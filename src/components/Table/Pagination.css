@@ -1,0 +1,35 @@
+.Table__itemCount {
+    /* margin-top: 10px; */
+    font-size: 14px;
+  }
+  
+  .Table__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+    
+  }
+  
+  .Table__pageButton {
+    font-size: 15px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  
+  .Table__pageButton:disabled {
+    cursor: not-allowed;
+    color: gray;
+  }
+  
+  .Table__pageButton--active {
+    background-color: #cf6054;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0 10px;
+    padding: 2px 12px;
+    border-radius: 10px;
+  }

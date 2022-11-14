@@ -1,0 +1,38 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ @layer components {
+    .btn{
+        background-color: rgb(231, 229, 229);
+        @apply h-40 w-160 bg-tomato rounded-12 border-none text-white shadow-md
+    }
+
+    .bigBtn{
+        @apply w-219 h-40 bg-tomato rounded-12 border-none text-white shadow-md
+    }
+    .btn_noBorder {
+        @apply w-160 h-40 bg-white text-numColor border-none shadow-md
+    }
+
+    .checkboxStyle{
+        @apply bg-tomato text-white focus:!bg-red-800
+    }
+    .selectBox{
+        @apply border-none  h-40 w-258
+    }
+
+    .customTable .rt-tr-group{
+        @apply odd:bg-tableColor  border-none
+    }
+    .checkbox_select,.inputSelect .css-1s2u09g-control{
+        @apply border-none
+    }
+    .checkbox_select,.selectIcon .css-1okebmr-indicatorSeparator{
+        @apply w-0
+    }
+    .selectIcon .css-c465re-ValueContainer{
+        @apply pr-8
+    }
+ }

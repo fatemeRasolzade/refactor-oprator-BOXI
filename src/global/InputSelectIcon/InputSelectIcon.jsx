@@ -1,0 +1,74 @@
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import Select, { components } from "react-select";
+import { BiChevronDown,BiSearchAlt2} from 'react-icons/bi';
+
+
+
+
+export default class InputSelectIcon extends Component {
+  constructor() {
+    super();
+    this.handleInfluencerName = this.handleInfluencerName.bind(this);
+  }
+  handleInfluencerName(event) {
+    console.log(event);
+  }
+  render() {
+    const influencers = [
+      { value: "abc", label: "abc" },
+      { value: "def", label: "def" }
+    ];
+
+    const ValueContainer = ({ children, ...props }) => {
+      return (
+        components.ValueContainer && (
+          <components.ValueContainer {...props}>
+            {!!children && (
+              
+               <BiChevronDown style={{ position: "absolute", left: 0 }}/>
+             )}
+            {children}
+          </components.ValueContainer>
+        )
+      );
+    };
+
+    const DropdownIndicator = props => {
+      return (
+        components.DropdownIndicator && (
+          <components.DropdownIndicator {...props}>
+           <BiSearchAlt2 style={{ position: "absolute", right: 6 ,top:10}} size={20}/>
+          </components.DropdownIndicator>
+        )
+      );
+    };
+
+    const styles = {
+      valueContainer: base => ({
+        ...base,
+        paddingLeft: 24
+      })
+    };
+
+    return (
+      <div className='relative w-258 h-48'>
+       
+          <Select
+          isRtl
+            options={influencers}
+            isMulti={false}
+            onChange={this.handleInfluencerName}
+            isSearchable={true}
+            components={{ DropdownIndicator, ValueContainer }}
+          
+            className="selectIcon"
+            styles={styles}
+          />
+      
+      </div>
+    );
+  }
+}
+
+
