@@ -4,7 +4,9 @@ export const Base_url2 = "http://172.16.38.210:8090";
 export const API_CONSIGNMENT = `${Base_url2}/core-api`;
 export const API_URL = `${Base_url}/core-api`;
 
-const createUrl = (base, dir) => {
+
+
+const createUrl =(base, dir) => {
   return base + dir;
 };
 

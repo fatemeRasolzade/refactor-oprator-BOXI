@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import Navbar from './../Navbar/Navbar';
+import Navbar from '../Navbar/Navbar';
 import { motion } from "framer-motion"
 import Sidebar from '../Sidebar/Sidebar';
-const Layout = ({children}) => {
+import { ChildrenProps } from '../../global/Interfaces/Interfaces';
+const Layout = ({children}:ChildrenProps) => {
 
   const [toggle,setToggle]=useState(false)
 

@@ -2,6 +2,10 @@ import axios from "axios";
 import { ErrorAlert } from "../global/alert/Alert";
 import { API_CONSIGNMENT } from "./apiRoute";
 
+
+
+
+
 axios.defaults.baseURL = API_CONSIGNMENT;
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.interceptors.response.use(null, (error) => {

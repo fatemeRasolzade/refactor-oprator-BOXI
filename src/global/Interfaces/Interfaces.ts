@@ -29,3 +29,11 @@ export interface PropsSelect{
     text:string,
    
 }
+
+export interface PropsModal {
+    visible:boolean,
+    setVisible:React.Dispatch<React.SetStateAction<boolean>>,
+    children:ReactNode,
+    width:string,
+    height:string
+  }

@@ -35,6 +35,9 @@
  .selectIcon .css-c465re-ValueContainer{
         @apply pr-8
     }
+    .timePicker .rmdp-input{
+        @apply text-center
+    }
         /*
     .selectIcon{
          @apply !w-160 

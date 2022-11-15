@@ -42,6 +42,7 @@ module.exports = {
   
       colors:{
         tableColor:'rgb(231, 229, 229)',
+        grayLight:'#E0E0E2',
         gray: colors.slate,
 				blue: colors.sky,
 				red: colors.rose,

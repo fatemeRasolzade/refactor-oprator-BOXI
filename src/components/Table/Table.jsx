@@ -143,3 +143,4 @@ PaginationComponent={Pagination}
 }
 
 export default Table
+
