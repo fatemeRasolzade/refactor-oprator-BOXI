@@ -12,8 +12,8 @@ export interface PropState {
 }
 
 export interface PropsInput{
-    handelChange :(e:string)=>string,
-    text:string,
+    handelChange ?:(e:string)=>string,
+    text?:string,
     handelSubmit?:React.FormEventHandler<HTMLFormElement> 
 }
 

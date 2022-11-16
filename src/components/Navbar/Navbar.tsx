@@ -15,7 +15,7 @@ const [drawerShow,setDrawerShow]=useState(false)
       
 			<div className='hidden sm:block '></div>
       <div className='hidden Max-sm:block Max-sm:w-40% mr-5'><button className='border-none' onClick={()=>setDrawerShow(before=>!before)}><BiMenu className='text-white' size={27}/></button></div>
-      <div className='Max-sm:w-40% w-30%'><Link to="/"><img src={require("../../assets/images/Boxi-3.png")} alt="logo" className='pr-5'/></Link></div>
+      <div className='Max-sm:w-40% w-30% flex justify-start items-center'><Link to="/" ><img src={require("../../assets/images/Boxi-3.png")} alt="logo" className='pr-5'/></Link></div>
            
              <div className='w-40% Max-sm:hidden'><Search/></div> 
          <div className='Max-sm:w-30% h-2/2 flex justify-center items-center Max-sm:justify-between w-30%'>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { BiXCircle } from 'react-icons/bi'
 
-const Chip = ({handelDelete,title,value}:any) => {
+const Chip = ({handelDelete,title,value}:{title?:string,value?:string,handelDelete?: any}) => {
 
 
 

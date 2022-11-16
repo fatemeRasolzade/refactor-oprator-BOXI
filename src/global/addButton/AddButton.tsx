@@ -1,6 +1,15 @@
 import  { useState } from "react";
+import { Interface } from "readline";
 
-const AddButton = ({ text, subItemOne, subItemTwo, RightIcon, LeftIcon }) => {
+interface PropAddButton{
+  text?:string,
+  subItemOne?:string,
+  subItemTwo?:string,
+  RightIcon?:JSX.Element,
+  LeftIcon?:JSX.Element
+}
+
+const AddButton = ({ text, subItemOne, subItemTwo, RightIcon, LeftIcon }:PropAddButton) => {
   const [toggle, setToggle] = useState(false);
 
   const handelClick = () => {

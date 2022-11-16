@@ -74,8 +74,8 @@ const CheckboxSelect=({text,change})=> {
 
   return (
     <div className='w-258 h-48'>
-       <fieldset className='border-white rounded-lg'>
-        <legend style={{lineHeight:'0.8',marginRight:'10px'}}>{text}</legend>
+       {/* <fieldset className='border-white rounded-lg'>
+        <legend style={{lineHeight:'0.8',marginRight:'10px'}}>{text}</legend> */}
       <Select
         className="checkbox_select"
         isMulti
@@ -85,11 +85,9 @@ const CheckboxSelect=({text,change})=> {
        placeholder=""
         options={allOptions}
         onChange={change}
-        components={{
-          Option: InputOption
-        }}
+        components={{ Option: InputOption}}
       />
-    </fieldset>
+    {/* </fieldset> */}
     </div>
   );
 }
