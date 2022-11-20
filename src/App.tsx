@@ -21,7 +21,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-    {/* <InputIcon text="تست" /> */}
+   
 
    
     </div>

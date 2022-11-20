@@ -10,10 +10,10 @@ const PerfesionalSearch = ({LeftIcon,text}:{LeftIcon?:JSX.Element,text?:string})
   return (
     <div className="w-160 relative">
     <button
-      className="w-160 h-40 shadow-sm text-tomato  rounded-lg border-none flex justify-around items-center flex-row-reverse"
+      className="w-160 h-40  text-tomato  rounded-lg border-none flex justify-around items-center flex-row-reverse"
       onClick={() => setToggle(!toggle)}
     >
-      <span>{LeftIcon}</span> <span className="text-lg text-dark">{text}</span>{" "}
+      <span>{LeftIcon}</span> <span className="text-dark text-md">{text}</span>{" "}
      
     </button>
     {toggle ? (

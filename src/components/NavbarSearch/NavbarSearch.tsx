@@ -56,7 +56,7 @@ e.preventDefault()
             })
         }
 
-       {ChipData.length > 0 ? (<div><button className='w-122 h-21 flex justify-center items-center flex-row-reverse border-none text-tomato' onClick={()=>setChipData([])}>حذف جستجوها <span><BiX color=''/></span></button></div>): null } 
+       {ChipData.length > 0 ? (<div><button className='w-122 h-21 flex justify-center items-center flex-row-reverse border-none text-tomato' onClick={()=>setChipData([])}>حذف جستجوها <span><BiX /></span></button></div>): null } 
     </div>
 
     </>

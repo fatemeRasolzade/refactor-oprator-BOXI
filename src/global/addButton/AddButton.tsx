@@ -1,25 +1,26 @@
 import  { useState } from "react";
-import { Interface } from "readline";
 
 interface PropAddButton{
   text?:string,
   subItemOne?:string,
   subItemTwo?:string,
   RightIcon?:JSX.Element,
-  LeftIcon?:JSX.Element
+  LeftIcon?:JSX.Element,
+  color?:string,
+  textColor?:string
 }
 
-const AddButton = ({ text, subItemOne, subItemTwo, RightIcon, LeftIcon }:PropAddButton) => {
+const AddButton = ({ text, subItemOne, subItemTwo, RightIcon, LeftIcon,color,textColor }:PropAddButton) => {
   const [toggle, setToggle] = useState(false);
 
   const handelClick = () => {
-    setToggle(false);
+    setToggle(false); 
   };
 
   return (
     <div className="w-160 relative">
       <button
-        className="w-160 h-40 bg-tomato text-white rounded-lg border-tomato flex justify-around items-center flex-row-reverse"
+        className={`w-160 h-40 bg-${color} text-${textColor} rounded-lg border-none flex justify-around items-center flex-row-reverse`}
         onClick={() => setToggle(!toggle)}
       >
         <span>{LeftIcon}</span> <span className="text-lg">{text}</span>{" "}

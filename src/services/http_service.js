@@ -6,13 +6,14 @@ import { API_CONSIGNMENT } from "./apiRoute";
 
 
 
-axios.defaults.baseURL = API_CONSIGNMENT;
+
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.interceptors.response.use(null, (error) => {
   // const accessToken = Cookies.get()
   const errorStatus = error.response.status;
 
   if (errorStatus === 401) {
+    
   }
 
   const expectedErrors =

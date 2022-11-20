@@ -1,7 +1,7 @@
 import React from 'react'
 import Select from "react-select"
 import { PropsSelect } from './../Interfaces/Interfaces';
-const InputSelect = ({text,handelChange}:PropsSelect) => {
+const InputSelect = ({text,handelChange}:{text?:string,handelChange?:any}) => {
 
     const options = [
         { value: 'chocolate', label: 'Chocolate' },

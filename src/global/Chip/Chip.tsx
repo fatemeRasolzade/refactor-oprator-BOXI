@@ -16,7 +16,7 @@ const handelClick=()=>{
     <>
     {show ? (
         <div className='bg-grayLight flex w-fit py-1 px-3 justify-between items-center rounded-md'>
-        <span>{title} : {value}</span>
+        <span>{`${title} :`}  {value}</span>
         <span className='mr-2 cursor-pointer' onClick={()=>{handelClick();handelDelete()}}><BiXCircle/></span>
 
 

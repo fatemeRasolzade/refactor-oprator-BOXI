@@ -39,7 +39,7 @@
         @apply text-center
     }
     .autoComplete{
-        @apply w-258  before:content-[attr(data-before)] relative before:absolute before:-top-15 before:right-15 before:bg-white before:z-10
+        @apply w-258  before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-15 before:bg-white before:z-30
     }
    .autoComplete .fDbOPw > input,.hCpHso .ellipsis{
     @apply text-right pr-3
@@ -52,17 +52,8 @@
    .simple_select{
     @apply w-258 before:content-[attr(data-before)] relative before:absolute before:-top-15 before:right-15 before:bg-white before:z-10
    }
-        /*
-    .selectIcon{
-         @apply !w-160 
-    }
-
-    .selectIcon .css-1s2u09g-control{
-        @apply bg-tomato border-tomato text-white rounded-xl
-    }
-    .selectIcon  .css-14el2xx-placeholder{
-        @apply text-white
-    } */
+   
+       
  }
 
  
