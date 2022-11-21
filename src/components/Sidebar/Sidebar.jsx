@@ -16,25 +16,25 @@ const Sidebar = ({setToggle}) => {
       </NavItem>
         */}
         {
-            links.map(item=>{
+            links.map((item,index)=>{
                 const {Icon,label,childs}=item
                 return(
-                 
+                  <React.Fragment key={index}>
                     <NavItem eventKey={label} className='focus:border-none '>
             <NavIcon>
                 {Icon}
             </NavIcon>
             <NavText>{label}</NavText>
             {childs.map(({ to, label}, index) => (
-            
-							<NavItem key={index} eventKey={to.replace(/^\//, "")}>
+           
+							<NavItem key={index} eventKey={to.replace(/^\//, "")} >
 								<NavText style={{ fontWeight: 500, marginRight: 10 }}>{label}</NavText>
 							</NavItem>
-             
+            
               
 						))}
         </NavItem> 
-      
+        </React.Fragment>
                 )
             })
         }

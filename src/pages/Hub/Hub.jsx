@@ -7,7 +7,6 @@ import { apiRoute } from "../../services/apiRoute";
 import { ErrorAlert } from "../../global/alert/Alert";
 import StaticTable from './../../components/staticTable/StaticTable';
 import {HubColumn} from "../../global/Column/Columns"
-import Table from './../../components/Table/Table';
 
 const Hub = () => {
   const [dataTable, seDatatable] = useState([]);
@@ -17,7 +16,7 @@ const Hub = () => {
     PostDataParams(apiRoute().post.hub, params, {}).then((res) => {
       if (res.status === "OK") {
         seDatatable(res.payload.content);
-        console.log(res.payload.content);
+      
       } else {
         ErrorAlert("خطای ارتباط با سرور");
       }
@@ -28,16 +27,16 @@ const Hub = () => {
 
 const data=dataTable.map(hubItem=>{
   return{
-    code:hubItem.code,
-    name:hubItem.name,
-    hubType:hubItem.selectHubType.text,
-    category:hubItem.selectHubCategory !==null ? hubItem.selectHubCategory.text : "ناموجود",
-    parentHub:hubItem.selectParentHub !== null ? hubItem.selectParentHub.text : "ناموجود",
-    addressLine1:hubItem.addressLine1,
-    Ragen:hubItem.selectRegion.text,
+    code:hubItem.code ? hubItem.code : "",
+    name:hubItem.name ? hubItem.name : "",
+    hubType:hubItem.selectHubType !== null ? hubItem.selectHubType.text : "",
+    category:hubItem.selectHubCategory !==null ? hubItem.selectHubCategory.text : "",
+    parentHub:hubItem.selectParentHub !== null ? hubItem.selectParentHub.text : "",
+    addressLine1:hubItem.addressLine1 ? hubItem.addressLine1 : "",
+    Ragen:hubItem.selectRegion !==null ? hubItem.selectRegion.text :"",
     deliver:hubItem.dropOffAllowed ? "بله" : "خیر",
-    editBy:hubItem.name,
-    EditTime:`${hubItem.locationStartDate.year}/${hubItem.locationStartDate.month}/${hubItem.locationStartDate.day}`
+    editBy:hubItem.name ? hubItem.name : "",
+    EditTime:hubItem.locationStartDate !==null ? `${hubItem.locationStartDate.year}/${hubItem.locationStartDate.month}/${hubItem.locationStartDate.day} ` : ""
   }
 })
 
@@ -46,7 +45,6 @@ const data=dataTable.map(hubItem=>{
       <Breadcrumb beforePage="برگشت" curentPage="هاب" />
       <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" />
       <OptionsTable />
-       {/* <Table data={data} column={HubColumn}/> */}
      <StaticTable data={data} column={HubColumn}/> 
     </div>
   );

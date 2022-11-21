@@ -49,9 +49,9 @@ e.preventDefault()
 
     <div className='flex justify-start items-center gap-3 mt-6'>
         {
-            ChipData && ChipData.map(item=>{
+            ChipData && ChipData.map((item,index)=>{
                 return (
-                    <Chip title={item.label} value={item.number}/>
+                    <Chip title={item.label} value={item.number} key={index}/>
                 )
             })
         }

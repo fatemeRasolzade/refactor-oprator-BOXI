@@ -310,7 +310,7 @@ module.exports = {
     },
 
     fontFamily: {
-      shabnam: ["shabnam", "Roboto", "Arial", "sans-serif"],
+      shabnam: ["yekan", "Roboto", "Arial", "sans-serif"],
     },
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1rem" }],

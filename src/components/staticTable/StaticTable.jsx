@@ -82,8 +82,8 @@ function Table({ columns, data }) {
   return (
     <>
      <div className='p-5'>
-      <table {...getTableProps()} className='w-full text-center overflow-auto'>
-        <thead className='bg-tableColor h-40'>
+      <table {...getTableProps()} className='w-full text-center overflow-auto '>
+        <thead className='bg-tableColor h-40 font-thin'>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()} >
               {headerGroup.headers.map(column => (
@@ -98,7 +98,7 @@ function Table({ columns, data }) {
             return (
               <tr {...row.getRowProps()} className="even:bg-gray-100 h-9">
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()} className="border-gray-300 border">{cell.render('Cell')}</td>
+                  return <td {...cell.getCellProps()} className="border-gray-300 border ">{cell.render('Cell')}</td>
                 })}
               </tr>
             )

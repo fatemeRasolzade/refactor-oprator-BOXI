@@ -1,7 +1,27 @@
 
+@font-face {
+    font-family: 'yekan';
+   
+    src:local('yekan'), url('./assets/fonts/ttf/iranyekanwebregularfanum.ttf') ;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src:local('yekan'), url('./assets/fonts/ttf/iranyekanwebboldfanum.ttf') format('ttf');
+    font-weight: 500;
+}
+*{
+    font-family: 'yekan'!important;
+}
+
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
  @layer components {
     .btn{
