@@ -3,6 +3,7 @@ export const Base_url2 = "http://172.16.38.210:8090";
 export const Base_url3 = "http://172.16.55.144:8090";
 export const API_CONSIGNMENT = `${Base_url2}/core-api`;
 export const API_CONSIGNMENT2 = `${Base_url}/resource-api`;
+export const API_CONSIGNMENT3 = `${Base_url3}/core-api`;
 export const API_URL = `/core-api`;
 export const API_URL_2 = `/resource-api`;
 
@@ -56,6 +57,7 @@ export const apiRoute = () => {
 
       // filter
       filterRole: createUrl(API_CONSIGNMENT2, "/role"),
+      serviceDefine:createUrl(API_CONSIGNMENT3, "/service")
     },
   };
 };

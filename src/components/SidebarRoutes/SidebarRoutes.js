@@ -15,7 +15,7 @@ import CRMManagment from '../../pages/CRMManagment/CRMManagment';
 import Roles from '../../pages/Roles/Roles';
 import ServiceInformation from '../../pages/ServiceInformation/ServiceInformation';
 import ProductInfo from '../../pages/ProductInfo/ProductInfo';
-import ServiceDefinition from '../../pages/ServiceDefinition/ServiceDefinition';
+
 import ServiceProvision from '../../pages/ServiceProvision/ServiceProvision';
 import Price from '../../pages/Price/Price';
 import Thirdparty from '../../pages/Thirdparty/Thirdparty';
@@ -26,6 +26,7 @@ import ProductGroup from '../../pages/ProductGroup/ProductGroup';
 import ServiceTime from '../../pages/ServiceTime/ServiceTime';
 import PincodeManagement from '../../pages/PincodeManagement/PincodeManagement';
 import CustomGeographic from '../../pages/CustomGeographic/CustomGeographic';
+import ServiceDefinition from "../../pages/ServiceManagement/ServiceDefinition";
 
 
 
