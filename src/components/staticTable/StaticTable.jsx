@@ -3,7 +3,6 @@ import { useTable, usePagination, useRowSelect } from 'react-table'
 
 
 
-
 const IndeterminateCheckbox = React.forwardRef(
   ({data, indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef()

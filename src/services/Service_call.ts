@@ -16,9 +16,9 @@ import { Base_url3 } from './apiRoute';
    return data
  };
  
-export const PostDataParams=async (apiRoute:{apiRoute:string},params:{params:string},body:{body:object})=>{
+export const PostDataParams=async (apiRoute:{apiRoute:string},body:{body:object})=>{
  
-  const {data}=await http.post(Base_url3 + apiRoute + params,body)
+  const {data}=await http.post(Base_url3 + apiRoute,body)
   return data
  
  }
