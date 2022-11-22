@@ -44,14 +44,14 @@ export const HubColumn = [
 export const RoleColumn = [
   {
     Header: "عنوان نقش",
-    accessor: "sdasd",
+    accessor: "name",
   },
   {
     Header: "دسترسی ها",
-    accessor: "asd",
+    accessor: "selectPermissions",
   },
   {
     Header: "عملیات",
-    accessor: "asasdasd",
+    accessor: "operation",
   },
 ];
