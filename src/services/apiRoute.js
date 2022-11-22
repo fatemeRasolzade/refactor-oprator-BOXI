@@ -1,8 +1,10 @@
-export const Base_url = "http://192.168.1.153:8090";
+export const Base_url = "http://192.168.1.153:20000";
 export const Base_url2 = "http://172.16.38.210:8090";
 export const Base_url3 = "http://172.16.55.144:8090";
 export const API_CONSIGNMENT = `${Base_url2}/core-api`;
+export const API_CONSIGNMENT2 = `${Base_url}/resource-api`;
 export const API_URL = `/core-api`;
+export const API_URL_2 = `/resource-api`;
 
 const createUrl = (base, dir) => {
   return base + dir;
@@ -53,7 +55,7 @@ export const apiRoute = () => {
       hub: createUrl(API_URL, "/hub"),
 
       // filter
-      
+      filterRole: createUrl(API_CONSIGNMENT2, "/role"),
     },
   };
 };
