@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { apiRoute } from "../../services/apiRoute";
 import { PostDataParams } from "../../services/Service_call";
+import { StateData } from "./state-model";
 
 export const RoleData = createAsyncThunk("post", async () => {
   const params = `/filter?pageNumber=1&pageSize=20`;
@@ -19,10 +20,11 @@ export const RoleData = createAsyncThunk("post", async () => {
   return data;
 });
 
-const initialState: any = {
+const initialState: StateData = {
   rolesList: [],
   fetchPost: false,
   errorMessage: null,
+  isUpdating: false,
 };
 
 const RolesList = createSlice({
@@ -32,18 +34,28 @@ const RolesList = createSlice({
     clearRole: (state) => {
       state.rolesList = [];
     },
+    updating: (state) => {
+      state.isUpdating = true;
+    },
   },
   extraReducers: {
     [RoleData.fulfilled as any]: (state, action) => {
       state.rolesList = action.payload.payload;
       state.fetchPost = false;
+      state.errorMessage = null;
+      state.isUpdating = false;
     },
     [RoleData.pending as any]: (state) => {
       state.fetchPost = true;
+      state.rolesList = [];
+      state.errorMessage = null;
+      state.isUpdating = false;
     },
     [RoleData.rejected as any]: (state) => {
       state.fetchPost = false;
       state.errorMessage = "wrong";
+      state.rolesList = [];
+      state.isUpdating = false;
     },
   },
 });
