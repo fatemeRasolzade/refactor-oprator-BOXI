@@ -1,31 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import NavbarSearch from "../../components/NavbarSearch/NavbarSearch";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
-import { PostDataParams } from "../../services/Service_call";
-import { apiRoute } from "../../services/apiRoute";
-import { ErrorAlert } from "../../global/alert/Alert";
 import StaticTable from './../../components/staticTable/StaticTable';
 import {HubColumn} from "../../global/Column/Columns"
-
+import {useDispatch,useSelector} from "react-redux"
+import {clearHub, HubData} from "../../redux/HubData/HubData"
 const Hub = () => {
-  const [dataTable, seDatatable] = useState([]);
+  const dispatch=useDispatch()
 
-  useEffect(() => {
-    const params = `/filter?pageNumber=1&pageSize=20`;
-    PostDataParams(apiRoute().post.hub, params, {}).then((res) => {
-      if (res.status === "OK") {
-        seDatatable(res.payload.content);
-      
-      } else {
-        ErrorAlert("خطای ارتباط با سرور");
-      }
-    });
-  }, []);
+  useEffect(()=>{
+    dispatch(HubData())
+
+   return()=>dispatch(clearHub())
+  },[])
+
+  const {payload}=useSelector(state=>state.hub.postLists)
 
 
 
-const data=dataTable.map(hubItem=>{
+const data=payload?.content?.length > 0 ? payload.content.map(hubItem=>{
   return{
     code:hubItem.code ? hubItem.code : "",
     name:hubItem.name ? hubItem.name : "",
@@ -38,7 +32,7 @@ const data=dataTable.map(hubItem=>{
     editBy:hubItem.name ? hubItem.name : "",
     EditTime:hubItem.locationStartDate !==null ? `${hubItem.locationStartDate.year}/${hubItem.locationStartDate.month}/${hubItem.locationStartDate.day} ` : ""
   }
-})
+}) : []
 
   return (
     <div>

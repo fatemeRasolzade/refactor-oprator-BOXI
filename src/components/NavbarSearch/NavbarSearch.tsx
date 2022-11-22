@@ -42,7 +42,7 @@ e.preventDefault()
        <button type='submit' className='w-160 h-40 flex justify-center items-center bg-lightesGray border-none rounded-lg text-md relative active:-top-3 text-halfDark'><span className='ml-2'><BiSearch size={20}/></span>جستجو</button>
     </div>
     </form>
-<PerfesionalSearch text="جستجوی ‍‍پیشرفته" LeftIcon={<BiChevronDown/>}/>
+<PerfesionalSearch text="جستجوی ‍‍پیشرفته" LeftIcon={<BiChevronDown/>} />
 </div>
 
     {/* list of chip */}

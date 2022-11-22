@@ -9,7 +9,7 @@ const Sidebar = ({setToggle}) => {
     <div>
    <SideNav style={{right:'0',top:'0',bottom:'0',width:'70px'}} className="!bg-gray-500 focus:content-none" onSelect={(e)=>e !== undefined ? navigate(`/${e}`):navigate(`/`)}>
     <SideNav.Toggle onClick={()=>setToggle(last=>!last)}/>
-    <SideNav.Nav  >
+    <SideNav.Nav>
 
       {/* <NavItem className="flex justify-center items-center mb-5 hover:!bg-gray-500">
      <img src={require('../../assets/images/Boxi-3.png')} alt="logo" />
@@ -19,7 +19,7 @@ const Sidebar = ({setToggle}) => {
             links.map((item,index)=>{
                 const {Icon,label,childs}=item
                 return(
-                  <React.Fragment key={index}>
+                 
                     <NavItem eventKey={label} className='focus:border-none '>
             <NavIcon>
                 {Icon}
@@ -34,7 +34,7 @@ const Sidebar = ({setToggle}) => {
               
 						))}
         </NavItem> 
-        </React.Fragment>
+      
                 )
             })
         }

@@ -1,4 +1,4 @@
-import { configureStore,combineReducers } from '@reduxjs/toolkit'
+import { configureStore,combineReducers  } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import HubList from "../HubData/HubData"
@@ -15,7 +15,11 @@ const persistConfig = {
   const persistedReducer = persistReducer(persistConfig, reducers)
 
 export const store=configureStore({
-    reducer:persistedReducer
+    reducer:persistedReducer,
+    middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })
 
 export let persistor = persistStore(store)
