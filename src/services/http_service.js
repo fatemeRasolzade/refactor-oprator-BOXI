@@ -10,8 +10,7 @@ import { API_CONSIGNMENT } from "./apiRoute";
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.interceptors.response.use(null, (error) => {
   // const accessToken = Cookies.get()
-  const errorStatus = error.response.status;
-
+  const errorStatus = error.respons 
   if (errorStatus === 401) {
     
   }
