@@ -1,19 +1,18 @@
-export const Base_url = "http://192.168.1.153:8090";
+export const Base_url = "http://192.168.1.153:20000";
 export const Base_url2 = "http://172.16.38.210:8090";
-export const Base_url3 ="http://172.16.55.144:8090"
+export const Base_url3 = "http://172.16.55.144:8090";
 export const API_CONSIGNMENT = `${Base_url2}/core-api`;
-export const API_URL =`/core-api`;
+export const API_CONSIGNMENT2 = `${Base_url}/resource-api`;
+export const API_URL = `/core-api`;
+export const API_URL_2 = `/resource-api`;
 
-
-
-const createUrl =(base, dir) => {
+const createUrl = (base, dir) => {
   return base + dir;
 };
 
 export const apiRoute = () => {
   return {
     get: {
-      
       login_Url: createUrl(API_URL, "/auth/login"),
       user_url: createUrl(API_URL, "/users/all"),
       filter_hub: createUrl(API_URL, "/hub/filter"),
@@ -22,7 +21,10 @@ export const apiRoute = () => {
       //hub_category
       filter_hub_category: createUrl(API_URL, "/hubCategory/filter"),
       //CUSTOM_GEOGRAPHIC
-      get_custom_geographics: createUrl(API_CONSIGNMENT,"/customcountrydevision/filter"),
+      get_custom_geographics: createUrl(
+        API_CONSIGNMENT,
+        "/customcountrydevision/filter"
+      ),
       //VENDOR
       get_venders: createUrl(API_URL, "/vendor/filter"),
       //VEHICLE_MODEL
@@ -48,8 +50,12 @@ export const apiRoute = () => {
       //ADM_VEHICLE
       GET_ADM_VEHICLE: createUrl(API_URL, "/admVehicle/filter"),
     },
-    post:{
-      hub:createUrl(API_URL, "/hub"),
-    }
+    post: {
+      // create
+      hub: createUrl(API_URL, "/hub"),
+
+      // filter
+      filterRole: createUrl(API_CONSIGNMENT2, "/role"),
+    },
   };
 };

@@ -1,21 +1,27 @@
-import { configureStore,combineReducers } from '@reduxjs/toolkit'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import HubList from "../HubData/HubData"
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import HubList from "../HubData/HubData";
+import RolesData from "../RolsData/RolesData";
 const persistConfig = {
-    key: 'root',
-    storage,
-    blacklist: ['hub']
-  }
+  key: "root",
+  storage,
+  blacklist: ["hub"],
+};
 
-  const reducers=combineReducers({
-    hub:HubList
-  })
-  
-  const persistedReducer = persistReducer(persistConfig, reducers)
+const reducers = combineReducers({
+  hub: HubList,
+  role: RolesData,
+});
 
-export const store=configureStore({
-    reducer:persistedReducer
-})
+const persistedReducer = persistReducer(persistConfig, reducers);
 
-export let persistor = persistStore(store)
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
+
+export let persistor = persistStore(store);
