@@ -13,7 +13,7 @@ export const ServiceDefineColumns = [
     Header: "محصول ",
     width: "auto",
     Cell: ({ cell }) => {
-      return <span className="flex items-center ">{console.log(cell?.value)}</span>;
+      return <span className="flex items-center "></span>;
     },
   },
   // {

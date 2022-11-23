@@ -1,8 +1,7 @@
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
 
-const InputIcon = ({text,item,handleOnSearch}:{text?:string ,item?:any,handleOnSearch?:((keyword: any, results: unknown[]) => void) | undefined}) => {
-
+const InputIcon = ({text,item,handleOnSearch,handleOnSelect,onClear}:{text?:string ,onClear?:any,item?:any,handleOnSelect: any ,handleOnSearch?:((keyword: any, results: unknown[]) => void) | undefined}) => {
 
       const formatResult = (item:any) => {
  return (
@@ -11,14 +10,15 @@ const InputIcon = ({text,item,handleOnSearch}:{text?:string ,item?:any,handleOnS
           </>
         )
       }
-
   return (
     <div className='autoComplete' data-before={text} dir='ltr'>
         <ReactSearchAutocomplete
        
         items={item}
              onSearch={handleOnSearch}
+           onSelect={handleOnSelect}
            autoFocus
+        onClear={onClear}
             formatResult={formatResult}
           />
     </div>
