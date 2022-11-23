@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import NavbarSearch from "../../components/NavbarSearch/NavbarSearch";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
@@ -8,14 +8,22 @@ import {useDispatch,useSelector} from "react-redux"
 import {clearHub, HubData} from "../../redux/HubData/HubData"
 const Hub = () => {
   const dispatch=useDispatch()
+  const {payload}=useSelector(state=>state.hub.postLists)
+  const {pageNumbers} =useSelector(state=>state.paginate)
 
   useEffect(()=>{
     dispatch(HubData())
-
+console.log("first",payload)
    return()=>dispatch(clearHub())
+   
   },[])
 
-  const {payload}=useSelector(state=>state.hub.postLists)
+  useEffect(()=>{
+
+
+    
+    dispatch(HubData(pageNumbers))
+  },[pageNumbers])
 
 
 
@@ -39,7 +47,7 @@ const data=payload?.content?.length > 0 ? payload.content.map(hubItem=>{
       <Breadcrumb beforePage="برگشت" curentPage="هاب" />
       <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" />
       <OptionsTable />
-     <StaticTable data={data} column={HubColumn}/> 
+     <StaticTable data={data} column={HubColumn} pagination={payload?.totalElements}/>
     </div>
   );
 };

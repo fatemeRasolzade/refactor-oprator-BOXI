@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTable, usePagination, useRowSelect } from 'react-table'
-
-
+import Paginations from './../../global/Pagination/Pagination';
 
 const IndeterminateCheckbox = React.forwardRef(
   ({data, indeterminate, ...rest }, ref) => {
@@ -25,8 +24,10 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 )
 
-function Table({ columns, data }) {
-  // Use the state and functions returned from useTable to build your UI
+function Table({ columns, data,pageTable}) {
+ 
+
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -36,14 +37,7 @@ function Table({ columns, data }) {
     // which has only the rows for the active page
 
     // The rest of these things are super handy, too ;)
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
+   
     state: { pageIndex, pageSize },
   } = useTable(
     {
@@ -106,53 +100,21 @@ function Table({ columns, data }) {
       </table>
      
       <div className="text-center mt-10">
-      
-        {/* <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="bg-gray-500 p-1 cursor-pointer rounded-md text-white">
-          {'<<'}
-        </button>{' '} */}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage} className="bg-tomato px-3 py-1 cursor-pointer rounded-md text-white border-none">
-          {'<'}
-        </button>{' '}
-        <span>
-          صفحه{' '}
-          <strong>
-            {pageIndex + 1} از {pageOptions.length}
-          </strong>{' '}
-        </span>
-        {/* <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="bg-gray-500 p-1 cursor-pointer rounded-md text-white">
-          {'>>'}
-        </button>{' '} */}
-        <button onClick={() => nextPage()} disabled={!canNextPage} className="bg-tomato px-3 py-1 cursor-pointer rounded-md text-white border-none ">
-          {'>'}
-        </button>{' '}
-       
-       
-       
-        <select
-          value={pageSize}
-          className="p-2 border-lightGray rounded-md mr-4"
-          onChange={e => {
-            setPageSize(Number(e.target.value))
-          }}
-        >
-          {[10, 20, 30, 40, 50].map(pageSize => (
-            <option key={pageSize} value={pageSize}>
-              نمایش {pageSize} تایی
-            </option>
-          ))}
-        </select>
-       
+
+      <Paginations pageData={pageTable} />
+
       </div>
       </div>
     </>
   )
 }
 
-function StaticTable({data,column}) {
+function StaticTable({data,column,pagination}) {
+console.log(pagination)
 
   return (
    
-      <Table columns={column}  data={data}/>
+      <Table columns={column}  data={data} pageTable={pagination}/>
     
   )
 }

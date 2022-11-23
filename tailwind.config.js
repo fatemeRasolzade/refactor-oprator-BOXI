@@ -55,6 +55,7 @@ module.exports =withMT( {
       secondaryTextColor: "#2E2310",
       mainColor: "#EF5644",
       customeTextColor:"#818181",
+      grayLights:"#F9FAFC",
       light: {
         DEFAULT: "#d1d1d1",
       },
@@ -316,6 +317,7 @@ module.exports =withMT( {
       shabnam: ["yekan", "Roboto", "Arial", "sans-serif"],
     },
     fontSize: {
+      16:"16px",
       xs: ["0.75rem", { lineHeight: "1rem" }],
       sm: ["0.875rem", { lineHeight: "1.25rem" }],
       base: ["1rem", { lineHeight: "1.5rem" }],
@@ -608,6 +610,7 @@ module.exports =withMT( {
       30: "30px",
       40: "40px",
       400:"400px",
+      230:"230px",
       250:"250px",
       351:"351px",
       258: "258px",

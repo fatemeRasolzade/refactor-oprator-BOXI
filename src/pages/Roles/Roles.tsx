@@ -34,9 +34,9 @@ const Roles = () => {
   return (
     <div>
       <Breadcrumb curentPage="هاب" />
-      <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" />
+      <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد  هاب" />
       <OptionsTable />
-      <StaticTable data={data ? data : []} column={RoleColumn} />
+      <StaticTable data={data ? data : []} column={RoleColumn}  pagination/>
     </div>
   );
 };

@@ -3,16 +3,19 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import HubList from "../HubData/HubData";
 import RolesData from "../RolsData/RolesData";
+import PageNumber from "../PaginationAction/PaginationAction"
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["hub"],
+  blacklist: ["hub",'paginate'],
 };
 
 const reducers = combineReducers({
   hub: HubList,
   role: RolesData,
+  paginate:PageNumber
 });
+
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
