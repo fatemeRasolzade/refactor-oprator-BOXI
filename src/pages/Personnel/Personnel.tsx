@@ -10,6 +10,7 @@ import {
   clearPersonnel,
   PersonnelData,
 } from "../../redux/PersonData/PersonsData";
+import Operation from "./Operation";
 
 const Personnel = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const Personnel = () => {
             name: item.name,
             mobile: item.mobile,
             email: item.email,
+            operation: <Operation id={item.id} />,
           };
         })
       : [];
