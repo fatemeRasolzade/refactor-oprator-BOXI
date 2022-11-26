@@ -6,6 +6,7 @@ import RolesList from "../RolsData/RolesData";
 import PageNumber from "../PaginationAction/PaginationAction";
 import PersonnelList from "../PersonData/PersonsData";
 
+import ServiceData from "../ServiceDefine/ServiceDefineReducer";
 const persistConfig = {
   key: "root",
   storage,
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   role: RolesList,
   paginate: PageNumber,
   personnel: PersonnelList,
+  serviceDefine: ServiceData,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

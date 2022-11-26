@@ -1,8 +1,9 @@
 export const Base_url = "http://192.168.1.153:20000";
-export const Base_url2 = "http://172.16.38.210:8090";
+export const Base_url2 = "http://192.168.1.153:8090";
 export const Base_url3 = "http://172.16.55.144:8090";
 export const API_CONSIGNMENT = `${Base_url2}/core-api`;
 export const API_CONSIGNMENT2 = `${Base_url}/resource-api`;
+export const API_CONSIGNMENT3 = `${Base_url3}/core-api`;
 export const API_URL = `/core-api`;
 export const API_URL_2 = `/resource-api`;
 
@@ -49,6 +50,8 @@ export const apiRoute = () => {
       GET_SERVICE_TIME: createUrl(API_CONSIGNMENT, "/timecommitment/filter"),
       //ADM_VEHICLE
       GET_ADM_VEHICLE: createUrl(API_URL, "/admVehicle/filter"),
+      //Service
+      GET_SERVICES:createUrl(API_URL,`/service/select?fliter=`)
     },
     post: {
       // create
@@ -57,6 +60,7 @@ export const apiRoute = () => {
       // filter
       filterRole: createUrl(API_CONSIGNMENT2, "/role"),
       filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
+      serviceDefine:createUrl(API_CONSIGNMENT3, "/service")
     },
   };
 };
