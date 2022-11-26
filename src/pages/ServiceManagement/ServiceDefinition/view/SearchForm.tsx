@@ -1,144 +1,101 @@
-
 import React, {useEffect, useState} from 'react'
-import { BiSearch, BiX, BiChevronDown } from 'react-icons/bi';
+import {BiSearch, BiX, BiChevronDown} from 'react-icons/bi';
+import {useFormik} from "formik";
+import {useDispatch} from "react-redux";
 import Chip from "../../../../global/Chip/Chip";
 import PerfesionalSearch from "../../../../components/PerfesionalSearch/PerfesionalSearch";
-import InputIcon from "../../../../global/InputIcon/InputIcon";
-import {PostDataParams} from "../../../../services/Service_call";
-import {apiRoute} from "../../../../services/apiRoute";
-import {useDispatch} from "react-redux";
-
 import {ServiceData} from "../../../../redux/ServiceDefine/ServiceDefineReducer";
-import Autocomplete from "react-autocomplete";
-import InputAuto from "../../../../global/Autocomplete/Autocomplete";
-// import {Autocomplete} from "../../../../global/Autocomplete/Autocomplete";
+import AutocompleteInput from "../../../../global/Autocomplete/AutocompleteInput";
 
 
-interface PropData{
-    label?:string,
-    data?:any
-    action: any
-    // code?:number
+
+interface chipData {
+    label?: string,
+    data?: any,
+    name: string,
 }
-const items = [
-    {
-        id: 0,
-        name: 'Cobol'
-    },
-    {
-        id: 1,
-        name: 'JavaScript'
-    },
-    {
-        id: 2,
-        name: 'Basic'
-    },
-    {
-        id: 3,
-        name: 'PHP'
-    },
-    {
-        id: 4,
-        name: 'Java'
-    }
-]
 const SearchForm = () => {
-    const dispatch=useDispatch()
-    // const [state,setState]=useState({code:'',name:''})
-    const [code,setCode]=useState<string | null >()
+    const dispatch = useDispatch()
+    const [options, setOptions] = useState<any>([])
+    const [chipData, setChipData] = useState<chipData[]>([])
+    const [search, setSearch] = useState({})
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            code: "",
+            name: "",
+        },
+        onSubmit: (values) => {
+            setChipData([
+                {
+                    label: "کد ",
+                    data: values.code,
+                    name: 'code'
+                },
+                {
+                    label: " نام",
+                    data: values.name,
+                    name: 'name'
+                }
+            ])
+            // @ts-ignore
+            dispatch(ServiceData(formik.values))
+            setSearch(values);
+        },
+    });
 
-    const [name,setName]=useState<string>('')
-    const [chipData,setChipData]=useState<PropData[]>([])
-
-
-    const handelSubmit=async(e?:React.FormEvent<HTMLFormElement>)=>{
-        e?.preventDefault()
-        setChipData([
-            {
-                label:"کد ",
-                data:code,
-                action:setCode
-            },
-            {
-                label:" نام",
-                data:name,
-                action:setName
-            }
-        ])
-      setCode(null)
-        setName('')
-    }
-
-    useEffect(()=>{
-        const body={
-            code: code,
-            name: name,
-            isActive: true,
-        }
+    useEffect(() => {
         // @ts-ignore
-        dispatch(ServiceData(body))
-    },[chipData.length])
-    const handleOnSelect = (item: any) => {
-        // the item selected
-        setCode(item.name)
-    }
-    const data = ["java", "javascript", "php", "c#", "go", "dart"];
-    const getSelectedVal = (value: any) => {
-        console.log(value);
-    };
+        dispatch(ServiceData(formik.values))
+    }, [chipData.length])
 
-    const getChanges = (value: any) => {
-        console.log(value);
-    };
+
     return (
         <>
             <div className='flex justify-start items-center mt-6 gap-4 flex-wrap'>
-                <form onSubmit={handelSubmit}>
+                <form onSubmit={formik.handleSubmit}>
                     <div className=' flex gap-3 justify-start items-center flex-wrap'>
                         <div className='Max-sm:mb-3'>
-                            <InputAuto
-
-                                label="languages"
-                                pholder="Keyword..."
-                                data={data}
-                                onSelected={getSelectedVal}
-                                onChange={getChanges}
+                            <AutocompleteInput
+                                label={"کد"}
+                                items={options}
+                                value={formik.values.code}
+                                onChange={(e: { target: { value: React.SetStateAction<string | null | undefined>; }; }) => {
+                                    // const params = `${e.target.value}`;
+                                    // GetDataParams(apiRoute().get.GET_SERVICES+ params)
+                                    formik.setFieldValue('code', e.target.value)
+                                }}
+                                onSelect={(val: React.SetStateAction<string | null | undefined>) => formik.setFieldValue('code', val)}
                             />
-                            {/*<Autocomplete*/}
-                            {/*    getItemValue={(item) => item.label}*/}
-                            {/*    items={[*/}
-                            {/*        { label: 'apple' },*/}
-                            {/*        { label: 'banana' },*/}
-                            {/*        { label: 'pear' }*/}
-                            {/*    ]}*/}
-                            {/*    renderItem={(item, isHighlighted) =>*/}
-                            {/*        <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>*/}
-                            {/*            {item?.label}*/}
-                            {/*        </div>*/}
-                            {/*    }*/}
-                            {/*    // value={value}*/}
-                            {/*    // onChange={(e) => value = e.target.value}*/}
-                            {/*    // onSelect={(val) => value = val}*/}
-                            {/*    value={code}*/}
-                            {/*    onChange={(e) => setCode(e.target.value)}*/}
-                            {/*    onSelect={(val) =>setCode(val)}*/}
-                            {/*/>*/}
-
-                        {/*<InputIcon*/}
-                        {/*    item={items} text='کد'*/}
-                        {/*    handleOnSelect={handleOnSelect}*/}
-                        {/*    handleOnSearch={setCode}*/}
-                        {/*    onClear={()=>console.log("clear")}*/}
-                        {/*/>*/}
                         </div>
-                        <div><InputIcon text='عنوان' handleOnSelect={handleOnSelect} handleOnSearch={setName}/></div>
-                        <button type='submit' className='w-160 h-40 flex justify-center items-center bg-lightesGray border-none rounded-lg text-md relative active:-top-3 text-halfDark'><span className='ml-2'><BiSearch size={20}/></span>جستجو</button>
+                        <div>
+                            <AutocompleteInput
+                                label={"عنوان"}
+                                items={[
+                                    {label: 'apple'},
+                                    {label: 'banana'},
+                                    {label: 'pear'}
+                                ]}
+                                value={formik.values.name}
+                                onChange={
+                                    (e: { target: { value: React.SetStateAction<string | null | undefined>; }; }) => {
+                                        formik.setFieldValue('name', e.target.value)
+                                    }
+                                }
+                                onSelect={(val: React.SetStateAction<string | null | undefined>) => formik.setFieldValue('name', val)}
+                            />
+                            {/*<InputIcon text='عنوان' handleOnSelect={handleOnSelect} handleOnSearch={setName}/>*/}
+                        </div>
+                        <button type='submit'
+                                className='w-160 h-40 flex justify-center items-center bg-lightesGray border-none rounded-lg text-md relative active:-top-3 text-halfDark'>
+                            <span className='ml-2'><BiSearch size={20}/></span>جستجو
+                        </button>
                     </div>
                 </form>
-                <PerfesionalSearch text="جستجوی پیشرفته" LeftIcon={<BiChevronDown/>} />
+                {/*<PerfesionalSearch text="جستجوی پیشرفته" LeftIcon={<BiChevronDown/>}/>*/}
             </div>
             {/* list of chip */}
-           <Chip chipData={chipData} setChipData={setChipData}  />
+            <Chip chipData={chipData} setChipData={setChipData} formData={formik}/>
         </>
     )
 }

@@ -20,14 +20,9 @@ import StaticTable from "../../../components/staticTable/StaticTable";
 
 
 const ServiceDefinition = () => {
-
     const dispatch=useDispatch()
-
-
     // @ts-ignore
     const {fetchpost,errorMessage,postLists}=useSelector(state=>state.serviceDefine)
-
-
     useEffect(() => {
         // @ts-ignore
         dispatch(ServiceData())
@@ -37,11 +32,7 @@ const ServiceDefinition = () => {
         <div>
             <SearchForm  />
             <OptionsTable />
-             {/*<Table*/}
-             {/*    column={ServiceDefineColumns}*/}
-             {/*    data={postLists?.content}*/}
-             {/*/>*/}
-            <StaticTable column={ServiceDefineColumns}  data={postLists?.content}/>
+            {/*<StaticTable column={ServiceDefineColumns}  data={postLists?.content}/>*/}
         </div>
     );
 };
