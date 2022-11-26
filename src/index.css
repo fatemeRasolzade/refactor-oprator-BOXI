@@ -100,7 +100,7 @@
 
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; 
 
 
 @layer components {
@@ -126,9 +126,12 @@
   .customTable .rt-tr-group {
     @apply odd:bg-tableColor  border-none;
   }
+  .inputSelect{
+    @apply mt-1
+  }
   .checkbox_select,
   .inputSelect .css-1s2u09g-control {
-    @apply border-none;
+    @apply border-none 
   }
   .checkbox_select,
   .selectIcon .css-1okebmr-indicatorSeparator {
@@ -160,5 +163,11 @@
   }
   .chips .-translate-y-2\/4{
     @apply top-10 right-5
+  }
+  .myCustomInput  label{
+    @apply top-0
+  }
+  .myCustomInput > div {
+    @apply w-258 h-7
   }
 }
