@@ -1,17 +1,3 @@
-/* @font-face {
-  font-family: "yekan";
-
-  src: local("yekan"), url("./assets/fonts/ttf/iranyekanwebregularfanum.ttf");
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: "yekan";
-  src: local("yekan"),
-    url("./assets/fonts/ttf/iranyekanwebboldfanum.ttf") format("ttf");
-  font-weight: 500;
-} */
-
 @font-face {
   font-family: "IRANSans";
   font-style: normal;
@@ -102,25 +88,24 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer components {
   .btn {
     background-color: rgb(231, 229, 229);
-    @apply h-40 w-160 bg-tomato rounded-12 border-none text-white shadow-md;
+    @apply h-10 w-160 bg-tomato rounded-12 border-none text-white shadow-md;
   }
 
   .bigBtn {
-    @apply w-219 h-40 bg-tomato rounded-12 border-none text-white shadow-md;
+    @apply w-219 h-10 bg-tomato rounded-12 border-none text-white shadow-md;
   }
   .btn_noBorder {
-    @apply w-160 h-40 bg-white text-numColor border-none shadow-md;
+    @apply w-160 h-10 bg-white text-numColor border-none shadow-md;
   }
 
   .checkboxStyle {
     @apply bg-tomato text-white focus:!bg-red-800;
   }
   .selectBox {
-    @apply border-none  h-40 w-258;
+    @apply border-none  h-10 w-64;
   }
 
   .customTable .rt-tr-group {
@@ -141,7 +126,7 @@
     @apply text-center;
   }
   .autoComplete {
-    @apply w-258  before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-15 before:bg-white before:z-30;
+    @apply w-64  before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-14 before:bg-white before:z-30;
   }
   .autoComplete .fDbOPw > input,
   .hCpHso .ellipsis {
@@ -153,12 +138,50 @@
   }
 
   .simple_select {
-    @apply w-258 before:content-[attr(data-before)] relative before:absolute before:-top-15 before:right-15 before:bg-white before:z-10;
+    @apply w-64  relative before:absolute before:-top-14 before:right-14 before:bg-white before:z-10;
   }
-  .chips .transition-colors{
-    @apply top-0 left-0
+  .chips .transition-colors {
+    @apply top-0 left-0;
   }
-  .chips .-translate-y-2\/4{
-    @apply top-10 right-5
+  .chips .-translate-y-2\/4 {
+    @apply top-10 right-5;
+  }
+
+  /* flex box */
+  .centering {
+    @apply flex justify-center items-center;
+  }
+  .flex-start-center {
+    @apply flex justify-start items-center;
+  }
+  .flex-end-center {
+    @apply flex justify-end items-center;
+  }
+  .flex-start-start {
+    @apply flex justify-start items-start;
+  }
+  .flex-start-end {
+    @apply flex justify-start items-end;
+  }
+  .flex-between-center {
+    @apply flex justify-between items-center;
+  }
+  .flex-between-start {
+    @apply flex justify-between items-start;
+  }
+  .flex-around-center {
+    @apply flex justify-around items-center;
+  }
+  .flex-center-end {
+    @apply flex justify-center items-end;
+  }
+  .flex-end-end {
+    @apply flex justify-end items-end;
+  }
+  .flex-between-end {
+    @apply flex justify-between items-end;
+  }
+  .flex-end-start {
+    @apply flex justify-end items-start;
   }
 }

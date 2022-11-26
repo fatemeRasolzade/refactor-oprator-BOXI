@@ -20,7 +20,7 @@ const AddButton = ({ text, subItemOne, subItemTwo, RightIcon, LeftIcon,color,tex
   return (
     <div className="w-160 relative">
       <button
-        className={`w-160 h-40 bg-${color} text-${textColor} rounded-lg border-none flex justify-around items-center flex-row-reverse`}
+        className={`w-160 h-10 bg-${color} text-${textColor} rounded-lg border-none flex justify-around items-center flex-row-reverse`}
         onClick={() => setToggle(!toggle)}
       >
         <span>{LeftIcon}</span> <span className="text-lg">{text}</span>{" "}

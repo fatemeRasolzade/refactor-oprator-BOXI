@@ -51,7 +51,7 @@ placement="bottom"
        <div className='flex justify-between items-center mt-5'>
        <BtnIcon text='شخصی سازی' icon={<BiCog color='gray'/>} handelClick={handelClick}/>
        <BtnIcon text='پاک کردن ورودی ها'/>
-       <Button type='submit' className='w-160 h-40 flex justify-center items-center bg-tomato border-none rounded-lg text-md  text-white'><span className='ml-2'>جستجو</span></Button>
+       <Button type='submit' className='w-160 h-10 flex justify-center items-center bg-tomato border-none rounded-lg text-md  text-white'><span className='ml-2'>جستجو</span></Button>
 
        </div>
       </div>

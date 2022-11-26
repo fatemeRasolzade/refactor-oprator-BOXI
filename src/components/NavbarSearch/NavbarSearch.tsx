@@ -44,7 +44,7 @@ const NavbarSearch = ({
        
         </div>
        <div><InputIcon text={secondTextInput} handleOnSearch={sethub}/></div>
-       <button type='submit' className='w-160 h-40 flex justify-center items-center bg-lightesGray border-none rounded-lg text-md relative active:-top-3 text-halfDark'><span className='ml-2'><BiSearch size={20}/></span>جستجو</button>
+       <button type='submit' className='w-160 h-10 flex justify-center items-center bg-lightesGray border-none rounded-lg text-md relative active:-top-3 text-halfDark'><span className='ml-2'><BiSearch size={20}/></span>جستجو</button>
     </div>
     </form>
 <PerfesionalSearch text="جستجوی ‍‍پیشرفته" LeftIcon={<BiChevronDown/>} />

@@ -9,7 +9,7 @@ const Navbar = () => {
   const [drawerShow, setDrawerShow] = useState(false);
 
   return (
-    <div className="h-87 flex  justify-between items-center shadow-sm  w-full bg-[#7075a5]      ">
+    <div className="h-20 flex  justify-between items-center shadow-sm  w-full bg-[#7075a5]      ">
       <div className="hidden sm:block "></div>
       <div className="hidden Max-sm:block Max-sm:w-40% mr-5">
         <button
