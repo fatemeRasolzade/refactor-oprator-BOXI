@@ -22,6 +22,8 @@
     "@types/stylis": "^4.0.2",
     "axios": "^1.1.3",
     "ensure-array": "^1.0.0",
+    "flowbite": "^1.5.4",
+    "flowbite-react": "^0.3.5",
     "formik": "^2.2.9",
     "framer-motion": "^7.6.4",
     "jalali-moment": "^3.3.11",

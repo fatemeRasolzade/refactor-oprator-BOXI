@@ -7,19 +7,19 @@ const ChipIcon = ({text}:{text?:string | undefined}) => {
   return (
     <>
 <Chip
-        variant="gradient"
+        variant="filled"
         show={show}
         icon={<BiMoveVertical size={25}/>}
-       color="gray"
+      color="gray"
         animate={{
           mount: { y: 0 },
-          unmount: { y: 50 },
+          unmount: { y:50 },
         }}
         dismissible={{
           onClose: () => setShow(false),
         }}
         value={`${text}`}
-        className='chips w-[210px] my-1'
+        className='chips w-70 my-1 bg-lightGray'
       />
     </>
   )
