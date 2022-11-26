@@ -91,11 +91,11 @@
 @layer components {
   .btn {
     background-color: rgb(231, 229, 229);
-    @apply h-10 w-160 bg-tomato rounded-12 border-none text-white shadow-md;
+    @apply h-10 w-160 bg-tomato rounded-lg border-none text-white shadow-md;
   }
 
   .bigBtn {
-    @apply w-219 h-10 bg-tomato rounded-12 border-none text-white shadow-md;
+    @apply w-219 h-10 bg-tomato rounded-lg border-none text-white shadow-md;
   }
   .btn_noBorder {
     @apply w-160 h-10 bg-white text-numColor border-none shadow-md;
@@ -126,7 +126,7 @@
     @apply text-center;
   }
   .autoComplete {
-    @apply w-64  before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-14 before:bg-white before:z-30;
+    @apply w-64  before:content-[attr(data-before)] relative before:absolute before:-top-3 before:right-5 before:bg-white before:z-30;
   }
   .autoComplete .fDbOPw > input,
   .hCpHso .ellipsis {
@@ -134,7 +134,7 @@
   }
 
   .autoComplete .cmyNjn > .wrapper {
-    @apply z-20;
+    @apply z-20 rounded-lg;
   }
 
   .simple_select {
