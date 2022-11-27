@@ -7,11 +7,7 @@ export const ServiceData=createAsyncThunk('servicelist',async(body:any)=>{
     const params = `/filter?pageNumber=1&pageSize=20`;
     var data = {};
     try {
-        data = await PostDataParams(apiRoute().post.serviceDefine + params, body?body:{
-            code: "",
-            name: "",
-            isActive: true,
-        });
+        data = await PostDataParams(apiRoute().post.serviceDefine + params, body);
     } catch (error) {
         console.log("error ", error);
     }

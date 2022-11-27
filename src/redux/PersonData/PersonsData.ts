@@ -33,8 +33,8 @@ const PersonnelList = createSlice({
     clearPersonnel: (state) => {
       state.personnelList = [];
     },
-    updating: (state) => {
-      state.isUpdating = true;
+    updating: (state, action) => {
+      state.isUpdating = action.payload;
     },
   },
   extraReducers: {
@@ -58,5 +58,5 @@ const PersonnelList = createSlice({
     },
   },
 });
-export const { clearPersonnel } = PersonnelList.actions;
+export const { clearPersonnel, updating } = PersonnelList.actions;
 export default PersonnelList.reducer;

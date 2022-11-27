@@ -4,15 +4,16 @@ import { apiRoute } from "../../services/apiRoute";
 import { PostDataParams } from "../../services/Service_call";
 import { StateData } from "./state-model";
 
-export const RoleData = createAsyncThunk("post", async () => {
+interface RoleDataBody {
+  code: string;
+  name: string;
+  isActive: boolean;
+}
+export const RoleData = createAsyncThunk("post", async (body: RoleDataBody) => {
   const params = `/filter?pageNumber=1&pageSize=20`;
   var data = {};
   try {
-    data = await PostDataParams(apiRoute().post.filterRole + params, {
-      code: "",
-      name: "",
-      isActive: true,
-    });
+    data = await PostDataParams(apiRoute().post.filterRole + params, body);
   } catch (error) {
     console.log("error ", error);
   }
@@ -34,8 +35,8 @@ const RolesList = createSlice({
     clearRole: (state) => {
       state.rolesList = [];
     },
-    updating: (state) => {
-      state.isUpdating = true;
+    updating: (state, action) => {
+      state.isUpdating = action.payload;
     },
   },
   extraReducers: {
@@ -59,5 +60,5 @@ const RolesList = createSlice({
     },
   },
 });
-export const { clearRole } = RolesList.actions;
+export const { clearRole, updating } = RolesList.actions;
 export default RolesList.reducer;

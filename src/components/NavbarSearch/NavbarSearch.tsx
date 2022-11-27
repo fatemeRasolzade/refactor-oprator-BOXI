@@ -5,13 +5,7 @@ import InputIcon from "../../global/InputIcon/InputIcon";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
 import PerfesionalSearch from "./../PerfesionalSearch/PerfesionalSearch";
 
-const NavbarSearch = ({
-  firstTextInput,
-  secondTextInput,
-}: {
-  firstTextInput?: string;
-  secondTextInput?: string;
-}) => {
+const NavbarSearch = ({ firstTextInput, secondTextInput }: { firstTextInput?: string; secondTextInput?: string }) => {
   const [shelf, setShelf] = useState<string>("");
   const [hub, sethub] = useState<string>("");
 
@@ -45,18 +39,11 @@ const NavbarSearch = ({
             <div>
               <InputIcon text={secondTextInput} handleOnSearch={sethub} handleOnSelect={undefined} />
             </div>
-         
-            <SimpleButton
-              className="full-gray-btn"
-              icon={<BiSearch size={20} />}
-              text="جستجو"
-            />
+
+            <SimpleButton className="full-gray-btn" icon={<BiSearch size={20} />} text="جستجو" />
           </div>
         </form>
-        <PerfesionalSearch
-          text="جستجوی ‍‍پیشرفته"
-          LeftIcon={<BiChevronDown />}
-        />
+        <PerfesionalSearch text="جستجوی پیشرفته" LeftIcon={<BiChevronDown />} />
       </div>
 
       {/* list of chip */}
