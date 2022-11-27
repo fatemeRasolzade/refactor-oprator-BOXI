@@ -8,7 +8,7 @@ const Sidebar = ({ setToggle }) => {
     <>
       <SideNav
         style={{ right: "0", top: "0", bottom: "0", width: "50px" }}
-        className="!bg-gray-100 focus:content-none"
+        className="!bg-gray-900 focus:content-none"
         onSelect={(e) => (e !== undefined ? navigate(`/${e}`) : navigate(`/`))}
       >
         <img

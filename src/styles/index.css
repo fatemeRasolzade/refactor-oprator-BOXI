@@ -1,106 +1,25 @@
-@font-face {
-  font-family: "IRANSans";
-  font-style: normal;
-  font-weight: 300;
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Light.eot");
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Light.eot?#iefix")
-      format("embedded-opentype"),
-    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum)_Light.woff2")
-      format("woff2"),
-    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum)_Light.woff")
-      format("woff"),
-    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum)_Light.ttf")
-      format("truetype");
-}
-@font-face {
-  font-family: "IRANSans";
-  font-style: normal;
-  font-weight: 900;
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Black.eot");
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Black.eot?#iefix")
-      format("embedded-opentype"),
-    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum)_Black.woff2")
-      format("woff2"),
-    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum)_Black.woff")
-      format("woff"),
-    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum)_Black.ttf")
-      format("truetype");
-}
-@font-face {
-  font-family: "IRANSans";
-  font-style: normal;
-  font-weight: bold;
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Bold.eot");
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Bold.eot?#iefix")
-      format("embedded-opentype"),
-    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum)_Bold.woff2")
-      format("woff2"),
-    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum)_Bold.woff")
-      format("woff"),
-    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum)_Bold.ttf")
-      format("truetype");
-}
-@font-face {
-  font-family: "IRANSans";
-  font-style: normal;
-  font-weight: 500;
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Medium.eot");
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Medium.eot?#iefix")
-      format("embedded-opentype"),
-    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum)_Medium.woff2")
-      format("woff2"),
-    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum)_Medium.woff")
-      format("woff"),
-    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum)_Medium.ttf")
-      format("truetype");
-}
-@font-face {
-  font-family: "IRANSans";
-  font-style: normal;
-  font-weight: 200;
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_UltraLight.eot");
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_UltraLight.eot?#iefix")
-      format("embedded-opentype"),
-    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum)_UltraLight.woff2")
-      format("woff2"),
-    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum)_UltraLight.woff")
-      format("woff"),
-    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum)_UltraLight.ttf")
-      format("truetype");
-}
-@font-face {
-  font-family: "IRANSans";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum).eot");
-  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum).eot?#iefix")
-      format("embedded-opentype"),
-    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum).woff2") format("woff2"),
-    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum).woff") format("woff"),
-    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum).ttf") format("truetype");
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "FontFamily.css";
 
 * {
   font-family: "IRANSans" !important;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @layer components {
   .btn {
-    background-color: rgb(231, 229, 229);
-    @apply h-10 w-160 bg-tomato rounded-lg border-none text-white shadow-md;
+    @apply h-[46px] rounded-lg border-none text-dark px-5 py-2 centering gap-2;
   }
-
-  .bigBtn {
-    @apply w-219 h-10 bg-tomato rounded-lg border-none text-white shadow-md;
+  .full-tomato-btn {
+    @apply bg-tomato text-light;
   }
-  .btn_noBorder {
-    @apply w-160 h-10 bg-white text-numColor border-none shadow-md;
+  .line-tomato-btn {
+    @apply bg-light text-tomato border border-tomato;
   }
-
+  .full-gray-btn {
+    @apply bg-lightesGray text-dark;
+  }
   .checkboxStyle {
     @apply bg-tomato text-white focus:!bg-red-800;
   }
@@ -131,6 +50,10 @@
   .autoComplete .fDbOPw > input,
   .hCpHso .ellipsis {
     @apply text-right pr-3;
+  }
+
+  .autoComplete::before {
+    @apply px-2;
   }
 
   .autoComplete .cmyNjn > .wrapper {

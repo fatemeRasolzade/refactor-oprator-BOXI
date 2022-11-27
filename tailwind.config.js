@@ -16,6 +16,8 @@ module.exports = withMT({
         "Max-sm": { max: "576px" },
       },
       colors: {
+        light: "#ffffff",
+        dark: "#282827",
         lightesGray: "#F4F4F4",
         tableColor: "rgb(231, 229, 229)",
         grayLight: "#E0E0E2",
@@ -28,9 +30,6 @@ module.exports = withMT({
         mainColor: "#EF5644",
         customeTextColor: "#818181",
         grayLights: "#F9FAFC",
-        light: {
-          DEFAULT: "#d1d1d1",
-        },
         tomato: {
           light: "#cf6054",
           DEFAULT: "#EF5644",

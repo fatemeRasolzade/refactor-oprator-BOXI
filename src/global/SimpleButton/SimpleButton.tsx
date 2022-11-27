@@ -1,12 +1,27 @@
-import React from 'react'
+import React from "react";
 
+type SimpleButtonProps = {
+  text?: string;
+  className?: string;
+  icon?: JSX.Element;
+  handelClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+};
 
-const SimpleButton = ({text,color,icon,colorText,handelClick}:{text?:string,color?:string,icon?:JSX.Element,colorText?:string,handelClick?:React.MouseEventHandler<HTMLButtonElement> | undefined}) => {
+const SimpleButton = ({
+  text,
+  icon,
+  className,
+  handelClick,
+}: SimpleButtonProps) => {
   return (
-    <>
-        <button className={`w-fit  h-10 px-4 flex justify-center items-center  bg-${color} border-none rounded-lg text-md text-${colorText}`} onClick={handelClick}><span className='ml-2'>{icon}</span>{text}</button>
-    </> 
-  )
-}
+    <button
+      className={`btn ${className}`}
+      onClick={handelClick}
+    >
+      {icon}
+      {text}
+    </button>
+  );
+};
 
-export default SimpleButton
+export default SimpleButton;
