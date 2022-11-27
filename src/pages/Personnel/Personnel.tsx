@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -10,16 +10,21 @@ import {
   clearPersonnel,
   PersonnelData,
 } from "../../redux/PersonData/PersonsData";
-import Operation from "./Operation";
+import Operation from "./view/PersonnelOperation";
+import PersonnelSearchFrom from "./view/PersonnelSearchFrom";
 
-const Personnel = () => {
+interface PersonnelProps {}
+
+const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { personnelList } = useSelector((state: any) => state.personnel);
+  const { personnelList, isUpdating } = useSelector(
+    (state: any) => state.personnel
+  );
 
   useEffect(() => {
     dispatch(PersonnelData() as any);
     return () => dispatch(clearPersonnel() as any);
-  }, []);
+  }, [dispatch, isUpdating]);
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0
@@ -30,7 +35,7 @@ const Personnel = () => {
             name: item.name,
             mobile: item.mobile,
             email: item.email,
-            operation: <Operation id={item.id} />,
+            operation: <Operation itemValue={item} />,
           };
         })
       : [];
@@ -38,10 +43,7 @@ const Personnel = () => {
   return (
     <div>
       <Breadcrumb curentPage="مدیریت پرسنل" />
-      <NavbarSearch
-        firstTextInput="کد پرسنلی"
-        secondTextInput="نام و نام خانوادگی"
-      />
+      <PersonnelSearchFrom />
       <OptionsTable />
       <StaticTable
         data={data ? data : []}

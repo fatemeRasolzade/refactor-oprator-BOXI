@@ -51,7 +51,7 @@ export const apiRoute = () => {
       //ADM_VEHICLE
       GET_ADM_VEHICLE: createUrl(API_URL, "/admVehicle/filter"),
       //Service
-      GET_SERVICES:createUrl(API_URL,`/service/select?fliter=`)
+      GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
     },
     post: {
       // create
@@ -60,7 +60,11 @@ export const apiRoute = () => {
       // filter
       filterRole: createUrl(API_CONSIGNMENT2, "/role"),
       filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
-      serviceDefine:createUrl(API_CONSIGNMENT3, "/service")
+      serviceDefine: createUrl(API_CONSIGNMENT3, "/service"),
+    },
+    delete: {
+      role: createUrl(API_CONSIGNMENT2, "/role"),
+      personnel: createUrl(API_CONSIGNMENT2, "/employee"),
     },
   };
 };

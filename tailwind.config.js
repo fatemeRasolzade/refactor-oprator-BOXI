@@ -3,74 +3,46 @@ const colors = require("tailwindcss/colors");
 
 const withMT = require("@material-tailwind/react/utils/withMT");
 
-module.exports =withMT( {
+
+
+module.exports = withMT({
+
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    inset: {
-      0: "0px",
-      2:"2px",
-      3: "3px",
-      5: "5px",
-      8:"8px",
-      9: "9px",
-      10: "10px",
-      12:"12px",
-      15: "15px",
-      20: "20px",
-      25:"25px",
-      30: "30px",
-      40: "40px",
-      42:"42px",
-      45:"45px",
-      50: "50px",
-      60: "60px",
-      70: "70px",
-    },
-
-    screens: {
-      sm: "570px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1280px",
-
-      "Max-2xl": { max: "1535px" },
-
-      "Max-xl": { max: "1279px" },
-
-      "Max-lg": { max: "1023px" },
-
-      "Max-md": { max: "767px" },
-
-      "Max-sm": { max: "576px" },
-    },
-
-    colors: {
-      lightesGray:"#F4F4F4",
-      tableColor: "rgb(231, 229, 229)",
-      grayLight: "#E0E0E2",
-      gray: colors.slate,
-      blue: colors.sky,
-      red: colors.rose,
-      green: colors.emerald,
-      secondaryColor: "#FFF3E5",
-      secondaryTextColor: "#2E2310",
-      mainColor: "#EF5644",
-      customeTextColor:"#818181",
-      grayLights:"#F9FAFC",
-      light: {
-        DEFAULT: "#d1d1d1",
+    extend: {
+      screens: {
+        sm: "570px",
+        "Max-2xl": { max: "1535px" },
+        "Max-xl": { max: "1279px" },
+        "Max-lg": { max: "1023px" },
+        "Max-md": { max: "767px" },
+        "Max-sm": { max: "576px" },
       },
-     
-      tomato: {
-        light: "#cf6054",
-        DEFAULT: "#EF5644",
-        dark: "#b5382a",
+      colors: {
+        light: "#ffffff",
+        dark: "#282827",
+        lightesGray: "#F4F4F4",
+        tableColor: "rgb(231, 229, 229)",
+        grayLight: "#E0E0E2",
+        gray: colors.slate,
+        blue: colors.sky,
+        red: colors.rose,
+        green: colors.emerald,
+        secondaryColor: "#FFF3E5",
+        secondaryTextColor: "#2E2310",
+        mainColor: "#EF5644",
+        customeTextColor: "#818181",
+        grayLights: "#F9FAFC",
+        tomato: {
+          light: "#cf6054",
+          DEFAULT: "#EF5644",
+          dark: "#b5382a",
+        },
       },
-      halfDark: {
-        light: "#4e4d4d",
-        DEFAULT: "#3B3B3B",
-        dark: "#100f0f",
+      fontFamily: {
+        shabnam: ["yekan", "Roboto", "Arial", "sans-serif"],
       },
+
       dark: {
         DEFAULT: "#000000",
       },
@@ -664,6 +636,7 @@ module.exports =withMT( {
       30: "30",
       40: "40",
       50: "50",
+
     },
   },
 

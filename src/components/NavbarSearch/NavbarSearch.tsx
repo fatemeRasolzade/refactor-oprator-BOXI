@@ -2,15 +2,10 @@ import React, { useState } from "react";
 import { BiSearch, BiX, BiChevronDown } from "react-icons/bi";
 import Chip from "../../global/Chip/Chip";
 import InputIcon from "../../global/InputIcon/InputIcon";
+import SimpleButton from "../../global/SimpleButton/SimpleButton";
 import PerfesionalSearch from "./../PerfesionalSearch/PerfesionalSearch";
 
-const NavbarSearch = ({
-  firstTextInput,
-  secondTextInput,
-}: {
-  firstTextInput?: string;
-  secondTextInput?: string;
-}) => {
+const NavbarSearch = ({ firstTextInput, secondTextInput }: { firstTextInput?: string; secondTextInput?: string }) => {
   const [shelf, setShelf] = useState<string>("");
   const [hub, sethub] = useState<string>("");
 
@@ -39,34 +34,16 @@ const NavbarSearch = ({
         <form onSubmit={handelSubmit}>
           <div className=" flex gap-3 justify-start items-center flex-wrap">
             <div className="Max-sm:mb-3">
-              <InputIcon
-                text={firstTextInput}
-                handleOnSearch={setShelf}
-                handleOnSelect={() => console.log()}
-              />
+              <InputIcon text={firstTextInput} handleOnSearch={setShelf} handleOnSelect={undefined} />
             </div>
             <div>
-              <InputIcon
-                text={secondTextInput}
-                handleOnSearch={sethub}
-                handleOnSelect={() => console.log()}
-              />
+              <InputIcon text={secondTextInput} handleOnSearch={sethub} handleOnSelect={undefined} />
             </div>
-            <button
-              type="submit"
-              className="w-160 h-40 flex justify-center items-center bg-lightesGray border-none rounded-lg text-md relative active:-top-3 text-halfDark"
-            >
-              <span className="ml-2">
-                <BiSearch size={20} />
-              </span>
-              جستجو
-            </button>
+
+            <SimpleButton className="full-gray-btn" icon={<BiSearch size={20} />} text="جستجو" />
           </div>
         </form>
-        <PerfesionalSearch
-          text="جستجوی ‍‍پیشرفته"
-          LeftIcon={<BiChevronDown />}
-        />
+        <PerfesionalSearch text="جستجوی پیشرفته" LeftIcon={<BiChevronDown />} />
       </div>
 
       {/* list of chip */}

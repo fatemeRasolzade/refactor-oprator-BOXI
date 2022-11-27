@@ -1,33 +1,41 @@
-import  { useState } from "react";
+import { useState } from "react";
 
-interface PropAddButton{
-  text?:string,
-  subItemOne?:string,
-  subItemTwo?:string,
-  RightIcon?:JSX.Element,
-  LeftIcon?:JSX.Element,
-  color?:string,
-  textColor?:string
+interface PropAddButton {
+  text?: string;
+  subItemOne?: string;
+  subItemTwo?: string;
+  RightIcon?: JSX.Element;
+  LeftIcon?: JSX.Element;
+  color?: string;
+  textColor?: string;
 }
 
-const AddButton = ({ text, subItemOne, subItemTwo, RightIcon, LeftIcon,color,textColor }:PropAddButton) => {
+const AddButton = ({
+  text = "افزودن",
+  subItemOne,
+  subItemTwo,
+  RightIcon,
+  LeftIcon,
+  color,
+  textColor,
+}: PropAddButton) => {
   const [toggle, setToggle] = useState(false);
 
   const handelClick = () => {
-    setToggle(false); 
+    setToggle(false);
   };
 
   return (
     <div className="w-160 relative">
       <button
-        className={`w-160 h-40 bg-${color} text-${textColor} rounded-lg border-none flex justify-around items-center flex-row-reverse`}
+        className={`btn  full-tomato-btn`}
         onClick={() => setToggle(!toggle)}
       >
         <span>{LeftIcon}</span> <span className="text-lg">{text}</span>{" "}
         <span>{RightIcon}</span>
       </button>
       {toggle ? (
-        <div className="w-full bg-white  absolute top-40 right-0 shadow-lg rounded-md ">
+        <div className="w-full bg-red  absolute top-40 right-0 shadow-lg rounded-md ">
           <ul>
             <li>
               <button
