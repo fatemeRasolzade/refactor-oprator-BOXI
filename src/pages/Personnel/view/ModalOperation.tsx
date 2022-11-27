@@ -4,9 +4,10 @@ import React, { FC } from "react";
 import DeleteOperation from "../../../components/tableOperation/DeleteOperation";
 import { updating } from "../../../redux/PersonData/PersonsData";
 import { apiRoute } from "../../../services/apiRoute";
+import EditPersonnel from "./EditPersonnel";
 
 interface ModalOperationProps {
-  itemId: number;
+  itemValue: any;
   type: "delete" | "edit" | null;
   setOnClose: (value: boolean) => void;
   setMode: (value: "delete" | "edit" | null) => void;
@@ -14,17 +15,20 @@ interface ModalOperationProps {
 
 const ModalOperation: FC<ModalOperationProps> = ({
   type,
-  itemId,
+  itemValue,
   setOnClose,
   setMode,
 }): JSX.Element => {
   switch (type) {
+    case "edit":
+      return <EditPersonnel setMode={setMode} itemValue={itemValue} />;
+
     case "delete":
       return (
         <DeleteOperation
           title="حذف پرسنل"
-          itemId={itemId}
-          route={apiRoute().delete.personnel + `/${itemId}`}
+          itemId={itemValue.id}
+          route={apiRoute().delete.personnel + `/${itemValue.id}`}
           updating={updating}
           setOnClose={setOnClose}
           setMode={setMode}

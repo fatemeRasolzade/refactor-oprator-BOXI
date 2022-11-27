@@ -49,7 +49,10 @@ const DeleteOperation: FC<DeleteOperationProps> = ({
         </Button>
         <Button
           className="border-none bg-[#FFF8F0] text-gray-500"
-          onClick={() => setOnClose(false)}
+          onClick={() => {
+            setOnClose(false);
+            setMode(null);
+          }}
         >
           خیر
         </Button>

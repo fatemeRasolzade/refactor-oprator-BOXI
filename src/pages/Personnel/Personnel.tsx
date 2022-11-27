@@ -32,7 +32,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
             name: item.name,
             mobile: item.mobile,
             email: item.email,
-            operation: <Operation id={item.id} />,
+            operation: <Operation itemValue={item} />,
           };
         })
       : [];

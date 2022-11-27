@@ -8,18 +8,18 @@ import { GrFormClose } from "react-icons/gr";
 import ModalOperation from "./ModalOperation";
 
 interface OperationProps {
-  id: number;
+  itemValue: any;
 }
-const Operation: FC<OperationProps> = ({ id }): JSX.Element => {
+const Operation: FC<OperationProps> = ({ itemValue }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [mode, setMode] = useState<"delete" | "edit" | null>(null);
 
-  const deleteHandler = (id: number) => {
+  const deleteHandler = () => {
     setIsModalOpen(true);
     setMode("delete");
   };
 
-  const editHandler = (id: number) => {
+  const editHandler = () => {
     setIsModalOpen(true);
     setMode("edit");
   };
@@ -28,19 +28,19 @@ const Operation: FC<OperationProps> = ({ id }): JSX.Element => {
     <div className="flex w-full gap-3 justify-center">
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px] "
-        onClick={() => editHandler(id)}
+        onClick={() => editHandler()}
       >
         <AiOutlineEdit className="w-full h-full" />
       </button>
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
-        onClick={() => deleteHandler(id)}
+        onClick={() => deleteHandler()}
       >
         <BiTrash className="w-full h-full	" />
       </button>
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
-        onClick={() => deleteHandler(id)}
+        onClick={() => deleteHandler()}
       >
         <BsKey className="w-full h-full" />
       </button>
@@ -48,13 +48,16 @@ const Operation: FC<OperationProps> = ({ id }): JSX.Element => {
       <Dialog open={isModalOpen} handler={setIsModalOpen}>
         <button
           className="flex w-[50px] h-[50px]  border-none items-center justify-center"
-          onClick={() => setIsModalOpen(false)}
+          onClick={() => {
+            setIsModalOpen(false);
+            setMode(null);
+          }}
         >
           <GrFormClose />
         </button>
         {ModalOperation({
           type: mode,
-          itemId: 1,
+          itemValue: itemValue,
           setMode: (value) => setMode(value),
           setOnClose: (value) => setIsModalOpen(value),
         })}
