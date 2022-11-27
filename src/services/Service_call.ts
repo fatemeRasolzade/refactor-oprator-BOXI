@@ -1,5 +1,5 @@
 import http from "./http_service";
-import {Base_url2, Base_url3} from "./apiRoute";
+import { Base_url2, Base_url3 } from "./apiRoute";
 
 export const getDataFromServer = async (apiRoute: { apiRoute: string }) => {
   const { data } = await http.get(Base_url3 + apiRoute);
@@ -29,5 +29,9 @@ export const PostDataParams = async (apiRoute: string, body: object) => {
 };
 export const GetDataParams = async (apiRoute: string) => {
   const { data } = await http.get(Base_url2 + apiRoute);
+  return data;
+};
+export const DeleteDataParams = async (apiRoute: string) => {
+  const { data } = await http.delete(apiRoute);
   return data;
 };

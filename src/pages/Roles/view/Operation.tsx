@@ -1,34 +1,32 @@
-import { useState } from "react";
+import { FC, useState } from "react";
+import { Dialog } from "@material-tailwind/react";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { FiAlertCircle } from "react-icons/fi";
 import { MdEditNote } from "react-icons/md";
-import Modal from "../../global/Modal/Modal";
-import {
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
-import OperationForm from "./OperationForm";
+
+import Modal from "../../../global/Modal/Modal";
+import ModalOperation from "./ModalOperation";
+
 interface OperationProps {
   id: number;
 }
-const Operation = ({ id }: OperationProps) => {
-  const [isOpenDelete, setIsOpenDelete] = useState(false);
+const Operation: FC<OperationProps> = ({ id }): JSX.Element => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mode, setMode] = useState<"delete" | "edit" | null>(null);
 
-  const [mode, setmode] = useState<"delete" | "edit" | null>(null);
   const deleteHandler = (id: number) => {
-    setIsOpenDelete(true);
-    setmode("delete");
+    setIsModalOpen(true);
+    setMode("delete");
   };
+
   const editHandler = (id: number) => {
-    setIsOpenDelete(true);
-    setmode("edit");
+    setIsModalOpen(true);
+    setMode("edit");
   };
+
   const editPermissionHandler = (id: number) => {
-    setIsOpenDelete(true);
+    setIsModalOpen(true);
   };
 
   return (
@@ -51,14 +49,18 @@ const Operation = ({ id }: OperationProps) => {
       >
         <AiFillEdit className="w-full h-full" />
       </button>
-      <Dialog open={isOpenDelete} handler={setIsOpenDelete}>
+      <Dialog open={isModalOpen} handler={setIsModalOpen}>
         <button
           className="flex w-[50px] h-[50px]  border-none items-center justify-center"
-          onClick={() => setIsOpenDelete(false)}
+          onClick={() => setIsModalOpen(false)}
         >
           <GrFormClose />
         </button>
-        <OperationForm setIsOpen={setIsOpenDelete} mode={mode} />
+        {ModalOperation({
+          type: mode,
+          itemId: 1,
+          setOnClose: (value) => setIsModalOpen(value),
+        })}
       </Dialog>
     </div>
   );

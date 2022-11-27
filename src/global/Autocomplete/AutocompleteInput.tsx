@@ -28,6 +28,7 @@ const AutocompleteInput = ({items, value, onSelect, onChange, label}: PropsData)
                 }
                 shouldItemRender={(item, value) => item.label.toLowerCase().indexOf(value.toLowerCase()) > -1}
                 value={value}
+                
                 onChange={onChange}
                 onSelect={onSelect}
                 menuStyle={{

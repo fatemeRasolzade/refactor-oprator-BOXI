@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -12,7 +12,9 @@ import {
 } from "../../redux/PersonData/PersonsData";
 import Operation from "./Operation";
 
-const Personnel = () => {
+interface PersonnelProps {}
+
+const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   const dispatch = useDispatch();
   const { personnelList } = useSelector((state: any) => state.personnel);
 
