@@ -15,10 +15,11 @@ const DatePickers = ({title,handelChange}:PropType) => {
 
 
   return (
-    <div>
-      <fieldset className="p-3 w-fit border-white rounded-xl">
-      <legend>{title}</legend>
+    <>
+     <label >
+      <span>{title}</span>
       <DatePicker
+      className="!w-full !h-40"
 // calendar={persian}
 locale={persian_fa}
 format="MM/DD/YYYY HH:mm:ss"
@@ -30,9 +31,9 @@ render={<InputIcon/>}
    <TimePicker/>
   ]}
 />
-      </fieldset>
+</label>
 
-</div>
+</>
   )
 }
 

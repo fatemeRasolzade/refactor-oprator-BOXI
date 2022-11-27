@@ -44,14 +44,56 @@ export const HubColumn = [
 export const RoleColumn = [
   {
     Header: "عنوان نقش",
-    accessor: "sdasd",
+    accessor: "name",
   },
   {
     Header: "دسترسی ها",
-    accessor: "asd",
+    accessor: "selectPermissions",
   },
   {
     Header: "عملیات",
-    accessor: "asasdasd",
+    accessor: "operation",
+  },
+];
+export const PersonnelColumn = [
+  {
+    Header: "کد پرسنلی",
+    accessor: "personelCode",
+  },
+  {
+    Header: "کد ملی",
+    accessor: "nationalCode",
+  },
+  {
+    Header: "نام و نام خانوادگی",
+    accessor: "name",
+  },
+  {
+    Header: "شماره موبایل",
+    accessor: "mobile",
+  },
+  {
+    Header: "پست الکترونیک",
+    accessor: "email",
+  },
+  {
+    Header: "آخرین ورود",
+    accessor: "lastlogin",
+  },
+  {
+    Header: "ایجاد شده در ",
+    accessor: "createdat",
+  },
+  {
+    Header: " آخرین بروز رسانی توسط ",
+    accessor: "lastupdatedatperson",
+  },
+  {
+    Header: "تاریخ آخرین بروز رسانی",
+    accessor: "lastupdatedat",
+  },
+  {
+    Header: "عملیات",
+    accessor: "operation",
   },
 ];

@@ -43,7 +43,8 @@ import { BiChevronDown,BiSearchAlt2} from 'react-icons/bi';
     const styles = {
       valueContainer: base => ({
         ...base,
-        paddingLeft: 24
+        paddingLeft: 24,
+       
       })
     };
 
@@ -53,7 +54,7 @@ import { BiChevronDown,BiSearchAlt2} from 'react-icons/bi';
           <Select
           isRtl
             options={influencers}
-            isMulti={false}
+            
             onChange={handleInfluencerName}
             isSearchable={true}
             components={{ DropdownIndicator, ValueContainer }}

@@ -1,14 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
 import { apiRoute } from "../../services/apiRoute";
 import { PostDataParams } from "../../services/Service_call";
 import { StateData } from "./state-model";
 
-export const RoleData = createAsyncThunk("post", async () => {
+export const PersonnelData = createAsyncThunk("post", async () => {
   const params = `/filter?pageNumber=1&pageSize=20`;
   var data = {};
   try {
-    data = await PostDataParams(apiRoute().post.filterRole + params, {
+    data = await PostDataParams(apiRoute().post.filterPersonnel + params, {
       code: "",
       name: "",
       isActive: true,
@@ -21,43 +20,43 @@ export const RoleData = createAsyncThunk("post", async () => {
 });
 
 const initialState: StateData = {
-  rolesList: [],
+  personnelList: [],
   fetchPost: false,
   errorMessage: null,
   isUpdating: false,
 };
 
-const RolesList = createSlice({
+const PersonnelList = createSlice({
   initialState: initialState,
-  name: "rolesList",
+  name: "personnelList",
   reducers: {
-    clearRole: (state) => {
-      state.rolesList = [];
+    clearPersonnel: (state) => {
+      state.personnelList = [];
     },
     updating: (state) => {
       state.isUpdating = true;
     },
   },
   extraReducers: {
-    [RoleData.fulfilled as any]: (state, action) => {
-      state.rolesList = action.payload.payload;
+    [PersonnelData.fulfilled as any]: (state, action) => {
+      state.personnelList = action.payload.payload;
       state.fetchPost = false;
       state.errorMessage = null;
       state.isUpdating = false;
     },
-    [RoleData.pending as any]: (state) => {
+    [PersonnelData.pending as any]: (state) => {
       state.fetchPost = true;
-      state.rolesList = [];
+      state.personnelList = [];
       state.errorMessage = null;
       state.isUpdating = false;
     },
-    [RoleData.rejected as any]: (state) => {
+    [PersonnelData.rejected as any]: (state) => {
       state.fetchPost = false;
       state.errorMessage = "wrong";
-      state.rolesList = [];
+      state.personnelList = [];
       state.isUpdating = false;
     },
   },
 });
-export const { clearRole } = RolesList.actions;
-export default RolesList.reducer;
+export const { clearPersonnel } = PersonnelList.actions;
+export default PersonnelList.reducer;

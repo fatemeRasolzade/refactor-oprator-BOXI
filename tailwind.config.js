@@ -4,10 +4,11 @@ const colors = require("tailwindcss/colors");
 const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports =withMT( {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}",'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'],
   theme: {
     inset: {
       0: "0px",
+      2:"2px",
       3: "3px",
       5: "5px",
       8:"8px",
@@ -55,6 +56,7 @@ module.exports =withMT( {
       secondaryTextColor: "#2E2310",
       mainColor: "#EF5644",
       customeTextColor:"#818181",
+      grayLights:"#F9FAFC",
       light: {
         DEFAULT: "#d1d1d1",
       },
@@ -316,6 +318,7 @@ module.exports =withMT( {
       shabnam: ["yekan", "Roboto", "Arial", "sans-serif"],
     },
     fontSize: {
+      16:"16px",
       xs: ["0.75rem", { lineHeight: "1rem" }],
       sm: ["0.875rem", { lineHeight: "1.25rem" }],
       base: ["1rem", { lineHeight: "1.5rem" }],
@@ -607,13 +610,16 @@ module.exports =withMT( {
       45: "45%",
       30: "30px",
       40: "40px",
+      50:"50px",
       400:"400px",
+      230:"230px",
       250:"250px",
       351:"351px",
       258: "258px",
       219: "219px",
       160: "160px",
       10: "10%",
+      70:"70%",
       17: "17%",
       "1/2": "50%",
       "1/3": "33.333333%",
@@ -660,5 +666,5 @@ module.exports =withMT( {
     },
   },
 
-  plugins: [],
+  plugins: [require('flowbite/plugin')],
 });
