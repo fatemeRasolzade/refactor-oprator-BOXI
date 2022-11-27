@@ -4,7 +4,7 @@ const colors = require("tailwindcss/colors");
 const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports =withMT( {
-  content: ["./src/**/*.{js,jsx,ts,tsx}",'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     inset: {
       0: "0px",
@@ -652,6 +652,7 @@ module.exports =withMT( {
       min: "min-content",
       max: "max-content",
       fit: "fit-content",
+      fill:"-webkit-fill-available"
     }),
 
     zIndex: {
@@ -666,5 +667,5 @@ module.exports =withMT( {
     },
   },
 
-  plugins: [require('flowbite/plugin')],
+  plugins: [],
 });

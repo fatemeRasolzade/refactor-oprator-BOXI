@@ -6,21 +6,26 @@ import InputIcon from "react-multi-date-picker/components/input_icon"
 
 interface PropType{
   title?:string,
-  handelChange?: any
+  handelChange?: any,
+  name?:string,
+  values?:string
 }
 
 
-const DatePickers = ({title,handelChange}:PropType) => {
+const DatePickers = ({title,name,values}:PropType) => {
 
-
+const handelChange=(e:any)=>console.log(e)
 
   return (
     <>
      <label >
-      <span>{title}</span>
+      <span className="block">{title}</span>
       <DatePicker
-      className="!w-full !h-40"
+      
+      className="myclassDate"
 // calendar={persian}
+name={name}
+value={values}
 locale={persian_fa}
 format="MM/DD/YYYY HH:mm:ss"
 calendarPosition="bottom-right"

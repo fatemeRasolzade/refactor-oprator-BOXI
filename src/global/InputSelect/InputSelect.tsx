@@ -1,7 +1,6 @@
 import React from 'react'
 import Select from "react-select"
-import { PropsSelect } from './../Interfaces/Interfaces';
-const InputSelect = ({text,handelChange}:{text?:string,handelChange?:any}) => {
+const InputSelect = ({text,handelChange,name,blure,values}:{text?:string,handelChange?:any,name?:string,blure?:React.FocusEventHandler<HTMLInputElement>,values?:any}) => {
 
     const options = [
         { value: 'chocolate', label: 'Chocolate' },
@@ -9,25 +8,30 @@ const InputSelect = ({text,handelChange}:{text?:string,handelChange?:any}) => {
         { value: 'vanilla', label: 'Vanilla' },
       ];
       
+
       const style = {
         control: (base:any) => ({
           ...base,
           
           // This line disable the blue border
-          boxShadow: "none"
+          boxShadow: "none",
+          width:"100%"
         })
       };
 
   return (
-    <div className='w-258 h-48'>
+    <div className='w-full h-48'>
        <label >
         <span>{text}</span>
         <Select
-        onChange={handelChange}
+        value={values}
+        onChange={option => handelChange(name, (option as any).value)}
+        onBlur={blure}
         styles={style}
         options={options}
         isRtl
         placeholder=""
+        name={name}
        className='inputSelect focus:outline-none'
         />
 </label>
