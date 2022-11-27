@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BiX, BiXCircle } from "react-icons/bi";
 
-
-
 interface propsData {
   formData: any;
   filterData: any;
@@ -12,10 +10,15 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
   const [chipData, setChipData] = useState<any>([]);
   const handleRemoveChipData = (id: number) => {
     const findData = chipData.find((item: { id: number }) => item.id === id);
-    const filterData = chipData.filter((item: { id: number }) => item.id !== id);
+    const filterData = chipData.filter(
+      (item: { id: number }) => item.id !== id
+    );
     const searchData = filterData.map((item: string) => item.search);
     setChipData(filterData);
-    if (findData.mainTitle === "pelak" || findData.mainTitle === "vehicleNumber") {
+    if (
+      findData.mainTitle === "pelak" ||
+      findData.mainTitle === "vehicleNumber"
+    ) {
       formData.setFieldValue("vehicleNumber0", "");
       formData.setFieldValue("vehicleNumber1", "");
       formData.setFieldValue("vehicleNumber2", "");
@@ -78,32 +81,33 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
     fromCountryDevision: "مبدا",
     toCountryDevision: "مقصد",
   };
-
+  const valueAccessor = (value: any) => {
+    if (value["label"]) {
+      return value.label;
+    } else if (value["text"]) {
+      return value.text;
+    } else if (value["day"]) {
+      return value.day;
+    } else if (value["year"] && value["month"] && value["day"]) {
+      return value.year + "/" + value.month + "/" + value.day;
+    } else if (Array.isArray(value)) {
+      return value.map((item) => item.text);
+    } else {
+      return value;
+    }
+  };
   useEffect(() => {
-    const convertObject = Object.entries(filterData).map(([key, value], index) =>
-      value
-        ? {
-            search: { [`${key}`]: value },
-            id: index,
-            mainTitle: key,
-            title: persianName[key],
-            // @ts-ignore
-            value: value?.label
-              ? // @ts-ignore
-                value.label
-              : // @ts-ignore
-              value?.text
-              ? // @ts-ignore
-                value.text
-              : // @ts-ignore
-              value?.day
-              ? // @ts-ignore
-                value.year + "/" + value.month + "/" + value.day
-              : Array.isArray(value)
-              ? value.map((item) => item.text)
-              : value,
-          }
-        : ""
+    const convertObject = Object.entries(filterData).map(
+      ([key, value]: any, index) =>
+        value
+          ? {
+              search: { [`${key}`]: value },
+              id: index,
+              mainTitle: key,
+              title: persianName[key],
+              value: valueAccessor(value),
+            }
+          : ""
     );
     setChipData(convertObject.filter((item) => item));
   }, [filterData]);
@@ -122,7 +126,10 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
               item.mainTitle !== "vehicleNumber3"
           )
           .map(({ id, title, value }: any) => (
-            <div key={id} className="bg-grayLight flex w-fit py-1 px-3 justify-between items-center rounded-md">
+            <div
+              key={id}
+              className="bg-grayLight flex w-fit py-1 px-3 justify-between items-center rounded-md"
+            >
               <span>
                 {title} : {value}
               </span>

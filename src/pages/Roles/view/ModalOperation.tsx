@@ -6,7 +6,7 @@ import { updating } from "../../../redux/RolsData/RolesData";
 import { apiRoute } from "../../../services/apiRoute";
 
 interface ModalOperationProps {
-  itemId: number;
+  itemValue: any;
   type: "delete" | "edit" | null;
   setOnClose: (value: boolean) => void;
   setMode: (value: "delete" | "edit" | null) => void;
@@ -14,7 +14,7 @@ interface ModalOperationProps {
 
 const ModalOperation: FC<ModalOperationProps> = ({
   type,
-  itemId,
+  itemValue,
   setOnClose,
   setMode,
 }): JSX.Element => {
@@ -23,8 +23,8 @@ const ModalOperation: FC<ModalOperationProps> = ({
       return (
         <DeleteOperation
           title="حذف نقش"
-          itemId={itemId}
-          route={apiRoute().delete.role + `/${itemId}`}
+          itemId={itemValue.id}
+          route={apiRoute().delete.role + `/${itemValue.id}`}
           updating={updating}
           setOnClose={setOnClose}
           setMode={setMode}

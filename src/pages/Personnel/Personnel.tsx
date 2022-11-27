@@ -16,12 +16,14 @@ interface PersonnelProps {}
 
 const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { personnelList } = useSelector((state: any) => state.personnel);
+  const { personnelList, isUpdating } = useSelector(
+    (state: any) => state.personnel
+  );
 
   useEffect(() => {
     dispatch(PersonnelData() as any);
     return () => dispatch(clearPersonnel() as any);
-  }, [dispatch]);
+  }, [dispatch, isUpdating]);
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0

@@ -35,7 +35,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
             selectPermissions: item?.selectPermissions?.map(
               (permissionItem: any) => permissionItem.text
             ),
-            operation: <Operation id={item.id} />,
+            operation: <Operation itemValue={item} />,
           };
         })
       : [];

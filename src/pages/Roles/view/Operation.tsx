@@ -7,23 +7,23 @@ import { GrFormClose } from "react-icons/gr";
 import ModalOperation from "./ModalOperation";
 
 interface OperationProps {
-  id: number;
+  itemValue: any;
 }
-const Operation: FC<OperationProps> = ({ id }): JSX.Element => {
+const Operation: FC<OperationProps> = ({ itemValue }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mode, setMode] = useState<"delete" | "edit" | null>(null);
 
-  const deleteHandler = (id: number) => {
+  const deleteHandler = () => {
     setIsModalOpen(true);
     setMode("delete");
   };
 
-  const editHandler = (id: number) => {
+  const editHandler = () => {
     setIsModalOpen(true);
     setMode("edit");
   };
 
-  const editPermissionHandler = (id: number) => {
+  const editPermissionHandler = () => {
     setIsModalOpen(true);
   };
 
@@ -31,19 +31,19 @@ const Operation: FC<OperationProps> = ({ id }): JSX.Element => {
     <div className="flex w-full gap-3 justify-center">
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px] "
-        onClick={() => editHandler(id)}
+        onClick={() => editHandler()}
       >
         <MdEditNote className="w-full h-full" />
       </button>
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
-        onClick={() => deleteHandler(id)}
+        onClick={() => deleteHandler()}
       >
         <AiFillDelete className="w-full h-full	" />
       </button>
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
-        onClick={() => editPermissionHandler(id)}
+        onClick={() => editPermissionHandler()}
       >
         <AiFillEdit className="w-full h-full" />
       </button>
@@ -56,7 +56,7 @@ const Operation: FC<OperationProps> = ({ id }): JSX.Element => {
         </button>
         {ModalOperation({
           type: mode,
-          itemId: 1,
+          itemValue: itemValue,
           setMode: (value) => setMode(value),
           setOnClose: (value) => setIsModalOpen(value),
         })}
