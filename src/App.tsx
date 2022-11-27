@@ -7,6 +7,7 @@ import "rodal/lib/rodal.css";
 import NotFound from "./pages/NotFound/NotFound";
 import InputIcon from "./global/InputIcon/InputIcon";
 import Breadcrumb from "./components/Breadcrumb/Breadcrumb";
+import HubAdd from "./pages/Hub/HubAdd/HubAdd";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           ))
         )}
         <Route path="*" element={<NotFound />} />
+        <Route path="/hub/add" element={<HubAdd/>}/>
       </Routes>
     </div>
   );

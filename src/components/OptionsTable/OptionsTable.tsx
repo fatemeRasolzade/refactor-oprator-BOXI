@@ -4,7 +4,9 @@ import { GoDesktopDownload, GoGear } from "react-icons/go";
 import CustomSwitch from "./../../global/Switch/Switch";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
 import AddButton from "../../global/addButton/AddButton";
+import { useNavigate } from "react-router-dom";
 const OptionsTable = () => {
+  const navigate=useNavigate()
   return (
     <div className="mt-6">
       <ul className="flex gap-4 justify-start items-center flex-wrap">

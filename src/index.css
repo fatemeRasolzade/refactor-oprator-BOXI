@@ -1,0 +1,183 @@
+/* @font-face {
+  font-family: "yekan";
+
+  src: local("yekan"), url("./assets/fonts/ttf/iranyekanwebregularfanum.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "yekan";
+  src: local("yekan"),
+    url("./assets/fonts/ttf/iranyekanwebboldfanum.ttf") format("ttf");
+  font-weight: 500;
+} */
+
+@font-face {
+  font-family: "IRANSans";
+  font-style: normal;
+  font-weight: 300;
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Light.eot");
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum)_Light.woff2")
+      format("woff2"),
+    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum)_Light.woff")
+      format("woff"),
+    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum)_Light.ttf")
+      format("truetype");
+}
+@font-face {
+  font-family: "IRANSans";
+  font-style: normal;
+  font-weight: 900;
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Black.eot");
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Black.eot?#iefix")
+      format("embedded-opentype"),
+    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum)_Black.woff2")
+      format("woff2"),
+    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum)_Black.woff")
+      format("woff"),
+    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum)_Black.ttf")
+      format("truetype");
+}
+@font-face {
+  font-family: "IRANSans";
+  font-style: normal;
+  font-weight: bold;
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Bold.eot");
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Bold.eot?#iefix")
+      format("embedded-opentype"),
+    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum)_Bold.woff2")
+      format("woff2"),
+    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum)_Bold.woff")
+      format("woff"),
+    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum)_Bold.ttf")
+      format("truetype");
+}
+@font-face {
+  font-family: "IRANSans";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Medium.eot");
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum)_Medium.woff2")
+      format("woff2"),
+    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum)_Medium.woff")
+      format("woff"),
+    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum)_Medium.ttf")
+      format("truetype");
+}
+@font-face {
+  font-family: "IRANSans";
+  font-style: normal;
+  font-weight: 200;
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_UltraLight.eot");
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum)_UltraLight.eot?#iefix")
+      format("embedded-opentype"),
+    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum)_UltraLight.woff2")
+      format("woff2"),
+    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum)_UltraLight.woff")
+      format("woff"),
+    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum)_UltraLight.ttf")
+      format("truetype");
+}
+@font-face {
+  font-family: "IRANSans";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum).eot");
+  src: url("/public/fonts/IRANSans/eot/IRANSansWeb(FaNum).eot?#iefix")
+      format("embedded-opentype"),
+    url("/public/fonts/IRANSans/woff2/IRANSansWeb(FaNum).woff2") format("woff2"),
+    url("/public/fonts/IRANSans/woff/IRANSansWeb(FaNum).woff") format("woff"),
+    url("/public/fonts/IRANSans/ttf/IRANSansWeb(FaNum).ttf") format("truetype");
+}
+
+* {
+  font-family: "IRANSans" !important;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
+
+
+@layer components {
+  .btn {
+    background-color: rgb(231, 229, 229);
+    @apply h-40 w-160 bg-tomato rounded-12 border-none text-white shadow-md;
+  }
+
+  .bigBtn {
+    @apply w-219 h-40 bg-tomato rounded-12 border-none text-white shadow-md;
+  }
+  .btn_noBorder {
+    @apply w-160 h-40 bg-white text-numColor border-none shadow-md;
+  }
+
+  .checkboxStyle {
+    @apply bg-tomato text-white focus:!bg-red-800;
+  }
+  .selectBox {
+    @apply border-none  h-40 w-258;
+  }
+
+  .customTable .rt-tr-group {
+    @apply odd:bg-tableColor  border-none;
+  }
+  .inputSelect{
+    @apply mt-1
+  }
+  .checkbox_select,
+  .inputSelect .css-1s2u09g-control {
+    @apply border-none 
+  }
+  .checkbox_select,
+  .selectIcon .css-1okebmr-indicatorSeparator {
+    @apply w-0;
+  }
+  .selectIcon .css-c465re-ValueContainer {
+    @apply pr-8;
+  }
+  .timePicker .rmdp-input {
+    @apply text-center;
+  }
+  .autoComplete {
+    @apply w-258  before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-15 before:bg-white before:z-30;
+  }
+  .autoComplete .fDbOPw > input,
+  .hCpHso .ellipsis {
+    @apply text-right pr-3;
+  }
+
+  .autoComplete .cmyNjn > .wrapper {
+    @apply z-20;
+  }
+
+  .simple_select {
+    @apply w-258 before:content-[attr(data-before)] relative before:absolute before:-top-15 before:right-15 before:bg-white before:z-10;
+  }
+  .chips .transition-colors{
+    @apply top-0 left-0
+  }
+  .chips .-translate-y-2\/4{
+    @apply top-10 right-5
+  }
+  .autocompleteInput{
+    @apply  w-full h-[46px] before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-15 before:bg-white before:z-30 border-0 outline-0 ;
+  }
+  .autocompleteWrapper{
+    @apply flex items-center justify-between relative h-[48px]  px-4  w-250  border-1 border-[#ABABAB] rounded-[20px]
+  }
+  .autocompleteLabel{
+    @apply absolute top-[-12px] right-20 bg-white z-5
+  }
+
+  .myCustomInput  label{
+    @apply top-0
+  }
+  .myCustomInput > div {
+    @apply w-258 h-7
+  }
+}

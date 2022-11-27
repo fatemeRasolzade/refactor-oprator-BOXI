@@ -19,11 +19,11 @@ const Roles = () => {
   }, []);
 
   const data =
-    rolesList?.content || rolesList?.content?.length !== 0
+    rolesList?.content?.length !== 0
       ? rolesList?.content?.map((item: any) => {
           return {
             name: item.name,
-            selectPermissions: item?.selectPermissions.map(
+            selectPermissions: item?.selectPermissions?.map(
               (permissionItem: any) => permissionItem.text
             ),
             operation: <Operation id={item.id} />,
@@ -36,7 +36,7 @@ const Roles = () => {
       <Breadcrumb curentPage="هاب" />
       <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد  هاب" />
       <OptionsTable />
-      <StaticTable data={data ? data : []} column={RoleColumn}  pagination/>
+      <StaticTable data={data ? data : []} column={RoleColumn} pagination />
     </div>
   );
 };

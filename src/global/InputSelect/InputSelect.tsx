@@ -12,7 +12,7 @@ const InputSelect = ({text,handelChange}:{text?:string,handelChange?:any}) => {
       const style = {
         control: (base:any) => ({
           ...base,
-          border: 0,
+          
           // This line disable the blue border
           boxShadow: "none"
         })
@@ -20,8 +20,8 @@ const InputSelect = ({text,handelChange}:{text?:string,handelChange?:any}) => {
 
   return (
     <div className='w-258 h-48'>
-        <fieldset className='border-white rounded-lg'>
-        <legend style={{lineHeight:'0.8',marginRight:'10px'}} >{text}</legend>
+       <label >
+        <span>{text}</span>
         <Select
         onChange={handelChange}
         styles={style}
@@ -30,7 +30,7 @@ const InputSelect = ({text,handelChange}:{text?:string,handelChange?:any}) => {
         placeholder=""
        className='inputSelect focus:outline-none'
         />
-</fieldset>
+</label>
     </div>
   )
 }

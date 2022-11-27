@@ -40,10 +40,10 @@ const NavbarSearch = ({
         <form onSubmit={handelSubmit}>
           <div className=" flex gap-3 justify-start items-center flex-wrap">
             <div className="Max-sm:mb-3">
-              <InputIcon text={firstTextInput} handleOnSearch={setShelf} />
+              <InputIcon text={firstTextInput} handleOnSearch={setShelf} handleOnSelect={undefined} />
             </div>
             <div>
-              <InputIcon text={secondTextInput} handleOnSearch={sethub} />
+              <InputIcon text={secondTextInput} handleOnSearch={sethub} handleOnSelect={undefined} />
             </div>
          
             <SimpleButton
@@ -62,11 +62,6 @@ const NavbarSearch = ({
       {/* list of chip */}
 
       <div className="flex justify-start items-center gap-3 mt-6">
-        {ChipData &&
-          ChipData.map((item, index) => {
-            return <Chip title={item.label} value={item.number} key={index} />;
-          })}
-
         {ChipData.length > 0 ? (
           <div>
             <button
