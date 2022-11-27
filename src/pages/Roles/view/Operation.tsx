@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import { Dialog } from "@material-tailwind/react";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { FiAlertCircle } from "react-icons/fi";
 import { MdEditNote } from "react-icons/md";
 import { GrFormClose } from "react-icons/gr";
 

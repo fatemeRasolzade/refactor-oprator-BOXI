@@ -1,0 +1,25 @@
+@import "./index.css";
+
+.sidenav---sidenav-subnav---1EN61 {
+  right: 70px;
+}
+.sidenav---sidenav-nav---3tvij
+  > .sidenav---sidenav-navitem---uwIJ-
+  > .sidenav---navitem---9uL5T
+  .sidenav---navicon---3gCRo {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+.sidenav---sidenav---_2tBP.sidenav---expanded---1KdUL
+  .sidenav---sidenav-nav---3tvij
+  > .sidenav---sidenav-navitem---uwIJ-.sidenav---expandable---3_dr7
+  > .sidenav---navitem---9uL5T {
+  display: flex !important;
+}
+.sidenav---sidenav---_2tBP.sidenav---expanded---1KdUL
+  .sidenav---sidenav-subnav---1EN61
+  > .sidenav---sidenav-subnavitem---1cD47.sidenav---selected---1EK3y
+  > .sidenav---navitem---9uL5T::before {
+  content: none !important;
+}

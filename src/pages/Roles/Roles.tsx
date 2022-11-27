@@ -14,7 +14,7 @@ interface RolesProps {}
 
 const Roles: FC<RolesProps> = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { rolesList } = useSelector((state: any) => state.role);
+  const { rolesList, isUpdating } = useSelector((state: any) => state.role);
 
   useEffect(() => {
     dispatch(
@@ -25,7 +25,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
       }) as any
     );
     return () => dispatch(clearRole() as any);
-  }, [dispatch]);
+  }, [dispatch, isUpdating]);
 
   const data =
     rolesList?.content?.length !== 0

@@ -6,6 +6,7 @@ import StaticTable from './../../components/staticTable/StaticTable';
 import {HubColumn} from "../../global/Column/Columns"
 import {useDispatch,useSelector} from "react-redux"
 import {clearHub, HubData} from "../../redux/HubData/HubData"
+import AddButton from "../../global/addButton/AddButton";
 const Hub = () => {
   const dispatch=useDispatch()
   const {payload}=useSelector(state=>state.hub.postLists)

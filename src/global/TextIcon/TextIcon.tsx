@@ -1,4 +1,5 @@
-import React from 'react'
+
+import SimpleButton from '../SimpleButton/SimpleButton'
 
 
 const TextIcon = ({icon,title,subtitle,width,height}:{icon?:JSX.Element,title?:string,subtitle?:string,width?:string,height?:string}) => {
@@ -8,7 +9,7 @@ const TextIcon = ({icon,title,subtitle,width,height}:{icon?:JSX.Element,title?:s
     }
   return (
     <div className={`shadow-sm rounded-md flex justify-start items-center px-3`} style={style}>
-<button className='border-none bg-tomato rounded-md'>{icon}</button>
+<SimpleButton className='full-tomato-btn' icon={icon} />
 <div className='mr-5'>
 <p className='font-bold'>{title}</p>
 <p className='text-customeTextColor text-lg'>{subtitle}</p>
