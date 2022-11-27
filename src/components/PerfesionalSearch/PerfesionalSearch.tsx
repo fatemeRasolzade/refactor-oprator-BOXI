@@ -1,4 +1,4 @@
-import { useState,useEffect,useRef } from 'react';
+import { useState } from 'react';
 import InputText from './../../global/InputText/InputText';
 import Select from "react-select"
 import {
@@ -13,9 +13,9 @@ import {
 } from "@material-tailwind/react";
 
 import { BiChevronDown ,BiXCircle} from 'react-icons/bi';
-import BtnIcon from './../../global/BtnIcon/BtnIcon';
 import { BiCog,BiSearch } from "react-icons/bi";
 import CustomizeModal from './CustomizeModal';
+import SimpleButton from '../../global/SimpleButton/SimpleButton';
 const PerfesionalSearch = ({LeftIcon,text}:{LeftIcon?:JSX.Element,text?:string}) => {
    
 const [costomizeModal,setCostomizeModal]=useState(false)
@@ -35,10 +35,10 @@ placement="bottom"
       }}
     >
       <PopoverHandler>
-        <Button className='border-none bg-transparent text-dark shadow-none flex justify-around items-center text-xs'>جستجوی پیشرفته <span className='mr-5'><BiChevronDown/></span><span></span></Button>
+        <Button className='border-none bg-transparent text-dark shadow-none flex justify-around items-center'>جستجوی پیشرفته <span className='mr-5'><BiChevronDown/></span><span></span></Button>
       </PopoverHandler>
       <PopoverContent>
-      <div className=" bg-white  shadow-lg rounded-md p-5 z-10" style={{width:"550px"}}>
+      <div className=" " style={{width:"550px"}}>
        <div className='flex flex-wrap justify-between items-center gap-4'>
         <div><InputText/></div>
         <div> <Select className='simple_select' data-before="text"/></div>
@@ -49,9 +49,9 @@ placement="bottom"
 
 
        <div className='flex justify-between items-center mt-5'>
-       <BtnIcon text='شخصی سازی' icon={<BiCog color='gray'/>} handelClick={handelClick}/>
-       <BtnIcon text='پاک کردن ورودی ها'/>
-       <Button type='submit' className='w-160 h-40 flex justify-center items-center bg-tomato border-none rounded-lg text-md  text-white'><span className='ml-2'>جستجو</span></Button>
+       <SimpleButton text='شخصی سازی' icon={<BiCog color='gray'/>} handelClick={handelClick}/>
+       <SimpleButton text='پاک کردن ورودی ها'/>
+       <SimpleButton className='full-tomato-btn' text='جستجو'/>
 
        </div>
       </div>

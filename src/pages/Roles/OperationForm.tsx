@@ -4,6 +4,7 @@ import { Input, Button } from "@material-tailwind/react";
 import InputIcon from "react-multi-date-picker/components/input_icon";
 import InputSelect from "../../global/InputSelect/InputSelect";
 import InputText from "../../global/InputText/InputText";
+import SimpleButton from "../../global/SimpleButton/SimpleButton";
 
 interface OperationFormProps {
   setIsOpen: (value: boolean) => void;
@@ -30,15 +31,12 @@ const OperationForm = ({ setIsOpen, mode }: OperationFormProps) => {
           <h3 className="font-bold">حذف نقش</h3>
           <div className="h-[20px]">آیا از حذف مورد اطمینان دارید؟</div>
           <div className="flex w-full justify-center h-[20px] pb-[20px] gap-x-10">
-            <Button className=" w-[20%]  h-40 px-4 flex justify-center items-center  bg-tomato border-none rounded-lg text-md  text-white">
-              بله
-            </Button>
-            <Button
-              className="w-[20%]  h-40 px-4 flex justify-center items-center  bg-[#FFF3E5] border-none rounded-lg text-md  text-black"
-              onClick={() => setIsOpen(false)}
-            >
-              خیر
-            </Button>
+            <SimpleButton text="بله" className="full-tomato-btn" />
+            <SimpleButton
+              text="خیر"
+              className="full-lightTomato-btn"
+              handelClick={() => setIsOpen(false)}
+            />
           </div>
         </div>
       );
