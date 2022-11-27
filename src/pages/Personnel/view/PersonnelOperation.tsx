@@ -5,12 +5,14 @@ import { BiTrash } from "react-icons/bi";
 import { BsKey } from "react-icons/bs";
 import { GrFormClose } from "react-icons/gr";
 
-import ModalOperation from "./ModalOperation";
+import ModalOperation from "./PersonnelModalOperation";
 
-interface OperationProps {
+interface PersonnelOperationProps {
   itemValue: any;
 }
-const Operation: FC<OperationProps> = ({ itemValue }): JSX.Element => {
+const PersonnelOperation: FC<PersonnelOperationProps> = ({
+  itemValue,
+}): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [mode, setMode] = useState<"delete" | "edit" | null>(null);
 
@@ -66,4 +68,4 @@ const Operation: FC<OperationProps> = ({ itemValue }): JSX.Element => {
   );
 };
 
-export default Operation;
+export default PersonnelOperation;

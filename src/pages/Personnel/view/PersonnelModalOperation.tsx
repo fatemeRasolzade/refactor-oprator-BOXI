@@ -13,7 +13,7 @@ interface ModalOperationProps {
   setMode: (value: "delete" | "edit" | null) => void;
 }
 
-const ModalOperation: FC<ModalOperationProps> = ({
+const PersonnelModalOperation: FC<ModalOperationProps> = ({
   type,
   itemValue,
   setOnClose,
@@ -39,4 +39,4 @@ const ModalOperation: FC<ModalOperationProps> = ({
   }
 };
 
-export default ModalOperation;
+export default PersonnelModalOperation;

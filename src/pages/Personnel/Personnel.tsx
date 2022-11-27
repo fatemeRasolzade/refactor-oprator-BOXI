@@ -10,7 +10,8 @@ import {
   clearPersonnel,
   PersonnelData,
 } from "../../redux/PersonData/PersonsData";
-import Operation from "./view/Operation";
+import Operation from "./view/PersonnelOperation";
+import PersonnelSearchFrom from "./view/PersonnelSearchFrom";
 
 interface PersonnelProps {}
 
@@ -42,10 +43,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   return (
     <div>
       <Breadcrumb curentPage="مدیریت پرسنل" />
-      <NavbarSearch
-        firstTextInput="کد پرسنلی"
-        secondTextInput="نام و نام خانوادگی"
-      />
+      <PersonnelSearchFrom />
       <OptionsTable />
       <StaticTable
         data={data ? data : []}
