@@ -10,7 +10,7 @@ import {
   clearPersonnel,
   PersonnelData,
 } from "../../redux/PersonData/PersonsData";
-import Operation from "./Operation";
+import Operation from "./view/Operation";
 
 interface PersonnelProps {}
 
@@ -21,7 +21,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   useEffect(() => {
     dispatch(PersonnelData() as any);
     return () => dispatch(clearPersonnel() as any);
-  }, []);
+  }, [dispatch]);
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0

@@ -64,6 +64,7 @@ export const apiRoute = () => {
     },
     delete: {
       role: createUrl(API_CONSIGNMENT2, "/role"),
+      personnel: createUrl(API_CONSIGNMENT2, "/employee"),
     },
   };
 };

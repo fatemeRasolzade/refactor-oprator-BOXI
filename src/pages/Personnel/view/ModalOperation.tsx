@@ -1,8 +1,8 @@
 import { Button } from "@material-tailwind/react";
 import React, { FC } from "react";
-import { useDispatch } from "react-redux";
+
 import DeleteOperation from "../../../components/tableOperation/DeleteOperation";
-import { updating } from "../../../redux/RolsData/RolesData";
+import { updating } from "../../../redux/PersonData/PersonsData";
 import { apiRoute } from "../../../services/apiRoute";
 
 interface ModalOperationProps {
@@ -22,25 +22,17 @@ const ModalOperation: FC<ModalOperationProps> = ({
     case "delete":
       return (
         <DeleteOperation
-          title="حذف نقش"
+          title="حذف پرسنل"
           itemId={itemId}
-          route={apiRoute().delete.role + `/${itemId}`}
+          route={apiRoute().delete.personnel + `/${itemId}`}
           updating={updating}
           setOnClose={setOnClose}
           setMode={setMode}
         />
       );
-
-    case "edit":
-      return <EditOperation />;
-
     default:
       return <></>;
   }
 };
 
 export default ModalOperation;
-
-const EditOperation = () => {
-  return <></>;
-};

@@ -1,7 +1,8 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { Dialog } from "@material-tailwind/react";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { MdEditNote } from "react-icons/md";
+import { AiOutlineEdit } from "react-icons/ai";
+import { BiTrash } from "react-icons/bi";
+import { BsKey } from "react-icons/bs";
 import { GrFormClose } from "react-icons/gr";
 
 import ModalOperation from "./ModalOperation";
@@ -10,7 +11,7 @@ interface OperationProps {
   id: number;
 }
 const Operation: FC<OperationProps> = ({ id }): JSX.Element => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [mode, setMode] = useState<"delete" | "edit" | null>(null);
 
   const deleteHandler = (id: number) => {
@@ -23,30 +24,27 @@ const Operation: FC<OperationProps> = ({ id }): JSX.Element => {
     setMode("edit");
   };
 
-  const editPermissionHandler = (id: number) => {
-    setIsModalOpen(true);
-  };
-
   return (
     <div className="flex w-full gap-3 justify-center">
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px] "
         onClick={() => editHandler(id)}
       >
-        <MdEditNote className="w-full h-full" />
+        <AiOutlineEdit className="w-full h-full" />
       </button>
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
         onClick={() => deleteHandler(id)}
       >
-        <AiFillDelete className="w-full h-full	" />
+        <BiTrash className="w-full h-full	" />
       </button>
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
-        onClick={() => editPermissionHandler(id)}
+        onClick={() => deleteHandler(id)}
       >
-        <AiFillEdit className="w-full h-full" />
+        <BsKey className="w-full h-full" />
       </button>
+      {/* modal  */}
       <Dialog open={isModalOpen} handler={setIsModalOpen}>
         <button
           className="flex w-[50px] h-[50px]  border-none items-center justify-center"

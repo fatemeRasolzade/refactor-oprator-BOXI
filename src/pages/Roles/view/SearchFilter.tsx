@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import React, { ChangeEvent, FC, useState } from "react";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
+import InputIcon from "../../../global/InputIcon/InputIcon";
 
 interface MyFormValues {
   code: string;
@@ -29,15 +30,7 @@ const SearchFilter: FC<SearchFilterProps> = (): JSX.Element => {
     <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
       <form onSubmit={formik.handleSubmit}>
         <div className=" flex gap-3 justify-start items-center flex-wrap">
-          <div className="Max-sm:mb-3">
-            <AutocompleteInput
-              label={"عنوان نقش"}
-              items={[]}
-              value={formik.values.name}
-              onChange={handleChange}
-              onSelect={selectHandler}
-            />
-          </div>
+          <div className="Max-sm:mb-3"></div>
         </div>
       </form>
     </div>
