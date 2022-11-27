@@ -38,8 +38,6 @@ const SearchForm = () => {
                     name: 'name'
                 }
             ])
-            // @ts-ignore
-            dispatch(ServiceData(formik.values))
             setSearch(values);
         },
     });
@@ -95,7 +93,7 @@ const SearchForm = () => {
                 {/*<PerfesionalSearch text="جستجوی پیشرفته" LeftIcon={<BiChevronDown/>}/>*/}
             </div>
             {/* list of chip */}
-            <Chip chipData={chipData} setChipData={setChipData} formData={formik}/>
+            {search && <Chip chipData={chipData} setChipData={setChipData} formData={formik}/>}
         </>
     )
 }

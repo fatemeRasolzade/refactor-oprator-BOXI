@@ -23,9 +23,9 @@ const Chip: React.FC<propsData> = ({chipData, setChipData,formData}: propsData) 
         chipData.splice(findData, 1)
         formData.setFieldValue((item.name).toString(),'')  //empty value by name
     }
-
     return (
         <>
+            {console.log(chipData)}
             <div className='flex justify-start items-center gap-3 mt-6'>
                 {
                     chipData && chipData.map((item, index) =>
