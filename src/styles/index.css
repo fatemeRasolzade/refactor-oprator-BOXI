@@ -8,11 +8,11 @@
 }
 
 @layer components {
-  .btn {
-    @apply h-[46px] rounded-lg border-none text-dark px-5 py-2 centering gap-2;
-  }
+  /* .btn {
+    @apply h-["46px"] rounded-lg border-none text-dark px-5 py-2 centering gap-2;
+  } */
   .full-tomato-btn {
-    @apply bg-tomato text-light;
+    @apply bg-tomato text-gray-500;
   }
   .line-tomato-btn {
     @apply bg-light text-tomato border border-tomato;
