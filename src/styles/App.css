@@ -26,3 +26,8 @@
 .sidenav---sidenav-subnav---1EN61{
   right: 64px!important;
 }
+
+.rmdp-input,.rmdp-container{
+  width: 100%!important;
+  height: 36px!important;
+}

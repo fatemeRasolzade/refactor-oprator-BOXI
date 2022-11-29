@@ -1,13 +1,8 @@
 import React from 'react'
 import Select from "react-select"
-const InputSelect = ({text,handelChange,name,blure,values}:{text?:string,handelChange?:any,name?:string,blure?:React.FocusEventHandler<HTMLInputElement>,values?:any}) => {
+const InputSelect = ({text,handelChange,name,blure,values,options}:{text?:string,handelChange?:any,name?:string,blure?:React.FocusEventHandler<HTMLInputElement>,values?:any,options?:any}) => {
 
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-      ];
-      
+    
 
       const style = {
         control: (base:any) => ({
@@ -24,14 +19,26 @@ const InputSelect = ({text,handelChange,name,blure,values}:{text?:string,handelC
        <label >
         <span>{text}</span>
         <Select
-        value={values}
-        onChange={option => handelChange(name, (option as any).value)}
-        onBlur={blure}
+        isLoading={options.length > 0 ? false : true}
+        value={options ? options.find((option:any)=>option.label===values): ""}
+        onChange={option => handelChange(name, {
+          id:option.value,
+          text:option.label
+        })}
         styles={style}
-        options={options}
-        isRtl
+        options={
+             options.map((res:any)=>{
+              return{
+                 
+                  label:res.text,
+                  value:res.id,
+                }
+            })
+          
+          }
         placeholder=""
-        name={name}
+        isRtl
+       name={name}
        className='inputSelect focus:outline-none'
         />
 </label>

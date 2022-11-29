@@ -1,9 +1,9 @@
-import DatePicker  from "react-multi-date-picker"
+import DatePicker,{DateObject}  from "react-multi-date-picker"
 import persian_fa from "react-date-object/locales/persian_fa"
 import DatePanel from "react-multi-date-picker/plugins/date_panel"
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import InputIcon from "react-multi-date-picker/components/input_icon"
-
+import {useState} from "react"
 interface PropType{
   title?:string,
   handelChange?: any,
@@ -12,9 +12,9 @@ interface PropType{
 }
 
 
-const DatePickers = ({title,name,values}:PropType) => {
+const DatePickers = ({title,name,values,handelChange}:PropType) => {
 
-const handelChange=(e:any)=>console.log(e)
+  
 
   return (
     <>
@@ -27,9 +27,10 @@ const handelChange=(e:any)=>console.log(e)
 name={name}
 value={values}
 locale={persian_fa}
+
 format="MM/DD/YYYY HH:mm:ss"
 calendarPosition="bottom-right"
-onChange={handelChange}
+onChange={(date:any) =>handelChange(date?.toDate?.())}
 render={<InputIcon/>}
   plugins={[
    <DatePanel />,
