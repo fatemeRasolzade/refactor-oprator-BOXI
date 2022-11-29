@@ -42,7 +42,7 @@ const DeleteOperation: FC<DeleteOperationProps> = ({
       </p>
       <div className="flex w-full justify-center gap-4">
         <Button
-          className="border-none bg-[#E41020]  text-gray-200"
+          className="border-none bg-[#ef5644]  text-gray-200"
           onClick={() => deleteHandler(itemId)}
         >
           بله

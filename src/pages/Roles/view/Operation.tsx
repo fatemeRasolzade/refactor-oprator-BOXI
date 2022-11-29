@@ -5,6 +5,8 @@ import { MdEditNote } from "react-icons/md";
 import { GrFormClose } from "react-icons/gr";
 
 import ModalOperation from "./ModalOperation";
+import EditRole from "./AddRole";
+import DeleteOperation from "../../../components/tableOperation/DeleteOperation";
 
 interface OperationProps {
   itemValue: any;
@@ -29,18 +31,27 @@ const Operation: FC<OperationProps> = ({ itemValue }): JSX.Element => {
 
   return (
     <div className="flex w-full gap-3 justify-center">
-      <button
+      {/* <button
         className=" border-none	text-[14px]  w-[20px] h-[20px] "
         onClick={() => editHandler()}
       >
         <MdEditNote className="w-full h-full" />
-      </button>
+      </button> */}
+      <EditRole />
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
         onClick={() => deleteHandler()}
       >
         <AiFillDelete className="w-full h-full	" />
       </button>
+      {/* <DeleteOperation
+          title="حذف نقش"
+          itemId={itemValue.id}
+          route={apiRoute().delete.role + `/${itemValue.id}`}
+          updating={updating}
+          setOnClose={setOnClose}
+          setMode={setMode}
+        /> */}
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
         onClick={() => editPermissionHandler()}
