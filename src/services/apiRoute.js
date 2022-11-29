@@ -69,7 +69,9 @@ export const apiRoute = () => {
 
       // filter
       filterRole: createUrl(API_CONSIGNMENT2, "/role"),
+      // employee
       filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
+      // service
       serviceDefine: createUrl(API_CONSIGNMENT3, "/service"),
     },
     delete: {

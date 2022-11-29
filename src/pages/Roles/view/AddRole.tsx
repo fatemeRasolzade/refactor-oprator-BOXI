@@ -744,7 +744,7 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
         >
           <GrFormClose />
         </button>
-        <div className="flex w-full flex-col items-center gap-6 mb-6 ">
+        <div className="flex w-full flex-col items-center gap-6 mb-6 p-6">
           <div className="w-[80%]">input</div>
           <div className="w-[80%]">
             {loadingNode ? (
