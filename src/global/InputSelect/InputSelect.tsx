@@ -1,33 +1,44 @@
 import React from 'react'
 import Select from "react-select"
-import { PropsSelect } from './../Interfaces/Interfaces';
-const InputSelect = ({text,handelChange}:{text?:string,handelChange?:any}) => {
+const InputSelect = ({text,handelChange,name,blure,values,options}:{text?:string,handelChange?:any,name?:string,blure?:React.FocusEventHandler<HTMLInputElement>,values?:any,options?:any}) => {
 
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-      ];
-      
+    
+
       const style = {
         control: (base:any) => ({
           ...base,
           
           // This line disable the blue border
-          boxShadow: "none"
+          boxShadow: "none",
+          width:"100%"
         })
       };
 
   return (
-    <div className='w-258 h-48'>
+    <div className='w-full h-48'>
        <label >
         <span>{text}</span>
         <Select
-        onChange={handelChange}
+        isLoading={options.length > 0 ? false : true}
+        value={options ? options.find((option:any)=>option.label===values): ""}
+        onChange={option => handelChange(name, {
+          id:option.value,
+          text:option.label
+        })}
         styles={style}
-        options={options}
-        isRtl
+        options={
+             options.map((res:any)=>{
+              return{
+                 
+                  label:res.text,
+                  value:res.id,
+                }
+            })
+          
+          }
         placeholder=""
+        isRtl
+       name={name}
        className='inputSelect focus:outline-none'
         />
 </label>

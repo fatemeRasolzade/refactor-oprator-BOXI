@@ -97,6 +97,10 @@
 * {
   font-family: "IRANSans" !important;
 }
+body{
+  width: 100%;
+  overflow-x: hidden
+}
 
 @tailwind base;
 @tailwind components;
@@ -179,5 +183,8 @@
   }
   .myCustomInput > div {
     @apply w-258 h-7
+  }
+  .myclassDate .rmdp-input{
+    @apply w-258 h-40
   }
 }
