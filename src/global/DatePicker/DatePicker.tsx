@@ -13,9 +13,6 @@ interface PropType{
 
 
 const DatePickers = ({title,name,values,handelChange}:PropType) => {
-
-  
-
   return (
     <>
      <label >
@@ -27,10 +24,9 @@ const DatePickers = ({title,name,values,handelChange}:PropType) => {
 name={name}
 value={values}
 locale={persian_fa}
-
 format="MM/DD/YYYY HH:mm:ss"
 calendarPosition="bottom-right"
-onChange={(date:any) =>handelChange(date?.toDate?.())}
+onChange={handelChange}
 render={<InputIcon/>}
   plugins={[
    <DatePanel />,
@@ -44,3 +40,5 @@ render={<InputIcon/>}
 }
 
 export default DatePickers
+
+// onChange={(date:any) =>handelChange(date?.toDate?.())}
