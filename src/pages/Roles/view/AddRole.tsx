@@ -771,7 +771,10 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
         >
           <GrFormClose />
         </button>
-        <form className="flex w-full flex-col items-center gap-6 mb-6 p-6">
+        <form
+          className="flex w-full flex-col items-center gap-6 mb-6 p-6"
+          onSubmit={handleSubmit}
+        >
           <div className="w-[80%] flex gap-12">
             <div className="w-[80%]">
               <InputText
@@ -812,7 +815,7 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
               )}
             </div>
           </div>
-          <div className="flex w-[80%] justify-center gap-4">
+          <div className="flex w-[80%] justify-center gap-x-12">
             <Button
               className="border-none bg-[#ef5644] w-[30%] text-gray-200"
               // onClick={() => deleteHandler(itemId)}

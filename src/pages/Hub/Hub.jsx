@@ -7,7 +7,15 @@ import { HubColumn } from "../../global/Column/Columns";
 import { useDispatch, useSelector } from "react-redux";
 import { clearHub, HubData } from "../../redux/HubData/HubData";
 import AddButton from "../../global/addButton/AddButton";
-import {Tabs,TabsHeader, TabsBody,Tab,TabPanel} from "@material-tailwind/react";
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
+import AddExcel from "../../components/exel/AddExcel";
+import { apiRoute } from "../../services/apiRoute";
 const Hub = () => {
   const dispatch = useDispatch();
   const { payload } = useSelector((state) => state.hub.postLists);
@@ -56,7 +64,14 @@ const Hub = () => {
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="هاب" />
       <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" />
-      <OptionsTable />
+      <OptionsTable
+        addExcelProps={() => (
+          <AddExcel
+            url={apiRoute().postExcel.exception + "/addinexcel?Entity=service"}
+            fileSampleName="transportation.xlsx"
+          />
+        )}
+      />
       <StaticTable
         data={data ? data : []}
         column={HubColumn}

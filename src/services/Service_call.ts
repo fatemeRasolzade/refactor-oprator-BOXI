@@ -15,9 +15,9 @@ export const postDataToServer = async (
 };
 
 export const postDataHeaderToServer = async (
-  apiRoute: { apiRoute: string },
-  body: { body: object },
-  headers: { headers: object }
+apiRoute: string ,
+body: object ,
+ headers: object 
 ) => {
   const { data } = await http.post(Base_url4 + apiRoute, body, headers);
   return data;
