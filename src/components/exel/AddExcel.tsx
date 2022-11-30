@@ -72,7 +72,6 @@ const AddExcel: FC<AddExcelProps> = ({ url, fileSampleName }): JSX.Element => {
   };
 
   const handleSubmit = async (e: SyntheticEvent) => {
-    const params = `/filter?pageNumber=1&pageSize=20`;
     const headers = { "Content-Type": "multipart/form-data" };
 
     e.preventDefault();
@@ -81,25 +80,15 @@ const AddExcel: FC<AddExcelProps> = ({ url, fileSampleName }): JSX.Element => {
       let bodyFormData = new FormData();
       bodyFormData.append("file", theFile);
       try {
-        const data = await postDataHeaderToServer(url, bodyFormData, headers);
-        alert("seuccess");
-      } catch (error) {
-        console.log("error ", error);
-      }
-      axios({
-        headers: { "Content-Type": "multipart/form-data" },
-        method: "post",
-        url: url,
-        data: bodyFormData,
-      })
-        .then((response) => {
-          toast.success("اطلاعات مورد نظر اضافه شد ");
-          setIsOpenModal(false);
-        })
-        .catch((response) => {
-          //handle error
-          console.log(response);
+        axios({
+          headers: headers,
+          method: "post",
+          url: url,
+          data: bodyFormData,
         });
+        toast.success("اطلاعات مورد نظر اضافه شد ");
+        setIsOpenModal(false);
+      } catch (error) {}
     }
   };
   return (
