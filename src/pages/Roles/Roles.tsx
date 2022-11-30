@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -6,8 +6,11 @@ import AddExcel from "../../components/exel/AddExcel";
 import NavbarSearch from "../../components/NavbarSearch/NavbarSearch";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
+import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import { RoleColumn } from "../../global/Column/Columns";
-import { clearRole, RoleData } from "../../redux/RolsData/RolesData";
+import { clearRole, RoleData, updating } from "../../redux/RolsData/RolesData";
+import { apiRoute } from "../../services/apiRoute";
+import AddEditRole from "./view/AddRole";
 import Operation from "./view/Operation";
 import SearchFilter from "./view/SearchFilter";
 
@@ -17,16 +20,18 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   const dispatch = useDispatch();
   const { rolesList, isUpdating } = useSelector((state: any) => state.role);
 
+  const [isActive, setIsActive] = useState<boolean>(true);
+
   useEffect(() => {
     dispatch(
       RoleData({
         code: "",
         name: "",
-        isActive: true,
+        isActive: isActive,
       }) as any
     );
     return () => dispatch(clearRole() as any);
-  }, [dispatch, isUpdating]);
+  }, [dispatch, isActive]);
 
   const data =
     rolesList?.content?.length !== 0
@@ -36,7 +41,18 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
             selectPermissions: item?.selectPermissions?.map(
               (permissionItem: any) => permissionItem.text
             ),
-            operation: <Operation itemValue={item} />,
+            operation: (
+              <div className="flex w-full gap-3 justify-center">
+                <AddEditRole currentData={item} title="تغییر مدیریت نقش" />
+                <DeleteOperation
+                  itemId={item.id}
+                  title={"حذف نقش"}
+                  route={apiRoute().delete.role + `/${item.id}`}
+                  updating={updating}
+                />
+                <AddEditRole currentData={item} title="تغییر مدیریت نقش" />
+              </div>
+            ),
           };
         })
       : [];
@@ -45,7 +61,11 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
     <div>
       <Breadcrumb curentPage="هاب" />
       <SearchFilter />
-      <OptionsTable />
+      <OptionsTable
+        isActive={isActive}
+        setIsActive={setIsActive}
+        addComponentProps={() => <AddEditRole title="تغییر مدیریت نقش" />}
+      />
       <StaticTable data={data ? data : []} column={RoleColumn} pagination />
     </div>
   );

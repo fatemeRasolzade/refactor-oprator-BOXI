@@ -18,8 +18,14 @@ import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import { useFormik } from "formik";
 import CustomSwitch from "../../../global/Switch/Switch";
 import InputText from "../../../global/Input/Input";
+import { AiOutlineEdit } from "react-icons/ai";
+import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import { BiPlus } from "react-icons/bi";
 
-interface EditRoleProps {}
+interface EditRoleProps {
+  currentData?: any;
+  title: string;
+}
 const nodeArray = [
   {
     value: "1001",
@@ -708,21 +714,36 @@ const nodeArray = [
 const validation = yup.object().shape({
   name: yup.string().required(),
 });
-const EditRole: FC<EditRoleProps> = (): JSX.Element => {
+const AddEditRole: FC<EditRoleProps> = ({
+  currentData,
+  title,
+}): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState([]);
   const [treeChecked, setTreeChecked] = useState([]);
   const [treeCheckedError, setTreeCheckedError] = useState("");
   const [loadingNode, setLoadingNode] = useState(false);
-  const [nodes, setNodes] = useState(nodeArray);
+  const [nodes, setNodes] = useState([]);
 
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: validation,
     initialValues: {
-      name: "",
+      name: currentData ? currentData.name : "",
+      isActive: currentData ? currentData.isActive : true,
     },
-    onSubmit: (values, { resetForm }) => {},
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        await axios({
+          url: "http://boxi.local:40000/resource-api/role/filter?pageNumber=1&pageSize=20",
+          method: "post",
+          data: {
+            name: values.name,
+            isActive: values.isActive,
+          },
+        });
+      } catch (error) {}
+    },
   });
 
   const handleAccess = async () => {
@@ -742,8 +763,10 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
     }
   };
   useEffect(() => {
-    handleAccess();
-  }, []);
+    if (isModalOpen) {
+      handleAccess();
+    }
+  }, [isModalOpen]);
 
   const {
     values,
@@ -758,12 +781,22 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
 
   return (
     <div>
-      <button
-        className=" border-none	text-[14px]  w-[20px] h-[20px] "
-        onClick={() => setIsModalOpen(!isModalOpen)}
-      >
-        <MdEditNote className="w-full h-full" />
-      </button>
+      {currentData ? (
+        <button
+          className=" border-none	text-[14px]  w-[20px] h-[20px] "
+          onClick={() => setIsModalOpen(!isModalOpen)}
+        >
+          <AiOutlineEdit className="w-full h-full" />
+        </button>
+      ) : (
+        <SimpleButton
+          text="افزودن"
+          className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
+          icon={<BiPlus color="white" />}
+          handelClick={() => setIsModalOpen(!isModalOpen)}
+        />
+      )}
+
       <Dialog open={isModalOpen} handler={setIsModalOpen}>
         <button
           className="flex w-[50px] h-[50px]  border-none items-center justify-center"
@@ -771,6 +804,9 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
         >
           <GrFormClose />
         </button>
+        <h3 className="flex w-full justify-center text-gray-700 font-bold text-lg">
+          {title}
+        </h3>
         <form
           className="flex w-full flex-col items-center gap-6 mb-6 p-6"
           onSubmit={handleSubmit}
@@ -787,7 +823,11 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
               />
             </div>
             <div className="w-[20%] h-full justify-center items-center flex m-auto">
-              <CustomSwitch />
+              <CustomSwitch
+                handleChange={(value: boolean) =>
+                  setFieldValue("isActive", value)
+                }
+              />
             </div>
           </div>
           <div className="w-[80%]">
@@ -852,4 +892,4 @@ const icons = {
   parentOpen: <></>,
   leaf: <></>,
 };
-export default EditRole;
+export default AddEditRole;

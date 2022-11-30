@@ -1,11 +1,12 @@
 import { FC, useState } from "react";
 import { Dialog } from "@material-tailwind/react";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { MdEditNote } from "react-icons/md";
 import { GrFormClose } from "react-icons/gr";
 
 import ModalOperation from "./ModalOperation";
 import EditRole from "./AddRole";
+import { BiTrash } from "react-icons/bi";
+import { AiFillEdit } from "react-icons/ai";
+import { BsKey } from "react-icons/bs";
 
 interface OperationProps {
   itemValue: any;
@@ -30,18 +31,18 @@ const Operation: FC<OperationProps> = ({ itemValue }): JSX.Element => {
 
   return (
     <div className="flex w-full gap-3 justify-center">
-      <EditRole />
+      {/* <EditRole currentData={"df"} /> */}
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
         onClick={() => deleteHandler()}
       >
-        <AiFillDelete className="w-full h-full	" />
+        <BiTrash className="w-full h-full	" />
       </button>
       <button
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
         onClick={() => editPermissionHandler()}
       >
-        <AiFillEdit className="w-full h-full" />
+        <BsKey className="w-full h-full" />
       </button>
       <Dialog open={isModalOpen} handler={setIsModalOpen}>
         <button

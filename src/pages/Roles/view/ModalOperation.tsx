@@ -21,14 +21,15 @@ const ModalOperation: FC<ModalOperationProps> = ({
   switch (type) {
     case "delete":
       return (
-        <DeleteOperation
-          title="حذف نقش"
-          itemId={itemValue.id}
-          route={apiRoute().delete.role + `/${itemValue.id}`}
-          updating={updating}
-          setOnClose={setOnClose}
-          setMode={setMode}
-        />
+        <></>
+        // <DeleteOperation
+        //   title="حذف نقش"
+        //   itemId={itemValue.id}
+        //   route={apiRoute().delete.role + `/${itemValue.id}`}
+        //   updating={updating}
+        //   setOnClose={setOnClose}
+        //   setMode={setMode}
+        // />
       );
 
     case "edit":

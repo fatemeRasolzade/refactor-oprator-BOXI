@@ -44,7 +44,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     <div>
       <Breadcrumb curentPage="مدیریت پرسنل" />
       <PersonnelSearchFrom />
-      <OptionsTable />
+      <OptionsTable  />
       <StaticTable
         data={data ? data : []}
         column={PersonnelColumn}

@@ -10,21 +10,32 @@ import AddExcel from "../exel/AddExcel";
 import { FC } from "react";
 
 interface OptionsTableProps {
+  isActive?: boolean;
+  setIsActive?: (value: boolean) => void;
   addExcelProps?: () => JSX.Element;
+  addComponentProps?: () => JSX.Element;
 }
-const OptionsTable: FC<OptionsTableProps> = ({ addExcelProps }) => {
+const OptionsTable: FC<OptionsTableProps> = ({
+  setIsActive,
+  addExcelProps,
+  addComponentProps,
+}) => {
   return (
     <div className="mt-6">
       <ul className="flex gap-4 justify-start items-center flex-wrap">
         <li>
           {/* <AddButton />  */}
-          <Link to="/hub/add">
-            <SimpleButton
-              text="افزودن"
-              className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
-              icon={<BiPlus color="white" />}
-            />
-          </Link>
+          {addComponentProps ? (
+            addComponentProps()
+          ) : (
+            <Link to="/hub/add">
+              <SimpleButton
+                text="افزودن"
+                className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
+                icon={<BiPlus color="white" />}
+              />
+            </Link>
+          )}
         </li>
         {addExcelProps && <li>{addExcelProps()}</li>}
         <li>
@@ -42,7 +53,9 @@ const OptionsTable: FC<OptionsTableProps> = ({ addExcelProps }) => {
           />
         </li>
         <li>
-          <CustomSwitch />
+          <CustomSwitch
+            handleChange={(value: boolean) => setIsActive && setIsActive(value)}
+          />
         </li>
         <li>
           <SimpleButton

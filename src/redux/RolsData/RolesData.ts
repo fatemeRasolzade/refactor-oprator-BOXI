@@ -11,6 +11,8 @@ interface RoleDataBody {
 }
 export const RoleData = createAsyncThunk("post", async (body: RoleDataBody) => {
   const params = `/filter?pageNumber=1&pageSize=20`;
+  console.log("apiRoute().post.filterRole " ,apiRoute().post.filterRole+ params );
+  
   var data = {};
   try {
     data = await PostDataParams(apiRoute().post.filterRole + params, body);

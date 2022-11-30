@@ -6,6 +6,8 @@ import InputIcon from "../../../global/InputIcon/InputIcon";
 interface MyFormValues {
   code: string;
   name: string;
+  isActive?: boolean;
+  setIsActive?: (value: boolean) => void;
 }
 
 interface SearchFilterProps {}
