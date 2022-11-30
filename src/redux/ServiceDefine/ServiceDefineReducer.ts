@@ -18,16 +18,18 @@ export const ServiceData=createAsyncThunk('servicelist',async(body:any)=>{
 const initialState:any= {
     postLists:[],
     fetchpost:false,
-    errorMessage:null
+    errorMessage:null,
+    isUpdating: false,
+    
 }
 
 const ServiceDefineList = createSlice({
     initialState: initialState,
     name: "servicelist",
     reducers: {
-        // updateTable: (state) => {
-        //     state.postLists = [];
-        // },
+        updating: (state, action) => {
+            state.isUpdating = action.payload;
+          },
     },
     extraReducers: {
         [ServiceData.fulfilled as any]: (state, action) => {
@@ -44,5 +46,5 @@ const ServiceDefineList = createSlice({
     },
 });
 
-
+export const {  updating } = ServiceDefineList.actions;
 export default ServiceDefineList.reducer

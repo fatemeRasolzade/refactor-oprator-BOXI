@@ -10,8 +10,13 @@ import { GetDataParams } from "../../../../services/Service_call";
 import { apiRoute } from "../../../../services/apiRoute";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import PerfesionalSearch from "../../../../components/PerfesionalSearch/PerfesionalSearch";
+import { productData } from "../../../../redux/ProductDefineData/ProductDefineData";
 
-const SearchForm = (): JSX.Element => {
+interface PropsData{
+  isActive:Boolean | string
+}
+
+const SearchForm = ({isActive}:PropsData): JSX.Element => {
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
   const [filterData, setFilterData] = useState({});
@@ -20,18 +25,21 @@ const SearchForm = (): JSX.Element => {
     initialValues: {
       code: "",
       name: "",
+      isActive:isActive
     },
     onSubmit: (values) => {
+      console.log(values)
       setFilterData(values);
       //@ts-ignore
-      dispatch(ServiceData(formik.values));
+      dispatch(productData(formik.values));
     },
   });
 
-  // useEffect(() => {
-  //   // @ts-ignore
-  //   dispatch(ServiceData(formik.values));
-  // }, [filterData]);
+  useEffect(() => {
+
+    // @ts-ignore
+    dispatch(productData(formik.values));
+  }, [isActive]);
   const data = [
     { id: 1, text: "product" },
     { id: 2, text: "price" },
@@ -78,31 +86,9 @@ const SearchForm = (): JSX.Element => {
               onSelect={(val: any) => handleSelect(val, "name")}
             />
             {/*<InputIcon text='عنوان' handleOnSelect={handleOnSelect} handleOnSearch={setName}/>*/}
-            <SimpleButton  className="full-gray-btn" icon={<BiSearch size={20} />} text="جستجو" />
+            <SimpleButton className="full-gray-btn" icon={<BiSearch size={20} />} text="جستجو" />
           </div>
         </form>
-        <PerfesionalSearch formData={formik} text="جستجوی پیشرفته" LeftIcon={<BiChevronDown />}>
-          <>
-            <Select
-              name="selectBagType"
-              className="simple_select"
-              placeholder="محصول"
-              options={[
-                { label: "محصول اول", value: 1 },
-                { label: "محصول دوم", value: 2 },
-              ]}
-              onChange={(value) => {
-                formik.setFieldValue("product", { id: value?.value, text: value?.label });
-              }}
-              value={{
-                // @ts-ignore
-                value: formik.values?.product?.id,
-                // @ts-ignore
-                label: formik.values?.product?.text,
-              }}
-            />
-          </>
-        </PerfesionalSearch>
       </div>
       {/* list of chip */}
       {filterData && <Chip filterData={filterData} formData={formik} />}

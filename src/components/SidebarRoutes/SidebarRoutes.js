@@ -27,7 +27,7 @@ import ServiceTime from '../../pages/ServiceTime/ServiceTime';
 import PincodeManagement from '../../pages/PincodeManagement/PincodeManagement';
 import CustomGeographic from '../../pages/CustomGeographic/CustomGeographic';
 import ServiceDefinition from "../../pages/ServiceManagement/ServiceDefinition";
-
+import ProductDefine from "../../pages/ServiceManagement/ProductDefine";
 
 
 
@@ -181,7 +181,7 @@ export const links = [
 		childs: [
 			{
 				to: "/service-information/product",
-				component:<ServiceInformation/>,
+				component:<ProductDefine/>,
 				label: "تعریف محصول",
 			},
 			{

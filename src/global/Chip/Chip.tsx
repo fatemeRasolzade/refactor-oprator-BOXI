@@ -97,6 +97,7 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
     }
   };
   useEffect(() => {
+   
     const convertObject = Object.entries(filterData).map(
       ([key, value]: any, index) =>
         value

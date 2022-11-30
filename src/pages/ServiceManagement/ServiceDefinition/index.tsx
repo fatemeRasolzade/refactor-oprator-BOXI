@@ -1,28 +1,22 @@
 import React, { useEffect, useState } from "react";
-// import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
-// import NavbarSearch from "../../../components/NavbarSearch/NavbarSearch";
-import OptionsTable from "../../../components/OptionsTable/OptionsTable";
-// import StaticTable from "../../../components/staticTable/StaticTable";
-// import {ErrorAlert} from "../../../global/alert/Alert";
-// import {apiRoute} from "../../../services/apiRoute";
-// import {PostDataParams} from "../../../services/Service_call";
 
 import { useDispatch, useSelector } from "react-redux";
 import { ServiceData } from "../../../redux/ServiceDefine/ServiceDefineReducer";
-import Table from "../../../components/Table/Table";
 import { ServiceDefineColumns } from "./view/Column";
-
 import SearchForm from "./view/SearchForm";
 import StaticTable from "../../../components/staticTable/StaticTable";
+import Operation from "./view/Operation";
+import OptionsTable from "./view/OptionsTable";
+
+
 
 const ServiceDefinition = () => {
   const dispatch = useDispatch();
   // @ts-ignore
-  const { fetchpost, errorMessage, postLists } = useSelector(
+  const { fetchpost, errorMessage, postLists,isUpdating } = useSelector(
     (state: any) => state.serviceDefine
   );
   useEffect(() => {
-    // @ts-ignore
     dispatch(
       ServiceData({
         code: "",
@@ -30,13 +24,24 @@ const ServiceDefinition = () => {
         isActive: true,
       }) as any
     );
-  }, []);
+  }, [isUpdating]);
+    const data =
+    postLists?.content?.length !== 0
+      ? postLists?.content?.map((item: any) => {
+          return {
+           ...item,
+            operation: <Operation itemValue={item} />,
+          };
+        })
+      : [];
+
+
   if (fetchpost) return <p>Loading...</p>;
   return (
     <div>
       <SearchForm />
-      <OptionsTable />
-      {/*<StaticTable column={ServiceDefineColumns}  data={postLists?.content}/>*/}
+      <OptionsTable  />
+      <StaticTable data={data?data:[]}  column={ServiceDefineColumns}  pagination/>
     </div>
   );
 };
