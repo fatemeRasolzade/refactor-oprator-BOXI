@@ -15,16 +15,19 @@ import CheckboxTree from "react-checkbox-tree";
 import * as yup from "yup";
 
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
-import { useFormik } from "formik";
+import { ErrorMessage, useFormik } from "formik";
 import CustomSwitch from "../../../global/Switch/Switch";
 import InputText from "../../../global/Input/Input";
 import { AiOutlineEdit } from "react-icons/ai";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { BiPlus } from "react-icons/bi";
+import { RoleData } from "../../../redux/RolsData/RolesData";
+import { useDispatch } from "react-redux";
 
 interface EditRoleProps {
   currentData?: any;
   title: string;
+  isActive: boolean;
 }
 const nodeArray = [
   {
@@ -712,18 +715,21 @@ const nodeArray = [
   },
 ];
 const validation = yup.object().shape({
-  name: yup.string().required(),
+  name: yup.string().required("این فیلد اجبرای است"),
 });
 const AddEditRole: FC<EditRoleProps> = ({
   currentData,
   title,
+  isActive,
 }): JSX.Element => {
+  const dispatch = useDispatch();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState([]);
-  const [treeChecked, setTreeChecked] = useState([]);
+  const [treeChecked, setTreeChecked] = useState<Array<string>>([]);
   const [treeCheckedError, setTreeCheckedError] = useState("");
   const [loadingNode, setLoadingNode] = useState(false);
-  const [nodes, setNodes] = useState([]);
+  const [nodes, setNodes] = useState([...nodeArray]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -733,16 +739,29 @@ const AddEditRole: FC<EditRoleProps> = ({
       isActive: currentData ? currentData.isActive : true,
     },
     onSubmit: async (values, { resetForm }) => {
-      try {
-        await axios({
-          url: "http://boxi.local:40000/resource-api/role/filter?pageNumber=1&pageSize=20",
-          method: "post",
-          data: {
-            name: values.name,
-            isActive: values.isActive,
-          },
-        });
-      } catch (error) {}
+      const data = {
+        name: values.name,
+        isActive: values.isActive,
+        selectPermissions: treeChecked,
+      };
+      if (treeChecked.length !== 0) {
+        try {
+          await axios({
+            url: "http://boxi.local:40000/resource-api/role",
+            method: "post",
+            data: data,
+          });
+          dispatch(
+            RoleData({
+              code: "",
+              name: "",
+              isActive: isActive,
+            }) as any
+          );
+        } catch (error) {}
+      } else {
+        setTreeCheckedError("دسترسی نباید خالی باشد");
+      }
     },
   });
 
@@ -751,7 +770,7 @@ const AddEditRole: FC<EditRoleProps> = ({
       setLoadingNode(true);
       const data = await axios({
         method: "post",
-        url: "http://172.16.55.144:20000/resource-api/permission/fetchPermissions",
+        url: "http://boxi.local:40000/resource-api/permission/fetchPermissions",
         data: {
           in: "hojjat",
         },
@@ -764,9 +783,14 @@ const AddEditRole: FC<EditRoleProps> = ({
   };
   useEffect(() => {
     if (isModalOpen) {
-      handleAccess();
+      // handleAccess();
     }
   }, [isModalOpen]);
+  useEffect(() => {
+    if (treeChecked.length !== 0) {
+      setTreeCheckedError("");
+    }
+  }, [treeChecked.length]);
 
   const {
     values,
@@ -812,15 +836,22 @@ const AddEditRole: FC<EditRoleProps> = ({
           onSubmit={handleSubmit}
         >
           <div className="w-[80%] flex gap-12">
-            <div className="w-[80%]">
+            <div className="w-[80%] flex-col">
               <InputText
                 title="کدهاب"
-                name="code"
+                name="name"
                 handelChange={formik.handleChange}
                 values={formik.values.name}
                 important
                 type={"text"}
               />
+              <span className="text-[#d05372] text-[10px]">
+                {errors.name && touched.name ? (
+                  <span>{errors.name as any}</span>
+                ) : (
+                  " "
+                )}
+              </span>
             </div>
             <div className="w-[20%] h-full justify-center items-center flex m-auto">
               <CustomSwitch
@@ -830,33 +861,38 @@ const AddEditRole: FC<EditRoleProps> = ({
               />
             </div>
           </div>
-          <div className="w-[80%]">
-            <div className="flex text-sm font-medium text-gray-900 dark:text-white">
-              دسترسی ها <span className="text-[#e24f48]">&nbsp;* &nbsp;</span>
-            </div>
-            <div className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-[-webkit-fill-available] focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              {loadingNode ? (
-                <div className="flex w-full h-[200px] justify-center items-center">
-                  Loading ....
-                </div>
-              ) : (
-                <CheckboxTree
-                  direction="rtl"
-                  nodes={nodes}
-                  checked={treeChecked}
-                  expanded={expanded}
-                  onCheck={(checked: Array<string>, node: any) => {
-                    console.log("selected", checked, node);
-                    setTreeChecked(checked as any);
-                  }}
-                  onExpand={(expanded: any) => setExpanded(expanded)}
-                  icons={icons}
-                />
-              )}
+          <div className="w-[80%] flex-col">
+            <div className="w-full">
+              <div className="flex text-sm font-medium text-gray-900 dark:text-white">
+                دسترسی ها <span className="text-[#e24f48]">&nbsp;* &nbsp;</span>
+              </div>
+              <div className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-[-webkit-fill-available] focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                {loadingNode ? (
+                  <div className="flex w-full h-[200px] justify-center items-center">
+                    Loading ....
+                  </div>
+                ) : (
+                  <CheckboxTree
+                    direction="rtl"
+                    nodes={nodes}
+                    checked={treeChecked}
+                    expanded={expanded}
+                    onCheck={(checked: Array<string>) => {
+                      setTreeChecked(checked);
+                    }}
+                    onExpand={(expanded: any) => setExpanded(expanded)}
+                    icons={icons}
+                  />
+                )}
+              </div>
+              <span className="text-[#d05372] text-[10px]">
+                {treeCheckedError && treeCheckedError}
+              </span>
             </div>
           </div>
           <div className="flex w-[80%] justify-center gap-x-12">
             <Button
+              type="submit"
               className="border-none bg-[#ef5644] w-[30%] text-gray-200"
               // onClick={() => deleteHandler(itemId)}
             >

@@ -43,14 +43,22 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
             ),
             operation: (
               <div className="flex w-full gap-3 justify-center">
-                <AddEditRole currentData={item} title="تغییر مدیریت نقش" />
+                <AddEditRole
+                  currentData={item}
+                  title="تغییر مدیریت نقش"
+                  isActive={isActive}
+                />
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف نقش"}
                   route={apiRoute().delete.role + `/${item.id}`}
                   updating={updating}
                 />
-                <AddEditRole currentData={item} title="تغییر مدیریت نقش" />
+                <AddEditRole
+                  currentData={item}
+                  title="تغییر مدیریت نقش"
+                  isActive={isActive}
+                />
               </div>
             ),
           };
@@ -64,7 +72,9 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
       <OptionsTable
         isActive={isActive}
         setIsActive={setIsActive}
-        addComponentProps={() => <AddEditRole title="تغییر مدیریت نقش" />}
+        addComponentProps={() => (
+          <AddEditRole title="تغییر مدیریت نقش" isActive={isActive} />
+        )}
       />
       <StaticTable data={data ? data : []} column={RoleColumn} pagination />
     </div>
