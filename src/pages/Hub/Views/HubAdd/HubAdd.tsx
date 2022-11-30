@@ -1,15 +1,15 @@
 import {useEffect,useState} from "react"
 import { Button } from '@material-tailwind/react'
-import Checkbox from '../../../components/checkbox/Checkbox'
-import DatePickers from '../../../global/DatePicker/DatePicker'
-import InputText from '../../../global/Input/Input'
-import InputSelect from '../../../global/InputSelect/InputSelect'
+import Checkbox from '../../../../components/checkbox/Checkbox'
+import DatePickers from '../../../../global/DatePicker/DatePicker'
+import InputText from '../../../../global/Input/Input'
+import InputSelect from '../../../../global/InputSelect/InputSelect'
 import { Formik,ErrorMessage } from "formik";
 import {useNavigate} from "react-router-dom"
-import { addHubschema } from '../../../global/Validation/Validation'
-import { getDataFromServer, PostDataParams } from "../../../services/Service_call"
-import { apiRoute } from "../../../services/apiRoute"
-import { ErrorAlert } from "../../../global/alert/Alert"
+import { addHubschema } from '../../../../global/Validation/Validation'
+import { getDataFromServer, PostDataParams } from "../../../../services/Service_call"
+import { apiRoute } from "../../../../services/apiRoute"
+import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert"
 const HubAdd = () => {
 
 
@@ -60,7 +60,11 @@ const HubAdd = () => {
         text:""
       },
       pinCode: "",
-      locationStartDate:"",
+      locationStartDate:{
+        day:0,
+        month:0,
+        year:0
+      },
       mandatoryArrivalScan:false,
       isActive:false,
       dropOffAllowed:false,
@@ -88,9 +92,15 @@ const HubAdd = () => {
     }}
      validationSchema={addHubschema}
     onSubmit={(values)=>{
-console.log(values)
-       PostDataParams(apiRoute().post.hub,values).then(res=>console.log(res))
-
+      PostDataParams(apiRoute().post.hub,values).then(res=>{
+        if(res.status==="OK"){
+          SuccessAlert("با موفقیت ساخته شد")
+        }else{
+          ErrorAlert("خطا در برقراری اطلاعات")
+        }
+      })
+    console.log(values)
+    
     }}
     >
    {(formik)=>(
@@ -119,7 +129,7 @@ console.log(values)
        <div ><InputText title='پین کد'  name="pinCode" handelChange={formik.handleChange} values={formik.values.pinCode} type={"text"}/>
       
        </div>
-       <div ><DatePickers title='تاریخ شروع فعالیت' name="locationStartDate" handelChange={formik.handleChange} values={formik.values.locationStartDate}/>
+       <div ><DatePickers title='تاریخ شروع فعالیت' name="locationStartDate" handelChange={formik.setFieldValue} values={formik.values.locationStartDate}/>
        
        </div>
        <div><Checkbox title='اسکن مرسوله در ورودی هاب اجباری می باشد' name="mandatoryArrivalScan" handelChange={formik.handleChange} values={formik.values.mandatoryArrivalScan}/>

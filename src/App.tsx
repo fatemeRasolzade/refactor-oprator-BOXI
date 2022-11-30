@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
 import "rodal/lib/rodal.css";
 import NotFound from "./pages/NotFound/NotFound";
-import HubAdd from "./pages/Hub/HubAdd/HubAdd";
+import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 
 function App() {
 

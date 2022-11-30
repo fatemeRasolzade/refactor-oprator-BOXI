@@ -18,8 +18,8 @@ const SimpleButton = ({
       className={`btn ${className}`}
       onClick={handelClick}
     >
-      {icon}
-      {text}
+    <span className="ml-2">{icon} </span>  
+      <span>{text}</span>
     </button>
   );
 };

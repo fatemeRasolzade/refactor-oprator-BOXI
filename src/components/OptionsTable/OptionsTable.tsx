@@ -5,7 +5,7 @@ import CustomSwitch from "./../../global/Switch/Switch";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
 import AddButton from "../../global/addButton/AddButton";
 import { Link} from "react-router-dom";
-const OptionsTable = () => {
+const OptionsTable = ({exportExcel}:{exportExcel?:any}) => {
   return (
     <div className="mt-6">
       <ul className="flex gap-4 justify-start items-center flex-wrap">
@@ -37,6 +37,7 @@ const OptionsTable = () => {
         </li>
         <li>
           <SimpleButton
+          handelClick={exportExcel}
             text="خروجی اکسل"
             icon={<GoDesktopDownload color="black" />}
             className="centering rounded-lg text-black"

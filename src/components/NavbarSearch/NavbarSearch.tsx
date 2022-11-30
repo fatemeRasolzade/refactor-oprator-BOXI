@@ -40,28 +40,10 @@ const NavbarSearch = ({ firstTextInput, secondTextInput }: { firstTextInput?: st
               <InputIcon text={secondTextInput} handleOnSearch={sethub} handleOnSelect={undefined} />
             </div>
 
-            <SimpleButton className="full-gray-btn" icon={<BiSearch size={20} />} text="جستجو" />
+            <SimpleButton className="full-gray-btn w-[160px] h-[40px] centering rounded-md" icon={<BiSearch size={20} />} text="جستجو" />
           </div>
         </form>
         <PerfesionalSearch text="جستجوی پیشرفته" LeftIcon={<BiChevronDown />} />
-      </div>
-
-      {/* list of chip */}
-
-      <div className="flex justify-start items-center gap-3 mt-6">
-        {ChipData.length > 0 ? (
-          <div>
-            <button
-              className="w-122 h-21 flex justify-center items-center flex-row-reverse border-none text-tomato"
-              onClick={() => setChipData([])}
-            >
-              حذف جستجوها{" "}
-              <span>
-                <BiX />
-              </span>
-            </button>
-          </div>
-        ) : null}
       </div>
     </>
   );
