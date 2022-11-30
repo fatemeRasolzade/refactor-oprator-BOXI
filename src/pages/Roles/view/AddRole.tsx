@@ -12,8 +12,12 @@ import {
   MdKeyboardArrowDown,
 } from "react-icons/md";
 import CheckboxTree from "react-checkbox-tree";
+import * as yup from "yup";
 
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
+import { useFormik } from "formik";
+import CustomSwitch from "../../../global/Switch/Switch";
+import InputText from "../../../global/Input/Input";
 
 interface EditRoleProps {}
 const nodeArray = [
@@ -701,6 +705,9 @@ const nodeArray = [
     ],
   },
 ];
+const validation = yup.object().shape({
+  name: yup.string().required(),
+});
 const EditRole: FC<EditRoleProps> = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState([]);
@@ -708,6 +715,15 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
   const [treeCheckedError, setTreeCheckedError] = useState("");
   const [loadingNode, setLoadingNode] = useState(false);
   const [nodes, setNodes] = useState(nodeArray);
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    validationSchema: validation,
+    initialValues: {
+      name: "",
+    },
+    onSubmit: (values, { resetForm }) => {},
+  });
 
   const handleAccess = async () => {
     try {
@@ -729,6 +745,17 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
     handleAccess();
   }, []);
 
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleSubmit,
+    setValues,
+    setFieldValue,
+    setErrors,
+  } = formik;
+
   return (
     <div>
       <button
@@ -744,37 +771,56 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
         >
           <GrFormClose />
         </button>
-        <div className="flex w-full flex-col items-center gap-6 mb-6 p-6">
-          <div className="w-[80%]">input</div>
-          <div className="w-[80%]">
-            {loadingNode ? (
-              <div className="flex w-full h-[200px] justify-center items-center">
-                Loading ....
-              </div>
-            ) : (
-              <CheckboxTree
-                direction="rtl"
-                nodes={nodes}
-                checked={treeChecked}
-                expanded={expanded}
-                onCheck={(checked: Array<string>, node: any) => {
-                  console.log("selected", checked, node);
-                  setTreeChecked(checked as any);
-                }}
-                onExpand={(expanded: any) => setExpanded(expanded)}
-                icons={icons}
+        <form className="flex w-full flex-col items-center gap-6 mb-6 p-6">
+          <div className="w-[80%] flex gap-12">
+            <div className="w-[80%]">
+              <InputText
+                title="کدهاب"
+                name="code"
+                handelChange={formik.handleChange}
+                values={formik.values.name}
+                important
+                type={"text"}
               />
-            )}
+            </div>
+            <div className="w-[20%] h-full justify-center items-center flex m-auto">
+              <CustomSwitch />
+            </div>
+          </div>
+          <div className="w-[80%]">
+            <div className="flex text-sm font-medium text-gray-900 dark:text-white">
+              دسترسی ها <span className="text-[#e24f48]">&nbsp;* &nbsp;</span>
+            </div>
+            <div className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-[-webkit-fill-available] focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              {loadingNode ? (
+                <div className="flex w-full h-[200px] justify-center items-center">
+                  Loading ....
+                </div>
+              ) : (
+                <CheckboxTree
+                  direction="rtl"
+                  nodes={nodes}
+                  checked={treeChecked}
+                  expanded={expanded}
+                  onCheck={(checked: Array<string>, node: any) => {
+                    console.log("selected", checked, node);
+                    setTreeChecked(checked as any);
+                  }}
+                  onExpand={(expanded: any) => setExpanded(expanded)}
+                  icons={icons}
+                />
+              )}
+            </div>
           </div>
           <div className="flex w-[80%] justify-center gap-4">
             <Button
-              className="border-none bg-[#ef5644]  text-gray-200"
+              className="border-none bg-[#ef5644] w-[30%] text-gray-200"
               // onClick={() => deleteHandler(itemId)}
             >
               بله
             </Button>
             <Button
-              className="border-none bg-[#FFF8F0] text-gray-500"
+              className="border-none bg-[#FFF8F0] w-[30%] text-gray-500"
               onClick={() => {
                 setIsModalOpen(false);
               }}
@@ -782,7 +828,7 @@ const EditRole: FC<EditRoleProps> = (): JSX.Element => {
               خیر
             </Button>
           </div>
-        </div>
+        </form>
       </Dialog>
     </div>
   );

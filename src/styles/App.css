@@ -31,3 +31,10 @@
   width: 100%!important;
   height: 36px!important;
 }
+.react-checkbox-tree{
+	overflow: auto;
+	max-height: 190px;
+	min-height: 190px;
+	max-width: 100%;
+	min-width: 520px;
+}
