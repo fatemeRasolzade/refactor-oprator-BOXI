@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 /.vscode
-
+/.idea
 .idea/.gitignore
 .idea/hom-front.iml
 .idea/vcs.xml

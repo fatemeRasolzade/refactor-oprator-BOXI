@@ -24,7 +24,7 @@ const PerfesionalSearch = ({ LeftIcon, text, formData, children }: propsData): J
         }}
       >
         <PopoverHandler>
-          <Button className="border-none bg-transparent text-dark shadow-none flex justify-around items-center">
+          <Button className="border-none bg-transparent text-dark shadow-none flex justify-around items-center w-[140px]">
             جستجوی پیشرفته{" "}
             <span className="mr-5">
               <BiChevronDown />
