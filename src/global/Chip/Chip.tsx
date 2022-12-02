@@ -97,7 +97,7 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
     }
   };
   useEffect(() => {
-   
+    delete  filterData.isActive
     const convertObject = Object.entries(filterData).map(
       ([key, value]: any, index) =>
         value

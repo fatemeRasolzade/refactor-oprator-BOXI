@@ -104,7 +104,7 @@ const ProductDefineActionForm = ({  itemValue }: any) => {
             });
           } else {
             EditDataParams(apiRoute().edit.productDefine, values).then((res) => {
-              dispatch(updating(true));
+              // dispatch(updating(true));
               setIsModalOpen(false);
             });
            

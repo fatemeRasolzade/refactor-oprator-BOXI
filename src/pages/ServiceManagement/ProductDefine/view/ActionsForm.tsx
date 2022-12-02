@@ -12,17 +12,24 @@ import {
   PostDataParams,
   selectDataFromServer,
 } from "../../../../services/Service_call";
-import { ErrorAlert } from "../../../../global/alert/Alert";
+import {ErrorAlert, SuccessAlert} from "../../../../global/alert/Alert";
 import CustomSwitch from "../../../../global/Switch/Switch";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { productData, updating } from "../../../../redux/ProductDefineData/ProductDefineData";
 import { productDefineschema } from "./productDefineschema";
 import { AiOutlineEdit } from "react-icons/ai";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import { BiPlus } from "react-icons/bi";
 
+import DropButton from "./DropButton";
+import AddExcel from "./AddExcel";
+
 const ActionForms = ({ itemValue }: any) => {
+  const { productLists } = useSelector(
+      (state: any) => state.productDefine
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [uploadExcel, setUploadExcel] = useState(false);
   const [productOptions, setProductOptions] = useState([]);
   const [productTypeOptions, setProductTypeOptions] = useState([]);
   const dispatch = useDispatch();
@@ -40,21 +47,20 @@ const ActionForms = ({ itemValue }: any) => {
     }
     getDataSelect();
   }, []);
+    const handleAction=()=>{
+        setIsModalOpen(!isModalOpen)
+    }
+    const handleUploadFileAction=()=>{
+       setUploadExcel(!uploadExcel)
+    }
 
+
+  const options = [{ clickSub: handleAction, name: "افزودن محصول" },{ clickSub:handleUploadFileAction, name: "افزودن گروهی اکسل" }];
   return (
     <>
-      {itemValue ? (
-        <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
-          <AiOutlineEdit className="w-full h-full" />
-        </button>
-      ) : (
-        <SimpleButton
-          text="افزودن"
-          className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
-          icon={<BiPlus color="white" />}
-          handelClick={() => setIsModalOpen(!isModalOpen)}
-        />
-      )}
+
+        <DropButton  options={options}/>
+      <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel}/>
       <Dialog open={isModalOpen} handler={setIsModalOpen}>
         <Formik
           initialValues={
@@ -65,8 +71,8 @@ const ActionForms = ({ itemValue }: any) => {
                   name: "",
                   description: "",
                   productGroup: {
-                    id: "",
-                    text: "",
+                    id: "gfhg",
+                    text: "hjghkkk",
                   },
                 }
               : {
@@ -87,28 +93,40 @@ const ActionForms = ({ itemValue }: any) => {
             if (!itemValue) {
               // dispatch(updating(true));
               PostDataParams(apiRoute().post.createProduct, values).then((res) => {
-                dispatch(
-                  productData({
-                    code: "",
-                    name: "",
-                    isActive: true,
-                  }) as any
-                );
+                if(res.status==="OK"){
+                  SuccessAlert("با موفقیت ساخته شد")
+                  dispatch(
+                      productData({}) as any
+                  );
+                }else{
+                  ErrorAlert("خطا در برقراری اطلاعات")
+                }
+
+
                 // dispatch(updating(false));
 
                 setIsModalOpen(false);
               });
             } else {
               EditDataParams(apiRoute().edit.productDefine, values).then((res) => {
-                dispatch(updating(true));
+                // dispatch(updating(true));
+                if(res.status==="OK"){
+                  SuccessAlert("با موفقیت ویرایش شد")
+                  dispatch(
+                      productData({}) as any
+                  );
+                }else{
+                  ErrorAlert("خطا در برقراری اطلاعات")
+                }
+
                 setIsModalOpen(false);
               });
             }
           }}
         >
           {(formik) => (
-            <form onSubmit={formik.handleSubmit}>
-              <div className="w-full grid grid-cols-2 gap-2">
+            <form onSubmit={formik.handleSubmit} className='p-5'>
+              <div className="w-full  grid grid-cols-2 gap-2 content-center">
                 <div>
                   <InputText
                     title="کد"
@@ -143,13 +161,13 @@ const ActionForms = ({ itemValue }: any) => {
                   //   value: formik.values?.productGroup?.id,
                   //   label: 'formik.values?.productGroup?.text',
                   // }}
-                  options={productOptions}
+                  options={[{value:"gg",label:"gdfg"},{value:"hj",label:"kjk"},{value:"weqe",label:"tyt"}]}
+                  // options={productOptions}
                 />
-                <ErrorMessage
-                  name="productGroup"
-                  render={(messege) => <span className="text-tomato  block mt-5">{messege}</span>}
-                />
-              </div>
+                <CustomSwitch handleChange={(value:any)=>formik.setFieldValue('isActive',value)} />
+
+
+                              </div>
 
               <div className="mt-4">
                 <InputText

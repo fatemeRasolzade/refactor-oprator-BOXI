@@ -21,25 +21,23 @@ const SearchForm = ({isActive}:PropsData): JSX.Element => {
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
   const [filterData, setFilterData] = useState({});
   const formik = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       code: "",
       name: "",
       isActive:isActive
     },
     onSubmit: (values) => {
-      console.log(values)
       setFilterData(values);
-      //@ts-ignore
-      dispatch(productData(formik.values));
+      // //@ts-ignore
+      // dispatch(productData(formik.values));
     },
   });
 
   useEffect(() => {
-
     // @ts-ignore
-    dispatch(productData(formik.values));
-  }, [isActive]);
+    dispatch(productData({...formik.values,isActive}));
+  }, [isActive,filterData]);
   const data = [
     { id: 1, text: "product" },
     { id: 2, text: "price" },
@@ -91,7 +89,7 @@ const SearchForm = ({isActive}:PropsData): JSX.Element => {
         </form>
       </div>
       {/* list of chip */}
-      {filterData && <Chip filterData={filterData} formData={formik} />}
+      {filterData  && <Chip filterData={filterData} formData={formik} />}
     </>
   );
 };
