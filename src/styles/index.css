@@ -8,11 +8,11 @@
 }
 
 @layer components {
-  /* .btn {
-    @apply h-["46px"] rounded-lg border-none text-dark px-5 py-2 centering gap-2;
-  } */
+  .btn {
+    @apply h-10 rounded-lg border-none text-dark px-4 py-2 centering gap-2;
+  }
   .full-tomato-btn {
-    @apply bg-tomato text-gray-500;
+    @apply bg-tomato text-light;
   }
   .line-tomato-btn {
     @apply bg-light text-tomato border border-tomato;
@@ -26,7 +26,6 @@
   .selectBox {
     @apply border-none  h-10 w-64;
   }
-
   .customTable .rt-tr-group {
     @apply odd:bg-tableColor  border-none;
   }
@@ -70,20 +69,20 @@
     @apply top-10 right-5;
   }
 
-   .autocompleteInput{
-    @apply  w-full h-[40px] before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0 outline-0 ;
+  .autocompleteInput {
+    @apply w-full h-[46px] before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0 outline-0;
   }
-  .autocompleteWrapper{
-    @apply flex items-center justify-between relative h-[45px]  px-4  w-[250px]   border-[#ABABAB] rounded-[10px]
-  } 
-  .autocompleteLabel{
-    @apply absolute top-[-12px] right-5 bg-white  z-10
+  .autocompleteWrapper {
+    @apply flex items-center justify-between relative h-[48px]  px-4  w-[250px]   border-[#ABABAB] rounded-[20px];
   }
-  .advancedSearchButton{
-    @apply border-none bg-transparent text-dark shadow-none flex justify-around items-center
+  .autocompleteLabel {
+    @apply absolute top-[-12px] right-5 bg-white  z-10;
   }
-  .pagination_style{
-    @apply !bg-tomato text-white
+  .advancedSearchButton {
+    @apply border-none bg-transparent text-dark shadow-none flex justify-around items-center;
+  }
+  .pagination_style {
+    @apply !bg-tomato text-white;
   }
   /* flex box */
   .centering {
@@ -121,5 +120,12 @@
   }
   .flex-end-start {
     @apply flex justify-end items-start;
+  }
+  /* //Toggles */
+  .ToggleContainer {
+    @apply bg-light flex-start-start flex-col  absolute top-10  right-0 shadow-xl z-20 text-right w-full;
+  }
+  .ToggleElements {
+    @apply h-10 rounded-none border-none text-dark px-4 py-2 flex-start-start  gap-2 w-full hover:bg-grayLights transition;
   }
 }
