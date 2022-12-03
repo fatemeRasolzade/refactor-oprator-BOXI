@@ -23,6 +23,9 @@ const Paginations = ({pageData}:any) => {
       onPageChange={(pageNumber) =>dispatch(Actionpage(pageNumber)) }
       totalItems={pageData}
       pageNeighbours={2}
+      customClassNames={{
+        rpbItemClassNameActive:'pagination_style'
+      }}
     />
   </div>
   )

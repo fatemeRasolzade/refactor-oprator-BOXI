@@ -1,3 +1,4 @@
+import {useEffect} from "react"
 import "./styles/App.css";
 import "react-table-6/react-table.css";
 import { links } from "./components/SidebarRoutes/SidebarRoutes";
@@ -5,11 +6,14 @@ import { Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
 import "rodal/lib/rodal.css";
 import NotFound from "./pages/NotFound/NotFound";
-import InputIcon from "./global/InputIcon/InputIcon";
-import Breadcrumb from "./components/Breadcrumb/Breadcrumb";
-import HubAdd from "./pages/Hub/HubAdd/HubAdd";
+import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 
 function App() {
+
+
+
+
+
   return (
     <div className="App">
       <Routes>

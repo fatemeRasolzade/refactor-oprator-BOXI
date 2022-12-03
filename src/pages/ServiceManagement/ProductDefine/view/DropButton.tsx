@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { BiPlus } from "react-icons/bi";
+import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 
 
 const DropButton = ({options}:any) => {
@@ -34,9 +36,15 @@ const DropButton = ({options}:any) => {
         <div className="relative" ref={myRef}>
 
             <div className="w-160 relative">
-                <button className={`btn  full-tomato-btn`} onClick={() => setToggleDrop(!toggleDrop)}>
+            <SimpleButton
+            handelClick={() => setToggleDrop(!toggleDrop)}
+            text="افزودن"
+            className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
+            icon={<BiPlus color="white" />}
+          />
+                {/* <button className={`btn  full-tomato-btn`} onClick={() => setToggleDrop(!toggleDrop)}>
                     <span>{}</span> <span className="text-lg">افزودن</span> <span>{}</span>
-                </button>
+                </button> */}
 
 
             <div

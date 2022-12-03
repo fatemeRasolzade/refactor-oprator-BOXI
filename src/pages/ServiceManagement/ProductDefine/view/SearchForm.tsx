@@ -79,7 +79,7 @@ const SearchForm = ({isActive}:PropsData): JSX.Element => {
               onSelect={(val: any) => handleSelect(val, "name")}
             />
             {/*<InputIcon text='عنوان' handleOnSelect={handleOnSelect} handleOnSearch={setName}/>*/}
-            <SimpleButton className="full-gray-btn" icon={<BiSearch size={20} />} text="جستجو" />
+            <SimpleButton className="full-gray-btn w-[160px] h-[40px] centering rounded-md" icon={<BiSearch size={20} />} text="جستجو" />
           </div>
         </form>
       </div>

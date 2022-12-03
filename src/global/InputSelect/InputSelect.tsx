@@ -2,6 +2,8 @@ import React from 'react'
 import Select from "react-select"
 const InputSelect = ({text,handelChange,name,blure,values,options}:{text?:string,handelChange?:any,name?:string,blure?:React.FocusEventHandler<HTMLInputElement>,values?:any,options?:any}) => {
 
+    
+
       const style = {
         control: (base:any) => ({
           ...base,
@@ -13,11 +15,11 @@ const InputSelect = ({text,handelChange,name,blure,values,options}:{text?:string
       };
 
   return (
-    <div className='w-full'>
+    <div className='w-full h-48'>
        <label >
         <span>{text}</span>
         <Select
-        defaultInputValue={values?.text}
+      
         isLoading={options.length > 0 ? false : true}
         value={options ? options.find((option:any)=>option.label===values): ""}
         onChange={option => handelChange(name, {
