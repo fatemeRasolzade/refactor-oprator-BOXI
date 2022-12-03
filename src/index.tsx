@@ -9,11 +9,13 @@ import App from './App';
 import Layout from './components/Layout/Layout';
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    
     <BrowserRouter>
   <Provider store={store}>
   <PersistGate loading={null} persistor={persistor}>

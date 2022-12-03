@@ -7,15 +7,19 @@ import "react-toastify/dist/ReactToastify.min.css";
 import "rodal/lib/rodal.css";
 import NotFound from "./pages/NotFound/NotFound";
 import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
-
+import UserService from "./services/UserService";
+// import InterCeptor from "./services/http_service"
 function App() {
 
 
-
+// useEffect(()=>{
+//   UserService.initKeycloak();
+// },[])
 
 
   return (
     <div className="App">
+      {/* <InterCeptor/> */}
       <Routes>
         {links.map((item) =>
           item.childs.map((route) => (

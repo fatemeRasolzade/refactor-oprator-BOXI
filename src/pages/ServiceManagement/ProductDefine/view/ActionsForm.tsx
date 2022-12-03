@@ -15,6 +15,7 @@ import { productDefineschema } from "./productDefineschema";
 import DropButton from "./DropButton";
 import AddExcel from "./AddExcel";
 import { AiOutlineEdit } from "react-icons/ai";
+import AddButton from "../../../../global/addButton/AddButton";
 
 const ActionForms = ({ itemValue }: any) => {
   const { productLists } = useSelector((state: any) => state.productDefine);
@@ -43,14 +44,16 @@ const ActionForms = ({ itemValue }: any) => {
     setUploadExcel(!uploadExcel);
   };
 
-  const options = [
-    { clickSub: handleAction, name: "افزودن محصول" },
-    { clickSub: handleUploadFileAction, name: "افزودن گروهی اکسل" },
+
+  const ToggleOptions = [
+    { handleClick: handleAction, name: "افزودن محصول" },
+    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
   return (
     <>
       {!itemValue ? (
-        <DropButton options={options} />
+        <AddButton ToggleOptions={ToggleOptions} />
+     
       ) : (
         <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
           <AiOutlineEdit className="w-full h-full" />
@@ -149,6 +152,7 @@ const ActionForms = ({ itemValue }: any) => {
                 <div>
                   <InputSelect
                     text="گروه بندی محصول"
+                  
                     name="productGroup"
                     handelChange={formik.setFieldValue}
                     values={formik.values.productGroup}
