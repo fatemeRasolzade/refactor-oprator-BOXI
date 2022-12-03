@@ -14,11 +14,8 @@ const SimpleButton = ({
   handelClick,
 }: SimpleButtonProps) => {
   return (
-    <button
-      className={`btn ${className}`}
-      onClick={handelClick}
-    >
-    <span className="ml-2">{icon} </span>  
+    <button className={`btn ${className}`} onClick={handelClick}>
+      <span>{icon} </span>
       <span>{text}</span>
     </button>
   );

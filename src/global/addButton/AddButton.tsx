@@ -1,61 +1,47 @@
 import { useState } from "react";
+import { BiPlus } from "react-icons/bi";
+import { RiArrowDownSLine } from "react-icons/ri";
 
+interface Toggle {
+  name: string;
+  handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
 interface PropAddButton {
   text?: string;
-  subItemOne?: string;
-  subItemTwo?: string;
   RightIcon?: JSX.Element;
   LeftIcon?: JSX.Element;
-  color?: string;
-  textColor?: string;
+  ToggleOptions?: Toggle[];
 }
 
 const AddButton = ({
   text = "افزودن",
-  subItemOne,
-  subItemTwo,
-  RightIcon,
-  LeftIcon,
-  color,
-  textColor,
+  RightIcon = <BiPlus size={23} />,
+  LeftIcon = <RiArrowDownSLine size={23} />,
+  ToggleOptions = [],
 }: PropAddButton) => {
   const [toggle, setToggle] = useState(false);
 
-  const handelClick = () => {
-    setToggle(false);
-  };
-
   return (
-    <div className="w-160 relative">
+    <div className="relative w-44">
       <button
-        className={`btn  full-tomato-btn`}
+        className={`btn full-tomato-btn w-full`}
         onClick={() => setToggle(!toggle)}
       >
-        <span>{LeftIcon}</span> <span className="text-lg">{text}</span>{" "}
         <span>{RightIcon}</span>
+        <span className="px-5">{text}</span>
+        <span>{LeftIcon}</span>
       </button>
-      {toggle ? (
-        <div className="w-full bg-red  absolute top-40 right-0 shadow-lg rounded-md ">
-          <ul>
-            <li>
-              <button
-                className="w-full py-2 px-3 border-none hover:bg-gray-200 text-sm text-right "
-                onClick={handelClick}
-              >
-                {subItemOne}
-              </button>
-            </li>
-            <li>
-              <button
-                className="w-full py-2 px-3 border-none hover:bg-gray-200 text-right"
-                onClick={handelClick}
-              >
-                {subItemTwo}
-              </button>
-            </li>
-          </ul>
-        </div>
-      ) : null}
+      {toggle
+        ? ToggleOptions?.length > 0 && (
+            <div className="ToggleContainer ">
+              {ToggleOptions.map((item) => (
+                <button className="ToggleElements" onClick={item.handleClick}>
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          )
+        : null}
     </div>
   );
 };
