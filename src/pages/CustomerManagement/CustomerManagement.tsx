@@ -31,8 +31,10 @@ const CustomerManagement = () => {
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="مدیریت مشتریان" />
-      <AddButton ToggleOptions={ToggleOptions} />
-      <TestCustomOptions options={options} />
+      <div className="flex-start-center gap-16">
+        <AddButton ToggleOptions={ToggleOptions} />
+        <TestCustomOptions options={options} />
+      </div>
       heheee
       {/* <StaticTable data={data} column={HubColumn} pagination={payload?.totalElements}/> */}
     </div>

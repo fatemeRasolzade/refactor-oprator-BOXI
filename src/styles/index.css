@@ -50,15 +50,12 @@
   .hCpHso .ellipsis {
     @apply text-right pr-3;
   }
-
   .autoComplete::before {
     @apply px-2;
   }
-
   .autoComplete .cmyNjn > .wrapper {
     @apply z-20 rounded-lg;
   }
-
   .simple_select {
     @apply w-64  relative before:absolute before:-top-14 before:right-14 before:bg-white before:z-10;
   }
@@ -68,7 +65,6 @@
   .chips .-translate-y-2\/4 {
     @apply top-10 right-5;
   }
-
   .autocompleteInput {
     @apply w-full h-[46px] before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0 outline-0;
   }
