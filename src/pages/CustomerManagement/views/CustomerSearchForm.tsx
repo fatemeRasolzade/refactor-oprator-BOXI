@@ -1,50 +1,51 @@
-import React, { useEffect, useState } from "react";
-import { BiSearch, BiX, BiChevronDown } from "react-icons/bi";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
+import { BiSearch } from "react-icons/bi";
 import { useDispatch } from "react-redux";
-import Chip from "../../../../global/Chip/Chip";
-import AutocompleteInput from "../../../../global/Autocomplete/AutocompleteInput";
-import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import { productData } from "../../../../redux/ProductDefineData/ProductDefineData";
-import { apiRoute } from "../../../../services/apiRoute";
-import { GetDataParams } from "../../../../services/Service_call";
-import InputIcon from "../../../../global/InputIcon/InputIcon";
+import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
+import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
 
-interface PropsData {
-  isActive: Boolean | string;
-  isUpdating: Boolean;
-}
-
-const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
+type CustomerSearchFormProps = {
+  isActive?: Boolean | string;
+  isUpdating?: Boolean;
+};
+const CustomerSearchForm = ({
+  isActive,
+  isUpdating,
+}: CustomerSearchFormProps) => {
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
   const [filterData, setFilterData] = useState({});
   const formik = useFormik({
-    // enableReinitialize: true,
     initialValues: {
       code: "",
       name: "",
       isActive: isActive,
+      telNumber: "",
     },
     onSubmit: (values) => {
       setFilterData(values);
-      // //@ts-ignore
-      // dispatch(productData(formik.values));
     },
   });
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(productData({ ...formik.values, isActive }));
+    dispatch(customerData({ ...formik.values, isActive }));
   }, [isActive, filterData, isUpdating]);
   const data = [
     { id: 1, text: "product" },
     { id: 2, text: "price" },
     { id: 3, text: "vemdor" },
   ];
-  const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
+  const handleChangeCode = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    name: string
+  ) => {
     formik.setFieldValue(name, e.target.value);
-    const filterData = data.filter((item) => item.text.includes(e.target.value));
+    const filterData = data.filter((item) =>
+      item.text.includes(e.target.value)
+    );
     setServiceCodeOptions(
       filterData.map((item) => {
         return {
@@ -57,30 +58,41 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
     // setOptions(data.filter(item=>item.text.includes(e.target.value)))
     // GetDataParams(apiRoute().get.GET_PRODUCT + params);
   };
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
+  const handleChangeName = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    name: string
+  ) => {
     formik.setFieldValue(name, e.target.value);
   };
   const handleSelect = (val: any, name: string) => {
     formik.setFieldValue(name, val);
   };
+
   return (
     <>
-      <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
+      <div className="flex-start-center mt-6 gap-4 flex-wrap">
         <form onSubmit={formik.handleSubmit}>
-          <div className=" flex gap-3 justify-start items-center flex-wrap">
+          <div className=" flex-start-center gap-3 flex-wrap">
             <AutocompleteInput
-              label={"کد"}
+              label={"کد مشتری"}
               items={serviceCodeOptions}
               value={formik.values.code}
               onChange={(e) => handleChangeCode(e, "code")}
               onSelect={(val: any) => handleSelect(val, "code")}
             />
             <AutocompleteInput
-              label={"عنوان"}
+              label={"نام مشتری"}
               items={[]}
               value={formik.values.name}
               onChange={(e) => handleChangeName(e, "name")}
               onSelect={(val: any) => handleSelect(val, "name")}
+            />
+            <AutocompleteInput
+              label={"شماره تماس"}
+              items={[]}
+              value={formik.values.telNumber}
+              onChange={(e) => handleChangeName(e, "telNumber")}
+              onSelect={(val: any) => handleSelect(val, "telNumber")}
             />
 
             {/* <InputIcon text='عنوان' handleOnSelect={undefined} handleOnSearch={()=>formik.setFieldValue("name", formik.values.name)}/> */}
@@ -92,10 +104,8 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
           </div>
         </form>
       </div>
-      {/* list of chip */}
-      {filterData && <Chip filterData={filterData} formData={formik} />}
     </>
   );
 };
 
-export default SearchForm;
+export default CustomerSearchForm;

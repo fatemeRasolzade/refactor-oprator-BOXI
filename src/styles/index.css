@@ -18,7 +18,7 @@
     @apply bg-light text-tomato border border-tomato;
   }
   .full-gray-btn {
-    @apply !bg-lightesGray !text-dark;
+    @apply !bg-lightesGray !text-dark h-[46px];
   }
   .checkboxStyle {
     @apply bg-tomato text-white focus:!bg-red-800;

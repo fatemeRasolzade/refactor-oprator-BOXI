@@ -6,6 +6,7 @@ import {
   DOWNLOAD_OPTION,
 } from "../../global/CustomOptions/CustomOptionsKeyword";
 import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
+import CustomerSearchForm from "./views/CustomerSearchForm";
 
 const CustomerManagement = () => {
   const handleGetExcel = () => {
@@ -31,6 +32,7 @@ const CustomerManagement = () => {
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="مدیریت مشتریان" />
+      <CustomerSearchForm   />
       <div className="flex-start-center gap-16">
         <AddButton ToggleOptions={ToggleOptions} />
         <TestCustomOptions options={options} />
