@@ -1,11 +1,15 @@
+import { useSelector } from "react-redux";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../components/staticTable/StaticTable";
+import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import AddButton from "../../global/addButton/AddButton";
 import {
   ACTIVE_OPTION,
   DOWNLOAD_OPTION,
 } from "../../global/CustomOptions/CustomOptionsKeyword";
 import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
+import { CustomerColumns } from "./views/CustomerColumn";
+
 import CustomerSearchForm from "./views/CustomerSearchForm";
 
 const CustomerManagement = () => {
@@ -29,16 +33,44 @@ const CustomerManagement = () => {
     { handleClick: handleAction, name: "افزودن مشتری" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
+
+  const { errorMessage, customerList, isUpdating } = useSelector(
+    (state: any) => state.customerDefine
+  );
+
+  const data =
+    customerList?.content?.length !== 0
+      ? customerList?.content?.map((item: any) => {
+          return {
+            ...item,
+            // operation: (
+            //   <div className="flex w-full gap-3 justify-center">
+            //     <DeleteOperation
+            //       itemId={item.id}
+            //       title={"حذف مشتری"}
+            //       route={apiRoute().delete.productDefine + `/${item.id}`}
+            //       updating={updating}
+            //     />
+            //     <ActionForms itemValue={item} pagination={productLists?.totalElements} />
+            //   </div>
+            // ),
+          };
+        })
+      : [];
+
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="مدیریت مشتریان" />
-      <CustomerSearchForm   />
-      <div className="flex-start-center gap-16">
+      <CustomerSearchForm />
+      <div className="flex-start-center gap-16 mt-6">
         <AddButton ToggleOptions={ToggleOptions} />
         <TestCustomOptions options={options} />
       </div>
-      heheee
-      {/* <StaticTable data={data} column={HubColumn} pagination={payload?.totalElements}/> */}
+      <StaticTable
+        data={data ? data : []}
+        column={CustomerColumns}
+        pagination={customerList?.totalElements}
+      />
     </div>
   );
 };

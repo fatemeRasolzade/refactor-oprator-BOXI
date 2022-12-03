@@ -25,7 +25,7 @@ const initialState:any= {
     
 }
 
-const ProductDefineList = createSlice({
+const CustomerDefineList = createSlice({
     initialState: initialState,
     name: "customerList",
     reducers: {
@@ -48,5 +48,5 @@ const ProductDefineList = createSlice({
     },
 });
 
-export const {  updating } = ProductDefineList.actions;
-export default ProductDefineList.reducer
+export const {  updating } = CustomerDefineList.actions;
+export default CustomerDefineList.reducer

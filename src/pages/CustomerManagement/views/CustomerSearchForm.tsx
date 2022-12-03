@@ -2,7 +2,9 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch } from "react-redux";
+import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
+import Chip from "../../../global/Chip/Chip";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
 
@@ -70,40 +72,42 @@ const CustomerSearchForm = ({
 
   return (
     <>
-      <div className="flex-start-center mt-6 gap-4 flex-wrap">
-        <form onSubmit={formik.handleSubmit}>
-          <div className=" flex-start-center gap-3 flex-wrap">
-            <AutocompleteInput
-              label={"کد مشتری"}
-              items={serviceCodeOptions}
-              value={formik.values.code}
-              onChange={(e) => handleChangeCode(e, "code")}
-              onSelect={(val: any) => handleSelect(val, "code")}
-            />
-            <AutocompleteInput
-              label={"نام مشتری"}
-              items={[]}
-              value={formik.values.name}
-              onChange={(e) => handleChangeName(e, "name")}
-              onSelect={(val: any) => handleSelect(val, "name")}
-            />
-            <AutocompleteInput
-              label={"شماره تماس"}
-              items={[]}
-              value={formik.values.telNumber}
-              onChange={(e) => handleChangeName(e, "telNumber")}
-              onSelect={(val: any) => handleSelect(val, "telNumber")}
-            />
-
-            {/* <InputIcon text='عنوان' handleOnSelect={undefined} handleOnSearch={()=>formik.setFieldValue("name", formik.values.name)}/> */}
-            <SimpleButton
-              className="full-gray-btn"
-              icon={<BiSearch size={20} />}
-              text="جستجو"
-            />
-          </div>
+      <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col">
+        <form
+          className="flex-start-center flex-wrap gap-5"
+          onSubmit={formik.handleSubmit}
+        >
+          <AutocompleteInput
+            label={"کد مشتری"}
+            items={serviceCodeOptions}
+            value={formik.values.code}
+            onChange={(e) => handleChangeCode(e, "code")}
+            onSelect={(val: any) => handleSelect(val, "code")}
+          />
+          <AutocompleteInput
+            label={"نام مشتری"}
+            items={[]}
+            value={formik.values.name}
+            onChange={(e) => handleChangeName(e, "name")}
+            onSelect={(val: any) => handleSelect(val, "name")}
+          />
+          <AutocompleteInput
+            label={"شماره تماس"}
+            items={[]}
+            value={formik.values.telNumber}
+            onChange={(e) => handleChangeName(e, "telNumber")}
+            onSelect={(val: any) => handleSelect(val, "telNumber")}
+          />
+          <SimpleButton
+            className="full-gray-btn"
+            icon={<BiSearch size={20} />}
+            text="جستجو"
+          />
+          <PerfesionalSearch />
         </form>
       </div>
+
+      {filterData && <Chip filterData={filterData} formData={formik} />}
     </>
   );
 };

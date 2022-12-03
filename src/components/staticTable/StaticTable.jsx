@@ -78,46 +78,42 @@ function Table({ columns, data, pageTable }) {
   // Render the UI for your table
   return (
     <>
-      <div className="p-5">
-        <table
-          {...getTableProps()}
-          className="w-full text-center overflow-auto "
-        >
-          <thead className="bg-tableColor h-10 font-thin">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </th>
-                ))}
+      <table
+        {...getTableProps()}
+        className="w-full text-center overflow-auto mt-6"
+      >
+        <thead className="bg-tableColor h-10 font-thin">
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()} className="even:bg-gray-100 h-9">
+                {row.cells.map((cell) => {
+                  return (
+                    <td
+                      {...cell.getCellProps()}
+                      className="border-gray-300 border "
+                    >
+                      {cell.render("Cell")}
+                    </td>
+                  );
+                })}
               </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="even:bg-gray-100 h-9">
-                  {row.cells.map((cell) => {
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        className="border-gray-300 border "
-                      >
-                        {cell.render("Cell")}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+            );
+          })}
+        </tbody>
+      </table>
 
-        <div className="text-center mt-10">
-          <Paginations pageData={pageTable} />
-        </div>
+      <div className="text-center mt-10">
+        <Paginations pageData={pageTable} />
       </div>
     </>
   );

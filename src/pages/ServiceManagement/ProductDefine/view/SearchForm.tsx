@@ -42,9 +42,14 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
     { id: 2, text: "price" },
     { id: 3, text: "vemdor" },
   ];
-  const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
+  const handleChangeCode = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    name: string
+  ) => {
     formik.setFieldValue(name, e.target.value);
-    const filterData = data.filter((item) => item.text.includes(e.target.value));
+    const filterData = data.filter((item) =>
+      item.text.includes(e.target.value)
+    );
     setServiceCodeOptions(
       filterData.map((item) => {
         return {
@@ -57,7 +62,10 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
     // setOptions(data.filter(item=>item.text.includes(e.target.value)))
     // GetDataParams(apiRoute().get.GET_PRODUCT + params);
   };
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
+  const handleChangeName = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    name: string
+  ) => {
     formik.setFieldValue(name, e.target.value);
   };
   const handleSelect = (val: any, name: string) => {
@@ -65,31 +73,32 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
   };
   return (
     <>
-      <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
-        <form onSubmit={formik.handleSubmit}>
-          <div className=" flex gap-3 justify-start items-center flex-wrap">
-            <AutocompleteInput
-              label={"کد"}
-              items={serviceCodeOptions}
-              value={formik.values.code}
-              onChange={(e) => handleChangeCode(e, "code")}
-              onSelect={(val: any) => handleSelect(val, "code")}
-            />
-            <AutocompleteInput
-              label={"عنوان"}
-              items={[]}
-              value={formik.values.name}
-              onChange={(e) => handleChangeName(e, "name")}
-              onSelect={(val: any) => handleSelect(val, "name")}
-            />
+      <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col">
+        <form
+          className="flex-start-center flex-wrap gap-5"
+          onSubmit={formik.handleSubmit}
+        >
+          <AutocompleteInput
+            label={"کد"}
+            items={serviceCodeOptions}
+            value={formik.values.code}
+            onChange={(e) => handleChangeCode(e, "code")}
+            onSelect={(val: any) => handleSelect(val, "code")}
+          />
+          <AutocompleteInput
+            label={"عنوان"}
+            items={[]}
+            value={formik.values.name}
+            onChange={(e) => handleChangeName(e, "name")}
+            onSelect={(val: any) => handleSelect(val, "name")}
+          />
 
-            {/* <InputIcon text='عنوان' handleOnSelect={undefined} handleOnSearch={()=>formik.setFieldValue("name", formik.values.name)}/> */}
-            <SimpleButton
-              className="full-gray-btn"
-              icon={<BiSearch size={20} />}
-              text="جستجو"
-            />
-          </div>
+          {/* <InputIcon text='عنوان' handleOnSelect={undefined} handleOnSearch={()=>formik.setFieldValue("name", formik.values.name)}/> */}
+          <SimpleButton
+            className="full-gray-btn"
+            icon={<BiSearch size={20} />}
+            text="جستجو"
+          />
         </form>
       </div>
       {/* list of chip */}
