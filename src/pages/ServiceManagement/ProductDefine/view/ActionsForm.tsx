@@ -57,7 +57,10 @@ const ActionForms = ({ itemValue }: any) => {
         </button>
       )}
       <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
-      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible"}>
+      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5"}>
+      <div className="text-lg font-medium">
+      {itemValue?"ویرایش محصول":"افزودن محصول"}
+       </div>
         <Formik
           initialValues={
             !itemValue
@@ -116,7 +119,7 @@ const ActionForms = ({ itemValue }: any) => {
           }}
         >
           {(formik) => (
-            <form onSubmit={formik.handleSubmit} className="p-5">
+            <form onSubmit={formik.handleSubmit} className='p-5'>
               <div className="w-full  grid grid-cols-2 gap-y-10 gap-x-4 content-center">
                 <div>
                   <InputText
