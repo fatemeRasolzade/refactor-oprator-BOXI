@@ -30,8 +30,8 @@ const PersonnelModalOperation: FC<ModalOperationProps> = ({
           itemId={itemValue.id}
           route={apiRoute().delete.personnel + `/${itemValue.id}`}
           updating={updating}
-          setOnClose={setOnClose}
-          setMode={setMode}
+          // setOnClose={setOnClose}
+          // setMode={setMode}
         />
       );
     default:

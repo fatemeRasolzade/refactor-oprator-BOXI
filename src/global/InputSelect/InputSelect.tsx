@@ -15,7 +15,7 @@ const InputSelect = ({text,handelChange,name,blure,values,options}:{text?:string
       };
 
   return (
-    <div className='w-full h-48'>
+    <div className='w-full '>
        <label >
         <span>{text}</span>
         <Select

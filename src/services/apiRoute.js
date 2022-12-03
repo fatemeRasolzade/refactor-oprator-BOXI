@@ -54,7 +54,7 @@ export const apiRoute = () => {
       //CONNECTION
       GET_CONNECTION: createUrl(API_URL, "/connection/filter"),
       //PRODUCT
-      GET_PRODUCT: createUrl(API_CONSIGNMENT4, "/product/select?filter="),
+      GET_PRODUCT: createUrl(API_CONSIGNMENT4, "/vendor/select?filter="),
       //PRODUCT_GROUP
       GET_PRODUCT_GROUPS: createUrl(API_CONSIGNMENT4, "/productGroup/select?filter="),
       //SERVICE_TIME

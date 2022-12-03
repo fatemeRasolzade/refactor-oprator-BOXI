@@ -6,29 +6,23 @@ import { Formik, ErrorMessage } from "formik";
 import InputText from "../../../../global/Input/Input";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { apiRoute } from "../../../../services/apiRoute";
-import {
-  EditDataParams,
-  PostDataParams,
-  selectDataFromServer,
-} from "../../../../services/Service_call";
-import {ErrorAlert, SuccessAlert} from "../../../../global/alert/Alert";
+import { EditDataParams, PostDataParams, selectDataFromServer } from "../../../../services/Service_call";
+import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert";
 import CustomSwitch from "../../../../global/Switch/Switch";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { productData, updating } from "../../../../redux/ProductDefineData/ProductDefineData";
 import { productDefineschema } from "./productDefineschema";
 import DropButton from "./DropButton";
 import AddExcel from "./AddExcel";
+import { AiOutlineEdit } from "react-icons/ai";
 
 const ActionForms = ({ itemValue }: any) => {
-  const { productLists } = useSelector(
-      (state: any) => state.productDefine
-  );
+  const { productLists } = useSelector((state: any) => state.productDefine);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [productOptions, setProductOptions] = useState([]);
   const [productTypeOptions, setProductTypeOptions] = useState([]);
   const dispatch = useDispatch();
-  console.log("itemValue", itemValue);
   useEffect(() => {
     function getDataSelect() {
       try {
@@ -42,21 +36,28 @@ const ActionForms = ({ itemValue }: any) => {
     }
     getDataSelect();
   }, []);
-    const handleAction=()=>{
-        setIsModalOpen(!isModalOpen)
-    }
-    const handleUploadFileAction=()=>{
-       setUploadExcel(!uploadExcel)
-    }
+  const handleAction = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+  const handleUploadFileAction = () => {
+    setUploadExcel(!uploadExcel);
+  };
 
-
-  const options = [{ clickSub: handleAction, name: "افزودن محصول" },{ clickSub:handleUploadFileAction, name: "افزودن گروهی اکسل" }];
+  const options = [
+    { clickSub: handleAction, name: "افزودن محصول" },
+    { clickSub: handleUploadFileAction, name: "افزودن گروهی اکسل" },
+  ];
   return (
     <>
-
-        {!itemValue ?<DropButton  options={options}/>:''}
-      <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel}/>
-      <Dialog open={isModalOpen} handler={setIsModalOpen}>
+      {!itemValue ? (
+        <DropButton options={options} />
+      ) : (
+        <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
+          <AiOutlineEdit className="w-full h-full" />
+        </button>
+      )}
+      <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
+      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible"}>
         <Formik
           initialValues={
             !itemValue
@@ -88,15 +89,12 @@ const ActionForms = ({ itemValue }: any) => {
             if (!itemValue) {
               // dispatch(updating(true));
               PostDataParams(apiRoute().post.createProduct, values).then((res) => {
-                if(res.status==="OK"){
-                  SuccessAlert("با موفقیت ساخته شد")
-                  dispatch(
-                      productData({}) as any
-                  );
-                }else{
-                  ErrorAlert("خطا در برقراری اطلاعات")
+                if (res.status === "OK") {
+                  SuccessAlert("با موفقیت ساخته شد");
+                  dispatch(productData({}) as any);
+                } else {
+                  ErrorAlert("خطا در برقراری اطلاعات");
                 }
-
 
                 // dispatch(updating(false));
 
@@ -105,13 +103,11 @@ const ActionForms = ({ itemValue }: any) => {
             } else {
               EditDataParams(apiRoute().edit.productDefine, values).then((res) => {
                 // dispatch(updating(true));
-                if(res.status==="OK"){
-                  SuccessAlert("با موفقیت ویرایش شد")
-                  dispatch(
-                      productData({}) as any
-                  );
-                }else{
-                  ErrorAlert("خطا در برقراری اطلاعات")
+                if (res.status === "OK") {
+                  SuccessAlert("با موفقیت ویرایش شد");
+                  dispatch(productData({}) as any);
+                } else {
+                  ErrorAlert("خطا در برقراری اطلاعات");
                 }
 
                 setIsModalOpen(false);
@@ -120,8 +116,8 @@ const ActionForms = ({ itemValue }: any) => {
           }}
         >
           {(formik) => (
-            <form onSubmit={formik.handleSubmit} className='p-5'>
-              <div className="w-full  grid grid-cols-2 gap-2 content-center">
+            <form onSubmit={formik.handleSubmit} className="p-5">
+              <div className="w-full  grid grid-cols-2 gap-y-10 gap-x-4 content-center">
                 <div>
                   <InputText
                     title="کد"
@@ -147,33 +143,42 @@ const ActionForms = ({ itemValue }: any) => {
                 {/* <div>
               <CustomSwitch />
               </div> */}{" "}
-                <InputSelect
-                  text="گروه بندی محصول"
-                  name="productGroup"
-                  handelChange={formik.setFieldValue}
-                  values={formik.values.productGroup}
-                  // values={{
-                  //   value: formik.values?.productGroup?.id,
-                  //   label: 'formik.values?.productGroup?.text',
-                  // }}
-                  options={[{value:"gg",label:"gdfg"},{value:"hj",label:"kjk"},{value:"weqe",label:"tyt"}]}
-                  // options={productOptions}
-                />
-                <CustomSwitch handleChange={(value:any)=>formik.setFieldValue('isActive',value)} />
-
-
-                              </div>
-
-              <div className="mt-4">
-                <InputText
-                  title="توضیحات"
-                  name="description"
-                  handelChange={formik.handleChange}
-                  values={formik.values.description}
-                  type={"textarea"}
-                />
-                <ErrorMessage name="description" render={(messege) => <span className="text-tomato">{messege}</span>} />
+                <div>
+                  <InputSelect
+                    text="گروه بندی محصول"
+                    name="productGroup"
+                    handelChange={formik.setFieldValue}
+                    values={formik.values.productGroup}
+                    // values={{
+                    //   value: formik.values?.productGroup?.id,
+                    //   label: 'formik.values?.productGroup?.text',
+                    // }}
+                    // options={[
+                    //   { value: "gg", label: "gdfg" },
+                    //   { value: "hj", label: "kjk" },
+                    //   { value: "weqe", label: "tyt" },
+                    // ]}
+                    options={productOptions}
+                  />
+                </div>
+                <div className="flex items-center">
+                  <CustomSwitch handleChange={(value: any) => formik.setFieldValue("isActive", value)} />
+                </div>
+                <div className="!col-span-2 ">
+                  <InputText
+                    title="توضیحات"
+                    name="description"
+                    handelChange={formik.handleChange}
+                    values={formik.values.description}
+                    type={"textarea"}
+                  />
+                  <ErrorMessage
+                    name="description"
+                    render={(messege) => <span className="text-tomato">{messege}</span>}
+                  />
+                </div>
               </div>
+
               <div className="col-span-5 p-5 flex flex-row justify-end items-center">
                 <Button className="border-none bg-secondaryColor text-dark" onClick={() => setIsModalOpen(false)}>
                   لغو

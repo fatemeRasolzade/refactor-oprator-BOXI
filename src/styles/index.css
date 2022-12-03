@@ -71,10 +71,10 @@
   }
 
    .autocompleteInput{
-    @apply  w-full h-[46px] before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0 outline-0 ;
+    @apply  w-full h-[40px] before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0 outline-0 ;
   }
   .autocompleteWrapper{
-    @apply flex items-center justify-between relative h-[48px]  px-4  w-[250px]   border-[#ABABAB] rounded-[20px]
+    @apply flex items-center justify-between relative h-[45px]  px-4  w-[250px]   border-[#ABABAB] rounded-[10px]
   } 
   .autocompleteLabel{
     @apply absolute top-[-12px] right-5 bg-white  z-10

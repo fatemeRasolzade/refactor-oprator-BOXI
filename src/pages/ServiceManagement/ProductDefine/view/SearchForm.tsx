@@ -6,12 +6,16 @@ import Chip from "../../../../global/Chip/Chip";
 import AutocompleteInput from "../../../../global/Autocomplete/AutocompleteInput";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import { productData } from "../../../../redux/ProductDefineData/ProductDefineData";
+import { apiRoute } from "../../../../services/apiRoute";
+import { GetDataParams } from "../../../../services/Service_call";
+import InputIcon from "../../../../global/InputIcon/InputIcon";
 
-interface PropsData{
-  isActive:Boolean | string
+interface PropsData {
+  isActive: Boolean | string;
+  isUpdating: Boolean;
 }
 
-const SearchForm = ({isActive}:PropsData): JSX.Element => {
+const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
   const [filterData, setFilterData] = useState({});
@@ -20,7 +24,7 @@ const SearchForm = ({isActive}:PropsData): JSX.Element => {
     initialValues: {
       code: "",
       name: "",
-      isActive:isActive
+      isActive: isActive,
     },
     onSubmit: (values) => {
       setFilterData(values);
@@ -31,8 +35,8 @@ const SearchForm = ({isActive}:PropsData): JSX.Element => {
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(productData({...formik.values,isActive}));
-  }, [isActive,filterData]);
+    dispatch(productData({ ...formik.values, isActive }));
+  }, [isActive, filterData, isUpdating]);
   const data = [
     { id: 1, text: "product" },
     { id: 2, text: "price" },
@@ -51,7 +55,7 @@ const SearchForm = ({isActive}:PropsData): JSX.Element => {
     //mr hash please dont delete this comments//
     // const params = `${e.target.value}`;
     // setOptions(data.filter(item=>item.text.includes(e.target.value)))
-    // GetDataParams(apiRoute().get.GET_SERVICES+ params)
+    // GetDataParams(apiRoute().get.GET_PRODUCT + params);
   };
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     formik.setFieldValue(name, e.target.value);
@@ -78,13 +82,18 @@ const SearchForm = ({isActive}:PropsData): JSX.Element => {
               onChange={(e) => handleChangeName(e, "name")}
               onSelect={(val: any) => handleSelect(val, "name")}
             />
-            {/*<InputIcon text='عنوان' handleOnSelect={handleOnSelect} handleOnSearch={setName}/>*/}
-            <SimpleButton className="full-gray-btn w-[160px] h-[40px] centering rounded-md" icon={<BiSearch size={20} />} text="جستجو" />
+
+            {/* <InputIcon text='عنوان' handleOnSelect={undefined} handleOnSearch={()=>formik.setFieldValue("name", formik.values.name)}/> */}
+            <SimpleButton
+              className="full-gray-btn w-[160px] h-[40px] centering rounded-md"
+              icon={<BiSearch size={20} />}
+              text="جستجو"
+            />
           </div>
         </form>
       </div>
       {/* list of chip */}
-      {filterData  && <Chip filterData={filterData} formData={formik} />}
+      {filterData && <Chip filterData={filterData} formData={formik} />}
     </>
   );
 };
