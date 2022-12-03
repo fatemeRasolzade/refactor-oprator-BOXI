@@ -5,7 +5,7 @@ import HubList from "../HubData/HubData";
 import RolesList from "../RolsData/RolesData";
 import PageNumber from "../PaginationAction/PaginationAction";
 import PersonnelList from "../PersonData/PersonsData";
-
+import ProductDefineList from '../ProductDefineData/ProductDefineData'
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
 const persistConfig = {
   key: "root",
@@ -19,6 +19,7 @@ const reducers = combineReducers({
   paginate: PageNumber,
   personnel: PersonnelList,
   serviceDefine: ServiceData,
+  productDefine:ProductDefineList
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -1,10 +1,10 @@
 import { Button } from "@material-tailwind/react";
 import React, { FC } from "react";
+import { useDispatch } from "react-redux";
+import DeleteOperation from "../../../../components/tableOperation/DeleteOperation";
+import { updating } from "../../../../redux/ServiceDefine/ServiceDefineReducer";
 
-import DeleteOperation from "../../../components/tableOperation/DeleteOperation";
-import { updating } from "../../../redux/PersonData/PersonsData";
-import { apiRoute } from "../../../services/apiRoute";
-import EditPersonnel from "./EditPersonnel";
+import { apiRoute } from "../../../../services/apiRoute";
 
 interface ModalOperationProps {
   itemValue: any;
@@ -13,30 +13,34 @@ interface ModalOperationProps {
   setMode: (value: "delete" | "edit" | null) => void;
 }
 
-const PersonnelModalOperation: FC<ModalOperationProps> = ({
+const ModalOperation: FC<ModalOperationProps> = ({
   type,
   itemValue,
   setOnClose,
   setMode,
 }): JSX.Element => {
   switch (type) {
-    case "edit":
-      return <EditPersonnel setMode={setMode} itemValue={itemValue} />;
-
     case "delete":
       return (
         <DeleteOperation
-          title="حذف پرسنل"
+          title="حذف سرویس"
           itemId={itemValue.id}
-          route={apiRoute().delete.personnel + `/${itemValue.id}`}
+          route={apiRoute().delete.serviceDefine + `/${itemValue.id}`}
           updating={updating}
           // setOnClose={setOnClose}
           // setMode={setMode}
         />
       );
+
+    case "edit":
+      return <EditOperation />;
     default:
       return <></>;
   }
 };
 
-export default PersonnelModalOperation;
+export default ModalOperation;
+
+const EditOperation = () => {
+  return <></>;
+};

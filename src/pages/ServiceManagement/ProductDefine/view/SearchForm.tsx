@@ -2,36 +2,41 @@ import React, { useEffect, useState } from "react";
 import { BiSearch, BiX, BiChevronDown } from "react-icons/bi";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import Select from "react-select";
 import Chip from "../../../../global/Chip/Chip";
-import { ServiceData } from "../../../../redux/ServiceDefine/ServiceDefineReducer";
 import AutocompleteInput from "../../../../global/Autocomplete/AutocompleteInput";
-import { GetDataParams } from "../../../../services/Service_call";
-import { apiRoute } from "../../../../services/apiRoute";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import PerfesionalSearch from "../../../../components/PerfesionalSearch/PerfesionalSearch";
+import { productData } from "../../../../redux/ProductDefineData/ProductDefineData";
+import { apiRoute } from "../../../../services/apiRoute";
+import { GetDataParams } from "../../../../services/Service_call";
+import InputIcon from "../../../../global/InputIcon/InputIcon";
 
-const SearchForm = (): JSX.Element => {
+interface PropsData {
+  isActive: Boolean | string;
+  isUpdating: Boolean;
+}
+
+const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
   const [filterData, setFilterData] = useState({});
   const formik = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       code: "",
       name: "",
+      isActive: isActive,
     },
     onSubmit: (values) => {
       setFilterData(values);
-      //@ts-ignore
-      dispatch(ServiceData(formik.values));
+      // //@ts-ignore
+      // dispatch(productData(formik.values));
     },
   });
 
-  // useEffect(() => {
-  //   // @ts-ignore
-  //   dispatch(ServiceData(formik.values));
-  // }, [filterData]);
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(productData({ ...formik.values, isActive }));
+  }, [isActive, filterData, isUpdating]);
   const data = [
     { id: 1, text: "product" },
     { id: 2, text: "price" },
@@ -50,7 +55,7 @@ const SearchForm = (): JSX.Element => {
     //mr hash please dont delete this comments//
     // const params = `${e.target.value}`;
     // setOptions(data.filter(item=>item.text.includes(e.target.value)))
-    // GetDataParams(apiRoute().get.GET_SERVICES+ params)
+    // GetDataParams(apiRoute().get.GET_PRODUCT + params);
   };
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     formik.setFieldValue(name, e.target.value);
@@ -77,32 +82,15 @@ const SearchForm = (): JSX.Element => {
               onChange={(e) => handleChangeName(e, "name")}
               onSelect={(val: any) => handleSelect(val, "name")}
             />
-            {/*<InputIcon text='عنوان' handleOnSelect={handleOnSelect} handleOnSearch={setName}/>*/}
-            <SimpleButton  className="full-gray-btn" icon={<BiSearch size={20} />} text="جستجو" />
+
+            {/* <InputIcon text='عنوان' handleOnSelect={undefined} handleOnSearch={()=>formik.setFieldValue("name", formik.values.name)}/> */}
+            <SimpleButton
+              className="full-gray-btn w-[160px] h-[40px] centering rounded-md"
+              icon={<BiSearch size={20} />}
+              text="جستجو"
+            />
           </div>
         </form>
-        <PerfesionalSearch formData={formik} text="جستجوی پیشرفته" LeftIcon={<BiChevronDown />}>
-          <>
-            <Select
-              name="selectBagType"
-              className="simple_select"
-              placeholder="محصول"
-              options={[
-                { label: "محصول اول", value: 1 },
-                { label: "محصول دوم", value: 2 },
-              ]}
-              onChange={(value) => {
-                formik.setFieldValue("product", { id: value?.value, text: value?.label });
-              }}
-              value={{
-                // @ts-ignore
-                value: formik.values?.product?.id,
-                // @ts-ignore
-                label: formik.values?.product?.text,
-              }}
-            />
-          </>
-        </PerfesionalSearch>
       </div>
       {/* list of chip */}
       {filterData && <Chip filterData={filterData} formData={formik} />}

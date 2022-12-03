@@ -26,8 +26,8 @@ const ModalOperation: FC<ModalOperationProps> = ({
           itemId={itemValue.id}
           route={apiRoute().delete.role + `/${itemValue.id}`}
           updating={updating}
-          setOnClose={setOnClose}
-          setMode={setMode}
+          // setOnClose={setOnClose}
+          // setMode={setMode}
         />
       );
 

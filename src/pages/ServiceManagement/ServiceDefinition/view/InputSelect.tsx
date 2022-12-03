@@ -15,11 +15,10 @@ const InputSelect = ({text,handelChange,name,blure,values,options}:{text?:string
       };
 
   return (
-    <div className='w-full '>
+    <div className='w-full h-48'>
        <label >
         <span>{text}</span>
         <Select
-      
         isLoading={options.length > 0 ? false : true}
         value={options ? options.find((option:any)=>option.label===values): ""}
         onChange={option => handelChange(name, {
