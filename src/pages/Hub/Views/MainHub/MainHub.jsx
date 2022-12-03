@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect } from "react";
+import {Link, useNavigate} from "react-router-dom"
 import StaticTable from '../../../../components/staticTable/StaticTable';
 import {HubColumn} from "../../../../global/Column/Columns"
 import {useDispatch,useSelector} from "react-redux"
@@ -8,8 +8,10 @@ import Breadcrumb from "../../../../components//Breadcrumb/Breadcrumb";
 import NavbarSearch from "../../../../components/NavbarSearch/NavbarSearch";
 import OptionsTable from "../../../../components/OptionsTable/OptionsTable";
  import * as XLSX  from "xlsx-js-style"
+import { BiEditAlt, BiTrash } from "react-icons/bi";
 const Hub = () => {
   const dispatch=useDispatch()
+  const navigate=useNavigate()
   const {payload}=useSelector(state=>state.hub.postLists)
   const {pageNumbers} =useSelector(state=>state.paginate)
 
@@ -23,6 +25,11 @@ dispatch(HubData(pageNumbers))
   },[pageNumbers])
 
 
+const handelDeleteHub=(e)=>{
+console.log('yyyyyy',e)
+}
+
+  // onClick={()=>navigate('/hub/edit')}
 
 const data=payload?.content?.length > 0 ? payload.content.map(hubItem=>{
   return{
@@ -35,7 +42,9 @@ const data=payload?.content?.length > 0 ? payload.content.map(hubItem=>{
     Ragen:hubItem.selectRegion !==null ? hubItem?.selectRegion?.text :"",
     deliver:hubItem.dropOffAllowed ? "بله" : "خیر",
     editBy:hubItem.name ? hubItem?.name : "",
-    EditTime:hubItem.locationStartDate !==null ? `${hubItem?.locationStartDate?.year}/${hubItem?.locationStartDate?.month}/${hubItem?.locationStartDate?.day} ` : ""
+    EditTime:hubItem.locationStartDate !==null ? `${hubItem?.locationStartDate?.year}/${hubItem?.locationStartDate?.month}/${hubItem?.locationStartDate?.day} ` : "",
+    edit:<div className="w-full centering cursor-pointer" ><BiEditAlt onClick={()=>navigate("/hub/edit",{state:{dataEdit:hubItem}})}/></div>,
+    delete:<div className="w-full centering cursor-pointer"><BiTrash onClick={()=>handelDeleteHub(hubItem.id)}/></div>
   }
 }) : []
 
@@ -54,8 +63,6 @@ const exportExcel=()=>{
 
   XLSX.utils.book_append_sheet(web,ws,"myfile")
   XLSX.writeFile(web,"MyExcel.xlsx")
-
-
 }
 
   return (

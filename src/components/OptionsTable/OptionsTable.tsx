@@ -26,12 +26,7 @@ const OptionsTable = ({exportExcel}:{exportExcel?:any}) => {
             icon={<GrDocumentPdf color="black" />}
           />
         </li>
-        <li>
-          <SimpleButton text="ویرایش" className="centering rounded-lg text-black" icon={<BiEdit color="black" />} />
-        </li>
-        <li>
-          <SimpleButton text="حذف" className="centering rounded-lg text-black" icon={<BiTrash color="black" />} />
-        </li>
+     
         <li>
           <CustomSwitch />
         </li>

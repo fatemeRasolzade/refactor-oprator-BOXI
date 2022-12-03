@@ -9,14 +9,17 @@ import App from './App';
 import Layout from './components/Layout/Layout';
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
+import InterSeptor from "./services/http_service"
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+     <InterSeptor/>
     <BrowserRouter>
   <Provider store={store}>
   <PersistGate loading={null} persistor={persistor}>
+  
    <Layout>
    <ToastContainer closeButton={false} autoClose={3000} toastClassName="rounded-md p-4 font-medium" />
    <ThemeProvider>

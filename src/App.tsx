@@ -7,11 +7,13 @@ import "react-toastify/dist/ReactToastify.min.css";
 import "rodal/lib/rodal.css";
 import NotFound from "./pages/NotFound/NotFound";
 import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
+import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
+import UserService from "./services/userService";
 
 function App() {
 
 
-
+  UserService.initKeycloak();
 
 
   return (
@@ -24,6 +26,8 @@ function App() {
         )}
         <Route path="*" element={<NotFound />} />
         <Route path="/hub/add" element={<HubAdd/>}/>
+        <Route path="/hub/edit" element={<HubEdit/>}/>
+
       </Routes>
     </div>
   );

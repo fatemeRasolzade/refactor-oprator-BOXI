@@ -39,6 +39,14 @@ export const HubColumn = [
     Header: "تاریخ آخرین ویرایش",
     accessor: "EditTime",
   },
+  {
+    Header: "ویرایش",
+    accessor: "edit",
+  },
+  {
+    Header: "حذف",
+    accessor: "delete",
+  },
 ];
 
 export const RoleColumn = [
@@ -96,4 +104,5 @@ export const PersonnelColumn = [
     Header: "عملیات",
     accessor: "operation",
   },
+
 ];

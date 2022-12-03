@@ -1,32 +1,38 @@
+import { useEffect } from "react";
 import axios from "axios";
-import { ErrorAlert } from "../global/alert/Alert";
-import { API_CONSIGNMENT } from "./apiRoute";
+import UserService from "./userService";
+// import { useStore } from "../context";
+// import { parse, stringify } from "qs";
 
+// axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded; charset=utf-8";
 
+// const constants = {
+// 	param1: "one",
+// 	param2: "two",
+// };
 
+export default () => {
+ 
+	// const { user } = useStore();
+	const persianError = {
+		"productgroup.duplicate": "کد محصول تکراری است",
+	};
+	useEffect(() => {
+		axios.interceptors.request.use((config) => {
+		if (UserService.isLoggedIn()) {
+		  const cb = () => {
+			config.headers.Authorization = `Bearer ${UserService.getToken()}`;
+			return Promise.resolve(config);
+		  };
+		  return UserService.updateToken(cb);
+		}
+	  });
 
+	}, []);
+	return null;
+};
 
-
-axios.defaults.headers.common["Content-Type"] = "application/json";
-axios.interceptors.response.use(null, (error) => {
-  // const accessToken = Cookies.get()
-  const errorStatus = error.respons 
-  if (errorStatus === 401) {
-    
-  }
-
-  const expectedErrors =
-    error.response &&
-    error.response.status >= 400 &&
-    error.response.status < 500;
-  if (!expectedErrors) {
-    ErrorAlert("مشکلی از سمت سرور رخ داده است.");
-  }
-
-  return Promise.reject(error);
-});
-
-export default {
+export const http= {
   get: axios.get,
   post: axios.post,
   put: axios.put,
