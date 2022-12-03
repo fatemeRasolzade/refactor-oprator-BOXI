@@ -1,10 +1,8 @@
-import { BiPlus, BiEdit, BiTrash } from "react-icons/bi";
-import { GrDocumentPdf } from "react-icons/gr";
-import { GoDesktopDownload, GoGear } from "react-icons/go";
+
+import { GoDesktopDownload } from "react-icons/go";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import AddButton from "./AddButton";
-import DropButton from "./DropButton";
+
 
 interface propsData {
   setIsACtive?:(value: boolean) => void ,

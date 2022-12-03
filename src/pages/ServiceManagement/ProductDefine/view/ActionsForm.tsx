@@ -8,7 +8,6 @@ import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { apiRoute } from "../../../../services/apiRoute";
 import {
   EditDataParams,
-  getDataFromServer,
   PostDataParams,
   selectDataFromServer,
 } from "../../../../services/Service_call";
@@ -17,10 +16,6 @@ import CustomSwitch from "../../../../global/Switch/Switch";
 import {useDispatch, useSelector} from "react-redux";
 import { productData, updating } from "../../../../redux/ProductDefineData/ProductDefineData";
 import { productDefineschema } from "./productDefineschema";
-import { AiOutlineEdit } from "react-icons/ai";
-import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import { BiPlus } from "react-icons/bi";
-
 import DropButton from "./DropButton";
 import AddExcel from "./AddExcel";
 
@@ -59,7 +54,7 @@ const ActionForms = ({ itemValue }: any) => {
   return (
     <>
 
-        <DropButton  options={options}/>
+        {!itemValue ?<DropButton  options={options}/>:''}
       <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel}/>
       <Dialog open={isModalOpen} handler={setIsModalOpen}>
         <Formik

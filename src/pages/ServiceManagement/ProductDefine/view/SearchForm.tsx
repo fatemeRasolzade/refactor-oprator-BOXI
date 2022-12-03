@@ -2,14 +2,9 @@ import React, { useEffect, useState } from "react";
 import { BiSearch, BiX, BiChevronDown } from "react-icons/bi";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import Select from "react-select";
 import Chip from "../../../../global/Chip/Chip";
-import { ServiceData } from "../../../../redux/ServiceDefine/ServiceDefineReducer";
 import AutocompleteInput from "../../../../global/Autocomplete/AutocompleteInput";
-import { GetDataParams } from "../../../../services/Service_call";
-import { apiRoute } from "../../../../services/apiRoute";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import PerfesionalSearch from "../../../../components/PerfesionalSearch/PerfesionalSearch";
 import { productData } from "../../../../redux/ProductDefineData/ProductDefineData";
 
 interface PropsData{
