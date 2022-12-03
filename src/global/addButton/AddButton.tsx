@@ -21,8 +21,15 @@ const AddButton = ({
 }: PropAddButton) => {
   const [toggle, setToggle] = useState(false);
 
+  const handleBlur = (e: {
+    currentTarget: { contains: (arg0: any) => any };
+    relatedTarget: any;
+  }) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) setToggle(false);
+  };
+
   return (
-    <div className="relative w-44">
+    <div className="relative w-44" onBlur={handleBlur}>
       <button
         className={`btn full-tomato-btn w-full`}
         onClick={() => setToggle(!toggle)}
