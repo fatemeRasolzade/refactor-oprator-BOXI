@@ -7,9 +7,9 @@ export const productData=createAsyncThunk('productlists',async(body:any)=>{
     const params = `/filter?pageNumber=1&pageSize=20`;
     var data = {};
     try {
-        console.log("run try",apiRoute().post.product + params, body)
+   
         data = await PostDataParams(apiRoute().post.product + params, body);
-        console.log("data is",data)
+
     } catch (error) {
         console.log("error ", error);
     }
