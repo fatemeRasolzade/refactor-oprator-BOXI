@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { NationalCodeRegex } from "../../../tools/validations/ErrorHelper";
 import { VALIDNATIONALCODE } from "../../../tools/validations/ErrorKeywords";
+import InputSelect from "../../../global/InputSelect/InputSelect";
 
 type CustomerFormProps = {
   open: boolean;
@@ -208,13 +209,14 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
             handleChange={handleChange}
             error={touched.name && errors.name}
           />
-          <InputText
-            important
+          <InputSelect
+            options={[]}
+            // important
             label="کد ملی"
-            values={values.nationalCode}
-            name="nationalCode"
+            values={values.selectCustomerType}
+            name="selectCustomerType"
             handleChange={handleChange}
-            error={touched.nationalCode && errors.nationalCode}
+            // error={touched.selectCustomerType && errors.selectCustomerType}
           />
           <InputText
             important

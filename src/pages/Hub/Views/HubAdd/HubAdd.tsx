@@ -111,17 +111,17 @@ const HubAdd = () => {
        <div ><InputText label='نام هاب' name="name" handleChange={formik.handleChange} values={formik.values.name} important type={"text"}/>
        <ErrorMessage name='nameHub' render={(messege)=>(<span className='text-tomato'>{messege}</span>)}/>
        </div>
-        <div> <InputSelect text='نوع هاب' name="selectHubType" handleChange={formik.setFieldValue} values={formik.values.selectHubType} options={typeHub}/> 
+        <div> <InputSelect label='نوع هاب' name="selectHubType" handleChange={formik.setFieldValue} values={formik.values.selectHubType} options={typeHub}/> 
        
         <ErrorMessage name='typeHub' render={(messege)=>(<span className='text-tomato  block mt-5'>{messege}</span>)}/>
         </div>
        <div >
-        <InputSelect text='گونه هاب' name="selectHubCategory" handleChange={formik.setFieldValue} values={formik.values.selectHubCategory} options={catHub}/>
+        <InputSelect label='گونه هاب' name="selectHubCategory" handleChange={formik.setFieldValue} values={formik.values.selectHubCategory} options={catHub}/>
       
        </div>
         <div >
       
-          <InputSelect text='هاب والد' name="selectParentHub" handleChange={formik.setFieldValue} values={formik.values.selectParentHub} options={selectHub}/> 
+          <InputSelect label='هاب والد' name="selectParentHub" handleChange={formik.setFieldValue} values={formik.values.selectParentHub} options={selectHub}/> 
        
        </div> 
        <div ><InputText label='پین کد'  name="pinCode" handleChange={formik.handleChange} values={formik.values.pinCode} type={"text"}/>
@@ -140,15 +140,15 @@ const HubAdd = () => {
       
        </div>
       <div >
-         <InputSelect text='استان' name="selectState" handleChange={formik.setFieldValue} values={formik.values.selectState} options={selectProvince}/> 
+         <InputSelect label='استان' name="selectState" handleChange={formik.setFieldValue} values={formik.values.selectState} options={selectProvince}/> 
      
       </div>
        <div >
-        <InputSelect text='شهر' name="selectCity" handleChange={formik.setFieldValue} values={formik.values.selectCity} options={citys}/> 
+        <InputSelect label='شهر' name="selectCity" handleChange={formik.setFieldValue} values={formik.values.selectCity} options={citys}/> 
       
        </div>
        <div >
-       <InputSelect text='منطقه' name="selectRegion" handleChange={formik.setFieldValue} values={formik.values.selectRegion} options={provinceLoc}/> 
+       <InputSelect label='منطقه' name="selectRegion" handleChange={formik.setFieldValue} values={formik.values.selectRegion} options={provinceLoc}/> 
       
        </div> 
        <div ><InputText label='پلاک' name="plateNumber" handleChange={formik.handleChange} values={formik.values.plateNumber} type={"number"}/>
