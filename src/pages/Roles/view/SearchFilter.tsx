@@ -23,7 +23,7 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
 
   const initialValues: MyFormValues = { code: "", name: "" };
   const [role, setRole] = useState<string>("");
-  const [hub, sethub] = useState<string>("");
+  const [hub, setAccess] = useState<string>("");
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -42,7 +42,7 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
     try {
       dispatch(
         RoleData({
-          code: "",
+          code: hub,
           name: role,
           isActive: isActive,
         }) as any
@@ -62,8 +62,8 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
           </div>
           <div>
             <InputIcon
-              text={""}
-              handleOnSearch={sethub}
+              text={"دسترسی ها"}
+              handleOnSearch={setAccess}
               handleOnSelect={undefined}
             />
           </div>
