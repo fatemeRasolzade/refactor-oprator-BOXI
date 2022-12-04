@@ -15,8 +15,8 @@ const SimpleButton = ({
 }: SimpleButtonProps) => {
   return (
     <button className={`btn ${className}`} onClick={handelClick}>
-      {icon && <span>{icon} </span>}
       <span>{text}</span>
+      {icon && <span>{icon} </span>}
     </button>
   );
 };

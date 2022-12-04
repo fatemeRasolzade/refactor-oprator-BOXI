@@ -25,7 +25,7 @@ const PerfesionalSearch = ({ formData, children }: propsData): JSX.Element => {
         }}
       >
         <PopoverHandler>
-          <Button className="border-none bg-transparent text-dark !shadow-none centering gap-3 text-base">
+          <Button className="border-none bg-transparent text-dark !shadow-none centering gap-3 text-base font-normal">
             <span>جستجوی پیشرفته </span>
             <BiChevronDown size={25} />
           </Button>

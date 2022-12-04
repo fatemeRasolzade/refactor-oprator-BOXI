@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { BiSearch } from "react-icons/bi";
+import { FiSearch } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
@@ -100,7 +100,7 @@ const CustomerSearchForm = ({
           />
           <SimpleButton
             className="full-gray-btn"
-            icon={<BiSearch size={20} />}
+            icon={<FiSearch size={25} className="text-darkGray" />}
             text="جستجو"
           />
           <PerfesionalSearch />

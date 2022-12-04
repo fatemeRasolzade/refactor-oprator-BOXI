@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BiX, BiXCircle } from "react-icons/bi";
+import SimpleButton from "../SimpleButton/SimpleButton";
 
 interface propsData {
   formData: any;
@@ -97,7 +98,7 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
     }
   };
   useEffect(() => {
-    delete  filterData.isActive
+    delete filterData.isActive;
     const convertObject = Object.entries(filterData).map(
       ([key, value]: any, index) =>
         value
@@ -129,33 +130,27 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
           .map(({ id, title, value }: any) => (
             <div
               key={id}
-              className="bg-grayLight flex w-fit py-1 px-3 justify-between items-center rounded-md"
+              className="bg-mainGray w-fit py-1 px-3 flex-between-center rounded-lg text-sm shadow"
             >
-              <span>
-                {title} : {value}
-              </span>
+              <span className="text-darkGray pl-1">{title}:</span>
+              <span className="text-dark">{value}</span>
               <span
-                className="mr-2 cursor-pointer"
+                className="cursor-pointer mr-2"
                 onClick={() => {
                   handleRemoveChipData(id);
                 }}
               >
-                <BiXCircle />
+                <BiXCircle size={18} className="text-dark" />
               </span>
             </div>
           ))}
         {chipData.length > 0 ? (
-          <div>
-            <button
-              className="w-122 h-21 flex justify-center items-center flex-row-reverse border-none text-tomato"
-              onClick={handleRemoveSearchFilters}
-            >
-              حذف جستجوها{" "}
-              <span>
-                <BiX />
-              </span>
-            </button>
-          </div>
+          <SimpleButton
+            handelClick={handleRemoveSearchFilters}
+            className="line-tomato-btn p-0"
+            text="حذف جستجوها"
+            icon={<BiX size={22} />}
+          />
         ) : null}
       </div>
     </>

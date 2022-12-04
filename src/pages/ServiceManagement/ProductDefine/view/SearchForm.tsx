@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { BiSearch, BiX, BiChevronDown } from "react-icons/bi";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import Chip from "../../../../global/Chip/Chip";
@@ -9,6 +8,7 @@ import { productData } from "../../../../redux/ProductDefineData/ProductDefineDa
 import { apiRoute } from "../../../../services/apiRoute";
 import { GetDataParams } from "../../../../services/Service_call";
 import InputIcon from "../../../../global/InputIcon/InputIcon";
+import { FiSearch } from "react-icons/fi";
 
 interface PropsData {
   isActive: Boolean | string;
@@ -96,7 +96,7 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
           {/* <InputIcon text='عنوان' handleOnSelect={undefined} handleOnSearch={()=>formik.setFieldValue("name", formik.values.name)}/> */}
           <SimpleButton
             className="full-gray-btn"
-            icon={<BiSearch size={20} />}
+            icon={<FiSearch size={25} className="text-darkGray pr-10" />}
             text="جستجو"
           />
         </form>

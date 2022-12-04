@@ -82,7 +82,7 @@ function Table({ columns, data, pageTable }) {
         {...getTableProps()}
         className="w-full text-center overflow-auto mt-6"
       >
-        <thead className="bg-tableColor h-10 font-thin">
+        <thead className="bg-mainGray h-10 font-thin">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
