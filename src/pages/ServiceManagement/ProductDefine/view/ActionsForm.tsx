@@ -3,7 +3,7 @@ import { Button, Dialog } from "@material-tailwind/react";
 
 import { Formik, ErrorMessage } from "formik";
 
-import InputText from "../../../../global/Input/Input";
+import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { apiRoute } from "../../../../services/apiRoute";
 import { EditDataParams, PostDataParams, selectDataFromServer } from "../../../../services/Service_call";
@@ -126,9 +126,9 @@ const ActionForms = ({ itemValue }: any) => {
               <div className="w-full  grid grid-cols-2 gap-y-10 gap-x-4 content-center">
                 <div>
                   <InputText
-                    title="کد"
+                    label="کد"
                     name="code"
-                    handelChange={formik.handleChange}
+                    handleChange={formik.handleChange}
                     values={formik.values.code}
                     important
                     type={"text"}
@@ -137,9 +137,9 @@ const ActionForms = ({ itemValue }: any) => {
                 </div>
                 <div>
                   <InputText
-                    title="عنوان"
+                    label="عنوان"
                     name="name"
-                    handelChange={formik.handleChange}
+                    handleChange={formik.handleChange}
                     values={formik.values.name}
                     important
                     type={"text"}
@@ -154,7 +154,7 @@ const ActionForms = ({ itemValue }: any) => {
                     text="گروه بندی محصول"
                   
                     name="productGroup"
-                    handelChange={formik.setFieldValue}
+                    handleChange={formik.setFieldValue}
                     values={formik.values.productGroup}
                     // values={{
                     //   value: formik.values?.productGroup?.id,
@@ -173,9 +173,9 @@ const ActionForms = ({ itemValue }: any) => {
                 </div>
                 <div className="!col-span-2 ">
                   <InputText
-                    title="توضیحات"
+                    label="توضیحات"
                     name="description"
-                    handelChange={formik.handleChange}
+                    handleChange={formik.handleChange}
                     values={formik.values.description}
                     type={"textarea"}
                   />

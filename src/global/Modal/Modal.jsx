@@ -8,9 +8,13 @@ const Modal = ({ visible, setVisible, children, title }) => {
       handler={setVisible}
       className={"overflow-visible p-5"}
     >
-      <div className="flex-between-center">
+      <div className="flex-between-center mb-6">
         <span className="text-dark">{title}</span>{" "}
-        <BiXCircle size={25} className="text-dark" />
+        <BiXCircle
+          size={25}
+          className="text-dark cursor-pointer"
+          onClick={() => setVisible(false)}
+        />
       </div>
       <div>{children}</div>
     </Dialog>

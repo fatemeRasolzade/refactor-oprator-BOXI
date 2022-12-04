@@ -79,7 +79,7 @@
     @apply flex-between-center relative h-10 pr-2 pl-2 w-60 border border-darkBorder rounded-lg text-darkGray;
   }
   .autocompleteLabel {
-    @apply absolute top-[-12px] right-5 bg-white z-10  px-2 text-darkGray;
+    @apply absolute top-[-12px] right-5 bg-white z-10  px-2 text-darkGray text-sm;
   }
   .advancedSearchButton {
     @apply border-none bg-transparent text-dark shadow-none flex justify-around items-center;
