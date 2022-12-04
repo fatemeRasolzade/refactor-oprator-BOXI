@@ -1,4 +1,3 @@
-import {useEffect} from "react"
 import "./styles/App.css";
 import "react-table-6/react-table.css";
 import { links } from "./components/SidebarRoutes/SidebarRoutes";
@@ -7,19 +6,19 @@ import "react-toastify/dist/ReactToastify.min.css";
 import "rodal/lib/rodal.css";
 import NotFound from "./pages/NotFound/NotFound";
 import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
+
+import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
 import UserService from "./services/UserService";
-// import InterCeptor from "./services/http_service"
+import Interseptor from "./services/http_service";
+import YupDefault from "./tools/config/YupDefault";
 function App() {
-
-
-// useEffect(()=>{
-//   UserService.initKeycloak();
-// },[])
-
+  UserService.initKeycloak();
 
   return (
     <div className="App">
-      {/* <InterCeptor/> */}
+      <Interseptor />
+      <YupDefault />
+
       <Routes>
         {links.map((item) =>
           item.childs.map((route) => (
@@ -27,7 +26,8 @@ function App() {
           ))
         )}
         <Route path="*" element={<NotFound />} />
-        <Route path="/hub/add" element={<HubAdd/>}/>
+        <Route path="/hub/add" element={<HubAdd />} />
+        <Route path="/hub/edit" element={<HubEdit />} />
       </Routes>
     </div>
   );

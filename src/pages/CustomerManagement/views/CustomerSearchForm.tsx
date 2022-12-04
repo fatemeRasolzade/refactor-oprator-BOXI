@@ -1,41 +1,39 @@
-import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
-import Chip from "../../../../global/Chip/Chip";
-import AutocompleteInput from "../../../../global/Autocomplete/AutocompleteInput";
-import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import { productData } from "../../../../redux/ProductDefineData/ProductDefineData";
-import { apiRoute } from "../../../../services/apiRoute";
-import { GetDataParams } from "../../../../services/Service_call";
-import InputIcon from "../../../../global/InputIcon/InputIcon";
+import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
+import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
+import Chip from "../../../global/Chip/Chip";
+import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
 
-interface PropsData {
-  isActive: Boolean | string;
-  isUpdating: Boolean;
-}
-
-const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
+type CustomerSearchFormProps = {
+  isActive?: Boolean | string;
+  isUpdating?: Boolean;
+};
+const CustomerSearchForm = ({
+  isActive,
+  isUpdating,
+}: CustomerSearchFormProps) => {
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
   const [filterData, setFilterData] = useState({});
   const formik = useFormik({
-    // enableReinitialize: true,
     initialValues: {
       code: "",
       name: "",
       isActive: isActive,
+      telNumber: "",
     },
     onSubmit: (values) => {
       setFilterData(values);
-      // //@ts-ignore
-      // dispatch(productData(formik.values));
     },
   });
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(productData({ ...formik.values, isActive }));
+    dispatch(customerData({ ...formik.values, isActive }));
   }, [isActive, filterData, isUpdating]);
   const data = [
     { id: 1, text: "product" },
@@ -71,6 +69,7 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
   const handleSelect = (val: any, name: string) => {
     formik.setFieldValue(name, val);
   };
+
   return (
     <>
       <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col">
@@ -79,32 +78,38 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
           onSubmit={formik.handleSubmit}
         >
           <AutocompleteInput
-            label={"کد"}
+            label={"کد مشتری"}
             items={serviceCodeOptions}
             value={formik.values.code}
             onChange={(e) => handleChangeCode(e, "code")}
             onSelect={(val: any) => handleSelect(val, "code")}
           />
           <AutocompleteInput
-            label={"عنوان"}
+            label={"نام مشتری"}
             items={[]}
             value={formik.values.name}
             onChange={(e) => handleChangeName(e, "name")}
             onSelect={(val: any) => handleSelect(val, "name")}
           />
-
-          {/* <InputIcon text='عنوان' handleOnSelect={undefined} handleOnSearch={()=>formik.setFieldValue("name", formik.values.name)}/> */}
+          <AutocompleteInput
+            label={"شماره تماس"}
+            items={[]}
+            value={formik.values.telNumber}
+            onChange={(e) => handleChangeName(e, "telNumber")}
+            onSelect={(val: any) => handleSelect(val, "telNumber")}
+          />
           <SimpleButton
             className="full-gray-btn"
-            icon={<FiSearch size={25} className="text-darkGray pr-10" />}
+            icon={<FiSearch size={25} className="text-darkGray" />}
             text="جستجو"
           />
+          <PerfesionalSearch />
         </form>
       </div>
-      {/* list of chip */}
+
       {filterData && <Chip filterData={filterData} formData={formik} />}
     </>
   );
 };
 
-export default SearchForm;
+export default CustomerSearchForm;

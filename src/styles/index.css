@@ -7,9 +7,15 @@
   font-family: "IRANSans" !important;
 }
 
+@layer base {
+  body {
+    @apply text-dark text-sm;
+  }
+}
+
 @layer components {
   .btn {
-    @apply h-10 rounded-lg border-none text-dark px-4 py-2 centering gap-2;
+    @apply h-10 rounded-lg border-none text-dark px-5 py-2 centering gap-2;
   }
   .full-tomato-btn {
     @apply bg-tomato text-light;
@@ -18,7 +24,7 @@
     @apply bg-light text-tomato border border-tomato;
   }
   .full-gray-btn {
-    @apply !bg-lightesGray !text-dark;
+    @apply !bg-lightGray !text-dark px-10;
   }
   .checkboxStyle {
     @apply bg-tomato text-white focus:!bg-red-800;
@@ -27,7 +33,7 @@
     @apply border-none  h-10 w-64;
   }
   .customTable .rt-tr-group {
-    @apply odd:bg-tableColor  border-none;
+    @apply odd:bg-mainGray  border-none;
   }
   .checkbox_select,
   .inputSelect .css-1s2u09g-control {
@@ -67,13 +73,13 @@
   }
 
   .autocompleteInput {
-    @apply w-full h-[46px] before:content-[attr(data-before)] relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0 outline-0;
+    @apply w-full before:content-[attr(data-before)] focus-visible:outline-none relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0;
   }
   .autocompleteWrapper {
-    @apply flex items-center justify-between relative h-[48px]  px-4  w-[250px]   border-[#ABABAB] rounded-[20px];
+    @apply flex-between-center relative h-10 pr-2 pl-2 w-60 border border-darkBorder rounded-lg text-darkGray;
   }
   .autocompleteLabel {
-    @apply absolute top-[-12px] right-5 bg-white  z-10;
+    @apply absolute top-[-12px] right-5 bg-white z-10  px-2 text-darkGray text-sm;
   }
   .advancedSearchButton {
     @apply border-none bg-transparent text-dark shadow-none flex justify-around items-center;
@@ -123,6 +129,6 @@
     @apply bg-light flex-start-start flex-col  absolute top-10  right-0 shadow-xl z-20 text-right w-full;
   }
   .ToggleElements {
-    @apply h-10 rounded-none border-none text-dark px-4 py-2 flex-start-start  gap-2 w-full hover:bg-grayLights transition;
+    @apply h-10 rounded-none border-none text-dark px-4 py-2 flex-start-start  gap-2 w-full hover:bg-lightGray transition;
   }
 }

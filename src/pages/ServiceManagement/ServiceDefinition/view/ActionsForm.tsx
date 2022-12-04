@@ -3,7 +3,7 @@ import { Button } from "@material-tailwind/react";
 
 import { Formik, ErrorMessage } from "formik";
 
-import InputText from "../../../../global/Input/Input";
+import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { apiRoute } from "../../../../services/apiRoute";
 import { getDataFromServer, selectDataFromServer } from "../../../../services/Service_call";
@@ -58,7 +58,7 @@ const ActionForms = () => {
                 <InputSelect
                   text="محصول"
                   name="product"
-                  handelChange={formik.setFieldValue}
+                  handleChange={formik.setFieldValue}
                   values={formik.values.product}
                   options={productOptions}
                 />
@@ -72,7 +72,7 @@ const ActionForms = () => {
                 <InputSelect
                   text="نوع"
                   name="type"
-                  handelChange={formik.setFieldValue}
+                  handleChange={formik.setFieldValue}
                   values={formik.values.type}
                   options={productOptions}
                 />
@@ -83,9 +83,9 @@ const ActionForms = () => {
               </div>
               <div>
                 <InputText
-                  title="عنوان"
+                  label="عنوان"
                   name="type"
-                  handelChange={formik.handleChange}
+                  handleChange={formik.handleChange}
                   values={formik.values.name}
                   important
                   type={"text"}
@@ -95,9 +95,9 @@ const ActionForms = () => {
 
               <div>
                 <InputText
-                  title="کد"
+                  label="کد"
                   name="code"
-                  handelChange={formik.handleChange}
+                  handleChange={formik.handleChange}
                   values={formik.values.code}
                   important
                   type={"text"}

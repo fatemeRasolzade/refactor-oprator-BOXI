@@ -19,6 +19,7 @@ root.render(
     <BrowserRouter>
   <Provider store={store}>
   <PersistGate loading={null} persistor={persistor}>
+ 
    <Layout>
    <ToastContainer closeButton={false} autoClose={3000} toastClassName="rounded-md p-4 font-medium" />
    <ThemeProvider>

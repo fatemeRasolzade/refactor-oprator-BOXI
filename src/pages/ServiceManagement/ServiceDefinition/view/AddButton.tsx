@@ -40,7 +40,7 @@ const AddButton = ({
           <ul>
             <li>
               <button
-                className="w-full py-2 px-3 border-none hover:bg-gray-200 text-sm text-right "
+                className="w-full py-2 px-3 border-none hover:bg-gray-200  text-right "
                 onClick={handelClick}
               >
                 افزودن

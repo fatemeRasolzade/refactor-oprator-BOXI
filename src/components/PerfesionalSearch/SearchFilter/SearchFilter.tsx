@@ -11,7 +11,7 @@ const SearchFilter = () => {
     <div className='col-span-4'>
       <h3 className='my-4'>تمام فیلترها</h3>
       {/* search Input */}
-  <InputText/>
+  {/* <InputText/> */}
 
   {/*sample checkbox */}
   <div className='h-300 overflow-auto mt-5' dir='ltr'>
@@ -37,7 +37,7 @@ return <CheckboxText text='فیلد اول'/>
 
         <div className='flex-1'>
         <h3 className='my-4'> فیلترهای انتخاب شده</h3>
-    <InputText/>
+    {/* <InputText/> */}
     <div className='h-300 overflow-auto mt-5' dir='ltr'>
     <div dir='rtl'>
    { checkboxed.map(item=>{

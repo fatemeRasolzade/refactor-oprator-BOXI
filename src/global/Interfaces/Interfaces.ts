@@ -12,14 +12,14 @@ export interface PropState {
 }
 
 export interface PropsInput{
-    handelChange ?:(e:string)=>string,
+    handleChange ?:(e:string)=>string,
     text?:string,
     handelSubmit?:React.FormEventHandler<HTMLFormElement> 
 }
 
 
 export interface PropsSelect{
-    handelChange :((newValue: SingleValue<{
+    handleChange :((newValue: SingleValue<{
         value: string;
         label: string;
     }>, actionMeta: ActionMeta<{
