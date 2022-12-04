@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ErrorAlert } from "../global/alert/Alert";
-import UserService from "./userService";
+import UserService from "./UserService";
 import { useEffect } from 'react';
 
 

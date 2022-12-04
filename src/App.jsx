@@ -9,7 +9,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 
 import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
-import UserService from "./services/userService";
+import UserService from "./services/UserService";
 import Interseptor from "./services/http_service"
 function App() {
 
