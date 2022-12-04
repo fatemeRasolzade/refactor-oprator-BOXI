@@ -3,7 +3,6 @@ import { GrDocumentPdf } from "react-icons/gr";
 import { GoDesktopDownload, GoGear } from "react-icons/go";
 import CustomSwitch from "./../../global/Switch/Switch";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
-import AddButton from "../../global/addButton/AddButton";
 import { Link} from "react-router-dom";
 const OptionsTable = ({exportExcel}:{exportExcel?:any}) => {
   return (
@@ -26,12 +25,7 @@ const OptionsTable = ({exportExcel}:{exportExcel?:any}) => {
             icon={<GrDocumentPdf color="black" />}
           />
         </li>
-        <li>
-          <SimpleButton text="ویرایش" className="centering rounded-lg text-black" icon={<BiEdit color="black" />} />
-        </li>
-        <li>
-          <SimpleButton text="حذف" className="centering rounded-lg text-black" icon={<BiTrash color="black" />} />
-        </li>
+     
         <li>
           <CustomSwitch />
         </li>
