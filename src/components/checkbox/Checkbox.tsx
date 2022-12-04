@@ -4,7 +4,7 @@ const Checkbox = ({title,handelChange,name,blure,values}:{title?:string,handelCh
   return (
     <div>
         <label>
-            <span className='block text-sm'>{title}</span>
+            <span className='block '>{title}</span>
         <input type="checkbox" className="accent-pink-500 mt-4" onChange={handelChange} name={name} onBlur={blure} checked={values}/>
         </label>
     </div>

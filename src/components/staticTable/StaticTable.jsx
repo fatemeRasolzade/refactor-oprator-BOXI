@@ -77,16 +77,18 @@ function Table({ columns, data, pageTable }) {
 
   // Render the UI for your table
   return (
-    <>
+    <div className="overflow-auto bg-white rounded-lg shadow-md  mt-6">
       <table
         {...getTableProps()}
-        className="w-full text-center overflow-auto mt-6"
+        className="border-collapse table-auto w-full bg-white table-striped rounded-lg"
       >
-        <thead className="bg-mainGray h-10 font-thin">
+        <thead className="bg-mainGray h-12 rounded-lg text-dark">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th className=" font-normal" {...column.getHeaderProps()}>
+                  {column.render("Header")}
+                </th>
               ))}
             </tr>
           ))}
@@ -95,13 +97,13 @@ function Table({ columns, data, pageTable }) {
           {page.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className="even:bg-gray-100 h-9">
+              <tr
+                {...row.getRowProps()}
+                className="even:bg-lightGray h-12 text-dark"
+              >
                 {row.cells.map((cell) => {
                   return (
-                    <td
-                      {...cell.getCellProps()}
-                      className="border-gray-300 border "
-                    >
+                    <td {...cell.getCellProps()} className="">
                       {cell.render("Cell")}
                     </td>
                   );
@@ -112,10 +114,17 @@ function Table({ columns, data, pageTable }) {
         </tbody>
       </table>
 
-      <div className="text-center mt-10">
+          {page.length === 0 && (
+            <div className="h-20 centering w-full">
+           
+                <>موردی یافت نشد</>
+        
+            </div>
+          )}
+      <div className="text-center">
         <Paginations pageData={pageTable} />
       </div>
-    </>
+    </div>
   );
 }
 

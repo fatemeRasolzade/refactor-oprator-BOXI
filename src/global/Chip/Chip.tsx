@@ -130,7 +130,7 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
           .map(({ id, title, value }: any) => (
             <div
               key={id}
-              className="bg-mainGray w-fit py-1 px-3 flex-between-center rounded-lg text-sm shadow"
+              className="bg-mainGray w-fit py-1 px-3 flex-between-center rounded-lg  shadow"
             >
               <span className="text-darkGray pl-1">{title}:</span>
               <span className="text-dark">{value}</span>

@@ -7,6 +7,12 @@
   font-family: "IRANSans" !important;
 }
 
+@layer base {
+  body {
+    @apply text-dark text-sm;
+  }
+}
+
 @layer components {
   .btn {
     @apply h-10 rounded-lg border-none text-dark px-5 py-2 centering gap-2;
@@ -70,10 +76,10 @@
     @apply w-full before:content-[attr(data-before)] focus-visible:outline-none relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0;
   }
   .autocompleteWrapper {
-    @apply flex-between-center relative h-10 pr-2 pl-2 w-60 border border-darkBorder rounded-lg text-darkGray text-sm;
+    @apply flex-between-center relative h-10 pr-2 pl-2 w-60 border border-darkBorder rounded-lg text-darkGray;
   }
   .autocompleteLabel {
-    @apply absolute top-[-12px] right-5 bg-white z-10 text-sm px-2 text-darkGray;
+    @apply absolute top-[-12px] right-5 bg-white z-10  px-2 text-darkGray;
   }
   .advancedSearchButton {
     @apply border-none bg-transparent text-dark shadow-none flex justify-around items-center;
