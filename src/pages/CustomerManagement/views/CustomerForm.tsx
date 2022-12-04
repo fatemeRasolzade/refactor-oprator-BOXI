@@ -12,36 +12,36 @@ type CustomerFormProps = {
 
 const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
   const validation = Yup.object().shape({
-    code: Yup.string().required().label("شماره مشتری"),
-    name: Yup.string().required().label("نام مشتری"),
-    selectCustomerType: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
+    code: Yup.string().required(),
+    // name: Yup.string().required().label("نام مشتری"),
+    // selectCustomerType: Yup.object().shape({
+    //   text: Yup.string().required(),
+    //   id: Yup.string().required(),
+    // }),
     // nationalCode: Yup.string().matches(PersonNationalCodeRegex, "کد ملی معتبر نیست").required(),
-    selectParentCustomer: Yup.object().nullable(true).shape({
-      text: Yup.string(),
-      id: Yup.number(),
-    }),
-    email: Yup.string().email("ایمیل معتبر نیست"),
-    currentCredit: Yup.number().label(""),
-    creditLimit: Yup.number().label(""),
-    initialCredit: Yup.number().label(""),
+    // selectParentCustomer: Yup.object().nullable(true).shape({
+    //   text: Yup.string(),
+    //   id: Yup.number(),
+    // }),
+    // email: Yup.string().email("ایمیل معتبر نیست"),
+    // currentCredit: Yup.number().label(""),
+    // creditLimit: Yup.number().label(""),
+    // initialCredit: Yup.number().label(""),
 
-    username: Yup.string().required(),
+    // username: Yup.string().required(),
     // password:
     // 	!currentData &&
     // 	Yup.string().min(8, "حداقل هشت کاراکتر").matches(justENGRegex,  "رمز عبور باید شامل اعداد و حروف لاتین باشد").required(),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "رمز عبور مطابقت ندارد")
-      .required(),
-    extendGlobalVirtualSeries: Yup.boolean().nullable(),
-    dynamicPickupAllocation: Yup.boolean().nullable(),
+    // confirmPassword: Yup.string()
+    //   .oneOf([Yup.ref("password"), null], "رمز عبور مطابقت ندارد")
+    //   .required(),
+    // extendGlobalVirtualSeries: Yup.boolean().nullable(),
+    // dynamicPickupAllocation: Yup.boolean().nullable(),
 
-    smsNotification: Yup.boolean().nullable(),
-    emailNotification: Yup.boolean().nullable(),
-    pickupPaperWithEmail: Yup.boolean().nullable(),
-    isActive: Yup.boolean().nullable(),
+    // smsNotification: Yup.boolean().nullable(),
+    // emailNotification: Yup.boolean().nullable(),
+    // pickupPaperWithEmail: Yup.boolean().nullable(),
+    // isActive: Yup.boolean().nullable(),
 
     // telephones: [],
     // addresses: [],
@@ -49,7 +49,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
 
   const formik = useFormik({
     enableReinitialize: true,
-    // validationSchema: validation,
+    validationSchema: validation,
     initialValues: currentData
       ? {
           // edit feilds
@@ -195,6 +195,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
           values={values.code}
           name="code"
           handleChange={handleChange}
+          error={touched.code && errors.code}
         />
 
         <button type={"submit"}>hwsjfsdf</button>

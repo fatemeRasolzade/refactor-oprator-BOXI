@@ -10,12 +10,14 @@ import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
 import UserService from "./services/UserService";
 import Interseptor from "./services/http_service";
+import YupDefault from "./tools/config/YupDefault";
 function App() {
   UserService.initKeycloak();
 
   return (
     <div className="App">
       <Interseptor />
+      <YupDefault />
 
       <Routes>
         {links.map((item) =>
