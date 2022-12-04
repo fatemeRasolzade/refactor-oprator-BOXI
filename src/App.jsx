@@ -1,4 +1,3 @@
-import {useEffect} from "react"
 import "./styles/App.css";
 import "react-table-6/react-table.css";
 import { links } from "./components/SidebarRoutes/SidebarRoutes";
@@ -10,18 +9,13 @@ import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 
 import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
 import UserService from "./services/UserService";
-import Interseptor from "./services/http_service"
+import Interseptor from "./services/http_service";
 function App() {
-
-
-  UserService.initKeycloak(); 
-
-
+  UserService.initKeycloak();
 
   return (
     <div className="App">
-
-     <Interseptor/>
+      <Interseptor />
 
       <Routes>
         {links.map((item) =>
@@ -30,9 +24,8 @@ function App() {
           ))
         )}
         <Route path="*" element={<NotFound />} />
-        <Route path="/hub/add" element={<HubAdd/>}/>
-        <Route path="/hub/edit" element={<HubEdit/>}/>
-
+        <Route path="/hub/add" element={<HubAdd />} />
+        <Route path="/hub/edit" element={<HubEdit />} />
       </Routes>
     </div>
   );

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../components/staticTable/StaticTable";
@@ -9,10 +10,12 @@ import {
 } from "../../global/CustomOptions/CustomOptionsKeyword";
 import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
 import { CustomerColumns } from "./views/CustomerColumn";
+import CustomerForm from "./views/CustomerForm";
 
 import CustomerSearchForm from "./views/CustomerSearchForm";
 
 const CustomerManagement = () => {
+  const [open, setOpen] = useState(false);
   const handleGetExcel = () => {
     alert("HELOOOOOOOOOOOOOOO");
   };
@@ -22,15 +25,13 @@ const CustomerManagement = () => {
     { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
   ];
 
-  const handleAction = () => {
-    alert("frist");
-  };
+  const handleOpenModal = () => setOpen(true);
   const handleUploadFileAction = () => {
     alert("second");
   };
 
   const ToggleOptions = [
-    { handleClick: handleAction, name: "افزودن مشتری" },
+    { handleClick: handleOpenModal, name: "افزودن مشتری" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
 
@@ -71,6 +72,7 @@ const CustomerManagement = () => {
         column={CustomerColumns}
         pagination={customerList?.totalElements}
       />
+      <CustomerForm open={open} setOpen={setOpen} />
     </div>
   );
 };

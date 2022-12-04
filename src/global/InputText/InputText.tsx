@@ -1,4 +1,4 @@
-import React from "react";
+
 import { BiSearchAlt2 } from "react-icons/bi";
 
 const InputText = ({ setSearch, text }: { text?: string; setSearch?: any }) => {

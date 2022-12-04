@@ -1,19 +1,19 @@
-import Rodal from "rodal";
+import { Dialog } from "@material-tailwind/react";
+import { BiXCircle } from "react-icons/bi";
 
-const Modal = ({ visible, setVisible, children, width, height }) => {
+const Modal = ({ visible, setVisible, children, title }) => {
   return (
-    <div>
-      <Rodal
-        visible={visible}
-        onClose={() => setVisible(false)}
-        // width={width}
-        // height={height}
-        measure={60}
-        closeOnEsc
-      >
-        <div className=" w-full h-full ">{children}</div>
-      </Rodal>
-    </div>
+    <Dialog
+      open={visible}
+      handler={setVisible}
+      className={"overflow-visible p-5"}
+    >
+      <div className="flex-between-center">
+        <span className="text-dark">{title}</span>{" "}
+        <BiXCircle size={25} className="text-dark" />
+      </div>
+      <div>{children}</div>
+    </Dialog>
   );
 };
 
