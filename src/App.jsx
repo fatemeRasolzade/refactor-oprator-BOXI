@@ -9,15 +9,16 @@ import NotFound from "./pages/NotFound/NotFound";
 import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
 import UserService from "./services/userService";
-
+import Interseptor from "./services/http_service"
 function App() {
 
 
-  UserService.initKeycloak();
+  UserService.initKeycloak(); 
 
 
   return (
     <div className="App">
+     <Interseptor/>
       <Routes>
         {links.map((item) =>
           item.childs.map((route) => (

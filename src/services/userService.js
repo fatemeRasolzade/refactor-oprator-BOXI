@@ -19,12 +19,11 @@ const initKeycloak = (onAuthenticatedCallback) => {
 
 	})
 		.then((authenticated) => {
-			 if (authenticated) {
+			 if (!authenticated) {
+			console.log('user is not authenticated')
+			} 
 			onAuthenticatedCallback();
-			} else {
-			  doLogin();
-			}
-		})
+		}).catch(console.error)
 };
 
 const doLogin = _kc.login;
@@ -35,12 +34,11 @@ const getToken = () => _kc.token;
 
 const isLoggedIn = () => !!_kc.token;
 
-const updateToken = (successCallback) =>{
-	console.log('updateToken');
-	return _kc.updateToken(5)
+const updateToken = (successCallback) =>
+	 _kc.updateToken(5)
 		.then(successCallback)
 		.catch(doLogin);
-}
+
 
 
 const getUsername = () => _kc.tokenParsed?.preferred_username;
@@ -53,45 +51,6 @@ const hasClientRole = (role) => {
 	return _kc.hasResourceRole(role);
 }
 
-const  tokenExpired =_kc.onTokenExpired = () => {
-	console.log('token expired!: previous token', _kc.token);
-
-	_kc.updateToken(5).then((response) => {
-		console.log('response',response);
-		if (response) {
-			console.log('successfully get a new token', _kc.token);
-		} /*else {
-      throw new Error('Something went wrong ...');
-    }*/
-	}).catch( err => {
-		console.log('400 response form server',err);
-		doLogout()
-	});
-
-	
-      if(window.confirm('Do you want to keep login')){
-        try {
-          _kc.updateToken(5).then((response) => {
-            console.log('response',response);
-            if (response) {
-              console.log('successfully get a new token', _kc.token);
-            } else {
-              throw new Error('Something went wrong ...');
-            }
-          }).catch( err => {
-              console.log('400 response form server',err);
-             // doLogout();
-          });
-        }catch (e) {
-          console.log('err in try catch',e);
-          //doLogout();
-        }
-      }else {
-        console.log('User log out selected');
-        //doLogout();
-      }
-
-}
 
 const UserService = {
 	initKeycloak,
@@ -102,7 +61,6 @@ const UserService = {
 	updateToken,
 	getUsername,
 	hasRole,
-	//tokenExpired
 	hasClientRole
 };
 

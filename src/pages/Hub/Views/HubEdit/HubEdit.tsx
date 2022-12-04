@@ -11,7 +11,6 @@ import { apiRoute } from '../../../../services/apiRoute';
 import { ErrorAlert } from '../../../../global/alert/Alert';
 const HubEdit = () => {
     const {state} =useLocation()
-console.log('tttt',state)
    
     const navigate=useNavigate()
     useEffect(()=>{
