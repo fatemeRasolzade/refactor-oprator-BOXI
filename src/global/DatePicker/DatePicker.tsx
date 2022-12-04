@@ -22,10 +22,11 @@ const DatePickers = ({title,name,values,handelChange}:PropType) => {
       className="myclassDate"
  calendar={persian}
 name={name}
+
 locale={persian_fa}
 format="MM/DD/YYYY HH:mm:ss"
 calendarPosition="bottom-right"
-
+placeholder={`${values.day} / ${values.month} / ${values.year}`}
 onChange={(date:any)=>handelChange(name,{
   day:Number(date.day),
   month:Number(date.month),

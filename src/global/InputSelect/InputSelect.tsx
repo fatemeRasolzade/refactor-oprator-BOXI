@@ -22,6 +22,7 @@ const InputSelect = ({text,handelChange,name,blure,values,options}:{text?:string
       
         isLoading={options.length > 0 ? false : true}
         value={options ? options.find((option:any)=>option.label===values): ""}
+        defaultInputValue={values.text}
         onChange={option => handelChange(name, {
           id:option.value,
           text:option.label
