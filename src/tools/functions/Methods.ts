@@ -1,6 +1,7 @@
 import * as XLSX from "xlsx-js-style";
 
-export const ExportExcel = ({ data }: any) => {
+export const ExportExcel = ( data : any) => {
+
   let row = [
     { v: "Courier: 24", t: "s", s: { font: { name: "Courier", sz: 24 } } },
     {

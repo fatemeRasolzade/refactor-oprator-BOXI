@@ -11,8 +11,19 @@ import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
 import UserService from "./services/UserService";
 import Interseptor from "./services/http_service";
 import YupDefault from "./tools/config/YupDefault";
+import { useEffect } from "react";
 function App() {
-  UserService.initKeycloak();
+  const 	token=localStorage.getItem("Authorization");
+ 
+useEffect(()=>{
+    UserService.initKeycloak();
+   
+},[])
+useEffect(()=>{
+   console.log("token",token)
+
+},[token])
+
 
   return (
     <div className="App">

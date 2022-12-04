@@ -28,7 +28,7 @@ const ActionForms = ({ itemValue }: any) => {
     function getDataSelect() {
       try {
         selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then((res: any) => {
-          if (res.status === "OK") setProductOptions(res.payload.content);
+          if (res.status === "OK") setProductOptions(res?.payload?.content);
         });
         // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
       } catch (error) {

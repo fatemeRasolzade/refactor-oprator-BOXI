@@ -69,7 +69,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "npm-run-all --parallel start:*",
+    "start": "react-scripts start",
     "start:react": "set PORT=80 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

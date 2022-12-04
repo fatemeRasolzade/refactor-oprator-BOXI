@@ -19,7 +19,7 @@ const Hub = () => {
   const {pageNumbers} =useSelector(state=>state.paginate)
 
   useEffect(()=>{
-    dispatch(HubData())
+    dispatch(HubData(pageNumbers))
    return()=>dispatch(clearHub())
   },[])
 
@@ -56,7 +56,7 @@ const data=payload?.content?.length > 0 ? payload.content.map(hubItem=>{
      <Breadcrumb beforePage="برگشت" curentPage="هاب" />
       <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" />
       <OptionsTable
-       exportExcel={() => ExportExcel(payload?.content)}
+       exportExcel={()=>ExportExcel(payload?.content)}
        />
      <StaticTable data={data} column={HubColumn} pagination={payload?.totalElements}/>
     </div>
