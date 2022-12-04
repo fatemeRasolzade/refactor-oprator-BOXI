@@ -6,6 +6,7 @@ export const getDataFromServer = async (apiRoute:  string ) => {
   return data;
 };
 
+
 export const postDataToServer = async (
   apiRoute: string ,
   body:  object 
@@ -24,14 +25,26 @@ body: object ,
 };
 
 export const PostDataParams = async (apiRoute: string, body: object) => {
-  const { data } = await http.post(  apiRoute, body);
+  const { data } = await http.post( apiRoute, body);
+
   return data;
 };
 export const GetDataParams = async (apiRoute: string) => {
-  const { data } = await http.get(  apiRoute);
+  const { data } = await http.get( apiRoute);
   return data;
 };
 export const DeleteDataParams = async (apiRoute: string) => {
   const { data } = await http.delete(apiRoute);
+  return data;
+};
+export const selectDataFromServer = async (apiRoute: { apiRoute: string }) => {
+  console.log("apiRoute",apiRoute)
+  // @ts-ignore
+ const { data } = await http.get(apiRoute);
+ return data;
+};
+
+export const EditDataParams = async (apiRoute: string, body: object) => {
+  const { data } = await http.put(apiRoute, body);
   return data;
 };

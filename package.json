@@ -29,6 +29,7 @@
     "framer-motion": "^7.6.4",
     "jalali-moment": "^3.3.11",
     "js-cookie": "^3.0.1",
+    "keycloak-js": "^20.0.1",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-autocomplete": "^1.8.1",
@@ -62,10 +63,12 @@
     "stylis-plugin-rtl": "^2.1.1",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5",
+    "xlsx-js-style": "^1.2.0",
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": " react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -18,7 +18,11 @@ export const addHubschema =Yup.object().shape({
     //   value: Yup.string().required().label("والد هاب"),
     //   }),
     pinCode:Yup.string().nullable(true).label("پین کد"),
-    locationStartDate:Yup.string().nullable(true).label("تاریخ شروع فعالیت"),
+    locationStartDate:Yup.object().nullable(true).shape({
+    day:Yup.number(),
+    mounth:Yup.number(),
+    year:Yup.number()
+    }),
     isActive: Yup.boolean().nullable(true).label("فعال"),
      mandatoryArrivalScan:Yup.boolean().nullable(true).label("اسکن مرسوله در ورودی هاب اجباری است"),
      dropOffAllowed:Yup.boolean().nullable(true).label("امکان تحویل مرسوله دارد"),

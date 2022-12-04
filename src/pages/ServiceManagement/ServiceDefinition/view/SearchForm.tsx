@@ -23,13 +23,15 @@ const SearchForm = (): JSX.Element => {
     },
     onSubmit: (values) => {
       setFilterData(values);
+      //@ts-ignore
+      dispatch(ServiceData(formik.values));
     },
   });
 
-  useEffect(() => {
-    // @ts-ignore
-    dispatch(ServiceData(formik.values));
-  }, [filterData]);
+  // useEffect(() => {
+  //   // @ts-ignore
+  //   dispatch(ServiceData(formik.values));
+  // }, [filterData]);
   const data = [
     { id: 1, text: "product" },
     { id: 2, text: "price" },
@@ -76,7 +78,7 @@ const SearchForm = (): JSX.Element => {
               onSelect={(val: any) => handleSelect(val, "name")}
             />
             {/*<InputIcon text='عنوان' handleOnSelect={handleOnSelect} handleOnSearch={setName}/>*/}
-            <SimpleButton className="full-gray-btn" icon={<BiSearch size={20} />} text="جستجو" />
+            <SimpleButton  className="full-gray-btn" icon={<BiSearch size={20} />} text="جستجو" />
           </div>
         </form>
         <PerfesionalSearch formData={formik} text="جستجوی پیشرفته" LeftIcon={<BiChevronDown />}>

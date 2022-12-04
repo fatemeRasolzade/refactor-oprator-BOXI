@@ -19,9 +19,7 @@ const CustomSwitch = ({
   return (
     <div>
       <label className="flex justify-center items-center flex-row-reverse w-fit">
-        {active && deactive ? (
-          <span className="mr-2">{check ? "فعال" : "غیر فعال"}</span>
-        ) : null}
+        {active && deactive ? <span className="mr-2">{check ? "فعال" : "غیر فعال"}</span> : null}
         <Switch
           onChange={handelChanges}
           checked={check}

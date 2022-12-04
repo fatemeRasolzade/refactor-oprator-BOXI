@@ -25,15 +25,14 @@ const PersonnelModalOperation: FC<ModalOperationProps> = ({
 
     case "delete":
       return (
-        <></>
-        // <DeleteOperation
-        //   title="حذف پرسنل"
-        //   itemId={itemValue.id}
-        //   route={apiRoute().delete.personnel + `/${itemValue.id}`}
-        //   updating={updating}
-        //   setOnClose={setOnClose}
-        //   setMode={setMode}
-        // />
+        <DeleteOperation
+          title="حذف پرسنل"
+          itemId={itemValue.id}
+          route={apiRoute().delete.personnel + `/${itemValue.id}`}
+          updating={updating}
+          // setOnClose={setOnClose}
+          // setMode={setMode}
+        />
       );
     default:
       return <></>;

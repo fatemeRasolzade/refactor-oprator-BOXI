@@ -14,11 +14,13 @@ interface OptionsTableProps {
   setIsActive?: (value: boolean) => void;
   addExcelProps?: () => JSX.Element;
   addComponentProps?: () => JSX.Element;
+  exportExcel?: any;
 }
 const OptionsTable: FC<OptionsTableProps> = ({
   setIsActive,
   addExcelProps,
   addComponentProps,
+  exportExcel,
 }) => {
   return (
     <div className="mt-6">
@@ -59,6 +61,7 @@ const OptionsTable: FC<OptionsTableProps> = ({
         </li>
         <li>
           <SimpleButton
+            handelClick={exportExcel}
             text="خروجی اکسل"
             icon={<GoDesktopDownload color="black" />}
             className="centering rounded-lg text-black"

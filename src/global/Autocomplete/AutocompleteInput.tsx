@@ -54,7 +54,7 @@ const AutocompleteInput = ({items, value, onSelect, onChange, label}: PropsData)
             <style>{`
                 .autocompleteWrapper{
                     border: 1px solid #dfe1e5;
-                    border-radius: 12px;
+                    border-radius: 8px;
                 }
             `}</style>
         </div>
