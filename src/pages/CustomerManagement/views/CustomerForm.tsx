@@ -230,35 +230,35 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         <div className="inputRow">
           <InputText
             important
-            label="کد مشتری"
-            values={values.code}
-            name="code"
+            label="پست الکترونیکی"
+            values={values.email}
+            name="email"
             handleChange={handleChange}
-            error={touched.code && errors.code}
+            error={touched.email && errors.email}
           />
           <InputText
             important
-            label="نام مشتری"
-            values={values.name}
-            name="name"
+            label="اعتبار جاری"
+            values={values.currentCredit}
+            name="currentCredit"
             handleChange={handleChange}
-            error={touched.name && errors.name}
+            error={touched.currentCredit && errors.currentCredit}
           />
           <InputText
             important
-            label="کد ملی"
-            values={values.nationalCode}
-            name="nationalCode"
+            label="سقف اعتبار"
+            values={values.creditLimit}
+            name="creditLimit"
             handleChange={handleChange}
-            error={touched.nationalCode && errors.nationalCode}
+            error={touched.creditLimit && errors.creditLimit}
           />
           <InputText
             important
-            label="کد ملی"
-            values={values.nationalCode}
-            name="nationalCode"
+            label="اعتبار اولیه"
+            values={values.initialCredit}
+            name="initialCredit"
             handleChange={handleChange}
-            error={touched.nationalCode && errors.nationalCode}
+            error={touched.initialCredit && errors.initialCredit}
           />
         </div>
 

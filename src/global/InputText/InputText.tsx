@@ -4,6 +4,7 @@ type InputTextProps = {
   label: string;
   name: string;
   type?: string;
+  placeholder?: string;
   important?: boolean;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -14,6 +15,7 @@ const InputText = ({
   type = "text",
   important,
   error,
+  placeholder,
 }: InputTextProps) => {
   return (
     <div className="flex flex-col">
@@ -29,6 +31,7 @@ const InputText = ({
           name={name}
           onChange={handleChange}
           type={type}
+          placeholder={placeholder}
         />
       </div>
       <p className="text-red-700 text-xs pr-3 h-4">{error}</p>
