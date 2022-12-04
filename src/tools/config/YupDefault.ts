@@ -1,14 +1,24 @@
 import { useEffect } from "react";
 import { setLocale } from "yup";
+import {
+  DEFINED,
+  INVALID,
+  NOTTYPE,
+  REQUIRED,
+  VALIDEMAIL,
+} from "../validations/ErrorKeywords";
 
 const YupDefault = () => {
   useEffect(() => {
     setLocale({
       mixed: {
-        default: "نامعتبر است",
-        required: "اجباری است",
-        notType: "نوع ورودی نامعتبر است",
-        defined: "باید تعریف شود",
+        default: INVALID,
+        required: REQUIRED,
+        notType: NOTTYPE,
+        defined: DEFINED,
+      },
+      string: {
+        email: VALIDEMAIL,
       },
     });
   }, []);

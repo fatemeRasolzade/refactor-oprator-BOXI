@@ -19,7 +19,8 @@ const InputText = ({
     <>
       <div className={`autocompleteWrapper ${error && "border-red-700"}  `}>
         <div className={`autocompleteLabel ${error && "text-red-700"} `}>
-          {label} {important && <span className="text-tomato">*</span>}
+          {label}{" "}
+          {important && <span className="text-tomato font-extrabold">*</span>}
         </div>
         <input
           className="autocompleteInput"

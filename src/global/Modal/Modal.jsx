@@ -6,7 +6,9 @@ const Modal = ({ visible, setVisible, children, title }) => {
     <Dialog
       open={visible}
       handler={setVisible}
-      className={"overflow-visible p-5"}
+      className={
+        "inline-block align-bottom bg-white rounded-[30px]   p-3  shadow-xl transform transition-all sm:align-middle"
+      }
     >
       <div className="flex-between-center mb-6">
         <span className="text-dark">{title}</span>{" "}
