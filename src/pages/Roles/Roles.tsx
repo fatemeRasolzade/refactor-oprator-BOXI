@@ -11,7 +11,6 @@ import { RoleColumn } from "../../global/Column/Columns";
 import { clearRole, RoleData, updating } from "../../redux/RolsData/RolesData";
 import { apiRoute } from "../../services/apiRoute";
 import AddEditRole from "./view/AddRole";
-import Operation from "./view/Operation";
 import SearchFilter from "./view/SearchFilter";
 
 interface RolesProps {}
@@ -68,7 +67,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   return (
     <div>
       <Breadcrumb curentPage="هاب" />
-      <SearchFilter />
+      <SearchFilter isActive={isActive} />
       <OptionsTable
         isActive={isActive}
         setIsActive={setIsActive}

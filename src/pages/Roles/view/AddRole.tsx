@@ -730,6 +730,7 @@ const AddEditRole: FC<EditRoleProps> = ({
   const [treeCheckedError, setTreeCheckedError] = useState("");
   const [loadingNode, setLoadingNode] = useState(false);
   const [nodes, setNodes] = useState([...nodeArray]);
+  console.log("treeChecked", treeChecked);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -742,22 +743,26 @@ const AddEditRole: FC<EditRoleProps> = ({
       const data = {
         name: values.name,
         isActive: values.isActive,
-        selectPermissions: treeChecked,
+        // selectPermissions: [],
+        permsCodes: treeChecked,
       };
       if (treeChecked.length !== 0) {
         try {
-          await axios({
-            url: "http://boxi.local:40000/resource-api/role",
+          const res = await axios({
+            url: "http://192.168.1.153:20000/resource-api/role",
             method: "post",
             data: data,
           });
-          dispatch(
-            RoleData({
-              code: "",
-              name: "",
-              isActive: isActive,
-            }) as any
-          );
+          if (200 <= res.status && res.status < 300) {
+            dispatch(
+              RoleData({
+                code: "",
+                name: "",
+                isActive: isActive,
+              }) as any
+            );
+            setIsModalOpen(false);
+          }
         } catch (error) {}
       } else {
         setTreeCheckedError("دسترسی نباید خالی باشد");

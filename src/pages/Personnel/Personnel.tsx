@@ -5,11 +5,16 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import NavbarSearch from "../../components/NavbarSearch/NavbarSearch";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
+import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import { PersonnelColumn } from "../../global/Column/Columns";
 import {
   clearPersonnel,
   PersonnelData,
+  updating,
 } from "../../redux/PersonData/PersonsData";
+import { apiRoute } from "../../services/apiRoute";
+import AddEditPerson from "./view/AddEditPerson";
+import EditPersonRole from "./view/EditPersonRole";
 import Operation from "./view/PersonnelOperation";
 import PersonnelSearchFrom from "./view/PersonnelSearchFrom";
 
@@ -35,7 +40,18 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
             name: item.name,
             mobile: item.mobile,
             email: item.email,
-            operation: <Operation itemValue={item} />,
+            operation: (
+              <div className="flex w-full gap-3 justify-center">
+                <AddEditPerson currentData={"fsv"} />
+                <DeleteOperation
+                  itemId={item.id}
+                  title={"حذف کارمندhttps://gitlab.com/f.farnia/hub-operation-management-front.git"}
+                  route={apiRoute().delete.role + `/${item.id}`}
+                  updating={updating}
+                />
+                <EditPersonRole />
+              </div>
+            ),
           };
         })
       : [];
@@ -44,7 +60,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     <div>
       <Breadcrumb curentPage="مدیریت پرسنل" />
       <PersonnelSearchFrom />
-      <OptionsTable  />
+      <OptionsTable addComponentProps={() => <AddEditPerson />} />
       <StaticTable
         data={data ? data : []}
         column={PersonnelColumn}
