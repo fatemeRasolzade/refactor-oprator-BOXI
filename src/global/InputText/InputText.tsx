@@ -16,10 +16,10 @@ const InputText = ({
   error,
 }: InputTextProps) => {
   return (
-    <>
+    <div className="flex flex-col">
       <div className={`autocompleteWrapper ${error && "border-red-700"}  `}>
         <div className={`autocompleteLabel ${error && "text-red-700"} `}>
-          {label}{" "}
+          {label}
           {important && <span className="text-tomato font-extrabold">*</span>}
         </div>
         <input
@@ -29,8 +29,8 @@ const InputText = ({
           type={type}
         />
       </div>
-      {error && <p className="text-red-700 text-xs pr-3">{error}</p>}
-    </>
+      <p className="text-red-700 text-xs pr-3 h-4">{error}</p>
+    </div>
   );
 };
 

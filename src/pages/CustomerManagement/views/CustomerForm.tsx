@@ -225,6 +225,40 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
             error={touched.nationalCode && errors.nationalCode}
           />
         </div>
+        <div className="inputRow">
+          <InputText
+            important
+            label="کد مشتری"
+            values={values.code}
+            name="code"
+            handleChange={handleChange}
+            error={touched.code && errors.code}
+          />
+          <InputText
+            important
+            label="نام مشتری"
+            values={values.name}
+            name="name"
+            handleChange={handleChange}
+            error={touched.name && errors.name}
+          />
+          <InputText
+            important
+            label="کد ملی"
+            values={values.nationalCode}
+            name="nationalCode"
+            handleChange={handleChange}
+            error={touched.nationalCode && errors.nationalCode}
+          />
+          <InputText
+            important
+            label="کد ملی"
+            values={values.nationalCode}
+            name="nationalCode"
+            handleChange={handleChange}
+            error={touched.nationalCode && errors.nationalCode}
+          />
+        </div>
 
         <button type={"submit"}>hwsjfsdf</button>
       </form>

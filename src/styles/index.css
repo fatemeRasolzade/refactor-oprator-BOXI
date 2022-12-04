@@ -131,4 +131,7 @@
   .ToggleElements {
     @apply h-10 rounded-none border-none text-dark px-4 py-2 flex-start-start  gap-2 w-full hover:bg-lightGray transition;
   }
+  .inputRow {
+    @apply flex-start-center gap-5 flex-wrap mb-6;
+  }
 }
