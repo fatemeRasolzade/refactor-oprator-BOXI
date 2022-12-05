@@ -12,14 +12,13 @@ type InputTextProps = {
 const InputText = ({
   label,
   name,
-  values,
   handleChange,
   type = "text",
   important,
   error,
   placeholder,
   readOnly,
-  values
+  values,
 }: InputTextProps) => {
   return (
     <div className="flex flex-col">
@@ -37,7 +36,6 @@ const InputText = ({
           </span>
         </div>
         <input
-        value={values}
           disabled={readOnly}
           className="autocompleteInput"
           name={name}
