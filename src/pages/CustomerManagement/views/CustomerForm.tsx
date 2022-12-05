@@ -12,6 +12,8 @@ import { useState } from "react";
 import CustomerTelephoneElements from "./CustomerTelephoneElements";
 import CustomerAddressElements from "./CustomerAddressElements";
 import { ReverseArray } from "../../../tools/functions/Methods";
+import CustomerAddressForm from "./CustomerAddressForm";
+import CustomerTelephoneForm from "./CustomerTelephoneForm";
 
 type CustomerFormProps = {
   open: boolean;
@@ -430,7 +432,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
                 </>
               ))}
           </div>
-          <div className="border rounded-lg px-4 py-8 mt-10 relative w-full">
+          <div className="border rounded-lg px-4 py-8 mt-5 relative w-full">
             <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
               اطلاعات تماس{" "}
             </span>
@@ -456,6 +458,22 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         </div>
         <button type={"submit"}>hwsjfsdf</button>
       </form>
+      <CustomerAddressForm
+				setValue={setFieldValue}
+				value={values.addresses}
+				open={OpenAddresses}
+				setOpen={setOpenAddresses}
+				currentData={addressModalInfo.kind === 2 ? addressModalInfo.data : undefined}
+				ID={addressModalInfo.kind === 2 ? addressModalInfo.id : undefined}
+			/>
+			<CustomerTelephoneForm
+				setValue={setFieldValue}
+				value={values.telephones}
+				open={OpenPhones}
+				setOpen={setOpenPhones}
+				currentData={phonesModalInfo.kind === 2 ? phonesModalInfo.data : undefined}
+				ID={phonesModalInfo.kind === 2 ? phonesModalInfo.id : undefined}
+			/>
     </Modal>
   );
 };
