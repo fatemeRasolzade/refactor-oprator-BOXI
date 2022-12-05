@@ -23,6 +23,9 @@
   .line-tomato-btn {
     @apply bg-light text-tomato border border-tomato;
   }
+  .full-lightTomato-btn {
+    @apply bg-lightTomato;
+  }
   .full-gray-btn {
     @apply !bg-lightGray !text-dark px-10;
   }
@@ -79,7 +82,7 @@
     @apply flex-between-center relative h-10 pr-2 pl-2 min-w-[15rem] border border-darkBorder rounded-lg text-darkGray;
   }
   .autocompleteLabel {
-    @apply absolute top-[-12px] right-5 bg-white z-10  px-2 text-darkGray text-sm;
+    @apply absolute -top-3 right-5 bg-white   px-2 text-darkGray text-sm;
   }
   .advancedSearchButton {
     @apply border-none bg-transparent text-dark shadow-none flex justify-around items-center;
@@ -130,5 +133,11 @@
   }
   .ToggleElements {
     @apply h-10 rounded-none border-none text-dark px-4 py-2 flex-start-start  gap-2 w-full hover:bg-lightGray transition;
+  }
+  .inputRow {
+    @apply flex-start-center gap-5 flex-wrap mb-6;
+  }
+  .css-1mskxrd-control {
+    @apply border !border-darkBorder !rounded-lg;
   }
 }

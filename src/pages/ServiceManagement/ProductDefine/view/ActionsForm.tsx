@@ -156,7 +156,7 @@ const ActionForms = ({ itemValue }: any) => {
               </div> */}{" "}
                 <div>
                   <InputSelect
-                    text="گروه بندی محصول"
+                    label="گروه بندی محصول"
                   
                     name="productGroup"
                     handleChange={formik.setFieldValue}

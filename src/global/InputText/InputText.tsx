@@ -4,6 +4,7 @@ type InputTextProps = {
   label: string;
   name: string;
   type?: string;
+  placeholder?: string;
   important?: boolean;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -15,12 +16,18 @@ const InputText = ({
   type = "text",
   important,
   error,
+  placeholder,
 }: InputTextProps) => {
   return (
-    <>
+    <div className="flex flex-col">
       <div className={`autocompleteWrapper ${error && "border-red-700"}  `}>
-        <div className={`autocompleteLabel ${error && "text-red-700"} `}>
-          {label} {important && <span className="text-tomato">*</span>}
+        <div
+          className={`autocompleteLabel ${error && "text-red-700"} top-[-17px]`}
+        >
+          {label}{" "}
+          {important && (
+            <span className="text-tomato font-extrabold text-lg">*</span>
+          )}
         </div>
         <input
           className="autocompleteInput"
@@ -28,10 +35,11 @@ const InputText = ({
           value={values}
           onChange={handleChange}
           type={type}
+          placeholder={placeholder}
         />
       </div>
-      {error && <p className="text-red-700 text-xs pr-3">{error}</p>}
-    </>
+      <p className="text-red-700 text-xs pr-3 h-4">{error}</p>
+    </div>
   );
 };
 

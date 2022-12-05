@@ -3,6 +3,9 @@ import Modal from "../../../global/Modal/Modal";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import { NationalCodeRegex } from "../../../tools/validations/ErrorHelper";
+import { VALIDNATIONALCODE } from "../../../tools/validations/ErrorKeywords";
+import InputSelect from "../../../global/InputSelect/InputSelect";
 
 type CustomerFormProps = {
   open: boolean;
@@ -13,38 +16,37 @@ type CustomerFormProps = {
 const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
   const validation = Yup.object().shape({
     code: Yup.string().required(),
-    // name: Yup.string().required().label("نام مشتری"),
-    // selectCustomerType: Yup.object().shape({
-    //   text: Yup.string().required(),
-    //   id: Yup.string().required(),
-    // }),
-    // nationalCode: Yup.string().matches(PersonNationalCodeRegex, "کد ملی معتبر نیست").required(),
-    // selectParentCustomer: Yup.object().nullable(true).shape({
-    //   text: Yup.string(),
-    //   id: Yup.number(),
-    // }),
-    // email: Yup.string().email("ایمیل معتبر نیست"),
-    // currentCredit: Yup.number().label(""),
-    // creditLimit: Yup.number().label(""),
-    // initialCredit: Yup.number().label(""),
+    name: Yup.string().required(),
+    selectCustomerType: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDNATIONALCODE)
+      .required(),
+    selectParentCustomer: Yup.object().nullable(true).shape({
+      text: Yup.string(),
+      id: Yup.number(),
+    }),
+    email: Yup.string().email(),
+    currentCredit: Yup.number().label(""),
+    creditLimit: Yup.number().label(""),
+    initialCredit: Yup.number().label(""),
 
-    // username: Yup.string().required(),
+    username: Yup.string().required(),
     // password:
     // 	!currentData &&
     // 	Yup.string().min(8, "حداقل هشت کاراکتر").matches(justENGRegex,  "رمز عبور باید شامل اعداد و حروف لاتین باشد").required(),
     // confirmPassword: Yup.string()
     //   .oneOf([Yup.ref("password"), null], "رمز عبور مطابقت ندارد")
     //   .required(),
-    // extendGlobalVirtualSeries: Yup.boolean().nullable(),
-    // dynamicPickupAllocation: Yup.boolean().nullable(),
+    extendGlobalVirtualSeries: Yup.boolean().nullable(),
+    dynamicPickupAllocation: Yup.boolean().nullable(),
 
-    // smsNotification: Yup.boolean().nullable(),
-    // emailNotification: Yup.boolean().nullable(),
-    // pickupPaperWithEmail: Yup.boolean().nullable(),
-    // isActive: Yup.boolean().nullable(),
-
-    // telephones: [],
-    // addresses: [],
+    smsNotification: Yup.boolean().nullable(),
+    emailNotification: Yup.boolean().nullable(),
+    pickupPaperWithEmail: Yup.boolean().nullable(),
+    isActive: Yup.boolean().nullable(),
   });
 
   const formik = useFormik({
@@ -190,13 +192,75 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
       title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}
     >
       <form onSubmit={handleSubmit}>
-        <InputText
-          label="کد مشتری"
-          values={values.code}
-          name="code"
-          handleChange={handleChange}
-          error={touched.code && errors.code}
-        />
+        <div className="inputRow">
+          <InputText
+            important
+            label="کد مشتری"
+            values={values.code}
+            name="code"
+            handleChange={handleChange}
+            error={touched.code && errors.code}
+          />
+          <InputText
+            important
+            label="نام مشتری"
+            values={values.name}
+            name="name"
+            handleChange={handleChange}
+            error={touched.name && errors.name}
+          />
+          <InputSelect
+            options={[]}
+            // important
+            label="کد ملی"
+            values={values.selectCustomerType}
+            name="selectCustomerType"
+            handleChange={handleChange}
+            // error={touched.selectCustomerType && errors.selectCustomerType}
+          />
+          <InputText
+            important
+            label="کد ملی"
+            values={values.nationalCode}
+            name="nationalCode"
+            handleChange={handleChange}
+            error={touched.nationalCode && errors.nationalCode}
+          />
+        </div>
+        <div className="inputRow">
+          <InputText
+            important
+            label="پست الکترونیکی"
+            values={values.email}
+            name="email"
+            handleChange={handleChange}
+            error={touched.email && errors.email}
+          />
+          <InputText
+            important
+            label="اعتبار جاری"
+            values={values.currentCredit}
+            name="currentCredit"
+            handleChange={handleChange}
+            error={touched.currentCredit && errors.currentCredit}
+          />
+          <InputText
+            important
+            label="سقف اعتبار"
+            values={values.creditLimit}
+            name="creditLimit"
+            handleChange={handleChange}
+            error={touched.creditLimit && errors.creditLimit}
+          />
+          <InputText
+            important
+            label="اعتبار اولیه"
+            values={values.initialCredit}
+            name="initialCredit"
+            handleChange={handleChange}
+            error={touched.initialCredit && errors.initialCredit}
+          />
+        </div>
 
         <button type={"submit"}>hwsjfsdf</button>
       </form>
