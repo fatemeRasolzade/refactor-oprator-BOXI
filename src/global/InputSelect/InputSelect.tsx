@@ -23,6 +23,7 @@ const InputSelect = ({
       ...base,
       border: state.isFocused ? " 1px solid #ababab" : "1px solid #ababab",
       borderRadius: state.isFocused ? "0.5rem" : "0.5rem",
+      height: state.isFocused ? "2.5rem" : "2.5rem",
       "&:hover": {
         border: state.isFocused ? " 1px solid #ababab" : "1px solid #ababab",
       },

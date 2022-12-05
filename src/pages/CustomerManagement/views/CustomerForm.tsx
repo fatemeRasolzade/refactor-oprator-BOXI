@@ -8,12 +8,14 @@ import { VALIDNATIONALCODE } from "../../../tools/validations/ErrorKeywords";
 import InputSelect from "../../../global/InputSelect/InputSelect";
 import Checkbox from "../../../components/checkbox/Checkbox";
 import CustomSwitch from "../../../global/Switch/Switch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomerTelephoneElements from "./CustomerTelephoneElements";
 import CustomerAddressElements from "./CustomerAddressElements";
 import { ReverseArray } from "../../../tools/functions/Methods";
 import CustomerAddressForm from "./CustomerAddressForm";
 import CustomerTelephoneForm from "./CustomerTelephoneForm";
+import { GetCustomerType } from "../../../services/SelectApi";
+import { apiRoute } from "../../../services/apiRoute";
 
 type CustomerFormProps = {
   open: boolean;
@@ -77,6 +79,12 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
     data: undefined,
     id: undefined,
   });
+
+  useEffect(() => {
+    console.log(GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE));
+    // GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE);
+  }, []);
+
   const validation = Yup.object().shape({
     code: Yup.string().required(),
     name: Yup.string().required(),
@@ -459,21 +467,25 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         <button type={"submit"}>hwsjfsdf</button>
       </form>
       <CustomerAddressForm
-				setValue={setFieldValue}
-				value={values.addresses}
-				open={OpenAddresses}
-				setOpen={setOpenAddresses}
-				currentData={addressModalInfo.kind === 2 ? addressModalInfo.data : undefined}
-				ID={addressModalInfo.kind === 2 ? addressModalInfo.id : undefined}
-			/>
-			<CustomerTelephoneForm
-				setValue={setFieldValue}
-				value={values.telephones}
-				open={OpenPhones}
-				setOpen={setOpenPhones}
-				currentData={phonesModalInfo.kind === 2 ? phonesModalInfo.data : undefined}
-				ID={phonesModalInfo.kind === 2 ? phonesModalInfo.id : undefined}
-			/>
+        setValue={setFieldValue}
+        value={values.addresses}
+        open={OpenAddresses}
+        setOpen={setOpenAddresses}
+        currentData={
+          addressModalInfo.kind === 2 ? addressModalInfo.data : undefined
+        }
+        ID={addressModalInfo.kind === 2 ? addressModalInfo.id : undefined}
+      />
+      <CustomerTelephoneForm
+        setValue={setFieldValue}
+        value={values.telephones}
+        open={OpenPhones}
+        setOpen={setOpenPhones}
+        currentData={
+          phonesModalInfo.kind === 2 ? phonesModalInfo.data : undefined
+        }
+        ID={phonesModalInfo.kind === 2 ? phonesModalInfo.id : undefined}
+      />
     </Modal>
   );
 };

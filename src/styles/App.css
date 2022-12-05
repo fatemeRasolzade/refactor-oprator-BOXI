@@ -73,4 +73,5 @@
 
 .react-select-3-listbox {
   z-index: 50;
+  height: 2.5rem !important;
 }
