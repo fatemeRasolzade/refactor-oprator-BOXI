@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
-import React, { ChangeEvent, FC, useState } from "react";
-import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
-import InputIcon from "../../../global/InputIcon/InputIcon";
+import { ChangeEvent, FC } from "react";
+
 
 interface MyFormValues {
   code: string;
