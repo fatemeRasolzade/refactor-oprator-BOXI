@@ -1,23 +1,31 @@
 import Select from "react-select";
 const InputSelect = ({
   label,
-  handleChange,
   name,
   // blure,
   values,
   options,
+  handleChange,
+  error,
+  important,
 }: {
   label?: string;
-  handleChange?: any;
   name?: string;
   // blure?: React.FocusEventHandler<HTMLInputElement>;
   values?: any;
   options?: any;
+  handleChange?: any;
+  error?: any;
+  important?: boolean;
 }) => {
   const style = {
-    control: (base: any) => ({
+    control: (base: any, state: any) => ({
       ...base,
-
+      border: state.isFocused ? " 1px solid #ababab" : "1px solid #ababab",
+      borderRadius: state.isFocused ? "0.5rem" : "0.5rem",
+      "&:hover": {
+        border: state.isFocused ? " 1px solid #ababab" : "1px solid #ababab",
+      },
       // This line disable the blue border
       boxShadow: "none",
       width: "100%",
@@ -25,9 +33,12 @@ const InputSelect = ({
   };
 
   return (
-    <>
-      <label>
-        <span>{label}</span>
+    <div className="relative w-60 ">
+      <label className=" absolute top-[-12px] right-5 bg-white z-10  px-2 text-darkGray text-sm">
+        {label}{" "}
+        {important && (
+          <span className="text-tomato font-extrabold text-lg">*</span>
+        )}
       </label>
       <Select
         isLoading={options.length > 0 ? false : true}
@@ -53,7 +64,8 @@ const InputSelect = ({
         name={name}
         className="inputSelect focus:outline-none"
       />
-    </>
+      <p className="text-red-700 text-xs pr-3 h-4">{error}</p>
+    </div>
   );
 };
 
