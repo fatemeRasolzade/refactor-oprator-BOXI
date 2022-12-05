@@ -13,16 +13,12 @@ import Interseptor from "./services/http_service";
 import YupDefault from "./tools/config/YupDefault";
 import { useEffect } from "react";
 function App() {
-  const 	token=localStorage.getItem("Authorization");
- 
+
 useEffect(()=>{
     UserService.initKeycloak();
-   
-},[])
-useEffect(()=>{
-   console.log("token",token)
 
-},[token])
+},[])
+
 
 
   return (
