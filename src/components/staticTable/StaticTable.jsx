@@ -80,7 +80,7 @@ function Table({ columns, data, pageTable }) {
     <div className="overflow-auto bg-white rounded-lg shadow-md  mt-6">
       <table
         {...getTableProps()}
-        className="border-collapse table-auto w-full bg-white table-striped rounded-lg"
+        className="border-collapse table-auto w-full bg-white table-striped rounded-lg text-center"
       >
         <thead className="bg-mainGray h-12 rounded-lg text-dark">
           {headerGroups.map((headerGroup) => (

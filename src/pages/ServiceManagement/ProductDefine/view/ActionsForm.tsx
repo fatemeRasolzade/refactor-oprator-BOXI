@@ -36,7 +36,7 @@ const ActionForms = ({ itemValue }: any) => {
       }
     }
     getDataSelect();
-  }, []);
+  }, [isModalOpen]);
   const handleAction = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -44,7 +44,7 @@ const ActionForms = ({ itemValue }: any) => {
     setUploadExcel(!uploadExcel);
   };
 
-
+  console.log(itemValue,'itemValue')
   const ToggleOptions = [
     { handleClick: handleAction, name: "افزودن محصول" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
@@ -73,8 +73,8 @@ const ActionForms = ({ itemValue }: any) => {
                   name: "",
                   description: "",
                   productGroup: {
-                    id: "gfhg",
-                    text: "hjghkkk",
+                    id: "",
+                    text: "",
                   },
                 }
               : {
@@ -92,13 +92,15 @@ const ActionForms = ({ itemValue }: any) => {
           validationSchema={productDefineschema}
           onSubmit={(values) => {
             console.log(values);
-            if (!itemValue) {
+            if (!itemValue) {  console.log("run add")
               // dispatch(updating(true));
               PostDataParams(apiRoute().post.createProduct, values).then((res) => {
+
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ساخته شد");
                   dispatch(productData({}) as any);
                 } else {
+                  console.log("run error")
                   ErrorAlert("خطا در برقراری اطلاعات");
                 }
 
@@ -109,10 +111,12 @@ const ActionForms = ({ itemValue }: any) => {
             } else {
               EditDataParams(apiRoute().edit.productDefine, values).then((res) => {
                 // dispatch(updating(true));
+                console.log("run edit")
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ویرایش شد");
                   dispatch(productData({}) as any);
                 } else {
+                  console.log("run error")
                   ErrorAlert("خطا در برقراری اطلاعات");
                 }
 
@@ -121,6 +125,7 @@ const ActionForms = ({ itemValue }: any) => {
             }
           }}
         >
+         
           {(formik) => (
             <form onSubmit={formik.handleSubmit} className='p-5'>
               <div className="w-full  grid grid-cols-2 gap-y-10 gap-x-4 content-center">

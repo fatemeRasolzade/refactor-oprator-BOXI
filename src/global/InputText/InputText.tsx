@@ -10,6 +10,7 @@ type InputTextProps = {
 const InputText = ({
   label,
   name,
+  values,
   handleChange,
   type = "text",
   important,
@@ -24,6 +25,7 @@ const InputText = ({
         <input
           className="autocompleteInput"
           name={name}
+          value={values}
           onChange={handleChange}
           type={type}
         />

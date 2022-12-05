@@ -96,7 +96,7 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
           {/* <InputIcon text='عنوان' handleOnSelect={undefined} handleOnSearch={()=>formik.setFieldValue("name", formik.values.name)}/> */}
           <SimpleButton
             className="full-gray-btn"
-            icon={<FiSearch size={25} className="text-darkGray pr-10" />}
+            icon={<FiSearch size={25} className="text-darkGray" />}
             text="جستجو"
           />
         </form>

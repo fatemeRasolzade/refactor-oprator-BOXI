@@ -19,7 +19,8 @@ export default () => {
 			function (error) {
 				const message = error?.response?.data?.message;
 				if (message) {
-					// toast.error(message || error.toString(), toastConfig);
+					
+					ErrorAlert(message );
 					return Promise.reject(error);
 				}
 				if (error?.response?.data?.errors?.message) {
