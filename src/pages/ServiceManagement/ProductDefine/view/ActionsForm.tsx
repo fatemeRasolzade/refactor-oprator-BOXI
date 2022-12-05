@@ -157,7 +157,7 @@ const ActionForms = ({ itemValue }: any) => {
                 <div>
                   <InputSelect
                     label="گروه بندی محصول"
-                  
+                    important
                     name="productGroup"
                     handleChange={formik.setFieldValue}
                     values={formik.values.productGroup}
