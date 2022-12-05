@@ -1,6 +1,3 @@
-import React from 'react'
-import InputText from '.././../../global/InputText/InputText';
-import CheckboxText from '../../../global/CheckboxText/CheckboxText';
 import ChipIcon from '../../../global/ChipIcon/ChipIcon';
 import CustomSwitch from '../../../global/Switch/Switch';
 const SearchFilter = () => {
@@ -19,7 +16,7 @@ const SearchFilter = () => {
      
       {
 checkboxed.map(item=>{
-return <CheckboxText text='فیلد اول'/>
+return "<CheckboxText text='فیلد اول'/>"
 })
 
       }

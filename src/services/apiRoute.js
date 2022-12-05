@@ -76,6 +76,8 @@ export const apiRoute = () => {
       GET_ADM_VEHICLE: createUrl(API_URL, "/admVehicle/filter"),
       //Service
       GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
+      //customer
+      GET_CUSTOMER_TYPE: createUrl(API_CONSIGNMENT2, `/customer/customerType`)
     },
     post: {
       // create

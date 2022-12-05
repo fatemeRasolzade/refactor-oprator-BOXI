@@ -1,6 +1,4 @@
-import React from 'react'
-import CheckboxText from '../../../global/CheckboxText/CheckboxText';
-import InputText from '.././../../global/InputText/InputText';
+
 import ChipIcon from '../../../global/ChipIcon/ChipIcon';
 const ColumnTable = () => {
     const checkboxed=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
@@ -18,7 +16,7 @@ const ColumnTable = () => {
      
       {
 checkboxed.map(item=>{
-return <CheckboxText text='فیلد اول'/>
+return "<CheckboxText text='فیلد اول'/>"
 })
 
       }

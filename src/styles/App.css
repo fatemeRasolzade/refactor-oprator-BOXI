@@ -67,7 +67,11 @@
   border-color: #ababab !important;
 }
 
-.react-select-3-listbox {
-  z-index: 50;
+.css-smf1ef-control {
+  height: 2.5rem !important;
 }
 
+.react-select-3-listbox {
+  z-index: 50;
+  height: 2.5rem !important;
+}

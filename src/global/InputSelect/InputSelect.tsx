@@ -23,6 +23,7 @@ const InputSelect = ({
       ...base,
       border: state.isFocused ? " 1px solid #ababab" : "1px solid #ababab",
       borderRadius: state.isFocused ? "0.5rem" : "0.5rem",
+      height: state.isFocused ? "2.5rem" : "2.5rem",
       "&:hover": {
         border: state.isFocused ? " 1px solid #ababab" : "1px solid #ababab",
       },
@@ -34,18 +35,18 @@ const InputSelect = ({
 
   return (
     <div className="relative w-60 ">
-      <label className=" absolute top-[-12px] right-5 bg-white z-10  px-2 text-darkGray text-sm">
+      <label className=" absolute top-[-16px] right-5 bg-white z-10  px-2 text-darkGray text-sm">
         {label}{" "}
-        {important && (
-          <span className="text-tomato font-extrabold text-lg">*</span>
-        )}
+        <span className="text-tomato font-extrabold text-lg h-4">
+          {important ? "*" : " "}
+        </span>
       </label>
       <Select
         isLoading={options.length > 0 ? false : true}
         value={
           options ? options.find((option: any) => option.label === values) : ""
         }
-        defaultInputValue={values.text}
+        defaultInputValue={values?.text}
         onChange={(option) =>
           handleChange(name, {
             id: option.value,

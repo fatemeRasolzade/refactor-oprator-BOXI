@@ -1,7 +1,7 @@
 
-import CheckboxText from '../../../global/CheckboxText/CheckboxText';
 import ChipIcon from '../../../global/ChipIcon/ChipIcon';
 import CustomSwitch from '../../../global/Switch/Switch';
+import Checkbox from '../../checkbox/Checkbox';
 const ActionProfetional = () => {
 
     const checkboxed=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
@@ -18,7 +18,7 @@ const ActionProfetional = () => {
      
       {
 checkboxed.map(item=>{
-return <CheckboxText text='فیلد اول'/>
+return "checkBox"
 })
 
       }

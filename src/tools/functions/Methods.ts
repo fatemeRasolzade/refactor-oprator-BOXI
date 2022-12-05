@@ -20,3 +20,5 @@ export const ExportExcel = ( data : any) => {
   XLSX.utils.book_append_sheet(web, ws, "myfile");
   XLSX.writeFile(web, "MyExcel.xlsx");
 };
+
+export const ReverseArray = (arr: []) => [...arr].reverse();
