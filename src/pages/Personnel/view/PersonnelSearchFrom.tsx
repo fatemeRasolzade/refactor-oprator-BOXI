@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BiChevronDown, BiSearch } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
+import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 
 import InputIcon from "../../../global/InputIcon/InputIcon";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
@@ -25,24 +26,25 @@ const PersonnelSearchFrom = () => {
   return (
     <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
       <form onSubmit={handelSubmit}>
-        {" "}
         <div className=" flex gap-3 justify-start items-center flex-wrap">
           <div className="Max-sm:mb-3">
-            <InputIcon
-              text={"نقش"}
-              handleOnSearch={setRole}
-              handleOnSelect={undefined}
+            <AutocompleteInput
+              items={[]}
+              label={"کد پرسنلی"}
+              onSelect={() => console.log()}
+              // onChange={(e) => setRole(e.target.value)}
             />
           </div>
           <div>
-            <InputIcon
-              text={"نام و نام خانوادگی"}
-              handleOnSearch={setRole}
-              handleOnSelect={undefined}
+            <AutocompleteInput
+              items={[]}
+              label={"نام و نام خانوادگی"}
+              onSelect={() => console.log()}
+              // onChange={(e) => setRole(e.target.value)}
             />
           </div>
-
           <SimpleButton
+            type="submit"
             className="full-gray-btn w-[160px] h-[40px] centering rounded-md"
             icon={<BiSearch size={20} />}
             text="جستجو"
@@ -52,27 +54,32 @@ const PersonnelSearchFrom = () => {
       <PerfesionalSearch text="جستجوی پیشرفته" LeftIcon={<BiChevronDown />}>
         <div className="flex flex-col gap-6 my-6">
           <div className="flex gap-6">
-            <InputIcon
-              text={"کد ملی"}
-              handleOnSearch={setRole}
-              handleOnSelect={undefined}
+            <AutocompleteInput
+              items={[]}
+              label={"کد ملی"}
+              onSelect={() => console.log()}
+              // onChange={(e) => setRole(e.target.value)}
             />
-            <InputIcon
-              text={"شماره مموبایل"}
-              handleOnSearch={setRole}
-              handleOnSelect={undefined}
+            <AutocompleteInput
+              items={[]}
+              label={"شماره مموبایل"}
+              onSelect={() => console.log()}
+              // onChange={(e) => setRole(e.target.value)}
             />
           </div>
           <div className="flex gap-6">
-            <InputIcon
-              text={"پست الکترونیک"}
-              handleOnSearch={setRole}
-              handleOnSelect={undefined}
+            <AutocompleteInput
+              items={[]}
+              label={"شماره مموبایل"}
+              onSelect={() => console.log()}
+              // onChange={(e) => setRole(e.target.value)}
             />
-            <InputIcon
-              text="نام کاربری"
-              handleOnSearch={setRole}
-              handleOnSelect={undefined}
+
+            <AutocompleteInput
+              items={[]}
+              label={"پست الکترونیک"}
+              onSelect={() => console.log()}
+              // onChange={(e) => setRole(e.target.value)}
             />
           </div>
         </div>

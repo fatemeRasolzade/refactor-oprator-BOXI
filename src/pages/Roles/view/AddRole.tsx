@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { Button, Dialog } from "@material-tailwind/react";
+import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
 import axios from "axios";
 import {
@@ -759,6 +759,8 @@ const AddEditRole: FC<EditRoleProps> = ({
                 code: "",
                 name: "",
                 isActive: isActive,
+                pageSize: 10,
+                pageNumber: 1,
               }) as any
             );
             setIsModalOpen(false);
@@ -896,21 +898,19 @@ const AddEditRole: FC<EditRoleProps> = ({
             </div>
           </div>
           <div className="flex w-[80%] justify-center gap-x-12">
-            <Button
+            <SimpleButton
               type="submit"
-              className="border-none bg-[#ef5644] w-[30%] text-gray-200"
-              // onClick={() => deleteHandler(itemId)}
-            >
-              بله
-            </Button>
-            <Button
-              className="border-none bg-[#FFF8F0] w-[30%] text-gray-500"
-              onClick={() => {
+              text="بله"
+              className="full-tomato-btn px-[90px] "
+            />
+            <SimpleButton
+              type="button"
+              text="خیر"
+              className="full-lightTomato-btn  px-[90px] "
+              handelClick={() => {
                 setIsModalOpen(false);
               }}
-            >
-              خیر
-            </Button>
+            />
           </div>
         </form>
       </Dialog>

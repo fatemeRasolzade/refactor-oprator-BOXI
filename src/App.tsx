@@ -9,21 +9,18 @@ import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 
 import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
 import UserService from "./services/UserService";
-import Interseptor from "./services/http_service";
+
 import YupDefault from "./tools/config/YupDefault";
 import { useEffect } from "react";
 function App() {
-
-useEffect(()=>{
+  useEffect(() => {
     UserService.initKeycloak();
-
-},[])
-
-
+    console.log("keclock");
+  }, []);
 
   return (
     <div className="App">
-      <Interseptor />
+     
       <YupDefault />
 
       <Routes>

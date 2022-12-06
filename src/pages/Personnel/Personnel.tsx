@@ -15,7 +15,7 @@ import {
 import { apiRoute } from "../../services/apiRoute";
 import AddEditPerson from "./view/AddEditPerson";
 import EditPersonRole from "./view/EditPersonRole";
-import Operation from "./view/PersonnelOperation";
+
 import PersonnelSearchFrom from "./view/PersonnelSearchFrom";
 
 interface PersonnelProps {}
@@ -45,7 +45,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
                 <AddEditPerson currentData={"fsv"} />
                 <DeleteOperation
                   itemId={item.id}
-                  title={"حذف کارمندhttps://gitlab.com/f.farnia/hub-operation-management-front.git"}
+                  title={"حذف کارمند"}
                   route={apiRoute().delete.role + `/${item.id}`}
                   updating={updating}
                 />

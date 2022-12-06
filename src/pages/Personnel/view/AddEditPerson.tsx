@@ -81,7 +81,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
       <Dialog
         open={isModalOpen}
         handler={setIsModalOpen}
-        className="min-w-[1026px]"
+        className="min-w-[1100px]"
       >
         <button
           className="flex w-[50px] h-[50px]  border-none items-center justify-center"
@@ -90,14 +90,15 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           <GrFormClose />
         </button>
         <h3 className="flex w-full justify-center text-gray-700 font-bold text-lg">
-          تستس
+          {currentData ? "ویرایش پرسنل" : "افزودن پرسنل"}
         </h3>
         <form
           onSubmit={handleSubmit}
           className="flex w-full flex-col items-center gap-6 mb-6 p-6"
         >
-          <div className="flex w-[90%] justify-center align-center gap-3">
+          <div className="flex w-[90%] justify-start align-center gap-x-3">
             <InputText
+              widthWrapper="w-[33%]"
               label="کد پرسنلی"
               name="personelCode"
               handleChange={formik.handleChange}
@@ -106,6 +107,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               type={"text"}
             />
             <InputText
+              widthWrapper="w-[33%]"
               label="کد ملی"
               name="nationalCode"
               handleChange={formik.handleChange}
@@ -114,6 +116,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               type={"text"}
             />
             <InputText
+              widthWrapper="w-[33%]"
               label="نام و نام خانوادگی"
               name="name"
               handleChange={formik.handleChange}
@@ -122,8 +125,9 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               type={"text"}
             />
           </div>
-          <div className="flex w-[90%] justify-center align-center gap-3">
+          <div className="flex w-[90%] justify-start align-center gap-x-3">
             <InputText
+              widthWrapper="w-[32.6%]"
               label="شماره موبایل"
               name="mobile"
               handleChange={formik.handleChange}
@@ -132,13 +136,14 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               type={"text"}
             />
             <InputText
+              widthWrapper="w-[32.6%]"
               label="پست الکترونیک"
               name="email"
               handleChange={formik.handleChange}
               values={formik.values.email}
               type={"text"}
             />
-            <div className="w-[20%] h-full justify-center items-center flex m-auto">
+            <div className="w-[15%] h-full justify-center items-center flex my-auto pb-[10px]">
               <CustomSwitch
                 handleChange={(value: boolean) =>
                   setFieldValue("isActive", value)
@@ -146,7 +151,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               />
             </div>
           </div>
-          <div className="flex w-[90%] justify-center align-center ganter align-center gap-3">
+          <div className="flex w-[90%] justify-start align-center gap-x-3">
             <InputText
               label="نام کاربری"
               name="username"
@@ -181,21 +186,19 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             />
           </div>
           <div className="flex w-[80%] justify-center gap-x-12">
-            <Button
+            <SimpleButton
               type="submit"
-              className="border-none bg-[#ef5644] w-[30%] text-gray-200"
-              // onClick={() => deleteHandler(itemId)}
-            >
-              بله
-            </Button>
-            <Button
-              className="border-none bg-[#FFF8F0] w-[30%] text-gray-500"
-              onClick={() => {
+              text="بله"
+              className="full-tomato-btn px-[90px] "
+            />
+            <SimpleButton
+              type="button"
+              text="خیر"
+              className="full-lightTomato-btn px-[90px]"
+              handelClick={() => {
                 setIsModalOpen(false);
               }}
-            >
-              خیر
-            </Button>
+            />
           </div>
         </form>
       </Dialog>

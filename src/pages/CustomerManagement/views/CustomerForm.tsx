@@ -14,7 +14,6 @@ import CustomerAddressElements from "./CustomerAddressElements";
 import { ReverseArray } from "../../../tools/functions/Methods";
 import CustomerAddressForm from "./CustomerAddressForm";
 import CustomerTelephoneForm from "./CustomerTelephoneForm";
-import { GetCustomerType } from "../../../services/SelectApi";
 import { apiRoute } from "../../../services/apiRoute";
 
 type CustomerFormProps = {
@@ -81,7 +80,6 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
   });
 
   useEffect(() => {
-    console.log(GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE));
     // GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE);
   }, []);
 

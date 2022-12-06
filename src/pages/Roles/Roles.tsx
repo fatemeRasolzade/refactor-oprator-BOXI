@@ -2,8 +2,6 @@ import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import AddExcel from "../../components/exel/AddExcel";
-import NavbarSearch from "../../components/NavbarSearch/NavbarSearch";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
@@ -17,20 +15,28 @@ interface RolesProps {}
 
 const Roles: FC<RolesProps> = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { rolesList, isUpdating } = useSelector((state: any) => state.role);
+  const { rolesList } = useSelector((state: any) => state.role);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
 
   const [isActive, setIsActive] = useState<boolean>(true);
 
   useEffect(() => {
-    dispatch(
-      RoleData({
-        code: "",
-        name: "",
-        isActive: isActive,
-      }) as any
-    );
+    try {
+      dispatch(
+        RoleData({
+          code: "",
+          name: "",
+          isActive: isActive,
+          pageSize: 10,
+          pageNumber: pageNumbers,
+        }) as any
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
     return () => dispatch(clearRole() as any);
-  }, [dispatch, isActive]);
+  }, [dispatch, isActive, pageNumbers]);
 
   const data =
     rolesList?.content?.length !== 0
@@ -66,7 +72,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
 
   return (
     <div>
-      <Breadcrumb curentPage="هاب" />
+      <Breadcrumb curentPage="مدیریت نقش" />
       <SearchFilter isActive={isActive} />
       <OptionsTable
         isActive={isActive}
@@ -75,7 +81,11 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
           <AddEditRole title="تغییر مدیریت نقش" isActive={isActive} />
         )}
       />
-      <StaticTable data={data ? data : []} column={RoleColumn} pagination />
+      <StaticTable
+        data={data ? data : []}
+        column={RoleColumn}
+        pagination={rolesList?.totalElements}
+      />
     </div>
   );
 };

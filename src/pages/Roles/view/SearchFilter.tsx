@@ -3,6 +3,7 @@ import React, { ChangeEvent, FC, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
+
 import InputIcon from "../../../global/InputIcon/InputIcon";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { RoleData } from "../../../redux/RolsData/RolesData";
@@ -45,6 +46,8 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
           code: hub,
           name: role,
           isActive: isActive,
+          pageSize: 10,
+          pageNumber: 1,
         }) as any
       );
     } catch (error) {}
@@ -54,17 +57,19 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
       <form onSubmit={handelSubmit}>
         <div className=" flex gap-3 justify-start items-center flex-wrap">
           <div className="Max-sm:mb-3">
-            <InputIcon
-              text={"نقش"}
-              handleOnSearch={setRole}
-              handleOnSelect={undefined}
+            <AutocompleteInput
+              items={[]}
+              label="نقش"
+              onSelect={() => console.log()}
+              onChange={(e) => setRole(e.target.value)}
             />
           </div>
           <div>
-            <InputIcon
-              text={"دسترسی ها"}
-              handleOnSearch={setAccess}
-              handleOnSelect={undefined}
+            <AutocompleteInput
+              items={[]}
+              label="دسترسی ها"
+              onSelect={() => console.log()}
+              onChange={(e) => setRole(e.target.value)}
             />
           </div>
 
