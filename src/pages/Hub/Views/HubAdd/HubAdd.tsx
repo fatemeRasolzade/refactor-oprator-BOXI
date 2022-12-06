@@ -11,36 +11,42 @@ import { getDataFromServer, PostDataParams } from "../../../../services/Service_
 import { apiRoute } from "../../../../services/apiRoute"
 import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert"
 const HubAdd = () => {
+  const navigate = useNavigate();
 
-
-  const navigate=useNavigate()
-
-  useEffect(()=>{
-
+  useEffect(() => {
     function getDataSelect() {
       try {
-        getDataFromServer(apiRoute().get.get_hub_type).then(res=>{if(res.status==="OK") settypeHub(res.payload)})
-        getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
-        getDataFromServer(apiRoute().get.get_province_city).then(res=>{if(res.status==="OK") setCities(res.payload.content)})
-        getDataFromServer(apiRoute().get.get_province_loc).then(res=>{if(res.status==="OK") setProvinceLoc(res.payload.content)})
-        getDataFromServer(apiRoute().get.get_select_province).then(res=>{if(res.status==="OK") setSelectProvince(res.payload.content)})
-        getDataFromServer(apiRoute().get.select_hub).then(res=>{if(res.status==="OK") setselectHub(res.payload.content)})
-
+        getDataFromServer(apiRoute().get.get_hub_type).then((res) => {
+          if (res.status === "OK") settypeHub(res.payload);
+        });
+        getDataFromServer(apiRoute().get.select_hub_category).then((res) => {
+          if (res.status === "OK") setCatHub(res.payload.content);
+        });
+        getDataFromServer(apiRoute().get.get_province_city).then((res) => {
+          if (res.status === "OK") setCities(res.payload.content);
+        });
+        getDataFromServer(apiRoute().get.get_province_loc).then((res) => {
+          if (res.status === "OK") setProvinceLoc(res.payload.content);
+        });
+        getDataFromServer(apiRoute().get.get_select_province).then((res) => {
+          if (res.status === "OK") setSelectProvince(res.payload.content);
+        });
+        getDataFromServer(apiRoute().get.select_hub).then((res) => {
+          if (res.status === "OK") setselectHub(res.payload.content);
+        });
       } catch (error) {
-        ErrorAlert('دریافت دیتا با خطلا مواجه شد')
+        ErrorAlert("دریافت دیتا با خطلا مواجه شد");
       }
-      
     }
-    getDataSelect()
+    getDataSelect();
+  }, []);
 
-  },[])
- 
-  const [typeHub,settypeHub]=useState([])
-  const [catHub,setCatHub]=useState([])
-  const [citys,setCities]=useState([])
-  const [provinceLoc,setProvinceLoc]=useState([])
-  const [selectProvince,setSelectProvince]=useState([])
-  const [selectHub,setselectHub]=useState([])
+  const [typeHub, settypeHub] = useState([]);
+  const [catHub, setCatHub] = useState([]);
+  const [citys, setCities] = useState([]);
+  const [provinceLoc, setProvinceLoc] = useState([]);
+  const [selectProvince, setSelectProvince] = useState([]);
+  const [selectHub, setselectHub] = useState([]);
   return (
 <>
     <Formik
@@ -175,21 +181,24 @@ const HubAdd = () => {
        </div>
       </div>
      </div> */}
- 
-     <div className='col-span-5 flex flex-row justify-end items-center'>
-       <Button className='border-none bg-secondaryColor text-dark' onClick={()=>navigate(-1)}>بازگشت</Button>
-       <Button className='border-none bg-tomato mr-3' type='submit'>افزودن</Button>
- 
-     </div>
-    
-      
- </div>
- </form>
-   )}
-</Formik>
-</>
-  )
-  
-}
 
-export default HubAdd
+              <div className="col-span-5 flex flex-row justify-end items-center">
+                <Button
+                  className="border-none bg-secondaryColor text-dark"
+                  onClick={() => navigate(-1)}
+                >
+                  بازگشت
+                </Button>
+                <Button className="border-none bg-tomato mr-3" type="submit">
+                  افزودن
+                </Button>
+              </div>
+            </div>
+          </form>
+        )}
+      </Formik>
+    </>
+  );
+};
+
+export default HubAdd;

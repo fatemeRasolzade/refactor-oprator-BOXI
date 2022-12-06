@@ -34,12 +34,12 @@ const PersonnelList = createSlice({
       state.personnelList = [];
     },
     updating: (state, action) => {
-      state.isUpdating = action.payload;
+      state.isUpdating = action?.payload;
     },
   },
   extraReducers: {
     [PersonnelData.fulfilled as any]: (state, action) => {
-      state.personnelList = action.payload.payload;
+      state.personnelList = action?.payload?.payload;
       state.fetchPost = false;
       state.errorMessage = null;
       state.isUpdating = false;
