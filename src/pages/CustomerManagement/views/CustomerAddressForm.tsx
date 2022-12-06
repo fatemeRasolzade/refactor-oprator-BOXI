@@ -1,18 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { ClipLoader } from "react-spinners";
+import { useState } from "react";
 //  import { v4 as uuidv4 : any } from "uuid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../global/Modal/Modal";
-// import axios from "axios";
+import InputSelect from "../../../global/InputSelect/InputSelect";
+import InputText from "../../../global/InputText/InputText";
+import CustomSwitch from "../../../global/Switch/Switch";
+import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import { PostalCodeRegex } from "../../../tools/validations/ErrorHelper";
+import { VALIDPOSTALCODE } from "../../../tools/validations/ErrorKeywords";
 // import { Map } from "../../../../components/map";
-// import Select from "../../../../components/Select";
-// import Button from "../../../../components/Button";
-// import { getAddressesKind } from "../../../../services/api";
-// import FormGroup from "../../../../components/FormGroup";
 // import { PostalCodeRegex } from "../../../../utilities/function";
-// import CustomModal from "../../../../components/CustomModal";
-// import CustomSwitch from "../../../../components/CustomSwitch";
 
 const CustomerAddressForm = ({
   open,
@@ -143,12 +141,12 @@ const CustomerAddressForm = ({
       id: Yup.string().required(),
     }),
     pelak: Yup.string().required(),
-    unit: Yup.number().required().label("واحد"),
-    // postalCode: Yup.string().matches(PostalCodeRegex, "کد پستی معتبر نیست"),
+    unit: Yup.number().required(),
+    postalCode: Yup.string().matches(PostalCodeRegex, VALIDPOSTALCODE),
     isActive: Yup.boolean().nullable(),
-    latitude: Yup.number().nullable(true).label("عرض"),
-    longtitude: Yup.number().nullable(true).label("طول"),
-    address: Yup.string().required().label("آدرس"),
+    latitude: Yup.number().nullable(true),
+    longtitude: Yup.number().nullable(true),
+    address: Yup.string().required(),
   });
 
   const formik = useFormik({
@@ -186,7 +184,6 @@ const CustomerAddressForm = ({
         },
     onSubmit: (values: any, { resetForm }) => {
       //   setState({ loading: true, error: false });
-      console.log("This is true");
       if (currentData) {
         setOpen(false);
         resetForm({ values: "" });
@@ -220,195 +217,119 @@ const CustomerAddressForm = ({
       title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}
     >
       <form onSubmit={handleSubmit}>
-        {/* <div className="formInputSection">
-          <FormGroup
-            required={true}
-            error={
-              touched.selectAddressType &&
-              errors.selectAddressType &&
-              errors.selectAddressType.id
-            }
+        <div className="inputRow">
+          <InputSelect
+            important
+            options={[]}
             label="نوع آدرس"
-          >
-            <Select
-              name="selectAddressType"
-              placeholder="نوع آدرس"
-              value={{
-                value: values?.selectAddressType?.id,
-                label: values?.selectAddressType?.text,
-              }}
-              options={addressKind}
-              onChange={(value) => {
-                setFieldValue("selectAddressType", {
-                  id: value.value,
-                  text: value.label,
-                });
-              }}
-            />
-          </FormGroup>
-          <FormGroup
-            required={true}
-            error={
-              touched.selectState && errors.selectState && errors.selectState.id
-            }
-            label="استان"
-          >
-            <Select
-              name="selectState"
-              placeholder="استان"
-              value={{
-                value: values?.selectState?.id,
-                label: values?.selectState?.text,
-              }}
-              options={provinces}
-              onChange={(value) => {
-                setFieldValue("selectState", {
-                  id: value.value,
-                  text: value.label,
-                });
-              }}
-            />
-          </FormGroup>
+            name="selectAddressType"
+            values={values.selectAddressType}
+            error={touched.selectAddressType && errors.selectAddressType}
+            handleChange={(value: any) => {
+              setFieldValue("selectAddressType", {
+                id: value.value,
+                text: value.label,
+              });
+            }}
+          />
+          <InputSelect
+            important
+            options={[]}
+            label=" استان"
+            name="selectState"
+            values={values.selectState}
+            error={touched.selectState && errors.selectState}
+            handleChange={(value: any) => {
+              setFieldValue("selectState", {
+                id: value.value,
+                text: value.label,
+              });
+            }}
+          />
 
-          <FormGroup
-            required={true}
-            error={
-              touched.selectCity && errors.selectCity && errors.selectCity.id
-            }
-            label="شهر"
-          >
-            <Select
-              name="selectCity"
-              placeholder="شهر"
-              value={{
-                value: values?.selectCity?.id,
-                label: values?.selectCity?.text,
-              }}
-              options={cities}
-              onChange={(value) => {
-                setFieldValue("selectCity", {
-                  id: value.value,
-                  text: value.label,
-                });
-              }}
-            />
-          </FormGroup>
+          <InputSelect
+            important
+            options={[]}
+            label=" شهر"
+            name="selectState"
+            values={values.selectCity}
+            error={touched.selectCity && errors.selectCity}
+            handleChange={(value: any) => {
+              setFieldValue("selectCity", {
+                id: value.value,
+                text: value.label,
+              });
+            }}
+          />
         </div>
-        <div className="formInputSection">
-          <FormGroup
-            required={true}
-            error={
-              touched.selectRegion &&
-              errors.selectRegion &&
-              errors.selectRegion.id
-            }
-            label="منطقه"
-          >
-            <Select
-              name="selectRegion"
-              placeholder="منطقه"
-              value={{
-                value: values?.selectRegion?.id,
-                label: values?.selectRegion?.text,
-              }}
-              options={regions}
-              onChange={(value) => {
-                setFieldValue("selectRegion", {
-                  id: value.value,
-                  text: value.label,
-                });
-              }}
-              isSearchable={true}
-            />
-          </FormGroup>
-
-          <FormGroup
-            required={true}
+        <div className="inputRow">
+          <InputSelect
+            important
+            options={[]}
+            label=" منطقه"
+            name="selectRegion"
+            values={values.selectRegion}
+            error={touched.selectRegion && errors.selectRegion}
+            handleChange={(value: any) => {
+              setFieldValue("selectRegion", {
+                id: value.value,
+                text: value.label,
+              });
+            }}
+          />
+          <InputText
+            important
+            label=" پلاک"
+            values={values.pelak}
+            name="pelak"
+            handleChange={handleChange}
             error={touched.pelak && errors.pelak}
-            input={{
-              id: "pelak",
-              name: "pelak",
-              placeholder: "",
-              value: values.pelak,
-              onChange: handleChange,
-            }}
-            label="پلاک "
           />
-
-          <FormGroup
-            required={true}
+          <InputText
+            important
+            label="واحد"
+            values={values.unit}
+            name="unit"
+            handleChange={handleChange}
             error={touched.unit && errors.unit}
-            input={{
-              id: "unit",
-              name: "unit",
-              placeholder: "",
-              value: values.unit,
-              onChange: handleChange,
-            }}
-            label="واحد "
           />
         </div>
-        <div className="flex justify-between items-start mt-5">
-          <div className="formInputSection">
-            <FormGroup
-              error={touched.postalCode && errors.postalCode}
-              input={{
-                id: "postalCode",
-                name: "postalCode",
-                placeholder: "",
-                value: values.postalCode,
-                onChange: handleChange,
-              }}
-              label="کد پستی "
-            />
-            <CustomSwitch
-              type={"button"}
-              dataName={"isActive"}
-              formData={formik}
-              setChecked={setChecked}
-              checked={checked}
-            />
-          </div>
-          <div className={" flex flex-col"}>
-            <p className={"pr-4 text-sm"}>موقعیت روی نقشه</p>
-            <Map formData={formik} long="longtitude" late="latitude" />
-            <p className="pr-4 text-sm">
-              موقعیت هاب را بر روی نقشه مشخص فرمایید
-            </p>
+        <div className="flex-between-center">
+          <InputText
+            important
+            label="کد پستی"
+            values={values.postalCode}
+            name="postalCode"
+            handleChange={handleChange}
+            error={touched.postalCode && errors.postalCode}
+          />
+          <CustomSwitch
+            active={values.isActive}
+            handleChange={() => setFieldValue("isActive", !values.isActive)}
+          />
+          <div className="flex-start-start flex-col">
+            <p>موقعیت روی نقشه</p>
+            <p>MAP</p>
+            {/* <Map formData={formik} long="longtitude" late="latitude" /> */}
+            <p>موقعیت هاب را بر روی نقشه مشخص فرمایید</p>
           </div>
         </div>
-        <div className="formInputSection">
-          <FormGroup
-            required={true}
-            error={touched.address && errors.address}
-            input={{
-              id: "address",
-              name: "address",
-              placeholder: "",
-              value: values.address,
-              onChange: handleChange,
-            }}
-            label="آدرس"
-            width="w-full"
+        <InputText
+          className="mt-8"
+          important
+          label="آدرس"
+          values={values.address}
+          name="address"
+          handleChange={handleChange}
+          error={touched.address && errors.address}
+        />
+        <div className="flex-end-center gap-3">
+          <SimpleButton className="full-lightTomato-btn w-20" text="لغو" />
+          <SimpleButton
+            className="full-tomato-btn w-20"
+            text={currentData ? "ویرایش" : "افزودن"}
           />
         </div>
-
-        <div className="btnsection">
-          <Button theme="secondarypopUpButton" onClick={handleCloseModal}>
-            لغو
-          </Button>
-          <Button theme="mainpopUpButton">
-            {currentData ? "ویرایش" : "افزودن"}
-            {state.loading && (
-              <ClipLoader
-                className="inline-flex items-center"
-                size={24}
-                loading={true}
-                color="#FFF"
-              />
-            )}
-          </Button>
-        </div> */}
       </form>
     </Modal>
   );
