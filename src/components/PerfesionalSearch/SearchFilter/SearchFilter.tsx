@@ -1,6 +1,3 @@
-import React from 'react'
-import InputText from '.././../../global/InputText/InputText';
-import CheckboxText from '../../../global/CheckboxText/CheckboxText';
 import ChipIcon from '../../../global/ChipIcon/ChipIcon';
 import CustomSwitch from '../../../global/Switch/Switch';
 const SearchFilter = () => {
@@ -11,7 +8,7 @@ const SearchFilter = () => {
     <div className='col-span-4'>
       <h3 className='my-4'>تمام فیلترها</h3>
       {/* search Input */}
-  <InputText/>
+  {/* <InputText/> */}
 
   {/*sample checkbox */}
   <div className='h-300 overflow-auto mt-5' dir='ltr'>
@@ -19,7 +16,7 @@ const SearchFilter = () => {
      
       {
 checkboxed.map(item=>{
-return <CheckboxText text='فیلد اول'/>
+return "<CheckboxText text='فیلد اول'/>"
 })
 
       }
@@ -37,7 +34,7 @@ return <CheckboxText text='فیلد اول'/>
 
         <div className='flex-1'>
         <h3 className='my-4'> فیلترهای انتخاب شده</h3>
-    <InputText/>
+    {/* <InputText/> */}
     <div className='h-300 overflow-auto mt-5' dir='ltr'>
     <div dir='rtl'>
    { checkboxed.map(item=>{

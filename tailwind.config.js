@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 const colors = require("tailwindcss/colors");
 
 const withMT = require("@material-tailwind/react/utils/withMT");
@@ -18,20 +17,12 @@ module.exports = withMT({
       colors: {
         light: "#ffffff",
         dark: "#282827",
-
-        lightesGray: "#F4F4F4",
-        tableColor: "rgb(231, 229, 229)",
-        grayLight: "#E0E0E2",
-        gray: colors.slate,
-        blue: colors.sky,
-        red: colors.rose,
-        green: colors.emerald,
-        secondaryColor: "#FFF3E5",
-        secondaryTextColor: "#2E2310",
-        mainColor: "#EF5644",
-        customeTextColor: "#818181",
-        grayLights: "#F9FAFC",
+        darkBorder: "#ABABAB",
+        darkGray: "#525252",
+        lightGray: "#F9FAFC",
+        mainGray: "#e7e5e5",
         tomato: "#EF5644",
+        lightTomato: "#FFEAE9",
       },
       fontFamily: {
         shabnam: ["yekan", "Roboto", "Arial", "sans-serif"],

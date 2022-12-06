@@ -1,110 +1,104 @@
-import {useEffect,useState} from "react"
-import { Button } from '@material-tailwind/react'
-import Checkbox from '../../../../components/checkbox/Checkbox'
-import DatePickers from '../../../../global/DatePicker/DatePicker'
-import InputText from '../../../../global/InputText/InputText'
-import InputSelect from '../../../../global/InputSelect/InputSelect'
+import React, { useEffect, useState } from 'react'
+import {useNavigate, useLocation} from "react-router-dom"
 import { Formik,ErrorMessage } from "formik";
-import {useNavigate} from "react-router-dom"
-import { addHubschema } from '../../../../global/Validation/Validation'
-import { getDataFromServer, PostDataParams } from "../../../../services/Service_call"
-import { apiRoute } from "../../../../services/apiRoute"
-import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert"
-const HubAdd = () => {
-  const navigate = useNavigate();
+import { Button } from '@material-tailwind/react';
+import InputText from '../../../../global/InputText/InputText';
+import InputSelect from '../../../../global/InputSelect/InputSelect';
+import DatePickers from '../../../../global/DatePicker/DatePicker';
+import Checkbox from '../../../../components/checkbox/Checkbox';
+import { getDataFromServer } from '../../../../services/Service_call';
+import { apiRoute } from '../../../../services/apiRoute';
+import { ErrorAlert } from '../../../../global/alert/Alert';
+const HubEdit = () => {
+    const {state} =useLocation()
+   
+    const navigate=useNavigate()
+    useEffect(()=>{
 
-  useEffect(() => {
-    function getDataSelect() {
-      try {
-        getDataFromServer(apiRoute().get.get_hub_type).then((res) => {
-          if (res.status === "OK") settypeHub(res.payload);
-        });
-        getDataFromServer(apiRoute().get.select_hub_category).then((res) => {
-          if (res.status === "OK") setCatHub(res.payload.content);
-        });
-        getDataFromServer(apiRoute().get.get_province_city).then((res) => {
-          if (res.status === "OK") setCities(res.payload.content);
-        });
-        getDataFromServer(apiRoute().get.get_province_loc).then((res) => {
-          if (res.status === "OK") setProvinceLoc(res.payload.content);
-        });
-        getDataFromServer(apiRoute().get.get_select_province).then((res) => {
-          if (res.status === "OK") setSelectProvince(res.payload.content);
-        });
-        getDataFromServer(apiRoute().get.select_hub).then((res) => {
-          if (res.status === "OK") setselectHub(res.payload.content);
-        });
-      } catch (error) {
-        ErrorAlert("دریافت دیتا با خطلا مواجه شد");
-      }
-    }
-    getDataSelect();
-  }, []);
+        function getDataSelect() {
+          try {
+            getDataFromServer(apiRoute().get.get_hub_type).then(res=>{if(res.status==="OK") settypeHub(res.payload)})
+            getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
+            getDataFromServer(apiRoute().get.get_province_city).then(res=>{if(res.status==="OK") setCities(res.payload.content)})
+            getDataFromServer(apiRoute().get.get_province_loc).then(res=>{if(res.status==="OK") setProvinceLoc(res.payload.content)})
+            getDataFromServer(apiRoute().get.get_select_province).then(res=>{if(res.status==="OK") setSelectProvince(res.payload.content)})
+            getDataFromServer(apiRoute().get.select_hub).then(res=>{if(res.status==="OK") setselectHub(res.payload.content)})
+    
+          } catch (error) {
+            ErrorAlert('دریافت دیتا با خطلا مواجه شد')
+          }
+          
+        }
+        getDataSelect()
+    
+      },[])
 
-  const [typeHub, settypeHub] = useState([]);
-  const [catHub, setCatHub] = useState([]);
-  const [citys, setCities] = useState([]);
-  const [provinceLoc, setProvinceLoc] = useState([]);
-  const [selectProvince, setSelectProvince] = useState([]);
-  const [selectHub, setselectHub] = useState([]);
+    const [typeHub,settypeHub]=useState([])
+    const [catHub,setCatHub]=useState([])
+    const [citys,setCities]=useState([])
+    const [provinceLoc,setProvinceLoc]=useState([])
+    const [selectProvince,setSelectProvince]=useState([])
+    const [selectHub,setselectHub]=useState([])
+
+
   return (
-<>
-    <Formik
+    <>
+     <Formik
     initialValues={{
-      code: "",
-      name: "",
+      code: state?.dataEdit?.code,
+      name: state?.dataEdit?.name,
       selectHubType: {
-        id:"",
-        text:""
+        id:state?.dataEdit?.selectHubType?.id,
+        text:state?.dataEdit?.selectHubType?.text
       },
       selectHubCategory:{
-        id:"",
-        text:""
+        id:state?.dataEdit?.selectHubCategory?.id,
+        text:state?.dataEdit?.selectHubCategory?.text
       },
       selectParentHub: {
-        id:"",
-        text:""
+        id:state?.dataEdit?.selectParentHub.id,
+        text:state?.dataEdit?.selectParentHub.text
       },
-      pinCode: "",
+      pinCode: state?.dataEdit?.pinCode,
       locationStartDate:{
-        day:0,
-        month:0,
-        year:0
+        day:state?.dataEdit?.locationStartDate?.day,
+        month:state?.dataEdit?.locationStartDate?.month,
+        year:state?.dataEdit?.locationStartDate?.year
       },
-      mandatoryArrivalScan:false,
-      isActive:false,
-      dropOffAllowed:false,
+      mandatoryArrivalScan:state?.dataEdit?.mandatoryArrivalScan,
+      isActive:state?.dataEdit?.isActive,
+      dropOffAllowed:state?.dataEdit?.dropOffAllowed,
       selectState:{
-        id:"",
-        text:""
+        id:state?.dataEdit?.selectState?.id,
+        text:state?.dataEdit?.selectState?.text
       },
       selectCity:{
-        id:"",
-        text:""
+        id:state?.dataEdit?.selectCity?.id,
+        text:state?.dataEdit?.selectCity?.text
       },
       selectRegion:{
-        id:"",
-        text:""
+        id:state?.dataEdit?.selectRegion?.id,
+        text:state?.dataEdit?.selectRegion?.text
       },
-      plateNumber:"",
-      addressLine1:"",
-      addressLine2:"",
-      locLate: "",
-      locLong: "",
+      plateNumber:state?.dataEdit?.plateNumber,
+      addressLine1:state?.dataEdit?.addressLine1,
+      addressLine2:state?.dataEdit?.addressLine2,
+      locLate: state?.dataEdit?.locLate,
+      locLong: state?.dataEdit?.locLong,
      
       // fullName:"",
       // phone:"",
       // email:""
     }}
-     validationSchema={addHubschema}
+     //validationSchema={addHubschema}
     onSubmit={(values)=>{
-      PostDataParams(apiRoute().post.hub,values).then(res=>{
-        if(res.status==="OK"){
-          SuccessAlert("با موفقیت ساخته شد")
-        }else{
-          ErrorAlert("خطا در برقراری اطلاعات")
-        }
-      })
+    //   PostDataParams(apiRoute().post.hub,values).then(res=>{
+    //     if(res.status==="OK"){
+    //       SuccessAlert("با موفقیت ساخته شد")
+    //     }else{
+    //       ErrorAlert("خطا در برقراری اطلاعات")
+    //     }
+    //   })
     }}
     >
    {(formik)=>(
@@ -181,24 +175,21 @@ const HubAdd = () => {
        </div>
       </div>
      </div> */}
-
-              <div className="col-span-5 flex flex-row justify-end items-center">
-                <Button
-                  className="border-none bg-secondaryColor text-dark"
-                  onClick={() => navigate(-1)}
-                >
-                  بازگشت
-                </Button>
-                <Button className="border-none bg-tomato mr-3" type="submit">
-                  افزودن
-                </Button>
-              </div>
-            </div>
-          </form>
-        )}
-      </Formik>
+ 
+     <div className='col-span-5 flex flex-row justify-end items-center'>
+       <Button className='border-none bg-secondaryColor text-dark' onClick={()=>navigate(-1)}>بازگشت</Button>
+       <Button className='border-none bg-tomato mr-3' type='submit'>افزودن</Button>
+ 
+     </div>
+    
+      
+ </div>
+ </form>
+   )}
+</Formik>
+       
     </>
-  );
-};
+  )
+}
 
-export default HubAdd;
+export default HubEdit

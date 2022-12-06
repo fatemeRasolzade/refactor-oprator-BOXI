@@ -22,7 +22,7 @@ export const ProductColumns = [
     Header: "گروه بندی محصول ",
     width: "auto",
     Cell: ({ cell }) => {
-    return <span className="flex items-center ">{cell.value?.text}</span>;
+    return cell.value?.text ;
     },
 
   },
@@ -33,7 +33,7 @@ export const ProductColumns = [
     Cell: ({ cell }) => {
 
     return cell.value === true ? (
-      <span className="flex items-center">فعال</span>
+      <span >فعال</span>
     ) : (
       <span>غیر فعال</span>
     );

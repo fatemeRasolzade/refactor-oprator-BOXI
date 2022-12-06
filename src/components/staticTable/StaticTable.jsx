@@ -54,21 +54,21 @@ function Table({ columns, data, pageTable }) {
           id: "selection",
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
-          Header: ({ getToggleAllPageRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
-            </div>
-          ),
+          // Header: ({ getToggleAllPageRowsSelectedProps }) => (
+          //   <div>
+          //     <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+          //   </div>
+          // ),
           // The cell can use the individual row's getToggleRowSelectedProps method
           // to the render a checkbox
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox
-                {...row.getToggleRowSelectedProps()}
-                data={row}
-              />
-            </div>
-          ),
+          // Cell: ({ row }) => (
+          //   <div>
+          //     <IndeterminateCheckbox
+          //       {...row.getToggleRowSelectedProps()}
+          //       data={row}
+          //     />
+          //   </div>
+          // ),
         },
         ...columns,
       ]);
@@ -77,49 +77,54 @@ function Table({ columns, data, pageTable }) {
 
   // Render the UI for your table
   return (
-    <>
-      <div className="p-5">
-        <table
-          {...getTableProps()}
-          className="w-full text-center overflow-auto "
-        >
-          <thead className="bg-tableColor h-10 font-thin">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </th>
-                ))}
+    <div className="overflow-auto bg-white rounded-lg shadow-md  mt-6">
+      <table
+        {...getTableProps()}
+        className="border-collapse table-auto w-full bg-white table-striped rounded-lg text-center"
+      >
+        <thead className="bg-mainGray h-12 rounded-lg text-dark">
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th className=" font-normal" {...column.getHeaderProps()}>
+                  {column.render("Header")}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr
+                {...row.getRowProps()}
+                className="even:bg-lightGray h-12 text-dark"
+              >
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()} className="">
+                      {cell.render("Cell")}
+                    </td>
+                  );
+                })}
               </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="even:bg-gray-100 h-9">
-                  {row.cells.map((cell) => {
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        className="border-gray-300 border "
-                      >
-                        {cell.render("Cell")}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+            );
+          })}
+        </tbody>
+      </table>
 
-        <div className="text-center mt-10">
-          <Paginations pageData={pageTable} />
-        </div>
+          {page.length === 0 && (
+            <div className="h-20 centering w-full">
+           
+                <>موردی یافت نشد</>
+        
+            </div>
+          )}
+      <div className="text-center">
+        <Paginations pageData={pageTable} />
       </div>
-    </>
+    </div>
   );
 }
 

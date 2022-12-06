@@ -5,7 +5,8 @@ export const Base_url4 = "http://boxi.local:40000";
 export const API_CONSIGNMENT = `${Base_url2}/core-api`;
 export const API_CONSIGNMENT2 = `${Base_url}/resource-api`;
 export const API_CONSIGNMENT3 = `${Base_url3}/core-api`;
-export const API_CONSIGNMENT4= `${Base_url4}/core-api`;
+export const API_CONSIGNMENT4 = `${Base_url4}/core-api`;
+
 export const API_URL = `/core-api`;
 export const API_URL_2 = `/resource-api`;
 
@@ -65,25 +66,31 @@ export const apiRoute = () => {
       //PRODUCT
       GET_PRODUCT: createUrl(API_CONSIGNMENT4, "/vendor/select?filter="),
       //PRODUCT_GROUP
-      GET_PRODUCT_GROUPS: createUrl(API_CONSIGNMENT4, "/productGroup/select?filter="),
+      GET_PRODUCT_GROUPS: createUrl(
+        API_CONSIGNMENT4,
+        "/productGroup/select?filter="
+      ),
       //SERVICE_TIME
       GET_SERVICE_TIME: createUrl(API_CONSIGNMENT, "/timecommitment/filter"),
       //ADM_VEHICLE
       GET_ADM_VEHICLE: createUrl(API_URL, "/admVehicle/filter"),
       //Service
       GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
+      //customer
+      GET_CUSTOMER_TYPE: createUrl(API_CONSIGNMENT2, `/customer/customerType`)
     },
     post: {
       // create
       hub: createUrl(API_URL, "/hub"),
-      createProduct:createUrl(API_CONSIGNMENT4, "/product"),
-   
+      createProduct: createUrl(API_CONSIGNMENT4, "/product"),
+
       // filter
       filterRole: createUrl(API_CONSIGNMENT2, "/role"),
       // employee
       filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
-      serviceDefine:createUrl(API_CONSIGNMENT4, "/service"),
-      product:createUrl(API_CONSIGNMENT4, "/product"),
+      serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
+      product: createUrl(API_CONSIGNMENT4, "/product"),
+      customer: createUrl(API_CONSIGNMENT2, "/customer"),
     },
     postExcel: {
       exception: createUrl(API_CONSIGNMENT3, "/exception"),
@@ -91,11 +98,11 @@ export const apiRoute = () => {
     delete: {
       role: createUrl(API_CONSIGNMENT2, "/role"),
       personnel: createUrl(API_CONSIGNMENT2, "/employee"),
-      serviceDefine:createUrl(API_CONSIGNMENT4, "/service"),
-      productDefine:createUrl(API_CONSIGNMENT4,"/product")
+      serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
+      productDefine: createUrl(API_CONSIGNMENT4, "/product"),
     },
-    edit:{
-      productDefine:createUrl(API_CONSIGNMENT4,"/product")
-    }
+    edit: {
+      productDefine: createUrl(API_CONSIGNMENT4, "/product"),
+    },
   };
 };

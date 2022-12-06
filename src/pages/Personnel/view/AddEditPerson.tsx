@@ -1,12 +1,13 @@
 import React, { FC, useState } from "react";
+import * as Yup from "yup";
 import { Button, Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
+import { useFormik } from "formik";
+
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { BiPlus } from "react-icons/bi";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import InputText from "../../../global/Input/Input";
+import InputText from "../../../global/InputText/InputText";
 import CustomSwitch from "../../../global/Switch/Switch";
 
 interface AddEditPersonProps {
@@ -97,25 +98,25 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
         >
           <div className="flex w-[90%] justify-center align-center gap-3">
             <InputText
-              title="کد پرسنلی"
+              label="کد پرسنلی"
               name="personelCode"
-              handelChange={formik.handleChange}
+              handleChange={formik.handleChange}
               values={formik.values.personelCode}
               important
               type={"text"}
             />
             <InputText
-              title="کد ملی"
+              label="کد ملی"
               name="nationalCode"
-              handelChange={formik.handleChange}
+              handleChange={formik.handleChange}
               values={formik.values.nationalCode}
               important
               type={"text"}
             />
             <InputText
-              title="نام و نام خانوادگی"
+              label="نام و نام خانوادگی"
               name="name"
-              handelChange={formik.handleChange}
+              handleChange={formik.handleChange}
               values={formik.values.name}
               important
               type={"text"}
@@ -123,17 +124,17 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           </div>
           <div className="flex w-[90%] justify-center align-center gap-3">
             <InputText
-              title="شماره موبایل"
+              label="شماره موبایل"
               name="mobile"
-              handelChange={formik.handleChange}
+              handleChange={formik.handleChange}
               values={formik.values.mobile}
               important
               type={"text"}
             />
             <InputText
-              title="پست الکترونیک"
+              label="پست الکترونیک"
               name="email"
-              handelChange={formik.handleChange}
+              handleChange={formik.handleChange}
               values={formik.values.email}
               type={"text"}
             />
@@ -147,33 +148,33 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           </div>
           <div className="flex w-[90%] justify-center align-center ganter align-center gap-3">
             <InputText
-              title="نام کاربری"
+              label="نام کاربری"
               name="username"
-              handelChange={formik.handleChange}
+              handleChange={formik.handleChange}
               values={formik.values.username}
               important
               type={"text"}
             />
             <InputText
-              title=" گذر واژه"
+              label=" گذر واژه"
               name="password"
-              handelChange={formik.handleChange}
+              handleChange={formik.handleChange}
               values={formik.values.password}
               important
               type={"text"}
             />
             <InputText
-              title=" تایید گذر واژه"
+              label=" تایید گذر واژه"
               name="confirmPassword"
-              handelChange={formik.handleChange}
+              handleChange={formik.handleChange}
               values={formik.values.confirmPassword}
               important
               type={"text"}
             />
             <InputText
-              title="نام و نام خانوادگی"
+              label="نام و نام خانوادگی"
               name="name"
-              handelChange={formik.handleChange}
+              handleChange={formik.handleChange}
               values={formik.values.name}
               important
               type={"text"}

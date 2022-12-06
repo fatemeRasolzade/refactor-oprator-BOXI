@@ -17,7 +17,7 @@ import * as yup from "yup";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import { ErrorMessage, useFormik } from "formik";
 import CustomSwitch from "../../../global/Switch/Switch";
-import InputText from "../../../global/Input/Input";
+import InputText from "../../../global/InputText/InputText";
 import { AiOutlineEdit } from "react-icons/ai";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { BiPlus } from "react-icons/bi";
@@ -843,9 +843,9 @@ const AddEditRole: FC<EditRoleProps> = ({
           <div className="w-[80%] flex gap-12">
             <div className="w-[80%] flex-col">
               <InputText
-                title="کدهاب"
+                label="کدهاب"
                 name="name"
-                handelChange={formik.handleChange}
+                handleChange={formik.handleChange}
                 values={formik.values.name}
                 important
                 type={"text"}

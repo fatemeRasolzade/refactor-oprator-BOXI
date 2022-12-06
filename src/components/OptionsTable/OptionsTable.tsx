@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { BiPlus, BiEdit, BiTrash } from "react-icons/bi";
 import { GrDocumentPdf } from "react-icons/gr";
 import { Link } from "react-router-dom";
@@ -7,7 +8,7 @@ import CustomSwitch from "./../../global/Switch/Switch";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
 import AddButton from "../../global/addButton/AddButton";
 import AddExcel from "../exel/AddExcel";
-import { FC } from "react";
+
 
 interface OptionsTableProps {
   isActive?: boolean;

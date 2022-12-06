@@ -1,21 +1,53 @@
-import React from "react";
-import { BiSearchAlt2 } from "react-icons/bi";
-
-const InputText = ({ setSearch, text }: { text?: string; setSearch?: any }) => {
+type InputTextProps = {
+  error?: any;
+  values: any;
+  label: string;
+  name: string;
+  type?: string;
+  placeholder?: string;
+  important?: boolean;
+  readOnly?: boolean;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+const InputText = ({
+  label,
+  name,
+  handleChange,
+  type = "text",
+  important,
+  error,
+  placeholder,
+  readOnly,
+  values,
+}: InputTextProps) => {
   return (
-
-    <>
-       
-<div className='relative w-fit'>
-  <span className='absolute right-10 -top-12 z-5 text-md bg-white px-2'>{text && text}</span>
-    <span className='absolute left-3 top-3 bg-white h-85 w-30 rounded-lg flex justify-center items-center'><BiSearchAlt2 size={20}/></span>
-<input type="text" className='w-fit h-38 rounded-lg border-lightGray border-1 pr-2 ' onChange={(e)=>setSearch(e.target.value)} placeholder="جستجو"/>
-
-</div>
-
-    </>
-  )
-}
-
+    <div className="flex flex-col">
+      <div
+        className={`autocompleteWrapper ${error && "border-red-700"} ${
+          readOnly && "opacity-40"
+        } `}
+      >
+        <div
+          className={`autocompleteLabel ${error && "text-red-700"} top-[-17px]`}
+        >
+          {label}{" "}
+          <span className="text-tomato font-extrabold text-lg h-4">
+            {important ? "*" : " "}
+          </span>
+        </div>
+        <input
+          disabled={readOnly}
+          className="autocompleteInput"
+          name={name}
+          value={values}
+          onChange={handleChange}
+          type={type}
+          placeholder={placeholder}
+        />
+      </div>
+      <p className="text-red-700 text-xs pr-3 h-4">{error}</p>
+    </div>
+  );
+};
 
 export default InputText;

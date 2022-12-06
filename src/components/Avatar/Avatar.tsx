@@ -9,7 +9,7 @@ const Avatar = () => {
     <div>
         <div className="flex items-center gap-4 relative" >
 								<button
-									className="relative border-none text-gray-600 focus:ring-1 focus:outline-none focus:ring-gray-200 font-medium rounded-md text-sm px-3 py-2 text-center inline-flex items-center gap-3 Max-sm:hidden"
+									className="relative border-none text-gray-600 focus:ring-1 focus:outline-none focus:ring-gray-200 font-medium rounded-md  px-3 py-2 text-center inline-flex items-center gap-3 Max-sm:hidden"
 									type="button"
 									onClick={() => {
 										setNotifications(!notifications);
@@ -35,7 +35,7 @@ const Avatar = () => {
 								>
 									<div className="p-4">
 										<div className="text-base pb-2">عنوان اطلاعیه</div>
-										<div className="text-sm text-gray-600">
+										<div className=" text-gray-600">
 											من هرگز به طور خودکار بسته نمی شوم. این یک توصیف عمدا بسیار بسیار طولانی است
 											که دارای شخصیت ها و کلمات بسیاری است.
 										</div>
@@ -45,7 +45,7 @@ const Avatar = () => {
 									</div>
 									<div className="p-4">
 										<div className="text-base pb-2">عنوان اطلاعیه</div>
-										<div className="text-sm text-gray-600">
+										<div className=" text-gray-600">
 											من هرگز به طور خودکار بسته نمی شوم. این یک توصیف عمدا بسیار بسیار طولانی است
 											که دارای شخصیت ها و کلمات بسیاری است.
 										</div>
@@ -53,7 +53,7 @@ const Avatar = () => {
 								</div>
 
 								<button
-									className="text-gray-600 border-none focus:ring-1 focus:outline-none focus:ring-gray-200 font-medium rounded-md text-sm px-3 py-2 text-center inline-flex items-center gap-3"
+									className="text-gray-600 border-none focus:ring-1 focus:outline-none focus:ring-gray-200 font-medium rounded-md  px-3 py-2 text-center inline-flex items-center gap-3"
 									type="button"
 									onClick={() => {
 										setProfile(!profile);
@@ -75,7 +75,7 @@ const Avatar = () => {
 									}`}
 								>
 									<ul
-										className="py-1 text-sm text-gray-700 dark:text-gray-200"
+										className="py-1  text-gray-700 dark:text-gray-200"
 										aria-labelledby="dropdownDefault"
 									>
 										<li>
