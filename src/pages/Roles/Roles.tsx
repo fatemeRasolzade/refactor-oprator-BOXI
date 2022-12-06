@@ -24,7 +24,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
     try {
       dispatch(
         RoleData({
-          code: "",
+          permission: "",
           name: "",
           isActive: isActive,
           pageSize: 10,
