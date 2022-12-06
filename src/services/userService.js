@@ -1,30 +1,29 @@
 //public client
+import axios from "axios";
 import keycloak from "keycloak-js";
 const _kc=new keycloak({
-	"url":"http://boxi.local:8080",
-	"realm":"hubRealm",
-	"ssl-required":"none",
-	"public-client":true,
-	"confidential-port":0,
-	"clientId":"react-client",
-	"auth-server-url":"http://boxi.local:8080"
-});
+	url:"http://boxi.local:8080",
+	realm:"hubRealm",
+	clientId:"react-client",
+	});
 
 
 
 const initKeycloak = (onAuthenticatedCallback) => {
 	_kc.init({
 		onLoad: 'login-required',
-		//onLoad: 'check-sso'
-
-	})
+		checkLoginIframe: false,
+		checkLoginIframeInterval: 10,
+		})
 		.then((authenticated) => {
 			if (authenticated) {
-			onAuthenticatedCallback();
-			} else {
-			  doLogin();
-			}
-		})
+				onAuthenticatedCallback()
+				window.localStorage.setItem("userToken",_kc.token)
+				}else{
+					doLogin();
+				}
+			
+		}).catch((error)=>console.log(error))
 };
 
 const doLogin = _kc.login;
@@ -36,7 +35,7 @@ const getToken = () => _kc.token;
 const isLoggedIn = () => !!_kc.token;
 
 const updateToken = (successCallback) =>{
-	console.log('updateToken');
+	
 	return _kc.updateToken(5)
 		.then(successCallback)
 		.catch(doLogin);

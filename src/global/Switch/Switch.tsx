@@ -9,7 +9,7 @@ const CustomSwitch = ({
   active?: string;
   deactive?: string;
 }) => {
-  const [check, setCheck] = useState(true);
+  const [check, setCheck] = useState(false);
 
   const handelChanges = (e: boolean) => {
     setCheck(!check);

@@ -1,58 +1,30 @@
 import axios from "axios";
-import { ErrorAlert } from "../global/alert/Alert";
 import UserService from "./UserService";
-import { useEffect } from 'react';
 
 
 
+	axios.defaults.baseURL = "http://boxi.local:40000/";
+	axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("userToken");
 
-
-
-axios.defaults.headers.common["Content-Type"] = "application/json";
-
-
-export default ()=>{
-useEffect(()=>{
-
-  axios.interceptors.request.use((config) => {
-
-    if (UserService.isLoggedIn()) {
-      const cb = () => {
-        config.headers.Authorization = `Bearer ${UserService.getToken()}`;
-        return Promise.resolve(config);
-      };
-      return UserService.updateToken(cb);
-    }
-  
-    
-  
-  
-    const expectedErrors =
-    config.response &&
-    config.response.status >= 400 &&
-    config.response.status < 500;
-    if (!expectedErrors) {
-      ErrorAlert("مشکلی از سمت سرور رخ داده است.");
-    }
-  
-    return Promise.reject(config);
-  
-   
-  
-  
-  });
-
-  axios.interceptors.request.use(function (config) {
-    const 	token=localStorage.getItem("Authorization");
-    config.headers.Authorization="Bearer "+token;
-    return config;
-   });
-
-},[])
+ const configure = () => {
+	axios.interceptors.request.use((config) => {
+			
+		if (UserService.isLoggedIn()) {
+		  const cb = () => {
+			config.headers.Authorization = `Bearer ${UserService.getToken()}`;
+			return Promise.resolve(config);
+		  };
+		  return UserService.updateToken(cb);
+		}
+	  });
 }
 
+	
 
-export const http= {
+
+
+export default{
+  config:configure,
   get: axios.get,
   post: axios.post,
   put: axios.put,

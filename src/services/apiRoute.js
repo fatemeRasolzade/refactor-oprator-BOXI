@@ -79,7 +79,8 @@ export const apiRoute = () => {
       role: createUrl(API_CONSIGNMENT2, "/role"),
       personnel: createUrl(API_CONSIGNMENT2, "/employee"),
       serviceDefine:createUrl(API_CONSIGNMENT4, "/service"),
-      productDefine:createUrl(API_CONSIGNMENT4,"/product")
+      productDefine:createUrl(API_CONSIGNMENT4,"/product"),
+      hubTable:createUrl(API_CONSIGNMENT4,"/hub"),
     },
     edit:{
       productDefine:createUrl(API_CONSIGNMENT4,"/product")

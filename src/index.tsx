@@ -9,13 +9,17 @@ import App from './App';
 import Layout from './components/Layout/Layout';
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
+import UserService from './services/UserService';
+import http_service from './services/http_service';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+
 root.render(
-  <React.StrictMode>
-    
+  // <ReactKeycloakProvider authClient={keycloakConfigs}>
     <BrowserRouter>
   <Provider store={store}>
   <PersistGate loading={null} persistor={persistor}>
@@ -29,6 +33,10 @@ root.render(
     </PersistGate>
     </Provider>
    </BrowserRouter>
-  </React.StrictMode>
+  //  </ReactKeycloakProvider>
+
 );
+
+UserService.initKeycloak(root)
+http_service.config()
 reportWebVitals();

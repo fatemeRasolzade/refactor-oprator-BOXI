@@ -13,6 +13,7 @@ const persistConfig = {
   blacklist: ["hub", "paginate"],
 };
 
+
 const reducers = combineReducers({
   hub: HubList,
   role: RolesList,
