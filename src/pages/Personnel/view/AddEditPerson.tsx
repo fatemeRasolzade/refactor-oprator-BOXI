@@ -9,6 +9,7 @@ import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { BiPlus } from "react-icons/bi";
 import InputText from "../../../global/InputText/InputText";
 import CustomSwitch from "../../../global/Switch/Switch";
+import AddButton from "../../../global/addButton/AddButton";
 
 interface AddEditPersonProps {
   currentData?: any;
@@ -49,7 +50,14 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
         },
     onSubmit: async (values, { resetForm }) => {},
   });
-
+  const handleOpenModal = () => setIsModalOpen(!isModalOpen);
+  const handleUploadFileAction = () => {
+    alert("second");
+  };
+  const ToggleOptions = [
+    { handleClick: handleOpenModal, name: "افزودن مشتری" },
+    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
+  ];
   const {
     values,
     errors,
@@ -71,12 +79,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           <AiOutlineEdit className="w-full h-full" />
         </button>
       ) : (
-        <SimpleButton
-          text="افزودن"
-          className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
-          icon={<BiPlus color="white" />}
-          handelClick={() => setIsModalOpen(!isModalOpen)}
-        />
+        <AddButton ToggleOptions={ToggleOptions} />
       )}
       <Dialog
         open={isModalOpen}
@@ -145,6 +148,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             />
             <div className="w-[15%] h-full justify-center items-center flex my-auto pb-[10px]">
               <CustomSwitch
+                active={true}
                 handleChange={(value: boolean) =>
                   setFieldValue("isActive", value)
                 }

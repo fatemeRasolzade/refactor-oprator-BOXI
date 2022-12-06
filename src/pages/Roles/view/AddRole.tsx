@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
 import axios from "axios";
@@ -12,21 +13,23 @@ import {
 } from "react-icons/md";
 import CheckboxTree from "react-checkbox-tree";
 import * as yup from "yup";
+import { useFormik } from "formik";
+import { BiPlus } from "react-icons/bi";
+import { AiOutlineEdit } from "react-icons/ai";
 
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
-import { ErrorMessage, useFormik } from "formik";
+
 import CustomSwitch from "../../../global/Switch/Switch";
 import InputText from "../../../global/InputText/InputText";
-import { AiOutlineEdit } from "react-icons/ai";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
-import { BiPlus } from "react-icons/bi";
 import { RoleData } from "../../../redux/RolsData/RolesData";
-import { useDispatch } from "react-redux";
+import { SuccessAlert } from "../../../global/alert/Alert";
 
 interface EditRoleProps {
   currentData?: any;
   title: string;
   isActive: boolean;
+  isSomeEdit?: boolean;
 }
 const nodeArray = [
   {
@@ -720,18 +723,20 @@ const AddEditRole: FC<EditRoleProps> = ({
   currentData,
   title,
   isActive,
+  isSomeEdit,
 }): JSX.Element => {
   const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState([]);
   const [treeChecked, setTreeChecked] = useState<Array<string>>(
-    currentData ? currentData?.permsCodes : []
+    currentData && Array.isArray(currentData?.permsCodes)
+      ? currentData?.permsCodes
+      : []
   );
   const [treeCheckedError, setTreeCheckedError] = useState("");
   const [loadingNode, setLoadingNode] = useState(false);
   const [nodes, setNodes] = useState([...nodeArray]);
-  console.log("treeChecked", treeChecked);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -741,17 +746,23 @@ const AddEditRole: FC<EditRoleProps> = ({
       isActive: currentData ? currentData.isActive : true,
     },
     onSubmit: async (values, { resetForm }) => {
-      const data = {
-        name: values.name,
-        isActive: values.isActive,
-        // selectPermissions: [],
-        permsCodes: treeChecked,
-      };
-      if (treeChecked.length !== 0) {
+      const data = currentData
+        ? {
+            id: currentData.id,
+            name: values.name,
+            isActive: values.isActive,
+            permsCodes: treeChecked,
+          }
+        : {
+            name: values.name,
+            isActive: values.isActive,
+            permsCodes: treeChecked,
+          };
+      if (treeChecked?.length !== 0) {
         try {
           const res = await axios({
             url: "http://boxi.local:40000/resource-api/role",
-            method: "post",
+            method: currentData ? "put" : "post",
             data: data,
           });
           if (200 <= res.status && res.status < 300) {
@@ -764,6 +775,13 @@ const AddEditRole: FC<EditRoleProps> = ({
                 pageNumber: 1,
               }) as any
             );
+            SuccessAlert(
+              currentData
+                ? "با موفقیت بروزرسانی گردید"
+                : "با موفقیت اضافه گردید"
+            );
+            values.name = "";
+            setTreeChecked([]);
             setIsModalOpen(false);
           }
         } catch (error) {}
@@ -789,27 +807,20 @@ const AddEditRole: FC<EditRoleProps> = ({
       setLoadingNode(false);
     }
   };
+
   useEffect(() => {
     if (isModalOpen) {
       // handleAccess();
     }
   }, [isModalOpen]);
+
   useEffect(() => {
     if (treeChecked.length !== 0) {
       setTreeCheckedError("");
     }
   }, [treeChecked.length]);
 
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleSubmit,
-    setValues,
-    setFieldValue,
-    setErrors,
-  } = formik;
+  const { values, errors, handleSubmit, setFieldValue } = formik;
 
   return (
     <div>
@@ -841,25 +852,20 @@ const AddEditRole: FC<EditRoleProps> = ({
         </h3>
         <form className="grid grid-cols-1  p-6" onSubmit={handleSubmit}>
           <div>
-            <div className="w-full flex justify-between">
+            <div className="w-full flex justify-between gap-x-12">
               <div className="w-[80%] flex-col">
                 <InputText
+                  readOnly={isSomeEdit}
                   label="کدهاب"
                   name="name"
                   handleChange={formik.handleChange}
                   values={formik.values.name}
                   important
                   type={"text"}
+                  error={errors.name}
                 />
-                <span className="text-[#d05372] text-[10px]">
-                  {errors.name && touched.name ? (
-                    <span>{errors.name as any}</span>
-                  ) : (
-                    " "
-                  )}
-                </span>
               </div>
-              <div className="w-[20%] h-full justify-center items-center flex m-auto">
+              <div className="w-[20%] h-full justify-center items-center flex mx-auto mt-[8px]">
                 <CustomSwitch
                   active={values.isActive}
                   handleChange={(checked: boolean) =>
@@ -868,13 +874,13 @@ const AddEditRole: FC<EditRoleProps> = ({
                 />
               </div>
             </div>
-            <div className="w-full ">
-              <div className="w-full">
-                <div className="flex text-sm font-medium text-gray-900 dark:text-white ">
+            <div className="w-full mt-[15px]">
+              <div className="w-full relative">
+                <div className="flex justify-center pr-[10px] text-[0.875rem] font-sm text-[#686a68] dark:text-white absolute top-[-10px] right-[15px] bg-[white]">
                   دسترسی ها
-                  <span className="text-[#e24f48]">&nbsp;* &nbsp;</span>
+                  <span className="text-[#ef5644]">&nbsp;* &nbsp;</span>
                 </div>
-                <div className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-[80%] focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <div className="  border border-[#ababab] text-gray-900 text-sm rounded-lg w-[75%] focus:border-blue-500 block px-2.5 py-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   {loadingNode ? (
                     <div className="flex w-full h-[200px] justify-center items-center">
                       Loading ....
@@ -893,12 +899,12 @@ const AddEditRole: FC<EditRoleProps> = ({
                     />
                   )}
                 </div>
-                <span className="text-[#d05372] text-[10px]">
+                <p className="text-[#d05372] text-[10px]">
                   {treeCheckedError && treeCheckedError}
-                </span>
+                </p>
               </div>
             </div>
-            <div className="flex w-full justify-center gap-3 mt-3">
+            <div className="flex w-full justify-end gap-3 mt-3">
               <SimpleButton
                 type="submit"
                 text="بله"

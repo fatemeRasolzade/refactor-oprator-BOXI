@@ -33,7 +33,7 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    formik.setFieldValue("code", e.target.value);
+    formik.setFieldValue(e.target.name, e.target.value);
   };
   const selectHandler = (val: any) => {
     formik.setFieldValue("code", val);
@@ -52,6 +52,8 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
       );
     } catch (error) {}
   };
+  const { values, errors, handleSubmit, setFieldValue } = formik;
+
   return (
     <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
       <form onSubmit={handelSubmit}>
@@ -60,8 +62,9 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
             <AutocompleteInput
               items={[]}
               label="نقش"
+              value={values.name}
               onSelect={() => console.log()}
-              onChange={(e) => setRole(e.target.value)}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -77,6 +80,7 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
             className="full-gray-btn w-[160px] h-[40px] centering rounded-md"
             icon={<BiSearch size={20} />}
             text="جستجو"
+            type="submit"
           />
         </div>
       </form>

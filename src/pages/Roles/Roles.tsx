@@ -6,6 +6,7 @@ import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import { RoleColumn } from "../../global/Column/Columns";
+import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
 import { clearRole, RoleData, updating } from "../../redux/RolsData/RolesData";
 import { apiRoute } from "../../services/apiRoute";
 import AddEditRole from "./view/AddRole";
@@ -43,8 +44,25 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
       ? rolesList?.content?.map((item: any) => {
           return {
             name: item.name,
-            selectPermissions: item?.selectPermissions?.map(
-              (permissionItem: any) => permissionItem.text
+            // selectPermissions: item?.selectPermissions?.map(
+            //   (permissionItem: any) => permissionItem.text
+            // ),
+            selectPermissions: (
+              <div className="w-full flex justify-center">
+                <TooltipWrapper
+                  textProps={item?.selectPermissions?.map(
+                    (permissionItem: any) => (
+                      <div>{permissionItem.text}</div>
+                    )
+                  )}
+                >
+                  <div>
+                    {item?.selectPermissions?.map(
+                      (permissionItem: any) => permissionItem.text
+                    )}
+                  </div>
+                </TooltipWrapper>
+              </div>
             ),
             operation: (
               <div className="flex w-full gap-3 justify-center">
@@ -60,6 +78,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                   updating={updating}
                 />
                 <AddEditRole
+                  isSomeEdit={true}
                   currentData={item}
                   title="تغییر مدیریت نقش"
                   isActive={isActive}
