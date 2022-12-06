@@ -105,6 +105,7 @@ const UserService = {
 	tokenExpired,
 	hasClientRole
 	
+	
 };
 
 export default UserService;
