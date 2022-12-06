@@ -6,10 +6,6 @@ const CustomSwitch = ({
   handleChange?: any;
   active?: any;
 }) => {
-  // const handleChanges = (e: boolean) => {
-  //   setCheck(!check);
-  //   handleChange(e);
-  // };
 
   return (
     <div>

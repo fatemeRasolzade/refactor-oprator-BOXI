@@ -1,10 +1,10 @@
-import { BiPlus, BiEdit, BiTrash } from "react-icons/bi";
+import { BiPlus} from "react-icons/bi";
 import { GrDocumentPdf } from "react-icons/gr";
 import { GoDesktopDownload, GoGear } from "react-icons/go";
 import CustomSwitch from "./../../global/Switch/Switch";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
 import { Link} from "react-router-dom";
-const OptionsTable = ({exportExcel}:{exportExcel?:any}) => {
+const OptionsTable = ({exportExcel,handelSwitch}:{exportExcel?:any,handelSwitch?:any}) => {
   return (
     <div className="mt-6">
       <ul className="flex gap-4 justify-start items-center flex-wrap">
@@ -27,7 +27,7 @@ const OptionsTable = ({exportExcel}:{exportExcel?:any}) => {
         </li>
      
         <li>
-          <CustomSwitch />
+          <CustomSwitch handleChange={handelSwitch}/>
         </li>
         <li>
           <SimpleButton
