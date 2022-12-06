@@ -5,6 +5,8 @@ import { useFormik } from "formik";
 
 import Modal from "../../../global/Modal/Modal";
 import InputSelect from "../../../global/InputSelect/InputSelect";
+import InputText from "../../../global/InputText/InputText";
+import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 
 const CustomerTelephoneForm = ({
   open,
@@ -49,10 +51,10 @@ const CustomerTelephoneForm = ({
 
   // start fromik configurations
   const validation = Yup.object().shape({
-    selectPhoneType: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
+     selectPhoneType: Yup.object().shape({
+       text: Yup.string().required(),
+       id: Yup.string().required(),
+     }),
     telNumber: Yup.number().required(),
     telephonePrefix: Yup.number().required(),
   });
@@ -71,7 +73,7 @@ const CustomerTelephoneForm = ({
       : {
           telNumber: "",
           telephonePrefix: "",
-          selectPhoneType: {},
+          selectPhoneType: {} as any,
         },
     onSubmit: (values: any, { resetForm }) => {
       //   setState({ loading: true, error: false });
@@ -112,69 +114,51 @@ const CustomerTelephoneForm = ({
     >
       <form onSubmit={handleSubmit}>
         <div className="inputRow">
-        <InputSelect
+          <InputSelect
             important
             options={[]}
             label="تماس از طریق"
+            values={{
+              value: values?.selectPhoneType?.id,
+              label: values?.selectPhoneType?.text,
+            }}
             name="selectPhoneType"
-            values={values.selectPhoneType}
-            error={touched.selectPhoneType && errors.selectPhoneType}
-            handleChange={(value: any) => {
-              setFieldValue("selectPhoneType", {
-                id: value.value,
-                text: value.label,
-              });
-            }}
+            handleChange={handleChange}
+            error={
+              touched.selectPhoneType && errors.selectPhoneType
+           
+            }
           />
-        <InputSelect
+
+          <InputText
             important
-            options={[]}
-            label="تلفن"
-            name="telNumber"
+            label=" تلفن"
             values={values.telNumber}
+            name="telNumber"
+            handleChange={handleChange}
             error={touched.telNumber && errors.telNumber}
-            handleChange={(value: any) => {
-              setFieldValue("telNumber", {
-                id: value.value,
-                text: value.label,
-              });
-            }}
           />
-        </div>
-        {/* <div className="formInputSection">
-          
-
-
-          <FormGroup
-            required={true}
+          <InputText
+            important
+            label=" پیش شماره"
+            values={values.telephonePrefix}
+            name="telephonePrefix"
+            handleChange={handleChange}
             error={touched.telephonePrefix && errors.telephonePrefix}
-            input={{
-              id: "telephonePrefix",
-              name: "telephonePrefix",
-              placeholder: "",
-              value: values.telephonePrefix,
-              onChange: handleChange,
-            }}
-            label="پیش شماره "
           />
         </div>
-
-        <div className="btnsection">
-          <Button theme="secondarypopUpButton" onClick={handleCloseModal}>
-            لغو
-          </Button>
-          <Button theme="mainpopUpButton">
-            {currentData ? "ویرایش" : "افزودن"}
-            {state.loading && (
-              <ClipLoader
-                className="inline-flex items-center"
-                size={24}
-                loading={true}
-                color="#FFF"
-              />
-            )}
-          </Button>
-        </div> */}
+        <div className="flex-end-center gap-3">
+          <SimpleButton
+            text="لغو"
+            className="full-lightTomato-btn"
+            handelClick={() => setOpen(false)}
+          />
+          <SimpleButton
+            type="submit"
+            className="full-tomato-btn"
+            text={currentData ? "ویرایش" : "افزودن"}
+          />
+        </div>
       </form>
     </Modal>
   );

@@ -15,7 +15,7 @@ const OptionsTable = ({exportExcel,handelSwitch}:{exportExcel?:any,handelSwitch?
             text="افزودن"
             className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
             icon={<BiPlus color="white" />}
-          />
+          /> 
           </Link>
         </li>
         <li>
