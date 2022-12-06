@@ -1,8 +1,7 @@
-import React from 'react'
-import InputText from '.././../../global/InputText/InputText';
-import CheckboxText from '../../../global/CheckboxText/CheckboxText';
+
 import ChipIcon from '../../../global/ChipIcon/ChipIcon';
 import CustomSwitch from '../../../global/Switch/Switch';
+import Checkbox from '../../checkbox/Checkbox';
 const ActionProfetional = () => {
 
     const checkboxed=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
@@ -11,7 +10,7 @@ const ActionProfetional = () => {
     <div className='col-span-4'>
       <h3 className='my-4'>تمام عملیات</h3>
       {/* search Input */}
-  <InputText/>
+  {/* <InputText/> */}
 
   {/*sample checkbox */}
   <div className='h-300 overflow-auto mt-5' dir='ltr'>
@@ -19,7 +18,7 @@ const ActionProfetional = () => {
      
       {
 checkboxed.map(item=>{
-return <CheckboxText text='فیلد اول'/>
+return "checkBox"
 })
 
       }
@@ -31,7 +30,7 @@ return <CheckboxText text='فیلد اول'/>
 
         <div className='flex-1'>
         <h3 className='my-4'> عملیات های انتخاب شده</h3>
-    <InputText/>
+    {/* <InputText/> */}
     <div className='h-300 overflow-auto mt-5' dir='ltr'>
     <div dir='rtl'>
    { checkboxed.map(item=>{

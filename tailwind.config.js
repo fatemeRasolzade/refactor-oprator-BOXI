@@ -20,8 +20,9 @@ module.exports = withMT({
         darkBorder: "#ABABAB",
         darkGray: "#525252",
         lightGray: "#F9FAFC",
-        mainGray: "rgb(231, 229, 229)",
+        mainGray: "#e7e5e5",
         tomato: "#EF5644",
+        lightTomato: "#FFEAE9",
       },
       fontFamily: {
         shabnam: ["yekan", "Roboto", "Arial", "sans-serif"],

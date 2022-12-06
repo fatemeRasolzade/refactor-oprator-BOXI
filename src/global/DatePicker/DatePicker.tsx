@@ -6,13 +6,13 @@ import InputIcon from "react-multi-date-picker/components/input_icon"
 import persian from "react-date-object/calendars/persian"
 interface PropType{
   title?:string,
-  handelChange?: any,
+  handleChange?: any,
   name?:string,
   values?:any
 }
 
 
-const DatePickers = ({title,name,values,handelChange}:PropType) => {
+const DatePickers = ({title,name,values,handleChange}:PropType) => {
   return (
     <>
      <label >
@@ -27,7 +27,7 @@ locale={persian_fa}
 format="MM/DD/YYYY HH:mm:ss"
 calendarPosition="bottom-right"
 placeholder={`${values.day} / ${values.month} / ${values.year}`}
-onChange={(date:any)=>handelChange(name,{
+onChange={(date:any)=>handleChange(name,{
   day:Number(date.day),
   month:Number(date.month),
   year:Number(date.year)

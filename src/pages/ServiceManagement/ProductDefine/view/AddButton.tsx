@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
 import ModalOperation from "../../../../pages/Roles/view/ModalOperation";
-import ActionForms from "../../../../pages/ServiceManagement/ServiceDefinition/view/ActionsForm";
+import ActionForms from "./ActionsForm";
 interface PropAddButton {
   text?: string;
   subItemOne?: string;
@@ -40,7 +40,7 @@ const AddButton = ({
           <ul>
             <li>
               <button
-                className="w-full py-2 px-3 border-none hover:bg-gray-200  text-right "
+                className="w-full py-2 px-3 border-none hover:bg-gray-200 text-sm text-right "
                 onClick={handelClick}
               >
                 افزودن
@@ -55,7 +55,9 @@ const AddButton = ({
           </ul>
         </div>
       ) : null}
-      <Dialog open={isModalOpen} handler={setIsModalOpen} size={'lg'}>
+
+       {/* {isModalOpen && <ActionForms/>} */}
+      {/* <Dialog open={isModalOpen} handler={setIsModalOpen} size={'md'}>
         <button
           className="flex w-[50px] h-[50px]  border-none items-center justify-center"
           onClick={() => setIsModalOpen(false)}
@@ -63,10 +65,11 @@ const AddButton = ({
           <GrFormClose />
         </button>
         <div className="p-5">
-        <ActionForms />
+
+        <ActionForms  setIsModalOpen={setIsModalOpen}  isModalOpen={isModalOpen}/>
         </div>
         
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 };

@@ -7,21 +7,24 @@ import "rodal/lib/rodal.css";
 import NotFound from "./pages/NotFound/NotFound";
 import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
-function App() {
+import YupDefault from "./tools/config/YupDefault";
 
+function App() {
 
   return (
     <div className="App">
-      
-     <Routes>
+      <YupDefault />
+      <Routes>
+
         {links.map((item) =>
           item.childs.map((route) => (
             <Route path={route.to} element={route.component} />
           ))
         )}
-        <Route path="*" element={<NotFound />} /> 
-        <Route path="/hub/add" element={<HubAdd/>}/>
-        <Route path="/hub/edit" element={<HubEdit/>}/>
+
+        <Route path="*" element={<NotFound />} />
+        <Route path="/hub/add" element={<HubAdd />} />
+        <Route path="/hub/edit" element={<HubEdit />} />
 
       </Routes>
     </div>

@@ -1,6 +1,7 @@
 import http from "./http_service";
 import { Base_url2, Base_url3,Base_url4 } from "./apiRoute";
 
+
 export const getDataFromServer = async (apiRoute: { apiRoute: string }) => {
   const { data } = await http.get(Base_url4 + apiRoute);
   return data;

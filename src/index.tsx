@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { persistor, store } from './redux/store/Store';
 import {BrowserRouter} from "react-router-dom"
 import { PersistGate } from 'redux-persist/integration/react'
-import App from './App';
+import App from "./App"
 import Layout from './components/Layout/Layout';
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";

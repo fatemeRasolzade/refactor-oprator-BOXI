@@ -1,6 +1,7 @@
 import * as XLSX from "xlsx-js-style";
 
-export const ExportExcel = ({ data }: any) => {
+export const ExportExcel = ( data : any) => {
+
   let row = [
     { v: "Courier: 24", t: "s", s: { font: { name: "Courier", sz: 24 } } },
     {
@@ -19,3 +20,5 @@ export const ExportExcel = ({ data }: any) => {
   XLSX.utils.book_append_sheet(web, ws, "myfile");
   XLSX.writeFile(web, "MyExcel.xlsx");
 };
+
+export const ReverseArray = (arr: []) => [...arr].reverse();

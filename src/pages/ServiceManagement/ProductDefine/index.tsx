@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../components/tableOperation/DeleteOperation";
 import { updating } from "../../../redux/ProductDefineData/ProductDefineData";
 import { apiRoute } from "../../../services/apiRoute";
+import { ExportExcel } from "../../../tools/functions/Methods";
 import ActionForms from "./view/ActionsForm";
 import { ProductColumns } from "./view/Column";
 
@@ -54,7 +56,7 @@ const ProductDefine = () => {
                   route={apiRoute().delete.productDefine + `/${item.id}`}
                   updating={updating}
                 />
-                <ActionForms itemValue={item} pagination={productLists?.totalElements} />
+                <ActionForms itemValue={item}  />
               </div>
             ),
           };
@@ -63,12 +65,13 @@ const ProductDefine = () => {
 
   return (
     <div>
+      <Breadcrumb beforePage="برگشت" curentPage="تعریف محصول" />
       <SearchForm isActive={isActive} isUpdating={isUpdating} />
       <OptionsTable
         setIsACtive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ActionForms />}
-        exportExcel={exportExcel}
+        exportExcel={()=>ExportExcel(productLists?.content)}
       />
       <StaticTable data={data ? data : []} column={ProductColumns} pagination={productLists?.totalElements} />
     </div>

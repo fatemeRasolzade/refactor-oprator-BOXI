@@ -6,10 +6,10 @@ import TimePicker from "react-multi-date-picker/plugins/time_picker";
 
 interface PropTime {
     title?:string,
-    handelChange?:any
+    handleChange?:any
 }
 
-const TimePiker = ({title,handelChange}:PropTime) => {
+const TimePiker = ({title,handleChange}:PropTime) => {
   return (
     <>
     <label className='relative'>
@@ -22,7 +22,7 @@ const TimePiker = ({title,handelChange}:PropTime) => {
       locale={persian_fa}
   disableDayPicker
   format="hh:mm:ss A"
-  onChange={handelChange}
+  onChange={handleChange}
   plugins={[
     <TimePicker />
   ]} 

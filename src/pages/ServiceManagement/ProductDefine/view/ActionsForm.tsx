@@ -3,7 +3,7 @@ import { Button, Dialog } from "@material-tailwind/react";
 
 import { Formik, ErrorMessage } from "formik";
 
-import InputText from "../../../../global/Input/Input";
+import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { apiRoute } from "../../../../services/apiRoute";
 import { EditDataParams, PostDataParams, selectDataFromServer } from "../../../../services/Service_call";
@@ -28,7 +28,7 @@ const ActionForms = ({ itemValue }: any) => {
     function getDataSelect() {
       try {
         selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then((res: any) => {
-          if (res.status === "OK") setProductOptions(res.payload.content);
+          if (res.status === "OK") setProductOptions(res?.payload?.content);
         });
         // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
       } catch (error) {
@@ -36,7 +36,7 @@ const ActionForms = ({ itemValue }: any) => {
       }
     }
     getDataSelect();
-  }, []);
+  }, [isModalOpen]);
   const handleAction = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -44,7 +44,7 @@ const ActionForms = ({ itemValue }: any) => {
     setUploadExcel(!uploadExcel);
   };
 
-
+  console.log(itemValue,'itemValue')
   const ToggleOptions = [
     { handleClick: handleAction, name: "افزودن محصول" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
@@ -73,8 +73,8 @@ const ActionForms = ({ itemValue }: any) => {
                   name: "",
                   description: "",
                   productGroup: {
-                    id: "gfhg",
-                    text: "hjghkkk",
+                    id: "",
+                    text: "",
                   },
                 }
               : {
@@ -92,13 +92,15 @@ const ActionForms = ({ itemValue }: any) => {
           validationSchema={productDefineschema}
           onSubmit={(values) => {
             console.log(values);
-            if (!itemValue) {
+            if (!itemValue) {  console.log("run add")
               // dispatch(updating(true));
               PostDataParams(apiRoute().post.createProduct, values).then((res) => {
+
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ساخته شد");
                   dispatch(productData({}) as any);
                 } else {
+                  console.log("run error")
                   ErrorAlert("خطا در برقراری اطلاعات");
                 }
 
@@ -109,10 +111,12 @@ const ActionForms = ({ itemValue }: any) => {
             } else {
               EditDataParams(apiRoute().edit.productDefine, values).then((res) => {
                 // dispatch(updating(true));
+                console.log("run edit")
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ویرایش شد");
                   dispatch(productData({}) as any);
                 } else {
+                  console.log("run error")
                   ErrorAlert("خطا در برقراری اطلاعات");
                 }
 
@@ -121,14 +125,15 @@ const ActionForms = ({ itemValue }: any) => {
             }
           }}
         >
+         
           {(formik) => (
             <form onSubmit={formik.handleSubmit} className='p-5'>
               <div className="w-full  grid grid-cols-2 gap-y-10 gap-x-4 content-center">
                 <div>
                   <InputText
-                    title="کد"
+                    label="کد"
                     name="code"
-                    handelChange={formik.handleChange}
+                    handleChange={formik.handleChange}
                     values={formik.values.code}
                     important
                     type={"text"}
@@ -137,9 +142,9 @@ const ActionForms = ({ itemValue }: any) => {
                 </div>
                 <div>
                   <InputText
-                    title="عنوان"
+                    label="عنوان"
                     name="name"
-                    handelChange={formik.handleChange}
+                    handleChange={formik.handleChange}
                     values={formik.values.name}
                     important
                     type={"text"}
@@ -151,10 +156,10 @@ const ActionForms = ({ itemValue }: any) => {
               </div> */}{" "}
                 <div>
                   <InputSelect
-                    text="گروه بندی محصول"
-                  
+                    label="گروه بندی محصول"
+                    important
                     name="productGroup"
-                    handelChange={formik.setFieldValue}
+                    handleChange={formik.setFieldValue}
                     values={formik.values.productGroup}
                     // values={{
                     //   value: formik.values?.productGroup?.id,
@@ -173,9 +178,9 @@ const ActionForms = ({ itemValue }: any) => {
                 </div>
                 <div className="!col-span-2 ">
                   <InputText
-                    title="توضیحات"
+                    label="توضیحات"
                     name="description"
-                    handelChange={formik.handleChange}
+                    handleChange={formik.handleChange}
                     values={formik.values.description}
                     type={"textarea"}
                   />

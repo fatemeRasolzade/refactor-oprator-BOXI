@@ -1,14 +1,40 @@
-import React from 'react'
+import React from "react";
 
-const Checkbox = ({title,handelChange,name,blure,values}:{title?:string,handelChange?:React.ChangeEventHandler<HTMLInputElement> | undefined,name?:string,blure?:React.FocusEventHandler<HTMLInputElement>,values?:boolean}) => {
+const Checkbox = ({
+  title,
+  handleChange,
+  name,
+  blure,
+  values,
+}: {
+  title?: string;
+  handleChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  name?: string;
+  blure?: React.FocusEventHandler<HTMLInputElement>;
+  values?: boolean;
+}) => {
   return (
-    <div>
-        <label>
-            <span className='block text-sm'>{title}</span>
-        <input type="checkbox" className="accent-pink-500 mt-4" onChange={handelChange} name={name} onBlur={blure} checked={values}/>
-        </label>
+    <div className="flex-start-center gap-2">
+      <input
+        type="checkbox"
+        className="accent-tomato w-4 h-4"
+        onChange={handleChange}
+        name={name}
+        onBlur={blure}
+        checked={values}
+        style={{ borderRadius: "50%" }}
+      />
+      <label className="text-darkGray">{title}</label>
     </div>
-  )
-}
+  );
+};
 
-export default Checkbox
+// border-radius: 50%;
+// vertical-align: middle;
+// border: 1px solid #ddd;
+// appearance: none;
+// -webkit-appearance: none;
+// outline: none;
+// cursor: pointer;
+
+export default Checkbox;

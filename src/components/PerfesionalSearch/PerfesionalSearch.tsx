@@ -1,7 +1,11 @@
-import { Popover, PopoverHandler, PopoverContent, Button } from "@material-tailwind/react";
+import {
+  Popover,
+  PopoverHandler,
+  PopoverContent,
+  Button,
+} from "@material-tailwind/react";
 import { BiChevronDown, BiCog } from "react-icons/bi";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
-
 
 interface propsData {
   formData?: any;
@@ -10,7 +14,7 @@ interface propsData {
   children?: JSX.Element;
 }
 
-const PerfesionalSearch = ({ LeftIcon, text, formData, children }: propsData): JSX.Element => {
+const PerfesionalSearch = ({ formData, children }: propsData): JSX.Element => {
   return (
     <div className="w-160 relative">
       <Popover
@@ -21,23 +25,28 @@ const PerfesionalSearch = ({ LeftIcon, text, formData, children }: propsData): J
         }}
       >
         <PopoverHandler>
-          <Button className="border-none bg-transparent text-dark shadow-none flex justify-around items-center w-[140px] px-0 py-3">
-            جستجوی پیشرفته{" "}
-            <span className="mr-5">
-              <BiChevronDown />
-            </span>
-            <span></span>
+          <Button className="border-none bg-transparent text-dark !shadow-none centering gap-3 text-base font-normal">
+            <span>جستجوی پیشرفته </span>
+            <BiChevronDown size={25} />
           </Button>
         </PopoverHandler>
         <PopoverContent>
           <div className="" style={{ width: "550px" }}>
             <div className="flex  justify-between items-center gap-4">
               {children}
-              </div>
-            <div className="flex justify-between items-center mt-5">
-              <SimpleButton text="شخصی سازی" icon={<BiCog color="gray" />} className="centering p-3"/>
-              <SimpleButton text="پاک کردن ورودی ها" className="p-2"/>
-              <SimpleButton handelClick={()=>formData.handleSubmit()}  className="full-tomato-btn py-2 px-3 text-white rounded-md" text="جستجو" />
+            </div>
+            <div className="flex-between-center mt-5">
+              <SimpleButton
+                text="شخصی سازی"
+                icon={<BiCog color="gray" />}
+                className="centering p-3"
+              />
+              <SimpleButton text="پاک کردن ورودی ها" className="p-2" />
+              <SimpleButton
+                handelClick={() => formData.handleSubmit()}
+                className="full-tomato-btn"
+                text="جستجو"
+              />
             </div>
           </div>
         </PopoverContent>
