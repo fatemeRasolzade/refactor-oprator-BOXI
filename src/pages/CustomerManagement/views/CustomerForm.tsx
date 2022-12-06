@@ -414,7 +414,12 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
             </div>
           </div>
           <div className="centering w-6/12 mt-5">
-            <CustomSwitch />
+            <CustomSwitch
+              active={true}
+              handleChange={(checked: boolean) =>
+                console.log("isactive", checked)
+              }
+            />
           </div>
         </div>
         <div className="flex justify-between items-start gap-10 ">

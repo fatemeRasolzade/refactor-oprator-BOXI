@@ -7,7 +7,6 @@ import {
   MdCheckBox,
   MdCheckBoxOutlineBlank,
   MdChevronLeft,
-  MdEditNote,
   MdIndeterminateCheckBox,
   MdKeyboardArrowDown,
 } from "react-icons/md";
@@ -726,7 +725,9 @@ const AddEditRole: FC<EditRoleProps> = ({
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState([]);
-  const [treeChecked, setTreeChecked] = useState<Array<string>>([]);
+  const [treeChecked, setTreeChecked] = useState<Array<string>>(
+    currentData ? currentData?.permsCodes : []
+  );
   const [treeCheckedError, setTreeCheckedError] = useState("");
   const [loadingNode, setLoadingNode] = useState(false);
   const [nodes, setNodes] = useState([...nodeArray]);
@@ -749,7 +750,7 @@ const AddEditRole: FC<EditRoleProps> = ({
       if (treeChecked.length !== 0) {
         try {
           const res = await axios({
-            url: "http://192.168.1.153:20000/resource-api/role",
+            url: "http://boxi.local:40000/resource-api/role",
             method: "post",
             data: data,
           });
@@ -838,79 +839,80 @@ const AddEditRole: FC<EditRoleProps> = ({
         <h3 className="flex w-full justify-center text-gray-700 font-bold text-lg">
           {title}
         </h3>
-        <form
-          className="flex w-full flex-col items-center gap-6 mb-6 p-6"
-          onSubmit={handleSubmit}
-        >
-          <div className="w-[80%] flex gap-12">
-            <div className="w-[80%] flex-col">
-              <InputText
-                label="کدهاب"
-                name="name"
-                handleChange={formik.handleChange}
-                values={formik.values.name}
-                important
-                type={"text"}
-              />
-              <span className="text-[#d05372] text-[10px]">
-                {errors.name && touched.name ? (
-                  <span>{errors.name as any}</span>
-                ) : (
-                  " "
-                )}
-              </span>
-            </div>
-            <div className="w-[20%] h-full justify-center items-center flex m-auto">
-              <CustomSwitch
-                handleChange={(value: boolean) =>
-                  setFieldValue("isActive", value)
-                }
-              />
-            </div>
-          </div>
-          <div className="w-[80%] flex-col">
-            <div className="w-full">
-              <div className="flex text-sm font-medium text-gray-900 dark:text-white">
-                دسترسی ها <span className="text-[#e24f48]">&nbsp;* &nbsp;</span>
+        <form className="grid grid-cols-1  p-6" onSubmit={handleSubmit}>
+          <div>
+            <div className="w-full flex justify-between">
+              <div className="w-[80%] flex-col">
+                <InputText
+                  label="کدهاب"
+                  name="name"
+                  handleChange={formik.handleChange}
+                  values={formik.values.name}
+                  important
+                  type={"text"}
+                />
+                <span className="text-[#d05372] text-[10px]">
+                  {errors.name && touched.name ? (
+                    <span>{errors.name as any}</span>
+                  ) : (
+                    " "
+                  )}
+                </span>
               </div>
-              <div className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-[-webkit-fill-available] focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                {loadingNode ? (
-                  <div className="flex w-full h-[200px] justify-center items-center">
-                    Loading ....
-                  </div>
-                ) : (
-                  <CheckboxTree
-                    direction="rtl"
-                    nodes={nodes}
-                    checked={treeChecked}
-                    expanded={expanded}
-                    onCheck={(checked: Array<string>) => {
-                      setTreeChecked(checked);
-                    }}
-                    onExpand={(expanded: any) => setExpanded(expanded)}
-                    icons={icons}
-                  />
-                )}
+              <div className="w-[20%] h-full justify-center items-center flex m-auto">
+                <CustomSwitch
+                  active={values.isActive}
+                  handleChange={(checked: boolean) =>
+                    setFieldValue("isActive", checked)
+                  }
+                />
               </div>
-              <span className="text-[#d05372] text-[10px]">
-                {treeCheckedError && treeCheckedError}
-              </span>
             </div>
-          </div>
-          <div className="flex w-[80%] justify-center gap-x-12">
-            <SimpleButton
-              type="submit"
-              text="بله"
-              className="full-tomato-btn px-[90px] "
-            />
-            <SimpleButton
-              type="button"
-              text="خیر"
-              className="full-lightTomato-btn  px-[90px] "
-              handelClick={() => {
-                setIsModalOpen(false);
-              }}
-            />
+            <div className="w-full ">
+              <div className="w-full">
+                <div className="flex text-sm font-medium text-gray-900 dark:text-white ">
+                  دسترسی ها
+                  <span className="text-[#e24f48]">&nbsp;* &nbsp;</span>
+                </div>
+                <div className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-[80%] focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  {loadingNode ? (
+                    <div className="flex w-full h-[200px] justify-center items-center">
+                      Loading ....
+                    </div>
+                  ) : (
+                    <CheckboxTree
+                      direction="rtl"
+                      nodes={nodes}
+                      checked={treeChecked}
+                      expanded={expanded}
+                      onCheck={(checked: Array<string>) => {
+                        setTreeChecked(checked);
+                      }}
+                      onExpand={(expanded: any) => setExpanded(expanded)}
+                      icons={icons}
+                    />
+                  )}
+                </div>
+                <span className="text-[#d05372] text-[10px]">
+                  {treeCheckedError && treeCheckedError}
+                </span>
+              </div>
+            </div>
+            <div className="flex w-full justify-center gap-3 mt-3">
+              <SimpleButton
+                type="submit"
+                text="بله"
+                className="full-tomato-btn px-[50px] "
+              />
+              <SimpleButton
+                type="button"
+                text="خیر"
+                className="full-lightTomato-btn  px-[50px] "
+                handelClick={() => {
+                  setIsModalOpen(false);
+                }}
+              />
+            </div>
           </div>
         </form>
       </Dialog>
