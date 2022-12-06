@@ -90,16 +90,16 @@ const tokenExpired = (_kc.onTokenExpired = () => {
 });
 
 const UserService = {
-  initKeycloak,
-  doLogin,
-  doLogout,
-  isLoggedIn,
-  getToken,
-  updateToken,
-  getUsername,
-  hasRole,
-  tokenExpired,
-  hasClientRole,
+	initKeycloak,
+	doLogin,
+	doLogout,
+	isLoggedIn,
+	getToken,
+	updateToken,
+	getUsername,
+	hasRole,
+	tokenExpired,
+	hasClientRole
 };
 
 export default UserService;

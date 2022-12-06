@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 // import { v4 as uuidv4 } from "uuid";
 
 import Modal from "../../../global/Modal/Modal";
+import InputSelect from "../../../global/InputSelect/InputSelect";
 
 const CustomerTelephoneForm = ({
   open,
@@ -110,45 +111,40 @@ const CustomerTelephoneForm = ({
       title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}
     >
       <form onSubmit={handleSubmit}>
-        {/* <div className="formInputSection">
-          <FormGroup
-            required={true}
-            error={
-              touched.selectPhoneType &&
-              errors.selectPhoneType &&
-              errors.selectPhoneType.id
-            }
+        <div className="inputRow">
+        <InputSelect
+            important
+            options={[]}
             label="تماس از طریق"
-          >
-            <Select
-              name="selectPhoneType"
-              placeholder="تماس از طریق"
-              value={{
-                value: values?.selectPhoneType?.id,
-                label: values?.selectPhoneType?.text,
-              }}
-              options={phoneKind}
-              onChange={(value) => {
-                setFieldValue("selectPhoneType", {
-                  id: value.value,
-                  text: value.label,
-                });
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup
-            required={true}
-            error={touched.telNumber && errors.telNumber}
-            input={{
-              id: "telNumber",
-              name: "telNumber",
-              placeholder: "",
-              value: values.telNumber,
-              onChange: handleChange,
+            name="selectPhoneType"
+            values={values.selectPhoneType}
+            error={touched.selectPhoneType && errors.selectPhoneType}
+            handleChange={(value: any) => {
+              setFieldValue("selectPhoneType", {
+                id: value.value,
+                text: value.label,
+              });
             }}
-            label="تلفن "
           />
+        <InputSelect
+            important
+            options={[]}
+            label="تلفن"
+            name="telNumber"
+            values={values.telNumber}
+            error={touched.telNumber && errors.telNumber}
+            handleChange={(value: any) => {
+              setFieldValue("telNumber", {
+                id: value.value,
+                text: value.label,
+              });
+            }}
+          />
+        </div>
+        {/* <div className="formInputSection">
+          
+
+
           <FormGroup
             required={true}
             error={touched.telephonePrefix && errors.telephonePrefix}

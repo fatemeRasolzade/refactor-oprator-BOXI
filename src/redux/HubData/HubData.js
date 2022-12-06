@@ -13,7 +13,7 @@ const initialState = {
 export const HubData=createAsyncThunk('post',async(page)=>{
     const params=`/filter?pageNumber=${page}&pageSize=10`
     const data=await PostDataParams(apiRoute().post.hub + params,{})
-   
+   console.log('rrrr',data)
      return data
    
 })
@@ -24,7 +24,12 @@ const HubList=createSlice({
     reducers:{
         clearHub:(state)=>{
             state.postLists=[]
-        }
+        },
+        deleteRow:(state,action)=>{
+        
+           state.postLists.payload.content=state.postLists.payload.content.filter(item=>item.id !==action.payload)
+        },
+ 
     },
   
   extraReducers: {
@@ -41,5 +46,5 @@ const HubList=createSlice({
     },
   },
 });
-export const { clearHub } = HubList.actions;
+export const { clearHub,deleteRow } = HubList.actions;
 export default HubList.reducer;

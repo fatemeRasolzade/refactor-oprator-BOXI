@@ -6,11 +6,18 @@ import { Formik, ErrorMessage } from "formik";
 import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { apiRoute } from "../../../../services/apiRoute";
-import { EditDataParams, PostDataParams, selectDataFromServer } from "../../../../services/Service_call";
+import {
+  EditDataParams,
+  PostDataParams,
+  selectDataFromServer,
+} from "../../../../services/Service_call";
 import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import { useDispatch, useSelector } from "react-redux";
-import { productData, updating } from "../../../../redux/ProductDefineData/ProductDefineData";
+import {
+  productData,
+  updating,
+} from "../../../../redux/ProductDefineData/ProductDefineData";
 import { productDefineschema } from "./productDefineschema";
 import DropButton from "./DropButton";
 import AddExcel from "./AddExcel";
@@ -27,9 +34,11 @@ const ActionForms = ({ itemValue }: any) => {
   useEffect(() => {
     function getDataSelect() {
       try {
-        selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then((res: any) => {
-          if (res.status === "OK") setProductOptions(res?.payload?.content);
-        });
+        selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then(
+          (res: any) => {
+            if (res.status === "OK") setProductOptions(res?.payload?.content);
+          }
+        );
         // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
       } catch (error) {
         ErrorAlert("دریافت دیتا با خطلا مواجه شد");
@@ -44,7 +53,7 @@ const ActionForms = ({ itemValue }: any) => {
     setUploadExcel(!uploadExcel);
   };
 
-  console.log(itemValue,'itemValue')
+  console.log(itemValue, "itemValue");
   const ToggleOptions = [
     { handleClick: handleAction, name: "افزودن محصول" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
@@ -53,17 +62,23 @@ const ActionForms = ({ itemValue }: any) => {
     <>
       {!itemValue ? (
         <AddButton ToggleOptions={ToggleOptions} />
-     
       ) : (
-        <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
+        <button
+          className=" border-none	text-[14px]  w-[20px] h-[20px] "
+          onClick={() => setIsModalOpen(!isModalOpen)}
+        >
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
       <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
-      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5"}>
-      <div className="text-lg font-medium">
-      {itemValue?"ویرایش محصول":"افزودن محصول"}
-       </div>
+      <Dialog
+        open={isModalOpen}
+        handler={setIsModalOpen}
+        className={"overflow-visible p-5"}
+      >
+        <div className="text-lg font-medium">
+          {itemValue ? "ویرایش محصول" : "افزودن محصول"}
+        </div>
         <Formik
           initialValues={
             !itemValue
@@ -92,42 +107,45 @@ const ActionForms = ({ itemValue }: any) => {
           validationSchema={productDefineschema}
           onSubmit={(values) => {
             console.log(values);
-            if (!itemValue) {  console.log("run add")
+            if (!itemValue) {
+              console.log("run add");
               // dispatch(updating(true));
-              PostDataParams(apiRoute().post.createProduct, values).then((res) => {
+              PostDataParams(apiRoute().post.createProduct, values).then(
+                (res) => {
+                  if (res.status === "OK") {
+                    SuccessAlert("با موفقیت ساخته شد");
+                    dispatch(productData({}) as any);
+                  } else {
+                    console.log("run error");
+                    ErrorAlert("خطا در برقراری اطلاعات");
+                  }
 
-                if (res.status === "OK") {
-                  SuccessAlert("با موفقیت ساخته شد");
-                  dispatch(productData({}) as any);
-                } else {
-                  console.log("run error")
-                  ErrorAlert("خطا در برقراری اطلاعات");
+                  // dispatch(updating(false));
+
+                  setIsModalOpen(false);
                 }
-
-                // dispatch(updating(false));
-
-                setIsModalOpen(false);
-              });
+              );
             } else {
-              EditDataParams(apiRoute().edit.productDefine, values).then((res) => {
-                // dispatch(updating(true));
-                console.log("run edit")
-                if (res.status === "OK") {
-                  SuccessAlert("با موفقیت ویرایش شد");
-                  dispatch(productData({}) as any);
-                } else {
-                  console.log("run error")
-                  ErrorAlert("خطا در برقراری اطلاعات");
-                }
+              EditDataParams(apiRoute().edit.productDefine, values).then(
+                (res) => {
+                  // dispatch(updating(true));
+                  console.log("run edit");
+                  if (res.status === "OK") {
+                    SuccessAlert("با موفقیت ویرایش شد");
+                    dispatch(productData({}) as any);
+                  } else {
+                    console.log("run error");
+                    ErrorAlert("خطا در برقراری اطلاعات");
+                  }
 
-                setIsModalOpen(false);
-              });
+                  setIsModalOpen(false);
+                }
+              );
             }
           }}
         >
-         
           {(formik) => (
-            <form onSubmit={formik.handleSubmit} className='p-5'>
+            <form onSubmit={formik.handleSubmit} className="p-5">
               <div className="w-full  grid grid-cols-2 gap-y-10 gap-x-4 content-center">
                 <div>
                   <InputText
@@ -137,8 +155,9 @@ const ActionForms = ({ itemValue }: any) => {
                     values={formik.values.code}
                     important
                     type={"text"}
+                    error={formik.errors.code}
                   />
-                  <ErrorMessage name="code" render={(messege) => <span className="text-tomato">{messege}</span>} />
+                  {/* <ErrorMessage name="code" render={(messege) => <span className="text-tomato">{messege}</span>} /> */}
                 </div>
                 <div>
                   <InputText
@@ -149,7 +168,12 @@ const ActionForms = ({ itemValue }: any) => {
                     important
                     type={"text"}
                   />
-                  <ErrorMessage name="name" render={(messege) => <span className="text-tomato">{messege}</span>} />
+                  <ErrorMessage
+                    name="name"
+                    render={(messege) => (
+                      <span className="text-tomato">{messege}</span>
+                    )}
+                  />
                 </div>
                 {/* <div>
               <CustomSwitch />
@@ -174,7 +198,11 @@ const ActionForms = ({ itemValue }: any) => {
                   />
                 </div>
                 <div className="flex items-center">
-                  <CustomSwitch handleChange={(value: any) => formik.setFieldValue("isActive", value)} />
+                  <CustomSwitch
+                    handleChange={(value: any) =>
+                      formik.setFieldValue("isActive", value)
+                    }
+                  />
                 </div>
                 <div className="!col-span-2 ">
                   <InputText
@@ -186,13 +214,18 @@ const ActionForms = ({ itemValue }: any) => {
                   />
                   <ErrorMessage
                     name="description"
-                    render={(messege) => <span className="text-tomato">{messege}</span>}
+                    render={(messege) => (
+                      <span className="text-tomato">{messege}</span>
+                    )}
                   />
                 </div>
               </div>
 
               <div className="col-span-5 p-5 flex flex-row justify-end items-center">
-                <Button className="border-none bg-secondaryColor text-dark" onClick={() => setIsModalOpen(false)}>
+                <Button
+                  className="border-none bg-secondaryColor text-dark"
+                  onClick={() => setIsModalOpen(false)}
+                >
                   لغو
                 </Button>
                 <Button className="border-none bg-tomato mr-3" type="submit">

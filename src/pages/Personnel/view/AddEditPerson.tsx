@@ -98,7 +98,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
         >
           <div className="flex w-[90%] justify-start align-center gap-x-3">
             <InputText
-              widthWrapper="w-[33%]"
+              className="w-[33%]"
               label="کد پرسنلی"
               name="personelCode"
               handleChange={formik.handleChange}
@@ -107,7 +107,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               type={"text"}
             />
             <InputText
-              widthWrapper="w-[33%]"
+              className="w-[33%]"
               label="کد ملی"
               name="nationalCode"
               handleChange={formik.handleChange}
@@ -116,7 +116,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               type={"text"}
             />
             <InputText
-              widthWrapper="w-[33%]"
+              className="w-[33%]"
               label="نام و نام خانوادگی"
               name="name"
               handleChange={formik.handleChange}
@@ -127,7 +127,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           </div>
           <div className="flex w-[90%] justify-start align-center gap-x-3">
             <InputText
-              widthWrapper="w-[32.6%]"
+              className="w-[32.6%]"
               label="شماره موبایل"
               name="mobile"
               handleChange={formik.handleChange}
@@ -136,7 +136,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               type={"text"}
             />
             <InputText
-              widthWrapper="w-[32.6%]"
+              className="w-[32.6%]"
               label="پست الکترونیک"
               name="email"
               handleChange={formik.handleChange}

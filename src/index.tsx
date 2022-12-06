@@ -5,19 +5,21 @@ import { Provider } from 'react-redux'
 import { persistor, store } from './redux/store/Store';
 import {BrowserRouter} from "react-router-dom"
 import { PersistGate } from 'redux-persist/integration/react'
-
+import App from "./App"
 import Layout from './components/Layout/Layout';
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
-import App from './App';
+import UserService from './services/UserService';
+import http_service from './services/http_service';
 
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+
 root.render(
- 
-    
+  // <ReactKeycloakProvider authClient={keycloakConfigs}>
     <BrowserRouter>
   <Provider store={store}>
   <PersistGate loading={null} persistor={persistor}>
@@ -31,6 +33,10 @@ root.render(
     </PersistGate>
     </Provider>
    </BrowserRouter>
+  //  </ReactKeycloakProvider>
 
 );
+
+UserService.initKeycloak(root)
+http_service.config()
 reportWebVitals();
