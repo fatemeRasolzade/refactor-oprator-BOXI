@@ -25,12 +25,6 @@ const OptionsTable = ({ actions }: propsData) => {
               <SimpleButton text="افزودن گروهی" icon={<GrDocumentPdf color="black" />} />
             </li>
             <li>
-              <SimpleButton text="ویرایش" icon={<BiEdit color="black" />} />
-            </li>
-            <li>
-              <SimpleButton text="حذف" icon={<BiTrash color="black" />} />
-            </li>
-            <li>
               <CustomSwitch />
             </li>
             <li>

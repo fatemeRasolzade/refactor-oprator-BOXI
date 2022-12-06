@@ -13,7 +13,7 @@ const initialState = {
 export const HubData=createAsyncThunk('post',async(page)=>{
     const params=`/filter?pageNumber=${page}&pageSize=10`
     const data=await PostDataParams(apiRoute().post.hub + params,{})
-   console.log('rrrr',data)
+   
      return data
    
 })

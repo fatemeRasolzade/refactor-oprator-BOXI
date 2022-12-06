@@ -1,6 +1,6 @@
 import React from "react";
 import { useTable, usePagination, useRowSelect } from "react-table";
-import Paginations from "./../../global/Pagination/Pagination";
+import Paginations from "../../global/Pagination/Pagination";
 
 // const IndeterminateCheckbox = React.forwardRef(
 //   ({ data, indeterminate, ...rest }, ref) => {

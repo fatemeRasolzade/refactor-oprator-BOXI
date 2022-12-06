@@ -1,7 +1,6 @@
 
 import  { useEffect } from "react";
 import {useNavigate} from "react-router-dom"
-
 import StaticTable from '../../../../components/staticTable/StaticTable';
 import {HubColumn} from "../../../../global/Column/Columns"
 import {useDispatch,useSelector} from "react-redux"
@@ -33,15 +32,13 @@ const Hub = () => {
       active:hubItem?.isActive,
       editBy:hubItem.name ? hubItem?.name : "",
       EditTime:hubItem.locationStartDate !==null ? `${hubItem?.locationStartDate?.year}/${hubItem?.locationStartDate?.month}/${hubItem?.locationStartDate?.day} ` : "",
-      edit:<div className="w-full centering cursor-pointer" ><BiEditAlt onClick={()=>navigate("/hub/edit",{state:{dataEdit:hubItem}})}/></div>,
-      delete:<div className="w-full centering cursor-pointer"><BiTrash onClick={()=>handelDeleteHub(hubItem.id)}/></div>
+      edit:<div className="w-full centering cursor-pointer" ><BiEditAlt onClick={()=>navigate("/hub/edit",{state:{dataEdit:hubItem}})} size={20}/></div>,
+      delete:<div className="w-full centering cursor-pointer"><BiTrash onClick={()=>handelDeleteHub(hubItem.id)} size={20}/></div>
     }
   }) : []
 
   useEffect(()=>{
     dispatch(HubData(pageNumbers))
- 
-
    return()=>dispatch(clearHub())
   },[])
 
