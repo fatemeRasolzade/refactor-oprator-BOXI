@@ -47,7 +47,7 @@ const InputText = ({
           placeholder={placeholder}
         />
       </div>
-      <p className="text-red-700 text-xs pr-3 h-4">{error}</p>
+      <p className="text-red-700 text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
   );
 };
