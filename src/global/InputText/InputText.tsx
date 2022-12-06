@@ -1,4 +1,5 @@
 type InputTextProps = {
+  className?: string;
   error?: any;
   values: any;
   label: string;
@@ -10,6 +11,7 @@ type InputTextProps = {
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 const InputText = ({
+  className,
   label,
   name,
   handleChange,
@@ -21,7 +23,7 @@ const InputText = ({
   values,
 }: InputTextProps) => {
   return (
-    <div className="flex flex-col">
+    <div className={`flex flex-col ${className}`}>
       <div
         className={`autocompleteWrapper ${error && "border-red-700"} ${
           readOnly && "opacity-40"
