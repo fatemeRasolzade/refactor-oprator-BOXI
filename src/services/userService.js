@@ -15,6 +15,7 @@ const _kc=new keycloak({
 const initKeycloak = (onAuthenticatedCallback) => {
 	_kc.init({
 		onLoad: 'login-required',
+		checkLoginIframe: false
 		//onLoad: 'check-sso'
 
 	})

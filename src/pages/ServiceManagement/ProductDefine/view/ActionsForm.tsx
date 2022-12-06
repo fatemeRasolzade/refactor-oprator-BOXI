@@ -24,19 +24,19 @@ const ActionForms = ({ itemValue }: any) => {
   const [productOptions, setProductOptions] = useState([]);
   const [productTypeOptions, setProductTypeOptions] = useState([]);
   const dispatch = useDispatch();
-  useEffect(() => {
-    function getDataSelect() {
-      try {
-        selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then((res: any) => {
-          if (res.status === "OK") setProductOptions(res?.payload?.content);
-        });
-        // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
-      } catch (error) {
-        ErrorAlert("دریافت دیتا با خطلا مواجه شد");
-      }
-    }
-    getDataSelect();
-  }, [isModalOpen]);
+  // useEffect(() => {
+  //   function getDataSelect() {
+  //     try {
+  //       selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then((res: any) => {
+  //         if (res.status === "OK") setProductOptions(res?.payload?.content);
+  //       });
+  //       // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
+  //     } catch (error) {
+  //       ErrorAlert("دریافت دیتا با خطلا مواجه شد");
+  //     }
+  //   }
+  //   getDataSelect();
+  // }, [isModalOpen]);
   const handleAction = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -44,11 +44,12 @@ const ActionForms = ({ itemValue }: any) => {
     setUploadExcel(!uploadExcel);
   };
 
-  console.log(itemValue,'itemValue')
   const ToggleOptions = [
     { handleClick: handleAction, name: "افزودن محصول" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
+
+  
   return (
     <>
       {!itemValue ? (
@@ -128,7 +129,7 @@ const ActionForms = ({ itemValue }: any) => {
          
           {(formik) => (
             <form onSubmit={formik.handleSubmit} className='p-5'>
-              <div className="w-full  grid grid-cols-2 gap-y-10 gap-x-4 content-center">
+              <div className="w-full  grid grid-cols-2 gap-y-6 gap-x-4 content-center">
                 <div>
                   <InputText
                     label="کد"
@@ -137,8 +138,9 @@ const ActionForms = ({ itemValue }: any) => {
                     values={formik.values.code}
                     important
                     type={"text"}
+                    error={formik.errors.code}
                   />
-                  <ErrorMessage name="code" render={(messege) => <span className="text-tomato">{messege}</span>} />
+                  {/* <ErrorMessage name="code" render={(messege) => <span className="text-tomato">{messege}</span>} /> */}
                 </div>
                 <div>
                   <InputText
@@ -148,11 +150,14 @@ const ActionForms = ({ itemValue }: any) => {
                     values={formik.values.name}
                     important
                     type={"text"}
+                    error={formik.errors.name}
                   />
-                  <ErrorMessage name="name" render={(messege) => <span className="text-tomato">{messege}</span>} />
+                  {/* <ErrorMessage name="name" render={(messege) => <span className="text-tomato">{messege}</span>} /> */}
                 </div>
+             
                 {/* <div>
               <CustomSwitch />
+              
               </div> */}{" "}
                 <div>
                   <InputSelect
@@ -161,6 +166,7 @@ const ActionForms = ({ itemValue }: any) => {
                     name="productGroup"
                     handleChange={formik.setFieldValue}
                     values={formik.values.productGroup}
+                    error={formik.errors.productGroup}
                     // values={{
                     //   value: formik.values?.productGroup?.id,
                     //   label: 'formik.values?.productGroup?.text',
@@ -200,9 +206,11 @@ const ActionForms = ({ itemValue }: any) => {
                 </Button>
               </div>
             </form>
+             
           )}
         </Formik>
       </Dialog>
+   
     </>
   );
 };

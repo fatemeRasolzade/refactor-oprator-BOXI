@@ -4,11 +4,13 @@ import { apiRoute } from '../../services/apiRoute';
 
 
 export const productData=createAsyncThunk('productlists',async(body:any)=>{
-    const params = `/filter?pageNumber=1&pageSize=20`;
+    console.log("body",body)
+
+    const params=`/filter?pageNumber=${body?.page}&pageSize=10`
     var data = {};
     try {
    
-        data = await PostDataParams(apiRoute().post.product + params, body);
+        data = await PostDataParams(apiRoute().post.product + params, body?.body);
 
     } catch (error) {
         console.log("error ", error);
@@ -17,12 +19,16 @@ export const productData=createAsyncThunk('productlists',async(body:any)=>{
 })
 
 
+
+
+
+
+
 const initialState:any= {
     productLists:[],
     fetchpost:false,
     errorMessage:null,
-    isUpdating: false,
-    
+    isUpdating: false,    
 }
 
 const ProductDefineList = createSlice({

@@ -11,13 +11,12 @@ import InputIcon from "../../../../global/InputIcon/InputIcon";
 import { FiSearch } from "react-icons/fi";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { ErrorAlert } from "../../../../global/alert/Alert";
+import axios from "axios";
 
 interface PropsData {
   isActive: Boolean | string;
   isUpdating: Boolean;
 }
-
-
 
 const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
   const dispatch = useDispatch();
@@ -38,10 +37,15 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
   });
 
   useEffect(() => {
-   
-    let productGroup = formik.values.productGroup.id ;
+    console.log("run useeefect");
+    let productGroup = formik.values.productGroup.id;
+    axios.get("http://boxi.local:40000/product/select?filter=");
+    const body={
+      page:1,
+      body:{ ...formik.values, isActive, productGroup }
+    }
     // @ts-ignore
-    dispatch(productData({ ...formik.values, isActive, productGroup }));
+    dispatch(productData(body));
   }, [isActive, filterData, isUpdating]);
   const data = [
     { id: 1, text: "product" },
@@ -50,18 +54,27 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
   ];
   const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     formik.setFieldValue(name, e.target.value);
-    const filterData = data.filter((item) => item.text.includes(e.target.value));
-    setServiceCodeOptions(
-      filterData.map((item) => {
-        return {
-          label: item?.text,
-        };
-      })
-    );
+    // const filterData = data.filter((item) => item.text.includes(e.target.value));
+    // setServiceCodeOptions(
+    //   filterData.map((item) => {
+    //     return {
+    //       label: item?.text,
+    //     };
+    //   })
+    // );
     //mr hash please dont delete this comments//
-    // const params = `${e.target.value}`;
+    const params = `${e.target.value}`;
     // setOptions(data.filter(item=>item.text.includes(e.target.value)))
-    // GetDataParams(apiRoute().get.GET_PRODUCT + params);
+    GetDataParams(apiRoute().get.GET_PRODUCT + params).then((res) => {
+      //  console.log(res)
+      setServiceCodeOptions(
+        res.payload.content.map((item: { text: any }) => {
+          return {
+            label: item?.text,
+          };
+        })
+      );
+    });
   };
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     formik.setFieldValue(name, e.target.value);

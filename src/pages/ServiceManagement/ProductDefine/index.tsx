@@ -1,10 +1,11 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../components/tableOperation/DeleteOperation";
-import { updating } from "../../../redux/ProductDefineData/ProductDefineData";
+import { productData, updating } from "../../../redux/ProductDefineData/ProductDefineData";
 import { apiRoute } from "../../../services/apiRoute";
 import { ExportExcel } from "../../../tools/functions/Methods";
 import ActionForms from "./view/ActionsForm";
@@ -15,34 +16,20 @@ import SearchForm from "./view/SearchForm";
 // import * as XLSX  from "xlsx-js-style"
 
 const ProductDefine = () => {
-  // @ts-ignore
+  // axios.get('http://boxi.local:40000/product/select?filter=')
   const [isActive, setIsACtive] = useState(true);
+  const dispatch=useDispatch()
   const { errorMessage, productLists, isUpdating } = useSelector((state: any) => state.productDefine);
-  const exportExcel = () => {
-    // let row = [
-    //     { v: "Courier: 24", t: "s", s: { font: { name: "Courier", sz: 24 } } },
-    //     { v: "bold & color", t: "s", s: { font: { bold: true, color: { rgb: "#a50202" } } } },
-    //     { v: "fill: color", t: "s", s: { fill: { fgColor: { rgb: "#a50202" } } } },
-    //     { v: "line\nbreak", t: "s", s: { alignment: { wrapText: true } } },
-    // ];
-    // XLSX.utils.aoa_to_sheet([row])
-    //
-    // let web=XLSX.utils.book_new(),
-    //     ws=XLSX.utils.json_to_sheet(payload.content)
-    //
-    // XLSX.utils.book_append_sheet(web,ws,"myfile")
-    // XLSX.writeFile(web,"MyExcel.xlsx")
-  };
-
-  // useEffect(() => {
-  //   dispatch(
-  //     productData({
-  //       code: "",
-  //       name: "",
-  //       isActive: isActive,
-  //     }) as any
-  //   );
-  // }, [isUpdating]);
+  // @ts-ignore
+  const {pageNumbers} =useSelector(state=>state.paginate)
+  useEffect(()=>{
+    const body={
+      page:pageNumbers,
+      body:{}
+    }
+    // @ts-ignore
+    dispatch(productData(body))
+      },[pageNumbers])
   const data =
     productLists?.content?.length !== 0
       ? productLists?.content?.map((item: any) => {

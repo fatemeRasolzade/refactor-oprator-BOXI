@@ -65,7 +65,7 @@ const InputSelect = ({
         name={name}
         className="inputSelect focus:outline-none"
       />
-      <p className="text-red-700 text-xs pr-3 h-4">{error}</p>
+     {important &&  <p className="text-red-700 text-xs pr-3 h-4">{error?.text}</p>}
     </div>
   );
 };
