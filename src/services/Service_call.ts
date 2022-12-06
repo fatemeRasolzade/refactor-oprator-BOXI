@@ -1,4 +1,4 @@
-import {http} from "./http_service";
+import http from "./http_service";
 import { Base_url2, Base_url3,Base_url4 } from "./apiRoute";
 
 
@@ -9,19 +9,19 @@ export const getDataFromServer = async (apiRoute: { apiRoute: string }) => {
 
 
 export const postDataToServer = async (
-  apiRoute: { apiRoute: string },
-  body: { body: object }
+  apiRoute: string ,
+  body:  object 
 ) => {
-  const { data } = await http.post(Base_url4 + apiRoute, body);
+  const { data } = await http.post(  apiRoute, body);
   return data;
 };
 
 export const postDataHeaderToServer = async (
-  apiRoute: { apiRoute: string },
-  body: { body: object },
-  headers: { headers: object }
+apiRoute: string ,
+body: object ,
+ headers: object 
 ) => {
-  const { data } = await http.post(Base_url4 + apiRoute, body, headers);
+  const { data } = await http.post(  apiRoute, body, headers);
   return data;
 };
 

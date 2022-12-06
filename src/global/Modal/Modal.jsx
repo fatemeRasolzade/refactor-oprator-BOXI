@@ -1,6 +1,7 @@
 import Rodal from "rodal";
 import { BiXCircle } from "react-icons/bi";
 
+
 const Modal = ({ visible, setVisible, children, title }) => {
   return (
     <Rodal

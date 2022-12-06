@@ -1,30 +1,25 @@
-import React, { useState } from "react";
+import { FC } from "react";
 import Switch from "react-switch";
-const CustomSwitch = ({
+interface CustomSwitchProps {
+  active?: any;
+  handleChange: (
+    checked: boolean,
+    event: MouseEvent | React.SyntheticEvent<MouseEvent | KeyboardEvent, Event>,
+    id: string
+  ) => void;
+}
+
+const CustomSwitch: FC<CustomSwitchProps> = ({
   handleChange,
   active,
-  deactive,
-}: {
-  handleChange?: any;
-  active?: string;
-  deactive?: string;
-}) => {
-  const [check, setCheck] = useState(true);
-
-  const handleChanges = (e: boolean) => {
-    setCheck(!check);
-    handleChange(e);
-  };
-
+}): JSX.Element => {
   return (
     <div>
       <label className="flex justify-center items-center flex-row-reverse w-fit">
-        {active && deactive ? (
-          <span className="mr-2">{check ? "فعال" : "غیر فعال"}</span>
-        ) : null}
+        <span className="mr-2 w-20">{active ? "فعال" : "غیر فعال"}</span>
         <Switch
-          onChange={handleChanges}
-          checked={check}
+          onChange={handleChange}
+          checked={active}
           onColor="#FFEAE9"
           offColor="#F9FAFC"
           onHandleColor="#EF5644"

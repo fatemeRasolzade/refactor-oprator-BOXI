@@ -2,31 +2,31 @@ import React from "react";
 import { useTable, usePagination, useRowSelect } from "react-table";
 import Paginations from "./../../global/Pagination/Pagination";
 
-const IndeterminateCheckbox = React.forwardRef(
-  ({ data, indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
+// const IndeterminateCheckbox = React.forwardRef(
+//   ({ data, indeterminate, ...rest }, ref) => {
+//     const defaultRef = React.useRef();
+//     const resolvedRef = ref || defaultRef;
 
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
+//     React.useEffect(() => {
+//       resolvedRef.current.indeterminate = indeterminate;
+//     }, [resolvedRef, indeterminate]);
 
-    return (
-      <>
-        <input
-          type="checkbox"
-          ref={resolvedRef}
-          {...rest}
-          onClick={(e) => {
-            if (e.target.checked === true) {
-              console.log(data);
-            }
-          }}
-        />
-      </>
-    );
-  }
-);
+//     return (
+//       <>
+//         <input
+//           type="checkbox"
+//           ref={resolvedRef}
+//           {...rest}
+//           onClick={(e) => {
+//             if (e.target.checked === true) {
+//               console.log(data);
+//             }
+//           }}
+//         />
+//       </>
+//     );
+//   }
+// );
 
 function Table({ columns, data, pageTable }) {
   const {
@@ -39,7 +39,7 @@ function Table({ columns, data, pageTable }) {
 
     // The rest of these things are super handy, too ;)
 
-    state: { pageIndex, pageSize },
+   // state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
@@ -82,7 +82,7 @@ function Table({ columns, data, pageTable }) {
         {...getTableProps()}
         className="border-collapse table-auto w-full bg-white table-striped rounded-lg text-center"
       >
-        <thead className="bg-mainGray h-12 rounded-lg text-dark">
+        <thead className="bg-lightTomato h-12 rounded-lg text-dark">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
@@ -114,13 +114,11 @@ function Table({ columns, data, pageTable }) {
         </tbody>
       </table>
 
-          {page.length === 0 && (
-            <div className="h-20 centering w-full">
-           
-                <>موردی یافت نشد</>
-        
-            </div>
-          )}
+      {page.length === 0 && (
+        <div className="h-20 centering w-full">
+          <>موردی یافت نشد</>
+        </div>
+      )}
       <div className="text-center">
         <Paginations pageData={pageTable} />
       </div>
@@ -129,7 +127,7 @@ function Table({ columns, data, pageTable }) {
 }
 
 function StaticTable({ data, column, pagination }) {
-  console.log(pagination);
+ 
 
   return <Table columns={column} data={data} pageTable={pagination} />;
 }

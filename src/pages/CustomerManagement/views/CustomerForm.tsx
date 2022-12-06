@@ -14,7 +14,6 @@ import CustomerAddressElements from "./CustomerAddressElements";
 import { ReverseArray } from "../../../tools/functions/Methods";
 import CustomerAddressForm from "./CustomerAddressForm";
 import CustomerTelephoneForm from "./CustomerTelephoneForm";
-import { GetCustomerType } from "../../../services/SelectApi";
 import { apiRoute } from "../../../services/apiRoute";
 
 type CustomerFormProps = {
@@ -81,7 +80,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
   });
 
   useEffect(() => {
-    console.log(GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE));
+    // console.log(GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE));
     // GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE);
   }, []);
 
@@ -415,10 +414,15 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
             </div>
           </div>
           <div className="centering w-6/12 mt-5">
-            <CustomSwitch />
+            <CustomSwitch
+              active={true}
+              handleChange={(checked: boolean) =>
+                console.log("isactive", checked)
+              }
+            />
           </div>
         </div>
-        <div className="flex justify-between items-start gap-20 ">
+        <div className="flex justify-between items-start gap-10 ">
           <div className="border rounded-lg px-4 py-8 mt-5 relative w-full">
             <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
               آدرس{" "}
@@ -464,7 +468,11 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
               ))}
           </div>
         </div>
-        <button type={"submit"}>hwsjfsdf</button>
+        <div className="flex-end-center mt-5 gap-3">
+          <SimpleButton text="لغو" className="full-lightTomato-btn w-20" />
+          <SimpleButton text="افزودن" className="full-tomato-btn w-20" />
+        </div>
+        {/* <button type={"submit"}>hwsjfsdf</button> */}
       </form>
       <CustomerAddressForm
         setValue={setFieldValue}

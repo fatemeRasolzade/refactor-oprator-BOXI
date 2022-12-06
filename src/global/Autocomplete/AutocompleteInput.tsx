@@ -61,7 +61,7 @@ const AutocompleteInput = ({
         wrapperStyle={{ width: "100%" }}
         inputProps={{ className: "autocompleteInput" }}
       />
-      <FiSearch size={25} className="text-darkGray" />
+      <FiSearch size={19} className="text-darkGray" />
     </div>
   );
 };

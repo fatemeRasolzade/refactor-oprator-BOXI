@@ -86,19 +86,27 @@ export const apiRoute = () => {
 
       // filter
       filterRole: createUrl(API_CONSIGNMENT2, "/role"),
+      // employee
       filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
       serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
       product: createUrl(API_CONSIGNMENT4, "/product"),
       customer: createUrl(API_CONSIGNMENT2, "/customer"),
     },
+    postExcel: {
+      exception: createUrl(API_CONSIGNMENT3, "/exception"),
+    },
     delete: {
       role: createUrl(API_CONSIGNMENT2, "/role"),
       personnel: createUrl(API_CONSIGNMENT2, "/employee"),
-      serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
-      productDefine: createUrl(API_CONSIGNMENT4, "/product"),
+
+      serviceDefine:createUrl(API_CONSIGNMENT4, "/service"),
+      productDefine:createUrl(API_CONSIGNMENT4,"/product"),
+      hubTable:createUrl(API_CONSIGNMENT4,"/hub"),
+
     },
     edit: {
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
+
     },
   };
 };

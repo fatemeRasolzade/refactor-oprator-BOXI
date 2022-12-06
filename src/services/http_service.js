@@ -1,47 +1,14 @@
 import axios from "axios";
-import { ErrorAlert } from "../global/alert/Alert";
-
-import { useEffect } from "react";
 import UserService from "./UserService";
 
 
 
-export default () => {
 	axios.defaults.baseURL = "http://boxi.local:40000/";
-	axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("Authorization");
-	// const { user } = useStore();
-	const persianError = {
-		"productgroup.duplicate": "کد محصول تکراری است",
-	};
-	useEffect(() => {
-		axios.interceptors.response.use(
-			(response) => response,
-			function (error) {
-				const message = error?.response?.data?.message;
-				if (message) {
-					
-					ErrorAlert(message );
-					return Promise.reject(error);
-				}
-				if (error?.response?.data?.errors?.message) {
-					// console.log(persianError[error?.response?.data?.errors?.message]?)
-					// toast.error(
-					// 	persianError[error?.response?.data?.errors?.message]
-					// 		? persianError[error?.response?.data?.errors?.message]
-					// 		: error?.response?.data?.errors?.message,
-					// 	toastConfig
-					// );
-					return Promise.reject(error);
-				} else {
-					// toast.error(error.toString(), toastConfig);
-				}
-  
-				return error;
-			}
-		);
+	axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("userToken");
 
-		axios.interceptors.request.use((config) => {
-			console.log("run interceptor")
+ const configure = () => {
+	axios.interceptors.request.use((config) => {
+			
 		if (UserService.isLoggedIn()) {
 		  const cb = () => {
 			config.headers.Authorization = `Bearer ${UserService.getToken()}`;
@@ -50,14 +17,14 @@ export default () => {
 		  return UserService.updateToken(cb);
 		}
 	  });
+}
 
-	}, []);
-	return null;
-};
-
+	
 
 
-export const http = {
+
+export default{
+  config:configure,
   get: axios.get,
   post: axios.post,
   put: axios.put,
