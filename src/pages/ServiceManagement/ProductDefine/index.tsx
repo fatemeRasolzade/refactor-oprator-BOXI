@@ -13,24 +13,27 @@ import { ProductColumns } from "./view/Column";
 
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
+import { useGetServiceQuery } from "./view/serviceProvisionData";
 // import * as XLSX  from "xlsx-js-style"
 
 const ProductDefine = () => {
+  // @ts-ignore
+  const { data } = useGetServiceQuery();
   // axios.get('http://boxi.local:40000/product/select?filter=')
   const [isActive, setIsACtive] = useState(true);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const { errorMessage, productLists, isUpdating } = useSelector((state: any) => state.productDefine);
   // @ts-ignore
-  const {pageNumbers} =useSelector(state=>state.paginate)
-  useEffect(()=>{
-    const body={
-      page:pageNumbers,
-      body:{}
-    }
+  const { pageNumbers } = useSelector((state) => state.paginate);
+  useEffect(() => {
+    const body = {
+      page: pageNumbers,
+      body: {},
+    };
     // @ts-ignore
-    dispatch(productData(body))
-      },[pageNumbers])
-  const data =
+    dispatch(productData(body));
+  }, [pageNumbers]);
+  const datas =
     productLists?.content?.length !== 0
       ? productLists?.content?.map((item: any) => {
           return {
@@ -43,7 +46,7 @@ const ProductDefine = () => {
                   route={apiRoute().delete.productDefine + `/${item.id}`}
                   updating={updating}
                 />
-                <ActionForms itemValue={item}  />
+                <ActionForms itemValue={item} />
               </div>
             ),
           };
@@ -58,9 +61,9 @@ const ProductDefine = () => {
         setIsACtive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ActionForms />}
-        exportExcel={()=>ExportExcel(productLists?.content)}
+        exportExcel={() => ExportExcel(productLists?.content)}
       />
-      <StaticTable data={data ? data : []} column={ProductColumns} pagination={productLists?.totalElements} />
+      <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} />
     </div>
   );
 };

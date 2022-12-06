@@ -11,7 +11,7 @@ interface propsData {
   exportExcel:()=>void
 }
 
-const OptionsTable = ({ setIsACtive,addComponentProps,exportExcel}: propsData) => {
+const OptionsTable = ({ setIsACtive,addComponentProps,exportExcel,isActive}: propsData) => {
 
   return (
     <div className="mt-6">
@@ -23,7 +23,7 @@ const OptionsTable = ({ setIsACtive,addComponentProps,exportExcel}: propsData) =
             {/* <SimpleButton text="افزودن" className="full-tomato-btn" icon={<BiPlus color="white" />} /> */}
           </li>
           <li>
-            <CustomSwitch handleChange={(value:boolean)=>setIsACtive && setIsACtive(value)} />
+            <CustomSwitch active={isActive} handleChange={(value:boolean)=>setIsACtive && setIsACtive(value)} />
           </li>
           <li>
             <SimpleButton

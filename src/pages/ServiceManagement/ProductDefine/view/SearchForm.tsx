@@ -7,11 +7,10 @@ import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import { productData } from "../../../../redux/ProductDefineData/ProductDefineData";
 import { apiRoute } from "../../../../services/apiRoute";
 import { GetDataParams, selectDataFromServer } from "../../../../services/Service_call";
-import InputIcon from "../../../../global/InputIcon/InputIcon";
 import { FiSearch } from "react-icons/fi";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { ErrorAlert } from "../../../../global/alert/Alert";
-import axios from "axios";
+
 
 interface PropsData {
   isActive: Boolean | string;
@@ -37,9 +36,7 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
   });
 
   useEffect(() => {
-    console.log("run useeefect");
     let productGroup = formik.values.productGroup.id;
-    axios.get("http://boxi.local:40000/product/select?filter=");
     const body={
       page:1,
       body:{ ...formik.values, isActive, productGroup }
@@ -47,11 +44,6 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
     // @ts-ignore
     dispatch(productData(body));
   }, [isActive, filterData, isUpdating]);
-  const data = [
-    { id: 1, text: "product" },
-    { id: 2, text: "price" },
-    { id: 3, text: "vemdor" },
-  ];
   const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     formik.setFieldValue(name, e.target.value);
     // const filterData = data.filter((item) => item.text.includes(e.target.value));
@@ -122,6 +114,7 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
             options={productOptions}
           />
           <SimpleButton
+            type={'submit'}
             className="full-gray-btn"
             icon={<FiSearch size={25} className="text-darkGray" />}
             text="جستجو"
