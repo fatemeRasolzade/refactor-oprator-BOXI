@@ -15,8 +15,10 @@ interface OptionsTableProps {
   addExcelProps?: () => JSX.Element;
   addComponentProps?: () => JSX.Element;
   exportExcel?: any;
+  btnLink?:string
 }
 const OptionsTable: FC<OptionsTableProps> = ({
+  btnLink,
   isActive,
   setIsActive,
   addExcelProps,
@@ -28,17 +30,13 @@ const OptionsTable: FC<OptionsTableProps> = ({
       <ul className="flex gap-4 justify-start items-center flex-wrap">
         <li>
           {/* <AddButton />  */}
-          {addComponentProps ? (
-            addComponentProps()
-          ) : (
-            <Link to="/hub/add">
-              <SimpleButton
-                text="افزودن"
-                className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
-                icon={<BiPlus color="white" />}
-              />
-            </Link>
-          )}
+          <Link to={btnLink}>
+          <SimpleButton
+            text="افزودن"
+            className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
+            icon={<BiPlus color="white" />}
+          />
+          </Link>
         </li>
         {addExcelProps && <li>{addExcelProps()}</li>}
         <li>
