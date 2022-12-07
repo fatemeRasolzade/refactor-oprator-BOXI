@@ -80,12 +80,21 @@ export const apiRoute = () => {
       GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
       //customer
       GET_CUSTOMER_TYPE: createUrl(API_CONSIGNMENT5, `/customer/customerType`),
-      GET_CUSOTMER_PARENT: createUrl(API_CONSIGNMENT5, `/customer/select?filter=`),
+      GET_CUSOTMER_PARENT: createUrl(
+        API_CONSIGNMENT5,
+        `/customer/select?filter=`
+      ),
       //GLOBAL
-      GET_PROVINCES: createUrl(API_CONSIGNMENT6, "/countryDevision?filter="),
-      GET_CITIES: createUrl(API_CONSIGNMENT6, "/countryDevision/province/1/city?filter="),
-      GET_REGIONS: createUrl(API_CONSIGNMENT6, "countryDevision/city/2/loc?filter"),
-
+      GET_PROVINCES: createUrl(API_CONSIGNMENT4, "/countryDevision?filter="),
+      GET_CITIES: createUrl(
+        API_CONSIGNMENT4,
+        "/countryDevision/province/1/city?filter="
+      ),
+      GET_REGIONS: createUrl(
+        API_CONSIGNMENT4,
+        "/countryDevision/city/2/loc?filter"
+      ),
+      GET_ADDRESS_TYPE: createUrl(API_CONSIGNMENT5, "/address/addressType"),
     },
     post: {
       // create
@@ -113,7 +122,7 @@ export const apiRoute = () => {
     },
     edit: {
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
-      EDIT_CUSTOMER:  createUrl(API_CONSIGNMENT5, "/customer"),
+      EDIT_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
     },
   };
 };

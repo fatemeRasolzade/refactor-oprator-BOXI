@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import InputText from "../../../global/InputText/InputText";
 import Modal from "../../../global/Modal/Modal";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
@@ -22,8 +24,6 @@ import {
   getCustomerParent,
   getCustomerType,
 } from "../../../services/CustomerApi";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
 import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
 
 type CustomerFormProps = {
@@ -183,7 +183,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
       : {
           code: "",
           name: "",
-          selectCustomerType: {},
+          selectCustomerType: { id: 0, text: "حقیقی" },
           nationalCode: "",
 
           selectParentCustomer: undefined,
@@ -241,7 +241,8 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         // 	});
       } else {
         console.log(values.selectCustomerType);
-        
+        console.log(values.selectParentCustomer);
+
         createCustomer({
           ...values,
           currentCredit: parseInt(values.currentCredit),
@@ -305,17 +306,39 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
               label="نوع مشتری"
               values={values.selectCustomerType}
               name="selectCustomerType"
-              handleChange={handleChange}
+              handleChange={setFieldValue}
               error={touched.selectCustomerType && errors.selectCustomerType}
             />
-            <InputText
-              important
-              label="کد ملی"
-              values={values.nationalCode}
-              name="nationalCode"
-              handleChange={handleChange}
-              error={touched.nationalCode && errors.nationalCode}
-            />
+            {values.selectCustomerType.id === 0 && (
+              <InputText
+                important
+                label="کد ملی"
+                values={values.nationalCode}
+                name="nationalCode"
+                handleChange={handleChange}
+                error={touched.nationalCode && errors.nationalCode}
+              />
+            )}
+            {values.selectCustomerType.id === 1 && (
+              <>
+                <InputText
+                  important
+                  label="شناسه ملی"
+                  values={values.nationalId}
+                  name="nationalId"
+                  handleChange={handleChange}
+                  error={touched.nationalId && errors.nationalId}
+                />
+                <InputText
+                  important
+                  label="کد اقتصادی"
+                  values={values.economicCode}
+                  name="economicCode"
+                  handleChange={handleChange}
+                  error={touched.economicCode && errors.economicCode}
+                />
+              </>
+            )}
           </div>
           <div className="inputRow">
             <InputSelect
@@ -323,7 +346,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
               label="مشتری والد"
               values={values.selectParentCustomer}
               name="selectParentCustomer"
-              handleChange={handleChange}
+              handleChange={setFieldValue}
               error={
                 touched.selectParentCustomer && errors.selectParentCustomer
               }
