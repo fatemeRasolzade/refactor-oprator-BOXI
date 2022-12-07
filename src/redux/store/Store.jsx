@@ -12,7 +12,7 @@ import ServiceData from "../ServiceDefine/ServiceDefineReducer";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["hub", "paginate","personnel","serviceDefine","productDefine","customerDefine","role","serviceProvision"],
+  blacklist: ["hub", "paginate","personnel","serviceDefine","productDefine","customerDefine","role","serviceProvision","[serviceProvisionData.reducerPath]"],
 };
 
 
@@ -25,6 +25,7 @@ const reducers = combineReducers({
   productDefine: ProductDefineList,
   customerDefine: CustomerDefineList,
    serviceProvision:ServiceProvision
+  
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

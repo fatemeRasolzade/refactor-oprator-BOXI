@@ -76,6 +76,7 @@ const handelEventSwitch=(event)=>{
       <OptionsTable
        exportExcel={() => ExportExcel(payload?.content)}
        handelSwitch={handelEventSwitch}
+       btnLink="/hub/add"
        />
      <StaticTable data={data} column={HubColumn} pagination={payload?.totalElements}/>
     </div>

@@ -4,13 +4,13 @@ import { GoDesktopDownload, GoGear } from "react-icons/go";
 import CustomSwitch from "./../../global/Switch/Switch";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
 import { Link} from "react-router-dom";
-const OptionsTable = ({exportExcel,handelSwitch}:{exportExcel?:any,handelSwitch?:any}) => {
+const OptionsTable = ({exportExcel,handelSwitch,btnLink}:{exportExcel?:any,handelSwitch?:any,btnLink?:any}) => {
   return (
     <div className="mt-6">
       <ul className="flex gap-4 justify-start items-center flex-wrap">
         <li>
           {/* <AddButton />  */}
-          <Link to="/hub/add">
+          <Link to={btnLink}>
           <SimpleButton
             text="افزودن"
             className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"

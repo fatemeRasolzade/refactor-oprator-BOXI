@@ -1,26 +1,22 @@
 import axios from "axios";
-import UserService from "./UserService";
+import UserService from "./userService";
 
 
 
 	axios.defaults.baseURL = "http://boxi.local:40000/";
-	axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("userToken");
 
  const configure = () => {
 	axios.interceptors.request.use((config) => {
 			
 		if (UserService.isLoggedIn()) {
 		  const cb = () => {
-			config.headers.Authorization = `Bearer ${UserService.getToken()}`;
+			config.headers.Authorization = `Bearer ${localStorage.getItem("myToken")}`;
 			return Promise.resolve(config);
 		  };
 		  return UserService.updateToken(cb);
 		}
 	  });
 }
-
-	
-
 
 
 export default{

@@ -16,6 +16,7 @@ const {isUpdating}=useSelector((state:any)=>state.serviceProvision)
       <Breadcrumb beforePage="مدیریت سرویس" curentPage="ارایه سرویس" />
       <SearchForm isActive={isActive} isUpdating={isUpdating} />
       <OptionsTable
+     
        //exportExcel={() => ExportExcel(payload?.content)}
       // handelSwitch={handelEventSwitch}
     />
