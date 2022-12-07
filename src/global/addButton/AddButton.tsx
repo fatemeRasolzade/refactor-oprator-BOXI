@@ -41,8 +41,12 @@ const AddButton = ({
       {toggle
         ? ToggleOptions?.length > 0 && (
             <div className="ToggleContainer ">
-              {ToggleOptions.map((item) => (
-                <button className="ToggleElements" onClick={item.handleClick}>
+              {ToggleOptions.map((item, index) => (
+                <button
+                  key={index}
+                  className="ToggleElements"
+                  onClick={item.handleClick}
+                >
                   {item.name}
                 </button>
               ))}

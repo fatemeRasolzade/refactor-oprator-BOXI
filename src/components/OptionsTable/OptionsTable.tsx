@@ -9,7 +9,6 @@ import SimpleButton from "../../global/SimpleButton/SimpleButton";
 import AddButton from "../../global/addButton/AddButton";
 import AddExcel from "../exel/AddExcel";
 
-
 interface OptionsTableProps {
   isActive?: boolean;
   setIsActive?: (value: boolean) => void;
@@ -18,6 +17,7 @@ interface OptionsTableProps {
   exportExcel?: any;
 }
 const OptionsTable: FC<OptionsTableProps> = ({
+  isActive,
   setIsActive,
   addExcelProps,
   addComponentProps,
@@ -57,6 +57,7 @@ const OptionsTable: FC<OptionsTableProps> = ({
         </li>
         <li>
           <CustomSwitch
+            active={isActive ? isActive : false}
             handleChange={(value: boolean) => setIsActive && setIsActive(value)}
           />
         </li>

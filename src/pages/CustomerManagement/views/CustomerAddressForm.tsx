@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //  import { v4 as uuidv4 : any } from "uuid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,6 +9,12 @@ import CustomSwitch from "../../../global/Switch/Switch";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { PostalCodeRegex } from "../../../tools/validations/ErrorHelper";
 import { VALIDPOSTALCODE } from "../../../tools/validations/ErrorKeywords";
+import {
+  getCities,
+  getProvinces,
+  getRegions,
+} from "../../../services/GlobalApi";
+import { getCustomerType } from "../../../services/CustomerApi";
 // import { Map } from "../../../../components/map";
 // import { PostalCodeRegex } from "../../../../utilities/function";
 
@@ -32,6 +38,37 @@ const CustomerAddressForm = ({
   const [regions, setRegions] = useState([]);
   const [addressKind, setAddressKind] = useState([]);
 
+  const initAddressKind = () => {
+    getCustomerType().then((res) => {
+      console.log(res);
+    });
+  };
+
+  const initCities = () => {
+    getCities().then((res) => {
+      console.log(res);
+    });
+  };
+
+  const initRegions = () => {
+    getRegions().then((res) => {
+      console.log(res);
+    });
+  };
+
+  const initProvinces = () => {
+    getProvinces().then((res) => {
+      console.log(res);
+    });
+  };
+
+  useEffect(() => {
+    initAddressKind();
+    initCities();
+    initRegions();
+    initProvinces();
+  }, []);
+
   // const getAddressKind = useCallback(() => {
   // 	getAddressesKind()
   // 		.then((response) => {
@@ -48,7 +85,7 @@ const CustomerAddressForm = ({
   // 		.catch((err) => {
   // 			console.log(err);
   // 		});
-  // }, []);
+  //  }, []);
 
   // const getProvince = useCallback(() => {
   // 	// getProvinces();
@@ -128,6 +165,7 @@ const CustomerAddressForm = ({
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
+
     selectState: Yup.object().shape({
       text: Yup.string().required(),
       id: Yup.string().required(),
@@ -169,10 +207,10 @@ const CustomerAddressForm = ({
           address: currentData.address,
         }
       : {
-          selectAddressType: {},
-          selectState: {},
-          selectCity: {},
-          selectRegion: {},
+          selectAddressType: undefined,
+          selectState: undefined,
+          selectCity: undefined,
+          selectRegion: undefined,
           pelak: "",
           unit: "",
           postalCode: "",
@@ -183,6 +221,7 @@ const CustomerAddressForm = ({
           // telephones: [],
         },
     onSubmit: (values: any, { resetForm }) => {
+      alert("arash mozakhraf");
       //   setState({ loading: true, error: false });
       if (currentData) {
         setOpen(false);
@@ -194,10 +233,10 @@ const CustomerAddressForm = ({
         // setState({ loading: false, error: false });
       } else {
         // const id: string = uuidv4();
-        setOpen(false);
-        resetForm({ values: "" });
+        // resetForm({ values: "" });
         // setValue("addresses", [...value, { ...values, id: `null${id}` }]);
         // setState({ loading: false, error: false });
+        // setOpen(false);
       }
     },
   });
@@ -223,14 +262,16 @@ const CustomerAddressForm = ({
             options={[]}
             label="نوع آدرس"
             name="selectAddressType"
-            values={values.selectAddressType}
-            error={touched.selectAddressType && errors.selectAddressType}
-            handleChange={(value: any) => {
-              setFieldValue("selectAddressType", {
-                id: value.value,
-                text: value.label,
-              });
-            }}
+            // values={values.selectAddressType}
+            // values={{
+            //   value: values?.selectAddressType?.id,
+            //   label: values?.selectAddressType?.text,
+            // }}
+            error={
+              touched.selectAddressType && errors.selectAddressType
+              // && errors.selectAddressType.id
+            }
+            handleChange={handleChange}
           />
           <InputSelect
             important
@@ -269,7 +310,9 @@ const CustomerAddressForm = ({
             label=" منطقه"
             name="selectRegion"
             values={values.selectRegion}
-            error={touched.selectRegion && errors.selectRegion}
+            error={
+              touched.selectRegion && errors.selectRegion && errors.selectRegion
+            }
             handleChange={(value: any) => {
               setFieldValue("selectRegion", {
                 id: value.value,
@@ -296,7 +339,6 @@ const CustomerAddressForm = ({
         </div>
         <div className="flex-between-center">
           <InputText
-            important
             label="کد پستی"
             values={values.postalCode}
             name="postalCode"
@@ -324,9 +366,14 @@ const CustomerAddressForm = ({
           error={touched.address && errors.address}
         />
         <div className="flex-end-center gap-3">
-          <SimpleButton className="full-lightTomato-btn w-20" text="لغو" />
           <SimpleButton
-            className="full-tomato-btn w-20"
+            className="full-lightTomato-btn"
+            text="لغو"
+            handelClick={() => setOpen(false)}
+          />
+          <SimpleButton
+            type="submit"
+            className="full-tomato-btn"
             text={currentData ? "ویرایش" : "افزودن"}
           />
         </div>

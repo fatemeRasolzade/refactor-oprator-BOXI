@@ -1,20 +1,22 @@
+import { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import InputText from "../../../global/InputText/InputText";
 import Modal from "../../../global/Modal/Modal";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { NationalCodeRegex } from "../../../tools/validations/ErrorHelper";
-import { VALIDNATIONALCODE } from "../../../tools/validations/ErrorKeywords";
+import {
+  UNMATCHPASSWORD,
+  VALIDNATIONALCODE,
+} from "../../../tools/validations/ErrorKeywords";
 import InputSelect from "../../../global/InputSelect/InputSelect";
 import Checkbox from "../../../components/checkbox/Checkbox";
 import CustomSwitch from "../../../global/Switch/Switch";
-import { useEffect, useState } from "react";
 import CustomerTelephoneElements from "./CustomerTelephoneElements";
 import CustomerAddressElements from "./CustomerAddressElements";
 import { ReverseArray } from "../../../tools/functions/Methods";
 import CustomerAddressForm from "./CustomerAddressForm";
 import CustomerTelephoneForm from "./CustomerTelephoneForm";
-import { apiRoute } from "../../../services/apiRoute";
 
 type CustomerFormProps = {
   open: boolean;
@@ -104,12 +106,13 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
     initialCredit: Yup.number().label(""),
 
     username: Yup.string().required(),
-    // password:
-    // 	!currentData &&
-    // 	Yup.string().min(8, "حداقل هشت کاراکتر").matches(justENGRegex,  "رمز عبور باید شامل اعداد و حروف لاتین باشد").required(),
-    // confirmPassword: Yup.string()
-    //   .oneOf([Yup.ref("password"), null], "رمز عبور مطابقت ندارد")
-    //   .required(),
+    password: Yup.string()
+      .min(8)
+      // .matches(justENGRegex, "رمز عبور باید شامل اعداد و حروف لاتین باشد")
+      .required(),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], UNMATCHPASSWORD)
+      .required(),
     extendGlobalVirtualSeries: Yup.boolean().nullable(),
     dynamicPickupAllocation: Yup.boolean().nullable(),
 
@@ -183,6 +186,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
           economicCode: "",
         },
     onSubmit: (values, { resetForm }) => {
+      alert("*/**********************");
       // setState({ loading: true, error: false });
       if (currentData) {
         // console.log(a.id.toString().includes("null"));
@@ -415,10 +419,8 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
           </div>
           <div className="centering w-6/12 mt-5">
             <CustomSwitch
-              active={true}
-              handleChange={(checked: boolean) =>
-                console.log("isactive", checked)
-              }
+              active={values.isActive}
+              handleChange={() => setFieldValue("isActive", !values.isActive)}
             />
           </div>
         </div>
@@ -469,10 +471,17 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
           </div>
         </div>
         <div className="flex-end-center mt-5 gap-3">
-          <SimpleButton text="لغو" className="full-lightTomato-btn w-20" />
-          <SimpleButton text="افزودن" className="full-tomato-btn w-20" />
+          <SimpleButton
+            handelClick={() => setOpen(false)}
+            text="لغو"
+            className="full-lightTomato-btn"
+          />
+          <SimpleButton
+            type="submit"
+            text="افزودن"
+            className="full-tomato-btn"
+          />
         </div>
-        {/* <button type={"submit"}>hwsjfsdf</button> */}
       </form>
       <CustomerAddressForm
         setValue={setFieldValue}
