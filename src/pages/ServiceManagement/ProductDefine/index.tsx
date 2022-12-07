@@ -26,12 +26,24 @@ const ProductDefine = () => {
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
   useEffect(() => {
-    const body = {
-      page: pageNumbers,
-      body: {},
-    };
-    // @ts-ignore
-    dispatch(productData(body));
+    // const body = {
+    //   page: pageNumbers,
+    //   body: {},
+    // };
+    // // @ts-ignore
+    // dispatch(productData(body));
+
+    dispatch(
+      productData({
+        code: "",
+        name: "",
+        isActive: isActive,
+        pageSize: 10,
+        pageNumber: pageNumbers,
+      }) as any
+    );
+
+
   }, [pageNumbers]);
   const datas =
     productLists?.content?.length !== 0

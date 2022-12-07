@@ -117,7 +117,7 @@ const ActionForms = ({ itemValue }: any) => {
                 console.log("run edit");
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ویرایش شد");
-                  dispatch({}  as any);
+                  dispatch(productData(body) as any);
           
                 } else {
                   console.log("run error");

@@ -6,15 +6,19 @@ import { apiRoute } from '../../services/apiRoute';
 export const productData=createAsyncThunk('productlists',async(body:any)=>{
     console.log("body",body)
 
-    const params=`/filter?pageNumber=${body?.page}&pageSize=10`
+    const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
     var data = {};
     try {
-   
-        data = await PostDataParams(apiRoute().post.product + params, body?.body);
-
-    } catch (error) {
+        data = await PostDataParams(apiRoute().post.product + params, {
+          code:body.code,
+          name:body.name,
+          isActive:body.isActive
+        });
+      } catch (error) {
         console.log("error ", error);
-    }
+      }
+
+
     return data;
 })
 
