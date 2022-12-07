@@ -34,7 +34,7 @@ const InputSelect = ({
   };
 
   return (
-    <div className="relative w-60 ">
+    <div className="relative w-full ">
       <label className=" absolute top-[-16px] right-5 bg-white z-10  px-2 text-darkGray text-sm">
         {label}
         <span className="text-tomato font-extrabold text-lg h-4">

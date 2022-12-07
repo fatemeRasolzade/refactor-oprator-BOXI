@@ -2,7 +2,6 @@ import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import NavbarSearch from "../../components/NavbarSearch/NavbarSearch";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
@@ -49,7 +48,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
                   route={apiRoute().delete.role + `/${item.id}`}
                   updating={updating}
                 />
-                <EditPersonRole />
+                <EditPersonRole currentData={item} />
               </div>
             ),
           };
