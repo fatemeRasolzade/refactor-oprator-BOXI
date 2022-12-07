@@ -1,59 +1,47 @@
+import { FC, useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import { useDispatch } from "react-redux";
+
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 
-import InputIcon from "../../../global/InputIcon/InputIcon";
 import InputSelect from "../../../global/InputSelect/InputSelect";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
-import { RoleData } from "../../../redux/RolsData/RolesData";
 
 interface MyFormValues {
-  permission: string;
+  permission: Array<any>;
   name: string;
   isActive?: boolean;
 }
 
 interface SearchFilterProps {
   isActive: boolean;
+  setFilterData: (newFilter: any) => void;
 }
 
-const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
-  const dispatch = useDispatch();
+const SearchFilter: FC<SearchFilterProps> = ({
+  isActive,
+  setFilterData,
+}): JSX.Element => {
+  const initialValues: MyFormValues = { permission: [], name: "" };
 
-  const initialValues: MyFormValues = { permission: "", name: "" };
-
-  const [permissionOptions, setPermissionOptions] = useState([
-    {
-      id: 1,
-      text: "jsj",
-    },
-  ]);
+  const [permissionOptions, setPermissionOptions] = useState([]);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues,
     onSubmit: async (values) => {
-      try {
-        dispatch(
-          RoleData({
-            permission: values.permission,
-            name: values.name,
-            isActive: isActive,
-            pageSize: 10,
-            pageNumber: 1,
-          }) as any
-        );
-      } catch (error) {
-        debugger
-      }
+      setFilterData({
+        permission: values.permission as any,
+        name: values.name,
+        isActive: isActive,
+        pageSize: 10,
+        pageNumber: 1,
+      });
     },
   });
 
-  
-  const getRoleFilterData = async () => {
+  const getRoleFilterData = useCallback(async () => {
     try {
       const res = await axios.get(
         "http://boxi.local:40000/resource-api/permission/select"
@@ -62,14 +50,20 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
         res.data.payload.content ? res.data.payload.content : []
       );
     } catch (error) {}
-  };
-  useEffect(() => {
-    getRoleFilterData();
   }, []);
 
-  const { values, errors, touched, handleSubmit, setValues, setFieldValue } =
-    formik;
-  console.log("sdgsdg", values.permission);
+  const handleSelect = (name: string, value: any) => {
+    let newArray = [...values.permission];
+    newArray.push(value);
+
+    formik.setFieldValue(name, newArray);
+  };
+
+  useEffect(() => {
+    getRoleFilterData();
+  }, [getRoleFilterData]);
+
+  const { values, handleSubmit } = formik;
 
   return (
     <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
@@ -88,7 +82,7 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
             <InputSelect
               label="دسترسی ها"
               name="permission"
-              handleChange={formik.setFieldValue}
+              handleChange={handleSelect}
               values={formik.values?.permission}
               options={permissionOptions}
             />

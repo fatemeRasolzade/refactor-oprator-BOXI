@@ -199,6 +199,7 @@ const ActionForms = ({ itemValue }: any) => {
                 </div>
                 <div className="flex items-center">
                   <CustomSwitch
+                    active={true}
                     handleChange={(value: any) =>
                       formik.setFieldValue("isActive", value)
                     }
