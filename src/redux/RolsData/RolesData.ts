@@ -5,7 +5,7 @@ import { PostDataParams } from "../../services/Service_call";
 import { StateData } from "./state-model";
 
 interface RoleDataBody {
-  code: string;
+  permission: string;
   name: string;
   isActive: boolean;
   pageSize:number,
@@ -19,7 +19,7 @@ export const RoleData = createAsyncThunk("post", async (body: RoleDataBody ) => 
   var data = {};
   try {
     data = await PostDataParams(apiRoute().post.filterRole + params, {
-      code:body.code,
+      permission:body.permission,
       name:body.name,
       isActive:body.isActive
     });

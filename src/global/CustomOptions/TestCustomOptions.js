@@ -22,7 +22,9 @@ const TestCustomOptions = ({ options = [] }) => {
           />
         );
       case ACTIVE_OPTION:
-        return <CustomSwitch />;
+        return (
+          <CustomSwitch active={type?.value} handleChange={type.handleClick} />
+        );
       case DOWNLOAD_OPTION:
         return (
           <SimpleButton

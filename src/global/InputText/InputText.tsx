@@ -25,12 +25,12 @@ const InputText = ({
   return (
     <div className={`flex flex-col ${className}`}>
       <div
-        className={`autocompleteWrapper ${error && "border-red-700"} ${
+        className={`autocompleteWrapper ${error && "border-red"} ${
           readOnly && "opacity-40"
         } `}
       >
         <div
-          className={`autocompleteLabel ${error && "text-red-700"} top-[-17px]`}
+          className={`autocompleteLabel ${error && "text-red"} top-[-17px]`}
         >
           {label}{" "}
           <span className="text-tomato font-extrabold text-lg h-4">
@@ -47,7 +47,7 @@ const InputText = ({
           placeholder={placeholder}
         />
       </div>
-      <p className="text-red-700 text-xs pr-3 h-4 mt-1">{error}</p>
+      <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Switch from "react-switch";
 interface CustomSwitchProps {
-  active?: any;
+  active: boolean;
   handleChange: (
     checked: boolean,
     event: MouseEvent | React.SyntheticEvent<MouseEvent | KeyboardEvent, Event>,

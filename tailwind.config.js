@@ -22,7 +22,8 @@ module.exports = withMT({
         lightGray: "#F9FAFC",
         mainGray: "#e7e5e5",
         tomato: "#EF5644",
-        lightTomato: "#FFF8F0",
+        lightTomato: "#FFEAE9",
+        red: " #d32f2f",
       },
       fontFamily: {
         shabnam: ["yekan", "Roboto", "Arial", "sans-serif"],

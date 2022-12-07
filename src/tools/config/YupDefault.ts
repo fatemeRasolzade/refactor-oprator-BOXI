@@ -3,6 +3,8 @@ import { setLocale } from "yup";
 import {
   DEFINED,
   INVALID,
+  MAXCHAR,
+  MINCHAR,
   NOTTYPE,
   REQUIRED,
   VALIDEMAIL,
@@ -18,6 +20,8 @@ const YupDefault = () => {
         defined: DEFINED,
       },
       string: {
+        min: MINCHAR,
+        max: MAXCHAR,
         email: VALIDEMAIL,
       },
     });
