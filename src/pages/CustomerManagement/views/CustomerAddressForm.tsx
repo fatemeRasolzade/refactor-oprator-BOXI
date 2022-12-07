@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //  import { v4 as uuidv4 : any } from "uuid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,6 +9,12 @@ import CustomSwitch from "../../../global/Switch/Switch";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { PostalCodeRegex } from "../../../tools/validations/ErrorHelper";
 import { VALIDPOSTALCODE } from "../../../tools/validations/ErrorKeywords";
+import {
+  getCities,
+  getProvinces,
+  getRegions,
+} from "../../../services/GlobalApi";
+import { getCustomerType } from "../../../services/CustomerApi";
 // import { Map } from "../../../../components/map";
 // import { PostalCodeRegex } from "../../../../utilities/function";
 
@@ -32,6 +38,37 @@ const CustomerAddressForm = ({
   const [regions, setRegions] = useState([]);
   const [addressKind, setAddressKind] = useState([]);
 
+  const initAddressKind = () => {
+    getCustomerType().then((res) => {
+      console.log(res);
+    });
+  };
+
+  const initCities = () => {
+    getCities().then((res) => {
+      console.log(res);
+    });
+  };
+
+  const initRegions = () => {
+    getRegions().then((res) => {
+      console.log(res);
+    });
+  };
+
+  const initProvinces = () => {
+    getProvinces().then((res) => {
+      console.log(res);
+    });
+  };
+
+  useEffect(() => {
+    initAddressKind();
+    initCities();
+    initRegions();
+    initProvinces();
+  }, []);
+
   // const getAddressKind = useCallback(() => {
   // 	getAddressesKind()
   // 		.then((response) => {
@@ -48,7 +85,7 @@ const CustomerAddressForm = ({
   // 		.catch((err) => {
   // 			console.log(err);
   // 		});
-  // }, []);
+  //  }, []);
 
   // const getProvince = useCallback(() => {
   // 	// getProvinces();

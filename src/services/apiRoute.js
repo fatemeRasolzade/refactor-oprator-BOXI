@@ -6,6 +6,8 @@ export const API_CONSIGNMENT = `${Base_url2}/core-api`;
 export const API_CONSIGNMENT2 = `${Base_url}/resource-api`;
 export const API_CONSIGNMENT3 = `${Base_url3}/core-api`;
 export const API_CONSIGNMENT4 = `${Base_url4}/core-api`;
+export const API_CONSIGNMENT5 = `${Base_url4}/resource-api`;
+export const API_CONSIGNMENT6 = `${Base_url}/core-api`;
 
 export const API_URL = `/core-api`;
 export const API_URL_2 = `/resource-api`;
@@ -77,7 +79,12 @@ export const apiRoute = () => {
       //Service
       GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
       //customer
-      GET_CUSTOMER_TYPE: createUrl(API_CONSIGNMENT2, `/customer/customerType`)
+      GET_CUSTOMER_TYPE: createUrl(API_CONSIGNMENT5, `/customer/customerType`),
+      //GLOBAL
+      GET_PROVINCES: createUrl(API_CONSIGNMENT6, "/countryDevision?filter="),
+      GET_CITIES: createUrl(API_CONSIGNMENT6, "/countryDevision/province/1/city?filter="),
+      GET_REGIONS: createUrl(API_CONSIGNMENT6, "countryDevision/city/2/loc?filter"),
+
     },
     post: {
       // create
@@ -95,14 +102,12 @@ export const apiRoute = () => {
       role: createUrl(API_CONSIGNMENT2, "/role"),
       personnel: createUrl(API_CONSIGNMENT2, "/employee"),
 
-      serviceDefine:createUrl(API_CONSIGNMENT4, "/service"),
-      productDefine:createUrl(API_CONSIGNMENT4,"/product"),
-      hubTable:createUrl(API_CONSIGNMENT4,"/hub"),
-
+      serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
+      productDefine: createUrl(API_CONSIGNMENT4, "/product"),
+      hubTable: createUrl(API_CONSIGNMENT4, "/hub"),
     },
     edit: {
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
-
     },
   };
 };
