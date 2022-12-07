@@ -757,7 +757,7 @@ const AddEditRole: FC<EditRoleProps> = ({
           if (200 <= res.status && res.status < 300) {
             dispatch(
               RoleData({
-                code: "",
+                permission: "",
                 name: "",
                 isActive: isActive,
                 pageSize: 10,
