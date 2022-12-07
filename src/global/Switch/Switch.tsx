@@ -3,9 +3,9 @@ import Switch from "react-switch";
 interface CustomSwitchProps {
   active: boolean;
   handleChange: (
-    checked: boolean,
-    event: MouseEvent | React.SyntheticEvent<MouseEvent | KeyboardEvent, Event>,
-    id: string
+    checked?: boolean ,
+    event?: MouseEvent | React.SyntheticEvent<MouseEvent | KeyboardEvent, Event>,
+    id?: string
   ) => void;
 }
 

@@ -12,7 +12,7 @@ interface DeleteOperationProps {
   itemId: number;
   route: string;
   updating?: any;
-  handleDeleteActionNewData?: () => void;
+  handleDeleteActionNewData?: any;
 }
 const DeleteOperation: FC<DeleteOperationProps> = ({
   title,

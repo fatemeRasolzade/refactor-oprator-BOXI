@@ -26,7 +26,7 @@ const OptionsTable = ({
           <li>
             <CustomSwitch
               active={true}
-              handleChange={(value: boolean) =>
+              handleChange={(value: any) =>
                 setIsACtive && setIsACtive(value)
               }
             />
