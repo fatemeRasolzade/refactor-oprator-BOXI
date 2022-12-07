@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import Chip from "../../../../global/Chip/Chip";
@@ -17,7 +17,7 @@ interface PropsData {
   isUpdating: Boolean;
 }
 
-const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
+const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating }): JSX.Element => {
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
    // @ts-ignore
@@ -97,6 +97,7 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
     }
     getDataSelect();
   }, []);
+
   return (
     <>
       <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col ">
@@ -137,6 +138,6 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
   );
 };
 
-export default SearchForm;
+export default memo(SearchForm);
 
 

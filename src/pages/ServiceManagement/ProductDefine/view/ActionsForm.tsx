@@ -36,8 +36,10 @@ const ActionForms = ({ itemValue }: any) => {
         ErrorAlert("دریافت دیتا با خطلا مواجه شد");
       }
     }
-    getDataSelect();
-  }, []);
+    if (isModalOpen) {
+      getDataSelect();
+    }
+  }, [isModalOpen]);
   const handleAction = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -89,10 +91,10 @@ const ActionForms = ({ itemValue }: any) => {
           }
           validationSchema={productDefineschema}
           onSubmit={(values) => {
-            let body={
-              page:1,
-              body:{ }
-            }
+            let body = {
+              page: 1,
+              body: {},
+            };
             console.log(values);
             if (!itemValue) {
               console.log("run add");
@@ -100,8 +102,13 @@ const ActionForms = ({ itemValue }: any) => {
               PostDataParams(apiRoute().post.createProduct, values).then((res) => {
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ساخته شد");
-                 
-                  dispatch(productData({}) as any);
+                  productData({
+                    code: "",
+                    name: "",
+                    isActive: "",
+                    pageSize: 10,
+                    pageNumber: "",
+                  }) as any;
                 } else {
                   console.log("run error");
                   // ErrorAlert("خطا در برقراری اطلاعات");
@@ -117,8 +124,13 @@ const ActionForms = ({ itemValue }: any) => {
                 console.log("run edit");
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ویرایش شد");
-                  dispatch(productData(body) as any);
-          
+                  productData({
+                    code: "",
+                    name: "",
+                    isActive: "",
+                    pageSize: 10,
+                    pageNumber: "",
+                  }) as any;
                 } else {
                   console.log("run error");
                   // ErrorAlert("خطا در برقراری اطلاعات");
