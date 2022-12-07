@@ -21,10 +21,10 @@ const CustomOptions = ({ options = [] }: any) => {
             handelClick={type.handleClick}
           />
         );
-      // case ACTIVE_OPTION:
-      //   return (
-      //     <CustomSwitch active={type?.value} handleChange={type.handleClick} />
-      //   );
+      case ACTIVE_OPTION:
+        return (
+          <CustomSwitch active={type?.value as boolean} handleChange={type.handleClick} />
+        );
       case DOWNLOAD_OPTION:
         return (
           <SimpleButton
