@@ -11,27 +11,35 @@ interface DeleteOperationProps {
   itemId: number;
   route: string;
   updating?: any;
+  handleDeleteActionNewData?: () => void;
 }
-const DeleteOperation: FC<DeleteOperationProps> = ({ title, itemId, route, updating }): JSX.Element => {
+const DeleteOperation: FC<DeleteOperationProps> = ({
+  title,
+  itemId,
+  route,
+  updating,
+  handleDeleteActionNewData,
+}): JSX.Element => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const deleteHandler = async (id: number) => {
     try {
-      dispatch(updating(true));
       await DeleteDataParams(route);
       SuccessAlert("با موفقیت حذف شد");
       setIsModalOpen(false);
-      dispatch(updating(false));
+      handleDeleteActionNewData && handleDeleteActionNewData();
     } catch (error) {
-      dispatch(updating(false));
       setIsModalOpen(false);
       ErrorAlert("خطایی رخ داده است.");
     }
   };
   return (
     <>
-      <button className=" border-none	text-[14px]  w-[20px] h-[20px]" onClick={() => setIsModalOpen(!isModalOpen)}>
+      <button
+        className=" border-none	text-[14px]  w-[20px] h-[20px]"
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
         <BiTrash className="w-full h-full	" />
       </button>
       <Dialog open={isModalOpen} handler={setIsModalOpen}>
@@ -46,9 +54,14 @@ const DeleteOperation: FC<DeleteOperationProps> = ({ title, itemId, route, updat
             <div className="w-full justify-center flex">
               <h3 className="text-gray-700 font-bold text-lg">{title}</h3>
             </div>
-            <p className="w-full flex justify-center">آیا از حذف این مورد اطمینان دارید؟</p>
+            <p className="w-full flex justify-center">
+              آیا از حذف این مورد اطمینان دارید؟
+            </p>
             <div className="flex w-full justify-center gap-4">
-              <Button className="border-none bg-[#ef5644] w-[30%] text-gray-200" onClick={() => deleteHandler(itemId)}>
+              <Button
+                className="border-none bg-[#ef5644] w-[30%] text-gray-200"
+                onClick={() => deleteHandler(itemId)}
+              >
                 بله
               </Button>
               <Button

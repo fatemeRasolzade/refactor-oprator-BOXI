@@ -39,6 +39,17 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
     return () => dispatch(clearRole() as any);
   }, [dispatch, isActive, pageNumbers]);
 
+  const handleDeleteActionNewData = () => {
+    dispatch(
+      RoleData({
+        code: "",
+        name: "",
+        isActive: isActive,
+        pageSize: 10,
+        pageNumber: pageNumbers,
+      }) as any
+    );
+  };
   const data =
     rolesList?.content?.length !== 0
       ? rolesList?.content?.map((item: any) => {
@@ -76,6 +87,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                   title={"حذف نقش"}
                   route={apiRoute().delete.role + `/${item.id}`}
                   updating={updating}
+                  handleDeleteActionNewData={handleDeleteActionNewData}
                 />
                 <AddEditRole
                   isSomeEdit={true}
