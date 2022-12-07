@@ -25,7 +25,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
     try {
       dispatch(
         RoleData({
-          code: "",
+          permission: "",
           name: "",
           isActive: isActive,
           pageSize: 10,
@@ -42,7 +42,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   const handleDeleteActionNewData = () => {
     dispatch(
       RoleData({
-        code: "",
+        permission: "",
         name: "",
         isActive: isActive,
         pageSize: 10,

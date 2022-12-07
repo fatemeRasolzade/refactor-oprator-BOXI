@@ -1,18 +1,25 @@
+import axios from "axios";
 import { useFormik } from "formik";
-import React, { ChangeEvent, FC, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 
 import InputIcon from "../../../global/InputIcon/InputIcon";
+import InputSelect from "../../../global/InputSelect/InputSelect";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { RoleData } from "../../../redux/RolsData/RolesData";
 
 interface MyFormValues {
-  code: string;
+  permission: string;
   name: string;
   isActive?: boolean;
-  setIsActive?: (value: boolean) => void;
 }
 
 interface SearchFilterProps {
@@ -22,66 +29,80 @@ interface SearchFilterProps {
 const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
   const dispatch = useDispatch();
 
-  const initialValues: MyFormValues = { code: "", name: "" };
-  const [role, setRole] = useState<string>("");
-  const [hub, setAccess] = useState<string>("");
+  const initialValues: MyFormValues = { permission: "", name: "" };
+
+  const [permissionOptions, setPermissionOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  console.log("asfasf", permissionOptions);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues,
-    onSubmit: (values) => {},
+    onSubmit: async (values) => {
+      try {
+        dispatch(
+          RoleData({
+            permission: values.permission,
+            name: values.name,
+            isActive: isActive,
+            pageSize: 10,
+            pageNumber: 1,
+          }) as any
+        );
+      } catch (error) {
+        debugger;
+      }
+    },
   });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    formik.setFieldValue(e.target.name, e.target.value);
-  };
-  const selectHandler = (val: any) => {
-    formik.setFieldValue("code", val);
-  };
-  const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const getRoleFilterData = useCallback(async () => {
     try {
-      dispatch(
-        RoleData({
-          code: hub,
-          name: role,
-          isActive: isActive,
-          pageSize: 10,
-          pageNumber: 1,
-        }) as any
+      setIsLoading(true);
+      const res = await axios.get(
+        "http://boxi.local:40000/resource-api/permission/select"
       );
+      setPermissionOptions(
+        res.data.payload.content ? res.data.payload.content : []
+      );
+      setIsLoading(false);
     } catch (error) {}
-  };
-  const { values, errors, handleSubmit, setFieldValue } = formik;
+  }, []);
+
+  useEffect(() => {
+    getRoleFilterData();
+  }, [getRoleFilterData]);
+
+  const { values, handleSubmit } = formik;
 
   return (
     <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
-      <form onSubmit={handelSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className=" flex gap-3 justify-start items-center flex-wrap">
-          <div className="Max-sm:mb-3">
+          <div className="Max-sm:mb-3 mb-4">
             <AutocompleteInput
               items={[]}
               label="نقش"
               value={values.name}
               onSelect={() => console.log()}
-              onChange={handleChange}
+              onChange={(e) => formik.setFieldValue("name", e.target.value)}
             />
           </div>
           <div>
-            <AutocompleteInput
-              items={[]}
+            <InputSelect
               label="دسترسی ها"
-              onSelect={() => console.log()}
-              onChange={(e) => setRole(e.target.value)}
+              name="permission"
+              handleChange={formik.setFieldValue}
+              values={formik.values?.permission}
+              options={permissionOptions}
             />
           </div>
-
-          <SimpleButton
-            className="full-gray-btn w-[160px] h-[40px] centering rounded-md"
-            icon={<BiSearch size={20} />}
-            text="جستجو"
-            type="submit"
-          />
+          <div className="mb-4">
+            <SimpleButton
+              className="full-gray-btn w-[160px] h-[40px] centering rounded-md"
+              icon={<BiSearch size={20} />}
+              text="جستجو"
+              type="submit"
+            />
+          </div>
         </div>
       </form>
     </div>
