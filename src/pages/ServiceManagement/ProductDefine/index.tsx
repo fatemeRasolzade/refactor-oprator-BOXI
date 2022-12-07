@@ -25,14 +25,8 @@ const ProductDefine = () => {
   const { errorMessage, productLists, isUpdating } = useSelector((state: any) => state.productDefine);
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
-  useEffect(() => {
-    // const body = {
-    //   page: pageNumbers,
-    //   body: {},
-    // };
-    // // @ts-ignore
-    // dispatch(productData(body));
 
+  const handleDeleteActionNewData = () => {
     dispatch(
       productData({
         code: "",
@@ -42,9 +36,7 @@ const ProductDefine = () => {
         pageNumber: pageNumbers,
       }) as any
     );
-
-
-  }, [pageNumbers]);
+  };
   const datas =
     productLists?.content?.length !== 0
       ? productLists?.content?.map((item: any) => {
@@ -55,6 +47,7 @@ const ProductDefine = () => {
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف محصول"}
+                  // handleDeleteActionNewData={handleDeleteActionNewData}
                   route={apiRoute().delete.productDefine + `/${item.id}`}
                   updating={updating}
                 />

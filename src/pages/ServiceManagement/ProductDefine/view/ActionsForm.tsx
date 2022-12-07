@@ -101,7 +101,7 @@ const ActionForms = ({ itemValue }: any) => {
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ساخته شد");
                  
-                  dispatch(productData(body) as any);
+                  dispatch(productData({}) as any);
                 } else {
                   console.log("run error");
                   // ErrorAlert("خطا در برقراری اطلاعات");

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Chip from "../../../../global/Chip/Chip";
 import AutocompleteInput from "../../../../global/Autocomplete/AutocompleteInput";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
@@ -20,6 +20,8 @@ interface PropsData {
 const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
+   // @ts-ignore
+  const { pageNumbers } = useSelector((state) => state.paginate);
   const [filterData, setFilterData] = useState({});
   const [productOptions, setProductOptions] = useState([]);
   const formik = useFormik({
@@ -41,9 +43,17 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
       page:1,
       body:{ ...formik.values, isActive, productGroup }
     }
-    // @ts-ignore
-    dispatch(productData(body));
-  }, [isActive, filterData, isUpdating]);
+    dispatch(
+      productData({
+        code: formik.values.code,
+        name: formik.values.name,
+        productGroup:productGroup,
+        isActive: isActive,
+        pageSize: 10,
+        pageNumber: pageNumbers,
+      }) as any
+    );
+  }, [isActive, filterData, isUpdating,pageNumbers]);
   const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     formik.setFieldValue(name, e.target.value);
     // const filterData = data.filter((item) => item.text.includes(e.target.value));
@@ -128,3 +138,5 @@ const SearchForm = ({ isActive, isUpdating }: PropsData): JSX.Element => {
 };
 
 export default SearchForm;
+
+
