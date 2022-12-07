@@ -1,20 +1,12 @@
+import { FC, useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
-import React, {
-  ChangeEvent,
-  FC,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
 import { BiSearch } from "react-icons/bi";
-import { useDispatch } from "react-redux";
+
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 
-import InputIcon from "../../../global/InputIcon/InputIcon";
 import InputSelect from "../../../global/InputSelect/InputSelect";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
-import { RoleData } from "../../../redux/RolsData/RolesData";
 
 interface MyFormValues {
   permission: Array<any>;
@@ -31,8 +23,6 @@ const SearchFilter: FC<SearchFilterProps> = ({
   isActive,
   setFilterData,
 }): JSX.Element => {
-  const dispatch = useDispatch();
-
   const initialValues: MyFormValues = { permission: [], name: "" };
 
   const [permissionOptions, setPermissionOptions] = useState([]);
@@ -41,17 +31,13 @@ const SearchFilter: FC<SearchFilterProps> = ({
     enableReinitialize: true,
     initialValues,
     onSubmit: async (values) => {
-      try {
-        setFilterData({
-          permission: values.permission as any,
-          name: values.name,
-          isActive: isActive,
-          pageSize: 10,
-          pageNumber: 1,
-        });
-      } catch (error) {
-        debugger;
-      }
+      setFilterData({
+        permission: values.permission as any,
+        name: values.name,
+        isActive: isActive,
+        pageSize: 10,
+        pageNumber: 1,
+      });
     },
   });
 
@@ -70,7 +56,7 @@ const SearchFilter: FC<SearchFilterProps> = ({
     let newArray = [...values.permission];
     newArray.push(value);
 
-    formik.setFieldValue("permission", newArray);
+    formik.setFieldValue(name, newArray);
   };
 
   useEffect(() => {

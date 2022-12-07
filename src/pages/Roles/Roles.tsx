@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
@@ -32,7 +33,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
     try {
       dispatch(RoleData(filterData) as any);
     } catch (error) {
-      console.log(error);
+      toast.error("مشکلی پیش آمده است");
     }
 
     return () => dispatch(clearRole() as any);
@@ -54,9 +55,6 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
       ? rolesList?.content?.map((item: any) => {
           return {
             name: item.name,
-            // selectPermissions: item?.selectPermissions?.map(
-            //   (permissionItem: any) => permissionItem.text
-            // ),
             selectPermissions: (
               <div className="w-full flex justify-center">
                 <TooltipWrapper

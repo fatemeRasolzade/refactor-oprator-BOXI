@@ -5,6 +5,7 @@ import { DeleteDataParams } from "../../services/Service_call";
 import { BiTrash } from "react-icons/bi";
 import { GrFormClose } from "react-icons/gr";
 import { SuccessAlert } from "../../global/alert/Alert";
+import SimpleButton from "../../global/SimpleButton/SimpleButton";
 
 interface DeleteOperationProps {
   title: string;
@@ -20,7 +21,6 @@ const DeleteOperation: FC<DeleteOperationProps> = ({
   updating,
   handleDeleteActionNewData,
 }): JSX.Element => {
-  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const deleteHandler = async (id: number) => {
@@ -40,7 +40,7 @@ const DeleteOperation: FC<DeleteOperationProps> = ({
         className=" border-none	text-[14px]  w-[20px] h-[20px]"
         onClick={() => setIsModalOpen(!isModalOpen)}
       >
-        <BiTrash className="w-full h-full	" />
+        <BiTrash size={20} className="w-full h-full	" />
       </button>
       <Dialog open={isModalOpen} handler={setIsModalOpen}>
         <button
@@ -58,20 +58,18 @@ const DeleteOperation: FC<DeleteOperationProps> = ({
               آیا از حذف این مورد اطمینان دارید؟
             </p>
             <div className="flex w-full justify-center gap-4">
-              <Button
-                className="border-none bg-[#ef5644] w-[30%] text-gray-200"
-                onClick={() => deleteHandler(itemId)}
-              >
-                بله
-              </Button>
-              <Button
-                className="border-none bg-[#FFF8F0] w-[30%] text-gray-500"
-                onClick={() => {
-                  setIsModalOpen(false);
-                }}
-              >
-                خیر
-              </Button>
+              <SimpleButton
+                type="submit"
+                text="بله"
+                className="full-tomato-btn px-[50px] "
+                handelClick={() => deleteHandler(itemId)}
+              />
+              <SimpleButton
+                type="submit"
+                text="خیر"
+                className="full-lightTomato-btn px-[50px] "
+                handelClick={() => setIsModalOpen(false)}
+              />
             </div>
           </div>
         </div>
