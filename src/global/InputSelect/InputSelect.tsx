@@ -1,14 +1,7 @@
+import { FC } from "react";
 import Select from "react-select";
-const InputSelect = ({
-  label,
-  name,
-  // blure,
-  values,
-  options,
-  handleChange,
-  error,
-  important,
-}: {
+
+interface InputSelectProps {
   label?: string;
   name?: string;
   // blure?: React.FocusEventHandler<HTMLInputElement>;
@@ -17,7 +10,20 @@ const InputSelect = ({
   handleChange?: any;
   error?: any;
   important?: boolean;
-}) => {
+  wrapperClassName?: string;
+}
+
+const InputSelect: FC<InputSelectProps> = ({
+  label,
+  name,
+  // blure,
+  values,
+  options,
+  handleChange,
+  error,
+  important,
+  wrapperClassName,
+}): JSX.Element => {
   const style = {
     control: (base: any, state: any) => ({
       ...base,
@@ -34,7 +40,7 @@ const InputSelect = ({
   };
 
   return (
-    <div className="relative w-full ">
+    <div className={`relative  ${wrapperClassName}`}>
       <label className=" absolute top-[-16px] right-5 bg-white z-10  px-2 text-darkGray text-sm">
         {label}
         <span className="text-tomato font-extrabold text-lg h-4">
@@ -70,4 +76,7 @@ const InputSelect = ({
   );
 };
 
+InputSelect.defaultProps = {
+  wrapperClassName: "w-60",
+};
 export default InputSelect;
