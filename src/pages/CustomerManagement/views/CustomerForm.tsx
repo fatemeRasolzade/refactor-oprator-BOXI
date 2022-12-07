@@ -17,6 +17,14 @@ import CustomerAddressElements from "./CustomerAddressElements";
 import { ReverseArray } from "../../../tools/functions/Methods";
 import CustomerAddressForm from "./CustomerAddressForm";
 import CustomerTelephoneForm from "./CustomerTelephoneForm";
+import {
+  createCustomer,
+  getCustomerParent,
+  getCustomerType,
+} from "../../../services/CustomerApi";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
 
 type CustomerFormProps = {
   open: boolean;
@@ -27,6 +35,7 @@ type CustomerFormProps = {
 const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
   const [OpenAddresses, setOpenAddresses] = useState(false);
   const [OpenPhones, setOpenPhones] = useState(false);
+  const dispatch = useDispatch();
   const handleOpenAddress = (kind?: any, data?: any, id?: any) => {
     setAddressModalInfo({ kind, data, id });
     setOpenAddresses(true);
@@ -81,10 +90,25 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
     id: undefined,
   });
 
+  const [customerType, setCustomerType] = useState([]);
+  const [customerParent, setCustomerParent] = useState([]);
+
   useEffect(() => {
-    // console.log(GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE));
-    // GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE);
+    initCustomerType();
+    initParentCustomer();
   }, []);
+
+  const initCustomerType = () => {
+    getCustomerType().then((res) => {
+      setCustomerType(res);
+    });
+  };
+
+  const initParentCustomer = () => {
+    getCustomerParent().then((res) => {
+      setCustomerParent(res);
+    });
+  };
 
   const validation = Yup.object().shape({
     code: Yup.string().required(),
@@ -216,33 +240,28 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         // 		setState({ loading: false, error: error.response.data.message });
         // 	});
       } else {
-        // delete values.id;
-        // createCustomer({
-        // 	...values,
-        // 	currentCredit: parseInt(values.currentCredit),
-        // 	creditLimit: parseInt(values.creditLimit),
-        // 	initialCredit: parseInt(values.initialCredit),
-        // 	confirmPassword: undefined,
-        // 	addresses: values.addresses.map((a) => {
-        // 		return { ...a, id: undefined };
-        // 	}),
-        // 	telephones: values.telephones.map((a) => {
-        // 		return { ...a, id: undefined };
-        // 	}),
-        // })
-        // 	.then((response) => {
-        // 		setState({ loading: false, error: false });
-        // 		action({
-        // 			type: REFRESH,
-        // 			payload: !refresh,
-        // 		});
-        // 		resetForm({ values: "" });
-        // 		closeModal();
-        // 		response.status && toast.success("مشتری افزوده شد ");
-        // 	})
-        // 	.catch((error) => {
-        // 		setState({ loading: false, error: error.response.data.message });
-        // 	});
+        console.log(values.selectCustomerType);
+        
+        createCustomer({
+          ...values,
+          currentCredit: parseInt(values.currentCredit),
+          creditLimit: parseInt(values.creditLimit),
+          initialCredit: parseInt(values.initialCredit),
+          confirmPassword: undefined,
+          addresses: values.addresses.map((a: any) => {
+            return { ...a, id: undefined };
+          }),
+          telephones: values.telephones.map((a: any) => {
+            return { ...a, id: undefined };
+          }),
+        })
+          .then((response) => {
+            dispatch(customerData({}) as any);
+            // resetForm({ values: "" });
+            setOpen(false);
+            toast.success("مشتری افزوده شد ");
+          })
+          .catch((error) => {});
       }
     },
   });
@@ -281,7 +300,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
               error={touched.name && errors.name}
             />
             <InputSelect
-              options={[]}
+              options={customerType}
               important
               label="نوع مشتری"
               values={values.selectCustomerType}
@@ -300,7 +319,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
           </div>
           <div className="inputRow">
             <InputSelect
-              options={[]}
+              options={customerParent}
               label="مشتری والد"
               values={values.selectParentCustomer}
               name="selectParentCustomer"
@@ -345,7 +364,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         </div>
         <div className="inputRow">
           <div className="border rounded-lg px-5 pt-10 mt-10 relative">
-            <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
+            <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">
               اطلاعات کاربری
             </span>
             <div className="inputRow">
@@ -393,7 +412,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
 
         <div className="inputRow">
           <div className="border rounded-lg px-5 pt-8 mt-5 relative">
-            <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
+            <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">
               اطلاع رسانی جمع آوری از طریق
             </span>
             <div className="inputRow">

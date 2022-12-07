@@ -38,12 +38,7 @@ const CustomerAddressForm = ({
   const [regions, setRegions] = useState([]);
   const [addressKind, setAddressKind] = useState([]);
 
-  const initAddressKind = () => {
-    getCustomerType().then((res) => {
-      console.log(res);
-    });
-  };
-
+ 
   const initCities = () => {
     getCities().then((res) => {
       console.log(res);
@@ -63,7 +58,7 @@ const CustomerAddressForm = ({
   };
 
   useEffect(() => {
-    initAddressKind();
+    // initAddressKind();
     initCities();
     initRegions();
     initProvinces();

@@ -119,7 +119,7 @@ function Table({ columns, data, pageTable }) {
           <>موردی یافت نشد</>
         </div>
       )}
-      <div className="text-center">
+      <div className="text-center my-5">
         <Paginations pageData={pageTable} />
       </div>
     </div>
