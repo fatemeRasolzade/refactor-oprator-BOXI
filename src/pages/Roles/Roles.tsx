@@ -20,24 +20,23 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   const { pageNumbers } = useSelector((state: any) => state.paginate);
 
   const [isActive, setIsActive] = useState<boolean>(true);
+  const [filterData, setFilterData] = useState({
+    permission: "",
+    name: "",
+    isActive: isActive,
+    pageSize: 10,
+    pageNumber: pageNumbers,
+  });
 
   useEffect(() => {
     try {
-      dispatch(
-        RoleData({
-          permission: "",
-          name: "",
-          isActive: isActive,
-          pageSize: 10,
-          pageNumber: pageNumbers,
-        }) as any
-      );
+      dispatch(RoleData(filterData) as any);
     } catch (error) {
       console.log(error);
     }
 
     return () => dispatch(clearRole() as any);
-  }, [dispatch, isActive, pageNumbers]);
+  }, [dispatch, isActive, pageNumbers, filterData]);
 
   const handleDeleteActionNewData = () => {
     dispatch(
@@ -104,7 +103,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   return (
     <div>
       <Breadcrumb curentPage="مدیریت نقش" />
-      <SearchFilter isActive={isActive} />
+      <SearchFilter isActive={isActive} setFilterData={setFilterData} />
       <OptionsTable
         isActive={isActive}
         setIsActive={setIsActive}

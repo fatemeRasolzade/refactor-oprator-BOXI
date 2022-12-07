@@ -17,55 +17,61 @@ import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { RoleData } from "../../../redux/RolsData/RolesData";
 
 interface MyFormValues {
-  permission: string;
+  permission: Array<any>;
   name: string;
   isActive?: boolean;
 }
 
 interface SearchFilterProps {
   isActive: boolean;
+  setFilterData: (newFilter: any) => void;
 }
 
-const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
+const SearchFilter: FC<SearchFilterProps> = ({
+  isActive,
+  setFilterData,
+}): JSX.Element => {
   const dispatch = useDispatch();
 
-  const initialValues: MyFormValues = { permission: "", name: "" };
+  const initialValues: MyFormValues = { permission: [], name: "" };
 
   const [permissionOptions, setPermissionOptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  console.log("asfasf", permissionOptions);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues,
     onSubmit: async (values) => {
       try {
-        dispatch(
-          RoleData({
-            permission: values.permission,
-            name: values.name,
-            isActive: isActive,
-            pageSize: 10,
-            pageNumber: 1,
-          }) as any
-        );
+        setFilterData({
+          permission: values.permission as any,
+          name: values.name,
+          isActive: isActive,
+          pageSize: 10,
+          pageNumber: 1,
+        });
       } catch (error) {
         debugger;
       }
     },
   });
+
   const getRoleFilterData = useCallback(async () => {
     try {
-      setIsLoading(true);
       const res = await axios.get(
         "http://boxi.local:40000/resource-api/permission/select"
       );
       setPermissionOptions(
         res.data.payload.content ? res.data.payload.content : []
       );
-      setIsLoading(false);
     } catch (error) {}
   }, []);
+
+  const handleSelect = (name: string, value: any) => {
+    let newArray = [...values.permission];
+    newArray.push(value);
+
+    formik.setFieldValue("permission", newArray);
+  };
 
   useEffect(() => {
     getRoleFilterData();
@@ -90,7 +96,7 @@ const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
             <InputSelect
               label="دسترسی ها"
               name="permission"
-              handleChange={formik.setFieldValue}
+              handleChange={handleSelect}
               values={formik.values?.permission}
               options={permissionOptions}
             />
