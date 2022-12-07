@@ -24,7 +24,7 @@
     @apply bg-light text-tomato border border-tomato;
   }
   .full-lightTomato-btn {
-    @apply bg-lightTomato;
+    @apply bg-lightTomato text-gray-600;
   }
   .full-gray-btn {
     @apply !bg-lightGray !text-dark px-10;

@@ -1,12 +1,18 @@
+import { FC } from "react";
 import Switch from "react-switch";
-const CustomSwitch = ({
+interface CustomSwitchProps {
+  active: boolean;
+  handleChange: (
+    checked: boolean,
+    event: MouseEvent | React.SyntheticEvent<MouseEvent | KeyboardEvent, Event>,
+    id: string
+  ) => void;
+}
+
+const CustomSwitch: FC<CustomSwitchProps> = ({
   handleChange,
   active,
-}: {
-  handleChange?: any;
-  active?: any;
-}) => {
-
+}): JSX.Element => {
   return (
     <div>
       <label className="flex justify-center items-center flex-row-reverse w-fit">
