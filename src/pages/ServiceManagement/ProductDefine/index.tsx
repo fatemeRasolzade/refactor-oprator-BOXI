@@ -13,12 +13,12 @@ import { ProductColumns } from "./view/Column";
 
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
-import { useGetServiceQuery } from "./view/serviceProvisionData";
+
 // import * as XLSX  from "xlsx-js-style"
 
 const ProductDefine = () => {
   // @ts-ignore
-  const { data } = useGetServiceQuery();
+
   // axios.get('http://boxi.local:40000/product/select?filter=')
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();

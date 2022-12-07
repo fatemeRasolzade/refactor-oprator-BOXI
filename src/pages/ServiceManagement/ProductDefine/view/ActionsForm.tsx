@@ -117,8 +117,8 @@ const ActionForms = ({ itemValue }: any) => {
                 console.log("run edit");
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ویرایش شد");
-                  dispatch(body as any);
-                  setIsModalOpen(false);
+                  dispatch({}  as any);
+          
                 } else {
                   console.log("run error");
                   // ErrorAlert("خطا در برقراری اطلاعات");

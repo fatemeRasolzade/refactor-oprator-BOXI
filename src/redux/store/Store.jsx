@@ -31,11 +31,10 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 export const store = configureStore({
   [serviceProvisionData.reducerPath]:serviceProvisionData.reducer,
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(serviceProvisionData.middleware),
-  // getDefaultMiddleware({
-  //   serializableCheck: false,
-
-  // }),
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export let persistor = persistStore(store);
