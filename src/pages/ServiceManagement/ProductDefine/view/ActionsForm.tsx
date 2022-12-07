@@ -24,6 +24,7 @@ const ActionForms = ({ itemValue }: any) => {
   const [productOptions, setProductOptions] = useState([]);
   const [productTypeOptions, setProductTypeOptions] = useState([]);
   const dispatch = useDispatch();
+
   useEffect(() => {
     function getDataSelect() {
       try {
@@ -36,7 +37,7 @@ const ActionForms = ({ itemValue }: any) => {
       }
     }
     getDataSelect();
-  }, [isModalOpen]);
+  }, []);
   const handleAction = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -88,6 +89,10 @@ const ActionForms = ({ itemValue }: any) => {
           }
           validationSchema={productDefineschema}
           onSubmit={(values) => {
+            let body={
+              page:1,
+              body:{ }
+            }
             console.log(values);
             if (!itemValue) {
               console.log("run add");
@@ -95,7 +100,8 @@ const ActionForms = ({ itemValue }: any) => {
               PostDataParams(apiRoute().post.createProduct, values).then((res) => {
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ساخته شد");
-                  dispatch(productData({}) as any);
+                 
+                  dispatch(productData(body) as any);
                 } else {
                   console.log("run error");
                   // ErrorAlert("خطا در برقراری اطلاعات");
@@ -111,7 +117,8 @@ const ActionForms = ({ itemValue }: any) => {
                 console.log("run edit");
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ویرایش شد");
-                  dispatch(productData({}) as any);
+                  dispatch(body as any);
+                  setIsModalOpen(false);
                 } else {
                   console.log("run error");
                   // ErrorAlert("خطا در برقراری اطلاعات");
