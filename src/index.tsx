@@ -37,6 +37,6 @@ root.render(
 
 );
 
-UserService.initKeycloak(root)
-http_service.config()
+// UserService.initKeycloak(root)
+// http_service.config()
 reportWebVitals();

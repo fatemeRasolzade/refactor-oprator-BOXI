@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dialog } from "@material-tailwind/react";
 
 import { Formik, ErrorMessage } from "formik";
@@ -12,12 +12,16 @@ import CustomSwitch from "../../../../global/Switch/Switch";
 import { useDispatch, useSelector } from "react-redux";
 import { productData, updating } from "../../../../redux/ProductDefineData/ProductDefineData";
 import { productDefineschema } from "./productDefineschema";
-import DropButton from "./DropButton";
+
 import AddExcel from "./AddExcel";
 import { AiOutlineEdit } from "react-icons/ai";
 import AddButton from "../../../../global/addButton/AddButton";
 
-const ActionForms = ({ itemValue }: any) => {
+interface  PropsData{
+  itemValue?:any
+}
+
+const ActionForms:React.FC <PropsData>= ({ itemValue }):JSX.Element => {
   const { productLists } = useSelector((state: any) => state.productDefine);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
