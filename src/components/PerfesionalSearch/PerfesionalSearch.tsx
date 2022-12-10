@@ -43,7 +43,8 @@ const PerfesionalSearch = ({ formData, children }: propsData): JSX.Element => {
               />
               <SimpleButton text="پاک کردن ورودی ها" className="p-2" />
               <SimpleButton
-                handelClick={() => formData.handleSubmit()}
+                type="submit"
+                handelClick={formData}
                 className="full-tomato-btn"
                 text="جستجو"
               />

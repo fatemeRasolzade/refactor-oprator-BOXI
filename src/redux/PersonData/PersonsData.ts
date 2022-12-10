@@ -3,14 +3,29 @@ import { apiRoute } from "../../services/apiRoute";
 import { PostDataParams } from "../../services/Service_call";
 import { StateData } from "./state-model";
 
-export const PersonnelData = createAsyncThunk("post", async () => {
-  const params = `/filter?pageNumber=1&pageSize=20`;
+
+interface PersonnelDataBody {
+  personelCode: string,
+  name: string,
+  nationalCode: string,
+  mobile: string,
+  email: string,
+  username: string,
+  isActive: boolean,
+  pageNumber:number
+}
+export const PersonnelData = createAsyncThunk("post", async (body: PersonnelDataBody) => {
+  const params = `/filter?pageNumber=${body.pageNumber}&pageSize=20`;
   var data = {};
   try {
     data = await PostDataParams(apiRoute().post.filterPersonnel + params, {
-      code: "",
-      name: "",
-      isActive: true,
+      personelCode: body.personelCode,
+      name: body.name,
+      nationalCode: body.nationalCode,
+      mobile: body.mobile,
+      email: body.email,
+      username: body.username,
+      isActive: body.isActive,
     });
   } catch (error) {
     console.log("error ", error);

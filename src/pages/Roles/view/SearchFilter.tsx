@@ -51,12 +51,7 @@ const SearchFilter: FC<SearchFilterProps> = ({
     } catch (error) {}
   }, []);
 
-  const handleSelect = (name: string, value: any) => {
-    let newArray = [...values.permission];
-    newArray.push(value);
 
-    formik.setFieldValue(name, newArray);
-  };
 
   useEffect(() => {
     getRoleFilterData();
