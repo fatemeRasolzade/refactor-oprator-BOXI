@@ -6,3 +6,6 @@ export const VALIDEMAIL = "ایمیل معتبر باشد";
 export const VALIDNATIONALCODE = "کد ملی باید معتبر باشد";
 export const VALIDPOSTALCODE = "کد پستی باید معتبر باشد";
 export const VALIDNATIONALID = "شناسه ملی باید معتبر باشد";
+export const MINCHAR = "حداقل ${min} نویسه";
+export const MAXCHAR = "حداکثر ${max} نویسه";
+export const UNMATCHPASSWORD= "رمز عبور مطابقت ندارد"

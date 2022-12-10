@@ -188,7 +188,7 @@ const AddEditRole: FC<EditRoleProps> = ({
               <div className="w-[20%] h-full justify-center items-center flex mx-auto mt-[8px]">
                 <CustomSwitch
                   active={values.isActive}
-                  handleChange={(checked: boolean) =>
+                  handleChange={(checked: any) =>
                     setFieldValue("isActive", checked)
                   }
                 />

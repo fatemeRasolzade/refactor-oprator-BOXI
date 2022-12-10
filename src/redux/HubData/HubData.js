@@ -1,6 +1,8 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import { PostDataParams } from './../../services/Service_call';
+import { PostDataParams,postDataHeaderToServer } from './../../services/Service_call';
 import { apiRoute } from './../../services/apiRoute';
+import UserService from "../../services/userService";
+import axios from "axios";
 
 
 
@@ -12,8 +14,10 @@ const initialState = {
 
 export const HubData=createAsyncThunk('post',async(page)=>{
     const params=`/filter?pageNumber=${page}&pageSize=10`
-    const data=await PostDataParams(apiRoute().post.hub + params,{})
-   console.log('rrrr',data)
+   const data=postDataHeaderToServer(apiRoute().post.hub + params,{},{
+    headers:{"Authorization":"Bearer " + localStorage.getItem("myToken")}
+   })
+  
      return data
    
 })

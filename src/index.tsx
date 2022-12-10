@@ -9,7 +9,7 @@ import App from "./App"
 import Layout from './components/Layout/Layout';
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
-import UserService from './services/UserService';
+import UserService from './services/userService';
 import http_service from './services/http_service';
 
 
@@ -38,5 +38,5 @@ root.render(
 );
 
 UserService.initKeycloak(root)
-http_service.config()
+
 reportWebVitals();

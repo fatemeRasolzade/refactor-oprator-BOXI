@@ -29,11 +29,23 @@ const InputSelect: FC<InputSelectProps> = ({
   const style = {
     control: (base: any, state: any) => ({
       ...base,
-      border: state.isFocused ? " 1px solid #ababab" : "1px solid #ababab",
+      border: state.isFocused
+        ? error
+          ? "1px solid  #d32f2f"
+          : " 1px solid #ababab"
+        : error
+        ? "1px solid  #d32f2f"
+        : " 1px solid #ababab",
       borderRadius: state.isFocused ? "0.5rem" : "0.5rem",
       height: state.isFocused ? "2.5rem" : "2.5rem",
       "&:hover": {
-        border: state.isFocused ? " 1px solid #ababab" : "1px solid #ababab",
+        border: state.isFocused
+          ? error
+            ? "1px solid  #d32f2f"
+            : " 1px solid #ababab"
+          : error
+          ? "1px solid  #d32f2f"
+          : " 1px solid #ababab",
       },
       // This line disable the blue border
       boxShadow: "none",
@@ -43,8 +55,12 @@ const InputSelect: FC<InputSelectProps> = ({
 
   return (
     <div className={`relative  ${wrapperClassName}`}>
-      <label className=" absolute top-[-16px] right-5 bg-white z-10  px-2 text-darkGray text-sm">
-        {label}
+      <label
+        className={` absolute top-[-16px] right-5 bg-white z-10  px-2  text-sm ${
+          error ? "text-red" : "text-darkGray"
+        }`}
+      >
+        {label}{" "}
         <span className="text-tomato font-extrabold text-lg h-4">
           {important ? "*" : " "}
         </span>
@@ -74,7 +90,7 @@ const InputSelect: FC<InputSelectProps> = ({
         name={name}
         className="inputSelect focus:outline-none flex"
       />
-      <p className="text-red-700 text-xs pr-3 h-4">{error}</p>
+      <p className="text-red text-xs pr-3 h-4 mt-1">{error?.text}</p>
     </div>
   );
 };

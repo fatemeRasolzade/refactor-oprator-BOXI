@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //  import { v4 as uuidv4 : any } from "uuid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,6 +9,12 @@ import CustomSwitch from "../../../global/Switch/Switch";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { PostalCodeRegex } from "../../../tools/validations/ErrorHelper";
 import { VALIDPOSTALCODE } from "../../../tools/validations/ErrorKeywords";
+import {
+  getAddressType,
+  getCities,
+  getProvinces,
+  getRegions,
+} from "../../../services/GlobalApi";
 // import { Map } from "../../../../components/map";
 // import { PostalCodeRegex } from "../../../../utilities/function";
 
@@ -32,94 +38,38 @@ const CustomerAddressForm = ({
   const [regions, setRegions] = useState([]);
   const [addressKind, setAddressKind] = useState([]);
 
-  // const getAddressKind = useCallback(() => {
-  // 	getAddressesKind()
-  // 		.then((response) => {
-  // 			const options = response.data.payload.map(({ id: value, ...rest }) => ({
-  // 				value,
-  // 				...rest,
-  // 			}));
-  // 			const options1 = options.map(({ text: label, ...rest }) => ({
-  // 				label,
-  // 				...rest,
-  // 			}));
-  // 			setAddressKind(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, []);
+  const initAddressKind = () => {
+    getAddressType().then((res) => {
+      setAddressKind(res);
+    });
+  };
 
-  // const getProvince = useCallback(() => {
-  // 	// getProvinces();
-  // 	axios({ method: "GET", url: "http://192.168.1.153:8090/core-api/countryDevision?filter=" })
+  const initCities = () => {
+    getCities().then((res) => {
+      setCities(res);
+    });
+  };
 
-  // 		.then((response) => {
-  // 			console.log(response);
-  // 			console.log(response.data);
-  // 			// const options = response.data.payload.content.map(({ id: value, ...rest }) => ({
-  // 			// 	value,
-  // 			// 	...rest,
-  // 			// }));
-  // 			// const options1 = options.map(({ text: label, ...rest }) => ({
-  // 			// 	label,
-  // 			// 	...rest,
-  // 			// }));
-  // 			// setProvinces(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, [provinces]);
+  const initRegions = () => {
+    getRegions().then((res) => {
+      setRegions(res);
+    });
+  };
 
-  // const getCities = useCallback(() => {
-  // 	// getProvincesCities()
-  // 	// axios({ method: "GET", url: "http://192.168.1.153:8090/core-api/countryDevision/province/1/city?filter" })
-  // 	axios({ method: "GET", url: "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter" })
-  // 		.then((response) => {
-  // 			const options = response.data.payload.content.map(({ id: value, ...rest }) => ({
-  // 				value,
-  // 				...rest,
-  // 			}));
-  // 			const options1 = options.map(({ text: label, ...rest }) => ({
-  // 				label,
-  // 				...rest,
-  // 			}));
-  // 			setCities(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, [cities]);
+  const initProvinces = () => {
+    getProvinces().then((res) => {
+      setProvinces(res);
+    });
+  };
 
-  // const getRegions = useCallback(() => {
-  // 	// getCityLocations()
-  // 	// axios({ method: "GET", url: "http://192.168.1.153:8090/core-api/countryDevision/city/2/loc?filter" })
-  // 	axios({ method: "GET", url: "http://boxi.local:40000/core-api/countryDevision/city/2/loc?filter" })
-  // 		.then((response) => {
-  // 			const options = response.data.payload.content.map(({ id: value, ...rest }) => ({
-  // 				value,
-  // 				...rest,
-  // 			}));
-  // 			const options1 = options.map(({ text: label, ...rest }) => ({
-  // 				label,
-  // 				...rest,
-  // 			}));
-  // 			setRegions(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, [regions]);
-
-  // useEffect(() => {
-  // 	if (open) {
-  // 		getAddressKind();
-  // 		getProvince();
-  // 		getCities();
-  // 		getRegions();
-  // 	}
-  // }, [open]);
+  useEffect(() => {
+    if (open) {
+      initAddressKind();
+      initCities();
+      initRegions();
+      initProvinces();
+    }
+  }, [open]);
 
   // start fromik configurations
   const [checked, setChecked] = useState(false);
@@ -128,6 +78,7 @@ const CustomerAddressForm = ({
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
+
     selectState: Yup.object().shape({
       text: Yup.string().required(),
       id: Yup.string().required(),
@@ -169,10 +120,10 @@ const CustomerAddressForm = ({
           address: currentData.address,
         }
       : {
-          selectAddressType: {},
-          selectState: {},
-          selectCity: {},
-          selectRegion: {},
+          selectAddressType: undefined,
+          selectState: undefined,
+          selectCity: undefined,
+          selectRegion: undefined,
           pelak: "",
           unit: "",
           postalCode: "",
@@ -183,6 +134,7 @@ const CustomerAddressForm = ({
           // telephones: [],
         },
     onSubmit: (values: any, { resetForm }) => {
+      alert("arash mozakhraf");
       //   setState({ loading: true, error: false });
       if (currentData) {
         setOpen(false);
@@ -194,10 +146,10 @@ const CustomerAddressForm = ({
         // setState({ loading: false, error: false });
       } else {
         // const id: string = uuidv4();
-        setOpen(false);
-        resetForm({ values: "" });
+        // resetForm({ values: "" });
         // setValue("addresses", [...value, { ...values, id: `null${id}` }]);
         // setState({ loading: false, error: false });
+        // setOpen(false);
       }
     },
   });
@@ -220,62 +172,44 @@ const CustomerAddressForm = ({
         <div className="inputRow">
           <InputSelect
             important
-            options={[]}
+            options={addressKind}
             label="نوع آدرس"
             name="selectAddressType"
             values={values.selectAddressType}
             error={touched.selectAddressType && errors.selectAddressType}
-            handleChange={(value: any) => {
-              setFieldValue("selectAddressType", {
-                id: value.value,
-                text: value.label,
-              });
-            }}
+            handleChange={setFieldValue}
           />
           <InputSelect
             important
-            options={[]}
+            options={provinces}
             label=" استان"
             name="selectState"
             values={values.selectState}
             error={touched.selectState && errors.selectState}
-            handleChange={(value: any) => {
-              setFieldValue("selectState", {
-                id: value.value,
-                text: value.label,
-              });
-            }}
+            handleChange={setFieldValue}
           />
 
           <InputSelect
             important
-            options={[]}
+            options={cities}
             label=" شهر"
             name="selectState"
             values={values.selectCity}
             error={touched.selectCity && errors.selectCity}
-            handleChange={(value: any) => {
-              setFieldValue("selectCity", {
-                id: value.value,
-                text: value.label,
-              });
-            }}
+            handleChange={setFieldValue}
           />
         </div>
         <div className="inputRow">
           <InputSelect
             important
-            options={[]}
+            options={regions}
             label=" منطقه"
             name="selectRegion"
             values={values.selectRegion}
-            error={touched.selectRegion && errors.selectRegion}
-            handleChange={(value: any) => {
-              setFieldValue("selectRegion", {
-                id: value.value,
-                text: value.label,
-              });
-            }}
+            error={
+              touched.selectRegion && errors.selectRegion && errors.selectRegion
+            }
+            handleChange={setFieldValue}
           />
           <InputText
             important
@@ -296,7 +230,6 @@ const CustomerAddressForm = ({
         </div>
         <div className="flex-between-center">
           <InputText
-            important
             label="کد پستی"
             values={values.postalCode}
             name="postalCode"
@@ -324,9 +257,14 @@ const CustomerAddressForm = ({
           error={touched.address && errors.address}
         />
         <div className="flex-end-center gap-3">
-          <SimpleButton className="full-lightTomato-btn w-20" text="لغو" />
           <SimpleButton
-            className="full-tomato-btn w-20"
+            className="full-lightTomato-btn"
+            text="لغو"
+            handelClick={() => setOpen(false)}
+          />
+          <SimpleButton
+            type="submit"
+            className="full-tomato-btn"
             text={currentData ? "ویرایش" : "افزودن"}
           />
         </div>
