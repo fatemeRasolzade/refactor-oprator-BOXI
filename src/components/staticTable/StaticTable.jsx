@@ -39,7 +39,7 @@ function Table({ columns, data, pageTable }) {
 
     // The rest of these things are super handy, too ;)
 
-   // state: { pageIndex, pageSize },
+    // state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
@@ -127,8 +127,6 @@ function Table({ columns, data, pageTable }) {
 }
 
 function StaticTable({ data, column, pagination }) {
- 
-
   return <Table columns={column} data={data} pageTable={pagination} />;
 }
 

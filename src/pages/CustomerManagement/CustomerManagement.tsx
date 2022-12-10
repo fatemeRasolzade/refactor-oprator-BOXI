@@ -9,6 +9,8 @@ import {
   DOWNLOAD_OPTION,
 } from "../../global/CustomOptions/CustomOptionsKeyword";
 import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
+import { updating } from "../../redux/CustomerManagement/CustomerManagementData";
+import { DELETE_CUSTOMER } from "../../services/apiRoute";
 import { CustomerColumns } from "./views/CustomerColumn";
 import CustomerForm from "./views/CustomerForm";
 
@@ -49,17 +51,17 @@ const CustomerManagement = () => {
       ? customerList?.content?.map((item: any) => {
           return {
             ...item,
-            // operation: (
-            //   <div className="flex w-full gap-3 justify-center">
-            //     <DeleteOperation
-            //       itemId={item.id}
-            //       title={"حذف مشتری"}
-            //       route={apiRoute().delete.productDefine + `/${item.id}`}
-            //       updating={updating}
-            //     />
-            //     <ActionForms itemValue={item} pagination={productLists?.totalElements} />
-            //   </div>
-            // ),
+            operation: (
+              <div className="flex w-full gap-3 justify-center">
+                Helllllllllllow
+                <DeleteOperation
+                  itemId={item.id}
+                  title={"حذف مشتری"}
+                  route={DELETE_CUSTOMER + `/${item.id}`}
+                  updating={updating}
+                />
+              </div>
+            ),
           };
         })
       : [];
