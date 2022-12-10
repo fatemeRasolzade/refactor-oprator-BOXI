@@ -25,6 +25,18 @@ export const productData=createAsyncThunk('productlists',async(body:any)=>{
 })
 
 
+// export const productData=createAsyncThunk('productlists',async(body:any)=>{
+//     const params = `/filter?pageNumber=1&pageSize=20`;
+//     var data = {};
+//     try {
+   
+//         data = await PostDataParams(apiRoute().post.product + params, body);
+
+//     } catch (error) {
+//         console.log("error ", error);
+//     }
+//     return data;
+// })
 
 
 const initialState:any= {

@@ -21,6 +21,8 @@ const ProductDefine = () => {
 
   // axios.get('http://boxi.local:40000/product/select?filter=')
   // const {options}=useGetOptions()
+
+  // console.log("optiosn is",options)
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
   const { errorMessage, productLists, isUpdating } = useSelector((state: any) => state.productDefine);
