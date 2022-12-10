@@ -26,6 +26,8 @@ const InputSelect: FC<InputSelectProps> = ({
   wrapperClassName,
   isMulti,
 }): JSX.Element => {
+
+  //This is custom Style for react-select 
   const style = {
     control: (base: any, state: any) => ({
       ...base,

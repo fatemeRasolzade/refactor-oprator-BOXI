@@ -14,6 +14,19 @@ import axios from "axios";
 import { PersonnelData } from "../../../redux/PersonData/PersonsData";
 import InputSelect from "../../../global/InputSelect/InputSelect";
 import { toast } from "react-toastify";
+import {
+  ComplexPasswordRegex,
+  JustEngNameRegex,
+  MobileRegex,
+  NationalCodeRegex,
+} from "../../../tools/validations/ErrorHelper";
+import {
+  UNMATCHPASSWORD,
+  VALIDCOMPLEXREGEX,
+  VALIDMOBILE,
+  VALIDNATIONALCODE,
+  VALIDPOSTALCODE,
+} from "../../../tools/validations/RegexKeywords";
 
 interface AddEditPersonProps {
   currentData?: any;
@@ -154,7 +167,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           <div className="grid grid-cols-4 gap-6 my-6">
             <div className="inputRow">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="کد پرسنلی"
                 name="personelCode"
                 handleChange={formik.handleChange}
@@ -166,7 +179,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             </div>
             <div className=" ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="کد ملی"
                 name="nationalCode"
                 handleChange={formik.handleChange}
@@ -189,7 +202,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             </div>
             <div className="col-span-1 ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="شماره موبایل"
                 name="mobile"
                 handleChange={formik.handleChange}
@@ -201,7 +214,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             </div>
             <div className="col-span-1 ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="پست الکترونیک"
                 name="email"
                 handleChange={formik.handleChange}
@@ -261,7 +274,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 </div>
                 <div className="col-span-1 ">
                   <InputText
-                    className="w-full"
+                    wrapperClassName="w-full"
                     label=" تایید گذر واژه"
                     name="confirmPassword"
                     handleChange={formik.handleChange}
@@ -279,10 +292,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 name="isSuperAdmin"
                 label="سوپر ادمین"
                 values={formik.values.isSuperAdmin}
-                handleChange={(valuename: any, value: any) => {
-                  console.log("sdfsdf", valuename, value);
-                  formik.setFieldValue(valuename, value);
-                }}
+                handleChange={formik.setFieldValue}
                 options={options}
                 error={formik.errors.isSuperAdmin}
               />
@@ -314,32 +324,23 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 
 export default AddEditPerson;
 
-const nationalCodeRegex = /^[0-9]{10}$/g;
-const mobileRegex = /^09\d{9}$/g;
-const nameRegex = /^[A-Za-z]+$/;
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/g;
+
 
 const validation = Yup.object().shape({
-  personelCode: Yup.string().required("نام کاربری اجباری است"),
+  personelCode: Yup.string().required(),
   nationalCode: Yup.string()
-    .matches(nationalCodeRegex, "کد ملی معتبر نیست")
-    .required("کد ملی اجباری است"),
+    .matches(NationalCodeRegex, VALIDPOSTALCODE)
+    .required(),
   name: Yup.string().required(),
-  mobile: Yup.string()
-    .matches(mobileRegex, "شماره موبایل معتبر نیست ")
-    .required("تلفن همراه اجباری است"),
-  email: Yup.string().email("ایمیل معتبر نیست"),
-  username: Yup.string().matches(nameRegex, "نام کاربری معتبر نیست").required(),
+  mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
+  email: Yup.string().email(),
+  username: Yup.string().matches(JustEngNameRegex, ).required(),
   password: Yup.string()
-    .matches(
-      passwordRegex,
-      "پسورد باید شامل  حداقل 8 کاراکتر ،حروف بزرگ و کوچک  ،کاراکتر های ویژه  و عدد باشد"
-    )
-    .required("پسورد اجباری است"),
+    .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
+    .required(),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "رمز عبور مطابقت ندارد")
-    .required("تکرار پسورد اجباری است"),
+    .oneOf([Yup.ref("password"), null], UNMATCHPASSWORD)
+    .required(),
   isSuperAdmin: Yup.object().shape({
     text: Yup.string().required(),
     id: Yup.string().required(),
@@ -347,15 +348,13 @@ const validation = Yup.object().shape({
 });
 
 const validationEdit = Yup.object().shape({
-  personelCode: Yup.string().required("نام کاربری اجباری است"),
+  personelCode: Yup.string().required(),
   nationalCode: Yup.string()
-    .matches(nationalCodeRegex, "کد ملی معتبر نیست")
+    .matches(NationalCodeRegex, VALIDNATIONALCODE)
     .required(),
   name: Yup.string().required(),
-  mobile: Yup.string()
-    .matches(mobileRegex, "شماره موبایل معتبر نیست ")
-    .required(),
-  email: Yup.string().email("ایمیل معتبر نیست"),
+  mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
+  email: Yup.string().email(),
 
   isSuperAdmin: Yup.object().shape({
     text: Yup.string().required(),

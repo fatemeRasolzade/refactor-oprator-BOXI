@@ -1,4 +1,3 @@
-import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import Autocomplete from "react-autocomplete";
 import React from "react";
 import { FiSearch } from "react-icons/fi";
@@ -9,6 +8,7 @@ interface PropsData {
   onSelect: any;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
+  wrapperClassName?: string;
 }
 
 const AutocompleteInput = ({
@@ -17,9 +17,10 @@ const AutocompleteInput = ({
   onSelect,
   onChange,
   label,
+  wrapperClassName,
 }: PropsData) => {
   return (
-    <div className="autocompleteWrapper  ">
+    <div className={`autocompleteWrapper  ${wrapperClassName}`}>
       <div className="autocompleteLabel">{label}</div>
       <Autocomplete
         getItemValue={(item) => item.label}
@@ -62,6 +63,10 @@ const AutocompleteInput = ({
       <FiSearch size={19} className="text-darkGray" />
     </div>
   );
+};
+
+AutocompleteInput.defaultProps = {
+  wrapperClassName: "w-60",
 };
 
 export default AutocompleteInput;

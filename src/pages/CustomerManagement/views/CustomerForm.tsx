@@ -6,11 +6,16 @@ import { useDispatch } from "react-redux";
 import InputText from "../../../global/InputText/InputText";
 import Modal from "../../../global/Modal/Modal";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
-import { NationalCodeRegex } from "../../../tools/validations/ErrorHelper";
+import {
+  EconomicCodeValidate,
+  NationalCodeRegex,
+  NationalCodeValidator,
+  NationalIDValidator,
+} from "../../../tools/validations/ErrorHelper";
 import {
   UNMATCHPASSWORD,
   VALIDNATIONALCODE,
-} from "../../../tools/validations/ErrorKeywords";
+} from "../../../tools/validations/RegexKeywords";
 import InputSelect from "../../../global/InputSelect/InputSelect";
 import Checkbox from "../../../components/checkbox/Checkbox";
 import CustomSwitch from "../../../global/Switch/Switch";
@@ -117,9 +122,9 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
-    nationalCode: Yup.string()
-      .matches(NationalCodeRegex, VALIDNATIONALCODE)
-      .required(),
+    // nationalCode: Yup.string()
+    //   .matches(NationalCodeRegex, VALIDNATIONALCODE)
+    //   .required(),
     selectParentCustomer: Yup.object().nullable(true).shape({
       text: Yup.string(),
       id: Yup.number(),
@@ -183,7 +188,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
       : {
           code: "",
           name: "",
-          selectCustomerType: { id: 0, text: "حقیقی" },
+          selectCustomerType: {},
           nationalCode: "",
 
           selectParentCustomer: undefined,
@@ -209,6 +214,31 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
           nationalId: "",
           economicCode: "",
         },
+    validate: (values) => {
+      const errors = {
+        // nationalId: ,
+        nationalCode: {},
+        economicCode: {},
+      };
+      const [isValidNC, errNC] = NationalCodeValidator(
+        values.nationalCode,
+        true
+      );
+      if (values.selectCustomerType?.id === 0 && !isValidNC) {
+        errors.nationalCode = errNC;
+      }
+      if (values.selectCustomerType?.id === 1) {
+        const [isValidNI, errNI] = NationalIDValidator(values.nationalId, true);
+        // if (values.selectCustomerType?.id === 1 && !isValidNI) {
+        //   errors.nationalId = errNI;
+        // }
+        const [isValidEC, errEC] = EconomicCodeValidate(values.economicCode, true);
+         if (values.selectCustomerType?.id === 1 && !isValidEC) {
+           errors.economicCode = errEC;
+         }
+      }
+      return errors;
+    },
     onSubmit: (values, { resetForm }) => {
       alert("*/**********************");
       // setState({ loading: true, error: false });

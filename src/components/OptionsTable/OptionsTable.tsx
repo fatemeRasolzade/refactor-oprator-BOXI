@@ -59,9 +59,9 @@ const OptionsTable: FC<OptionsTableProps> = ({
         <li>
           <CustomSwitch
             active={isActive ? isActive : false}
-            handleChange={(value: boolean) => {
-              setIsActive && setIsActive(value);
-            }}
+            handleChange={(value: boolean) =>
+              setIsActive && setIsActive(value as boolean)
+            }
           />
         </li>
         <li>

@@ -8,7 +8,7 @@ import {
   NOTTYPE,
   REQUIRED,
   VALIDEMAIL,
-} from "../validations/ErrorKeywords";
+} from "../validations/RegexKeywords";
 
 const YupDefault = () => {
   useEffect(() => {
