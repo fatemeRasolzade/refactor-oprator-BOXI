@@ -14,7 +14,6 @@ interface RoleDataBody {
 
 export const RoleData = createAsyncThunk("post", async (body: RoleDataBody ) => {
   const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
-  console.log("bsdfv" ,body.pageNumber);
   
   
   var data = {};
