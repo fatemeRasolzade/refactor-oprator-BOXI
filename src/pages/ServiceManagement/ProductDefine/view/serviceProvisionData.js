@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { useEffect, useState } from "react";
+import { useEffect,useState } from "react";
 import { Base_url4 } from "../../../../services/apiRoute";
-import UserService from "../../../../services/userService";
+import UserService from "../../../../services/UserService";
 import { apiRoute } from "../../../../services/apiRoute";
-import { selectDataFromServer } from "../../../../services/Service_call";
+import {  selectDataFromServer } from "../../../../services/Service_call";
 console.log("run");
 // export const serviceProvisionData = createApi({
 //   reducerPath: "service",
@@ -40,9 +40,11 @@ console.log("run");
 
 // export const { useGetServiceQuery } = serviceProvisionData;
 
-export const useGetOptions = () => {
-  const [options, setOptions] = useState([]);
-  useEffect(() => {
+
+
+export const useGetOptions=()=>{
+   const [options,setOptions]=useState([])
+   useEffect(()=>{
     try {
       selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then((res) => {
         if (res.status === "OK") setOptions(res?.payload?.content);
@@ -51,7 +53,7 @@ export const useGetOptions = () => {
     } catch (error) {
       // ErrorAlert("دریافت دیتا با خطلا مواجه شد");
     }
-  }, []);
+   },[])
 
-  return { options };
-};
+   return {options}
+}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import UserService from "./userService";
+import UserService from "./UserService";
 
 axios.defaults.baseURL = "http://boxi.local:40000/";
 

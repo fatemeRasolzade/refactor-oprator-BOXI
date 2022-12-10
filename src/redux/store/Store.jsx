@@ -9,12 +9,12 @@ import ProductDefineList from "../ProductDefineData/ProductDefineData";
 import CustomerDefineList from "../CustomerManagement/CustomerManagementData";
 import ServiceProvision from "../ServiceProvision/ServiceProvision"
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
+import { serviceProvisionData } from "../../pages/ServiceManagement/ProductDefine/view/serviceProvisionData";
 const persistConfig = {
   key: "root",
   storage,
   blacklist: ["hub", "paginate","personnel","serviceDefine","productDefine","customerDefine","role","serviceProvision","[serviceProvisionData.reducerPath]"],
 };
-
 
 const reducers = combineReducers({
   hub: HubList,
@@ -33,9 +33,9 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 export const store = configureStore({
   reducer:persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+  getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export let persistor = persistStore(store);
