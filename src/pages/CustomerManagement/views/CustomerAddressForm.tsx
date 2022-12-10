@@ -8,7 +8,7 @@ import InputText from "../../../global/InputText/InputText";
 import CustomSwitch from "../../../global/Switch/Switch";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { PostalCodeRegex } from "../../../tools/validations/ErrorHelper";
-import { VALIDPOSTALCODE } from "../../../tools/validations/ErrorKeywords";
+import { VALIDPOSTALCODE } from "../../../tools/validations/RegexKeywords";
 import {
   getAddressType,
   getCities,

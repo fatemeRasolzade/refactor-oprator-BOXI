@@ -15,7 +15,7 @@ import {
 import {
   UNMATCHPASSWORD,
   VALIDNATIONALCODE,
-} from "../../../tools/validations/ErrorKeywords";
+} from "../../../tools/validations/RegexKeywords";
 import InputSelect from "../../../global/InputSelect/InputSelect";
 import Checkbox from "../../../components/checkbox/Checkbox";
 import CustomSwitch from "../../../global/Switch/Switch";
