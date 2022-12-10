@@ -11,7 +11,7 @@ import {
 } from "./CustomOptionsKeyword";
 
 const CustomOptions = ({ options = [] }: any) => {
-  const SwitchOptions = (type: {name: any, handleClick: () => void, value?: boolean}) => {
+  const SwitchOptions = (type: {name: any, handleClick: () => void, value: boolean}) => {
     switch (type.name) {
       case ADD_EXCEL_OPTION:
         return (
