@@ -4,9 +4,8 @@ import { useFormik } from "formik";
 import { BiSearch } from "react-icons/bi";
 
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
-
-import InputSelect from "../../../global/InputSelect/InputSelect";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import MultiSelect from "../../../global/multiselect/MultiSelect";
 
 interface MyFormValues {
   permission: Array<any>;
@@ -79,11 +78,13 @@ const SearchFilter: FC<SearchFilterProps> = ({
             />
           </div>
           <div>
-            <InputSelect
-              isMulti
+            <MultiSelect
+              wrapperClassName="w-fit"
               label="دسترسی ها"
               name="permission"
-              handleChange={(value: any) => console.log("value", value)}
+              handleChange={(valueName: any, value: any) =>
+                formik.setFieldValue(valueName, value)
+              }
               values={formik.values?.permission}
               options={permissionOptions}
             />
