@@ -21,7 +21,7 @@ import {
   VALIDMOBILE,
   VALIDNATIONALCODE,
   VALIDPOSTALCODE,
-} from "../../../tools/validations/ErrorKeywords";
+} from "../../../tools/validations/RegexKeywords";
 
 interface AddEditPersonProps {
   currentData?: any;
