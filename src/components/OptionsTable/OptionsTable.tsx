@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { BiPlus, BiEdit, BiTrash } from "react-icons/bi";
 import { GrDocumentPdf } from "react-icons/gr";
-import { Link } from "react-router-dom";
+import { Link, To } from "react-router-dom";
 import { GoDesktopDownload, GoGear } from "react-icons/go";
 
 import CustomSwitch from "./../../global/Switch/Switch";
@@ -15,7 +15,7 @@ interface OptionsTableProps {
   addExcelProps?: () => JSX.Element;
   addComponentProps?: () => JSX.Element;
   exportExcel?: any;
-  btnLink?:string
+  btnLink?: To;
 }
 const OptionsTable: FC<OptionsTableProps> = ({
   btnLink,
@@ -30,13 +30,15 @@ const OptionsTable: FC<OptionsTableProps> = ({
       <ul className="flex gap-4 justify-start items-center flex-wrap">
         <li>
           {/* <AddButton />  */}
-          <Link to={btnLink}>
-          <SimpleButton
-            text="افزودن"
-            className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
-            icon={<BiPlus color="white" />}
-          />
-          </Link>
+          {btnLink && (
+            <Link to={btnLink}>
+              <SimpleButton
+                text="افزودن"
+                className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
+                icon={<BiPlus color="white" />}
+              />
+            </Link>
+          )}
         </li>
         {addExcelProps && <li>{addExcelProps()}</li>}
         <li>
@@ -56,7 +58,9 @@ const OptionsTable: FC<OptionsTableProps> = ({
         <li>
           <CustomSwitch
             active={isActive ? isActive : false}
-            handleChange={(value: boolean) => setIsActive && setIsActive(value)}
+            handleChange={(value?: boolean) =>
+              setIsActive && setIsActive(value as boolean)
+            }
           />
         </li>
         <li>
