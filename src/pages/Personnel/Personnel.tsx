@@ -41,6 +41,8 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(PersonnelData(filterData) as any);
+    console.log("loop");
+
     return () => dispatch(clearPersonnel() as any);
   }, [dispatch, isUpdating, isActive, filterData]);
 

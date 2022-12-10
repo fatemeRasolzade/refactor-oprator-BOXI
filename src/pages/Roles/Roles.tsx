@@ -30,11 +30,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   });
 
   useEffect(() => {
-    try {
-      dispatch(RoleData(filterData) as any);
-    } catch (error) {
-      toast.error("مشکلی پیش آمده است");
-    }
+    dispatch(RoleData({ ...filterData, pageNumber: pageNumbers }) as any);
 
     return () => dispatch(clearRole() as any);
   }, [dispatch, isActive, pageNumbers, filterData]);

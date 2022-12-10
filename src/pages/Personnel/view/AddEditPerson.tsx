@@ -13,6 +13,7 @@ import AddButton from "../../../global/addButton/AddButton";
 import axios from "axios";
 import { PersonnelData } from "../../../redux/PersonData/PersonsData";
 import InputSelect from "../../../global/InputSelect/InputSelect";
+import { toast } from "react-toastify";
 
 interface AddEditPersonProps {
   currentData?: any;
@@ -23,8 +24,8 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [options] = useState([
-    { id: true, text: "بله" },
-    { id: true, text: "خیر" },
+    { id: 0, text: "خیر" },
+    { id: 1, text: "بله" },
   ]);
 
   const formik = useFormik({
@@ -54,12 +55,32 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           username: "",
           password: "",
           confirmPassword: "",
-          isSuperAdmin: {},
+          isSuperAdmin: null,
           isActive: true,
         },
     onSubmit: async (values, { resetForm }) => {
-      const data = currentData ? values : { ...values, id: currentData.id };
-      debugger;
+      const data = currentData
+        ? {
+            id: values.id,
+            nationalCode: values.nationalCode,
+            personelCode: values.personelCode,
+            name: values.name,
+            mobile: values.mobile,
+            email: values.email,
+            isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
+            isActive: currentData.isActive,
+          }
+        : {
+            isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
+            personelCode: values.personelCode,
+            nationalCode: values.nationalCode,
+            name: values.name,
+            mobile: values.mobile,
+            email: values.email,
+            username: values.username,
+            password: values.password,
+            isActive: true,
+          };
 
       try {
         const res = await axios({
@@ -67,6 +88,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           method: currentData ? "put" : "post",
           data: data,
         });
+        debugger;
         if (200 <= res.status && res.status < 300) {
           dispatch(
             PersonnelData({
@@ -75,14 +97,22 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               nationalCode: "",
               mobile: "",
               email: "",
-
               username: "",
               isActive: true,
               pageNumber: 1,
             }) as any
           );
+          toast.success(
+            currentData
+              ? "کارمند با موفقیت به روزرسانی گردید"
+              : "کارمند با موفقیت اضافه گردید"
+          );
+          setIsModalOpen(false);
+          resetForm({});
         }
-      } catch (error) {}
+      } catch (error) {
+        toast.error("مشکلی پیش آمده");
+      }
     },
   });
   const handleOpenModal = () => setIsModalOpen(!isModalOpen);
@@ -122,7 +152,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
         </h3>
         <form onSubmit={formik.handleSubmit} className="p-6 ">
           <div className="grid grid-cols-4 gap-6 my-6">
-            <div className=" ">
+            <div className="inputRow">
               <InputText
                 className="w-full"
                 label="کد پرسنلی"
@@ -180,7 +210,23 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 error={formik.errors.email}
               />
             </div>
-            <div className="col-span-2 h-[40px] mb-[20px]">
+            {currentData && (
+              <InputText
+                readOnly
+                label="نام کاربری"
+                name="username"
+                handleChange={formik.handleChange}
+                values={formik.values.username}
+                important
+                type={"text"}
+                error={formik.errors.username}
+              />
+            )}
+            <div
+              className={`${
+                currentData ? "col-span-1" : "col-span-2 "
+              } h-[40px] mb-[20px]`}
+            >
               <CustomSwitch
                 active={true}
                 handleChange={(value) =>
@@ -188,15 +234,18 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 }
               />
             </div>
-            <InputText
-              label="نام کاربری"
-              name="username"
-              handleChange={formik.handleChange}
-              values={formik.values.username}
-              important
-              type={"text"}
-              error={formik.errors.username}
-            />
+            {!currentData && (
+              <InputText
+                label="نام کاربری"
+                name="username"
+                handleChange={formik.handleChange}
+                values={formik.values.username}
+                important
+                type={"text"}
+                error={formik.errors.username}
+              />
+            )}
+
             {!currentData && (
               <>
                 <div className="col-span-1 ">
@@ -225,12 +274,15 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               </>
             )}
 
-            <div className="col-span-1 ">
+            <div className="col-span-1  relative">
               <InputSelect
-                values={[]}
                 name="isSuperAdmin"
                 label="سوپر ادمین"
-                handleChange={formik.setFieldValue}
+                values={formik.values.isSuperAdmin}
+                handleChange={(valuename: any, value: any) => {
+                  console.log("sdfsdf", valuename, value);
+                  formik.setFieldValue(valuename, value);
+                }}
                 options={options}
                 error={formik.errors.isSuperAdmin}
               />
@@ -242,7 +294,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               <SimpleButton
                 type="submit"
                 text="بله"
-                className="full-tomato-btn px-[90px] "
+                className="full-tomato-btn px-[50px] "
               />
               <SimpleButton
                 type="button"
