@@ -104,7 +104,16 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
       <SearchFilter isActive={isActive} setFilterData={setFilterData} />
       <OptionsTable
         isActive={isActive}
-        setIsActive={setIsActive}
+        setIsActive={(value: boolean) => {
+          setFilterData({
+            permission: "",
+            name: "",
+            isActive: value,
+            pageSize: 10,
+            pageNumber: pageNumbers,
+          });
+          setIsActive(value);
+        }}
         addComponentProps={() => (
           <AddEditRole title="تغییر مدیریت نقش" isActive={isActive} />
         )}
