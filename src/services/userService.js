@@ -61,7 +61,7 @@ const hasClientRole = (role) => {
 }
 
 const  tokenExpired =_kc.onTokenExpired = () => {
-	console.log('token expired!: previous token', _kc.token);
+	
 
 	_kc.updateToken(5).then((response) => {
 		console.log('response',response);
