@@ -3,16 +3,16 @@ import React from "react";
 import { FiSearch } from "react-icons/fi";
 
 interface PropsData {
-  items: object[];
+  items?: object[];
   value?: string | null;
-  onSelect: any;
+  onSelect?: any;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
   wrapperClassName?: string;
 }
 
 const AutocompleteInput = ({
-  items,
+  items = [],
   value,
   onSelect,
   onChange,
@@ -46,14 +46,14 @@ const AutocompleteInput = ({
           boxShadow: "0 2px 12px rgba(0, 0, 0, 0.1)",
           background: "rgba(255, 255, 255, 0.9)",
           // padding: '10px',
-          maxHeight:'15rem',
+          maxHeight: "15rem",
           zIndex: "99",
           boxSizing: "border-box",
           fontSize: "90%",
           position: "fixed",
           display: "flex",
           flexDirection: "column",
-          top:'120px',
+          top: "120px",
           rowGap: "5px",
           overflow: "auto",
           cursor: "pointer",

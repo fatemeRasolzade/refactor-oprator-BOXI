@@ -20,7 +20,7 @@ const CustomerSearchForm: React.FC<PropsData> = ({
   isUpdating,
 }): JSX.Element => {
   const dispatch = useDispatch();
-  const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
+
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
   const [filterData, setFilterData] = useState({});
@@ -44,7 +44,14 @@ const CustomerSearchForm: React.FC<PropsData> = ({
     },
   });
 
-  const { values, setFieldValue, handleSubmit }: any = formik;
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+  }: any = formik;
 
   useEffect(() => {
     dispatch(
@@ -63,15 +70,6 @@ const CustomerSearchForm: React.FC<PropsData> = ({
   ) => {
     setFieldValue(name, e.target.value);
   };
-  const handleChangeName = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    name: string
-  ) => {
-    setFieldValue(name, e.target.value);
-  };
-  const handleSelect = (val: any, name: string) => {
-    setFieldValue(name, val);
-  };
 
   return (
     <>
@@ -82,24 +80,18 @@ const CustomerSearchForm: React.FC<PropsData> = ({
         >
           <AutocompleteInput
             label={"کد مشتری"}
-            items={serviceCodeOptions}
             value={values.code}
-            onChange={(e) => handleChangeCode(e, "code")}
-            onSelect={(val: any) => handleSelect(val, "code")}
+            onChange={(e) => setFieldValue("code", e.target.value)}
           />
           <AutocompleteInput
             label={"نام مشتری"}
-            items={[]}
             value={values.name}
-            onChange={(e) => handleChangeName(e, "name")}
-            onSelect={(val: any) => handleSelect(val, "name")}
+            onChange={(e) => setFieldValue("name", e.target.value)}
           />
           <AutocompleteInput
             label={"شماره تماس"}
-            items={[]}
             value={values.telNumber}
-            onChange={(e) => handleChangeName(e, "telNumber")}
-            onSelect={(val: any) => handleSelect(val, "telNumber")}
+            onChange={(e) => setFieldValue("telNumber", e.target.value)}
           />
           <SimpleButton
             type={"submit"}
