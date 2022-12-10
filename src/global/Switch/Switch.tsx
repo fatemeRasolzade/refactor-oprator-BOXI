@@ -11,11 +11,6 @@ const CustomSwitch = ({
 }) => {
   const [check, setCheck] = useState(false);
 
-  // const handleChanges = (e: boolean) => {
-  //   setCheck(!check);
-  //   handleChange(e);
-  // };
-
   return (
     <div>
       <label className="flex justify-center items-center flex-row-reverse w-fit">
