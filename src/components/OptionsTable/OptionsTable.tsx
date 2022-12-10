@@ -15,7 +15,7 @@ interface OptionsTableProps {
   addExcelProps?: () => JSX.Element;
   addComponentProps?: () => JSX.Element;
   exportExcel?: any;
-  btnLink?: To;
+  btnLink?: string;
 }
 const OptionsTable: FC<OptionsTableProps> = ({
   btnLink,
@@ -28,9 +28,9 @@ const OptionsTable: FC<OptionsTableProps> = ({
   return (
     <div className="mt-6">
       <ul className="flex gap-4 justify-start items-center flex-wrap">
-        <li>
-          {/* <AddButton />  */}
-          {btnLink && (
+        {/* <AddButton />  */}
+        {btnLink && (
+          <li>
             <Link to={btnLink}>
               <SimpleButton
                 text="افزودن"
@@ -38,8 +38,8 @@ const OptionsTable: FC<OptionsTableProps> = ({
                 icon={<BiPlus color="white" />}
               />
             </Link>
-          )}
-        </li>
+          </li>
+        )}
         {addExcelProps && <li>{addExcelProps()}</li>}
         <li>
           <SimpleButton

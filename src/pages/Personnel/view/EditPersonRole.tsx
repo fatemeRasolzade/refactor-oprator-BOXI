@@ -39,13 +39,6 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
 
   const addRoleToUsers = useCallback(async () => {}, []);
 
-  const handleSelect = (name: string, value: any) => {
-    let newArray = [...values.role];
-    newArray.push(value);
-
-    formik.setFieldValue(name, newArray);
-  };
-
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: isGroup ? validationUsers : validation,
@@ -54,12 +47,21 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
       : {
           id: currentData?.id,
           text: currentData?.name,
-          role: currentData?.selectRoles,
+          role: [],
         },
     onSubmit: async (values, { resetForm }) => {
       // isGroup ? addRoleToUsers() : addRoleToUser(values);
     },
   });
+
+  const handleSelect = (name: string, value: any) => {
+    let newArray = [...values.role, value];
+    console.log("value", value, newArray);
+
+    // newArray.push(value);
+
+    formik.setFieldValue(name, [...values.role, value]);
+  };
 
   useEffect(() => {
     if (isModalOpen) {
@@ -76,7 +78,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
     setFieldValue,
     setErrors,
   } = formik;
-
+  console.log("rendetr", values.role);
   return (
     <div>
       <button
@@ -111,6 +113,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
               error={errors.text}
             />
             <InputSelect
+              wrapperClassName="w-full"
               label="نقش ها "
               name="users"
               handleChange={handleSelect}
