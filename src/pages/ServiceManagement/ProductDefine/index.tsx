@@ -13,13 +13,14 @@ import { ProductColumns } from "./view/Column";
 
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
-
+import {useGetOptions} from './view/serviceProvisionData'
 // import * as XLSX  from "xlsx-js-style"
 
 const ProductDefine = () => {
   // @ts-ignore
 
   // axios.get('http://boxi.local:40000/product/select?filter=')
+  // const {options}=useGetOptions()
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
   const { errorMessage, productLists, isUpdating } = useSelector((state: any) => state.productDefine);
