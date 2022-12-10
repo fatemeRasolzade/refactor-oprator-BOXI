@@ -29,6 +29,7 @@ const OptionsTable: FC<OptionsTableProps> = ({
     <div className="mt-6">
       <ul className="flex gap-4 justify-start items-center flex-wrap">
         {/* <AddButton />  */}
+        {addComponentProps && <li>{addComponentProps()}</li>}
         {btnLink && (
           <li>
             <Link to={btnLink}>
@@ -58,7 +59,7 @@ const OptionsTable: FC<OptionsTableProps> = ({
         <li>
           <CustomSwitch
             active={isActive ? isActive : false}
-            handleChange={(value?: boolean) =>
+            handleChange={(value: boolean) =>
               setIsActive && setIsActive(value as boolean)
             }
           />

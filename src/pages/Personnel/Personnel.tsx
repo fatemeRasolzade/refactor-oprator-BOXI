@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -21,14 +21,30 @@ interface PersonnelProps {}
 
 const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   const dispatch = useDispatch();
+
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
   const { personnelList, isUpdating } = useSelector(
     (state: any) => state.personnel
   );
 
+  const [isActive, setIsActive] = useState<boolean>(true);
+  const [filterData, setFilterData] = useState({
+    personelCode: "",
+    name: "",
+    nationalCode: "",
+    mobile: "",
+    email: "",
+    username: "",
+    isActive: isActive,
+    pageNumber: pageNumbers,
+  });
+
   useEffect(() => {
-    dispatch(PersonnelData() as any);
+    dispatch(PersonnelData(filterData) as any);
+    console.log("loop");
+
     return () => dispatch(clearPersonnel() as any);
-  }, [dispatch, isUpdating]);
+  }, [dispatch, isUpdating, isActive, filterData]);
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0
@@ -58,8 +74,18 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   return (
     <div>
       <Breadcrumb curentPage="مدیریت پرسنل" />
-      <PersonnelSearchFrom />
-      <OptionsTable addComponentProps={() => <AddEditPerson />} />
+      <PersonnelSearchFrom isActive={isActive} setFilterData={setFilterData} />
+      <OptionsTable
+        addComponentProps={() => <AddEditPerson />}
+        setIsActive={(value) => {
+          setFilterData({
+            ...filterData,
+            isActive: value,
+          });
+          setIsActive(!isActive);
+        }}
+        isActive={isActive}
+      />
       <StaticTable
         data={data ? data : []}
         column={PersonnelColumn}

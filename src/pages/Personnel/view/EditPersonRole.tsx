@@ -56,7 +56,6 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
 
   const handleSelect = (name: string, value: any) => {
     let newArray = [...values.role, value];
-    console.log("value", value, newArray);
 
     // newArray.push(value);
 
