@@ -4,7 +4,7 @@ import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 
 interface propsData {
   setIsACtive?: (value: boolean) => void;
-  isActive: Boolean | string;
+  isActive: boolean ;
   addComponentProps?: () => JSX.Element;
   exportExcel: () => void;
 }
