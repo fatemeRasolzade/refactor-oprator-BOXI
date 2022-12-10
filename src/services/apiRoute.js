@@ -78,12 +78,6 @@ export const apiRoute = () => {
       GET_ADM_VEHICLE: createUrl(API_URL, "/admVehicle/filter"),
       //Service
       GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
-      //customer
-      GET_CUSTOMER_TYPE: createUrl(API_CONSIGNMENT5, `/customer/customerType`),
-      GET_CUSOTMER_PARENT: createUrl(
-        API_CONSIGNMENT5,
-        `/customer/select?filter=`
-      ),
       //GLOBAL
       GET_PROVINCES: createUrl(API_CONSIGNMENT4, "/countryDevision?filter="),
       GET_CITIES: createUrl(
@@ -126,3 +120,18 @@ export const apiRoute = () => {
     },
   };
 };
+
+
+//Gloobal
+export const GET_ADDRESS_TYPE = `${API_CONSIGNMENT5}/address/addressType`;
+export const GET_PROVINCES = `${API_URL}/countryDevision/province/1/city?filter=`
+export const GET_CITIES = `${API_URL}/countryDevision/province/1/city?filter=`
+export const GET_REGIONS = `${API_URL}/countryDevision/city/2/loc?filter=`
+
+//customer
+export const GET_CUSTOMER_TYPE = `${API_CONSIGNMENT5}/customer/customerType`
+export const GET_CUSTOMER_PARENT = `${API_CONSIGNMENT5}/customer/select?filter=`
+export const CREATE_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
+export const EDIT_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
+
+//thirdParty

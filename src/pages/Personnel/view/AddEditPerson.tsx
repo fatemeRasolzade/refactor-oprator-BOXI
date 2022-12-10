@@ -1,12 +1,11 @@
 import React, { FC, useState } from "react";
 import * as Yup from "yup";
-import { Button, Dialog } from "@material-tailwind/react";
+import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useFormik } from "formik";
 
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
-import { BiPlus } from "react-icons/bi";
 import InputText from "../../../global/InputText/InputText";
 import CustomSwitch from "../../../global/Switch/Switch";
 import AddButton from "../../../global/addButton/AddButton";
@@ -89,7 +88,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           <div className="grid grid-cols-4 gap-6 my-6">
             <div className=" ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="کد پرسنلی"
                 name="personelCode"
                 handleChange={formik.handleChange}
@@ -100,7 +99,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             </div>
             <div className=" ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="کد ملی"
                 name="nationalCode"
                 handleChange={formik.handleChange}
@@ -121,7 +120,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             </div>
             <div className="col-span-1 ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="شماره موبایل"
                 name="mobile"
                 handleChange={formik.handleChange}
@@ -132,7 +131,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             </div>
             <div className="col-span-1 ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="پست الکترونیک"
                 name="email"
                 handleChange={formik.handleChange}
@@ -170,7 +169,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 </div>
                 <div className="col-span-1 ">
                   <InputText
-                    className="w-full"
+                    wrapperClassName="w-full"
                     label=" تایید گذر واژه"
                     name="confirmPassword"
                     handleChange={formik.handleChange}
@@ -184,7 +183,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 
             <div className="col-span-1 ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="سوپر ادمین"
                 name="confirmPassword"
                 handleChange={formik.handleChange}
