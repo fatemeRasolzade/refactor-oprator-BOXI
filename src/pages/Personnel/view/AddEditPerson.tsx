@@ -101,7 +101,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           method: currentData ? "put" : "post",
           data: data,
         });
-        debugger;
+
         if (200 <= res.status && res.status < 300) {
           dispatch(
             PersonnelData({
@@ -312,6 +312,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 className="full-lightTomato-btn px-[90px]"
                 handelClick={() => {
                   setIsModalOpen(false);
+                  formik.resetForm();
                 }}
               />
             </div>
@@ -324,8 +325,6 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 
 export default AddEditPerson;
 
-
-
 const validation = Yup.object().shape({
   personelCode: Yup.string().required(),
   nationalCode: Yup.string()
@@ -334,7 +333,7 @@ const validation = Yup.object().shape({
   name: Yup.string().required(),
   mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
   email: Yup.string().email(),
-  username: Yup.string().matches(JustEngNameRegex, ).required(),
+  username: Yup.string().matches(JustEngNameRegex).required(),
   password: Yup.string()
     .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
     .required(),

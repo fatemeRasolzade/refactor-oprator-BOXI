@@ -40,11 +40,11 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   });
 
   useEffect(() => {
-    dispatch(PersonnelData(filterData) as any);
+    dispatch(PersonnelData({ ...filterData, pageNumber: pageNumbers }) as any);
     console.log("loop");
 
     return () => dispatch(clearPersonnel() as any);
-  }, [dispatch, isUpdating, isActive, filterData]);
+  }, [dispatch, isUpdating, isActive, filterData, pageNumbers]);
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0
@@ -89,7 +89,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
       <StaticTable
         data={data ? data : []}
         column={PersonnelColumn}
-        pagination
+        pagination={personnelList?.totalElements}
       />
     </div>
   );

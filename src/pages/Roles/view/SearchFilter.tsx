@@ -31,7 +31,7 @@ const SearchFilter: FC<SearchFilterProps> = ({
     initialValues,
     onSubmit: async (values) => {
       setFilterData({
-        permission: values.permission as any,
+        permission: values.permission,
         name: values.name,
         isActive: isActive,
         pageSize: 10,
@@ -50,8 +50,6 @@ const SearchFilter: FC<SearchFilterProps> = ({
       );
     } catch (error) {}
   }, []);
-
-
 
   useEffect(() => {
     getRoleFilterData();

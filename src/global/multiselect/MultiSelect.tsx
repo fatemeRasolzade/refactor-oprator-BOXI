@@ -65,9 +65,12 @@ const MultiSelect: FC<InputSelectProps> = ({
         isMulti
         isLoading={options.length > 0 ? false : true}
         value={
-          options ? options.find((option: any) => option.label === values) : ""
+          values
+            ? values.map((item: any) => {
+                return { value: item.id, label: item.text };
+              })
+            : []
         }
-        defaultInputValue={values?.text}
         onChange={(option) =>
           handleChange(
             name,
@@ -91,7 +94,7 @@ const MultiSelect: FC<InputSelectProps> = ({
         name={name}
         className="inputSelect focus:outline-none flex"
       />
-      <p className="text-red text-xs pr-3 h-4 mt-1">{error?.text}</p>
+      <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
   );
 };
