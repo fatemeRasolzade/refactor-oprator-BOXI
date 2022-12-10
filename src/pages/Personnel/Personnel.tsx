@@ -39,9 +39,12 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     pageNumber: pageNumbers,
   });
 
+  const handleGetnewDataOnDelete = () => {
+    dispatch(PersonnelData({ ...filterData, pageNumber: pageNumbers }) as any);
+  };
+
   useEffect(() => {
     dispatch(PersonnelData({ ...filterData, pageNumber: pageNumbers }) as any);
-    console.log("loop");
 
     return () => dispatch(clearPersonnel() as any);
   }, [dispatch, isUpdating, isActive, filterData, pageNumbers]);
@@ -61,8 +64,9 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف کارمند"}
-                  route={apiRoute().delete.role + `/${item.id}`}
+                  route={`http://boxi.local:40000/resource-api/employee/${item.id}`}
                   updating={updating}
+                  handleDeleteActionNewData={handleGetnewDataOnDelete}
                 />
                 <EditPersonRole currentData={item} />
               </div>

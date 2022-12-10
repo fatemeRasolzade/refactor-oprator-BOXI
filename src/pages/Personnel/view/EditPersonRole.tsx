@@ -10,15 +10,18 @@ import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import InputText from "../../../global/InputText/InputText";
 import axios from "axios";
 import MultiSelect from "../../../global/multiselect/MultiSelect";
+import { useDispatch } from "react-redux";
+import { PersonnelData } from "../../../redux/PersonData/PersonsData";
+import { Actionpage } from "../../../redux/PaginationAction/PaginationAction";
 
 interface EditPersonRoleProps {
   currentData?: any;
   isGroup?: boolean;
 }
 const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [rolesOptions, setRolesOptions] = useState<Array<any>>([]);
-  console.log("currentData.selectRoles", currentData.selectRoles);
 
   const getRoleHandler = useCallback(async () => {
     try {
@@ -66,6 +69,19 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
       toast.success("نقش مورد نظر به کاربر اضافه کردید");
       setIsModalOpen(false);
       formik.resetForm();
+      dispatch(
+        PersonnelData({
+          personelCode: "",
+          name: "",
+          nationalCode: "",
+          mobile: "",
+          email: "",
+          username: "",
+          isActive: true,
+          pageNumber: 1,
+        }) as any
+      );
+      dispatch(Actionpage(1));
     } catch (error) {
       toast.error("مشکلی پیش آمده است");
     }
@@ -76,8 +92,6 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
       getRoleHandler();
     }
   }, [getRoleHandler, isModalOpen]);
-  console.log("valuese ", formik.values.role);
-
   return (
     <div>
       <button

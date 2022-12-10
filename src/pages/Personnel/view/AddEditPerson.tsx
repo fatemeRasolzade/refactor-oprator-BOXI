@@ -27,6 +27,7 @@ import {
   VALIDNATIONALCODE,
   VALIDPOSTALCODE,
 } from "../../../tools/validations/RegexKeywords";
+import { Actionpage } from "../../../redux/PaginationAction/PaginationAction";
 
 interface AddEditPersonProps {
   currentData?: any;
@@ -115,6 +116,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               pageNumber: 1,
             }) as any
           );
+          dispatch(Actionpage(1));
           toast.success(
             currentData
               ? "کارمند با موفقیت به روزرسانی گردید"
