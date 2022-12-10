@@ -8,12 +8,14 @@ import Modal from "../../../global/Modal/Modal";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import {
   EconomicCodeValidate,
+  JustEngPasswordRegex,
   NationalCodeRegex,
   NationalCodeValidator,
   NationalIDValidator,
 } from "../../../tools/validations/ErrorHelper";
 import {
   UNMATCHPASSWORD,
+  VALIDENGPASSWORD,
   VALIDNATIONALCODE,
 } from "../../../tools/validations/RegexKeywords";
 import InputSelect from "../../../global/InputSelect/InputSelect";
@@ -30,6 +32,7 @@ import {
   getCustomerType,
 } from "../../../services/CustomerApi";
 import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
+import { deleteAddress, deletePhone } from "../../../services/GlobalApi";
 
 type CustomerFormProps = {
   open: boolean;
@@ -56,14 +59,14 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
       const filtered = values.addresses.filter((a: any) => a.id !== id);
       setFieldValue("addresses", filtered);
     } else {
-      //    deleteAddress(id)
-      //      .then(() => {
-      //        const filtered = values.addresses.filter((a) => a.id !== id);
-      //        setFieldValue("addresses", filtered);
-      //      })
-      //      .catch(() => {
-      //        toast.error("حذف آدرس با مشکل مواجه شده است");
-      //      });
+      deleteAddress(id)
+        .then(() => {
+          const filtered = values.addresses.filter((a: any) => a.id !== id);
+          setFieldValue("addresses", filtered);
+        })
+        .catch(() => {
+          toast.error("حذف آدرس با مشکل مواجه شده است");
+        });
     }
   };
 
@@ -72,15 +75,14 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
       const filtered = values.telephones.filter((t: any) => t.id !== id);
       setFieldValue("telephones", filtered);
     } else {
-      //  Call delete customer phone api
-      //  deletePhones(id)
-      //    .then(() => {
-      //      const filtered = values.telephones.filter((t) => t.id !== id);
-      //      setFieldValue("telephones", filtered);
-      //    })
-      //    .catch(() => {
-      //      toast.error("حذف تلفن با مشکل مواجه شده است");
-      //    });
+      deletePhone(id)
+        .then(() => {
+          const filtered = values.telephones.filter((t: any) => t.id !== id);
+          setFieldValue("telephones", filtered);
+        })
+        .catch(() => {
+          toast.error("حذف تلفن با مشکل مواجه شده است");
+        });
     }
   };
 
@@ -122,9 +124,9 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
-    // nationalCode: Yup.string()
-    //   .matches(NationalCodeRegex, VALIDNATIONALCODE)
-    //   .required(),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDNATIONALCODE)
+      .required(),
     selectParentCustomer: Yup.object().nullable(true).shape({
       text: Yup.string(),
       id: Yup.number(),
@@ -137,7 +139,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
     username: Yup.string().required(),
     password: Yup.string()
       .min(8)
-      // .matches(justENGRegex, "رمز عبور باید شامل اعداد و حروف لاتین باشد")
+      .matches(JustEngPasswordRegex, VALIDENGPASSWORD)
       .required(),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], UNMATCHPASSWORD)
@@ -232,15 +234,17 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         // if (values.selectCustomerType?.id === 1 && !isValidNI) {
         //   errors.nationalId = errNI;
         // }
-        const [isValidEC, errEC] = EconomicCodeValidate(values.economicCode, true);
-         if (values.selectCustomerType?.id === 1 && !isValidEC) {
-           errors.economicCode = errEC;
-         }
+        const [isValidEC, errEC] = EconomicCodeValidate(
+          values.economicCode,
+          true
+        );
+        if (values.selectCustomerType?.id === 1 && !isValidEC) {
+          errors.economicCode = errEC;
+        }
       }
       return errors;
     },
-    onSubmit: (values, { resetForm }) => {
-      alert("*/**********************");
+    onSubmit: (values: any, { resetForm }) => {
       // setState({ loading: true, error: false });
       if (currentData) {
         // console.log(a.id.toString().includes("null"));
@@ -270,9 +274,6 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         // 		setState({ loading: false, error: error.response.data.message });
         // 	});
       } else {
-        console.log(values.selectCustomerType);
-        console.log(values.selectParentCustomer);
-
         createCustomer({
           ...values,
           currentCredit: parseInt(values.currentCredit),
@@ -288,6 +289,9 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         })
           .then((response) => {
             dispatch(customerData({}) as any);
+            // resetForm({ values: undefined });
+            // resetForm({ values: "" });
+
             // resetForm({ values: "" });
             setOpen(false);
             toast.success("مشتری افزوده شد ");

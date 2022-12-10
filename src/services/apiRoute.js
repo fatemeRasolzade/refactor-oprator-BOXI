@@ -78,17 +78,6 @@ export const apiRoute = () => {
       GET_ADM_VEHICLE: createUrl(API_URL, "/admVehicle/filter"),
       //Service
       GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
-      //GLOBAL
-      GET_PROVINCES: createUrl(API_CONSIGNMENT4, "/countryDevision?filter="),
-      GET_CITIES: createUrl(
-        API_CONSIGNMENT4,
-        "/countryDevision/province/1/city?filter="
-      ),
-      GET_REGIONS: createUrl(
-        API_CONSIGNMENT4,
-        "/countryDevision/city/2/loc?filter"
-      ),
-      GET_ADDRESS_TYPE: createUrl(API_CONSIGNMENT5, "/address/addressType"),
     },
     post: {
       // create
@@ -101,7 +90,6 @@ export const apiRoute = () => {
       filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
       serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
       product: createUrl(API_CONSIGNMENT4, "/product"),
-      CREATE_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
     },
     postExcel: {
       exception: createUrl(API_CONSIGNMENT3, "/exception"),
@@ -121,16 +109,20 @@ export const apiRoute = () => {
   };
 };
 
-
 //Gloobal
+export const GET_PROVINCES = `${API_URL}/countryDevision/province/1/city?filter=`;
+export const GET_CITIES = `${API_URL}/countryDevision/province/1/city?filter=`;
+export const GET_REGIONS = `${API_URL}/countryDevision/city/2/loc?filter=`;
 export const GET_ADDRESS_TYPE = `${API_CONSIGNMENT5}/address/addressType`;
-export const GET_PROVINCES = `${API_URL}/countryDevision/province/1/city?filter=`
-export const GET_CITIES = `${API_URL}/countryDevision/province/1/city?filter=`
-export const GET_REGIONS = `${API_URL}/countryDevision/city/2/loc?filter=`
+export const GET_PHONETYPE = `${API_CONSIGNMENT5}/telephone/phoneType`;
+export const DEL_ADDRESS = `${API_CONSIGNMENT5}/address/`
+export const DEL_TELEPHONE = `${API_CONSIGNMENT5}/telephone/`
+
+
 
 //customer
-export const GET_CUSTOMER_TYPE = `${API_CONSIGNMENT5}/customer/customerType`
-export const GET_CUSTOMER_PARENT = `${API_CONSIGNMENT5}/customer/select?filter=`
+export const GET_CUSTOMER_TYPE = `${API_CONSIGNMENT5}/customer/customerType`;
+export const GET_CUSTOMER_PARENT = `${API_CONSIGNMENT5}/customer/select?filter=`;
 export const CREATE_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
 export const EDIT_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
 

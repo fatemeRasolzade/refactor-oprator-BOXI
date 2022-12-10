@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { PostDataParams } from "../../services/Service_call";
-import { apiRoute } from "../../services/apiRoute";
+import {  CREATE_CUSTOMER } from "../../services/apiRoute";
 
 export const customerData = createAsyncThunk(
   "customerList",
@@ -8,10 +8,7 @@ export const customerData = createAsyncThunk(
     const params = `/filter?pageNumber=1&pageSize=20`;
     var data = {};
     try {
-      data = await PostDataParams(
-        apiRoute().post.CREATE_CUSTOMER + params,
-        body
-      );
+      data = await PostDataParams(CREATE_CUSTOMER + params, body);
     } catch (error) {
       console.log("error ", error);
     }
