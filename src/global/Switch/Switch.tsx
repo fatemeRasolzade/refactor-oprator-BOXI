@@ -11,10 +11,10 @@ const CustomSwitch = ({
 }) => {
   const [check, setCheck] = useState(false);
 
-  const handleChanges = (e: boolean) => {
-    setCheck(!check);
-    handleChange(e);
-  };
+  // const handleChanges = (e: boolean) => {
+  //   setCheck(!check);
+  //   handleChange(e);
+  // };
 
   return (
     <div>
@@ -23,7 +23,7 @@ const CustomSwitch = ({
           <span className="mr-2">{check ? "فعال" : "غیر فعال"}</span>
         ) : null}
         <Switch
-          onChange={handleChanges}
+          onChange={handleChange}
           checked={check}
           onColor="#FFEAE9"
           offColor="#F9FAFC"

@@ -44,7 +44,7 @@ const ActionForms = ({ itemValue }: any) => {
     setUploadExcel(!uploadExcel);
   };
 
-  console.log(itemValue,'itemValue')
+
   const ToggleOptions = [
     { handleClick: handleAction, name: "افزودن محصول" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
