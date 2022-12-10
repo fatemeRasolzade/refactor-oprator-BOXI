@@ -1,6 +1,10 @@
 export const NationalCodeRegex = /^[0-9]{10}$/g;
 export const justENGRegex = /^[A-Za-z][A-Za-z0-9]*$/;
+export const ComplexPasswordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/g;
 export const PostalCodeRegex = /\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b/gm;
+export const MobileRegex = /^09\d{9}$/g;
+export const JustEngNameRegex = /^[A-Za-z]+$/;
 
 export const NationalCodeValidator = (nationalCode: string, req?: boolean) => {
   if (req && nationalCode === "") {
@@ -29,21 +33,21 @@ export const NationalIDValidator = (nationalId: string, req?: boolean) => {
     //   alert("Hellooooooooooo")
     //   err = "شناسه ملی نامعتبر";
     // } else {
-      // let c = parseInt(nationalId.substring(10, 1), 10);
-      // let d = parseInt(nationalId.substring(9, 1), 10) + 2;
-      // let z = new Array(29, 27, 23, 19, 17);
-      // let s = 0;
-      // for (let i = 0; i < 10; i++)
-      //   s += (d + parseInt(nationalId.substring(i, 1), 10)) * z[i % 5];
-      // s = s % 11;
-      // if (s == 10) s = 0;
-      // // return (c==s);
-      // if (c == s) {
-      //   isValid = true;
-      // } else {
-      //   isValid = false;
-      //   err = "شناسه ملی نامعتبر";
-      // }
+    // let c = parseInt(nationalId.substring(10, 1), 10);
+    // let d = parseInt(nationalId.substring(9, 1), 10) + 2;
+    // let z = new Array(29, 27, 23, 19, 17);
+    // let s = 0;
+    // for (let i = 0; i < 10; i++)
+    //   s += (d + parseInt(nationalId.substring(i, 1), 10)) * z[i % 5];
+    // s = s % 11;
+    // if (s == 10) s = 0;
+    // // return (c==s);
+    // if (c == s) {
+    //   isValid = true;
+    // } else {
+    //   isValid = false;
+    //   err = "شناسه ملی نامعتبر";
+    // }
     // }
     // if (!err) {
     //   isValid = true;
