@@ -29,7 +29,7 @@ const AddModalService = () => {
  <ErrorMessage name='codeHub' render={(messege)=>(<span className='text-tomato'>{messege}</span>)}/></div>
  <div ><InputText label='کد' name="code" handleChange={formik.handleChange} values={formik.values.code} important type={"text"} classNames="!w-full min-w-0"/>
  <ErrorMessage name='codeHub' render={(messege)=>(<span className='text-tomato'>{messege}</span>)}/></div>
-<div><CustomSwitch active='فعال' deactive='غیر فعال'/></div>
+{/* <div><CustomSwitch active='فعال' deactive='غیر فعال'/></div> */}
 <div className='col-span-2'><InputText label='سرویس' name="service" handleChange={formik.handleChange} values={formik.values.service} important type={"text"} classNames="!w-full min-w-0"/>
  <ErrorMessage name='codeHub' render={(messege)=>(<span className='text-tomato'>{messege}</span>)}/></div>
 

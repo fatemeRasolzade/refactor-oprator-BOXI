@@ -25,7 +25,7 @@ const handleUploadFileAction=()=>{
   return (
     <div className='w-full flex-start-center flex-wrap'>
         <AddButton ToggleOptions={ToggleOptions} />
-        <CustomSwitch active='فعال' deactive='غیر فعال'/>
+        {/* <CustomSwitch active='فعال' deactive='غیر فعال'/> */}
         <SimpleButton
           handelClick={exportExcel}
             text="خروجی اکسل"
