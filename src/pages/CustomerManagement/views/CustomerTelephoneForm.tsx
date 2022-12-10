@@ -1,9 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
+
 import * as Yup from "yup";
 import { useFormik } from "formik";
 // import { v4 as uuidv4 } from "uuid";
 
 import Modal from "../../../global/Modal/Modal";
+import InputSelect from "../../../global/InputSelect/InputSelect";
+import InputText from "../../../global/InputText/InputText";
+import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 
 const CustomerTelephoneForm = ({
   open,
@@ -22,29 +27,15 @@ const CustomerTelephoneForm = ({
   const [phoneKind, setPhoneKind] = useState([]);
 
   //get required data
-  //   const getPhoneKind = useCallback(() => {
-  //     getTelePhonesKind()
-  //       .then((response) => {
-  //         const options = response.data.payload.map(({ id: value, ...rest }) => ({
-  //           value,
-  //           ...rest,
-  //         }));
-  //         const options1 = options.map(({ text: label, ...rest }) => ({
-  //           label,
-  //           ...rest,
-  //         }));
-  //         setPhoneKind(options1);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }, []);
+const initPhoneType = () => {
+  
+}
 
-  //   useEffect(() => {
-  //     if (open) {
-  //       getPhoneKind();
-  //     }
-  //   }, [open]);
+     useEffect(() => {
+       if (open) {
+         initPhoneType();
+       }
+     }, [open]);
 
   // start fromik configurations
   const validation = Yup.object().shape({
@@ -70,10 +61,9 @@ const CustomerTelephoneForm = ({
       : {
           telNumber: "",
           telephonePrefix: "",
-          selectPhoneType: {},
+          selectPhoneType: {} as any,
         },
     onSubmit: (values: any, { resetForm }) => {
-      //   setState({ loading: true, error: false });
       if (currentData) {
         // edit
         setOpen(false);
@@ -82,15 +72,11 @@ const CustomerTelephoneForm = ({
         let index = newArray.findIndex((a) => a.id === ID);
         newArray[index] = values;
         setValue("telephones", newArray);
-        // setState({ loading: false, error: false });
       } else {
+        const id: string = uuid();
         setOpen(false);
         resetForm({ values: "" });
-        setValue("telephones", [
-          ...value,
-          //   { ...values, id: `null${uuidv4()}` },
-        ]);
-        // setState({ loading: false, error: false });
+        setValue("telephones", [...value, { ...values, id: `null${id}` }]);
       }
     },
   });
@@ -110,75 +96,49 @@ const CustomerTelephoneForm = ({
       title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}
     >
       <form onSubmit={handleSubmit}>
-        {/* <div className="formInputSection">
-          <FormGroup
-            required={true}
-            error={
-              touched.selectPhoneType &&
-              errors.selectPhoneType &&
-              errors.selectPhoneType.id
-            }
+        <div className="inputRow">
+          <InputSelect
+            important
+            options={[]}
             label="تماس از طریق"
-          >
-            <Select
-              name="selectPhoneType"
-              placeholder="تماس از طریق"
-              value={{
-                value: values?.selectPhoneType?.id,
-                label: values?.selectPhoneType?.text,
-              }}
-              options={phoneKind}
-              onChange={(value) => {
-                setFieldValue("selectPhoneType", {
-                  id: value.value,
-                  text: value.label,
-                });
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup
-            required={true}
-            error={touched.telNumber && errors.telNumber}
-            input={{
-              id: "telNumber",
-              name: "telNumber",
-              placeholder: "",
-              value: values.telNumber,
-              onChange: handleChange,
+            values={{
+              value: values?.selectPhoneType?.id,
+              label: values?.selectPhoneType?.text,
             }}
-            label="تلفن "
+            name="selectPhoneType"
+            handleChange={handleChange}
+            error={touched.selectPhoneType && errors.selectPhoneType}
           />
-          <FormGroup
-            required={true}
+
+          <InputText
+            important
+            label=" تلفن"
+            values={values.telNumber}
+            name="telNumber"
+            handleChange={handleChange}
+            error={touched.telNumber && errors.telNumber}
+          />
+          <InputText
+            important
+            label=" پیش شماره"
+            values={values.telephonePrefix}
+            name="telephonePrefix"
+            handleChange={handleChange}
             error={touched.telephonePrefix && errors.telephonePrefix}
-            input={{
-              id: "telephonePrefix",
-              name: "telephonePrefix",
-              placeholder: "",
-              value: values.telephonePrefix,
-              onChange: handleChange,
-            }}
-            label="پیش شماره "
           />
         </div>
-
-        <div className="btnsection">
-          <Button theme="secondarypopUpButton" onClick={handleCloseModal}>
-            لغو
-          </Button>
-          <Button theme="mainpopUpButton">
-            {currentData ? "ویرایش" : "افزودن"}
-            {state.loading && (
-              <ClipLoader
-                className="inline-flex items-center"
-                size={24}
-                loading={true}
-                color="#FFF"
-              />
-            )}
-          </Button>
-        </div> */}
+        <div className="flex-end-center gap-3">
+          <SimpleButton
+            text="لغو"
+            className="full-lightTomato-btn"
+            handelClick={() => setOpen(false)}
+          />
+          <SimpleButton
+            type="submit"
+            className="full-tomato-btn"
+            text={currentData ? "ویرایش" : "افزودن"}
+          />
+        </div>
       </form>
     </Modal>
   );

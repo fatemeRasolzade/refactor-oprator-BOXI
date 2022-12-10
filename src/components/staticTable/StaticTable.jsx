@@ -82,7 +82,7 @@ function Table({ columns, data, pageTable }) {
         {...getTableProps()}
         className="border-collapse table-auto w-full bg-white table-striped rounded-lg text-center"
       >
-        <thead className="bg-mainGray h-12 rounded-lg text-dark">
+        <thead className="bg-lightTomato h-12 rounded-lg text-dark">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
@@ -114,14 +114,12 @@ function Table({ columns, data, pageTable }) {
         </tbody>
       </table>
 
-          {page.length === 0 && (
-            <div className="h-20 centering w-full">
-           
-                <>موردی یافت نشد</>
-        
-            </div>
-          )}
-      <div className="text-center">
+      {page.length === 0 && (
+        <div className="h-20 centering w-full">
+          <>موردی یافت نشد</>
+        </div>
+      )}
+      <div className="text-center my-5">
         <Paginations pageData={pageTable} />
       </div>
     </div>

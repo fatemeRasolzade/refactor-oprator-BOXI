@@ -1,14 +1,7 @@
+import { FC } from "react";
 import Select from "react-select";
-const InputSelect = ({
-  label,
-  name,
-  // blure,
-  values,
-  options,
-  handleChange,
-  error,
-  important,
-}: {
+
+interface InputSelectProps {
   label?: string;
   name?: string;
   // blure?: React.FocusEventHandler<HTMLInputElement>;
@@ -17,15 +10,44 @@ const InputSelect = ({
   handleChange?: any;
   error?: any;
   important?: boolean;
-}) => {
+  wrapperClassName?: string;
+  isMulti?: boolean;
+}
+
+const InputSelect: FC<InputSelectProps> = ({
+  label,
+  name,
+  // blure,
+  values,
+  options,
+  handleChange,
+  error,
+  important,
+  wrapperClassName,
+  isMulti,
+}): JSX.Element => {
+
+  //This is custom Style for react-select 
   const style = {
     control: (base: any, state: any) => ({
       ...base,
-      border: state.isFocused ? " 1px solid #ababab" : "1px solid #ababab",
+      border: state.isFocused
+        ? error
+          ? "1px solid  #d32f2f"
+          : " 1px solid #ababab"
+        : error
+        ? "1px solid  #d32f2f"
+        : " 1px solid #ababab",
       borderRadius: state.isFocused ? "0.5rem" : "0.5rem",
       height: state.isFocused ? "2.5rem" : "2.5rem",
       "&:hover": {
-        border: state.isFocused ? " 1px solid #ababab" : "1px solid #ababab",
+        border: state.isFocused
+          ? error
+            ? "1px solid  #d32f2f"
+            : " 1px solid #ababab"
+          : error
+          ? "1px solid  #d32f2f"
+          : " 1px solid #ababab",
       },
       // This line disable the blue border
       boxShadow: "none",
@@ -34,14 +56,19 @@ const InputSelect = ({
   };
 
   return (
-    <div className="relative w-60 ">
-      <label className=" absolute top-[-16px] right-5 bg-white z-10  px-2 text-darkGray text-sm">
+    <div className={`relative  ${wrapperClassName}`}>
+      <label
+        className={` absolute top-[-16px] right-5 bg-white z-10  px-2  text-sm ${
+          error ? "text-red" : "text-darkGray"
+        }`}
+      >
         {label}{" "}
         <span className="text-tomato font-extrabold text-lg h-4">
           {important ? "*" : " "}
         </span>
       </label>
       <Select
+        isMulti={isMulti}
         isLoading={options.length > 0 ? false : true}
         value={
           options ? options.find((option: any) => option.label === values) : ""
@@ -63,11 +90,14 @@ const InputSelect = ({
         placeholder=""
         isRtl
         name={name}
-        className="inputSelect focus:outline-none"
+        className="inputSelect focus:outline-none flex"
       />
-      <p className="text-red-700 text-xs pr-3 h-4">{error}</p>
+      <p className="text-red text-xs pr-3 h-4 mt-1">{error?.text}</p>
     </div>
   );
 };
 
+InputSelect.defaultProps = {
+  wrapperClassName: "w-60",
+};
 export default InputSelect;

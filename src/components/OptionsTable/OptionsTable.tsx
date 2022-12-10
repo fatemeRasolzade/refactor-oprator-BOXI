@@ -1,44 +1,82 @@
-import { BiPlus} from "react-icons/bi";
+import { FC } from "react";
+import { BiPlus, BiEdit, BiTrash } from "react-icons/bi";
 import { GrDocumentPdf } from "react-icons/gr";
+import { Link, To } from "react-router-dom";
 import { GoDesktopDownload, GoGear } from "react-icons/go";
+
 import CustomSwitch from "./../../global/Switch/Switch";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
-import { Link} from "react-router-dom";
-const OptionsTable = ({exportExcel,handelSwitch,btnLink}:{exportExcel?:any,handelSwitch?:any,btnLink?:any}) => {
+import AddButton from "../../global/addButton/AddButton";
+import AddExcel from "../exel/AddExcel";
+
+interface OptionsTableProps {
+  isActive?: boolean;
+  setIsActive?: (value: boolean) => void;
+  addExcelProps?: () => JSX.Element;
+  addComponentProps?: () => JSX.Element;
+  exportExcel?: any;
+  btnLink?: string;
+}
+const OptionsTable: FC<OptionsTableProps> = ({
+  btnLink,
+  isActive,
+  setIsActive,
+  addExcelProps,
+  addComponentProps,
+  exportExcel,
+}) => {
   return (
     <div className="mt-6">
       <ul className="flex gap-4 justify-start items-center flex-wrap">
+        {/* <AddButton />  */}
+        {btnLink && (
+          <li>
+            <Link to={btnLink}>
+              <SimpleButton
+                text="افزودن"
+                className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
+                icon={<BiPlus color="white" />}
+              />
+            </Link>
+          </li>
+        )}
+        {addExcelProps && <li>{addExcelProps()}</li>}
         <li>
-          {/* <AddButton />  */}
-          <Link to={btnLink}>
           <SimpleButton
-            text="افزودن"
-            className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
-            icon={<BiPlus color="white" />}
+            text="ویرایش"
+            className="centering rounded-lg text-black"
+            icon={<BiEdit color="black" />}
           />
-          </Link>
         </li>
         <li>
           <SimpleButton
-          className=" w-[160px] h-[40px] centering rounded-lg text-black"
-            text="افزودن گروهی"
-            icon={<GrDocumentPdf color="black" />}
+            text="حذف"
+            className="centering rounded-lg text-black"
+            icon={<BiTrash color="black" />}
           />
         </li>
-     
         <li>
-          <CustomSwitch handleChange={handelSwitch}/>
+          <CustomSwitch
+            active={isActive ? isActive : false}
+            handleChange={(value?: boolean) =>
+              setIsActive && setIsActive(value as boolean)
+            }
+          />
         </li>
         <li>
           <SimpleButton
-          handelClick={exportExcel}
+            handelClick={exportExcel}
             text="خروجی اکسل"
             icon={<GoDesktopDownload color="black" />}
             className="centering rounded-lg text-black"
           />
         </li>
         <li>
-          <SimpleButton text="شخصی سازی" icon={<GoGear color="black" />} className="centering rounded-lg text-black"/>
+          <SimpleButton
+            text="شخصی سازی"
+            icon={<GoGear color="black" />}
+            className="centering rounded-lg text-black"
+          />
         </li>
       </ul>
     </div>

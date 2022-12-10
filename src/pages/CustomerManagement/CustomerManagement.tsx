@@ -15,13 +15,18 @@ import CustomerForm from "./views/CustomerForm";
 import CustomerSearchForm from "./views/CustomerSearchForm";
 
 const CustomerManagement = () => {
+  const [isActive, setIsActive] = useState(true);
   const [open, setOpen] = useState(false);
   const handleGetExcel = () => {
     alert("HELOOOOOOOOOOOOOOO");
   };
 
   const options = [
-    { name: ACTIVE_OPTION, handleClick: handleGetExcel },
+    {
+      name: ACTIVE_OPTION,
+      handleClick: () => setIsActive(!isActive),
+      value: isActive,
+    },
     { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
   ];
 

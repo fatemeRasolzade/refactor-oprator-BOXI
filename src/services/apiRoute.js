@@ -6,6 +6,8 @@ export const API_CONSIGNMENT = `${Base_url2}/core-api`;
 export const API_CONSIGNMENT2 = `${Base_url}/resource-api`;
 export const API_CONSIGNMENT3 = `${Base_url3}/core-api`;
 export const API_CONSIGNMENT4 = `${Base_url4}/core-api`;
+export const API_CONSIGNMENT5 = `${Base_url4}/resource-api`;
+export const API_CONSIGNMENT6 = `${Base_url}/core-api`;
 
 export const API_URL = `/core-api`;
 export const API_URL_2 = `/resource-api`;
@@ -76,8 +78,17 @@ export const apiRoute = () => {
       GET_ADM_VEHICLE: createUrl(API_URL, "/admVehicle/filter"),
       //Service
       GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
-      //customer
-      GET_CUSTOMER_TYPE: createUrl(API_CONSIGNMENT2, `/customer/customerType`)
+      //GLOBAL
+      GET_PROVINCES: createUrl(API_CONSIGNMENT4, "/countryDevision?filter="),
+      GET_CITIES: createUrl(
+        API_CONSIGNMENT4,
+        "/countryDevision/province/1/city?filter="
+      ),
+      GET_REGIONS: createUrl(
+        API_CONSIGNMENT4,
+        "/countryDevision/city/2/loc?filter"
+      ),
+      GET_ADDRESS_TYPE: createUrl(API_CONSIGNMENT5, "/address/addressType"),
     },
     post: {
       // create
@@ -86,23 +97,41 @@ export const apiRoute = () => {
 
       // filter
       filterRole: createUrl(API_CONSIGNMENT2, "/role"),
+      // employee
       filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
       serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
       product: createUrl(API_CONSIGNMENT4, "/product"),
-      customer: createUrl(API_CONSIGNMENT2, "/customer"),
+      CREATE_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
+    },
+    postExcel: {
+      exception: createUrl(API_CONSIGNMENT3, "/exception"),
     },
     delete: {
       role: createUrl(API_CONSIGNMENT2, "/role"),
       personnel: createUrl(API_CONSIGNMENT2, "/employee"),
 
-      serviceDefine:createUrl(API_CONSIGNMENT4, "/service"),
-      productDefine:createUrl(API_CONSIGNMENT4,"/product"),
-      hubTable:createUrl(API_CONSIGNMENT4,"/hub"),
-
+      serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
+      productDefine: createUrl(API_CONSIGNMENT4, "/product"),
+      hubTable: createUrl(API_CONSIGNMENT4, "/hub"),
     },
     edit: {
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
-
+      EDIT_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
     },
   };
 };
+
+
+//Gloobal
+export const GET_ADDRESS_TYPE = `${API_CONSIGNMENT5}/address/addressType`;
+export const GET_PROVINCES = `${API_URL}/countryDevision/province/1/city?filter=`
+export const GET_CITIES = `${API_URL}/countryDevision/province/1/city?filter=`
+export const GET_REGIONS = `${API_URL}/countryDevision/city/2/loc?filter=`
+
+//customer
+export const GET_CUSTOMER_TYPE = `${API_CONSIGNMENT5}/customer/customerType`
+export const GET_CUSTOMER_PARENT = `${API_CONSIGNMENT5}/customer/select?filter=`
+export const CREATE_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
+export const EDIT_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
+
+//thirdParty

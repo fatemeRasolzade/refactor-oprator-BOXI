@@ -3,10 +3,12 @@ import { setLocale } from "yup";
 import {
   DEFINED,
   INVALID,
+  MAXCHAR,
+  MINCHAR,
   NOTTYPE,
   REQUIRED,
   VALIDEMAIL,
-} from "../validations/ErrorKeywords";
+} from "../validations/RegexKeywords";
 
 const YupDefault = () => {
   useEffect(() => {
@@ -18,6 +20,8 @@ const YupDefault = () => {
         defined: DEFINED,
       },
       string: {
+        min: MINCHAR,
+        max: MAXCHAR,
         email: VALIDEMAIL,
       },
     });

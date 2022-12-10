@@ -5,34 +5,42 @@ import { DeleteDataParams } from "../../services/Service_call";
 import { BiTrash } from "react-icons/bi";
 import { GrFormClose } from "react-icons/gr";
 import { SuccessAlert } from "../../global/alert/Alert";
+import SimpleButton from "../../global/SimpleButton/SimpleButton";
 
 interface DeleteOperationProps {
   title: string;
   itemId: number;
   route: string;
   updating?: any;
+  handleDeleteActionNewData?: any;
 }
-const DeleteOperation: FC<DeleteOperationProps> = ({ title, itemId, route, updating }): JSX.Element => {
-  const dispatch = useDispatch();
+const DeleteOperation: FC<DeleteOperationProps> = ({
+  title,
+  itemId,
+  route,
+  updating,
+  handleDeleteActionNewData,
+}): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const deleteHandler = async (id: number) => {
     try {
-      dispatch(updating(true));
       await DeleteDataParams(route);
       SuccessAlert("با موفقیت حذف شد");
       setIsModalOpen(false);
-      dispatch(updating(false));
+      handleDeleteActionNewData && handleDeleteActionNewData();
     } catch (error) {
-      dispatch(updating(false));
       setIsModalOpen(false);
       ErrorAlert("خطایی رخ داده است.");
     }
   };
   return (
     <>
-      <button className=" border-none	text-[14px]  w-[20px] h-[20px]" onClick={() => setIsModalOpen(!isModalOpen)}>
-        <BiTrash className="w-full h-full	" />
+      <button
+        className=" border-none	text-[14px]  w-[20px] h-[20px]"
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
+        <BiTrash size={20} className="w-full h-full	" />
       </button>
       <Dialog open={isModalOpen} handler={setIsModalOpen}>
         <button
@@ -46,19 +54,22 @@ const DeleteOperation: FC<DeleteOperationProps> = ({ title, itemId, route, updat
             <div className="w-full justify-center flex">
               <h3 className="text-gray-700 font-bold text-lg">{title}</h3>
             </div>
-            <p className="w-full flex justify-center">آیا از حذف این مورد اطمینان دارید؟</p>
+            <p className="w-full flex justify-center">
+              آیا از حذف این مورد اطمینان دارید؟
+            </p>
             <div className="flex w-full justify-center gap-4">
-              <Button className="border-none bg-[#ef5644] w-[30%] text-gray-200" onClick={() => deleteHandler(itemId)}>
-                بله
-              </Button>
-              <Button
-                className="border-none bg-[#FFF8F0] w-[30%] text-gray-500"
-                onClick={() => {
-                  setIsModalOpen(false);
-                }}
-              >
-                خیر
-              </Button>
+              <SimpleButton
+                type="submit"
+                text="بله"
+                className="full-tomato-btn px-[50px] "
+                handelClick={() => deleteHandler(itemId)}
+              />
+              <SimpleButton
+                type="submit"
+                text="خیر"
+                className="full-lightTomato-btn px-[50px] "
+                handelClick={() => setIsModalOpen(false)}
+              />
             </div>
           </div>
         </div>

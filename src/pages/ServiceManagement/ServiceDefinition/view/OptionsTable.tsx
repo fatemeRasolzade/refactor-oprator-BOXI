@@ -12,28 +12,44 @@ interface propsData {
 }
 
 const OptionsTable = ({ actions }: propsData) => {
-
   return (
     <div className="mt-6">
       <ul className="flex gap-4 justify-start items-center flex-wrap">
-          <>
-            <li>
+        <>
+          <li>
             <AddButton />
-              {/* <SimpleButton text="افزودن" className="full-tomato-btn" icon={<BiPlus color="white" />} /> */}
-            </li>
-            <li>
-              <SimpleButton text="افزودن گروهی" icon={<GrDocumentPdf color="black" />} />
-            </li>
-            <li>
-              <CustomSwitch />
-            </li>
-            <li>
-              <SimpleButton text="خروجی اکسل" icon={<GoDesktopDownload color="black" />} />
-            </li>
-            <li>
-              <SimpleButton text="شخصی سازی" icon={<GoGear color="black" />} />
-            </li>
-          </>
+            {/* <SimpleButton text="افزودن" className="full-tomato-btn" icon={<BiPlus color="white" />} /> */}
+          </li>
+          <li>
+            <SimpleButton
+              text="افزودن گروهی"
+              icon={<GrDocumentPdf color="black" />}
+            />
+          </li>
+          <li>
+            <SimpleButton text="ویرایش" icon={<BiEdit color="black" />} />
+          </li>
+          <li>
+            <SimpleButton text="حذف" icon={<BiTrash color="black" />} />
+          </li>
+          <li>
+            <CustomSwitch
+              active={true}
+              handleChange={(checked: any) =>
+                console.log("isactive", checked)
+              }
+            />
+          </li>
+          <li>
+            <SimpleButton
+              text="خروجی اکسل"
+              icon={<GoDesktopDownload color="black" />}
+            />
+          </li>
+          <li>
+            <SimpleButton text="شخصی سازی" icon={<GoGear color="black" />} />
+          </li>
+        </>
       </ul>
     </div>
   );

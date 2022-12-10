@@ -1,20 +1,35 @@
-import InputText from "../../../global/InputText/InputText";
-import Modal from "../../../global/Modal/Modal";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import InputText from "../../../global/InputText/InputText";
+import Modal from "../../../global/Modal/Modal";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
-import { NationalCodeRegex } from "../../../tools/validations/ErrorHelper";
-import { VALIDNATIONALCODE } from "../../../tools/validations/ErrorKeywords";
+import {
+  EconomicCodeValidate,
+  NationalCodeRegex,
+  NationalCodeValidator,
+  NationalIDValidator,
+} from "../../../tools/validations/ErrorHelper";
+import {
+  UNMATCHPASSWORD,
+  VALIDNATIONALCODE,
+} from "../../../tools/validations/RegexKeywords";
 import InputSelect from "../../../global/InputSelect/InputSelect";
 import Checkbox from "../../../components/checkbox/Checkbox";
 import CustomSwitch from "../../../global/Switch/Switch";
-import { useEffect, useState } from "react";
 import CustomerTelephoneElements from "./CustomerTelephoneElements";
 import CustomerAddressElements from "./CustomerAddressElements";
 import { ReverseArray } from "../../../tools/functions/Methods";
 import CustomerAddressForm from "./CustomerAddressForm";
 import CustomerTelephoneForm from "./CustomerTelephoneForm";
-import { apiRoute } from "../../../services/apiRoute";
+import {
+  createCustomer,
+  getCustomerParent,
+  getCustomerType,
+} from "../../../services/CustomerApi";
+import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
 
 type CustomerFormProps = {
   open: boolean;
@@ -25,6 +40,7 @@ type CustomerFormProps = {
 const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
   const [OpenAddresses, setOpenAddresses] = useState(false);
   const [OpenPhones, setOpenPhones] = useState(false);
+  const dispatch = useDispatch();
   const handleOpenAddress = (kind?: any, data?: any, id?: any) => {
     setAddressModalInfo({ kind, data, id });
     setOpenAddresses(true);
@@ -79,7 +95,25 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
     id: undefined,
   });
 
+  const [customerType, setCustomerType] = useState([]);
+  const [customerParent, setCustomerParent] = useState([]);
 
+  useEffect(() => {
+    initCustomerType();
+    initParentCustomer();
+  }, []);
+
+  const initCustomerType = () => {
+    getCustomerType().then((res) => {
+      setCustomerType(res);
+    });
+  };
+
+  const initParentCustomer = () => {
+    getCustomerParent().then((res) => {
+      setCustomerParent(res);
+    });
+  };
 
   const validation = Yup.object().shape({
     code: Yup.string().required(),
@@ -88,9 +122,9 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
-    nationalCode: Yup.string()
-      .matches(NationalCodeRegex, VALIDNATIONALCODE)
-      .required(),
+    // nationalCode: Yup.string()
+    //   .matches(NationalCodeRegex, VALIDNATIONALCODE)
+    //   .required(),
     selectParentCustomer: Yup.object().nullable(true).shape({
       text: Yup.string(),
       id: Yup.number(),
@@ -101,12 +135,13 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
     initialCredit: Yup.number().label(""),
 
     username: Yup.string().required(),
-    // password:
-    // 	!currentData &&
-    // 	Yup.string().min(8, "حداقل هشت کاراکتر").matches(justENGRegex,  "رمز عبور باید شامل اعداد و حروف لاتین باشد").required(),
-    // confirmPassword: Yup.string()
-    //   .oneOf([Yup.ref("password"), null], "رمز عبور مطابقت ندارد")
-    //   .required(),
+    password: Yup.string()
+      .min(8)
+      // .matches(justENGRegex, "رمز عبور باید شامل اعداد و حروف لاتین باشد")
+      .required(),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], UNMATCHPASSWORD)
+      .required(),
     extendGlobalVirtualSeries: Yup.boolean().nullable(),
     dynamicPickupAllocation: Yup.boolean().nullable(),
 
@@ -179,7 +214,33 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
           nationalId: "",
           economicCode: "",
         },
+    validate: (values) => {
+      const errors = {
+        // nationalId: ,
+        nationalCode: {},
+        economicCode: {},
+      };
+      const [isValidNC, errNC] = NationalCodeValidator(
+        values.nationalCode,
+        true
+      );
+      if (values.selectCustomerType?.id === 0 && !isValidNC) {
+        errors.nationalCode = errNC;
+      }
+      if (values.selectCustomerType?.id === 1) {
+        const [isValidNI, errNI] = NationalIDValidator(values.nationalId, true);
+        // if (values.selectCustomerType?.id === 1 && !isValidNI) {
+        //   errors.nationalId = errNI;
+        // }
+        const [isValidEC, errEC] = EconomicCodeValidate(values.economicCode, true);
+         if (values.selectCustomerType?.id === 1 && !isValidEC) {
+           errors.economicCode = errEC;
+         }
+      }
+      return errors;
+    },
     onSubmit: (values, { resetForm }) => {
+      alert("*/**********************");
       // setState({ loading: true, error: false });
       if (currentData) {
         // console.log(a.id.toString().includes("null"));
@@ -209,33 +270,29 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         // 		setState({ loading: false, error: error.response.data.message });
         // 	});
       } else {
-        // delete values.id;
-        // createCustomer({
-        // 	...values,
-        // 	currentCredit: parseInt(values.currentCredit),
-        // 	creditLimit: parseInt(values.creditLimit),
-        // 	initialCredit: parseInt(values.initialCredit),
-        // 	confirmPassword: undefined,
-        // 	addresses: values.addresses.map((a) => {
-        // 		return { ...a, id: undefined };
-        // 	}),
-        // 	telephones: values.telephones.map((a) => {
-        // 		return { ...a, id: undefined };
-        // 	}),
-        // })
-        // 	.then((response) => {
-        // 		setState({ loading: false, error: false });
-        // 		action({
-        // 			type: REFRESH,
-        // 			payload: !refresh,
-        // 		});
-        // 		resetForm({ values: "" });
-        // 		closeModal();
-        // 		response.status && toast.success("مشتری افزوده شد ");
-        // 	})
-        // 	.catch((error) => {
-        // 		setState({ loading: false, error: error.response.data.message });
-        // 	});
+        console.log(values.selectCustomerType);
+        console.log(values.selectParentCustomer);
+
+        createCustomer({
+          ...values,
+          currentCredit: parseInt(values.currentCredit),
+          creditLimit: parseInt(values.creditLimit),
+          initialCredit: parseInt(values.initialCredit),
+          confirmPassword: undefined,
+          addresses: values.addresses.map((a: any) => {
+            return { ...a, id: undefined };
+          }),
+          telephones: values.telephones.map((a: any) => {
+            return { ...a, id: undefined };
+          }),
+        })
+          .then((response) => {
+            dispatch(customerData({}) as any);
+            // resetForm({ values: "" });
+            setOpen(false);
+            toast.success("مشتری افزوده شد ");
+          })
+          .catch((error) => {});
       }
     },
   });
@@ -274,30 +331,52 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
               error={touched.name && errors.name}
             />
             <InputSelect
-              options={[]}
+              options={customerType}
               important
               label="نوع مشتری"
               values={values.selectCustomerType}
               name="selectCustomerType"
-              handleChange={handleChange}
+              handleChange={setFieldValue}
               error={touched.selectCustomerType && errors.selectCustomerType}
             />
-            <InputText
-              important
-              label="کد ملی"
-              values={values.nationalCode}
-              name="nationalCode"
-              handleChange={handleChange}
-              error={touched.nationalCode && errors.nationalCode}
-            />
+            {values.selectCustomerType.id === 0 && (
+              <InputText
+                important
+                label="کد ملی"
+                values={values.nationalCode}
+                name="nationalCode"
+                handleChange={handleChange}
+                error={touched.nationalCode && errors.nationalCode}
+              />
+            )}
+            {values.selectCustomerType.id === 1 && (
+              <>
+                <InputText
+                  important
+                  label="شناسه ملی"
+                  values={values.nationalId}
+                  name="nationalId"
+                  handleChange={handleChange}
+                  error={touched.nationalId && errors.nationalId}
+                />
+                <InputText
+                  important
+                  label="کد اقتصادی"
+                  values={values.economicCode}
+                  name="economicCode"
+                  handleChange={handleChange}
+                  error={touched.economicCode && errors.economicCode}
+                />
+              </>
+            )}
           </div>
           <div className="inputRow">
             <InputSelect
-              options={[]}
+              options={customerParent}
               label="مشتری والد"
               values={values.selectParentCustomer}
               name="selectParentCustomer"
-              handleChange={handleChange}
+              handleChange={setFieldValue}
               error={
                 touched.selectParentCustomer && errors.selectParentCustomer
               }
@@ -338,7 +417,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         </div>
         <div className="inputRow">
           <div className="border rounded-lg px-5 pt-10 mt-10 relative">
-            <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
+            <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">
               اطلاعات کاربری
             </span>
             <div className="inputRow">
@@ -386,7 +465,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
 
         <div className="inputRow">
           <div className="border rounded-lg px-5 pt-8 mt-5 relative">
-            <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
+            <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">
               اطلاع رسانی جمع آوری از طریق
             </span>
             <div className="inputRow">
@@ -411,10 +490,13 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
             </div>
           </div>
           <div className="centering w-6/12 mt-5">
-            <CustomSwitch />
+            <CustomSwitch
+              active={values.isActive}
+              handleChange={() => setFieldValue("isActive", !values.isActive)}
+            />
           </div>
         </div>
-        <div className="flex justify-between items-start gap-20 ">
+        <div className="flex justify-between items-start gap-10 ">
           <div className="border rounded-lg px-4 py-8 mt-5 relative w-full">
             <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
               آدرس{" "}
@@ -460,7 +542,18 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
               ))}
           </div>
         </div>
-        <button type={"submit"}>hwsjfsdf</button>
+        <div className="flex-end-center mt-5 gap-3">
+          <SimpleButton
+            handelClick={() => setOpen(false)}
+            text="لغو"
+            className="full-lightTomato-btn"
+          />
+          <SimpleButton
+            type="submit"
+            text="افزودن"
+            className="full-tomato-btn"
+          />
+        </div>
       </form>
       <CustomerAddressForm
         setValue={setFieldValue}

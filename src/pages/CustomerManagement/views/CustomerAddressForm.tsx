@@ -1,18 +1,22 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { ClipLoader } from "react-spinners";
-//  import { v4 as uuidv4 : any } from "uuid";
+import { useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../global/Modal/Modal";
-// import axios from "axios";
+import InputSelect from "../../../global/InputSelect/InputSelect";
+import InputText from "../../../global/InputText/InputText";
+import CustomSwitch from "../../../global/Switch/Switch";
+import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import { PostalCodeRegex } from "../../../tools/validations/ErrorHelper";
+import { VALIDPOSTALCODE } from "../../../tools/validations/RegexKeywords";
+import {
+  getAddressType,
+  getCities,
+  getProvinces,
+  getRegions,
+} from "../../../services/GlobalApi";
 // import { Map } from "../../../../components/map";
-// import Select from "../../../../components/Select";
-// import Button from "../../../../components/Button";
-// import { getAddressesKind } from "../../../../services/api";
-// import FormGroup from "../../../../components/FormGroup";
 // import { PostalCodeRegex } from "../../../../utilities/function";
-// import CustomModal from "../../../../components/CustomModal";
-// import CustomSwitch from "../../../../components/CustomSwitch";
 
 const CustomerAddressForm = ({
   open,
@@ -34,94 +38,38 @@ const CustomerAddressForm = ({
   const [regions, setRegions] = useState([]);
   const [addressKind, setAddressKind] = useState([]);
 
-  // const getAddressKind = useCallback(() => {
-  // 	getAddressesKind()
-  // 		.then((response) => {
-  // 			const options = response.data.payload.map(({ id: value, ...rest }) => ({
-  // 				value,
-  // 				...rest,
-  // 			}));
-  // 			const options1 = options.map(({ text: label, ...rest }) => ({
-  // 				label,
-  // 				...rest,
-  // 			}));
-  // 			setAddressKind(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, []);
+  const initAddressKind = () => {
+    getAddressType().then((res) => {
+      setAddressKind(res);
+    });
+  };
 
-  // const getProvince = useCallback(() => {
-  // 	// getProvinces();
-  // 	axios({ method: "GET", url: "http://192.168.1.153:8090/core-api/countryDevision?filter=" })
+  const initCities = () => {
+    getCities().then((res) => {
+      setCities(res);
+    });
+  };
 
-  // 		.then((response) => {
-  // 			console.log(response);
-  // 			console.log(response.data);
-  // 			// const options = response.data.payload.content.map(({ id: value, ...rest }) => ({
-  // 			// 	value,
-  // 			// 	...rest,
-  // 			// }));
-  // 			// const options1 = options.map(({ text: label, ...rest }) => ({
-  // 			// 	label,
-  // 			// 	...rest,
-  // 			// }));
-  // 			// setProvinces(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, [provinces]);
+  const initRegions = () => {
+    getRegions().then((res) => {
+      setRegions(res);
+    });
+  };
 
-  // const getCities = useCallback(() => {
-  // 	// getProvincesCities()
-  // 	// axios({ method: "GET", url: "http://192.168.1.153:8090/core-api/countryDevision/province/1/city?filter" })
-  // 	axios({ method: "GET", url: "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter" })
-  // 		.then((response) => {
-  // 			const options = response.data.payload.content.map(({ id: value, ...rest }) => ({
-  // 				value,
-  // 				...rest,
-  // 			}));
-  // 			const options1 = options.map(({ text: label, ...rest }) => ({
-  // 				label,
-  // 				...rest,
-  // 			}));
-  // 			setCities(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, [cities]);
+  const initProvinces = () => {
+    getProvinces().then((res) => {
+      setProvinces(res);
+    });
+  };
 
-  // const getRegions = useCallback(() => {
-  // 	// getCityLocations()
-  // 	// axios({ method: "GET", url: "http://192.168.1.153:8090/core-api/countryDevision/city/2/loc?filter" })
-  // 	axios({ method: "GET", url: "http://boxi.local:40000/core-api/countryDevision/city/2/loc?filter" })
-  // 		.then((response) => {
-  // 			const options = response.data.payload.content.map(({ id: value, ...rest }) => ({
-  // 				value,
-  // 				...rest,
-  // 			}));
-  // 			const options1 = options.map(({ text: label, ...rest }) => ({
-  // 				label,
-  // 				...rest,
-  // 			}));
-  // 			setRegions(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, [regions]);
-
-  // useEffect(() => {
-  // 	if (open) {
-  // 		getAddressKind();
-  // 		getProvince();
-  // 		getCities();
-  // 		getRegions();
-  // 	}
-  // }, [open]);
+  useEffect(() => {
+    if (open) {
+      initAddressKind();
+      initCities();
+      initRegions();
+      initProvinces();
+    }
+  }, [open]);
 
   // start fromik configurations
   const [checked, setChecked] = useState(false);
@@ -130,6 +78,7 @@ const CustomerAddressForm = ({
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
+
     selectState: Yup.object().shape({
       text: Yup.string().required(),
       id: Yup.string().required(),
@@ -143,12 +92,12 @@ const CustomerAddressForm = ({
       id: Yup.string().required(),
     }),
     pelak: Yup.string().required(),
-    unit: Yup.number().required().label("واحد"),
-    // postalCode: Yup.string().matches(PostalCodeRegex, "کد پستی معتبر نیست"),
+    unit: Yup.number().required(),
+    postalCode: Yup.string().matches(PostalCodeRegex, VALIDPOSTALCODE),
     isActive: Yup.boolean().nullable(),
-    latitude: Yup.number().nullable(true).label("عرض"),
-    longtitude: Yup.number().nullable(true).label("طول"),
-    address: Yup.string().required().label("آدرس"),
+    latitude: Yup.number().nullable(true),
+    longtitude: Yup.number().nullable(true),
+    address: Yup.string().required(),
   });
 
   const formik = useFormik({
@@ -171,10 +120,10 @@ const CustomerAddressForm = ({
           address: currentData.address,
         }
       : {
-          selectAddressType: {},
-          selectState: {},
-          selectCity: {},
-          selectRegion: {},
+          selectAddressType: undefined,
+          selectState: undefined,
+          selectCity: undefined,
+          selectRegion: undefined,
           pelak: "",
           unit: "",
           postalCode: "",
@@ -185,8 +134,7 @@ const CustomerAddressForm = ({
           // telephones: [],
         },
     onSubmit: (values: any, { resetForm }) => {
-      //   setState({ loading: true, error: false });
-      console.log("This is true");
+      alert("arash mozakhraf");
       if (currentData) {
         setOpen(false);
         resetForm({ values: "" });
@@ -194,13 +142,11 @@ const CustomerAddressForm = ({
         let index = newArray.findIndex((a) => a.id === ID);
         newArray[index] = values;
         setValue("addresses", newArray);
-        // setState({ loading: false, error: false });
       } else {
-        // const id: string = uuidv4();
-        setOpen(false);
+        const id: string = uuid();
         resetForm({ values: "" });
-        // setValue("addresses", [...value, { ...values, id: `null${id}` }]);
-        // setState({ loading: false, error: false });
+        setValue("addresses", [...value, { ...values, id: `null${id}` }]);
+        setOpen(false);
       }
     },
   });
@@ -220,195 +166,103 @@ const CustomerAddressForm = ({
       title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}
     >
       <form onSubmit={handleSubmit}>
-        {/* <div className="formInputSection">
-          <FormGroup
-            required={true}
-            error={
-              touched.selectAddressType &&
-              errors.selectAddressType &&
-              errors.selectAddressType.id
-            }
+        <div className="inputRow">
+          <InputSelect
+            important
+            options={addressKind}
             label="نوع آدرس"
-          >
-            <Select
-              name="selectAddressType"
-              placeholder="نوع آدرس"
-              value={{
-                value: values?.selectAddressType?.id,
-                label: values?.selectAddressType?.text,
-              }}
-              options={addressKind}
-              onChange={(value) => {
-                setFieldValue("selectAddressType", {
-                  id: value.value,
-                  text: value.label,
-                });
-              }}
-            />
-          </FormGroup>
-          <FormGroup
-            required={true}
-            error={
-              touched.selectState && errors.selectState && errors.selectState.id
-            }
-            label="استان"
-          >
-            <Select
-              name="selectState"
-              placeholder="استان"
-              value={{
-                value: values?.selectState?.id,
-                label: values?.selectState?.text,
-              }}
-              options={provinces}
-              onChange={(value) => {
-                setFieldValue("selectState", {
-                  id: value.value,
-                  text: value.label,
-                });
-              }}
-            />
-          </FormGroup>
+            name="selectAddressType"
+            values={values.selectAddressType}
+            error={touched.selectAddressType && errors.selectAddressType}
+            handleChange={setFieldValue}
+          />
+          <InputSelect
+            important
+            options={provinces}
+            label=" استان"
+            name="selectState"
+            values={values.selectState}
+            error={touched.selectState && errors.selectState}
+            handleChange={setFieldValue}
+          />
 
-          <FormGroup
-            required={true}
-            error={
-              touched.selectCity && errors.selectCity && errors.selectCity.id
-            }
-            label="شهر"
-          >
-            <Select
-              name="selectCity"
-              placeholder="شهر"
-              value={{
-                value: values?.selectCity?.id,
-                label: values?.selectCity?.text,
-              }}
-              options={cities}
-              onChange={(value) => {
-                setFieldValue("selectCity", {
-                  id: value.value,
-                  text: value.label,
-                });
-              }}
-            />
-          </FormGroup>
+          <InputSelect
+            important
+            options={cities}
+            label=" شهر"
+            name="selectCity"
+            values={values.selectCity}
+            error={touched.selectCity && errors.selectCity}
+            handleChange={setFieldValue}
+          />
         </div>
-        <div className="formInputSection">
-          <FormGroup
-            required={true}
-            error={
-              touched.selectRegion &&
-              errors.selectRegion &&
-              errors.selectRegion.id
-            }
-            label="منطقه"
-          >
-            <Select
-              name="selectRegion"
-              placeholder="منطقه"
-              value={{
-                value: values?.selectRegion?.id,
-                label: values?.selectRegion?.text,
-              }}
-              options={regions}
-              onChange={(value) => {
-                setFieldValue("selectRegion", {
-                  id: value.value,
-                  text: value.label,
-                });
-              }}
-              isSearchable={true}
-            />
-          </FormGroup>
-
-          <FormGroup
-            required={true}
+        <div className="inputRow">
+          <InputSelect
+            important
+            options={regions}
+            label=" منطقه"
+            name="selectRegion"
+            values={values.selectRegion}
+            error={touched.selectRegion && errors.selectRegion}
+            handleChange={setFieldValue}
+          />
+          <InputText
+            important
+            label=" پلاک"
+            values={values.pelak}
+            name="pelak"
+            handleChange={handleChange}
             error={touched.pelak && errors.pelak}
-            input={{
-              id: "pelak",
-              name: "pelak",
-              placeholder: "",
-              value: values.pelak,
-              onChange: handleChange,
-            }}
-            label="پلاک "
           />
-
-          <FormGroup
-            required={true}
+          <InputText
+            important
+            label="واحد"
+            values={values.unit}
+            name="unit"
+            handleChange={handleChange}
             error={touched.unit && errors.unit}
-            input={{
-              id: "unit",
-              name: "unit",
-              placeholder: "",
-              value: values.unit,
-              onChange: handleChange,
-            }}
-            label="واحد "
           />
         </div>
-        <div className="flex justify-between items-start mt-5">
-          <div className="formInputSection">
-            <FormGroup
-              error={touched.postalCode && errors.postalCode}
-              input={{
-                id: "postalCode",
-                name: "postalCode",
-                placeholder: "",
-                value: values.postalCode,
-                onChange: handleChange,
-              }}
-              label="کد پستی "
-            />
-            <CustomSwitch
-              type={"button"}
-              dataName={"isActive"}
-              formData={formik}
-              setChecked={setChecked}
-              checked={checked}
-            />
-          </div>
-          <div className={" flex flex-col"}>
-            <p className={"pr-4 text-sm"}>موقعیت روی نقشه</p>
-            <Map formData={formik} long="longtitude" late="latitude" />
-            <p className="pr-4 text-sm">
-              موقعیت هاب را بر روی نقشه مشخص فرمایید
-            </p>
+        <div className="flex-between-center">
+          <InputText
+            label="کد پستی"
+            values={values.postalCode}
+            name="postalCode"
+            handleChange={handleChange}
+            error={touched.postalCode && errors.postalCode}
+          />
+          <CustomSwitch
+            active={values.isActive}
+            handleChange={() => setFieldValue("isActive", !values.isActive)}
+          />
+          <div className="flex-start-start flex-col">
+            <p>موقعیت روی نقشه</p>
+            <p>MAP</p>
+            {/* <Map formData={formik} long="longtitude" late="latitude" /> */}
+            <p>موقعیت هاب را بر روی نقشه مشخص فرمایید</p>
           </div>
         </div>
-        <div className="formInputSection">
-          <FormGroup
-            required={true}
-            error={touched.address && errors.address}
-            input={{
-              id: "address",
-              name: "address",
-              placeholder: "",
-              value: values.address,
-              onChange: handleChange,
-            }}
-            label="آدرس"
-            width="w-full"
+        <InputText
+          wrapperClassName="mt-8"
+          important
+          label="آدرس"
+          values={values.address}
+          name="address"
+          handleChange={handleChange}
+          error={touched.address && errors.address}
+        />
+        <div className="flex-end-center gap-3">
+          <SimpleButton
+            className="full-lightTomato-btn"
+            text="لغو"
+            handelClick={() => setOpen(false)}
+          />
+          <SimpleButton
+            type="submit"
+            className="full-tomato-btn"
+            text={currentData ? "ویرایش" : "افزودن"}
           />
         </div>
-
-        <div className="btnsection">
-          <Button theme="secondarypopUpButton" onClick={handleCloseModal}>
-            لغو
-          </Button>
-          <Button theme="mainpopUpButton">
-            {currentData ? "ویرایش" : "افزودن"}
-            {state.loading && (
-              <ClipLoader
-                className="inline-flex items-center"
-                size={24}
-                loading={true}
-                color="#FFF"
-              />
-            )}
-          </Button>
-        </div> */}
       </form>
     </Modal>
   );

@@ -5,15 +5,25 @@ import { PostDataParams } from "../../services/Service_call";
 import { StateData } from "./state-model";
 
 interface RoleDataBody {
-  code: string;
+  permission: string;
   name: string;
   isActive: boolean;
+  pageSize:number,
+  pageNumber:number
 }
-export const RoleData = createAsyncThunk("post", async (body: RoleDataBody) => {
-  const params = `/filter?pageNumber=1&pageSize=20`;
+
+export const RoleData = createAsyncThunk("post", async (body: RoleDataBody ) => {
+  const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
+  console.log("bsdfv" ,body.pageNumber);
+  
+  
   var data = {};
   try {
-    data = await PostDataParams(apiRoute().post.filterRole + params, body);
+    data = await PostDataParams(apiRoute().post.filterRole + params, {
+      permission:body.permission,
+      name:body.name,
+      isActive:body.isActive
+    });
   } catch (error) {
     console.log("error ", error);
   }
@@ -36,12 +46,12 @@ const RolesList = createSlice({
       state.rolesList = [];
     },
     updating: (state, action) => {
-      state.isUpdating = action.payload;
+      state.isUpdating = action?.payload;
     },
   },
   extraReducers: {
     [RoleData.fulfilled as any]: (state, action) => {
-      state.rolesList = action.payload.payload;
+      state.rolesList = action?.payload?.payload;
       state.fetchPost = false;
       state.errorMessage = null;
       state.isUpdating = false;
