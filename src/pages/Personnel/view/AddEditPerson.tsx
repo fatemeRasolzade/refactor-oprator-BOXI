@@ -143,7 +143,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             <div className="col-span-2 h-[40px] mb-[20px]">
               <CustomSwitch
                 active={true}
-                handleChange={(value: boolean) =>
+                handleChange={(value) =>
                   formik.setFieldValue("isActive", value)
                 }
               />

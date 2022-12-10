@@ -11,6 +11,7 @@ interface InputSelectProps {
   error?: any;
   important?: boolean;
   wrapperClassName?: string;
+  isMulti?: boolean;
 }
 
 const InputSelect: FC<InputSelectProps> = ({
@@ -23,6 +24,7 @@ const InputSelect: FC<InputSelectProps> = ({
   error,
   important,
   wrapperClassName,
+  isMulti,
 }): JSX.Element => {
   const style = {
     control: (base: any, state: any) => ({
@@ -48,6 +50,7 @@ const InputSelect: FC<InputSelectProps> = ({
         </span>
       </label>
       <Select
+        isMulti={isMulti}
         isLoading={options.length > 0 ? false : true}
         value={
           options ? options.find((option: any) => option.label === values) : ""
@@ -69,7 +72,7 @@ const InputSelect: FC<InputSelectProps> = ({
         placeholder=""
         isRtl
         name={name}
-        className="inputSelect focus:outline-none"
+        className="inputSelect focus:outline-none flex"
       />
       <p className="text-red-700 text-xs pr-3 h-4">{error}</p>
     </div>

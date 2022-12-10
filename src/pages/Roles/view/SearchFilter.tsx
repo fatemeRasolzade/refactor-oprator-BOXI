@@ -80,9 +80,10 @@ const SearchFilter: FC<SearchFilterProps> = ({
           </div>
           <div>
             <InputSelect
+              isMulti
               label="دسترسی ها"
               name="permission"
-              handleChange={handleSelect}
+              handleChange={(value: any) => console.log("value", value)}
               values={formik.values?.permission}
               options={permissionOptions}
             />
