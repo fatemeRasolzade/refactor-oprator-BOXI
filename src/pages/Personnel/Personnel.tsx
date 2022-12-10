@@ -28,6 +28,10 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   );
 
   const [isActive, setIsActive] = useState<boolean>(true);
+  const [selectedTableRows, setSelectedTableRows] = useState<any>({
+    data: [],
+    checked: false,
+  });
   const [filterData, setFilterData] = useState({
     personelCode: "",
     name: "",
@@ -49,10 +53,15 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     return () => dispatch(clearPersonnel() as any);
   }, [dispatch, isUpdating, isActive, filterData, pageNumbers]);
 
+  const handleSelectTableIte = (item: any) => {
+    console.log("selected item", item);
+  };
+
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0
       ? personnelList?.content?.map((item: any) => {
           return {
+            id: item.id,
             personelCode: item.personelCode,
             nationalCode: item.nationalCode,
             name: item.name,
@@ -94,6 +103,9 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
         data={data ? data : []}
         column={PersonnelColumn}
         pagination={personnelList?.totalElements}
+        selectable={true}
+        // @ts-ignore
+        setSelectedRows={(value: any) => console.log("sdgsfdb", value)}
       />
     </div>
   );

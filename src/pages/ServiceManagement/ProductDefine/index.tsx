@@ -17,7 +17,9 @@ import SearchForm from "./view/SearchForm";
 const ProductDefine = () => {
   // @ts-ignore
   const [isActive, setIsACtive] = useState(true);
-  const { errorMessage, productLists, isUpdating } = useSelector((state: any) => state.productDefine);
+  const { errorMessage, productLists, isUpdating } = useSelector(
+    (state: any) => state.productDefine
+  );
   const exportExcel = () => {
     // let row = [
     //     { v: "Courier: 24", t: "s", s: { font: { name: "Courier", sz: 24 } } },
@@ -56,7 +58,7 @@ const ProductDefine = () => {
                   route={apiRoute().delete.productDefine + `/${item.id}`}
                   updating={updating}
                 />
-                <ActionForms itemValue={item}  />
+                <ActionForms itemValue={item} />
               </div>
             ),
           };
@@ -71,9 +73,14 @@ const ProductDefine = () => {
         setIsACtive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ActionForms />}
-        exportExcel={()=>ExportExcel(productLists?.content)}
+        exportExcel={() => ExportExcel(productLists?.content)}
       />
-      <StaticTable data={data ? data : []} column={ProductColumns} pagination={productLists?.totalElements} />
+      <StaticTable
+        data={data ? data : []}
+        column={ProductColumns}
+        pagination={productLists?.totalElements}
+        selectable={false}
+      />
     </div>
   );
 };

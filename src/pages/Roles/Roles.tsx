@@ -118,6 +118,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
         data={data ? data : []}
         column={RoleColumn}
         pagination={rolesList?.totalElements}
+        selectable={false}
       />
     </div>
   );

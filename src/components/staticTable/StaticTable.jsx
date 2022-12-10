@@ -1,35 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTable, usePagination, useRowSelect } from "react-table";
 import Paginations from "../../global/Pagination/Pagination";
 
-// const IndeterminateCheckbox = React.forwardRef(
-//   ({ data, indeterminate, ...rest }, ref) => {
-//     const defaultRef = React.useRef();
-//     const resolvedRef = ref || defaultRef;
+const IndeterminateCheckbox = React.forwardRef(
+  ({ data, indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
 
-//     React.useEffect(() => {
-//       resolvedRef.current.indeterminate = indeterminate;
-//     }, [resolvedRef, indeterminate]);
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
 
-//     return (
-//       <>
-//         <input
-//           type="checkbox"
-//           ref={resolvedRef}
-//           {...rest}
-//           onClick={(e) => {
-//             if (e.target.checked === true) {
-//               console.log(data);
-//             }
-//           }}
-//         />
-//       </>
-//     );
-//   }
-// );
+    return (
+      <>
+        <input
+          type="checkbox"
+          ref={resolvedRef}
+          {...rest}
+          // onClick={(e) => {
+          //   if (e.target.checked === true) {
+          //     console.log(data);
+          //   }
+          // }}
+        />
+      </>
+    );
+  }
+);
 
-function Table({ columns, data, pageTable }) {
+function Table({ columns, data, pageTable, selectable, setSelectedRows }) {
   const {
+    selectedFlatRows,
     getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -39,7 +40,7 @@ function Table({ columns, data, pageTable }) {
 
     // The rest of these things are super handy, too ;)
 
-   // state: { pageIndex, pageSize },
+    // state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
@@ -48,27 +49,34 @@ function Table({ columns, data, pageTable }) {
     usePagination,
     useRowSelect,
     (hooks) => {
+      let isSelectable = selectable
+        ? {
+            Header: ({ getToggleAllPageRowsSelectedProps }) => (
+              <div>
+                <IndeterminateCheckbox
+                  {...getToggleAllPageRowsSelectedProps()}
+                />
+              </div>
+            ),
+            // The cell can use the individual row's getToggleRowSelectedProps method
+            // to the render a checkbox
+            Cell: ({ row }) => (
+              <div>
+                <IndeterminateCheckbox
+                  {...row.getToggleRowSelectedProps()}
+                  data={row}
+                />
+              </div>
+            ),
+          }
+        : {};
       hooks.visibleColumns.push((columns) => [
         // Let's make a column for selection
         {
           id: "selection",
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
-          // Header: ({ getToggleAllPageRowsSelectedProps }) => (
-          //   <div>
-          //     <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
-          //   </div>
-          // ),
-          // The cell can use the individual row's getToggleRowSelectedProps method
-          // to the render a checkbox
-          // Cell: ({ row }) => (
-          //   <div>
-          //     <IndeterminateCheckbox
-          //       {...row.getToggleRowSelectedProps()}
-          //       data={row}
-          //     />
-          //   </div>
-          // ),
+          ...isSelectable,
         },
         ...columns,
       ]);
@@ -76,6 +84,11 @@ function Table({ columns, data, pageTable }) {
   );
 
   // Render the UI for your table
+  useEffect(() => {
+    console.log("loop");
+    setSelectedRows && setSelectedRows(selectedFlatRows);
+  }, [selectedFlatRows]);
+
   return (
     <div className="overflow-auto bg-white rounded-lg shadow-md  mt-6">
       <table
@@ -126,10 +139,22 @@ function Table({ columns, data, pageTable }) {
   );
 }
 
-function StaticTable({ data, column, pagination }) {
- 
-
-  return <Table columns={column} data={data} pageTable={pagination} />;
+function StaticTable({
+  data,
+  column,
+  pagination,
+  selectable,
+  setSelectedRows = null,
+}) {
+  return (
+    <Table
+      columns={column}
+      data={data}
+      pageTable={pagination}
+      selectable={selectable}
+      setSelectedRows={setSelectedRows}
+    />
+  );
 }
 
 export default StaticTable;

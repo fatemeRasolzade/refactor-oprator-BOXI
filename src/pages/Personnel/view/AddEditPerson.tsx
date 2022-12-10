@@ -193,6 +193,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             </div>
             <div className="col-span-2">
               <InputText
+                wrapperClassName="w-full"
                 label="نام و نام خانوادگی"
                 name="name"
                 handleChange={formik.handleChange}
@@ -291,6 +292,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 
             <div className="col-span-1  relative">
               <InputSelect
+              wrapperClassName="w-full"
                 name="isSuperAdmin"
                 label="سوپر ادمین"
                 values={formik.values.isSuperAdmin}
