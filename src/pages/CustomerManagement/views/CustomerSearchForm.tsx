@@ -9,6 +9,7 @@ import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { FiSearch } from "react-icons/fi";
 import Chip from "../../../global/Chip/Chip";
+import CustomerPerfesionalFilter from "../CustomerPerfesionalFilter";
 
 interface PropsData {
   isActive: Boolean | string;
@@ -93,13 +94,19 @@ const CustomerSearchForm: React.FC<PropsData> = ({
             value={values.telNumber}
             onChange={(e) => setFieldValue("telNumber", e.target.value)}
           />
-          <SimpleButton
-            type={"submit"}
+          {/* <SimpleButton
+           
             className="full-gray-btn"
             icon={<FiSearch size={25} className="text-darkGray" />}
             text="جستجو"
-          />
-          <PerfesionalSearch />
+          /> */}
+          <SimpleButton searchBtn />
+          <PerfesionalSearch formData={handleSubmit}>
+            <CustomerPerfesionalFilter
+              values={values}
+              setFieldValue={setFieldValue}
+            />
+          </PerfesionalSearch>
         </form>
       </div>
       {/* list of chip */}

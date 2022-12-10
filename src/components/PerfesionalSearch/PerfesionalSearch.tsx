@@ -31,23 +31,18 @@ const PerfesionalSearch = ({ formData, children }: propsData): JSX.Element => {
           </Button>
         </PopoverHandler>
         <PopoverContent>
-          <div className="" style={{ width: "550px" }}>
-            <div className="flex  justify-between items-center gap-4">
+          <div className="" style={{ width: "500px" }}>
+            <div className="flex  justify-between items-center gap-4 mt-5">
               {children}
             </div>
-            <div className="flex-between-center mt-5">
+            <div className="flex-between-center mt-2">
               <SimpleButton
                 text="شخصی سازی"
                 icon={<BiCog color="gray" />}
-                className="centering p-3"
+                className="centering p-0"
               />
-              <SimpleButton text="پاک کردن ورودی ها" className="p-2" />
-              <SimpleButton
-                type="submit"
-                handelClick={formData}
-                className="full-tomato-btn"
-                text="جستجو"
-              />
+              <SimpleButton text="پاک کردن ورودی ها" className="p-0" />
+              <SimpleButton searchBtn handelClick={formData} />
             </div>
           </div>
         </PopoverContent>
