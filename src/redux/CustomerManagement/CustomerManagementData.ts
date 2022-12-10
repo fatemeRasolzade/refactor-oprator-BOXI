@@ -1,14 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { PostDataParams } from "../../services/Service_call";
-import {  CREATE_CUSTOMER } from "../../services/apiRoute";
+import { postDataHeaderToServer } from "../../services/Service_call";
+import { CREATE_CUSTOMER } from "../../services/apiRoute";
 
 export const customerData = createAsyncThunk(
   "customerList",
   async (body: any) => {
-    const params = `/filter?pageNumber=1&pageSize=20`;
+    const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
     var data = {};
     try {
-      data = await PostDataParams(CREATE_CUSTOMER + params, body);
+      data = await postDataHeaderToServer(
+        CREATE_CUSTOMER + params,
+        {
+          ...body,
+          pageNumber: undefined,
+          pageSize: undefined,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("myToken"),
+          },
+        }
+      );
     } catch (error) {
       console.log("error ", error);
     }
@@ -17,7 +29,7 @@ export const customerData = createAsyncThunk(
 );
 
 const initialState: any = {
-  customerList: [],
+  productLists: [],
   fetchpost: false,
   errorMessage: null,
   isUpdating: false,

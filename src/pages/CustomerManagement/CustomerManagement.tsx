@@ -66,10 +66,12 @@ const CustomerManagement = () => {
         })
       : [];
 
+  console.log(customerList);
+
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="مدیریت مشتریان" />
-      <CustomerSearchForm />
+      <CustomerSearchForm isActive={isActive} isUpdating={isUpdating} />
       <div className="flex-start-center gap-16 mt-6">
         <AddButton ToggleOptions={ToggleOptions} />
         <TestCustomOptions options={options} />
@@ -79,6 +81,8 @@ const CustomerManagement = () => {
         column={CustomerColumns}
         pagination={customerList?.totalElements}
       />
+      {/* <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} /> */}
+
       <CustomerForm open={open} setOpen={setOpen} />
     </div>
   );

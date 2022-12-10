@@ -1,104 +1,108 @@
+import React, { memo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
-import { FiSearch } from "react-icons/fi";
-import { useDispatch } from "react-redux";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
-import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
-import Chip from "../../../global/Chip/Chip";
-import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
+import { GetDataParams } from "../../../services/Service_call";
+import { CREATE_CUSTOMER } from "../../../services/apiRoute";
+import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
+import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import { FiSearch } from "react-icons/fi";
+import Chip from "../../../global/Chip/Chip";
 
-type CustomerSearchFormProps = {
-  isActive?: Boolean | string;
-  isUpdating?: Boolean;
-};
-const CustomerSearchForm = ({
+interface PropsData {
+  isActive: Boolean | string;
+  isUpdating: Boolean;
+}
+
+const CustomerSearchForm: React.FC<PropsData> = ({
   isActive,
   isUpdating,
-}: CustomerSearchFormProps) => {
+}): JSX.Element => {
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
+  // @ts-ignore
+  const { pageNumbers } = useSelector((state) => state.paginate);
   const [filterData, setFilterData] = useState({});
+  // const [productOptions, setProductOptions] = useState([]);
   const formik = useFormik({
     initialValues: {
-      code: "",
+      // username: "",
+      // postalCode: "",
+      // address: "",
       name: "",
-      isActive: isActive,
+      code: "",
       telNumber: "",
+      isActive: isActive,
+      // selectParentCustomer: {
+      //   id: 0,
+      //   text: "",
+      // },
     },
     onSubmit: (values) => {
       setFilterData(values);
     },
   });
 
+  const { values, setFieldValue, handleSubmit }: any = formik;
+
   useEffect(() => {
-    // @ts-ignore
-    dispatch(customerData({ ...formik.values, isActive }));
-  }, [isActive, filterData, isUpdating]);
-  const data = [
-    { id: 1, text: "product" },
-    { id: 2, text: "price" },
-    { id: 3, text: "vemdor" },
-  ];
+    dispatch(
+      customerData({
+        ...values,
+        telNumber: parseInt(values.telNumber),
+        pageSize: 10,
+        pageNumber: pageNumbers,
+      }) as any
+    );
+  }, [isActive, filterData, isUpdating, pageNumbers]);
+
   const handleChangeCode = (
     e: React.ChangeEvent<HTMLInputElement>,
     name: string
   ) => {
-    formik.setFieldValue(name, e.target.value);
-    const filterData = data.filter((item) =>
-      item.text.includes(e.target.value)
-    );
-    setServiceCodeOptions(
-      filterData.map((item) => {
-        return {
-          label: item?.text,
-        };
-      })
-    );
-    //mr hash please dont delete this comments//
-    // const params = `${e.target.value}`;
-    // setOptions(data.filter(item=>item.text.includes(e.target.value)))
-    // GetDataParams(apiRoute().get.GET_PRODUCT + params);
+    setFieldValue(name, e.target.value);
   };
   const handleChangeName = (
     e: React.ChangeEvent<HTMLInputElement>,
     name: string
   ) => {
-    formik.setFieldValue(name, e.target.value);
+    setFieldValue(name, e.target.value);
   };
   const handleSelect = (val: any, name: string) => {
-    formik.setFieldValue(name, val);
+    setFieldValue(name, val);
   };
 
   return (
     <>
-      <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col">
+      <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col ">
         <form
-          className="flex-start-center flex-wrap gap-5"
-          onSubmit={formik.handleSubmit}
+          className="flex-start-center flex-wrap gap-5 items-center"
+          onSubmit={handleSubmit}
         >
           <AutocompleteInput
             label={"کد مشتری"}
             items={serviceCodeOptions}
-            value={formik.values.code}
+            value={values.code}
             onChange={(e) => handleChangeCode(e, "code")}
             onSelect={(val: any) => handleSelect(val, "code")}
           />
           <AutocompleteInput
             label={"نام مشتری"}
             items={[]}
-            value={formik.values.name}
+            value={values.name}
             onChange={(e) => handleChangeName(e, "name")}
             onSelect={(val: any) => handleSelect(val, "name")}
           />
           <AutocompleteInput
             label={"شماره تماس"}
             items={[]}
-            value={formik.values.telNumber}
+            value={values.telNumber}
             onChange={(e) => handleChangeName(e, "telNumber")}
             onSelect={(val: any) => handleSelect(val, "telNumber")}
           />
           <SimpleButton
+            type={"submit"}
             className="full-gray-btn"
             icon={<FiSearch size={25} className="text-darkGray" />}
             text="جستجو"
@@ -106,10 +110,10 @@ const CustomerSearchForm = ({
           <PerfesionalSearch />
         </form>
       </div>
-
+      {/* list of chip */}
       {filterData && <Chip filterData={filterData} formData={formik} />}
     </>
   );
 };
 
-export default CustomerSearchForm;
+export default memo(CustomerSearchForm);
