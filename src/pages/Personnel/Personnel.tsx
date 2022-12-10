@@ -34,7 +34,6 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     nationalCode: "",
     mobile: "",
     email: "",
-    search: "",
     username: "",
     isActive: isActive,
     pageNumber: pageNumbers,

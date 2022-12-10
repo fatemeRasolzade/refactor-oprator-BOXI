@@ -1,22 +1,31 @@
 import React, { FC, useState } from "react";
 import * as Yup from "yup";
-import { Button, Dialog } from "@material-tailwind/react";
+import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
-import { BiPlus } from "react-icons/bi";
 import InputText from "../../../global/InputText/InputText";
 import CustomSwitch from "../../../global/Switch/Switch";
 import AddButton from "../../../global/addButton/AddButton";
+import axios from "axios";
+import { PersonnelData } from "../../../redux/PersonData/PersonsData";
+import InputSelect from "../../../global/InputSelect/InputSelect";
 
 interface AddEditPersonProps {
   currentData?: any;
 }
 
 const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
+  const dispatch = useDispatch();
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [options] = useState([
+    { id: true, text: "بله" },
+    { id: true, text: "خیر" },
+  ]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -48,7 +57,33 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           isSuperAdmin: {},
           isActive: true,
         },
-    onSubmit: async (values, { resetForm }) => {},
+    onSubmit: async (values, { resetForm }) => {
+      const data = currentData ? values : { ...values, id: currentData.id };
+      debugger;
+
+      try {
+        const res = await axios({
+          url: "http://boxi.local:40000/resource-api/employee",
+          method: currentData ? "put" : "post",
+          data: data,
+        });
+        if (200 <= res.status && res.status < 300) {
+          dispatch(
+            PersonnelData({
+              personelCode: "",
+              name: "",
+              nationalCode: "",
+              mobile: "",
+              email: "",
+
+              username: "",
+              isActive: true,
+              pageNumber: 1,
+            }) as any
+          );
+        }
+      } catch (error) {}
+    },
   });
   const handleOpenModal = () => setIsModalOpen(!isModalOpen);
   const handleUploadFileAction = () => {
@@ -96,6 +131,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 values={formik.values.personelCode}
                 important
                 type={"text"}
+                error={formik.errors.personelCode}
               />
             </div>
             <div className=" ">
@@ -107,6 +143,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 values={formik.values.nationalCode}
                 important
                 type={"text"}
+                error={formik.errors.nationalCode}
               />
             </div>
             <div className="col-span-2">
@@ -117,6 +154,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 values={formik.values.name}
                 important
                 type={"text"}
+                error={formik.errors.name}
               />
             </div>
             <div className="col-span-1 ">
@@ -128,6 +166,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 values={formik.values.mobile}
                 important
                 type={"text"}
+                error={formik.errors.mobile}
               />
             </div>
             <div className="col-span-1 ">
@@ -138,6 +177,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 handleChange={formik.handleChange}
                 values={formik.values.email}
                 type={"text"}
+                error={formik.errors.email}
               />
             </div>
             <div className="col-span-2 h-[40px] mb-[20px]">
@@ -155,6 +195,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               values={formik.values.username}
               important
               type={"text"}
+              error={formik.errors.username}
             />
             {!currentData && (
               <>
@@ -166,6 +207,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                     values={formik.values.password}
                     important
                     type={"password"}
+                    error={formik.errors.password}
                   />
                 </div>
                 <div className="col-span-1 ">
@@ -177,20 +219,20 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                     values={formik.values.confirmPassword}
                     important
                     type={"password"}
+                    error={formik.errors.confirmPassword}
                   />
                 </div>
               </>
             )}
 
             <div className="col-span-1 ">
-              <InputText
-                className="w-full"
+              <InputSelect
+                values={[]}
+                name="isSuperAdmin"
                 label="سوپر ادمین"
-                name="confirmPassword"
-                handleChange={formik.handleChange}
-                values={formik.values.confirmPassword}
-                important
-                type={"text"}
+                handleChange={formik.setFieldValue}
+                options={options}
+                error={formik.errors.isSuperAdmin}
               />
             </div>
           </div>
