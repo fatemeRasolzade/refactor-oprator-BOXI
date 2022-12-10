@@ -41,7 +41,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
             email: item.email,
             operation: (
               <div className="flex w-full gap-3 justify-center">
-                <AddEditPerson currentData={"fsv"} />
+                <AddEditPerson currentData={item} />
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف کارمند"}

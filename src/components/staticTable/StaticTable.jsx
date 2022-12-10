@@ -1,6 +1,6 @@
 import React from "react";
 import { useTable, usePagination, useRowSelect } from "react-table";
-import Paginations from "./../../global/Pagination/Pagination";
+import Paginations from "../../global/Pagination/Pagination";
 
 // const IndeterminateCheckbox = React.forwardRef(
 //   ({ data, indeterminate, ...rest }, ref) => {
@@ -119,7 +119,7 @@ function Table({ columns, data, pageTable }) {
           <>موردی یافت نشد</>
         </div>
       )}
-      <div className="text-center">
+      <div className="text-center my-5">
         <Paginations pageData={pageTable} />
       </div>
     </div>

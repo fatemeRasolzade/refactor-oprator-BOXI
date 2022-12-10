@@ -23,7 +23,7 @@ const CustomOptions = ({ options = [] }: any) => {
         );
       case ACTIVE_OPTION:
         return (
-          <CustomSwitch active={type?.value} handleChange={type.handleClick} />
+          <CustomSwitch active={type?.value as boolean} handleChange={type.handleClick} />
         );
       case DOWNLOAD_OPTION:
         return (

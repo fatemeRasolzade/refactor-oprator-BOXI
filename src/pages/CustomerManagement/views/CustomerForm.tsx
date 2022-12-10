@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import InputText from "../../../global/InputText/InputText";
 import Modal from "../../../global/Modal/Modal";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
@@ -17,6 +19,12 @@ import CustomerAddressElements from "./CustomerAddressElements";
 import { ReverseArray } from "../../../tools/functions/Methods";
 import CustomerAddressForm from "./CustomerAddressForm";
 import CustomerTelephoneForm from "./CustomerTelephoneForm";
+import {
+  createCustomer,
+  getCustomerParent,
+  getCustomerType,
+} from "../../../services/CustomerApi";
+import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
 
 type CustomerFormProps = {
   open: boolean;
@@ -27,6 +35,7 @@ type CustomerFormProps = {
 const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
   const [OpenAddresses, setOpenAddresses] = useState(false);
   const [OpenPhones, setOpenPhones] = useState(false);
+  const dispatch = useDispatch();
   const handleOpenAddress = (kind?: any, data?: any, id?: any) => {
     setAddressModalInfo({ kind, data, id });
     setOpenAddresses(true);
@@ -81,10 +90,25 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
     id: undefined,
   });
 
+  const [customerType, setCustomerType] = useState([]);
+  const [customerParent, setCustomerParent] = useState([]);
+
   useEffect(() => {
-    // console.log(GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE));
-    // GetCustomerType(apiRoute().get.GET_CUSTOMER_TYPE);
+    initCustomerType();
+    initParentCustomer();
   }, []);
+
+  const initCustomerType = () => {
+    getCustomerType().then((res) => {
+      setCustomerType(res);
+    });
+  };
+
+  const initParentCustomer = () => {
+    getCustomerParent().then((res) => {
+      setCustomerParent(res);
+    });
+  };
 
   const validation = Yup.object().shape({
     code: Yup.string().required(),
@@ -159,7 +183,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
       : {
           code: "",
           name: "",
-          selectCustomerType: {},
+          selectCustomerType: { id: 0, text: "حقیقی" },
           nationalCode: "",
 
           selectParentCustomer: undefined,
@@ -216,33 +240,29 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         // 		setState({ loading: false, error: error.response.data.message });
         // 	});
       } else {
-        // delete values.id;
-        // createCustomer({
-        // 	...values,
-        // 	currentCredit: parseInt(values.currentCredit),
-        // 	creditLimit: parseInt(values.creditLimit),
-        // 	initialCredit: parseInt(values.initialCredit),
-        // 	confirmPassword: undefined,
-        // 	addresses: values.addresses.map((a) => {
-        // 		return { ...a, id: undefined };
-        // 	}),
-        // 	telephones: values.telephones.map((a) => {
-        // 		return { ...a, id: undefined };
-        // 	}),
-        // })
-        // 	.then((response) => {
-        // 		setState({ loading: false, error: false });
-        // 		action({
-        // 			type: REFRESH,
-        // 			payload: !refresh,
-        // 		});
-        // 		resetForm({ values: "" });
-        // 		closeModal();
-        // 		response.status && toast.success("مشتری افزوده شد ");
-        // 	})
-        // 	.catch((error) => {
-        // 		setState({ loading: false, error: error.response.data.message });
-        // 	});
+        console.log(values.selectCustomerType);
+        console.log(values.selectParentCustomer);
+
+        createCustomer({
+          ...values,
+          currentCredit: parseInt(values.currentCredit),
+          creditLimit: parseInt(values.creditLimit),
+          initialCredit: parseInt(values.initialCredit),
+          confirmPassword: undefined,
+          addresses: values.addresses.map((a: any) => {
+            return { ...a, id: undefined };
+          }),
+          telephones: values.telephones.map((a: any) => {
+            return { ...a, id: undefined };
+          }),
+        })
+          .then((response) => {
+            dispatch(customerData({}) as any);
+            // resetForm({ values: "" });
+            setOpen(false);
+            toast.success("مشتری افزوده شد ");
+          })
+          .catch((error) => {});
       }
     },
   });
@@ -281,30 +301,52 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
               error={touched.name && errors.name}
             />
             <InputSelect
-              options={[]}
+              options={customerType}
               important
               label="نوع مشتری"
               values={values.selectCustomerType}
               name="selectCustomerType"
-              handleChange={handleChange}
+              handleChange={setFieldValue}
               error={touched.selectCustomerType && errors.selectCustomerType}
             />
-            <InputText
-              important
-              label="کد ملی"
-              values={values.nationalCode}
-              name="nationalCode"
-              handleChange={handleChange}
-              error={touched.nationalCode && errors.nationalCode}
-            />
+            {values.selectCustomerType.id === 0 && (
+              <InputText
+                important
+                label="کد ملی"
+                values={values.nationalCode}
+                name="nationalCode"
+                handleChange={handleChange}
+                error={touched.nationalCode && errors.nationalCode}
+              />
+            )}
+            {values.selectCustomerType.id === 1 && (
+              <>
+                <InputText
+                  important
+                  label="شناسه ملی"
+                  values={values.nationalId}
+                  name="nationalId"
+                  handleChange={handleChange}
+                  error={touched.nationalId && errors.nationalId}
+                />
+                <InputText
+                  important
+                  label="کد اقتصادی"
+                  values={values.economicCode}
+                  name="economicCode"
+                  handleChange={handleChange}
+                  error={touched.economicCode && errors.economicCode}
+                />
+              </>
+            )}
           </div>
           <div className="inputRow">
             <InputSelect
-              options={[]}
+              options={customerParent}
               label="مشتری والد"
               values={values.selectParentCustomer}
               name="selectParentCustomer"
-              handleChange={handleChange}
+              handleChange={setFieldValue}
               error={
                 touched.selectParentCustomer && errors.selectParentCustomer
               }
@@ -345,7 +387,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         </div>
         <div className="inputRow">
           <div className="border rounded-lg px-5 pt-10 mt-10 relative">
-            <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
+            <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">
               اطلاعات کاربری
             </span>
             <div className="inputRow">
@@ -393,7 +435,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
 
         <div className="inputRow">
           <div className="border rounded-lg px-5 pt-8 mt-5 relative">
-            <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
+            <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">
               اطلاع رسانی جمع آوری از طریق
             </span>
             <div className="inputRow">

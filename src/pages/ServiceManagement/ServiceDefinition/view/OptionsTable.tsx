@@ -35,7 +35,7 @@ const OptionsTable = ({ actions }: propsData) => {
           <li>
             <CustomSwitch
               active={true}
-              handleChange={(checked: boolean) =>
+              handleChange={(checked: any) =>
                 console.log("isactive", checked)
               }
             />

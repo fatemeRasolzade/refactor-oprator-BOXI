@@ -10,11 +10,11 @@ import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { PostalCodeRegex } from "../../../tools/validations/ErrorHelper";
 import { VALIDPOSTALCODE } from "../../../tools/validations/ErrorKeywords";
 import {
+  getAddressType,
   getCities,
   getProvinces,
   getRegions,
 } from "../../../services/GlobalApi";
-import { getCustomerType } from "../../../services/CustomerApi";
 // import { Map } from "../../../../components/map";
 // import { PostalCodeRegex } from "../../../../utilities/function";
 
@@ -39,124 +39,37 @@ const CustomerAddressForm = ({
   const [addressKind, setAddressKind] = useState([]);
 
   const initAddressKind = () => {
-    getCustomerType().then((res) => {
-      console.log(res);
+    getAddressType().then((res) => {
+      setAddressKind(res);
     });
   };
 
   const initCities = () => {
     getCities().then((res) => {
-      console.log(res);
+      setCities(res);
     });
   };
 
   const initRegions = () => {
     getRegions().then((res) => {
-      console.log(res);
+      setRegions(res);
     });
   };
 
   const initProvinces = () => {
     getProvinces().then((res) => {
-      console.log(res);
+      setProvinces(res);
     });
   };
 
   useEffect(() => {
-    initAddressKind();
-    initCities();
-    initRegions();
-    initProvinces();
-  }, []);
-
-  // const getAddressKind = useCallback(() => {
-  // 	getAddressesKind()
-  // 		.then((response) => {
-  // 			const options = response.data.payload.map(({ id: value, ...rest }) => ({
-  // 				value,
-  // 				...rest,
-  // 			}));
-  // 			const options1 = options.map(({ text: label, ...rest }) => ({
-  // 				label,
-  // 				...rest,
-  // 			}));
-  // 			setAddressKind(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  //  }, []);
-
-  // const getProvince = useCallback(() => {
-  // 	// getProvinces();
-  // 	axios({ method: "GET", url: "http://192.168.1.153:8090/core-api/countryDevision?filter=" })
-
-  // 		.then((response) => {
-  // 			console.log(response);
-  // 			console.log(response.data);
-  // 			// const options = response.data.payload.content.map(({ id: value, ...rest }) => ({
-  // 			// 	value,
-  // 			// 	...rest,
-  // 			// }));
-  // 			// const options1 = options.map(({ text: label, ...rest }) => ({
-  // 			// 	label,
-  // 			// 	...rest,
-  // 			// }));
-  // 			// setProvinces(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, [provinces]);
-
-  // const getCities = useCallback(() => {
-  // 	// getProvincesCities()
-  // 	// axios({ method: "GET", url: "http://192.168.1.153:8090/core-api/countryDevision/province/1/city?filter" })
-  // 	axios({ method: "GET", url: "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter" })
-  // 		.then((response) => {
-  // 			const options = response.data.payload.content.map(({ id: value, ...rest }) => ({
-  // 				value,
-  // 				...rest,
-  // 			}));
-  // 			const options1 = options.map(({ text: label, ...rest }) => ({
-  // 				label,
-  // 				...rest,
-  // 			}));
-  // 			setCities(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, [cities]);
-
-  // const getRegions = useCallback(() => {
-  // 	// getCityLocations()
-  // 	// axios({ method: "GET", url: "http://192.168.1.153:8090/core-api/countryDevision/city/2/loc?filter" })
-  // 	axios({ method: "GET", url: "http://boxi.local:40000/core-api/countryDevision/city/2/loc?filter" })
-  // 		.then((response) => {
-  // 			const options = response.data.payload.content.map(({ id: value, ...rest }) => ({
-  // 				value,
-  // 				...rest,
-  // 			}));
-  // 			const options1 = options.map(({ text: label, ...rest }) => ({
-  // 				label,
-  // 				...rest,
-  // 			}));
-  // 			setRegions(options1);
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log(err);
-  // 		});
-  // }, [regions]);
-
-  // useEffect(() => {
-  // 	if (open) {
-  // 		getAddressKind();
-  // 		getProvince();
-  // 		getCities();
-  // 		getRegions();
-  // 	}
-  // }, [open]);
+    if (open) {
+      initAddressKind();
+      initCities();
+      initRegions();
+      initProvinces();
+    }
+  }, [open]);
 
   // start fromik configurations
   const [checked, setChecked] = useState(false);
@@ -259,66 +172,44 @@ const CustomerAddressForm = ({
         <div className="inputRow">
           <InputSelect
             important
-            options={[]}
+            options={addressKind}
             label="نوع آدرس"
             name="selectAddressType"
-            // values={values.selectAddressType}
-            // values={{
-            //   value: values?.selectAddressType?.id,
-            //   label: values?.selectAddressType?.text,
-            // }}
-            error={
-              touched.selectAddressType && errors.selectAddressType
-              // && errors.selectAddressType.id
-            }
-            handleChange={handleChange}
+            values={values.selectAddressType}
+            error={touched.selectAddressType && errors.selectAddressType}
+            handleChange={setFieldValue}
           />
           <InputSelect
             important
-            options={[]}
+            options={provinces}
             label=" استان"
             name="selectState"
             values={values.selectState}
             error={touched.selectState && errors.selectState}
-            handleChange={(value: any) => {
-              setFieldValue("selectState", {
-                id: value.value,
-                text: value.label,
-              });
-            }}
+            handleChange={setFieldValue}
           />
 
           <InputSelect
             important
-            options={[]}
+            options={cities}
             label=" شهر"
             name="selectState"
             values={values.selectCity}
             error={touched.selectCity && errors.selectCity}
-            handleChange={(value: any) => {
-              setFieldValue("selectCity", {
-                id: value.value,
-                text: value.label,
-              });
-            }}
+            handleChange={setFieldValue}
           />
         </div>
         <div className="inputRow">
           <InputSelect
             important
-            options={[]}
+            options={regions}
             label=" منطقه"
             name="selectRegion"
             values={values.selectRegion}
             error={
               touched.selectRegion && errors.selectRegion && errors.selectRegion
             }
-            handleChange={(value: any) => {
-              setFieldValue("selectRegion", {
-                id: value.value,
-                text: value.label,
-              });
-            }}
+            handleChange={setFieldValue}
           />
           <InputText
             important

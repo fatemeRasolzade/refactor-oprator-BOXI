@@ -80,11 +80,21 @@ export const apiRoute = () => {
       GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
       //customer
       GET_CUSTOMER_TYPE: createUrl(API_CONSIGNMENT5, `/customer/customerType`),
+      GET_CUSOTMER_PARENT: createUrl(
+        API_CONSIGNMENT5,
+        `/customer/select?filter=`
+      ),
       //GLOBAL
-      GET_PROVINCES: createUrl(API_CONSIGNMENT6, "/countryDevision?filter="),
-      GET_CITIES: createUrl(API_CONSIGNMENT6, "/countryDevision/province/1/city?filter="),
-      GET_REGIONS: createUrl(API_CONSIGNMENT6, "countryDevision/city/2/loc?filter"),
-
+      GET_PROVINCES: createUrl(API_CONSIGNMENT4, "/countryDevision?filter="),
+      GET_CITIES: createUrl(
+        API_CONSIGNMENT4,
+        "/countryDevision/province/1/city?filter="
+      ),
+      GET_REGIONS: createUrl(
+        API_CONSIGNMENT4,
+        "/countryDevision/city/2/loc?filter"
+      ),
+      GET_ADDRESS_TYPE: createUrl(API_CONSIGNMENT5, "/address/addressType"),
     },
     post: {
       // create
@@ -97,7 +107,7 @@ export const apiRoute = () => {
       filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
       serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
       product: createUrl(API_CONSIGNMENT4, "/product"),
-      customer: createUrl(API_CONSIGNMENT2, "/customer"),
+      CREATE_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
     },
     postExcel: {
       exception: createUrl(API_CONSIGNMENT3, "/exception"),
@@ -112,6 +122,7 @@ export const apiRoute = () => {
     },
     edit: {
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
+      EDIT_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
     },
   };
 };

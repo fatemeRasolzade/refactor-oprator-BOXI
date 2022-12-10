@@ -21,7 +21,12 @@ const OptionsTable = ({ setIsACtive,addComponentProps,exportExcel,isActive}: pro
             {/* <SimpleButton text="افزودن" className="full-tomato-btn" icon={<BiPlus color="white" />} /> */}
           </li>
           <li>
-            <CustomSwitch active={isActive} handleChange={(value:boolean)=>setIsACtive && setIsACtive(value)} />
+            <CustomSwitch
+              active={true}
+              handleChange={(value: any) =>
+                setIsACtive && setIsACtive(value)
+              }
+            />
           </li>
           <li>
             <SimpleButton
