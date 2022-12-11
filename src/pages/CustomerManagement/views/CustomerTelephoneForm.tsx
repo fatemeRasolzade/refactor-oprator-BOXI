@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { v4 as uuid } from "uuid";
-
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
+import { v4 as uuid } from "uuid";
 import { useFormik } from "formik";
-// import { v4 as uuidv4 } from "uuid";
-
 import Modal from "../../../global/Modal/Modal";
-import InputSelect from "../../../global/InputSelect/InputSelect";
 import InputText from "../../../global/InputText/InputText";
+import { getPhoneType } from "../../../services/GlobalApi";
+import InputSelect from "../../../global/InputSelect/InputSelect";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 
 const CustomerTelephoneForm = ({
@@ -18,24 +16,16 @@ const CustomerTelephoneForm = ({
   value,
   ID,
 }: any) => {
-  const [state, setState] = useState({
-    loading: false,
-    error: false,
-    response: null,
-  });
-
-  const [phoneKind, setPhoneKind] = useState([]);
+  const [PhoneType, setPhoneType] = useState([]);
 
   //get required data
-const initPhoneType = () => {
-  
-}
+  const initPhoneType = () => {
+    getPhoneType().then((res) => setPhoneType(res));
+  };
 
-     useEffect(() => {
-       if (open) {
-         initPhoneType();
-       }
-     }, [open]);
+  useEffect(() => {
+    if (open) initPhoneType();
+  }, [open]);
 
   // start fromik configurations
   const validation = Yup.object().shape({
@@ -85,10 +75,6 @@ const initPhoneType = () => {
   const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
     formik;
 
-  const handleCloseModal = (e: any) => {
-    e.preventDefault();
-    setOpen(false);
-  };
   return (
     <Modal
       visible={open}
@@ -99,17 +85,13 @@ const initPhoneType = () => {
         <div className="inputRow">
           <InputSelect
             important
-            options={[]}
+            options={PhoneType}
             label="تماس از طریق"
-            values={{
-              value: values?.selectPhoneType?.id,
-              label: values?.selectPhoneType?.text,
-            }}
+            values={values.selectPhoneType}
             name="selectPhoneType"
-            handleChange={handleChange}
+            handleChange={setFieldValue}
             error={touched.selectPhoneType && errors.selectPhoneType}
           />
-
           <InputText
             important
             label=" تلفن"
