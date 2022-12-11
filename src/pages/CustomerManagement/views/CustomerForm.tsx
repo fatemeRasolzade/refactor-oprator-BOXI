@@ -43,6 +43,7 @@ type CustomerFormProps = {
 const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
   const [OpenAddresses, setOpenAddresses] = useState(false);
   const [OpenPhones, setOpenPhones] = useState(false);
+  const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const handleOpenAddress = (kind?: any, data?: any, id?: any) => {
     setAddressModalInfo({ kind, data, id });
@@ -245,7 +246,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
       return errors;
     },
     onSubmit: (values: any, { resetForm }) => {
-      // setState({ loading: true, error: false });
+      setLoading(true);
       if (currentData) {
         // console.log(a.id.toString().includes("null"));
         // editCustomer({
@@ -273,6 +274,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         // 	.catch((error) => {
         // 		setState({ loading: false, error: error.response.data.message });
         // 	});
+        setLoading(false);
       } else {
         createCustomer({
           ...values,
@@ -296,7 +298,8 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
             setOpen(false);
             toast.success("مشتری افزوده شد ");
           })
-          .catch((error) => {});
+          .catch((error) => {})
+          .finally(() => setLoading(false));
       }
     },
   });
@@ -310,276 +313,284 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
   }: any = formik;
 
   return (
-    <Modal
-      visible={open}
-      setVisible={setOpen}
-      title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}
-    >
-      <form onSubmit={handleSubmit}>
-        <div className="border rounded-lg px-5 pt-10">
-          <div className="inputRow">
-            <InputText
-              important
-              label="کد مشتری"
-              values={values.code}
-              name="code"
-              handleChange={handleChange}
-              error={touched.code && errors.code}
-            />
-            <InputText
-              important
-              label="نام مشتری"
-              values={values.name}
-              name="name"
-              handleChange={handleChange}
-              error={touched.name && errors.name}
-            />
-            <InputSelect
-              options={customerType}
-              important
-              label="نوع مشتری"
-              values={values.selectCustomerType}
-              name="selectCustomerType"
-              handleChange={setFieldValue}
-              error={touched.selectCustomerType && errors.selectCustomerType}
-            />
-            {values.selectCustomerType.id === 0 && (
-              <InputText
-                important
-                label="کد ملی"
-                values={values.nationalCode}
-                name="nationalCode"
-                handleChange={handleChange}
-                error={touched.nationalCode && errors.nationalCode}
-              />
-            )}
-            {values.selectCustomerType.id === 1 && (
-              <>
-                <InputText
-                  important
-                  label="شناسه ملی"
-                  values={values.nationalId}
-                  name="nationalId"
-                  handleChange={handleChange}
-                  error={touched.nationalId && errors.nationalId}
-                />
-                <InputText
-                  important
-                  label="کد اقتصادی"
-                  values={values.economicCode}
-                  name="economicCode"
-                  handleChange={handleChange}
-                  error={touched.economicCode && errors.economicCode}
-                />
-              </>
-            )}
-          </div>
-          <div className="inputRow">
-            <InputSelect
-              options={customerParent}
-              label="مشتری والد"
-              values={values.selectParentCustomer}
-              name="selectParentCustomer"
-              handleChange={setFieldValue}
-              error={
-                touched.selectParentCustomer && errors.selectParentCustomer
-              }
-            />
-            <InputText
-              label="پست الکترونیکی"
-              values={values.email}
-              name="email"
-              handleChange={handleChange}
-              error={touched.email && errors.email}
-              placeholder="example@example.com"
-            />
-            <InputText
-              readOnly
-              label="اعتبار جاری"
-              values={values.currentCredit}
-              name="currentCredit"
-              handleChange={handleChange}
-              error={touched.currentCredit && errors.currentCredit}
-            />
-            <InputText
-              readOnly
-              label="سقف اعتبار"
-              values={values.creditLimit}
-              name="creditLimit"
-              handleChange={handleChange}
-              error={touched.creditLimit && errors.creditLimit}
-            />
-            <InputText
-              readOnly
-              label="اعتبار اولیه"
-              values={values.initialCredit}
-              name="initialCredit"
-              handleChange={handleChange}
-              error={touched.initialCredit && errors.initialCredit}
-            />
-          </div>
-        </div>
-        <div className="inputRow">
-          <div className="border rounded-lg px-5 pt-10 mt-10 relative">
-            <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">
-              اطلاعات کاربری
-            </span>
+    <>
+      {currentData ? <></> : null}
+      <Modal
+        visible={open}
+        setVisible={setOpen}
+        title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}
+      >
+        <form onSubmit={handleSubmit}>
+          <div className="border rounded-lg px-5 pt-10">
             <div className="inputRow">
               <InputText
                 important
-                label="نام کاربری"
-                values={values.username}
-                name="username"
+                label="کد مشتری"
+                values={values.code}
+                name="code"
                 handleChange={handleChange}
-                error={touched.username && errors.username}
+                error={touched.code && errors.code}
               />
               <InputText
                 important
-                label="گذر واژه "
-                values={values.password}
-                name="password"
+                label="نام مشتری"
+                values={values.name}
+                name="name"
                 handleChange={handleChange}
-                error={touched.password && errors.password}
+                error={touched.name && errors.name}
+              />
+              <InputSelect
+                options={customerType}
+                important
+                label="نوع مشتری"
+                values={values.selectCustomerType}
+                name="selectCustomerType"
+                handleChange={setFieldValue}
+                error={touched.selectCustomerType && errors.selectCustomerType}
+              />
+              {values.selectCustomerType.id === 0 && (
+                <InputText
+                  important
+                  label="کد ملی"
+                  values={values.nationalCode}
+                  name="nationalCode"
+                  handleChange={handleChange}
+                  error={touched.nationalCode && errors.nationalCode}
+                />
+              )}
+              {values.selectCustomerType.id === 1 && (
+                <>
+                  <InputText
+                    important
+                    label="شناسه ملی"
+                    values={values.nationalId}
+                    name="nationalId"
+                    handleChange={handleChange}
+                    error={touched.nationalId && errors.nationalId}
+                  />
+                  <InputText
+                    important
+                    label="کد اقتصادی"
+                    values={values.economicCode}
+                    name="economicCode"
+                    handleChange={handleChange}
+                    error={touched.economicCode && errors.economicCode}
+                  />
+                </>
+              )}
+            </div>
+            <div className="inputRow">
+              <InputSelect
+                options={customerParent}
+                label="مشتری والد"
+                values={values.selectParentCustomer}
+                name="selectParentCustomer"
+                handleChange={setFieldValue}
+                error={
+                  touched.selectParentCustomer && errors.selectParentCustomer
+                }
               />
               <InputText
-                important
-                label="تایید گذرواژه"
-                values={values.confirmPassword}
-                name="confirmPassword"
+                label="پست الکترونیکی"
+                values={values.email}
+                name="email"
                 handleChange={handleChange}
-                error={touched.confirmPassword && errors.confirmPassword}
+                error={touched.email && errors.email}
+                placeholder="example@example.com"
+              />
+              <InputText
+                readOnly
+                label="اعتبار جاری"
+                values={values.currentCredit}
+                name="currentCredit"
+                handleChange={handleChange}
+                error={touched.currentCredit && errors.currentCredit}
+              />
+              <InputText
+                readOnly
+                label="سقف اعتبار"
+                values={values.creditLimit}
+                name="creditLimit"
+                handleChange={handleChange}
+                error={touched.creditLimit && errors.creditLimit}
+              />
+              <InputText
+                readOnly
+                label="اعتبار اولیه"
+                values={values.initialCredit}
+                name="initialCredit"
+                handleChange={handleChange}
+                error={touched.initialCredit && errors.initialCredit}
               />
             </div>
           </div>
-          <div className="inputRow mt-16">
-            <Checkbox
-              handleChange={handleChange}
-              name="extendGlobalVirtualSeries"
-              values={values.extendGlobalVirtualSeries}
-              title="استفاده از منبع بارکد عمومی"
-            />
-            <Checkbox
-              handleChange={handleChange}
-              name="dynamicPickupAllocation"
-              values={values.dynamicPickupAllocation}
-              title="تخصیص خودکار جمع آوری"
-            />
+          <div className="inputRow">
+            <div className="border rounded-lg px-5 pt-10 mt-10 relative">
+              <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">
+                اطلاعات کاربری
+              </span>
+              <div className="inputRow">
+                <InputText
+                  important
+                  label="نام کاربری"
+                  values={values.username}
+                  name="username"
+                  handleChange={handleChange}
+                  error={touched.username && errors.username}
+                />
+                <InputText
+                  important
+                  label="گذر واژه "
+                  values={values.password}
+                  name="password"
+                  handleChange={handleChange}
+                  error={touched.password && errors.password}
+                />
+                <InputText
+                  important
+                  label="تایید گذرواژه"
+                  values={values.confirmPassword}
+                  name="confirmPassword"
+                  handleChange={handleChange}
+                  error={touched.confirmPassword && errors.confirmPassword}
+                />
+              </div>
+            </div>
+            <div className="inputRow mt-16">
+              <Checkbox
+                handleChange={handleChange}
+                name="extendGlobalVirtualSeries"
+                values={values.extendGlobalVirtualSeries}
+                title="استفاده از منبع بارکد عمومی"
+              />
+              <Checkbox
+                handleChange={handleChange}
+                name="dynamicPickupAllocation"
+                values={values.dynamicPickupAllocation}
+                title="تخصیص خودکار جمع آوری"
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="inputRow">
-          <div className="border rounded-lg px-5 pt-8 mt-5 relative">
-            <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">
-              اطلاع رسانی جمع آوری از طریق
-            </span>
-            <div className="inputRow">
-              <Checkbox
-                handleChange={handleChange}
-                name="emailNotification"
-                values={values.emailNotification}
-                title="پست الکترونیک  "
-              />
-              <Checkbox
-                handleChange={handleChange}
-                name="smsNotification"
-                values={values.smsNotification}
-                title="پیامک"
-              />
-              <Checkbox
-                handleChange={handleChange}
-                name="pickupPaperWithEmail"
-                values={values.pickupPaperWithEmail}
-                title="دریافت رسید تحویل از طریق پست الکترونیک"
+          <div className="inputRow">
+            <div className="border rounded-lg px-5 pt-8 mt-5 relative">
+              <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">
+                اطلاع رسانی جمع آوری از طریق
+              </span>
+              <div className="inputRow">
+                <Checkbox
+                  handleChange={handleChange}
+                  name="emailNotification"
+                  values={values.emailNotification}
+                  title="پست الکترونیک  "
+                />
+                <Checkbox
+                  handleChange={handleChange}
+                  name="smsNotification"
+                  values={values.smsNotification}
+                  title="پیامک"
+                />
+                <Checkbox
+                  handleChange={handleChange}
+                  name="pickupPaperWithEmail"
+                  values={values.pickupPaperWithEmail}
+                  title="دریافت رسید تحویل از طریق پست الکترونیک"
+                />
+              </div>
+            </div>
+            <div className="centering w-6/12 mt-5">
+              <CustomSwitch
+                active={values.isActive}
+                handleChange={() => setFieldValue("isActive", !values.isActive)}
               />
             </div>
           </div>
-          <div className="centering w-6/12 mt-5">
-            <CustomSwitch
-              active={values.isActive}
-              handleChange={() => setFieldValue("isActive", !values.isActive)}
+          <div className="flex justify-between items-start gap-10 ">
+            <div className="border rounded-lg px-4 py-8 mt-5 relative w-full">
+              <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
+                آدرس{" "}
+              </span>
+              <p
+                className="text-tomato text-sm cursor-pointer mb-5"
+                onClick={() => handleOpenAddress(1)}
+              >
+                + افزودن آدرس جدید
+              </p>
+              {values.addresses.length > 0 &&
+                ReverseArray(values.addresses).map((address: any) => (
+                  <>
+                    <CustomerAddressElements
+                      address={address}
+                      handleEdit={() =>
+                        handleOpenAddress(2, address, address.id)
+                      }
+                      handleDelete={() =>
+                        handleDeleteAddressElements(address.id)
+                      }
+                    />
+                  </>
+                ))}
+            </div>
+            <div className="border rounded-lg px-4 py-8 mt-5 relative w-full">
+              <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
+                اطلاعات تماس{" "}
+              </span>
+              <p
+                className="text-tomato text-sm cursor-pointer mb-5"
+                onClick={() => handleOpenPhone(1)}
+              >
+                + افزودن اطلاعات تماس جدید
+              </p>
+              {values.telephones.length > 0 &&
+                ReverseArray(values.telephones).map((phone: any) => (
+                  <>
+                    <CustomerTelephoneElements
+                      phone={phone}
+                      handleEdit={() => handleOpenPhone(2, phone, phone.id)}
+                      handleDelete={() =>
+                        handleDeleteTelephonesElements(phone.id)
+                      }
+                    />
+                  </>
+                ))}
+            </div>
+          </div>
+          <div className="flex-end-center mt-5 gap-3">
+            <SimpleButton
+              handelClick={() => setOpen(false)}
+              text="لغو"
+              className="full-lightTomato-btn"
+            />
+            <SimpleButton
+              loading={Loading}
+              type="submit"
+              text="افزودن"
+              className="full-tomato-btn"
             />
           </div>
-        </div>
-        <div className="flex justify-between items-start gap-10 ">
-          <div className="border rounded-lg px-4 py-8 mt-5 relative w-full">
-            <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
-              آدرس{" "}
-            </span>
-            <p
-              className="text-tomato text-sm cursor-pointer mb-5"
-              onClick={() => handleOpenAddress(1)}
-            >
-              + افزودن آدرس جدید
-            </p>
-            {values.addresses.length > 0 &&
-              ReverseArray(values.addresses).map((address: any) => (
-                <>
-                  <CustomerAddressElements
-                    address={address}
-                    handleEdit={() => handleOpenAddress(2, address, address.id)}
-                    handleDelete={() => handleDeleteAddressElements(address.id)}
-                  />
-                </>
-              ))}
-          </div>
-          <div className="border rounded-lg px-4 py-8 mt-5 relative w-full">
-            <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">
-              اطلاعات تماس{" "}
-            </span>
-            <p
-              className="text-tomato text-sm cursor-pointer mb-5"
-              onClick={() => handleOpenPhone(1)}
-            >
-              + افزودن اطلاعات تماس جدید
-            </p>
-            {values.telephones.length > 0 &&
-              ReverseArray(values.telephones).map((phone: any) => (
-                <>
-                  <CustomerTelephoneElements
-                    phone={phone}
-                    handleEdit={() => handleOpenPhone(2, phone, phone.id)}
-                    handleDelete={() =>
-                      handleDeleteTelephonesElements(phone.id)
-                    }
-                  />
-                </>
-              ))}
-          </div>
-        </div>
-        <div className="flex-end-center mt-5 gap-3">
-          <SimpleButton
-            handelClick={() => setOpen(false)}
-            text="لغو"
-            className="full-lightTomato-btn"
-          />
-          <SimpleButton
-            type="submit"
-            text="افزودن"
-            className="full-tomato-btn"
-          />
-        </div>
-      </form>
-      <CustomerAddressForm
-        setValue={setFieldValue}
-        value={values.addresses}
-        open={OpenAddresses}
-        setOpen={setOpenAddresses}
-        currentData={
-          addressModalInfo.kind === 2 ? addressModalInfo.data : undefined
-        }
-        ID={addressModalInfo.kind === 2 ? addressModalInfo.id : undefined}
-      />
-      <CustomerTelephoneForm
-        setValue={setFieldValue}
-        value={values.telephones}
-        open={OpenPhones}
-        setOpen={setOpenPhones}
-        currentData={
-          phonesModalInfo.kind === 2 ? phonesModalInfo.data : undefined
-        }
-        ID={phonesModalInfo.kind === 2 ? phonesModalInfo.id : undefined}
-      />
-    </Modal>
+        </form>
+        <CustomerAddressForm
+          setValue={setFieldValue}
+          value={values.addresses}
+          open={OpenAddresses}
+          setOpen={setOpenAddresses}
+          currentData={
+            addressModalInfo.kind === 2 ? addressModalInfo.data : undefined
+          }
+          ID={addressModalInfo.kind === 2 ? addressModalInfo.id : undefined}
+        />
+        <CustomerTelephoneForm
+          setValue={setFieldValue}
+          value={values.telephones}
+          open={OpenPhones}
+          setOpen={setOpenPhones}
+          currentData={
+            phonesModalInfo.kind === 2 ? phonesModalInfo.data : undefined
+          }
+          ID={phonesModalInfo.kind === 2 ? phonesModalInfo.id : undefined}
+        />
+      </Modal>
+    </>
   );
 };
 

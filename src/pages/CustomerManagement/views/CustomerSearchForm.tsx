@@ -11,15 +11,15 @@ import CustomerPerfesionalFilter from "../CustomerPerfesionalFilter";
 interface PropsData {
   isActive: Boolean | string;
   isUpdating: Boolean;
+  pageNumbers: any
 }
 
 const CustomerSearchForm: React.FC<PropsData> = ({
   isActive,
   isUpdating,
+  pageNumbers
 }): JSX.Element => {
   const dispatch = useDispatch();
-  // @ts-ignore
-  const { pageNumbers } = useSelector((state) => state.paginate);
   const [filterData, setFilterData] = useState({});
   const formik = useFormik({
     initialValues: {
@@ -37,7 +37,7 @@ const CustomerSearchForm: React.FC<PropsData> = ({
     },
   });
 
-  const { values, handleSubmit, setFieldValue }: any = formik;
+  const { values, handleSubmit, setFieldValue, handleReset }: any = formik;
 
   useEffect(() => {
     dispatch(
@@ -49,7 +49,9 @@ const CustomerSearchForm: React.FC<PropsData> = ({
         pageNumber: pageNumbers,
       }) as any
     );
+    
   }, [isActive, filterData, isUpdating, pageNumbers]);
+
 
   return (
     <>
@@ -74,7 +76,7 @@ const CustomerSearchForm: React.FC<PropsData> = ({
             onChange={(e) => setFieldValue("telNumber", e.target.value)}
           />
           <SimpleButton searchBtn />
-          <PerfesionalSearch formData={handleSubmit}>
+          <PerfesionalSearch formData={handleSubmit } handleReset={handleReset}>
             <CustomerPerfesionalFilter
               values={values}
               setFieldValue={setFieldValue}
@@ -82,7 +84,7 @@ const CustomerSearchForm: React.FC<PropsData> = ({
           </PerfesionalSearch>
         </form>
       </div>
-      {filterData && <Chip filterData={filterData} formData={formik} />}
+      {filterData && <Chip filterData={filterData} formData={formik}  />}
     </>
   );
 };

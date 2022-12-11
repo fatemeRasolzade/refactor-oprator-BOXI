@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../components/staticTable/StaticTable";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
@@ -9,7 +9,11 @@ import {
   DOWNLOAD_OPTION,
 } from "../../global/CustomOptions/CustomOptionsKeyword";
 import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
-import { updating } from "../../redux/CustomerManagement/CustomerManagementData";
+import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
+import {
+  customerData,
+  updating,
+} from "../../redux/CustomerManagement/CustomerManagementData";
 import { DELETE_CUSTOMER } from "../../services/apiRoute";
 import { CustomerColumns } from "./views/CustomerColumn";
 import CustomerForm from "./views/CustomerForm";
@@ -19,6 +23,9 @@ import CustomerSearchForm from "./views/CustomerSearchForm";
 const CustomerManagement = () => {
   const [isActive, setIsActive] = useState(true);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  // @ts-ignore
+  const { pageNumbers } = useSelector((state) => state.paginate);
   const handleGetExcel = () => {
     alert("HELOOOOOOOOOOOOOOO");
   };
@@ -42,9 +49,26 @@ const CustomerManagement = () => {
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
 
-  const { errorMessage, customerList, isUpdating } = useSelector(
+  const { customerList, isUpdating } = useSelector(
     (state: any) => state.customerDefine
   );
+
+  const handleDeleteActionNewData = () => {
+    dispatch(
+      customerData({
+        username: "",
+        postalCode: "",
+        address: "",
+        name: "",
+        code: "",
+        telNumber: "",
+        isActive: isActive,
+        selectParentCustomer: null,
+        pageSize: 10,
+        pageNumber: pageNumbers,
+      }) as any
+    );
+  };
 
   const data =
     customerList?.content?.length !== 0
@@ -53,12 +77,12 @@ const CustomerManagement = () => {
             ...item,
             operation: (
               <div className="flex w-full gap-3 justify-center">
-                Helllllllllllow
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف مشتری"}
                   route={DELETE_CUSTOMER + `/${item.id}`}
                   updating={updating}
+                  handleDeleteActionNewData={handleDeleteActionNewData}
                 />
               </div>
             ),
@@ -66,12 +90,14 @@ const CustomerManagement = () => {
         })
       : [];
 
-
-
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="مدیریت مشتریان" />
-      <CustomerSearchForm isActive={isActive} isUpdating={isUpdating} />
+      <CustomerSearchForm
+        isActive={isActive}
+        isUpdating={isUpdating}
+        pageNumbers={pageNumbers}
+      />
       <div className="flex-start-center gap-16 mt-6">
         <AddButton ToggleOptions={ToggleOptions} />
         <TestCustomOptions options={options} />

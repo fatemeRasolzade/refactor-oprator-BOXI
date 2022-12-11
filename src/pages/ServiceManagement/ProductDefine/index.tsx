@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../components/tableOperation/DeleteOperation";

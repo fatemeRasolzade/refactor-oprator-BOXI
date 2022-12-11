@@ -12,9 +12,14 @@ interface propsData {
   text?: string;
   LeftIcon?: JSX.Element;
   children?: JSX.Element;
+  handleReset?: any;
 }
 
-const PerfesionalSearch = ({ formData, children }: propsData): JSX.Element => {
+const PerfesionalSearch = ({
+  formData,
+  handleReset,
+  children,
+}: propsData): JSX.Element => {
   return (
     <div className="w-160 relative">
       <Popover
@@ -41,7 +46,11 @@ const PerfesionalSearch = ({ formData, children }: propsData): JSX.Element => {
                 icon={<BiCog color="gray" />}
                 className="centering p-0"
               />
-              <SimpleButton text="پاک کردن ورودی ها" className="p-0" />
+              <SimpleButton
+                text="پاک کردن ورودی ها"
+                className="p-0"
+                handelClick={handleReset}
+              />
               <SimpleButton searchBtn handelClick={formData} />
             </div>
           </div>
