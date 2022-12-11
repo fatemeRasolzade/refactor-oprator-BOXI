@@ -1,6 +1,6 @@
-import { Button, Dialog } from "@material-tailwind/react";
+import { Dialog } from "@material-tailwind/react";
 import axios from "axios";
-import React, {
+import {
   SyntheticEvent,
   FC,
   DragEvent,
@@ -12,7 +12,6 @@ import { GrDocumentPdf, GrFormClose } from "react-icons/gr";
 import { toast } from "react-toastify";
 
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
-import { postDataHeaderToServer } from "../../services/Service_call";
 interface AddExcelProps {
   url?: any;
   fileSampleName?: any;
@@ -140,14 +139,11 @@ const AddExcel: FC<AddExcelProps> = ({ url, fileSampleName }): JSX.Element => {
                     فایل را در این قسمت بکشید و رها کنید
                   </p>
                   <span>یا</span>
-
-                  <Button
-                    type="button"
-                    className=" shadow-gray-500/20 hover:shadow-lg hover:shadow-gray-500/40 upload-button w-[70%] flex p-[10px] cursor-pointer text-[1rem] bg-[#ef5644] rounded-[10px] text-[white]  hover:bg-orange-800 justify-center"
-                    onClick={onButtonClick}
-                  >
-                    یک فایل آپلود کنید
-                  </Button>
+                  <SimpleButton
+                    className="full-tomato-btn"
+                    handelClick={onButtonClick}
+                    text="یک فایل آپلود کنید"
+                  />
                   <span
                     className={`text-[12px] ${
                       theFile ? "text-[blue]" : "text-[red]"
@@ -181,23 +177,17 @@ const AddExcel: FC<AddExcelProps> = ({ url, fileSampleName }): JSX.Element => {
               </div>
 
               <div className="flex w-[75%] pt-8 justify-end gap-4">
-                <Button
+                <SimpleButton
                   type="submit"
-                  className="border-none bg-[#ef5644] w-[30%] text-gray-200  shadow-gray-500/20 hover:shadow-lg hover:shadow-gray-500/40"
+                  text="افزودن"
                   disabled={theFile ? false : true}
-                >
-                  افزودن
-                  {/* {state.loading && (
-						<ClipLoader className="inline-flex items-center" size={24} loading={true} color="#FFF" />
-					)} */}
-                </Button>
-                <Button
-                  type="button"
-                  className="border-none bg-[#FFF8F0] w-[30%] text-gray-500  shadow-gray-500/20 hover:shadow-lg hover:shadow-gray-500/40"
-                  onClick={handleClose}
-                >
-                  لغو
-                </Button>
+                  className="full-tomato-btn"
+                />
+                <SimpleButton
+                  className="full-gray-btn"
+                  text="لغو"
+                  handelClick={handleClose}
+                />
               </div>
             </div>
           </form>

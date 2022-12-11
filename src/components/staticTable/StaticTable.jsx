@@ -1,4 +1,5 @@
 import React from "react";
+import { ClipLoader } from "react-spinners";
 import { useTable, usePagination, useRowSelect } from "react-table";
 import Paginations from "../../global/Pagination/Pagination";
 
@@ -28,7 +29,7 @@ import Paginations from "../../global/Pagination/Pagination";
 //   }
 // );
 
-function Table({ columns, data, pageTable }) {
+function Table({ columns, data, pageTable, loading }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -114,11 +115,20 @@ function Table({ columns, data, pageTable }) {
         </tbody>
       </table>
 
-      {page.length === 0 && (
+      {loading ? (
+        <div className="h-20 cnetering w-full">
+          <ClipLoader />
+        </div>
+      ) : (
+        page.length === 0 && (
+          <div className="h-20 centering w-full"> موردی یافت نشد </div>
+        )
+      )}
+      {/* {page.length === 0 && (
         <div className="h-20 centering w-full">
           <>موردی یافت نشد</>
         </div>
-      )}
+      )} */}
       <div className="text-center my-5">
         <Paginations pageData={pageTable} />
       </div>
@@ -126,8 +136,15 @@ function Table({ columns, data, pageTable }) {
   );
 }
 
-function StaticTable({ data, column, pagination }) {
-  return <Table columns={column} data={data} pageTable={pagination} />;
+function StaticTable({ data, column, pagination, loading = false }) {
+  return (
+    <Table
+      columns={column}
+      data={data}
+      pageTable={pagination}
+      loading={loading}
+    />
+  );
 }
 
 export default StaticTable;

@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../components/staticTable/StaticTable";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
-import AddButton from "../../global/addButton/AddButton";
+
 import {
   ACTIVE_OPTION,
   DOWNLOAD_OPTION,
 } from "../../global/CustomOptions/CustomOptionsKeyword";
 import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
-import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
 import {
   customerData,
   updating,
@@ -17,12 +16,11 @@ import {
 import { DELETE_CUSTOMER } from "../../services/apiRoute";
 import { CustomerColumns } from "./views/CustomerColumn";
 import CustomerForm from "./views/CustomerForm";
-
 import CustomerSearchForm from "./views/CustomerSearchForm";
 
 const CustomerManagement = () => {
   const [isActive, setIsActive] = useState(true);
-  const [open, setOpen] = useState(false);
+  const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
@@ -39,21 +37,12 @@ const CustomerManagement = () => {
     { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
   ];
 
-  const handleOpenModal = () => setOpen(true);
-  const handleUploadFileAction = () => {
-    alert("second");
-  };
-
-  const ToggleOptions = [
-    { handleClick: handleOpenModal, name: "افزودن مشتری" },
-    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
-  ];
-
   const { customerList, isUpdating } = useSelector(
     (state: any) => state.customerDefine
   );
 
   const handleDeleteActionNewData = () => {
+    setLoading(true);
     dispatch(
       customerData({
         username: "",
@@ -68,6 +57,7 @@ const CustomerManagement = () => {
         pageNumber: pageNumbers,
       }) as any
     );
+    setLoading(false);
   };
 
   const data =
@@ -84,6 +74,7 @@ const CustomerManagement = () => {
                   updating={updating}
                   handleDeleteActionNewData={handleDeleteActionNewData}
                 />
+                <CustomerForm currentData={item} />
               </div>
             ),
           };
@@ -99,15 +90,15 @@ const CustomerManagement = () => {
         pageNumbers={pageNumbers}
       />
       <div className="flex-start-center gap-16 mt-6">
-        <AddButton ToggleOptions={ToggleOptions} />
+        <CustomerForm />
         <TestCustomOptions options={options} />
       </div>
       <StaticTable
         data={data ? data : []}
         column={CustomerColumns}
         pagination={customerList?.totalElements}
+        loading={Loading}
       />
-      <CustomerForm open={open} setOpen={setOpen} />
     </div>
   );
 };

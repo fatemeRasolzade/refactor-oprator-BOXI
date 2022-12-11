@@ -28,22 +28,27 @@ import CustomerAddressForm from "./CustomerAddressForm";
 import CustomerTelephoneForm from "./CustomerTelephoneForm";
 import {
   createCustomer,
+  editCustomer,
   getCustomerParent,
   getCustomerType,
 } from "../../../services/CustomerApi";
 import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
 import { deleteAddress, deletePhone } from "../../../services/GlobalApi";
+import { AiOutlineEdit } from "react-icons/ai";
+import AddButton from "../../../global/addButton/AddButton";
+import AddExcel from "../../../components/exel/AddExcel";
 
 type CustomerFormProps = {
-  open: boolean;
-  setOpen: (value: boolean) => void;
   currentData?: any;
 };
 
-const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
+const CustomerForm = ({ currentData }: CustomerFormProps) => {
+  const [open, setOpen] = useState(false);
   const [OpenAddresses, setOpenAddresses] = useState(false);
   const [OpenPhones, setOpenPhones] = useState(false);
+  const [OpenExcel, setOpenExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const handleOpenAddress = (kind?: any, data?: any, id?: any) => {
     setAddressModalInfo({ kind, data, id });
@@ -154,9 +159,38 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
     isActive: Yup.boolean().nullable(),
   });
 
+  const EditValidation = Yup.object().shape({
+    code: Yup.string().required(),
+    name: Yup.string().required(),
+    selectCustomerType: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDNATIONALCODE)
+      .required(),
+    selectParentCustomer: Yup.object().nullable(true).shape({
+      text: Yup.string(),
+      id: Yup.number(),
+    }),
+    email: Yup.string().email(),
+    currentCredit: Yup.number().label(""),
+    creditLimit: Yup.number().label(""),
+    initialCredit: Yup.number().label(""),
+
+    username: Yup.string().required(),
+    extendGlobalVirtualSeries: Yup.boolean().nullable(),
+    dynamicPickupAllocation: Yup.boolean().nullable(),
+
+    smsNotification: Yup.boolean().nullable(),
+    emailNotification: Yup.boolean().nullable(),
+    pickupPaperWithEmail: Yup.boolean().nullable(),
+    isActive: Yup.boolean().nullable(),
+  });
+
   const formik = useFormik({
     enableReinitialize: true,
-    validationSchema: validation,
+    validationSchema: currentData ? EditValidation : validation,
     initialValues: currentData
       ? {
           // edit feilds
@@ -217,64 +251,58 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
           nationalId: "",
           economicCode: "",
         },
-    validate: (values) => {
-      const errors = {
-        // nationalId: ,
-        nationalCode: {},
-        economicCode: {},
-      };
-      const [isValidNC, errNC] = NationalCodeValidator(
-        values.nationalCode,
-        true
-      );
-      if (values.selectCustomerType?.id === 0 && !isValidNC) {
-        errors.nationalCode = errNC;
-      }
-      if (values.selectCustomerType?.id === 1) {
-        const [isValidNI, errNI] = NationalIDValidator(values.nationalId, true);
-        // if (values.selectCustomerType?.id === 1 && !isValidNI) {
-        //   errors.nationalId = errNI;
-        // }
-        const [isValidEC, errEC] = EconomicCodeValidate(
-          values.economicCode,
-          true
-        );
-        if (values.selectCustomerType?.id === 1 && !isValidEC) {
-          errors.economicCode = errEC;
-        }
-      }
-      return errors;
-    },
+    // validate: (values) => {
+    //   const errors = {};
+    //   const [isValidNC, errNC] = NationalCodeValidator(
+    //     values.nationalCode,
+    //     true
+    //   );
+    //   if (values.selectCustomerType?.id === 0 && !isValidNC) {
+    //     errors.nationalCode = errNC;
+    //   }
+    //   if (values.selectCustomerType?.id === 1) {
+    //     const [isValidNI, errNI] = NationalIDValidator(values.nationalId, true);
+    //     if (values.selectCustomerType?.id === 1 && !isValidNI) {
+    //       errors.nationalId = errNI;
+    //     }
+    //     const [isValidEC, errEC] = EconomicCodeValidate(
+    //       values.economicCode,
+    //       true
+    //     );
+    //     if (values.selectCustomerType?.id === 1 && !isValidEC) {
+    //       errors.economicCode = errEC;
+    //     }
+    //   }
+    //   return errors;
+    // },
     onSubmit: (values: any, { resetForm }) => {
       setLoading(true);
       if (currentData) {
-        // console.log(a.id.toString().includes("null"));
-        // editCustomer({
-        // 	...values,
-        // 	id: currentData.id,
-        // 	password: undefined,
-        // 	confirmPassword: undefined,
-        // 	addresses: values.addresses.map((a) => {
-        // 		return { ...a, id: a.id.toString().includes("null") ? undefined : a.id };
-        // 	}),
-        // 	telephones: values.telephones.map((t) => {
-        // 		return { ...t, id: t.id.toString().includes("null") ? undefined : t.id };
-        // 	}),
-        // })
-        // 	.then((response) => {
-        // 		setState({ loading: false, error: false });
-        // 		action({
-        // 			type: REFRESH,
-        // 			payload: !refresh,
-        // 		});
-        // 		resetForm({ values: "" });
-        // 		closeModal();
-        // 		response.status && toast.success("مشتری ویرایش شد ");
-        // 	})
-        // 	.catch((error) => {
-        // 		setState({ loading: false, error: error.response.data.message });
-        // 	});
-        setLoading(false);
+        editCustomer({
+          ...values,
+          id: currentData.id,
+          password: undefined,
+          confirmPassword: undefined,
+          addresses: values.addresses.map((a: any) => {
+            return {
+              ...a,
+              id: a.id.toString().includes("null") ? undefined : a.id,
+            };
+          }),
+          telephones: values.telephones.map((t: any) => {
+            return {
+              ...t,
+              id: t.id.toString().includes("null") ? undefined : t.id,
+            };
+          }),
+        })
+          .then((response) => {
+            dispatch(customerData({}) as any);
+            setOpen(false);
+            response.status && toast.success("مشتری ویرایش شد ");
+          })
+          .catch((error) => {})
+          .finally(() => setLoading(false));
       } else {
         createCustomer({
           ...values,
@@ -291,10 +319,6 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
         })
           .then((response) => {
             dispatch(customerData({}) as any);
-            // resetForm({ values: undefined });
-            // resetForm({ values: "" });
-
-            // resetForm({ values: "" });
             setOpen(false);
             toast.success("مشتری افزوده شد ");
           })
@@ -312,9 +336,29 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
     setFieldValue,
   }: any = formik;
 
+  const handleOpenModal = () => setOpen(true);
+  const handleUploadFileAction = () => {
+    alert("second");
+  };
+
+  const ToggleOptions = [
+    { handleClick: handleOpenModal, name: "افزودن مشتری" },
+    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
+  ];
+
   return (
     <>
-      {currentData ? <></> : null}
+      {currentData ? (
+        <button
+          className=" border-none	text-[14px]  w-[20px] h-[20px] "
+          onClick={handleOpenModal}
+        >
+          <AiOutlineEdit className="w-[20px] h-[20px]" size={15} />
+        </button>
+      ) : (
+        <AddButton ToggleOptions={ToggleOptions} />
+      )}
+      <AddExcel />
       <Modal
         visible={open}
         setVisible={setOpen}
@@ -437,23 +481,28 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
                   name="username"
                   handleChange={handleChange}
                   error={touched.username && errors.username}
+                  readOnly={currentData && true}
                 />
-                <InputText
-                  important
-                  label="گذر واژه "
-                  values={values.password}
-                  name="password"
-                  handleChange={handleChange}
-                  error={touched.password && errors.password}
-                />
-                <InputText
-                  important
-                  label="تایید گذرواژه"
-                  values={values.confirmPassword}
-                  name="confirmPassword"
-                  handleChange={handleChange}
-                  error={touched.confirmPassword && errors.confirmPassword}
-                />
+                {!currentData && (
+                  <>
+                    <InputText
+                      important
+                      label="گذر واژه "
+                      values={values.password}
+                      name="password"
+                      handleChange={handleChange}
+                      error={touched.password && errors.password}
+                    />
+                    <InputText
+                      important
+                      label="تایید گذرواژه"
+                      values={values.confirmPassword}
+                      name="confirmPassword"
+                      handleChange={handleChange}
+                      error={touched.confirmPassword && errors.confirmPassword}
+                    />
+                  </>
+                )}
               </div>
             </div>
             <div className="inputRow mt-16">
@@ -511,7 +560,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
                 آدرس{" "}
               </span>
               <p
-                className="text-tomato text-sm cursor-pointer mb-5"
+                className="text-tomato text-sm cursor-pointer mb-5 text-right"
                 onClick={() => handleOpenAddress(1)}
               >
                 + افزودن آدرس جدید
@@ -536,7 +585,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
                 اطلاعات تماس{" "}
               </span>
               <p
-                className="text-tomato text-sm cursor-pointer mb-5"
+                className="text-tomato text-sm cursor-pointer mb-5 text-right"
                 onClick={() => handleOpenPhone(1)}
               >
                 + افزودن اطلاعات تماس جدید
@@ -564,7 +613,7 @@ const CustomerForm = ({ open, setOpen, currentData }: CustomerFormProps) => {
             <SimpleButton
               loading={Loading}
               type="submit"
-              text="افزودن"
+              text={currentData ? "ویرایش" : "افزودن"}
               className="full-tomato-btn"
             />
           </div>

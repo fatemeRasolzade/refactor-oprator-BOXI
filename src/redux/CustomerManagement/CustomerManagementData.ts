@@ -5,7 +5,9 @@ import { CREATE_CUSTOMER } from "../../services/apiRoute";
 export const customerData = createAsyncThunk(
   "customerList",
   async (body: any) => {
-    const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
+    const params = `/filter?pageNumber=${
+      body.pageNumber ? body.pageNumber : 1
+    }&pageSize=${body.pageSize ? body.pageSize : 10}`;
     var data = {};
     try {
       data = await postDataHeaderToServer(
