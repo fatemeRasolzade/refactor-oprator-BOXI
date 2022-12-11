@@ -3,7 +3,7 @@ import { useEffect,useState } from "react";
 import { Base_url4 } from "../../../../services/apiRoute";
 import UserService from "../../../../services/UserService";
 import { apiRoute } from "../../../../services/apiRoute";
-import {  selectDataFromServer } from "../../../../services/Service_call";
+import {  selectDataFromServerWithHeader } from "../../../../services/Service_call";
 console.log("run");
 // export const serviceProvisionData = createApi({
 //   reducerPath: "service",
@@ -42,11 +42,15 @@ console.log("run");
 
 
 
-export const useGetOptions=()=>{
+export const useGetOptions=(url)=>{
    const [options,setOptions]=useState([])
    useEffect(()=>{
     try {
-      selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then((res) => {
+      selectDataFromServerWithHeader(url,
+      {
+        headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
+      })
+      .then((res) => {
         if (res.status === "OK") setOptions(res?.payload?.content);
       });
       // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
@@ -57,3 +61,26 @@ export const useGetOptions=()=>{
 
    return {options}
 }
+
+
+
+// export const productData=createAsyncThunk('productlists',async(body:any)=>{
+//   console.log("body",body)
+
+//   const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
+//   var data = {};
+//   try {
+//       data = await postDataHeaderToServer(apiRoute().post.product + params, {
+//         code:body.code,
+//         name:body.name,
+//         isActive:body.isActive
+//       },{
+//           headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
+//         });
+//     } catch (error) {
+//       console.log("error ", error);
+//     }
+
+
+//   return data;
+// })

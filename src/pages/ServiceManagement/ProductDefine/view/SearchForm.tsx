@@ -15,16 +15,17 @@ import { ErrorAlert } from "../../../../global/alert/Alert";
 interface PropsData {
   isActive: Boolean | string;
   isUpdating: Boolean;
+  productOptions?:any
 }
 
-const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating }): JSX.Element => {
+const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating,productOptions }): JSX.Element => {
   console.log("render searh form")
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
    // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
   const [filterData, setFilterData] = useState({});
-  const [productOptions, setProductOptions] = useState([]);
+
   const formik = useFormik({
     // enableReinitialize: true,
     initialValues: {
@@ -85,19 +86,19 @@ const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating }): JSX.Element 
   const handleSelect = (val: any, name: string) => {
     formik.setFieldValue(name, val);
   };
-  useEffect(() => {
-    function getDataSelect() {
-      try {
-        selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then((res: any) => {
-          if (res.status === "OK") setProductOptions(res?.payload?.content);
-        });
-        // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
-      } catch (error) {
-        ErrorAlert("دریافت دیتا با خطلا مواجه شد");
-      }
-    }
-    getDataSelect();
-  }, []);
+  // useEffect(() => {
+  //   function getDataSelect() {
+  //     try {
+  //       selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then((res: any) => {
+  //         if (res.status === "OK") setProductOptions(res?.payload?.content);
+  //       });
+  //       // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
+  //     } catch (error) {
+  //       ErrorAlert("دریافت دیتا با خطلا مواجه شد");
+  //     }
+  //   }
+  //   getDataSelect();
+  // }, []);
 
   return (
     <>

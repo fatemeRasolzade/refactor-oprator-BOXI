@@ -45,6 +45,15 @@ export const selectDataFromServer = async (apiRoute: { apiRoute: string }) => {
  return data;
 };
 
+export const selectDataFromServerWithHeader = async (  apiRoute: string,headers: object  ) => {
+  // console.log("apiRoute",apiRoute)
+  // @ts-ignore
+ const { data } = await http.get(apiRoute,headers);
+ return data;
+};
+
+
+
 export const EditDataParams = async (apiRoute: string, body: object) => {
   const { data } = await http.put(apiRoute, body);
   return data;
