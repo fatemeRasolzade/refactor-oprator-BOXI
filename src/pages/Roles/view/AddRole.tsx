@@ -175,6 +175,7 @@ const AddEditRole: FC<EditRoleProps> = ({
             <div className="w-full flex justify-between gap-x-12">
               <div className="w-[80%] flex-col">
                 <InputText
+                  wrapperClassName="w-full"
                   readOnly={isSomeEdit}
                   label="کدهاب"
                   name="name"

@@ -60,8 +60,8 @@ const SearchFilter: FC<SearchFilterProps> = ({
   return (
     <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
       <form onSubmit={handleSubmit}>
-        <div className=" flex gap-3 justify-start items-center flex-wrap">
-          <div className="Max-sm:mb-3 mb-4">
+        <div className=" flex gap-3 justify-start items-start flex-wrap">
+          <div className="Max-sm:mb-3">
             <AutocompleteInput
               items={[]}
               label="نقش"
