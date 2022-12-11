@@ -45,11 +45,13 @@ const OptionsTable: FC<OptionsTableProps> = ({
         )}
         {addExcelProps && <li>{addExcelProps()}</li>}
 
+        {customComponent && customComponent()}
         <li>
           <SimpleButton
-            text="حذف"
-            className="centering rounded-lg text-black"
-            icon={<BiTrash color="black" />}
+            handelClick={exportExcel}
+            text="خروجی اکسل"
+            icon={<GoDesktopDownload color="black" />}
+            className="centering rounded-lg text-black w-full"
           />
         </li>
         <li>
@@ -58,15 +60,6 @@ const OptionsTable: FC<OptionsTableProps> = ({
             handleChange={(value: boolean) =>
               setIsActive && setIsActive(value as boolean)
             }
-          />
-        </li>
-        {customComponent && customComponent()}
-        <li>
-          <SimpleButton
-            handelClick={exportExcel}
-            text="خروجی اکسل"
-            icon={<GoDesktopDownload color="black" />}
-            className="centering rounded-lg text-black w-full"
           />
         </li>
         <li>

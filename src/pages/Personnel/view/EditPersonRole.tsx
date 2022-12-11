@@ -240,7 +240,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
 export default EditPersonRole;
 
 const validation = Yup.object().shape({
-  name: Yup.string().required(),
+  name: Yup.string(),
   role: Yup.array().required("مقادیر نباید خالی باشد"),
 });
 const validationUsers = Yup.object().shape({

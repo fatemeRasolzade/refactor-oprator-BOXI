@@ -16,15 +16,21 @@ import { postDataHeaderToServer } from "../../services/Service_call";
 interface AddExcelProps {
   url?: any;
   fileSampleName?: any;
+  setIsOpenModal?: any;
+  IsOpenModal?: any;
 }
 
-const AddExcel: FC<AddExcelProps> = ({ url, fileSampleName }): JSX.Element => {
+const AddExcel: FC<AddExcelProps> = ({
+  url,
+  fileSampleName,
+  setIsOpenModal,
+  IsOpenModal,
+}): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [theFile, setTheFile] = useState<any>();
   const [error, setError] = useState<string>("");
   const [dragActive, setDragActive] = useState<boolean>(false);
-  const [IsOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const handleDrag = (e: DragEvent) => {
     e.preventDefault();
@@ -93,12 +99,6 @@ const AddExcel: FC<AddExcelProps> = ({ url, fileSampleName }): JSX.Element => {
   };
   return (
     <>
-      <SimpleButton
-        className=" w-[160px] h-[40px] centering rounded-lg text-black"
-        text="افزودن گروهی"
-        icon={<GrDocumentPdf color="black" />}
-        handelClick={() => setIsOpenModal(!IsOpenModal)}
-      />
       <Dialog
         open={IsOpenModal}
         handler={setIsOpenModal}

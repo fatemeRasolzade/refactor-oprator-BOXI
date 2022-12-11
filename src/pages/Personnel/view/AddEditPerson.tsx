@@ -28,6 +28,7 @@ import {
   VALIDPOSTALCODE,
 } from "../../../tools/validations/RegexKeywords";
 import { Actionpage } from "../../../redux/PaginationAction/PaginationAction";
+import AddExcel from "../../../components/exel/AddExcel";
 
 interface AddEditPersonProps {
   currentData?: any;
@@ -71,7 +72,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   });
 
   const dispatch = useDispatch();
-
+  const [uploadExcel, setUploadExcel] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [options] = useState([
     { id: 0, text: "خیر" },
@@ -168,7 +169,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   });
   const handleOpenModal = () => setIsModalOpen(!isModalOpen);
   const handleUploadFileAction = () => {
-    alert("second");
+    setUploadExcel(!uploadExcel);
   };
   const ToggleOptions = [
     { handleClick: handleOpenModal, name: "افزودن پرسنل" },
@@ -185,7 +186,10 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           <AiOutlineEdit className="w-full h-full" />
         </button>
       ) : (
-        <AddButton ToggleOptions={ToggleOptions} />
+        <>
+          <AddButton ToggleOptions={ToggleOptions} />
+          <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
+        </>
       )}
       <Dialog
         open={isModalOpen}
@@ -339,15 +343,6 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                   formik.touched.isSuperAdmin && formik.errors.isSuperAdmin
                 }
               />
-              {/* <InputSelect
-                options={customerType}
-                important
-                label="نوع مشتری"
-                values={values.selectCustomerType}
-                name="selectCustomerType"
-                handleChange={setFieldValue}
-                error={touched.selectCustomerType && errors.selectCustomerType}
-              /> */}
             </div>
           </div>
           <div className="grid grid-cols-4 gap-6 ">

@@ -56,7 +56,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                 <TooltipWrapper
                   textProps={item?.selectPermissions?.map(
                     (permissionItem: any) => (
-                      <div>{permissionItem.text}</div>
+                      <div key={permissionItem.id }>{permissionItem.text}</div>
                     )
                   )}
                 >
