@@ -20,7 +20,7 @@ const AutocompleteInput = ({
   wrapperClassName,
 }: PropsData) => {
   return (
-    <div className={`autocompleteWrapper  ${wrapperClassName}`}>
+    <div className={`autocompleteWrapper  ${wrapperClassName} mb-5`}>
       <div className="autocompleteLabel">{label}</div>
       <Autocomplete
         getItemValue={(item) => item.label}

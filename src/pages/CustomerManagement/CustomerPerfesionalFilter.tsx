@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
+import { getCustomerParent } from "../../services/CustomerApi";
 import AutocompleteInput from "../../global/Autocomplete/AutocompleteInput";
+import InputSelect from "../../global/InputSelect/InputSelect";
 
 type CustomerPerfesionalFilterProps = {
   values: any;
@@ -9,30 +12,38 @@ const CustomerPerfesionalFilter = ({
   values,
   setFieldValue,
 }: CustomerPerfesionalFilterProps) => {
+  const [CustomerParent, setCustomerParent] = useState([]);
+
+  useEffect(() => {
+    getCustomerParent().then((res) => setCustomerParent(res));
+  }, []);
+
   return (
     <>
-      <div className="inputRow">
+      <div>
         <AutocompleteInput
-          label={"کد مشتری"}
-          value={values.code}
-          onChange={(e) => setFieldValue("code", e.target.value)}
+          label={"نام کاربری"}
+          value={values.username}
+          onChange={(e) => setFieldValue("username", e.target.value)}
         />
         <AutocompleteInput
-          label={"کد مشتری"}
-          value={values.code}
-          onChange={(e) => setFieldValue("code", e.target.value)}
+          label={"کد پستی"}
+          value={values.postalCode}
+          onChange={(e) => setFieldValue("postalCode", e.target.value)}
         />
       </div>
-      <div className="inputRow">
-        <AutocompleteInput
-          label={"کد مشتری"}
-          value={values.code}
-          onChange={(e) => setFieldValue("code", e.target.value)}
+      <div>
+        <InputSelect
+          label={"مشتری والد"}
+          name="selectParentCustomer"
+          handleChange={setFieldValue}
+          values={values.selectParentCustomer}
+          options={CustomerParent}
         />
         <AutocompleteInput
-          label={"کد مشتری"}
-          value={values.code}
-          onChange={(e) => setFieldValue("code", e.target.value)}
+          label={"آدرس"}
+          value={values.address}
+          onChange={(e) => setFieldValue("address", e.target.value)}
         />
       </div>
     </>

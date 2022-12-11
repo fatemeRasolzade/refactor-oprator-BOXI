@@ -117,7 +117,7 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
   // @ts-ignore
   return (
     <>
-      <div className="flex justify-start items-center gap-3 mt-6">
+      <div className="flex justify-start items-center gap-3">
         {chipData
           .filter(
             (item: { mainTitle: string }) =>

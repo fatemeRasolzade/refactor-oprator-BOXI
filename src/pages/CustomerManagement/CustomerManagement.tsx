@@ -66,7 +66,7 @@ const CustomerManagement = () => {
         })
       : [];
 
-  console.log(customerList);
+
 
   return (
     <div>
@@ -81,8 +81,6 @@ const CustomerManagement = () => {
         column={CustomerColumns}
         pagination={customerList?.totalElements}
       />
-      {/* <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} /> */}
-
       <CustomerForm open={open} setOpen={setOpen} />
     </div>
   );

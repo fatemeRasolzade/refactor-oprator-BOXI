@@ -25,7 +25,7 @@ const PerfesionalSearch = ({ formData, children }: propsData): JSX.Element => {
         }}
       >
         <PopoverHandler>
-          <Button className="border-none bg-transparent text-dark !shadow-none centering gap-3 text-base font-normal">
+          <Button className="border-none bg-transparent text-dark !shadow-none centering gap-3 text-base font-normal pt-2">
             <span>جستجوی پیشرفته </span>
             <BiChevronDown size={25} />
           </Button>
@@ -35,7 +35,7 @@ const PerfesionalSearch = ({ formData, children }: propsData): JSX.Element => {
             <div className="flex  justify-between items-center gap-4 mt-5">
               {children}
             </div>
-            <div className="flex-between-center mt-2">
+            <div className="flex-between-center">
               <SimpleButton
                 text="شخصی سازی"
                 icon={<BiCog color="gray" />}
