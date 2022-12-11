@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useTable, usePagination, useRowSelect } from "react-table";
 import Paginations from "../../global/Pagination/Pagination";
+import { addRows, deleteRow } from "../../redux/selectRowTable/selectRowTable";
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ data, indeterminate, ...rest }, ref) => {
+    const dispatch = useDispatch();
+
     const defaultRef = React.useRef();
     const resolvedRef = ref || defaultRef;
 
@@ -17,11 +21,13 @@ const IndeterminateCheckbox = React.forwardRef(
           type="checkbox"
           ref={resolvedRef}
           {...rest}
-          // onClick={(e) => {
-          //   if (e.target.checked === true) {
-          //     console.log(data);
-          //   }
-          // }}
+          onClick={(e) => {
+            if (e.target.checked) {
+              dispatch(addRows(data.original));
+            } else {
+              dispatch(deleteRow(data.original));
+            }
+          }}
         />
       </>
     );
@@ -82,12 +88,14 @@ function Table({ columns, data, pageTable, selectable, setSelectedRows }) {
       ]);
     }
   );
-
   // Render the UI for your table
-  useEffect(() => {
-    console.log("loop");
-    setSelectedRows && setSelectedRows(selectedFlatRows);
-  }, [selectedFlatRows]);
+  // useEffect(() => {
+  // console.log(";oop");
+  // dispatch(updateRows();
+  // if(setSelectedRows){
+  // setSelectedRows(selectedFlatRows.map((row) => row.original))
+  // }
+  // }, [selectedRowIds]);
 
   return (
     <div className="overflow-auto bg-white rounded-lg shadow-md  mt-6">

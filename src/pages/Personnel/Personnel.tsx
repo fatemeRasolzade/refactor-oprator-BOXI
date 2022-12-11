@@ -11,10 +11,9 @@ import {
   PersonnelData,
   updating,
 } from "../../redux/PersonData/PersonsData";
-import { apiRoute } from "../../services/apiRoute";
+import { clearRows } from "../../redux/selectRowTable/selectRowTable";
 import AddEditPerson from "./view/AddEditPerson";
 import EditPersonRole from "./view/EditPersonRole";
-
 import PersonnelSearchFrom from "./view/PersonnelSearchFrom";
 
 interface PersonnelProps {}
@@ -28,10 +27,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   );
 
   const [isActive, setIsActive] = useState<boolean>(true);
-  const [selectedTableRows, setSelectedTableRows] = useState<any>({
-    data: [],
-    checked: false,
-  });
+
   const [filterData, setFilterData] = useState({
     personelCode: "",
     name: "",
@@ -50,12 +46,11 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   useEffect(() => {
     dispatch(PersonnelData({ ...filterData, pageNumber: pageNumbers }) as any);
 
-    return () => dispatch(clearPersonnel() as any);
+    return () => {
+      dispatch(clearPersonnel() as any);
+      dispatch(clearRows());
+    };
   }, [dispatch, isUpdating, isActive, filterData, pageNumbers]);
-
-  const handleSelectTableIte = (item: any) => {
-    console.log("selected item", item);
-  };
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0
@@ -98,14 +93,14 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
           setIsActive(!isActive);
         }}
         isActive={isActive}
+        customComponent={() => <EditPersonRole isGroup={true} />}
       />
+
       <StaticTable
         data={data ? data : []}
         column={PersonnelColumn}
         pagination={personnelList?.totalElements}
         selectable={true}
-        // @ts-ignore
-        setSelectedRows={(value: any) => console.log("sdgsfdb", value)}
       />
     </div>
   );

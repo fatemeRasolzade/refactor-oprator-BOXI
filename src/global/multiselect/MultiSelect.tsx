@@ -11,6 +11,7 @@ interface InputSelectProps {
   error?: any;
   important?: boolean;
   wrapperClassName?: string;
+  isDisabled?: boolean;
 }
 const MultiSelect: FC<InputSelectProps> = ({
   label,
@@ -21,6 +22,7 @@ const MultiSelect: FC<InputSelectProps> = ({
   handleChange,
   error,
   important,
+  isDisabled,
   wrapperClassName,
 }): JSX.Element => {
   const style = {
@@ -63,6 +65,7 @@ const MultiSelect: FC<InputSelectProps> = ({
       </label>
       <Select
         isMulti
+        isDisabled={isDisabled}
         isLoading={options.length > 0 ? false : true}
         value={
           values

@@ -2,9 +2,11 @@ import React, { useState, FC, useCallback, useEffect } from "react";
 import { Dialog } from "@material-tailwind/react";
 import { MdSettingsAccessibility } from "react-icons/md";
 import { GrFormClose } from "react-icons/gr";
+import { TiGroupOutline } from "react-icons/ti";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import InputText from "../../../global/InputText/InputText";
@@ -20,6 +22,9 @@ interface EditPersonRoleProps {
 }
 const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
   const dispatch = useDispatch();
+
+  const { selectedRows } = useSelector((state: any) => state.selectedRows);
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [rolesOptions, setRolesOptions] = useState<Array<any>>([]);
 
@@ -31,12 +36,24 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
       setRolesOptions(res.data.payload.content);
     } catch (error) {}
   }, []);
+  console.log("selectedRows", selectedRows);
 
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: isGroup ? validationUsers : validation,
     initialValues: isGroup
-      ? { users: [], role: currentData.selectRoles }
+      ? {
+          users:
+            selectedRows && selectedRows.length !== 0
+              ? selectedRows.map((item: any) => {
+                  return {
+                    id: item.id,
+                    text: item.name,
+                  };
+                })
+              : [],
+          role: [],
+        }
       : {
           id: currentData?.id,
           text: currentData?.name,
@@ -44,7 +61,10 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
         },
     onSubmit: async (values, { resetForm }) => {
       isGroup
-        ? addRoleToUsers()
+        ? addRoleToUsers({
+            selectUsers: values.users,
+            selectRoles: values.role,
+          })
         : addRoleToUser({
             selectUser: {
               id: values.id,
@@ -54,10 +74,36 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
           });
     },
   });
-
-  const addRoleToUsers = async () => {
+  const handleGroupOpenModal = () => {
+    if (selectedRows && selectedRows.length !== 0) {
+      setIsModalOpen(!isModalOpen);
+    } else {
+      toast.warning("حداقل یک شخص باید انتخاب شده باشد ");
+    }
+  };
+  const addRoleToUsers = async (data: any) => {
     try {
-    } catch (error) {}
+      await axios({
+        url: "http://boxi.local:40000/resource-api/employee/roles2users",
+        method: "post",
+        data: data,
+      });
+      toast.success("نقش ها  به کاربران اضافه 'گردیدند'");
+      setIsModalOpen(false);
+      dispatch(
+        PersonnelData({
+          personelCode: "",
+          name: "",
+          nationalCode: "",
+          mobile: "",
+          email: "",
+          username: "",
+          isActive: true,
+          pageNumber: 1,
+        }) as any
+      );
+      dispatch(Actionpage(1));
+    } catch (error: any) {}
   };
   const addRoleToUser = async (data: any) => {
     try {
@@ -82,9 +128,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
         }) as any
       );
       dispatch(Actionpage(1));
-    } catch (error) {
-      toast.error("مشکلی پیش آمده است");
-    }
+    } catch (error: any) {}
   };
 
   useEffect(() => {
@@ -94,12 +138,25 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
   }, [getRoleHandler, isModalOpen]);
   return (
     <div>
-      <button
-        className=" border-none	text-[14px]  w-[20px] h-[20px] "
-        onClick={() => setIsModalOpen(!isModalOpen)}
-      >
-        <MdSettingsAccessibility className="w-full h-full" />
-      </button>
+      {isGroup ? (
+        <li>
+          <button
+            className="flex justify-center items-center gap-3"
+            onClick={handleGroupOpenModal}
+          >
+            <span>تخصیصی گروهی</span>
+            <TiGroupOutline height={"1em"} width={"1em"} />
+          </button>
+        </li>
+      ) : (
+        <button
+          className=" border-none	text-[14px]  w-[20px] h-[20px] "
+          onClick={() => setIsModalOpen(!isModalOpen)}
+        >
+          <MdSettingsAccessibility className="w-full h-full" />
+        </button>
+      )}
+
       <Dialog
         open={isModalOpen}
         handler={setIsModalOpen}
@@ -121,16 +178,29 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
               onSubmit={formik.handleSubmit}
             >
               <div className="col-start-1 col-span-1">
-                <InputText
-                  wrapperClassName="w-full"
-                  label="کدهاب"
-                  name="name"
-                  handleChange={formik.handleChange}
-                  values={formik.values.text}
-                  important
-                  type={"text"}
-                  error={formik.errors.text}
-                />
+                {isGroup ? (
+                  <MultiSelect
+                    wrapperClassName="w-full"
+                    label="کاربران"
+                    name="users"
+                    isDisabled={isGroup}
+                    handleChange={formik.setFieldValue}
+                    values={formik.values?.users}
+                    options={[]}
+                    error={formik.errors.role}
+                  />
+                ) : (
+                  <InputText
+                    wrapperClassName="w-full"
+                    label="نام کاربر"
+                    name="name"
+                    handleChange={formik.handleChange}
+                    values={formik.values.text}
+                    important
+                    type={"text"}
+                    error={formik.errors.text}
+                  />
+                )}
               </div>
               <div className="col-start-1 col-span-1">
                 <MultiSelect
