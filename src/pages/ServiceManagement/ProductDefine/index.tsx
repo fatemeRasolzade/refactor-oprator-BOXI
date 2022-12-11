@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../components/tableOperation/DeleteOperation";
-import { productData, updating } from "../../../redux/ProductDefineData/ProductDefineData";
+import {
+  productData,
+  updating,
+} from "../../../redux/ProductDefineData/ProductDefineData";
 import { apiRoute } from "../../../services/apiRoute";
 import { ExportExcel } from "../../../tools/functions/Methods";
 import ActionForms from "./view/ActionsForm";
@@ -13,7 +16,7 @@ import { ProductColumns } from "./view/Column";
 
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
-import {useGetOptions} from './view/serviceProvisionData'
+import { useGetOptions } from "./view/serviceProvisionData";
 // import * as XLSX  from "xlsx-js-style"
 
 const ProductDefine = () => {
@@ -25,7 +28,9 @@ const ProductDefine = () => {
   // console.log("optiosn is",options)
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
-  const { errorMessage, productLists, isUpdating } = useSelector((state: any) => state.productDefine);
+  const { errorMessage, productLists, isUpdating } = useSelector(
+    (state: any) => state.productDefine
+  );
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
 
@@ -71,7 +76,12 @@ const ProductDefine = () => {
         addComponentProps={() => <ActionForms />}
         exportExcel={() => ExportExcel(productLists?.content)}
       />
-      <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} />
+      <StaticTable
+        data={datas ? datas : []}
+        column={ProductColumns}
+        pagination={productLists?.totalElements}
+        selectable={false}
+      />
     </div>
   );
 };

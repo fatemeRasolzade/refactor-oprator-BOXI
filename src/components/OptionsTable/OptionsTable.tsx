@@ -14,6 +14,7 @@ interface OptionsTableProps {
   setIsActive?: (value: boolean) => void;
   addExcelProps?: () => JSX.Element;
   addComponentProps?: () => JSX.Element;
+  customComponent?: () => JSX.Element;
   exportExcel?: any;
   btnLink?: string;
 }
@@ -23,6 +24,7 @@ const OptionsTable: FC<OptionsTableProps> = ({
   setIsActive,
   addExcelProps,
   addComponentProps,
+  customComponent,
   exportExcel,
 }) => {
   return (
@@ -42,18 +44,14 @@ const OptionsTable: FC<OptionsTableProps> = ({
           </li>
         )}
         {addExcelProps && <li>{addExcelProps()}</li>}
+
+        {customComponent && customComponent()}
         <li>
           <SimpleButton
-            text="ویرایش"
-            className="centering rounded-lg text-black"
-            icon={<BiEdit color="black" />}
-          />
-        </li>
-        <li>
-          <SimpleButton
-            text="حذف"
-            className="centering rounded-lg text-black"
-            icon={<BiTrash color="black" />}
+            handelClick={exportExcel}
+            text="خروجی اکسل"
+            icon={<GoDesktopDownload color="black" />}
+            className="centering rounded-lg text-black w-full"
           />
         </li>
         <li>
@@ -66,17 +64,9 @@ const OptionsTable: FC<OptionsTableProps> = ({
         </li>
         <li>
           <SimpleButton
-            handelClick={exportExcel}
-            text="خروجی اکسل"
-            icon={<GoDesktopDownload color="black" />}
-            className="centering rounded-lg text-black"
-          />
-        </li>
-        <li>
-          <SimpleButton
             text="شخصی سازی"
             icon={<GoGear color="black" />}
-            className="centering rounded-lg text-black"
+            className="centering rounded-lg text-black w-full"
           />
         </li>
       </ul>

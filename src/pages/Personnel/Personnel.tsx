@@ -11,10 +11,9 @@ import {
   PersonnelData,
   updating,
 } from "../../redux/PersonData/PersonsData";
-import { apiRoute } from "../../services/apiRoute";
+import { clearRows } from "../../redux/selectRowTable/selectRowTable";
 import AddEditPerson from "./view/AddEditPerson";
 import EditPersonRole from "./view/EditPersonRole";
-
 import PersonnelSearchFrom from "./view/PersonnelSearchFrom";
 
 interface PersonnelProps {}
@@ -28,6 +27,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   );
 
   const [isActive, setIsActive] = useState<boolean>(true);
+
   const [filterData, setFilterData] = useState({
     personelCode: "",
     name: "",
@@ -39,17 +39,24 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     pageNumber: pageNumbers,
   });
 
-  useEffect(() => {
-    dispatch(PersonnelData(filterData) as any);
-    console.log("loop");
+  const handleGetnewDataOnDelete = () => {
+    dispatch(PersonnelData({ ...filterData, pageNumber: pageNumbers }) as any);
+  };
 
-    return () => dispatch(clearPersonnel() as any);
-  }, [dispatch, isUpdating, isActive, filterData]);
+  useEffect(() => {
+    dispatch(PersonnelData({ ...filterData, pageNumber: pageNumbers }) as any);
+
+    return () => {
+      dispatch(clearPersonnel() as any);
+      dispatch(clearRows());
+    };
+  }, [dispatch, isUpdating, isActive, filterData, pageNumbers]);
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0
       ? personnelList?.content?.map((item: any) => {
           return {
+            id: item.id,
             personelCode: item.personelCode,
             nationalCode: item.nationalCode,
             name: item.name,
@@ -61,8 +68,9 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف کارمند"}
-                  route={apiRoute().delete.role + `/${item.id}`}
+                  route={`http://boxi.local:40000/resource-api/employee/${item.id}`}
                   updating={updating}
+                  handleDeleteActionNewData={handleGetnewDataOnDelete}
                 />
                 <EditPersonRole currentData={item} />
               </div>
@@ -85,11 +93,14 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
           setIsActive(!isActive);
         }}
         isActive={isActive}
+        customComponent={() => <EditPersonRole isGroup={true} />}
       />
+
       <StaticTable
         data={data ? data : []}
         column={PersonnelColumn}
-        pagination
+        pagination={personnelList?.totalElements}
+        selectable={true}
       />
     </div>
   );

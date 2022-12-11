@@ -56,7 +56,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                 <TooltipWrapper
                   textProps={item?.selectPermissions?.map(
                     (permissionItem: any) => (
-                      <div>{permissionItem.text}</div>
+                      <div key={permissionItem.id }>{permissionItem.text}</div>
                     )
                   )}
                 >
@@ -118,6 +118,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
         data={data ? data : []}
         column={RoleColumn}
         pagination={rolesList?.totalElements}
+        selectable={false}
       />
     </div>
   );
