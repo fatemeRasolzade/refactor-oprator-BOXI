@@ -34,6 +34,42 @@ interface AddEditPersonProps {
 }
 
 const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
+  const validation = Yup.object().shape({
+    personelCode: Yup.string().required(),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDPOSTALCODE)
+      .required(),
+    name: Yup.string().required(),
+    mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
+    email: Yup.string().email(),
+    username: Yup.string().matches(JustEngNameRegex).required(),
+    password: Yup.string()
+      .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
+      .required(),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], UNMATCHPASSWORD)
+      .required(),
+    isSuperAdmin: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+  });
+
+  const validationEdit = Yup.object().shape({
+    personelCode: Yup.string().required(),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDNATIONALCODE)
+      .required(),
+    name: Yup.string().required(),
+    mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
+    email: Yup.string().email(),
+
+    isSuperAdmin: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+  });
+
   const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -69,7 +105,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           username: "",
           password: "",
           confirmPassword: "",
-          isSuperAdmin: null,
+          isSuperAdmin: undefined,
           isActive: true,
         },
     onSubmit: async (values, { resetForm }) => {
@@ -292,14 +328,26 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 
             <div className="col-span-1  relative">
               <InputSelect
-              wrapperClassName="w-full"
+                important
+                wrapperClassName="w-full"
                 name="isSuperAdmin"
                 label="سوپر ادمین"
                 values={formik.values.isSuperAdmin}
                 handleChange={formik.setFieldValue}
                 options={options}
-                error={formik.errors.isSuperAdmin}
+                error={
+                  formik.touched.isSuperAdmin && formik.errors.isSuperAdmin
+                }
               />
+              {/* <InputSelect
+                options={customerType}
+                important
+                label="نوع مشتری"
+                values={values.selectCustomerType}
+                name="selectCustomerType"
+                handleChange={setFieldValue}
+                error={touched.selectCustomerType && errors.selectCustomerType}
+              /> */}
             </div>
           </div>
           <div className="grid grid-cols-4 gap-6 ">
@@ -328,39 +376,3 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 };
 
 export default AddEditPerson;
-
-const validation = Yup.object().shape({
-  personelCode: Yup.string().required(),
-  nationalCode: Yup.string()
-    .matches(NationalCodeRegex, VALIDPOSTALCODE)
-    .required(),
-  name: Yup.string().required(),
-  mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
-  email: Yup.string().email(),
-  username: Yup.string().matches(JustEngNameRegex).required(),
-  password: Yup.string()
-    .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
-    .required(),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], UNMATCHPASSWORD)
-    .required(),
-  isSuperAdmin: Yup.object().shape({
-    text: Yup.string().required(),
-    id: Yup.string().required(),
-  }),
-});
-
-const validationEdit = Yup.object().shape({
-  personelCode: Yup.string().required(),
-  nationalCode: Yup.string()
-    .matches(NationalCodeRegex, VALIDNATIONALCODE)
-    .required(),
-  name: Yup.string().required(),
-  mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
-  email: Yup.string().email(),
-
-  isSuperAdmin: Yup.object().shape({
-    text: Yup.string().required(),
-    id: Yup.string().required(),
-  }),
-});

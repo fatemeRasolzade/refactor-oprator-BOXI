@@ -57,7 +57,6 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
                 items={[]}
                 value={formik.values.personelCode}
                 label={"کد پرسنلی"}
-                onSelect={() => console.log()}
                 onChange={(e) =>
                   formik.setFieldValue("personelCode", e.target.value)
                 }
@@ -68,7 +67,6 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
                 items={[]}
                 value={formik.values.name}
                 label={"نام و نام خانوادگی"}
-                onSelect={() => console.log()}
                 onChange={(e) => formik.setFieldValue("name", e.target.value)}
               />
             </div>
@@ -92,7 +90,6 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
                   items={[]}
                   value={formik.values.nationalCode}
                   label={"کد ملی"}
-                  onSelect={() => console.log()}
                   onChange={(e) =>
                     formik.setFieldValue("nationalCode", e.target.value)
                   }
@@ -101,7 +98,6 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
                   items={[]}
                   value={formik.values.mobile}
                   label={"شماره موبایل"}
-                  onSelect={() => console.log()}
                   onChange={(e) =>
                     formik.setFieldValue("mobile", e.target.value)
                   }
@@ -112,7 +108,6 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
                   items={[]}
                   value={formik.values.email}
                   label={"پست الکترونیک"}
-                  onSelect={() => console.log()}
                   onChange={(e) =>
                     formik.setFieldValue("email", e.target.value)
                   }
@@ -121,7 +116,6 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
                   items={[]}
                   value={formik.values.username}
                   label={"نام کاربری"}
-                  onSelect={() => console.log()}
                   onChange={(e) =>
                     formik.setFieldValue("username", e.target.value)
                   }

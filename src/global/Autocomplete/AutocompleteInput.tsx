@@ -5,7 +5,7 @@ import { FiSearch } from "react-icons/fi";
 interface PropsData {
   items: object[];
   value?: string | null;
-  onSelect: any;
+  onSelect?: any;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
   wrapperClassName?: string;

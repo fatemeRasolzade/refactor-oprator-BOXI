@@ -36,7 +36,6 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
       setRolesOptions(res.data.payload.content);
     } catch (error) {}
   }, []);
-  console.log("selectedRows", selectedRows);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -52,7 +51,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
                   };
                 })
               : [],
-          role: [],
+          role: undefined,
         }
       : {
           id: currentData?.id,
@@ -187,7 +186,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
                     handleChange={formik.setFieldValue}
                     values={formik.values?.users}
                     options={[]}
-                    error={formik.errors.role}
+                    error={formik.errors.users}
                   />
                 ) : (
                   <InputText
@@ -241,10 +240,10 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
 export default EditPersonRole;
 
 const validation = Yup.object().shape({
-  name: Yup.string(),
+  name: Yup.string().required(),
   role: Yup.array().required("مقادیر نباید خالی باشد"),
 });
 const validationUsers = Yup.object().shape({
-  users: Yup.array().required("مقادیر نباید خالی باشد"),
+  users: Yup.array(),
   role: Yup.array().required("مقادیر نباید خالی باشد"),
 });
