@@ -18,6 +18,7 @@ export const HubData = createAsyncThunk("post", async (page) => {
       headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
     }
   );
+  return data
   })
 const HubList=createSlice({
     initialState:initialState,
