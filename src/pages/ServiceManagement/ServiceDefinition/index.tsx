@@ -8,12 +8,10 @@ import StaticTable from "../../../components/staticTable/StaticTable";
 import Operation from "./view/Operation";
 import OptionsTable from "./view/OptionsTable";
 
-
-
 const ServiceDefinition = () => {
   const dispatch = useDispatch();
   // @ts-ignore
-  const { fetchpost, errorMessage, postLists,isUpdating } = useSelector(
+  const { fetchpost, errorMessage, postLists, isUpdating } = useSelector(
     (state: any) => state.serviceDefine
   );
   useEffect(() => {
@@ -25,23 +23,27 @@ const ServiceDefinition = () => {
       }) as any
     );
   }, [isUpdating]);
-    const data =
+  const data =
     postLists?.content?.length !== 0
       ? postLists?.content?.map((item: any) => {
           return {
-           ...item,
+            ...item,
             operation: <Operation itemValue={item} />,
           };
         })
       : [];
 
-
   if (fetchpost) return <p>Loading...</p>;
   return (
     <div>
       <SearchForm />
-      <OptionsTable  />
-      <StaticTable data={data?data:[]}  column={ServiceDefineColumns}  pagination/>
+      <OptionsTable />
+      <StaticTable
+        data={data ? data : []}
+        column={ServiceDefineColumns}
+        pagination
+        selectable={false}
+      />
     </div>
   );
 };

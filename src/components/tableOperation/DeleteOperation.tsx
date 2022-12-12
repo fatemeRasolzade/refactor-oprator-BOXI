@@ -1,10 +1,9 @@
-import React, { FC, useState } from "react";
-import { Button, Dialog } from "@material-tailwind/react";
-import { useDispatch } from "react-redux";
-import { DeleteDataParams } from "../../services/Service_call";
+import { FC, useState } from "react";
 import { BiTrash } from "react-icons/bi";
 import { GrFormClose } from "react-icons/gr";
+import { Dialog } from "@material-tailwind/react";
 import { SuccessAlert } from "../../global/alert/Alert";
+import { DeleteDataParams } from "../../services/Service_call";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
 
 interface DeleteOperationProps {
@@ -42,7 +41,11 @@ const DeleteOperation: FC<DeleteOperationProps> = ({
       >
         <BiTrash size={20} className="w-full h-full	" />
       </button>
-      <Dialog open={isModalOpen} handler={setIsModalOpen}>
+      <Dialog
+        open={isModalOpen}
+        handler={setIsModalOpen}
+        className="min-w-[400px] w-[500px]"
+      >
         <button
           className="flex w-[50px] h-[50px]  border-none items-center justify-center"
           onClick={() => setIsModalOpen(false)}
@@ -52,7 +55,7 @@ const DeleteOperation: FC<DeleteOperationProps> = ({
         <div className="flex  justify-center  mb-6">
           <div className="flex flex-col  w-[80%] gap-6">
             <div className="w-full justify-center flex">
-              <h3 className="text-gray-700 font-bold text-lg">{title}</h3>
+              <h3 className="text-darkGray font-bold text-lg">{title}</h3>
             </div>
             <p className="w-full flex justify-center">
               آیا از حذف این مورد اطمینان دارید؟
@@ -60,15 +63,15 @@ const DeleteOperation: FC<DeleteOperationProps> = ({
             <div className="flex w-full justify-center gap-4">
               <SimpleButton
                 type="submit"
-                text="بله"
-                className="full-tomato-btn px-[50px] "
-                handelClick={() => deleteHandler(itemId)}
+                text="خیر"
+                className="full-lightTomato-btn w-28 "
+                handelClick={() => setIsModalOpen(false)}
               />
               <SimpleButton
                 type="submit"
-                text="خیر"
-                className="full-lightTomato-btn px-[50px] "
-                handelClick={() => setIsModalOpen(false)}
+                text="بله"
+                className="full-tomato-btn w-28 "
+                handelClick={() => deleteHandler(itemId)}
               />
             </div>
           </div>

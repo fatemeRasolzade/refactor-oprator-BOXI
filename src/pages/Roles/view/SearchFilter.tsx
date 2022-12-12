@@ -4,9 +4,8 @@ import { useFormik } from "formik";
 import { BiSearch } from "react-icons/bi";
 
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
-
-import InputSelect from "../../../global/InputSelect/InputSelect";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import MultiSelect from "../../../global/multiselect/MultiSelect";
 
 interface MyFormValues {
   permission: Array<any>;
@@ -32,7 +31,7 @@ const SearchFilter: FC<SearchFilterProps> = ({
     initialValues,
     onSubmit: async (values) => {
       setFilterData({
-        permission: values.permission as any,
+        permission: values.permission,
         name: values.name,
         isActive: isActive,
         pageSize: 10,
@@ -51,13 +50,6 @@ const SearchFilter: FC<SearchFilterProps> = ({
       );
     } catch (error) {}
   }, []);
-
-  const handleSelect = (name: string, value: any) => {
-    let newArray = [...values.permission];
-    newArray.push(value);
-
-    formik.setFieldValue(name, newArray);
-  };
 
   useEffect(() => {
     getRoleFilterData();
@@ -79,11 +71,13 @@ const SearchFilter: FC<SearchFilterProps> = ({
             />
           </div>
           <div>
-            <InputSelect
-              isMulti
+            <MultiSelect
+              wrapperClassName="w-fit"
               label="دسترسی ها"
               name="permission"
-              handleChange={(value: any) => console.log("value", value)}
+              handleChange={(valueName: any, value: any) =>
+                formik.setFieldValue(valueName, value)
+              }
               values={formik.values?.permission}
               options={permissionOptions}
             />

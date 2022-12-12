@@ -30,11 +30,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   });
 
   useEffect(() => {
-    try {
-      dispatch(RoleData(filterData) as any);
-    } catch (error) {
-      toast.error("مشکلی پیش آمده است");
-    }
+    dispatch(RoleData({ ...filterData, pageNumber: pageNumbers }) as any);
 
     return () => dispatch(clearRole() as any);
   }, [dispatch, isActive, pageNumbers, filterData]);
@@ -60,7 +56,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                 <TooltipWrapper
                   textProps={item?.selectPermissions?.map(
                     (permissionItem: any) => (
-                      <div>{permissionItem.text}</div>
+                      <div key={permissionItem.id }>{permissionItem.text}</div>
                     )
                   )}
                 >
@@ -104,7 +100,16 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
       <SearchFilter isActive={isActive} setFilterData={setFilterData} />
       <OptionsTable
         isActive={isActive}
-        setIsActive={setIsActive}
+        setIsActive={(value: boolean) => {
+          setFilterData({
+            permission: "",
+            name: "",
+            isActive: value,
+            pageSize: 10,
+            pageNumber: pageNumbers,
+          });
+          setIsActive(value);
+        }}
         addComponentProps={() => (
           <AddEditRole title="تغییر مدیریت نقش" isActive={isActive} />
         )}
@@ -113,6 +118,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
         data={data ? data : []}
         column={RoleColumn}
         pagination={rolesList?.totalElements}
+        selectable={false}
       />
     </div>
   );

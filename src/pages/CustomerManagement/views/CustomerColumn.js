@@ -1,3 +1,5 @@
+import TooltipWrapper from "../../../global/tooltip/TooltipWrapper";
+
 export const CustomerColumns = [
   {
     accessor: "code",
@@ -39,16 +41,32 @@ export const CustomerColumns = [
     accessor: "telephones",
     Header: "شماره تماس ",
 
-    Cell: ({ cell }) => (
-      <span className="flex flex-row relative">
-        {cell.value.length > 0 && (
-          <>
-            {cell.value[0].telephonePrefix}
-            {cell.value[0].telNumber}
-          </>
-        )}
-      </span>
-    ),
+    Cell: ({ cell }) =>
+      cell.value.length > 1 ? (
+        <div className="flex flex-row relative">
+          <TooltipWrapper
+            textProps={cell?.value?.map((tel) => (
+              <div>{tel.telNumber}</div>
+            ))}
+          >
+            {cell.value.length > 0 && (
+              <>
+                {cell.value[0].telephonePrefix}
+                {cell.value[0].telNumber}
+              </>
+            )}
+          </TooltipWrapper>
+        </div>
+      ) : (
+        <div className="flex flex-row relative">
+          {cell.value.length > 0 && (
+            <>
+              {cell.value[0].telephonePrefix}
+              {cell.value[0].telNumber}
+            </>
+          )}
+        </div>
+      ),
   },
   {
     accessor: "email",
@@ -72,6 +90,7 @@ export const CustomerColumns = [
 
     Cell: ({ cell }) => {
       <span className="flex flex-row relative">
+        FFFFFFFF
         {cell.value.length > 0 && cell.value[0].address}
       </span>;
     },
@@ -97,27 +116,7 @@ export const CustomerColumns = [
   // 	width: "auto",
   // },
   {
-    accessor: "handover",
+    accessor: "operation",
     Header: "عملیات",
-
-    // Cell: ({ value, row }) => (
-    //   <div className="flex ">
-    //     <ActionButton
-    //       theme={"mainButton"}
-    //       onClick={() =>
-    //         handleDeletes(deleteCustomer, row.original, "حذف مشتری ")
-    //       }
-    //     >
-    //       {" "}
-    //       <IconTrash />
-    //     </ActionButton>
-    //     <ActionButton
-    //       theme={"mainButton"}
-    //       onClick={() => handleAction(row.original)}
-    //     >
-    //       <IconPencil />
-    //     </ActionButton>
-    //   </div>
-    // ),
   },
 ];

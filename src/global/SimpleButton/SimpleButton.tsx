@@ -1,4 +1,6 @@
 import React from "react";
+import { FiSearch } from "react-icons/fi";
+import { ClipLoader } from "react-spinners";
 
 type SimpleButtonProps = {
   type?: "button" | "submit" | "reset" | undefined;
@@ -6,6 +8,10 @@ type SimpleButtonProps = {
   className?: string;
   icon?: JSX.Element;
   handelClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  searchBtn?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
+  loadingColor?: string;
 };
 
 const SimpleButton = ({
@@ -14,11 +20,28 @@ const SimpleButton = ({
   icon,
   className,
   handelClick,
+  searchBtn,
+  loading,
+  disabled,
+  loadingColor = "#ffffff",
 }: SimpleButtonProps) => {
   return (
-    <button type={type} className={`btn ${className}`} onClick={handelClick}>
-      <span>{text}</span>
+    <button
+      disabled={loading ? true : disabled}
+      type={searchBtn ? "submit" : type}
+      className={`btn ${searchBtn && "full-gray-btn"} ${
+        disabled && "opacity-60"
+      } ${className}`}
+      onClick={handelClick}
+    >
+      <span>{searchBtn ? "جستجو" : text}</span>
       {icon && <span>{icon} </span>}
+      {searchBtn && (
+        <span>
+          <FiSearch size={25} className="text-darkGray" />
+        </span>
+      )}
+      {loading && <ClipLoader size={20} color={loadingColor} />}
     </button>
   );
 };

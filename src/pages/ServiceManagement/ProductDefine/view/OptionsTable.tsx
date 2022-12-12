@@ -3,17 +3,14 @@ import CustomSwitch from "../../../../global/Switch/Switch";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 
 interface propsData {
-  setIsACtive?: (value: boolean) => void;
-  isActive: Boolean | string;
+  setIsACtive?: any;
+  isActive: boolean ;
   addComponentProps?: () => JSX.Element;
   exportExcel: () => void;
 }
 
-const OptionsTable = ({
-  setIsACtive,
-  addComponentProps,
-  exportExcel,
-}: propsData) => {
+const OptionsTable = ({ setIsACtive,addComponentProps,exportExcel,isActive}: propsData) => {
+
   return (
     <div className="mt-6">
       <ul className="flex gap-4 justify-start items-center flex-wrap">
