@@ -1,7 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { ErrorAlert } from "../global/alert/Alert";
-import UserService from "./UserService";
+import UserService from "./keycloakService";
+
 
 axios.defaults.baseURL = "http://boxi.local:40000/";
 axios.interceptors.response.use(null, (error) => {

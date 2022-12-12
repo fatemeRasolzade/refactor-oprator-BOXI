@@ -61,14 +61,14 @@ const hasClientRole = (role) => {
 }
 
 const  tokenExpired =_kc.onTokenExpired = () => {
-	// console.log('token expired!: previous token', _kc.token);
+	console.log('token expired!: previous token', _kc.token);
 
 	_kc.updateToken(5).then((response) => {
 		console.log('response',response);
 		if (response) {
 			axios.defaults.headers.common["Authorization"] = "Bearer " + getToken();
-			window.localStorage.setItem("myToken",getToken())
-			// console.log('successfully get a new token', _kc.token);
+				window.localStorage.setItem("myToken",getToken())
+			console.log('successfully get a new token', _kc.token);
 		} /*else {
       throw new Error('Something went wrong ...');
     }*/

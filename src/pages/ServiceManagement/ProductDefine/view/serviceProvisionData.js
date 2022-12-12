@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { useEffect,useState } from "react";
 import { Base_url4 } from "../../../../services/apiRoute";
-import UserService from "../../../../services/UserService";
 import { apiRoute } from "../../../../services/apiRoute";
 import {  selectDataFromServer } from "../../../../services/Service_call";
 console.log("run");

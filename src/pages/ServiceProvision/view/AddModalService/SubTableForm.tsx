@@ -60,12 +60,9 @@ const SubTableForm = ({title,formik}:{title?:string,formik?:any}) =>(
             </div>
 
             <div className='table w-full'>
-                <StaticTable data={data} column={column} pagination/>
+                <StaticTable data={data} column={column} pagination selectable={false}/>
 
             </div>
-
-
-
         </fieldset>
     </>
 )
