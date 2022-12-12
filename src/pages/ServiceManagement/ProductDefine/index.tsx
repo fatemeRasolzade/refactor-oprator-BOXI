@@ -13,7 +13,8 @@ import { ProductColumns } from "./view/Column";
 
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
-import {useGetOptions} from './view/serviceProvisionData'
+// import {useGetOptions} from './view/serviceProvisionData'
+import {useGetOptions} from '../../../global/hooks/useFetchOptions'
 // import * as XLSX  from "xlsx-js-style"
 
 const ProductDefine = () => {
@@ -49,6 +50,7 @@ const ProductDefine = () => {
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف محصول"}
+                  handleDeleteActionNewData={handleDeleteActionNewData}
                   // handleDeleteActionNewData={handleDeleteActionNewData}
                   route={apiRoute().delete.productDefine + `/${item.id}`}
                   updating={updating}
@@ -63,14 +65,14 @@ const ProductDefine = () => {
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="تعریف محصول" />
-      <SearchForm isActive={isActive} isUpdating={isUpdating} />
+      <SearchForm isActive={isActive} isUpdating={isUpdating}  productOptions={options} />
       <OptionsTable
-        // setIsActive={setIsACtive}
+        setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ActionForms />}
         exportExcel={() => ExportExcel(productLists?.content)}
       />
-      <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} selectable loading={false} />
+      <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} selectable={false}  />
     </div>
   );
 };

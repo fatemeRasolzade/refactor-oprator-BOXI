@@ -1,4 +1,3 @@
-
 import { ClipLoader } from "react-spinners";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -163,7 +162,7 @@ function StaticTable({
   column,
   pagination,
   selectable,
- loading,
+  loading = false,
 }) {
   return (
     <Table

@@ -1,5 +1,5 @@
 import http from "./http_service";
-import { Base_url2, Base_url3,Base_url4 } from "./apiRoute";
+import {Base_url4 } from "./apiRoute";
 
 
 export const getDataFromServer = async (apiRoute: { apiRoute: string }) => {
@@ -7,6 +7,10 @@ export const getDataFromServer = async (apiRoute: { apiRoute: string }) => {
   return data;
 };
 
+export const getDataHeaderServer = async (apiRoute: string, headers: object  ) => {
+  const { data } = await http.get(apiRoute,headers);
+  return data;
+};
 
 export const postDataToServer = async (
   apiRoute: string ,
@@ -44,6 +48,15 @@ export const selectDataFromServer = async (apiRoute: { apiRoute: string }) => {
  const { data } = await http.get(apiRoute);
  return data;
 };
+
+export const selectDataFromServerWithHeader = async (  apiRoute: string,headers: object  ) => {
+  // console.log("apiRoute",apiRoute)
+  // @ts-ignore
+ const { data } = await http.get(apiRoute,headers);
+ return data;
+};
+
+
 
 export const EditDataParams = async (apiRoute: string, body: object) => {
   const { data } = await http.put(apiRoute, body);
