@@ -15,7 +15,7 @@ interface PersonnelDataBody {
   pageNumber:number
 }
 export const PersonnelData = createAsyncThunk("post", async (body: PersonnelDataBody) => {
-  const params = `/filter?pageNumber=${body.pageNumber}&pageSize=20`;
+  const params = `/filter?pageNumber=${body.pageNumber}&pageSize=10`;
   var data = {};
   try {
     data = await PostDataParams(apiRoute().post.filterPersonnel + params, {

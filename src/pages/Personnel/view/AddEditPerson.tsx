@@ -27,14 +27,52 @@ import {
   VALIDNATIONALCODE,
   VALIDPOSTALCODE,
 } from "../../../tools/validations/RegexKeywords";
+import { Actionpage } from "../../../redux/PaginationAction/PaginationAction";
+import AddExcel from "../../../components/exel/AddExcel";
 
 interface AddEditPersonProps {
   currentData?: any;
 }
 
 const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
-  const dispatch = useDispatch();
+  const validation = Yup.object().shape({
+    personelCode: Yup.string().required(),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDPOSTALCODE)
+      .required(),
+    name: Yup.string().required(),
+    mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
+    email: Yup.string().email(),
+    username: Yup.string().matches(JustEngNameRegex).required(),
+    password: Yup.string()
+      .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
+      .required(),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], UNMATCHPASSWORD)
+      .required(),
+    isSuperAdmin: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+  });
 
+  const validationEdit = Yup.object().shape({
+    personelCode: Yup.string().required(),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDNATIONALCODE)
+      .required(),
+    name: Yup.string().required(),
+    mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
+    email: Yup.string().email(),
+
+    isSuperAdmin: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+  });
+
+  const dispatch = useDispatch();
+  const [uploadExcel, setUploadExcel] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [options] = useState([
     { id: 0, text: "خیر" },
@@ -104,7 +142,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           username: "",
           password: "",
           confirmPassword: "",
-          isSuperAdmin: null,
+          isSuperAdmin: undefined,
           isActive: true,
         },
     onSubmit: async (values, { resetForm }) => {
@@ -137,7 +175,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           method: currentData ? "put" : "post",
           data: data,
         });
-        debugger;
+
         if (200 <= res.status && res.status < 300) {
           dispatch(
             PersonnelData({
@@ -151,6 +189,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               pageNumber: 1,
             }) as any
           );
+          dispatch(Actionpage(1));
           toast.success(
             currentData
               ? "کارمند با موفقیت به روزرسانی گردید"
@@ -166,7 +205,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   });
   const handleOpenModal = () => setIsModalOpen(!isModalOpen);
   const handleUploadFileAction = () => {
-    alert("second");
+    setUploadExcel(!uploadExcel);
   };
   const ToggleOptions = [
     { handleClick: handleOpenModal, name: "افزودن پرسنل" },
@@ -183,7 +222,10 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           <AiOutlineEdit className="w-full h-full" />
         </button>
       ) : (
-        <AddButton ToggleOptions={ToggleOptions} />
+        <>
+          <AddButton ToggleOptions={ToggleOptions} />
+          <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
+        </>
       )}
       <Dialog
         open={isModalOpen}
@@ -227,6 +269,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             </div>
             <div className="col-span-2">
               <InputText
+                wrapperClassName="w-full"
                 label="نام و نام خانوادگی"
                 name="name"
                 handleChange={formik.handleChange}
@@ -325,12 +368,16 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 
             <div className="col-span-1  relative">
               <InputSelect
+                important
+                wrapperClassName="w-full"
                 name="isSuperAdmin"
                 label="سوپر ادمین"
                 values={formik.values.isSuperAdmin}
                 handleChange={formik.setFieldValue}
                 options={options}
-                error={formik.errors.isSuperAdmin}
+                error={
+                  formik.touched.isSuperAdmin && formik.errors.isSuperAdmin
+                }
               />
             </div>
           </div>
@@ -348,6 +395,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 className="full-lightTomato-btn px-[90px]"
                 handelClick={() => {
                   setIsModalOpen(false);
+                  formik.resetForm();
                 }}
               />
             </div>

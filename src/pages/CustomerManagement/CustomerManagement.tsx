@@ -94,6 +94,7 @@ const CustomerManagement = () => {
         <TestCustomOptions options={options} />
       </div>
       <StaticTable
+        selectable={false}
         data={data ? data : []}
         column={CustomerColumns}
         pagination={customerList?.totalElements}

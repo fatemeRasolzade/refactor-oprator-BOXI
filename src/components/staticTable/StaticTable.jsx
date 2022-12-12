@@ -1,36 +1,44 @@
-import React from "react";
+
 import { ClipLoader } from "react-spinners";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { useTable, usePagination, useRowSelect } from "react-table";
 import Paginations from "../../global/Pagination/Pagination";
+import { addRows, deleteRow } from "../../redux/selectRowTable/selectRowTable";
 
-// const IndeterminateCheckbox = React.forwardRef(
-//   ({ data, indeterminate, ...rest }, ref) => {
-//     const defaultRef = React.useRef();
-//     const resolvedRef = ref || defaultRef;
+const IndeterminateCheckbox = React.forwardRef(
+  ({ data, indeterminate, ...rest }, ref) => {
+    const dispatch = useDispatch();
 
-//     React.useEffect(() => {
-//       resolvedRef.current.indeterminate = indeterminate;
-//     }, [resolvedRef, indeterminate]);
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
 
-//     return (
-//       <>
-//         <input
-//           type="checkbox"
-//           ref={resolvedRef}
-//           {...rest}
-//           onClick={(e) => {
-//             if (e.target.checked === true) {
-//               console.log(data);
-//             }
-//           }}
-//         />
-//       </>
-//     );
-//   }
-// );
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
 
-function Table({ columns, data, pageTable, loading }) {
+    return (
+      <>
+        <input
+          type="checkbox"
+          ref={resolvedRef}
+          {...rest}
+          onClick={(e) => {
+            if (e.target.checked) {
+              dispatch(addRows(data.original));
+            } else {
+              dispatch(deleteRow(data.original));
+            }
+          }}
+        />
+      </>
+    );
+  }
+);
+
+function Table({ columns, data, pageTable, selectable, loading }) {
   const {
+    selectedFlatRows,
     getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -49,34 +57,48 @@ function Table({ columns, data, pageTable, loading }) {
     usePagination,
     useRowSelect,
     (hooks) => {
+      let isSelectable = selectable
+        ? {
+            Header: ({ getToggleAllPageRowsSelectedProps }) => (
+              <div>
+                <IndeterminateCheckbox
+                  {...getToggleAllPageRowsSelectedProps()}
+                />
+              </div>
+            ),
+            // The cell can use the individual row's getToggleRowSelectedProps method
+            // to the render a checkbox
+            Cell: ({ row }) => (
+              <div>
+                <IndeterminateCheckbox
+                  {...row.getToggleRowSelectedProps()}
+                  data={row}
+                />
+              </div>
+            ),
+          }
+        : {};
       hooks.visibleColumns.push((columns) => [
         // Let's make a column for selection
         {
           id: "selection",
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
-          // Header: ({ getToggleAllPageRowsSelectedProps }) => (
-          //   <div>
-          //     <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
-          //   </div>
-          // ),
-          // The cell can use the individual row's getToggleRowSelectedProps method
-          // to the render a checkbox
-          // Cell: ({ row }) => (
-          //   <div>
-          //     <IndeterminateCheckbox
-          //       {...row.getToggleRowSelectedProps()}
-          //       data={row}
-          //     />
-          //   </div>
-          // ),
+          ...isSelectable,
         },
         ...columns,
       ]);
     }
   );
-
   // Render the UI for your table
+  // useEffect(() => {
+  // console.log(";oop");
+  // dispatch(updateRows();
+  // if(setSelectedRows){
+  // setSelectedRows(selectedFlatRows.map((row) => row.original))
+  // }
+  // }, [selectedRowIds]);
+
   return (
     <div className="overflow-auto bg-white rounded-lg shadow-md  mt-6">
       <table
@@ -136,12 +158,19 @@ function Table({ columns, data, pageTable, loading }) {
   );
 }
 
-function StaticTable({ data, column, pagination, loading = false }) {
+function StaticTable({
+  data,
+  column,
+  pagination,
+  selectable,
+ loading,
+}) {
   return (
     <Table
       columns={column}
       data={data}
       pageTable={pagination}
+      selectable={selectable}
       loading={loading}
     />
   );

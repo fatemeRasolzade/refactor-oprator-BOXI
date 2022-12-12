@@ -3,7 +3,7 @@ import CustomSwitch from "../../../../global/Switch/Switch";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 
 interface propsData {
-  setIsACtive?: (value: boolean) => void;
+  setIsACtive?: any;
   isActive: boolean ;
   addComponentProps?: () => JSX.Element;
   exportExcel: () => void;

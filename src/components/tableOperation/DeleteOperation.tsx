@@ -41,7 +41,11 @@ const DeleteOperation: FC<DeleteOperationProps> = ({
       >
         <BiTrash size={20} className="w-full h-full	" />
       </button>
-      <Dialog open={isModalOpen} handler={setIsModalOpen}>
+      <Dialog
+        open={isModalOpen}
+        handler={setIsModalOpen}
+        className="min-w-[400px] w-[500px]"
+      >
         <button
           className="flex w-[50px] h-[50px]  border-none items-center justify-center"
           onClick={() => setIsModalOpen(false)}
