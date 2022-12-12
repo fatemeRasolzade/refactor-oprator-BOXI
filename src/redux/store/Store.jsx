@@ -9,22 +9,11 @@ import ProductDefineList from "../ProductDefineData/ProductDefineData";
 import CustomerDefineList from "../CustomerManagement/CustomerManagementData";
 import ServiceProvision from "../ServiceProvision/ServiceProvision";
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
-import SelectedRowsList from "../selectRowTable/selectRowTable";
+import EditHubTable from "../HubData/EditData"
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: [
-    "hub",
-    "paginate",
-    "personnel",
-    "serviceDefine",
-    "productDefine",
-    "customerDefine",
-    "role",
-    "serviceProvision",
-    "[serviceProvisionData.reducerPath]",
-    "selectedRows",
-  ],
+  whitelist: ["editHub"],
 };
 
 const reducers = combineReducers({
@@ -35,8 +24,8 @@ const reducers = combineReducers({
   serviceDefine: ServiceData,
   productDefine: ProductDefineList,
   customerDefine: CustomerDefineList,
-  serviceProvision: ServiceProvision,
-  selectedRows: SelectedRowsList,
+   serviceProvision:ServiceProvision,
+   editHub:EditHubTable,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
