@@ -37,6 +37,7 @@ import { deleteAddress, deletePhone } from "../../../services/GlobalApi";
 import { AiOutlineEdit } from "react-icons/ai";
 import AddButton from "../../../global/addButton/AddButton";
 import AddExcel from "../../../components/exel/AddExcel";
+import { CustomerExcel } from "../../../tools/services/ExcelInfoFile";
 
 type CustomerFormProps = {
   currentData?: any;
@@ -337,9 +338,7 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
   }: any = formik;
 
   const handleOpenModal = () => setOpen(true);
-  const handleUploadFileAction = () => {
-    alert("second");
-  };
+  const handleUploadFileAction = () => setOpenExcel(true);
 
   const ToggleOptions = [
     { handleClick: handleOpenModal, name: "افزودن مشتری" },
@@ -358,7 +357,11 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
       ) : (
         <AddButton ToggleOptions={ToggleOptions} />
       )}
-      <AddExcel />
+      <AddExcel
+        excelInfo={CustomerExcel}
+        OpenModal={OpenExcel}
+        setOpenModal={setOpenExcel}
+      />
       <Modal
         visible={open}
         setVisible={setOpen}
