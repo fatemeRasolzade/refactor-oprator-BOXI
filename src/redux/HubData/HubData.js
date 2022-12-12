@@ -18,6 +18,7 @@ export const HubData = createAsyncThunk("post", async (page) => {
       headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
     }
   );
+  return data
   })
 const HubList=createSlice({
     initialState:initialState,
@@ -30,13 +31,13 @@ const HubList=createSlice({
         
            state.postLists.payload.content=state.postLists.payload.content.filter(item=>item.id !==action.payload)
         },
-        filterSwitch:(state,action)=>{
-          if(action.payload===true){
-           console.log("state",state?.postLists?.payload?.content.filter(item=>item.isActive !==true))
-          }
+        // filterSwitch:(state,action)=>{
+        //   if(action.payload===true){
+        //    console.log("state",state?.postLists?.payload?.content.filter(item=>item.isActive !==true))
+        //   }
          
        
-        }
+        // }
        
  
     },

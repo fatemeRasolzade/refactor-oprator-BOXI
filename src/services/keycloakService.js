@@ -42,7 +42,7 @@ const initKeycloak = (onAuthenticatedCallback) => {
 				console.log('token')
 				axios.defaults.headers.common["Authorization"] = "Bearer " + getToken();
 				window.localStorage.setItem("myToken",getToken())
-			onAuthenticatedCallback();
+			
 			} else {
 			  doLogin();
 			}

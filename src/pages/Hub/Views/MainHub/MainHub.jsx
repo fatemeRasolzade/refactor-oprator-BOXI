@@ -52,11 +52,11 @@ const Hub = () => {
 dispatch(HubData(pageNumbers))
   },[pageNumbers])
 
-  useEffect(()=>{
- //dispatch(filterSwitch(ActiveSwitch))
+//   useEffect(()=>{
+//  //dispatch(filterSwitch(ActiveSwitch))
 
     
-  },[ActiveSwitch])
+//   },[ActiveSwitch])
 
 
 const handelDeleteHub=(id)=>{
