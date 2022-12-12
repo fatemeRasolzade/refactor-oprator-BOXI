@@ -6,23 +6,38 @@ import InputText from '../../../../global/InputText/InputText';
 import InputSelect from '../../../../global/InputSelect/InputSelect';
 import DatePickers from '../../../../global/DatePicker/DatePicker';
 import Checkbox from '../../../../components/checkbox/Checkbox';
-import { getDataFromServer } from '../../../../services/Service_call';
+import { EditDataParams, getDataHeaderServer } from '../../../../services/Service_call';
 import { apiRoute } from '../../../../services/apiRoute';
-import { ErrorAlert } from '../../../../global/alert/Alert';
+import { ErrorAlert, SuccessAlert } from '../../../../global/alert/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearEdit } from '../../../../redux/HubData/EditData';
 const HubEdit = () => {
-    const {state} =useLocation()
    
+  const {editData} =useSelector((state:any)=>state.editHub)
+  const dispatch=useDispatch()
     const navigate=useNavigate()
     useEffect(()=>{
 
         function getDataSelect() {
           try {
-            getDataFromServer(apiRoute().get.get_hub_type).then(res=>{if(res.status==="OK") settypeHub(res.payload)})
-            getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
-            getDataFromServer(apiRoute().get.get_province_city).then(res=>{if(res.status==="OK") setCities(res.payload.content)})
-            getDataFromServer(apiRoute().get.get_province_loc).then(res=>{if(res.status==="OK") setProvinceLoc(res.payload.content)})
-            getDataFromServer(apiRoute().get.get_select_province).then(res=>{if(res.status==="OK") setSelectProvince(res.payload.content)})
-            getDataFromServer(apiRoute().get.select_hub).then(res=>{if(res.status==="OK") setselectHub(res.payload.content)})
+            getDataHeaderServer(apiRoute().get.get_hub_type,{headers:{
+              "Authorization":"Bearer " + localStorage.getItem("myToken")
+            }}).then(res=>{if(res.status==="OK") settypeHub(res.payload)})
+            getDataHeaderServer(apiRoute().get.select_hub_category,{headers:{
+              "Authorization":"Bearer " + localStorage.getItem("myToken")
+            }}).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
+            getDataHeaderServer(apiRoute().get.get_province_city,{headers:{
+              "Authorization":"Bearer " + localStorage.getItem("myToken")
+            }}).then(res=>{if(res.status==="OK") setCities(res.payload.content)})
+            getDataHeaderServer(apiRoute().get.get_province_loc,{headers:{
+              "Authorization":"Bearer " + localStorage.getItem("myToken")
+            }}).then(res=>{if(res.status==="OK") setProvinceLoc(res.payload.content)})
+            getDataHeaderServer(apiRoute().get.get_select_province,{headers:{
+              "Authorization":"Bearer " + localStorage.getItem("myToken")
+            }}).then(res=>{if(res.status==="OK") setSelectProvince(res.payload.content)})
+            getDataHeaderServer(apiRoute().get.select_hub,{headers:{
+              "Authorization":"Bearer " + localStorage.getItem("myToken")
+            }}).then(res=>{if(res.status==="OK") setselectHub(res.payload.content)})
     
           } catch (error) {
             ErrorAlert('دریافت دیتا با خطلا مواجه شد')
@@ -30,6 +45,10 @@ const HubEdit = () => {
           
         }
         getDataSelect()
+
+        return()=>{
+          dispatch(clearEdit())
+        }
     
       },[])
 
@@ -45,46 +64,47 @@ const HubEdit = () => {
     <>
      <Formik
     initialValues={{
-      code: state?.dataEdit?.code,
-      name: state?.dataEdit?.name,
+      id:editData?.id,
+      code: editData?.code,
+      name: editData?.name,
       selectHubType: {
-        id:state?.dataEdit?.selectHubType?.id,
-        text:state?.dataEdit?.selectHubType?.text
+        id:editData?.selectHubType?.id,
+        text:editData?.selectHubType?.text
       },
       selectHubCategory:{
-        id:state?.dataEdit?.selectHubCategory?.id,
-        text:state?.dataEdit?.selectHubCategory?.text
+        id:editData?.selectHubCategory?.id,
+        text:editData?.selectHubCategory?.text
       },
       selectParentHub: {
-        id:state?.dataEdit?.selectParentHub.id,
-        text:state?.dataEdit?.selectParentHub.text
+        id:editData?.selectParentHub?.id,
+        text:editData?.selectParentHub?.text
       },
-      pinCode: state?.dataEdit?.pinCode,
+      pinCode: editData?.pinCode,
       locationStartDate:{
-        day:state?.dataEdit?.locationStartDate?.day,
-        month:state?.dataEdit?.locationStartDate?.month,
-        year:state?.dataEdit?.locationStartDate?.year
+        day:editData?.locationStartDate?.day,
+        month:editData?.locationStartDate?.month,
+        year:editData?.locationStartDate?.year
       },
-      mandatoryArrivalScan:state?.dataEdit?.mandatoryArrivalScan,
-      isActive:state?.dataEdit?.isActive,
-      dropOffAllowed:state?.dataEdit?.dropOffAllowed,
+      mandatoryArrivalScan:editData?.mandatoryArrivalScan,
+      isActive:editData?.isActive,
+      dropOffAllowed:editData?.dropOffAllowed,
       selectState:{
-        id:state?.dataEdit?.selectState?.id,
-        text:state?.dataEdit?.selectState?.text
+        id:editData?.selectState?.id,
+        text:editData?.selectState?.text
       },
       selectCity:{
-        id:state?.dataEdit?.selectCity?.id,
-        text:state?.dataEdit?.selectCity?.text
+        id:editData?.selectCity?.id,
+        text:editData?.selectCity?.text
       },
       selectRegion:{
-        id:state?.dataEdit?.selectRegion?.id,
-        text:state?.dataEdit?.selectRegion?.text
+        id:editData?.selectRegion?.id,
+        text:editData?.selectRegion?.text
       },
-      plateNumber:state?.dataEdit?.plateNumber,
-      addressLine1:state?.dataEdit?.addressLine1,
-      addressLine2:state?.dataEdit?.addressLine2,
-      locLate: state?.dataEdit?.locLate,
-      locLong: state?.dataEdit?.locLong,
+      plateNumber:editData?.plateNumber,
+      addressLine1:editData?.addressLine1,
+      addressLine2:editData?.addressLine2,
+      locLate: editData?.locLate,
+      locLong: editData?.locLong,
      
       // fullName:"",
       // phone:"",
@@ -92,39 +112,41 @@ const HubEdit = () => {
     }}
      //validationSchema={addHubschema}
     onSubmit={(values)=>{
-    //   PostDataParams(apiRoute().post.hub,values).then(res=>{
-    //     if(res.status==="OK"){
-    //       SuccessAlert("با موفقیت ساخته شد")
-    //     }else{
-    //       ErrorAlert("خطا در برقراری اطلاعات")
-    //     }
-    //   })
+      console.log('ttt',values)
+      EditDataParams(apiRoute().post.hub,values).then(res=>{
+        if(res.status==="OK"){
+          SuccessAlert("با موفقیت ویرایش شد")
+        }else{
+          ErrorAlert("خطا در برقراری اطلاعات")
+        }
+      })
     }}
     >
    {(formik)=>(
      <form onSubmit={formik.handleSubmit}>
      <div className='w-11/12 grid grid-cols-5 gap-2'>
        
-       <div ><InputText label='کدهاب' name="code" handleChange={formik.handleChange} values={formik.values.code} important type={"text"}/>
+       <div ><InputText label='کدهاب' name="code" handleChange={formik.handleChange} values={formik.values.code} important type={"text"} wrapperClassName="!w-full"/>
        <ErrorMessage name='codeHub' render={(messege)=>(<span className='text-tomato'>{messege}</span>)}/>
        </div>
-       <div ><InputText label='نام هاب' name="name" handleChange={formik.handleChange} values={formik.values.name} important type={"text"}/>
+       <div><InputText label='نام هاب' name="name" handleChange={formik.handleChange} values={formik.values.name} important type={"text"} wrapperClassName="!w-full"/>
        <ErrorMessage name='nameHub' render={(messege)=>(<span className='text-tomato'>{messege}</span>)}/>
+
        </div>
-        <div> <InputSelect label='نوع هاب' name="selectHubType" handleChange={formik.setFieldValue} values={formik.values.selectHubType} options={typeHub}/> 
+        <div> <InputSelect label='نوع هاب' name="selectHubType" handleChange={formik.setFieldValue} values={formik.values.selectHubType} options={typeHub} wrapperClassName="!w-full"/> 
        
         <ErrorMessage name='typeHub' render={(messege)=>(<span className='text-tomato  block mt-5'>{messege}</span>)}/>
         </div>
        <div >
-        <InputSelect label='گونه هاب' name="selectHubCategory" handleChange={formik.setFieldValue} values={formik.values.selectHubCategory} options={catHub}/>
+        <InputSelect label='گونه هاب' name="selectHubCategory" handleChange={formik.setFieldValue} values={formik.values.selectHubCategory} options={catHub} wrapperClassName="!w-full"/>
       
        </div>
         <div >
       
-          <InputSelect label='هاب والد' name="selectParentHub" handleChange={formik.setFieldValue} values={formik.values.selectParentHub} options={selectHub}/> 
+          <InputSelect label='هاب والد' name="selectParentHub" handleChange={formik.setFieldValue} values={formik.values.selectParentHub} options={selectHub} wrapperClassName="!w-full"/> 
        
        </div> 
-       <div ><InputText label='پین کد'  name="pinCode" handleChange={formik.handleChange} values={formik.values.pinCode} type={"text"}/>
+       <div ><InputText label='پین کد'  name="pinCode" handleChange={formik.handleChange} values={formik.values.pinCode} type={"text"} wrapperClassName="!w-full"/>
       
        </div>
        <div ><DatePickers title='تاریخ شروع فعالیت' name="locationStartDate" handleChange={formik.setFieldValue} values={formik.values.locationStartDate}/>
@@ -140,24 +162,24 @@ const HubEdit = () => {
       
        </div>
       <div >
-         <InputSelect label='استان' name="selectState" handleChange={formik.setFieldValue} values={formik.values.selectState} options={selectProvince}/> 
+         <InputSelect label='استان' name="selectState" handleChange={formik.setFieldValue} values={formik.values.selectState} options={selectProvince} wrapperClassName="!w-full"/> 
      
       </div>
        <div >
-        <InputSelect label='شهر' name="selectCity" handleChange={formik.setFieldValue} values={formik.values.selectCity} options={citys}/> 
+        <InputSelect label='شهر' name="selectCity" handleChange={formik.setFieldValue} values={formik.values.selectCity} options={citys} wrapperClassName="!w-full"/> 
       
        </div>
        <div >
-       <InputSelect label='منطقه' name="selectRegion" handleChange={formik.setFieldValue} values={formik.values.selectRegion} options={provinceLoc}/> 
+       <InputSelect label='منطقه' name="selectRegion" handleChange={formik.setFieldValue} values={formik.values.selectRegion} options={provinceLoc} wrapperClassName="!w-full"/> 
       
        </div> 
-       <div ><InputText label='پلاک' name="plateNumber" handleChange={formik.handleChange} values={formik.values.plateNumber} type={"number"}/>
+       <div ><InputText label='پلاک' name="plateNumber" handleChange={formik.handleChange} values={formik.values.plateNumber} type={"number"} wrapperClassName="!w-full"/>
        
        </div>
-       <div ><InputText label='آدرس 1' name="addressLine1" handleChange={formik.handleChange} values={formik.values.addressLine1} type={"text"}/>
+       <div ><InputText label='آدرس 1' name="addressLine1" handleChange={formik.handleChange} values={formik.values.addressLine1} type={"text"} wrapperClassName="!w-full"/>
       
        </div>
-       <div className='!col-span-2 ' ><InputText label='آدرس 2' name="addressLine2" handleChange={formik.handleChange} values={formik.values.addressLine2} type={"text"}/>
+       <div className='!col-span-2 ' ><InputText label='آدرس 2' name="addressLine2" handleChange={formik.handleChange} values={formik.values.addressLine2} type={"text"} wrapperClassName="!w-full"/>
       
        </div>
        <div>نقشه</div>

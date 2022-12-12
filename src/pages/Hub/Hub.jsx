@@ -5,7 +5,7 @@ const Hub = () => {
 
   return (
    <>
-    <MainHub/>
+   <MainHub/>
     </>
   );
 };

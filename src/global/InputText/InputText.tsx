@@ -7,10 +7,12 @@ type InputTextProps = {
   placeholder?: string;
   important?: boolean;
   readOnly?: boolean;
+  classNames?:string;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   wrapperClassName?: string
 };
 const InputText = ({
+  classNames,
   label,
   name,
   handleChange,
@@ -25,12 +27,12 @@ const InputText = ({
   return (
     <div className={`flex flex-col ${wrapperClassName} `}>
       <div
-        className={`autocompleteWrapper ${error && "border-red"} ${
+        className={`autocompleteWrapper ${classNames} ${error && "border-red-700"} ${
           readOnly && "opacity-40"
         } `}
       >
         <div
-          className={`autocompleteLabel ${error && "text-red"} top-[-17px]`}
+          className={`autocompleteLabel  ${error && "text-red-700"} top-[-17px]`}
         >
           {label}{" "}
           <span className="text-tomato font-extrabold text-lg h-4">

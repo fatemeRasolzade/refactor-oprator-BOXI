@@ -1,6 +1,7 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
 import { postDataHeaderToServer } from '../../services/Service_call';
 import { apiRoute } from '../../services/apiRoute';
+import { ErrorAlert } from "../../global/alert/Alert";
 
 export const productData=createAsyncThunk('productlists',async(body:any)=>{
 
@@ -8,9 +9,7 @@ export const productData=createAsyncThunk('productlists',async(body:any)=>{
     var data = {};
     try {
         data = await postDataHeaderToServer(apiRoute().post.product + params, {
-          code:body.code,
-          name:body.name,
-          isActive:body.isActive
+        ...body
         },{
             headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
           });
