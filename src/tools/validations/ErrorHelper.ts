@@ -28,34 +28,61 @@ export const NationalIDValidator = (nationalId: string, req?: boolean) => {
   if (nationalId.length !== 11) {
     err = "شناسه ملی یازده رقم ";
   } else {
-    alert("fate");
-    // if (parseInt(nationalId.substring(3, 6), 10) === 0) {
-    //   alert("Hellooooooooooo")
-    //   err = "شناسه ملی نامعتبر";
-    // } else {
-    // let c = parseInt(nationalId.substring(10, 1), 10);
-    // let d = parseInt(nationalId.substring(9, 1), 10) + 2;
-    // let z = new Array(29, 27, 23, 19, 17);
-    // let s = 0;
-    // for (let i = 0; i < 10; i++)
-    //   s += (d + parseInt(nationalId.substring(i, 1), 10)) * z[i % 5];
-    // s = s % 11;
-    // if (s == 10) s = 0;
-    // // return (c==s);
-    // if (c == s) {
-    //   isValid = true;
-    // } else {
-    //   isValid = false;
-    //   err = "شناسه ملی نامعتبر";
-    // }
-    // }
-    // if (!err) {
-    //   isValid = true;
-    // }
+  
+    if (parseInt(nationalId.substr(3, 6), 10) === 0) {
+      alert("Hellooooooooooo")
+      err = "شناسه ملی نامعتبر";
+    } else {
+    let c = parseInt(nationalId.substr(10, 1), 10);
+    let d = parseInt(nationalId.substr(9, 1), 10) + 2;
+    let z = new Array(29, 27, 23, 19, 17);
+    let s = 0;
+    for (let i = 0; i < 10; i++)
+      s += (d + parseInt(nationalId.substr(i, 1), 10)) * z[i % 5];
+    s = s % 11;
+    if (s == 10) s = 0;
+    // return (c==s);
+    if (c == s) {
+      isValid = true;
+    } else {
+      isValid = false;
+      err = "شناسه ملی نامعتبر";
+    }
+    }
+    if (!err) {
+      isValid = true;
+    }
   }
   return [isValid, err];
 };
+export const ContactNumberValidate = (contactNumber:any) => {
+	let isValidContact = false;
+	let errContact;
+	let digits = contactNumber.toString(11).replace(/\D/g, "0").split("").map(Number);
+	if (contactNumber === "") {
+		isValidContact = true;
+	} else if (digits.length !== 11 || digits.length !== 11) {
+		errContact = "شماره تماس 11 رقم ";
+	} else if (
+		contactNumber === "00000000000" ||
+		contactNumber === "11111111111" ||
+		contactNumber === "22222222222" ||
+		contactNumber === "33333333333" ||
+		contactNumber === "44444444444" ||
+		contactNumber === "55555555555" ||
+		contactNumber === "66666666666" ||
+		contactNumber === "77777777777" ||
+		contactNumber === "88888888888" ||
+		contactNumber === "99999999999"
+	) {
+		errContact = "شماره تماس 11 رقم";
+	}
 
+	if (!errContact) {
+		isValidContact = true;
+	}
+	return [isValidContact, errContact];
+};
 export const EconomicCodeValidate = (economicCode: any, req?: boolean) => {
   if (req && economicCode === "") {
     return [false, "اجباری است"];

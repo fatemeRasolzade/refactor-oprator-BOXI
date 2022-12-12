@@ -1,3 +1,4 @@
+
 export const Base_url = "http://192.168.1.153:20000";
 export const Base_url2 = "http://192.168.1.153:8090";
 export const Base_url3 = "http://172.16.55.144:8090";
@@ -83,13 +84,14 @@ export const apiRoute = () => {
       // create
       hub: createUrl(API_URL, "/hub"),
       createProduct: createUrl(API_CONSIGNMENT4, "/product"),
-
+      createVendor:createUrl(API_CONSIGNMENT4, "/vendor"),
       // filter
       filterRole: createUrl(API_CONSIGNMENT2, "/role"),
       // employee
       filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
       serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
       product: createUrl(API_CONSIGNMENT4, "/product"),
+      filterVendor:createUrl(API_CONSIGNMENT4,"/vendor")
     },
     postExcel: {
       exception: createUrl(API_CONSIGNMENT3, "/exception"),
@@ -97,12 +99,13 @@ export const apiRoute = () => {
     delete: {
       role: createUrl(API_CONSIGNMENT2, "/role"),
       personnel: createUrl(API_CONSIGNMENT2, "/employee"),
-
+      vendor:createUrl(API_CONSIGNMENT4,"/vendor"),
       serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
       hubTable: createUrl(API_CONSIGNMENT4, "/hub"),
     },
     edit: {
+      EditVendor:createUrl(API_CONSIGNMENT4,'vendor'),
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
       EDIT_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
     },

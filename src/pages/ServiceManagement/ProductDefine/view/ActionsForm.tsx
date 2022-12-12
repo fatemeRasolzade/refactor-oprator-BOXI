@@ -95,14 +95,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
           }
           validationSchema={productDefineschema}
           onSubmit={(values) => {
-            let body = {
-              page: 1,
-              body: {},
-            };
-            console.log(values);
             if (!itemValue) {
-              console.log("run add");
-              // dispatch(updating(true));
               PostDataParams(apiRoute().post.createProduct, values).then((res) => {
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ساخته شد");
