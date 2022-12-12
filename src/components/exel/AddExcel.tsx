@@ -1,4 +1,3 @@
-import { Dialog } from "@material-tailwind/react";
 import axios from "axios";
 import {
   SyntheticEvent,
@@ -8,28 +7,35 @@ import {
   useRef,
   useState,
 } from "react";
-import { GrDocumentPdf, GrFormClose } from "react-icons/gr";
 import { toast } from "react-toastify";
-
+import Modal from "../../global/Modal/Modal";
+import UploadFileIcon from "../../assets/icons/UploadFileIcon";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
+
 interface AddExcelProps {
-  url?: any;
-  fileSampleName?: any;
-  setIsOpenModal?: any;
-  IsOpenModal?: any;
+  excelInfo: any;
+  setOpenModal: any;
+  OpenModal: any;
 }
 
 const AddExcel: FC<AddExcelProps> = ({
-  url,
-  fileSampleName,
-  setIsOpenModal,
-  IsOpenModal,
+  excelInfo,
+  setOpenModal,
+  OpenModal,
 }): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [theFile, setTheFile] = useState<any>();
-  const [error, setError] = useState<string>("");
   const [dragActive, setDragActive] = useState<boolean>(false);
+
+  const persianResponse: any = {
+    Product: "محصول",
+    priceList: "نرخ نامه",
+    priceListDetails: "مشخصات نرخ نامه",
+    service: "سرویس",
+    productAttribute: "مشخصات محصول",
+    vehicle: "وسیله نقیه",
+  };
 
   const handleDrag = (e: DragEvent) => {
     e.preventDefault();
@@ -51,9 +57,8 @@ const AddExcel: FC<AddExcelProps> = ({
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       ) {
         setTheFile(e.dataTransfer.files[0]);
-        setError("");
       } else {
-        setError("فرمت فایل صحیح نیست");
+        toast.error("فرمت فایل صحیح نیست");
       }
     }
   };
@@ -62,25 +67,18 @@ const AddExcel: FC<AddExcelProps> = ({
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
       setTheFile(e.target.files[0]);
-      setError("");
     } else {
-      setError("فرمت فایل صحیح نیست");
+      toast.error("فرمت فایل صحیح نیست");
     }
   };
 
-  const handleClose = () => {
-    setTheFile(null);
-  };
+  const handleClear = () => setTheFile(null);
 
-  const onButtonClick = () => {
-    inputRef?.current?.click();
-  };
+  const handleOpenUpload = () => inputRef?.current?.click();
 
   const handleSubmit = async (e: SyntheticEvent) => {
     const headers = { "Content-Type": "multipart/form-data" };
-
     e.preventDefault();
-    console.log("ssdfsdg");
     if (theFile) {
       let bodyFormData = new FormData();
       bodyFormData.append("file", theFile);
@@ -88,111 +86,111 @@ const AddExcel: FC<AddExcelProps> = ({
         axios({
           headers: headers,
           method: "post",
-          url: url,
+          url: process.env.REACT_APP_BASE_URL + excelInfo.url,
           data: bodyFormData,
+        }).then((response) => {
+          toast.success("اطلاعات مورد نظر اضافه شد ");
+          setOpenModal(false);
+          handleClear();
+          if (response.status) {
+            const convert = Object.entries(response.data.payload).map(
+              ([key, value]) =>
+                persianResponse[key]
+                  ? "تعداد" +
+                    " " +
+                    value +
+                    " " +
+                    persianResponse[key] +
+                    " " +
+                    "اضافه شد"
+                  : "تعداد" + " " + value + " " + "عدد" + " " + "اضافه شد"
+            );
+            convert.forEach((response) => {
+              toast.success(response);
+            });
+          }
         });
-        toast.success("اطلاعات مورد نظر اضافه شد ");
-        setIsOpenModal(false);
       } catch (error) {}
     }
   };
   return (
     <>
-      <Dialog
-        open={IsOpenModal}
-        handler={setIsOpenModal}
-        className="height-[900px]"
-      >
-        <button
-          className="flex w-[50px] h-[50px]  border-none items-center justify-center"
-          onClick={() => setIsOpenModal(false)}
-        >
-          <GrFormClose />
-        </button>
-        <div className="w-full flex flex-col justify-center items-center mb-[40px]">
-          <div className="flex text-lg font-semibold mt-0">آپلود فایل</div>
-          <form
-            onSubmit={handleSubmit}
-            className="flex justify-center flex-col items-center"
-          >
-            <div
-              className="w-[40rem] h-[20rem] max-w-[100%] text-center relative m-[20px]"
-              onDragEnter={handleDrag}
+      <Modal visible={OpenModal} setVisible={setOpenModal} title="آپلود فایل">
+        <form onSubmit={handleSubmit} className="centering flex-col w-[30rem]">
+          <div className="text-center mb-5 w-full" onDragEnter={handleDrag}>
+            <input
+              accept=".xlsx"
+              type="file"
+              id="input-file-upload"
+              ref={inputRef}
+              multiple={true}
+              onChange={handleChange}
+              className="hidden"
+            />
+            <label
+              id="label-file-upload"
+              htmlFor="input-file-upload"
+              className={`centering border-2 border-dashed border-tomato  py-3 ${
+                dragActive ? "bg-lightTomato" : "bg-light"
+              } `}
             >
-              <input
-                accept=".xlsx"
-                type="file"
-                id="input-file-upload"
-                ref={inputRef}
-                multiple={true}
-                onChange={handleChange}
-                className="hidden"
-              />
-              <label
-                style={{ backgroundColor: dragActive ? "#ffffff" : "#fff9f2" }}
-                id="label-file-upload"
-                htmlFor="input-file-upload"
-                className="h-full flex justify-center items-center	 border-[2px] rounded-[30px] border-solid	 border-[#b1d4fd] "
-              >
-                <div className="m-2 flex flex-col gap-[10px] items-center   ">
-                  <p className="opacity-40">
-                    فایل را در این قسمت بکشید و رها کنید
-                  </p>
-                  <span>یا</span>
-                  <SimpleButton
-                    className="full-tomato-btn"
-                    handelClick={onButtonClick}
-                    text="یک فایل آپلود کنید"
-                  />
+              <div className="my-4 centering flex-col gap-3  ">
+                <UploadFileIcon />
+                <p className="text-base text-darkGray leading-7">
+                  فایل را در این قسمت بکشید و رها کنید <br />
+                  یا یک{" "}
                   <span
-                    className={`text-[12px] ${
-                      theFile ? "text-[blue]" : "text-[red]"
-                    }`}
+                    className="px-1 text-tomato underline cursor-pointer"
+                    onClick={handleOpenUpload}
                   >
-                    {theFile ? theFile?.name : "فایلی وجود ندارد"}
+                    {" "}
+                    فایل آپلود{" "}
                   </span>
-                  <span>{error && error}</span>
-                </div>
-              </label>
-              {dragActive && (
-                <div
-                  className="absolute w-full h-full rounded-[1px] top-0	right-0 bottom-0 left-0	"
-                  id="drag-file-element"
-                  onDragEnter={handleDrag}
-                  onDragLeave={handleDrag}
-                  onDragOver={handleDrag}
-                  onDrop={handleDrop}
-                ></div>
-              )}
-            </div>
-            <div className="flex w-[93%] justify-center">
-              <div className="flex w-[25%] pt-8 justify-end gap-4">
-                <a
-                  href={`/assets/sampleFiles/${fileSampleName}`}
-                  download={fileSampleName}
-                  className="shadow-md shadow-gray-500/20 hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none border-none hover:bg-orange-800 flex  w-full justify-center items-center p-[10px] cursor-pointer bg-[#ef5644] rounded-[10px] text-[white]   justify-center text-[13px] "
-                >
-                  دانلود قالب فایل
-                </a>
+                  کنید
+                </p>
+                <span className={`my-2 ${theFile ? "text-green" : "text-red"}`}>
+                  {theFile ? theFile?.name : "فایلی وجود ندارد"}
+                </span>
               </div>
+            </label>
+            {dragActive && (
+              <div
+                className="absolute w-full h-full rounded-[1px] top-0	right-0 bottom-0 left-0	"
+                id="drag-file-element"
+                onDragEnter={handleDrag}
+                onDragLeave={handleDrag}
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+              ></div>
+            )}
+          </div>
+          <div className="flex-between-start w-full">
+            <a
+              href={`/assets/sampleFiles/${excelInfo.fileName}`}
+              download={excelInfo.fileName}
+              className="btn px-0 w-fit "
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              دانلود قالب فایل
+            </a>
 
-              <div className="flex w-[75%] pt-8 justify-end gap-4">
-                <SimpleButton
-                  type="submit"
-                  text="افزودن"
-                  disabled={theFile ? false : true}
-                  className="full-tomato-btn"
-                />
-                <SimpleButton
-                  className="full-gray-btn"
-                  text="لغو"
-                  handelClick={handleClose}
-                />
-              </div>
+            <div className="flex-end-start gap-4">
+              <SimpleButton
+                className="full-gray-btn"
+                text="لغو"
+                handelClick={handleClear}
+              />
+              <SimpleButton
+                type="submit"
+                text="افزودن"
+                disabled={theFile ? false : true}
+                className="full-tomato-btn"
+              />
             </div>
-          </form>
-        </div>
-      </Dialog>
+          </div>
+        </form>
+      </Modal>
     </>
   );
 };

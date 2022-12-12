@@ -11,6 +11,19 @@
   body {
     @apply text-dark text-sm;
   }
+  p,
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  a,
+  ul,
+  li {
+    @apply text-dark;
+  }
 }
 
 @layer components {
