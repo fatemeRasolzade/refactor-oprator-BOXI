@@ -49,6 +49,7 @@ const ProductDefine = () => {
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف محصول"}
+                  handleDeleteActionNewData={handleDeleteActionNewData}
                   // handleDeleteActionNewData={handleDeleteActionNewData}
                   route={apiRoute().delete.productDefine + `/${item.id}`}
                   updating={updating}

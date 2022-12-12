@@ -147,10 +147,11 @@ const ActionForms:React.FC <PropsData>= ({ itemValue }):JSX.Element => {
         >
           {(formik) => (
             <form onSubmit={formik.handleSubmit} className="p-5">
-              <div className="w-full  grid grid-cols-2 gap-y-6 gap-x-4 content-center">
+              <div className="  grid grid-cols-2 gap-y-6 gap-x-4 content-center">
                 <div>
                   <InputText
                     label="کد"
+                    className="w-full"
                     name="code"
                     handleChange={formik.handleChange}
                     values={formik.values.code}
@@ -163,6 +164,7 @@ const ActionForms:React.FC <PropsData>= ({ itemValue }):JSX.Element => {
                 <div>
                   <InputText
                     label="عنوان"
+                    className="w-full"
                     name="name"
                     handleChange={formik.handleChange}
                     values={formik.values.name}
@@ -180,6 +182,7 @@ const ActionForms:React.FC <PropsData>= ({ itemValue }):JSX.Element => {
                   <InputSelect
                     label="گروه بندی محصول"
                     important
+         
                     name="productGroup"
                     handleChange={formik.setFieldValue}
                     values={formik.values.productGroup}
