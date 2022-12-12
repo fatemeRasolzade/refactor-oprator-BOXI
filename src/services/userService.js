@@ -1,5 +1,4 @@
 //public client
-import axios from "axios";
 import keycloak from "keycloak-js";
 const _kc=new keycloak({
 	"url":"http://boxi.local:8080",
@@ -10,6 +9,23 @@ const _kc=new keycloak({
 	"clientId":"react-client",
 	"auth-server-url":"http://boxi.local:8080"
 });
+
+
+
+const initKeycloak = (onAuthenticatedCallback) => {
+	_kc.init({
+		onLoad: 'login-required',
+		//onLoad: 'check-sso'
+
+	})
+		.then((authenticated) => {
+			if (authenticated) {
+			onAuthenticatedCallback();
+			} else {
+			  doLogin();
+			}
+		})
+};
 
 const doLogin = _kc.login;
 
@@ -27,29 +43,6 @@ const updateToken = (successCallback) =>{
 }
 
 
-
-
-const initKeycloak = (onAuthenticatedCallback) => {
-	_kc.init({
-		onLoad: 'login-required',
-		checkLoginIframe: false,
-		
-		//onLoad: 'check-sso'
-
-	})
-		.then((authenticated) => {
-			if (authenticated) {
-				console.log('token')
-				axios.defaults.headers.common["Authorization"] = "Bearer " + getToken();
-				window.localStorage.setItem("myToken",getToken())
-			onAuthenticatedCallback();
-			} else {
-			  doLogin();
-			}
-		})
-};
-
-
 const getUsername = () => _kc.tokenParsed?.preferred_username;
 
 const hasRole = (roles) => roles.some((role) => _kc.hasRealmRole(role));
@@ -61,7 +54,7 @@ const hasClientRole = (role) => {
 }
 
 const  tokenExpired =_kc.onTokenExpired = () => {
-	
+	console.log('token expired!: previous token', _kc.token);
 
 	_kc.updateToken(5).then((response) => {
 		console.log('response',response);
