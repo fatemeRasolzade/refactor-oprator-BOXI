@@ -3,29 +3,31 @@ import { postDataHeaderToServer } from '../../services/Service_call';
 import { apiRoute } from '../../services/apiRoute';
 import { ErrorAlert } from "../../global/alert/Alert";
 
-
 export const productData=createAsyncThunk('productlists',async(body:any)=>{
-    const params = `/filter?pageNumber=1&pageSize=20`;
+
+    const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
     var data = {};
     try {
-   
-        data = await postDataHeaderToServer(apiRoute().post.product + params, body,{
-            headers:{"Authorization":"Bearer " + localStorage.getItem("myToken")}
-           });
+        data = await postDataHeaderToServer(apiRoute().post.product + params, {
+          code:body.code,
+          name:body.name,
+          isActive:body.isActive
+        },{
+            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
+          });
+      } catch (error) {
+        console.log("error ", error);
+      }
 
-    } catch (error) {
-        ErrorAlert("گرفتن دیتا با خطا مواجه شد")
-    }
+
     return data;
 })
-
 
 const initialState:any= {
     productLists:[],
     fetchpost:false,
     errorMessage:null,
-    isUpdating: false,
-    
+    isUpdating: false,    
 }
 
 const ProductDefineList = createSlice({

@@ -2,8 +2,6 @@ import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
 import { PostDataParams,postDataHeaderToServer } from './../../services/Service_call';
 import { apiRoute } from './../../services/apiRoute';
 
-
-
 const initialState = {
   postLists: [],
   
@@ -11,16 +9,16 @@ const initialState = {
   errorMessage: null,
 };
 
-export const HubData=createAsyncThunk('post',async(page)=>{
-    const params=`/filter?pageNumber=${page}&pageSize=10`
-   const data=postDataHeaderToServer(apiRoute().post.hub + params,{},{
-    headers:{"Authorization":"Bearer " + localStorage.getItem("myToken")}
-   })
-  
-     return data
-   
-})
-
+export const HubData = createAsyncThunk("post", async (page) => {
+  const params = `/filter?pageNumber=${page}&pageSize=10`;
+  const data = postDataHeaderToServer(
+    apiRoute().post.hub + params,
+    {},
+    {
+      headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
+    }
+  );
+  })
 const HubList=createSlice({
     initialState:initialState,
     name:'hubList',
@@ -42,7 +40,11 @@ const HubList=createSlice({
        
  
     },
+    deleteRow: (state, action) => {
+      state.postLists.payload.content = state.postLists.payload.content.filter((item) => item.id !== action.payload);
+    },
   
+
   extraReducers: {
     [HubData.fulfilled]: (state, action) => {
       state.postLists = action.payload;
@@ -60,5 +62,5 @@ const HubList=createSlice({
 
  
 
-export const { clearHub,deleteRow,editHub,filterSwitch } = HubList.actions;
+export const { clearHub,deleteRow,filterSwitch } = HubList.actions;
 export default HubList.reducer;

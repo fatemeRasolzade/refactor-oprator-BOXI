@@ -3,9 +3,9 @@ import { v4 as uuid } from "uuid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../global/Modal/Modal";
-import InputSelect from "../../../global/InputSelect/InputSelect";
 import InputText from "../../../global/InputText/InputText";
 import CustomSwitch from "../../../global/Switch/Switch";
+import InputSelect from "../../../global/InputSelect/InputSelect";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { PostalCodeRegex } from "../../../tools/validations/ErrorHelper";
 import { VALIDPOSTALCODE } from "../../../tools/validations/RegexKeywords";
@@ -16,7 +16,6 @@ import {
   getRegions,
 } from "../../../services/GlobalApi";
 // import { Map } from "../../../../components/map";
-// import { PostalCodeRegex } from "../../../../utilities/function";
 
 const CustomerAddressForm = ({
   open,
@@ -26,12 +25,6 @@ const CustomerAddressForm = ({
   value,
   ID,
 }: any) => {
-  const [state, setState] = useState({
-    loading: false,
-    error: false,
-    response: null,
-  });
-
   //get required data
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
@@ -72,13 +65,11 @@ const CustomerAddressForm = ({
   }, [open]);
 
   // start fromik configurations
-  const [checked, setChecked] = useState(false);
   const validation = Yup.object().shape({
     selectAddressType: Yup.object().shape({
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
-
     selectState: Yup.object().shape({
       text: Yup.string().required(),
       id: Yup.string().required(),
@@ -131,17 +122,15 @@ const CustomerAddressForm = ({
           latitude: 10.0,
           longtitude: 20.0,
           address: "",
-          // telephones: [],
         },
     onSubmit: (values: any, { resetForm }) => {
-      alert("arash mozakhraf");
       if (currentData) {
-        setOpen(false);
-        resetForm({ values: "" });
         let newArray = [...value];
         let index = newArray.findIndex((a) => a.id === ID);
         newArray[index] = values;
         setValue("addresses", newArray);
+        resetForm({ values: "" });
+        setOpen(false);
       } else {
         const id: string = uuid();
         resetForm({ values: "" });
@@ -155,10 +144,6 @@ const CustomerAddressForm = ({
   const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
     formik;
 
-  const handleCloseModal = (e: any) => {
-    e.preventDefault();
-    setOpen(false);
-  };
   return (
     <Modal
       visible={open}

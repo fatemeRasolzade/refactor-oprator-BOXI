@@ -7,7 +7,7 @@ import PageNumber from "../PaginationAction/PaginationAction";
 import PersonnelList from "../PersonData/PersonsData";
 import ProductDefineList from "../ProductDefineData/ProductDefineData";
 import CustomerDefineList from "../CustomerManagement/CustomerManagementData";
-import ServiceProvision from "../ServiceProvision/ServiceProvision"
+import ServiceProvision from "../ServiceProvision/ServiceProvision";
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
 import EditHubTable from "../HubData/EditData"
 const persistConfig = {
@@ -15,7 +15,6 @@ const persistConfig = {
   storage,
   whitelist: ["editHub"],
 };
-
 
 const reducers = combineReducers({
   hub: HubList,
@@ -26,18 +25,17 @@ const reducers = combineReducers({
   productDefine: ProductDefineList,
   customerDefine: CustomerDefineList,
    serviceProvision:ServiceProvision,
-   editHub:EditHubTable
-  
+   editHub:EditHubTable,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer:persistedReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+  getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export let persistor = persistStore(store);

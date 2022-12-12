@@ -7,7 +7,7 @@ const CustomerAddressElements = ({
   handleDelete,
 }: any) => {
   return (
-    <div className="flex flex-col py-3 text-sm text-mainGray">
+    <div className="flex flex-col py-3 text-sm text-darkGray">
       <div className="flex justify-start gap-8">
         <p>نوع آدرس: {address?.selectAddressType?.text} </p>
         <p>کد پستی: {address?.postalCode}</p>

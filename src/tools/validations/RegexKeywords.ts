@@ -13,3 +13,4 @@ export const MAXCHAR = "حداکثر ${max} نویسه";
 export const UNMATCHPASSWORD = "رمز عبور مطابقت ندارد";
 export const VALIDCOMPLEXREGEX =
   "پسورد باید شامل  حداقل 8 کاراکتر ،حروف بزرگ و کوچک  ،کاراکتر های ویژه  و عدد باشد";
+export const VALIDENGPASSWORD = "رمز عبور باید شامل اعداد و حروف لاتین باشد";

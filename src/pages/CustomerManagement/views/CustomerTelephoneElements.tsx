@@ -7,7 +7,7 @@ const CustomerTelephoneElements = ({
   handleDelete,
 }: any) => {
   return (
-    <div className="flex flex-col py-3 text-sm text-mainGray">
+    <div className="flex flex-col py-3 text-sm text-darkGray">
       <div className="flex justify-between gap-5">
         <div className="flex justify-start gap-8">
           <p>تماس از طریق: {phone?.selectPhoneType?.text} </p>

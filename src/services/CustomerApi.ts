@@ -1,5 +1,10 @@
 import http from "./http_service";
-import { CREATE_CUSTOMER, EDIT_CUSTOMER, GET_CUSTOMER_PARENT, GET_CUSTOMER_TYPE } from "./apiRoute";
+import {
+  CREATE_CUSTOMER,
+  EDIT_CUSTOMER,
+  GET_CUSTOMER_PARENT,
+  GET_CUSTOMER_TYPE,
+} from "./apiRoute";
 
 export const getCustomerType = async () => {
   const { data } = await http.get(GET_CUSTOMER_TYPE);
@@ -17,6 +22,6 @@ export const createCustomer = async (body: object) => {
 };
 
 export const editCustomer = async (body: object) => {
-  const { data } = await http.post(EDIT_CUSTOMER, body);
+  const { data } = await http.put(EDIT_CUSTOMER, body);
   return data;
 };
