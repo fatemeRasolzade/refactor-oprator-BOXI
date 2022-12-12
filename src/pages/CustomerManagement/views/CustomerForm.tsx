@@ -139,9 +139,9 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
       id: Yup.number(),
     }),
     email: Yup.string().email(),
-    currentCredit: Yup.number().label(""),
-    creditLimit: Yup.number().label(""),
-    initialCredit: Yup.number().label(""),
+    currentCredit: Yup.number(),
+    creditLimit: Yup.number(),
+    initialCredit: Yup.number(),
 
     username: Yup.string().required(),
     password: Yup.string()
@@ -175,9 +175,9 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
       id: Yup.number(),
     }),
     email: Yup.string().email(),
-    currentCredit: Yup.number().label(""),
-    creditLimit: Yup.number().label(""),
-    initialCredit: Yup.number().label(""),
+    currentCredit: Yup.number().nullable(),
+    creditLimit: Yup.number().nullable(),
+    initialCredit: Yup.number().nullable(),
 
     username: Yup.string().required(),
     extendGlobalVirtualSeries: Yup.boolean().nullable(),
@@ -318,12 +318,11 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
             return { ...a, id: undefined };
           }),
         })
-          .then((response) => {
+          .then(() => {
             dispatch(customerData({}) as any);
             setOpen(false);
             toast.success("مشتری افزوده شد ");
           })
-          .catch((error) => {})
           .finally(() => setLoading(false));
       }
     },

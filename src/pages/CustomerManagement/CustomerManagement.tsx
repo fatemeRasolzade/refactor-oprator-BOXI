@@ -14,6 +14,7 @@ import {
   updating,
 } from "../../redux/CustomerManagement/CustomerManagementData";
 import { DELETE_CUSTOMER } from "../../services/apiRoute";
+import { ExportExcel } from "../../tools/functions/Methods";
 import { CustomerColumns } from "./views/CustomerColumn";
 import CustomerForm from "./views/CustomerForm";
 import CustomerSearchForm from "./views/CustomerSearchForm";
@@ -24,9 +25,7 @@ const CustomerManagement = () => {
   const dispatch = useDispatch();
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
-  const handleGetExcel = () => {
-    alert("HELOOOOOOOOOOOOOOO");
-  };
+  const handleGetExcel = () => ExportExcel(customerList?.content);
 
   const options = [
     {
@@ -89,7 +88,7 @@ const CustomerManagement = () => {
         isUpdating={isUpdating}
         pageNumbers={pageNumbers}
       />
-      <div className="flex-start-center gap-16 mt-6">
+      <div className="flex-start-center gap-20 mt-6">
         <CustomerForm />
         <TestCustomOptions options={options} />
       </div>

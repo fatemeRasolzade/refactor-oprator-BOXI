@@ -24,6 +24,9 @@
   li {
     @apply text-dark;
   }
+  p {
+    @apply text-right;
+  }
 }
 
 @layer components {

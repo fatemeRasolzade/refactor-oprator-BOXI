@@ -28,8 +28,6 @@ const AddExcel: FC<AddExcelProps> = ({
   const [theFile, setTheFile] = useState<any>();
   const [dragActive, setDragActive] = useState<boolean>(false);
 
-  console.log(excelInfo.fileName);
-
   const persianResponse: any = {
     Product: "محصول",
     priceList: "نرخ نامه",
@@ -75,7 +73,6 @@ const AddExcel: FC<AddExcelProps> = ({
   };
 
   const handleClear = () => setTheFile(null);
-
   const handleOpenUpload = () => inputRef?.current?.click();
 
   const handleSubmit = async (e: SyntheticEvent) => {
@@ -94,23 +91,23 @@ const AddExcel: FC<AddExcelProps> = ({
           toast.success("اطلاعات مورد نظر اضافه شد ");
           setOpenModal(false);
           handleClear();
-          // if (response.status) {
-          //   const convert = Object.entries(response.data.payload).map(
-          //     ([key, value]) =>
-          //       persianResponse[key]
-          //         ? "تعداد" +
-          //           " " +
-          //           value +
-          //           " " +
-          //           persianResponse[key] +
-          //           " " +
-          //           "اضافه شد"
-          //         : "تعداد" + " " + value + " " + "عدد" + " " + "اضافه شد"
-          //   );
-          //   convert.forEach((response) => {
-          //     toast.success(response);
-          //   });
-          // }
+          if (response.status) {
+            const convert = Object.entries(response.data.payload).map(
+              ([key, value]) =>
+                persianResponse[key]
+                  ? "تعداد" +
+                    " " +
+                    value +
+                    " " +
+                    persianResponse[key] +
+                    " " +
+                    "اضافه شد"
+                  : ` تعداد ${value} عدد اضافه شد`
+            );
+            convert.forEach((response) => {
+              toast.success(response);
+            });
+          }
         });
       } catch (error) {}
     }

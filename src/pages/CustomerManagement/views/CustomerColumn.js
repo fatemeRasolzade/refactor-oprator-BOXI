@@ -46,7 +46,7 @@ export const CustomerColumns = [
         <div className="flex flex-row relative">
           <TooltipWrapper
             textProps={cell?.value?.map((tel) => (
-              <div>{tel.telNumber}</div>
+              <div className="text-white">{tel.telNumber}</div>
             ))}
           >
             {cell.value.length > 0 && (
@@ -87,13 +87,22 @@ export const CustomerColumns = [
   {
     accessor: "addresses",
     Header: "آدرس",
-
-    Cell: ({ cell }) => {
-      <span className="flex flex-row relative">
-        FFFFFFFF
-        {cell.value.length > 0 && cell.value[0].address}
-      </span>;
-    },
+    Cell: ({ cell }) =>
+      cell.value.length > 1 ? (
+        <div className="flex flex-row relative">
+          <TooltipWrapper
+            textProps={cell?.value?.map((a) => (
+              <div className="text-white">{a.address}</div>
+            ))}
+          >
+            {cell.value.length > 0 && <>{cell.value[0].address}</>}
+          </TooltipWrapper>
+        </div>
+      ) : (
+        <div className="flex flex-row relative">
+          {cell.value.length > 0 && <>{cell.value[0].address}</>}
+        </div>
+      ),
   },
   // {
   // 	accessor: "name",

@@ -12,7 +12,7 @@ export const API_CONSIGNMENT6 = `${Base_url}/core-api`;
 export const API_URL = `/core-api`;
 export const API_URL_2 = `/resource-api`;
 
-const createUrl = (base, dir) => {
+const createUrl = (base: any, dir: any) => {
   return base + dir;
 };
 
@@ -126,4 +126,3 @@ export const EDIT_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
 export const DELETE_CUSTOMER = `${API_CONSIGNMENT5}/customer/`;
 
 //ThirdParty
-
