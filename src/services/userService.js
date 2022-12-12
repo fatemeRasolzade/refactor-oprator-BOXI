@@ -1,5 +1,4 @@
 //public client
-import axios from "axios";
 import keycloak from "keycloak-js";
 const _kc=new keycloak({
 	"url":"http://boxi.local:8080",
@@ -10,6 +9,23 @@ const _kc=new keycloak({
 	"clientId":"react-client",
 	"auth-server-url":"http://boxi.local:8080"
 });
+
+
+
+const initKeycloak = (onAuthenticatedCallback) => {
+	_kc.init({
+		onLoad: 'login-required',
+		//onLoad: 'check-sso'
+
+	})
+		.then((authenticated) => {
+			if (authenticated) {
+			onAuthenticatedCallback();
+			} else {
+			  doLogin();
+			}
+		})
+};
 
 const doLogin = _kc.login;
 
@@ -25,29 +41,6 @@ const updateToken = (successCallback) =>{
 		.then(successCallback)
 		.catch(doLogin);
 }
-
-
-
-
-const initKeycloak = (onAuthenticatedCallback) => {
-	_kc.init({
-		onLoad: 'login-required',
-		checkLoginIframe: false,
-		
-		//onLoad: 'check-sso'
-
-	})
-		.then((authenticated) => {
-			if (authenticated) {
-				
-				axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token;
-				window.localStorage.setItem("myToken",_kc.token)
-			
-			} else {
-			  doLogin();
-			}
-		})
-};
 
 
 const getUsername = () => _kc.tokenParsed?.preferred_username;
@@ -66,8 +59,6 @@ const  tokenExpired =_kc.onTokenExpired = () => {
 	_kc.updateToken(5).then((response) => {
 		console.log('response',response);
 		if (response) {
-			axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token;
-			window.localStorage.setItem("myToken",_kc.token)
 			console.log('successfully get a new token', _kc.token);
 		} /*else {
       throw new Error('Something went wrong ...');
