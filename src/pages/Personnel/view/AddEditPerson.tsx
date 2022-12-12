@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import * as Yup from "yup";
 import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
@@ -78,42 +78,6 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
     { id: 0, text: "خیر" },
     { id: 1, text: "بله" },
   ]);
-
-  const validation = Yup.object().shape({
-    personelCode: Yup.string().required(),
-    nationalCode: Yup.string()
-      .matches(NationalCodeRegex, VALIDPOSTALCODE)
-      .required(),
-    name: Yup.string().required(),
-    mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
-    email: Yup.string().email(),
-    username: Yup.string().matches(JustEngNameRegex).required(),
-    password: Yup.string()
-      .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
-      .required(),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], UNMATCHPASSWORD)
-      .required(),
-    isSuperAdmin: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
-  });
-
-  const validationEdit = Yup.object().shape({
-    personelCode: Yup.string().required(),
-    nationalCode: Yup.string()
-      .matches(NationalCodeRegex, VALIDNATIONALCODE)
-      .required(),
-    name: Yup.string().required(),
-    mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
-    email: Yup.string().email(),
-
-    isSuperAdmin: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
-  });
 
   const formik = useFormik({
     enableReinitialize: true,
