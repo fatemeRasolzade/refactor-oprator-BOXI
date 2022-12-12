@@ -11,10 +11,16 @@ import AddButton from "../../../../global/addButton/AddButton";
 import AddExcel from "../../../../components/exel/AddExcel";
 import { vendorData } from "../../../../redux/Transportation/vendor/VendorData";
 import { ContactNumberValidate, NationalIDValidator } from "../../../../tools/validations/ErrorHelper";
-
+import * as Yup from "yup";
 interface PropsData {
   currentData?: any;
 }
+const validation = Yup.object().shape({
+  name: Yup.string().required().label("نام شرکت"),
+  code: Yup.string().required().label("کد شرکت"),
+  nationalCode: Yup.number().required(),
+  contactNumber: Yup.number().label("شماره تماس"),
+});
 
 const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,6 +41,7 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
   ];
   const formik = useFormik({
     enableReinitialize: true,
+    validationSchema:validation,
     initialValues: currentData
       ? {
           id: currentData?.id,
@@ -148,7 +155,6 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
                 name="contactNumber"
                 handleChange={formik.handleChange}
                 values={formik.values.contactNumber}
-                important
                 type={"text"}
                 error={formik.touched.contactNumber && formik.errors.contactNumber}
               />

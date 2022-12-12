@@ -16,7 +16,7 @@ const Transportation: React.FC = (): JSX.Element => {
         selectedTabClassName="selected font-bold "
         // selectedTabPanelClassName="react-tabs__tab-panel--selected bg-white p-6 shadow-md rounded-b-md rounded-tl-md"
       >
-        <TabList className={"overflow-hidden flex gap-x-5 text-xl text-[#505A73]"}>
+        <TabList className={"overflow-hidden flex gap-x-5 text-xl text-[#505A73] p m-10"}>
           <Tab>
             شرکت های نقلیه <span className="border  border-l-gary-200 relative right-4"></span>
           </Tab>

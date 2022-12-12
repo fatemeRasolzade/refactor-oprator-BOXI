@@ -37,8 +37,9 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
     formData.handleSubmit();
   };
   const persianName: any = {
-    code: "کد هاب",
-    name: "نام هاب",
+    code: "کد ",
+    name: "نام ",
+    search:'کد',
     hub: "نام هاب",
     hubTypeId: "نوع هاب",
     hubCategoryId: "گونه هاب",

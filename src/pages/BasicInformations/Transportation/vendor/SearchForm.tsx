@@ -7,28 +7,24 @@ import { productData } from "../../../../redux/ProductDefineData/ProductDefineDa
 import { apiRoute } from "../../../../services/apiRoute";
 import { GetDataParams, selectDataFromServer } from "../../../../services/Service_call";
 import { vendorData } from "../../../../redux/Transportation/vendor/VendorData";
-
-
+import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
+import { FiSearch } from "react-icons/fi";
 
 interface PropsData {
   isActive: Boolean | string;
-
-
 }
 
-const SearchForm:React.FC <PropsData> = ({ isActive }): JSX.Element => {
-  console.log("render searh form")
+const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
-   // @ts-ignore
+  // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
   const [filterData, setFilterData] = useState({});
 
   const formik = useFormik({
     // enableReinitialize: true,
     initialValues: {
-      code: "",
-      name: "",
+      search: "",
       isActive: isActive,
       productGroup: "" as any,
     },
@@ -38,28 +34,17 @@ const SearchForm:React.FC <PropsData> = ({ isActive }): JSX.Element => {
   });
 
   useEffect(() => {
-   
     dispatch(
       vendorData({
-        code: formik.values.code,
-        name: formik.values.name,
+        search: formik.values.search,
         isActive: isActive,
         pageSize: 10,
         pageNumber: pageNumbers,
       }) as any
     );
-  }, [isActive, filterData,pageNumbers]);
+  }, [isActive, filterData, pageNumbers]);
   const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     formik.setFieldValue(name, e.target.value);
-    // const filterData = data.filter((item) => item.text.includes(e.target.value));
-    // setServiceCodeOptions(
-    //   filterData.map((item) => {
-    //     return {
-    //       label: item?.text,
-    //     };
-    //   })
-    // );
-    //mr hash please dont delete this comments//
     const params = `${e.target.value}`;
     // setOptions(data.filter(item=>item.text.includes(e.target.value)))
     GetDataParams(apiRoute().get.GET_PRODUCT + params).then((res) => {
@@ -100,11 +85,16 @@ const SearchForm:React.FC <PropsData> = ({ isActive }): JSX.Element => {
           <AutocompleteInput
             label={"کد"}
             items={serviceCodeOptions}
-            value={formik.values.code}
-            onChange={(e) => handleChangeCode(e, "code")}
-            onSelect={(val: any) => handleSelect(val, "code")}
+            value={formik.values.search}
+            onChange={(e) => handleChangeCode(e, "search")}
+            onSelect={(val: any) => handleSelect(val, "search")}
           />
-        
+          <SimpleButton
+            type={"submit"}
+            className="full-gray-btn"
+            icon={<FiSearch size={25} className="text-darkGray" />}
+            text="جستجو"
+          />
         </form>
       </div>
       {/* list of chip */}
@@ -114,5 +104,3 @@ const SearchForm:React.FC <PropsData> = ({ isActive }): JSX.Element => {
 };
 
 export default SearchForm;
-
-

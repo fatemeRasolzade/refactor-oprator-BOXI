@@ -4,6 +4,7 @@ import Breadcrumb from "../../../../components/Breadcrumb/Breadcrumb";
 
 import StaticTable from "../../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../../components/tableOperation/DeleteOperation";
+import { vendorData } from "../../../../redux/Transportation/vendor/VendorData";
 import { apiRoute } from "../../../../services/apiRoute";
 import { ExportExcel } from "../../../../tools/functions/Methods";
 import { VendorColumns } from "./Column";
@@ -18,17 +19,14 @@ const Vendor: React.FC = (): JSX.Element => {
   const { pageNumbers } = useSelector((state: any) => state.paginate);
   const handleDeleteActionNewData = () => {
     dispatch(
-      vendorLists({
-        code: "",
-        name: "",
+      vendorData({
+        search: "",
         isActive: isActive,
         pageSize: 10,
         pageNumber: pageNumbers,
       }) as any
     );
   };
-
- console.log(vendorLists)
   const data =
     vendorLists?.content?.length !== 0
       ? vendorLists?.content?.map((item: any) => {
