@@ -11,10 +11,9 @@ interface InputSelectProps {
   error?: any;
   important?: boolean;
   wrapperClassName?: string;
-  isMulti?: boolean;
+  isDisabled?: boolean;
 }
-
-const InputSelect: FC<InputSelectProps> = ({
+const MultiSelect: FC<InputSelectProps> = ({
   label,
   name,
   // blure,
@@ -23,11 +22,9 @@ const InputSelect: FC<InputSelectProps> = ({
   handleChange,
   error,
   important,
+  isDisabled,
   wrapperClassName,
-  isMulti,
 }): JSX.Element => {
-
-  //This is custom Style for react-select 
   const style = {
     control: (base: any, state: any) => ({
       ...base,
@@ -54,9 +51,8 @@ const InputSelect: FC<InputSelectProps> = ({
       width: "100%",
     }),
   };
-
   return (
-    <div className={`relative  ${wrapperClassName}`}>
+    <div className={`relative min-w-[240px]  ${wrapperClassName}`}>
       <label
         className={` absolute top-[-16px] right-5 bg-white z-10  px-2  text-sm ${
           error ? "text-red" : "text-darkGray"
@@ -68,17 +64,26 @@ const InputSelect: FC<InputSelectProps> = ({
         </span>
       </label>
       <Select
-        isMulti={isMulti}
+        isMulti
+        isDisabled={isDisabled}
         isLoading={options.length > 0 ? false : true}
         value={
-          options ? options.find((option: any) => option.label === values) : ""
+          values
+            ? values.map((item: any) => {
+                return { value: item.id, label: item.text };
+              })
+            : []
         }
-        defaultInputValue={values?.text}
         onChange={(option) =>
-          handleChange(name, {
-            id: option.value,
-            text: option.label,
-          })
+          handleChange(
+            name,
+            option.map((item: any) => {
+              return {
+                id: item.value,
+                text: item.label,
+              };
+            })
+          )
         }
         styles={style}
         options={options.map((res: any) => {
@@ -92,12 +97,11 @@ const InputSelect: FC<InputSelectProps> = ({
         name={name}
         className="inputSelect focus:outline-none flex"
       />
-      <p className="text-red text-xs pr-3 h-4 mt-1">{error?.text}</p>
+      <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
   );
 };
-
-InputSelect.defaultProps = {
+MultiSelect.defaultProps = {
   wrapperClassName: "w-60",
 };
-export default InputSelect;
+export default MultiSelect;

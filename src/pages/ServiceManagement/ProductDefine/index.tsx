@@ -71,7 +71,7 @@ const ProductDefine = () => {
         addComponentProps={() => <ActionForms />}
         exportExcel={() => ExportExcel(productLists?.content)}
       />
-      <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} />
+      <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} selectable loading={false} />
     </div>
   );
 };

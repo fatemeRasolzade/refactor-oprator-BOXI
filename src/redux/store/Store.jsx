@@ -7,13 +7,24 @@ import PageNumber from "../PaginationAction/PaginationAction";
 import PersonnelList from "../PersonData/PersonsData";
 import ProductDefineList from "../ProductDefineData/ProductDefineData";
 import CustomerDefineList from "../CustomerManagement/CustomerManagementData";
-import ServiceProvision from "../ServiceProvision/ServiceProvision"
+import ServiceProvision from "../ServiceProvision/ServiceProvision";
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
-import { serviceProvisionData } from "../../pages/ServiceManagement/ProductDefine/view/serviceProvisionData";
+import SelectedRowsList from "../selectRowTable/selectRowTable";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["hub", "paginate","personnel","serviceDefine","productDefine","customerDefine","role","serviceProvision","[serviceProvisionData.reducerPath]"],
+  blacklist: [
+    "hub",
+    "paginate",
+    "personnel",
+    "serviceDefine",
+    "productDefine",
+    "customerDefine",
+    "role",
+    "serviceProvision",
+    "[serviceProvisionData.reducerPath]",
+    "selectedRows",
+  ],
 };
 
 const reducers = combineReducers({
@@ -24,14 +35,14 @@ const reducers = combineReducers({
   serviceDefine: ServiceData,
   productDefine: ProductDefineList,
   customerDefine: CustomerDefineList,
-   serviceProvision:ServiceProvision
-  
+  serviceProvision: ServiceProvision,
+  selectedRows: SelectedRowsList,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer:persistedReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({
     serializableCheck: false,

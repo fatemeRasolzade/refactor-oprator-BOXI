@@ -1,22 +1,119 @@
 import React, { FC, useState } from "react";
 import * as Yup from "yup";
-import { Button, Dialog } from "@material-tailwind/react";
+import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
-import { BiPlus } from "react-icons/bi";
 import InputText from "../../../global/InputText/InputText";
 import CustomSwitch from "../../../global/Switch/Switch";
 import AddButton from "../../../global/addButton/AddButton";
+import axios from "axios";
+import { PersonnelData } from "../../../redux/PersonData/PersonsData";
+import InputSelect from "../../../global/InputSelect/InputSelect";
+import { toast } from "react-toastify";
+import {
+  ComplexPasswordRegex,
+  JustEngNameRegex,
+  MobileRegex,
+  NationalCodeRegex,
+} from "../../../tools/validations/ErrorHelper";
+import {
+  UNMATCHPASSWORD,
+  VALIDCOMPLEXREGEX,
+  VALIDMOBILE,
+  VALIDNATIONALCODE,
+  VALIDPOSTALCODE,
+} from "../../../tools/validations/RegexKeywords";
+import { Actionpage } from "../../../redux/PaginationAction/PaginationAction";
+import AddExcel from "../../../components/exel/AddExcel";
 
 interface AddEditPersonProps {
   currentData?: any;
 }
 
 const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
+  const validation = Yup.object().shape({
+    personelCode: Yup.string().required(),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDPOSTALCODE)
+      .required(),
+    name: Yup.string().required(),
+    mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
+    email: Yup.string().email(),
+    username: Yup.string().matches(JustEngNameRegex).required(),
+    password: Yup.string()
+      .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
+      .required(),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], UNMATCHPASSWORD)
+      .required(),
+    isSuperAdmin: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+  });
+
+  const validationEdit = Yup.object().shape({
+    personelCode: Yup.string().required(),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDNATIONALCODE)
+      .required(),
+    name: Yup.string().required(),
+    mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
+    email: Yup.string().email(),
+
+    isSuperAdmin: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+  });
+
+  const dispatch = useDispatch();
+  const [uploadExcel, setUploadExcel] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [options] = useState([
+    { id: 0, text: "خیر" },
+    { id: 1, text: "بله" },
+  ]);
+
+  const validation = Yup.object().shape({
+    personelCode: Yup.string().required(),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDPOSTALCODE)
+      .required(),
+    name: Yup.string().required(),
+    mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
+    email: Yup.string().email(),
+    username: Yup.string().matches(JustEngNameRegex).required(),
+    password: Yup.string()
+      .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
+      .required(),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], UNMATCHPASSWORD)
+      .required(),
+    isSuperAdmin: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+  });
+
+  const validationEdit = Yup.object().shape({
+    personelCode: Yup.string().required(),
+    nationalCode: Yup.string()
+      .matches(NationalCodeRegex, VALIDNATIONALCODE)
+      .required(),
+    name: Yup.string().required(),
+    mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
+    email: Yup.string().email(),
+
+    isSuperAdmin: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+  });
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -45,14 +142,70 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           username: "",
           password: "",
           confirmPassword: "",
-          isSuperAdmin: {},
+          isSuperAdmin: undefined,
           isActive: true,
         },
-    onSubmit: async (values, { resetForm }) => {},
+    onSubmit: async (values, { resetForm }) => {
+      const data = currentData
+        ? {
+            id: values.id,
+            nationalCode: values.nationalCode,
+            personelCode: values.personelCode,
+            name: values.name,
+            mobile: values.mobile,
+            email: values.email,
+            isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
+            isActive: currentData.isActive,
+          }
+        : {
+            isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
+            personelCode: values.personelCode,
+            nationalCode: values.nationalCode,
+            name: values.name,
+            mobile: values.mobile,
+            email: values.email,
+            username: values.username,
+            password: values.password,
+            isActive: true,
+          };
+
+      try {
+        const res = await axios({
+          url: "http://boxi.local:40000/resource-api/employee",
+          method: currentData ? "put" : "post",
+          data: data,
+        });
+
+        if (200 <= res.status && res.status < 300) {
+          dispatch(
+            PersonnelData({
+              personelCode: "",
+              name: "",
+              nationalCode: "",
+              mobile: "",
+              email: "",
+              username: "",
+              isActive: true,
+              pageNumber: 1,
+            }) as any
+          );
+          dispatch(Actionpage(1));
+          toast.success(
+            currentData
+              ? "کارمند با موفقیت به روزرسانی گردید"
+              : "کارمند با موفقیت اضافه گردید"
+          );
+          setIsModalOpen(false);
+          resetForm({});
+        }
+      } catch (error) {
+        toast.error("مشکلی پیش آمده");
+      }
+    },
   });
   const handleOpenModal = () => setIsModalOpen(!isModalOpen);
   const handleUploadFileAction = () => {
-    alert("second");
+    setUploadExcel(!uploadExcel);
   };
   const ToggleOptions = [
     { handleClick: handleOpenModal, name: "افزودن پرسنل" },
@@ -69,7 +222,10 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           <AiOutlineEdit className="w-full h-full" />
         </button>
       ) : (
-        <AddButton ToggleOptions={ToggleOptions} />
+        <>
+          <AddButton ToggleOptions={ToggleOptions} />
+          <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
+        </>
       )}
       <Dialog
         open={isModalOpen}
@@ -87,60 +243,82 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
         </h3>
         <form onSubmit={formik.handleSubmit} className="p-6 ">
           <div className="grid grid-cols-4 gap-6 my-6">
-            <div className=" ">
+            <div className="inputRow">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="کد پرسنلی"
                 name="personelCode"
                 handleChange={formik.handleChange}
                 values={formik.values.personelCode}
                 important
                 type={"text"}
+                error={formik.errors.personelCode}
               />
             </div>
             <div className=" ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="کد ملی"
                 name="nationalCode"
                 handleChange={formik.handleChange}
                 values={formik.values.nationalCode}
                 important
                 type={"text"}
+                error={formik.errors.nationalCode}
               />
             </div>
             <div className="col-span-2">
               <InputText
+                wrapperClassName="w-full"
                 label="نام و نام خانوادگی"
                 name="name"
                 handleChange={formik.handleChange}
                 values={formik.values.name}
                 important
                 type={"text"}
+                error={formik.errors.name}
               />
             </div>
             <div className="col-span-1 ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="شماره موبایل"
                 name="mobile"
                 handleChange={formik.handleChange}
                 values={formik.values.mobile}
                 important
                 type={"text"}
+                error={formik.errors.mobile}
               />
             </div>
             <div className="col-span-1 ">
               <InputText
-                className="w-full"
+                wrapperClassName="w-full"
                 label="پست الکترونیک"
                 name="email"
                 handleChange={formik.handleChange}
                 values={formik.values.email}
                 type={"text"}
+                error={formik.errors.email}
               />
             </div>
-            <div className="col-span-2 h-[40px] mb-[20px]">
+            {currentData && (
+              <InputText
+                readOnly
+                label="نام کاربری"
+                name="username"
+                handleChange={formik.handleChange}
+                values={formik.values.username}
+                important
+                type={"text"}
+                error={formik.errors.username}
+              />
+            )}
+            <div
+              className={`${
+                currentData ? "col-span-1" : "col-span-2 "
+              } h-[40px] mb-[20px]`}
+            >
               <CustomSwitch
                 active={true}
                 handleChange={(value) =>
@@ -148,14 +326,18 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 }
               />
             </div>
-            <InputText
-              label="نام کاربری"
-              name="username"
-              handleChange={formik.handleChange}
-              values={formik.values.username}
-              important
-              type={"text"}
-            />
+            {!currentData && (
+              <InputText
+                label="نام کاربری"
+                name="username"
+                handleChange={formik.handleChange}
+                values={formik.values.username}
+                important
+                type={"text"}
+                error={formik.errors.username}
+              />
+            )}
+
             {!currentData && (
               <>
                 <div className="col-span-1 ">
@@ -166,31 +348,36 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                     values={formik.values.password}
                     important
                     type={"password"}
+                    error={formik.errors.password}
                   />
                 </div>
                 <div className="col-span-1 ">
                   <InputText
-                    className="w-full"
+                    wrapperClassName="w-full"
                     label=" تایید گذر واژه"
                     name="confirmPassword"
                     handleChange={formik.handleChange}
                     values={formik.values.confirmPassword}
                     important
                     type={"password"}
+                    error={formik.errors.confirmPassword}
                   />
                 </div>
               </>
             )}
 
-            <div className="col-span-1 ">
-              <InputText
-                className="w-full"
-                label="سوپر ادمین"
-                name="confirmPassword"
-                handleChange={formik.handleChange}
-                values={formik.values.confirmPassword}
+            <div className="col-span-1  relative">
+              <InputSelect
                 important
-                type={"text"}
+                wrapperClassName="w-full"
+                name="isSuperAdmin"
+                label="سوپر ادمین"
+                values={formik.values.isSuperAdmin}
+                handleChange={formik.setFieldValue}
+                options={options}
+                error={
+                  formik.touched.isSuperAdmin && formik.errors.isSuperAdmin
+                }
               />
             </div>
           </div>
@@ -200,7 +387,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               <SimpleButton
                 type="submit"
                 text="بله"
-                className="full-tomato-btn px-[90px] "
+                className="full-tomato-btn px-[50px] "
               />
               <SimpleButton
                 type="button"
@@ -208,6 +395,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 className="full-lightTomato-btn px-[90px]"
                 handelClick={() => {
                   setIsModalOpen(false);
+                  formik.resetForm();
                 }}
               />
             </div>
@@ -219,52 +407,3 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 };
 
 export default AddEditPerson;
-
-const nationalCodeRegex = /^[0-9]{10}$/g;
-const mobileRegex = /^09\d{9}$/g;
-const nameRegex = /^[A-Za-z]+$/;
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/g;
-
-const validation = Yup.object().shape({
-  personelCode: Yup.string().required("نام کاربری اجباری است"),
-  nationalCode: Yup.string()
-    .matches(nationalCodeRegex, "کد ملی معتبر نیست")
-    .required("کد ملی اجباری است"),
-  name: Yup.string().required(),
-  mobile: Yup.string()
-    .matches(mobileRegex, "شماره موبایل معتبر نیست ")
-    .required("تلفن همراه اجباری است"),
-  email: Yup.string().email("ایمیل معتبر نیست"),
-  username: Yup.string().matches(nameRegex, "نام کاربری معتبر نیست").required(),
-  password: Yup.string()
-    .matches(
-      passwordRegex,
-      "پسورد باید شامل  حداقل 8 کاراکتر ،حروف بزرگ و کوچک  ،کاراکتر های ویژه  و عدد باشد"
-    )
-    .required("پسورد اجباری است"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "رمز عبور مطابقت ندارد")
-    .required("تکرار پسورد اجباری است"),
-  isSuperAdmin: Yup.object().shape({
-    text: Yup.string().required(),
-    id: Yup.string().required(),
-  }),
-});
-
-const validationEdit = Yup.object().shape({
-  personelCode: Yup.string().required("نام کاربری اجباری است"),
-  nationalCode: Yup.string()
-    .matches(nationalCodeRegex, "کد ملی معتبر نیست")
-    .required(),
-  name: Yup.string().required(),
-  mobile: Yup.string()
-    .matches(mobileRegex, "شماره موبایل معتبر نیست ")
-    .required(),
-  email: Yup.string().email("ایمیل معتبر نیست"),
-
-  isSuperAdmin: Yup.object().shape({
-    text: Yup.string().required(),
-    id: Yup.string().required(),
-  }),
-});

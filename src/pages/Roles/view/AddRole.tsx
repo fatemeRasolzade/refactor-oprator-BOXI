@@ -87,7 +87,7 @@ const AddEditRole: FC<EditRoleProps> = ({
               RoleData({
                 permission: "",
                 name: "",
-                isActive: isActive,
+                isActive: true,
                 pageSize: 10,
                 pageNumber: 1,
               }) as any

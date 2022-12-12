@@ -1,5 +1,4 @@
 type InputTextProps = {
-  className?: string;
   error?: any;
   values: any;
   label: string;
@@ -9,9 +8,9 @@ type InputTextProps = {
   important?: boolean;
   readOnly?: boolean;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  wrapperClassName?: string
 };
 const InputText = ({
-  className,
   label,
   name,
   handleChange,
@@ -21,9 +20,10 @@ const InputText = ({
   placeholder,
   readOnly,
   values,
+  wrapperClassName
 }: InputTextProps) => {
   return (
-    <div className={`flex flex-col ${className}`}>
+    <div className={`flex flex-col ${wrapperClassName} `}>
       <div
         className={`autocompleteWrapper ${error && "border-red"} ${
           readOnly && "opacity-40"
@@ -50,6 +50,10 @@ const InputText = ({
       <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
   );
+};
+
+InputText.defaultProps = {
+  wrapperClassName: "w-60",
 };
 
 export default InputText;

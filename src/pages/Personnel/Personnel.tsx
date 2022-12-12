@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -11,29 +11,52 @@ import {
   PersonnelData,
   updating,
 } from "../../redux/PersonData/PersonsData";
-import { apiRoute } from "../../services/apiRoute";
+import { clearRows } from "../../redux/selectRowTable/selectRowTable";
 import AddEditPerson from "./view/AddEditPerson";
 import EditPersonRole from "./view/EditPersonRole";
-
 import PersonnelSearchFrom from "./view/PersonnelSearchFrom";
 
 interface PersonnelProps {}
 
 const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   const dispatch = useDispatch();
+
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
   const { personnelList, isUpdating } = useSelector(
     (state: any) => state.personnel
   );
 
+  const [isActive, setIsActive] = useState<boolean>(true);
+
+  const [filterData, setFilterData] = useState({
+    personelCode: "",
+    name: "",
+    nationalCode: "",
+    mobile: "",
+    email: "",
+    username: "",
+    isActive: isActive,
+    pageNumber: pageNumbers,
+  });
+
+  const handleGetnewDataOnDelete = () => {
+    dispatch(PersonnelData({ ...filterData, pageNumber: pageNumbers }) as any);
+  };
+
   useEffect(() => {
-    dispatch(PersonnelData() as any);
-    return () => dispatch(clearPersonnel() as any);
-  }, [dispatch, isUpdating]);
+    dispatch(PersonnelData({ ...filterData, pageNumber: pageNumbers }) as any);
+
+    return () => {
+      dispatch(clearPersonnel() as any);
+      dispatch(clearRows());
+    };
+  }, [dispatch, isUpdating, isActive, filterData, pageNumbers]);
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0
       ? personnelList?.content?.map((item: any) => {
           return {
+            id: item.id,
             personelCode: item.personelCode,
             nationalCode: item.nationalCode,
             name: item.name,
@@ -45,8 +68,9 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف کارمند"}
-                  route={apiRoute().delete.role + `/${item.id}`}
+                  route={`http://boxi.local:40000/resource-api/employee/${item.id}`}
                   updating={updating}
+                  handleDeleteActionNewData={handleGetnewDataOnDelete}
                 />
                 <EditPersonRole currentData={item} />
               </div>
@@ -58,12 +82,25 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   return (
     <div>
       <Breadcrumb curentPage="مدیریت پرسنل" />
-      <PersonnelSearchFrom />
-      <OptionsTable addComponentProps={() => <AddEditPerson />} />
+      <PersonnelSearchFrom isActive={isActive} setFilterData={setFilterData} />
+      <OptionsTable
+        addComponentProps={() => <AddEditPerson />}
+        setIsActive={(value) => {
+          setFilterData({
+            ...filterData,
+            isActive: value,
+          });
+          setIsActive(!isActive);
+        }}
+        isActive={isActive}
+        customComponent={() => <EditPersonRole isGroup={true} />}
+      />
+
       <StaticTable
         data={data ? data : []}
         column={PersonnelColumn}
-        pagination
+        pagination={personnelList?.totalElements}
+        selectable={true}
       />
     </div>
   );

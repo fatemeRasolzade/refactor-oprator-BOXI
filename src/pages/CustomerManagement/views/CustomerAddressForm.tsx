@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-//  import { v4 as uuidv4 : any } from "uuid";
+import { v4 as uuid } from "uuid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../global/Modal/Modal";
-import InputSelect from "../../../global/InputSelect/InputSelect";
 import InputText from "../../../global/InputText/InputText";
 import CustomSwitch from "../../../global/Switch/Switch";
+import InputSelect from "../../../global/InputSelect/InputSelect";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { PostalCodeRegex } from "../../../tools/validations/ErrorHelper";
-import { VALIDPOSTALCODE } from "../../../tools/validations/ErrorKeywords";
+import { VALIDPOSTALCODE } from "../../../tools/validations/RegexKeywords";
 import {
   getAddressType,
   getCities,
@@ -16,7 +16,6 @@ import {
   getRegions,
 } from "../../../services/GlobalApi";
 // import { Map } from "../../../../components/map";
-// import { PostalCodeRegex } from "../../../../utilities/function";
 
 const CustomerAddressForm = ({
   open,
@@ -26,12 +25,6 @@ const CustomerAddressForm = ({
   value,
   ID,
 }: any) => {
-  const [state, setState] = useState({
-    loading: false,
-    error: false,
-    response: null,
-  });
-
   //get required data
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
@@ -72,13 +65,11 @@ const CustomerAddressForm = ({
   }, [open]);
 
   // start fromik configurations
-  const [checked, setChecked] = useState(false);
   const validation = Yup.object().shape({
     selectAddressType: Yup.object().shape({
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
-
     selectState: Yup.object().shape({
       text: Yup.string().required(),
       id: Yup.string().required(),
@@ -131,25 +122,20 @@ const CustomerAddressForm = ({
           latitude: 10.0,
           longtitude: 20.0,
           address: "",
-          // telephones: [],
         },
     onSubmit: (values: any, { resetForm }) => {
-      alert("arash mozakhraf");
-      //   setState({ loading: true, error: false });
       if (currentData) {
-        setOpen(false);
-        resetForm({ values: "" });
         let newArray = [...value];
         let index = newArray.findIndex((a) => a.id === ID);
         newArray[index] = values;
         setValue("addresses", newArray);
-        // setState({ loading: false, error: false });
+        resetForm({ values: "" });
+        setOpen(false);
       } else {
-        // const id: string = uuidv4();
-        // resetForm({ values: "" });
-        // setValue("addresses", [...value, { ...values, id: `null${id}` }]);
-        // setState({ loading: false, error: false });
-        // setOpen(false);
+        const id: string = uuid();
+        resetForm({ values: "" });
+        setValue("addresses", [...value, { ...values, id: `null${id}` }]);
+        setOpen(false);
       }
     },
   });
@@ -158,10 +144,6 @@ const CustomerAddressForm = ({
   const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
     formik;
 
-  const handleCloseModal = (e: any) => {
-    e.preventDefault();
-    setOpen(false);
-  };
   return (
     <Modal
       visible={open}
@@ -193,7 +175,7 @@ const CustomerAddressForm = ({
             important
             options={cities}
             label=" شهر"
-            name="selectState"
+            name="selectCity"
             values={values.selectCity}
             error={touched.selectCity && errors.selectCity}
             handleChange={setFieldValue}
@@ -206,9 +188,7 @@ const CustomerAddressForm = ({
             label=" منطقه"
             name="selectRegion"
             values={values.selectRegion}
-            error={
-              touched.selectRegion && errors.selectRegion && errors.selectRegion
-            }
+            error={touched.selectRegion && errors.selectRegion}
             handleChange={setFieldValue}
           />
           <InputText
@@ -248,7 +228,7 @@ const CustomerAddressForm = ({
           </div>
         </div>
         <InputText
-          className="mt-8"
+          wrapperClassName="mt-8"
           important
           label="آدرس"
           values={values.address}
