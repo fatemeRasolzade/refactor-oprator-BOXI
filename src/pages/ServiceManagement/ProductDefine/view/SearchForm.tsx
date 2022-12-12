@@ -40,16 +40,12 @@ const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating,productOptions }
   });
 
   useEffect(() => {
-    let productGroup = formik.values.productGroup.id;
-    const body={
-      page:1,
-      body:{ ...formik.values, isActive, productGroup }
-    }
+   
     dispatch(
       productData({
         code: formik.values.code,
         name: formik.values.name,
-        productGroup:productGroup,
+        productGroup:formik.values.productGroup.id,
         isActive: isActive,
         pageSize: 10,
         pageNumber: pageNumbers,
@@ -140,6 +136,6 @@ const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating,productOptions }
   );
 };
 
-export default memo(SearchForm);
+export default SearchForm;
 
 

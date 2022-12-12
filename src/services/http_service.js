@@ -3,6 +3,9 @@ import { toast } from "react-toastify";
 import { ErrorAlert } from "../global/alert/Alert";
 import UserService from "./UserService";
 
+
+
+axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("Authorization")
 axios.defaults.baseURL = "http://boxi.local:40000/";
 axios.interceptors.response.use(null, (error) => {
   const errorStatus = error.response.status;

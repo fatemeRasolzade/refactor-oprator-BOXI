@@ -17,11 +17,11 @@ import AddExcel from "./AddExcel";
 import { AiOutlineEdit } from "react-icons/ai";
 import AddButton from "../../../../global/addButton/AddButton";
 
-interface  PropsData{
-  itemValue?:any
+interface PropsData {
+  itemValue?: any;
 }
 
-const ActionForms:React.FC <PropsData>= ({ itemValue }):JSX.Element => {
+const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
   const { productLists } = useSelector((state: any) => state.productDefine);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
@@ -66,7 +66,7 @@ const ActionForms:React.FC <PropsData>= ({ itemValue }):JSX.Element => {
         </button>
       )}
       <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
-      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5"}>
+      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[600px] w-[400px]"}>
         <div className="text-lg font-medium">{itemValue ? "ویرایش محصول" : "افزودن محصول"}</div>
         <Formik
           initialValues={
@@ -147,11 +147,11 @@ const ActionForms:React.FC <PropsData>= ({ itemValue }):JSX.Element => {
         >
           {(formik) => (
             <form onSubmit={formik.handleSubmit} className="p-5">
-              <div className="  grid grid-cols-2 gap-y-6 gap-x-4 content-center">
+              <div className="  grid grid-cols-2 gap-y-6 gap-x-2 content-center">
                 <div>
                   <InputText
                     label="کد"
-                    className="w-full"
+                    // className="w-full"
                     name="code"
                     handleChange={formik.handleChange}
                     values={formik.values.code}
@@ -164,7 +164,7 @@ const ActionForms:React.FC <PropsData>= ({ itemValue }):JSX.Element => {
                 <div>
                   <InputText
                     label="عنوان"
-                    className="w-full"
+                    // className="w-full"
                     name="name"
                     handleChange={formik.handleChange}
                     values={formik.values.name}
@@ -182,7 +182,6 @@ const ActionForms:React.FC <PropsData>= ({ itemValue }):JSX.Element => {
                   <InputSelect
                     label="گروه بندی محصول"
                     important
-         
                     name="productGroup"
                     handleChange={formik.setFieldValue}
                     values={formik.values.productGroup}
@@ -212,6 +211,7 @@ const ActionForms:React.FC <PropsData>= ({ itemValue }):JSX.Element => {
                     handleChange={formik.handleChange}
                     values={formik.values.description}
                     type={"textarea"}
+                    wrapperClassName="w-full"
                   />
                 </div>
               </div>

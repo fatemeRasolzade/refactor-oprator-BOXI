@@ -13,7 +13,8 @@ import { ProductColumns } from "./view/Column";
 
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
-import {useGetOptions} from './view/serviceProvisionData'
+// import {useGetOptions} from './view/serviceProvisionData'
+import {useGetOptions} from '../../../global/hooks/useFetchOptions'
 // import * as XLSX  from "xlsx-js-style"
 
 const ProductDefine = () => {
@@ -71,7 +72,7 @@ const ProductDefine = () => {
         addComponentProps={() => <ActionForms />}
         exportExcel={() => ExportExcel(productLists?.content)}
       />
-      <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} selectable loading={false} />
+      <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} selectable={false}  />
     </div>
   );
 };

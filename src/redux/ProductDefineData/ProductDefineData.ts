@@ -8,9 +8,7 @@ export const productData=createAsyncThunk('productlists',async(body:any)=>{
     var data = {};
     try {
         data = await postDataHeaderToServer(apiRoute().post.product + params, {
-          code:body.code,
-          name:body.name,
-          isActive:body.isActive
+        ...body
         },{
             headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
           });
