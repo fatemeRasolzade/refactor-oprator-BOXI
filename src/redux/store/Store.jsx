@@ -9,10 +9,11 @@ import ProductDefineList from "../ProductDefineData/ProductDefineData";
 import CustomerDefineList from "../CustomerManagement/CustomerManagementData";
 import ServiceProvision from "../ServiceProvision/ServiceProvision"
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
+import EditHubTable from "../HubData/EditData"
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["hub", "paginate","personnel","serviceDefine","productDefine","customerDefine","role","serviceProvision","[serviceProvisionData.reducerPath]"],
+  whitelist: ["editHub"],
 };
 
 
@@ -24,7 +25,8 @@ const reducers = combineReducers({
   serviceDefine: ServiceData,
   productDefine: ProductDefineList,
   customerDefine: CustomerDefineList,
-   serviceProvision:ServiceProvision
+   serviceProvision:ServiceProvision,
+   editHub:EditHubTable
   
 });
 

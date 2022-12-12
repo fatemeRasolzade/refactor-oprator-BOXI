@@ -25,7 +25,7 @@ const handleUploadFileAction=()=>{
   return (
     <div className='w-full flex-start-center flex-wrap'>
         <AddButton ToggleOptions={ToggleOptions} />
-        <CustomSwitch active='فعال' deactive='غیر فعال'/>
+        {/* <CustomSwitch active /> */}
         <SimpleButton
           handelClick={exportExcel}
             text="خروجی اکسل"
@@ -33,13 +33,13 @@ const handleUploadFileAction=()=>{
             className="centering rounded-lg text-black"
           />
 
-<Dialog open={isModalOpen} handler={setIsModalOpen} className="p-5 !w-[80%] max-w-[60%]">
+<Dialog open={isModalOpen} handler={setIsModalOpen} className="p-5 !w-[80%] max-w-[60%] overflow-visible">
     <div className='flex-between-start'>
     <h3>ارائه سرویس</h3>
-<span><BiXCircle size={20}/></span>
+    <span><BiXCircle size={20}/></span>
     </div>
 
-   <AddModalService/>
+   <AddModalService isModal={setIsModalOpen}/>
 </Dialog>
 
 

@@ -16,7 +16,7 @@ interface EditPersonRoleProps {
 const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [rolesOptions, setRolesOptions] = useState<Array<any>>([]);
-  console.log("currentData", currentData);
+
 
   const getRoleHandler = useCallback(async () => {
     try {

@@ -1,6 +1,7 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import { PostDataParams } from '../../services/Service_call';
+import { postDataHeaderToServer } from '../../services/Service_call';
 import { apiRoute } from '../../services/apiRoute';
+import { ErrorAlert } from "../../global/alert/Alert";
 
 
 export const productData=createAsyncThunk('productlists',async(body:any)=>{
@@ -8,10 +9,12 @@ export const productData=createAsyncThunk('productlists',async(body:any)=>{
     var data = {};
     try {
    
-        data = await PostDataParams(apiRoute().post.product + params, body);
+        data = await postDataHeaderToServer(apiRoute().post.product + params, body,{
+            headers:{"Authorization":"Bearer " + localStorage.getItem("myToken")}
+           });
 
     } catch (error) {
-        console.log("error ", error);
+        ErrorAlert("گرفتن دیتا با خطا مواجه شد")
     }
     return data;
 })

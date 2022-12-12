@@ -1,13 +1,12 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
 import { PostDataParams,postDataHeaderToServer } from './../../services/Service_call';
 import { apiRoute } from './../../services/apiRoute';
-import UserService from "../../services/userService";
-import axios from "axios";
 
 
 
 const initialState = {
   postLists: [],
+  
   fetchpost: false,
   errorMessage: null,
 };
@@ -33,6 +32,14 @@ const HubList=createSlice({
         
            state.postLists.payload.content=state.postLists.payload.content.filter(item=>item.id !==action.payload)
         },
+        filterSwitch:(state,action)=>{
+          if(action.payload===true){
+           console.log("state",state?.postLists?.payload?.content.filter(item=>item.isActive !==true))
+          }
+         
+       
+        }
+       
  
     },
   
@@ -50,5 +57,8 @@ const HubList=createSlice({
     },
   },
 });
-export const { clearHub,deleteRow } = HubList.actions;
+
+ 
+
+export const { clearHub,deleteRow,editHub,filterSwitch } = HubList.actions;
 export default HubList.reducer;
