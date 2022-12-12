@@ -41,7 +41,7 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
   ];
   const formik = useFormik({
     enableReinitialize: true,
-    validationSchema:validation,
+    validationSchema: validation,
     initialValues: currentData
       ? {
           id: currentData?.id,
@@ -79,7 +79,15 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
         PostDataParams(apiRoute().post.createVendor, values).then((res) => {
           if (res.status === "OK") {
             SuccessAlert("با موفقیت ساخته شد");
-            vendorData({}) as any;
+
+            dispatch(
+              vendorData({
+                search: "",
+                isActive: "",
+                pageSize: 10,
+                pageNumber: "",
+              }) as any
+            );
           } else {
             console.log("run error");
             // ErrorAlert("خطا در برقراری اطلاعات");
@@ -95,7 +103,14 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
           console.log("run edit");
           if (res.status === "OK") {
             SuccessAlert("با موفقیت ویرایش شد");
-            vendorData({}) as any;
+            dispatch(
+              vendorData({
+                search: "",
+                isActive: true,
+                pageSize: 10,
+                pageNumber: "",
+              }) as any
+            );
           } else {
             console.log("run error");
             // ErrorAlert("خطا در برقراری اطلاعات");

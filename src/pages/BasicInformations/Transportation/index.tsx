@@ -35,7 +35,7 @@ const Transportation: React.FC = (): JSX.Element => {
         {`
 	
 			.selected {  border-bottom:1px solid red;  } 	
-			`}
+		`}
       </style>
     </>
   );

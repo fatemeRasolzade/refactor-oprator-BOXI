@@ -105,7 +105,7 @@ export const apiRoute = () => {
       hubTable: createUrl(API_CONSIGNMENT4, "/hub"),
     },
     edit: {
-      EditVendor:createUrl(API_CONSIGNMENT4,'vendor'),
+      EditVendor:createUrl(API_CONSIGNMENT4,'/vendor'),
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
       EDIT_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
     },

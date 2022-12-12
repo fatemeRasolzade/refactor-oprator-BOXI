@@ -43,6 +43,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
     if (isModalOpen) {
       getDataSelect();
     }
+    
   }, [isModalOpen]);
   const handleAction = () => {
     setIsModalOpen(!isModalOpen);
