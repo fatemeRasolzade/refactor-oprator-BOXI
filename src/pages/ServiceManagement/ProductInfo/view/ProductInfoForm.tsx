@@ -12,7 +12,29 @@ import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import CustomSwitch from "../../../../global/Switch/Switch";
 
 const ProductInfoForm = () => {
-  const validation = Yup.object().shape({});
+  const validation = Yup.object().shape({
+    fromWeight: Yup.number()
+      .min(0)
+      .when("toWeight", {
+        is: (value: any) => value,
+        then: Yup.number().nullable().required(),
+      }),
+    toWeight: Yup.number().min(0),
+    toValue: Yup.number().min(0),
+    fromValue: Yup.number()
+      .min(0)
+      .when("toValue", {
+        is: (value: any) => value,
+        then: Yup.number().nullable().required(),
+      }),
+    toDimension: Yup.number().min(0),
+    fromDim: Yup.number()
+      .min(0)
+      .when("toDimension", {
+        is: (value: any) => value,
+        then: Yup.number().nullable().required(),
+      }),
+  });
   const [valuesData, setValuesData] = useState({
     product: [],
     timeCommitment: [],
@@ -89,7 +111,7 @@ const ProductInfoForm = () => {
         <div className="col-span-2">
           <InputSelect
             important
-            wrapperClassName="w-full z-[300]"
+            wrapperClassName="w-full z-[600]"
             name="product"
             label="محصول"
             values={formik.values.product}
@@ -100,7 +122,7 @@ const ProductInfoForm = () => {
         </div>
         <div className="col-span-2">
           <MultiSelect
-            wrapperClassName="w-full z-[300]"
+            wrapperClassName="w-full z-[600]"
             label="قابل ارائه در محصولات"
             name="usingProduct"
             handleChange={formik.setFieldValue}
@@ -188,6 +210,7 @@ const ProductInfoForm = () => {
             error={formik.touched.fromValue && formik.errors.fromValue}
           />
           <InputText
+            type="number"
             wrapperClassName="w-full"
             important
             label="تا"

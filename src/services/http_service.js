@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { ErrorAlert } from "../global/alert/Alert";
 import UserService from "./keycloakService";
 
@@ -7,9 +8,14 @@ axios.defaults.headers.common["Authorization"] =
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 axios.interceptors.response.use(null, (error) => {
   const errorStatus = error.response.status;
-
+  console.log("sd[vsp[dv", errorStatus);
   if (errorStatus === 404) {
-    ErrorAlert(error.response.data.errors.message);
+    debugger;
+    ErrorAlert(error?.response?.data?.errors?.message);
+    toast.error(
+      error?.response?.data?.errors?.message || "مقدار مورد نظر یافت نشد"
+    );
+    debugger;
     throw error;
   }
   if (errorStatus >= 500) {

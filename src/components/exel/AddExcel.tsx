@@ -73,6 +73,7 @@ const AddExcel: FC<AddExcelProps> = ({
   };
 
   const handleClear = () => setTheFile(null);
+
   const handleOpenUpload = () => inputRef?.current?.click();
 
   const handleSubmit = async (e: SyntheticEvent) => {
@@ -136,14 +137,14 @@ const AddExcel: FC<AddExcelProps> = ({
                 <UploadFileIcon />
                 <p className="text-base text-darkGray leading-7">
                   فایل را در این قسمت بکشید و رها کنید <br />
-                  یا یک{" "}
-                  <span
+                  یا یک
+                  <button
+                    type="button"
                     className="px-1 text-tomato underline cursor-pointer"
                     onClick={handleOpenUpload}
                   >
-                    {" "}
-                    فایل آپلود{" "}
-                  </span>
+                    فایل آپلود
+                  </button>
                   کنید
                 </p>
                 <span className={`my-2 ${theFile ? "text-green" : "text-red"}`}>
