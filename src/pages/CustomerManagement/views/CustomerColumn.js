@@ -13,9 +13,7 @@ export const CustomerColumns = [
     accessor: "selectCustomerType",
     Header: "نوع مشتری",
 
-    Cell: ({ cell }) => (
-      <span className="flex flex-row">{cell.value?.text}</span>
-    ),
+    Cell: ({ cell }) => <span className="flex flex-row">{cell.value?.text}</span>,
   },
   {
     accessor: "nationalCode",
@@ -25,17 +23,13 @@ export const CustomerColumns = [
     accessor: "isActive",
     Header: "وضعیت",
 
-    Cell: ({ cell }) => (
-      <span className="flex flex-row">{cell.value ? "فعال" : "غیر فعال"}</span>
-    ),
+    Cell: ({ cell }) => <span className="flex flex-row">{cell.value ? "فعال" : "غیر فعال"}</span>,
   },
   {
     accessor: "selectParentCustomer",
     Header: "مشتری والد",
 
-    Cell: ({ cell }) => (
-      <span className="flex flex-row">{cell.value?.text}</span>
-    ),
+    Cell: ({ cell }) => <span className="flex flex-row">{cell.value?.text}</span>,
   },
   {
     accessor: "telephones",
@@ -46,7 +40,7 @@ export const CustomerColumns = [
         <div className="flex flex-row relative">
           <TooltipWrapper
             textProps={cell?.value?.map((tel) => (
-              <div>{tel.telNumber}</div>
+              <div className="text-white">{tel.telNumber}</div>
             ))}
           >
             {cell.value.length > 0 && (
@@ -87,13 +81,20 @@ export const CustomerColumns = [
   {
     accessor: "addresses",
     Header: "آدرس",
-
-    Cell: ({ cell }) => {
-      <span className="flex flex-row relative">
-        FFFFFFFF
-        {cell.value.length > 0 && cell.value[0].address}
-      </span>;
-    },
+    Cell: ({ cell }) =>
+      cell.value.length > 1 ? (
+        <div className="flex flex-row relative">
+          <TooltipWrapper
+            textProps={cell?.value?.map((a) => (
+              <div className="text-white">{a.address}</div>
+            ))}
+          >
+            {cell.value.length > 0 && <>{cell.value[0].address}</>}
+          </TooltipWrapper>
+        </div>
+      ) : (
+        <div className="flex flex-row relative">{cell.value.length > 0 && <>{cell.value[0].address}</>}</div>
+      ),
   },
   // {
   // 	accessor: "name",

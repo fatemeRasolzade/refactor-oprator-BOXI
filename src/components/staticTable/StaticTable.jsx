@@ -37,7 +37,6 @@ const IndeterminateCheckbox = React.forwardRef(
 
 function Table({ columns, data, pageTable, selectable, loading }) {
   const {
-    selectedFlatRows,
     getTableProps,
     getTableBodyProps,
     headerGroups,

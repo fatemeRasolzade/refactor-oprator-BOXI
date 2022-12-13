@@ -5,7 +5,6 @@ import { GrFormClose } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import InputText from "../../../global/InputText/InputText";
 import CustomSwitch from "../../../global/Switch/Switch";
@@ -188,7 +187,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
       ) : (
         <>
           <AddButton ToggleOptions={ToggleOptions} />
-          <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
+          {/* <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} /> */}
         </>
       )}
       <Dialog
