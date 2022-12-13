@@ -13,7 +13,7 @@ export const CustomerColumns = [
     accessor: "selectCustomerType",
     Header: "نوع مشتری",
 
-    Cell: ({ cell }) => <span className="flex flex-row">{cell.value?.text}</span>,
+    Cell: ({ cell }) => <span className="centering">{cell.value?.text}</span>,
   },
   {
     accessor: "nationalCode",
@@ -22,14 +22,12 @@ export const CustomerColumns = [
   {
     accessor: "isActive",
     Header: "وضعیت",
-
-    Cell: ({ cell }) => <span className="flex flex-row">{cell.value ? "فعال" : "غیر فعال"}</span>,
+    Cell: ({ cell }) => <span className="centering">{cell.value ? "فعال" : "غیر فعال"}</span>,
   },
   {
     accessor: "selectParentCustomer",
     Header: "مشتری والد",
-
-    Cell: ({ cell }) => <span className="flex flex-row">{cell.value?.text}</span>,
+    Cell: ({ cell }) => <span className="centering">{cell.value?.text}</span>,
   },
   {
     accessor: "telephones",
@@ -37,7 +35,7 @@ export const CustomerColumns = [
 
     Cell: ({ cell }) =>
       cell.value.length > 1 ? (
-        <div className="flex flex-row relative">
+        <div className="centering">
           <TooltipWrapper
             textProps={cell?.value?.map((tel) => (
               <div className="text-white">{tel.telNumber}</div>
@@ -52,7 +50,7 @@ export const CustomerColumns = [
           </TooltipWrapper>
         </div>
       ) : (
-        <div className="flex flex-row relative">
+        <div className="centering">
           {cell.value.length > 0 && (
             <>
               {cell.value[0].telephonePrefix}
@@ -83,7 +81,7 @@ export const CustomerColumns = [
     Header: "آدرس",
     Cell: ({ cell }) =>
       cell.value.length > 1 ? (
-        <div className="flex flex-row relative">
+        <div className="centering">
           <TooltipWrapper
             textProps={cell?.value?.map((a) => (
               <div className="text-white">{a.address}</div>
@@ -93,7 +91,7 @@ export const CustomerColumns = [
           </TooltipWrapper>
         </div>
       ) : (
-        <div className="flex flex-row relative">{cell.value.length > 0 && <>{cell.value[0].address}</>}</div>
+        <div className="centering">{cell.value.length > 0 && <>{cell.value[0].address}</>}</div>
       ),
   },
   // {

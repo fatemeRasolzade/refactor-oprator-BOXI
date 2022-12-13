@@ -9,55 +9,35 @@ import InputSelect from "../../../../../global/InputSelect/InputSelect";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import { PostalCodeRegex } from "../../../../../tools/validations/ErrorHelper";
 import { VALIDPOSTALCODE } from "../../../../../tools/validations/RegexKeywords";
-import { getAddressType, getCities, getProvinces, getRegions } from "../../../../../services/GlobalApi";
+import { getCities, getProvinces, getRegions } from "../../../../../services/GlobalApi";
 // import { Map } from "../../../../components/map";
 
 const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID }: any) => {
-  //get required data
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [regions, setRegions] = useState([]);
-  const [addressKind, setAddressKind] = useState([]);
-
-  const initAddressKind = () => {
-    getAddressType().then((res) => {
-      setAddressKind(res);
-    });
-  };
 
   const initCities = () => {
-    getCities().then((res) => {
-      setCities(res);
-    });
+    getCities().then((res) => setCities(res));
   };
 
   const initRegions = () => {
-    getRegions().then((res) => {
-      setRegions(res);
-    });
+    getRegions().then((res) => setRegions(res));
   };
 
   const initProvinces = () => {
-    getProvinces().then((res) => {
-      setProvinces(res);
-    });
+    getProvinces().then((res) => setProvinces(res));
   };
 
   useEffect(() => {
     if (open) {
-      initAddressKind();
       initCities();
       initRegions();
       initProvinces();
     }
   }, [open]);
 
-  // start fromik configurations
   const validation = Yup.object().shape({
-    selectAddressType: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
     selectState: Yup.object().shape({
       text: Yup.string().required(),
       id: Yup.string().required(),
@@ -84,9 +64,7 @@ const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID
     validationSchema: validation,
     initialValues: currentData
       ? {
-          // edit feilds
           id: currentData.id,
-          selectAddressType: currentData.selectAddressType,
           selectState: currentData.selectState,
           selectCity: currentData.selectCity,
           selectRegion: currentData.selectRegion,
@@ -99,7 +77,6 @@ const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID
           address: currentData.address,
         }
       : {
-          selectAddressType: undefined,
           selectState: undefined,
           selectCity: undefined,
           selectRegion: undefined,
@@ -127,7 +104,6 @@ const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID
       }
     },
   });
-  // end formik configuration
 
   const { values, errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
 
@@ -137,15 +113,6 @@ const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID
         <div className="inputRow">
           <InputSelect
             important
-            options={addressKind}
-            label="نوع آدرس"
-            name="selectAddressType"
-            values={values.selectAddressType}
-            error={touched.selectAddressType && errors.selectAddressType}
-            handleChange={setFieldValue}
-          />
-          <InputSelect
-            important
             options={provinces}
             label=" استان"
             name="selectState"
@@ -153,7 +120,6 @@ const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID
             error={touched.selectState && errors.selectState}
             handleChange={setFieldValue}
           />
-
           <InputSelect
             important
             options={cities}
@@ -163,8 +129,6 @@ const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID
             error={touched.selectCity && errors.selectCity}
             handleChange={setFieldValue}
           />
-        </div>
-        <div className="inputRow">
           <InputSelect
             important
             options={regions}
@@ -174,10 +138,10 @@ const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID
             error={touched.selectRegion && errors.selectRegion}
             handleChange={setFieldValue}
           />
+        </div>
+        <div className="inputRow">
           <InputText important label=" پلاک" values={values.pelak} name="pelak" handleChange={handleChange} error={touched.pelak && errors.pelak} />
           <InputText important label="واحد" values={values.unit} name="unit" handleChange={handleChange} error={touched.unit && errors.unit} />
-        </div>
-        <div className="flex-between-center">
           <InputText
             label="کد پستی"
             values={values.postalCode}
@@ -185,6 +149,8 @@ const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID
             handleChange={handleChange}
             error={touched.postalCode && errors.postalCode}
           />
+        </div>
+        <div className="flex-between-center">
           <CustomSwitch active={values.isActive} handleChange={() => setFieldValue("isActive", !values.isActive)} />
           <div className="flex-start-start flex-col">
             <p>موقعیت روی نقشه</p>

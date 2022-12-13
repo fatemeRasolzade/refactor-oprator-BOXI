@@ -11,7 +11,6 @@ import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 const ThirdPartyTelephoneForm = ({ open, setOpen, currentData, setValue, value, ID }: any) => {
   const [PhoneType, setPhoneType] = useState([]);
 
-  //get required data
   const initPhoneType = () => {
     getPhoneType().then((res) => setPhoneType(res));
   };
@@ -20,7 +19,6 @@ const ThirdPartyTelephoneForm = ({ open, setOpen, currentData, setValue, value, 
     if (open) initPhoneType();
   }, [open]);
 
-  // start fromik configurations
   const validation = Yup.object().shape({
     selectPhoneType: Yup.object().shape({
       text: Yup.string().required(),
@@ -35,7 +33,6 @@ const ThirdPartyTelephoneForm = ({ open, setOpen, currentData, setValue, value, 
     validationSchema: validation,
     initialValues: currentData
       ? {
-          // edit feilds
           id: currentData.id,
           telNumber: currentData.telNumber,
           telephonePrefix: currentData.telephonePrefix,
@@ -63,8 +60,6 @@ const ThirdPartyTelephoneForm = ({ open, setOpen, currentData, setValue, value, 
       }
     },
   });
-  // end formik configuration
-
   const { values, errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
 
   return (

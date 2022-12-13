@@ -16,14 +16,14 @@ export const ThirdPartyFormValidation = () =>
       text: Yup.string(),
       id: Yup.number(),
     }),
-    email: Yup.string().email("ایمیل معتبر نیست"),
+    email: Yup.string().email(),
     isActive: Yup.boolean().nullable(),
   });
 
 export const ThirdPartyFormInitialValues = {
   code: "",
   name: "",
-  selectThirdPartyType: { id: 0, text: "حقیقی" },
+  selectThirdPartyType: {},
   nationalCode: "",
 
   selectThirdPartyCategory: undefined,

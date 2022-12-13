@@ -10,9 +10,9 @@ export const ThirdPartyColumn = [
     Header: "نام شخصیت",
   },
   {
-    accessor: "selectCustomerType",
+    accessor: "selectThirdPartyType",
     Header: "نوع شخصیت",
-    Cell: ({ cell }) => <span className="flex flex-row">{cell.value?.text}</span>,
+    Cell: ({ cell }) => <span className="centering">{cell.value?.text}</span>,
   },
   {
     accessor: "nationalCode",
@@ -21,14 +21,14 @@ export const ThirdPartyColumn = [
   {
     accessor: "isActive",
     Header: "وضعیت",
-    Cell: ({ cell }) => <span className="flex flex-row">{cell.value ? "فعال" : "غیر فعال"}</span>,
+    Cell: ({ cell }) => <span className="centering">{cell.value ? "فعال" : "غیر فعال"}</span>,
   },
   {
     accessor: "telephones",
     Header: "شماره تماس ",
     Cell: ({ cell }) =>
       cell.value.length > 1 ? (
-        <div className="flex flex-row relative">
+        <div className="centering">
           <TooltipWrapper
             textProps={cell?.value?.map((tel) => (
               <div className="text-white">{tel.telNumber}</div>
@@ -43,7 +43,7 @@ export const ThirdPartyColumn = [
           </TooltipWrapper>
         </div>
       ) : (
-        <div className="flex flex-row relative">
+        <div className="centering">
           {cell.value.length > 0 && (
             <>
               {cell.value[0].telephonePrefix}
@@ -53,10 +53,11 @@ export const ThirdPartyColumn = [
         </div>
       ),
   },
-  // {
-  //   accessor: "email",
-  //   Header: "گروه شخصیت ",
-  // },
+  {
+    accessor: "selectThirdPartyCategory",
+    Header: "گروه شخصیت ",
+    Cell: ({ cell }) => <span className="centering">{cell.value?.text}</span>,
+  },
   {
     accessor: "email",
     Header: "پست الکترونیک ",

@@ -29,7 +29,7 @@ const Thirdparty = () => {
     { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
   ];
 
-  const { thirdPartyList, isUpdating } = useSelector((state: any) => state.customer);
+  const { thirdPartyList, isUpdating } = useSelector((state: any) => state.thirdParty);
 
   const handleDeleteActionNewData = () => {
     setLoading(true);

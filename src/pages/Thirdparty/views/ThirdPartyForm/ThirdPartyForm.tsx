@@ -6,18 +6,16 @@ import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../../../../global/Modal/Modal";
 import AddExcel from "../../../../components/exel/AddExcel";
 import AddButton from "../../../../global/addButton/AddButton";
-import { CustomerExcel } from "../../../../tools/services/ExcelInfoFile";
+import { ThirdPartyExcel } from "../../../../tools/services/ExcelInfoFile";
 import ThirdPartyBasicInformation from "./ThirdPartyBasicInformation";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import { createCustomer, editCustomer } from "../../../../services/CustomerApi";
-import ThirdPartyUsernameInformation from "./ThirdPartyUsernameInformation";
-import ThirdPartyNotificationInformation from "./ThirdPartyNotificationInformation";
-import { customerData } from "../../../../redux/CustomerManagement/CustomerManagementData";
 import ThirdPartyAddressForm from "./ThirdPartyCommunicationInformation/ThirdPartyAddressForm";
 import ThirdPartyTelephoneForm from "./ThirdPartyCommunicationInformation/ThirdPartyTelephoneForm";
 import { EconomicCodeValidate, NationalCodeValidator, NationalIDValidator } from "../../../../tools/validations/ErrorHelper";
 import { ThirdPartyFormCurrentValues, ThirdPartyFormInitialValues, ThirdPartyFormValidation } from "./ThirdPartyFormVariable";
 import ThirdPartyCommunicationInformation from "./ThirdPartyCommunicationInformation/ThirdPartyCommunicationInformation";
+import { createThirdParty, editThirdParty } from "../../../../services/ThirdPartyApi";
+import { thirdPartyData } from "../../../../redux/ThirdParty/ThirdPartyData";
 
 type CustomerFormProps = {
   currentData?: any;
@@ -80,11 +78,9 @@ const ThirdPartyForm = ({ currentData }: CustomerFormProps) => {
     onSubmit: (values: any) => {
       setLoading(true);
       if (currentData) {
-        editCustomer({
+        editThirdParty({
           ...values,
           id: currentData.id,
-          password: undefined,
-          confirmPassword: undefined,
           addresses: values.addresses.map((a: any) => {
             return {
               ...a,
@@ -99,16 +95,15 @@ const ThirdPartyForm = ({ currentData }: CustomerFormProps) => {
           }),
         })
           .then((response) => {
-            dispatch(customerData({}) as any);
+            dispatch(thirdPartyData({}) as any);
             setOpen(false);
-            response.status && toast.success("مشتری ویرایش شد ");
+            response.status && toast.success("شخصیت ویرایش شد ");
           })
           .catch((error) => {})
           .finally(() => setLoading(false));
       } else {
-        createCustomer({
+        createThirdParty({
           ...values,
-          confirmPassword: undefined,
           addresses: values.addresses.map((a: any) => {
             return { ...a, id: undefined };
           }),
@@ -117,9 +112,9 @@ const ThirdPartyForm = ({ currentData }: CustomerFormProps) => {
           }),
         })
           .then(() => {
-            dispatch(customerData({}) as any);
+            dispatch(thirdPartyData({}) as any);
             setOpen(false);
-            toast.success("مشتری افزوده شد ");
+            toast.success("شخصیت افزوده شد ");
           })
           .finally(() => setLoading(false));
       }
@@ -131,7 +126,7 @@ const ThirdPartyForm = ({ currentData }: CustomerFormProps) => {
   const handleUploadFileAction = () => setOpenExcel(true);
 
   const ToggleOptions = [
-    { handleClick: handleOpenModal, name: "افزودن مشتری" },
+    { handleClick: handleOpenModal, name: "افزودن شخصیت" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
 
@@ -149,13 +144,11 @@ const ThirdPartyForm = ({ currentData }: CustomerFormProps) => {
       ) : (
         <AddButton ToggleOptions={ToggleOptions} />
       )}
-      <AddExcel excelInfo={CustomerExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} />
+      <AddExcel excelInfo={ThirdPartyExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} />
       <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}>
         <form onSubmit={handleSubmit}>
-          {/* <ThirdPartyBasicInformation formik={formik} open={open} />
-          <ThirdPartyUsernameInformation formik={formik} currentData={currentData} />
-          <ThirdPartyNotificationInformation formik={formik} />
-          <ThirdPartyCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} /> */}
+          <ThirdPartyBasicInformation formik={formik} open={open} />
+          <ThirdPartyCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} />
           <div className="flex-end-center mt-5 gap-3">
             <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
             <SimpleButton loading={Loading} type="submit" text={currentData ? "ویرایش" : "افزودن"} className="full-tomato-btn" />

@@ -6,7 +6,7 @@ import ThirdPartyPerfesionalFilter from "./ThirdPartyPerfesionalFilter";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
-import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
+import { thirdPartyData } from "../../../redux/ThirdParty/ThirdPartyData";
 
 interface PropsData {
   isActive: Boolean | string;
@@ -37,7 +37,7 @@ const ThirdPartySearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
 
   useEffect(() => {
     dispatch(
-      customerData({
+      thirdPartyData({
         ...values,
         isActive: isActive,
         telNumber: parseInt(values.telNumber),

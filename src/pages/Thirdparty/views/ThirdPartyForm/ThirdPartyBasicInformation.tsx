@@ -1,28 +1,38 @@
 import { useEffect, useState } from "react";
+import CustomSwitch from "../../../../global/Switch/Switch";
 import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
-import { getCustomerParent, getCustomerType } from "../../../../services/CustomerApi";
+import { getThirdPartyCategory, getThirdPartyParent, getThirdPartyType } from "../../../../services/ThirdPartyApi";
 
 const ThirdPartyBasicInformation = ({ formik, open }: any) => {
+  const [ThirdPartyType, setThirdPartyType] = useState([]);
+  const [ThirdPartyParent, setThirdPartyParent] = useState([]);
+  const [ThirdPartyCategory, setThirdPartyCategory] = useState([]);
   const { values, errors, touched, handleChange, setFieldValue }: any = formik;
 
-  const [customerType, setCustomerType] = useState([]);
-  const [customerParent, setCustomerParent] = useState([]);
-
   useEffect(() => {
-    initCustomerType();
-    initParentCustomer();
-  }, []);
+    if (open) {
+      initThirdPartyType();
+      initThirdPartyParent();
+      initThirdPartyCategory();
+    }
+  }, [open]);
 
-  const initCustomerType = () => {
-    getCustomerType().then((res) => {
-      setCustomerType(res);
+  const initThirdPartyType = () => {
+    getThirdPartyType().then((res) => {
+      setThirdPartyType(res);
     });
   };
 
-  const initParentCustomer = () => {
-    getCustomerParent().then((res) => {
-      setCustomerParent(res);
+  const initThirdPartyParent = () => {
+    getThirdPartyParent().then((res) => {
+      setThirdPartyParent(res);
+    });
+  };
+
+  const initThirdPartyCategory = () => {
+    getThirdPartyCategory().then((res) => {
+      setThirdPartyCategory(res);
     });
   };
 
@@ -32,15 +42,15 @@ const ThirdPartyBasicInformation = ({ formik, open }: any) => {
         <InputText important label="کد شخصیت" values={values.code} name="code" handleChange={handleChange} error={touched.code && errors.code} />
         <InputText important label="نام شخصیت" values={values.name} name="name" handleChange={handleChange} error={touched.name && errors.name} />
         <InputSelect
-          options={customerType}
+          options={ThirdPartyType}
           important
           label="نوع شخصیت"
-          values={values.selectCustomerType}
-          name="selectCustomerType"
+          values={values.selectThirdPartyType}
+          name="selectThirdPartyType"
           handleChange={setFieldValue}
-          error={touched.selectCustomerType && errors.selectCustomerType}
+          error={touched.selectThirdPartyType && errors.selectThirdPartyType}
         />
-        {values.selectCustomerType.id === 0 && (
+        {values.selectThirdPartyType.id === 0 && (
           <InputText
             important
             label="کد ملی"
@@ -50,7 +60,7 @@ const ThirdPartyBasicInformation = ({ formik, open }: any) => {
             error={touched.nationalCode && errors.nationalCode}
           />
         )}
-        {values.selectCustomerType.id === 1 && (
+        {values.selectThirdPartyType.id === 1 && (
           <>
             <InputText
               important
@@ -73,12 +83,20 @@ const ThirdPartyBasicInformation = ({ formik, open }: any) => {
       </div>
       <div className="inputRow">
         <InputSelect
-          options={customerParent}
-          label="مشتری والد"
-          values={values.selectParentCustomer}
-          name="selectParentCustomer"
+          options={ThirdPartyCategory}
+          label="گروه شخصیت"
+          values={values.selectThirdPartyCategory}
+          name="selectThirdPartyCategory"
           handleChange={setFieldValue}
-          error={touched.selectParentCustomer && errors.selectParentCustomer}
+          error={touched.selectThirdPartyCategory && errors.selectThirdPartyCategory}
+        />
+        <InputSelect
+          options={ThirdPartyParent}
+          label="شخصیت والد"
+          values={values.selectParentThirdParty}
+          name="selectParentThirdParty"
+          handleChange={setFieldValue}
+          error={touched.selectParentThirdParty && errors.selectParentThirdParty}
         />
         <InputText
           label="پست الکترونیکی"
@@ -88,6 +106,9 @@ const ThirdPartyBasicInformation = ({ formik, open }: any) => {
           error={touched.email && errors.email}
           placeholder="example@example.com"
         />
+        <div className=" mb-5">
+          <CustomSwitch active={values.isActive} handleChange={() => setFieldValue("isActive", !values.isActive)} />
+        </div>
       </div>
     </div>
   );
