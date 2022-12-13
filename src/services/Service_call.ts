@@ -1,41 +1,41 @@
 import http from "./http_service";
-import {Base_url4 } from "./apiRoute";
-
 
 export const getDataFromServer = async (apiRoute: { apiRoute: string }) => {
-  const { data } = await http.get(Base_url4 + apiRoute);
+  const { data } = await http.get(
+    `${process.env.REACT_APP_BASE_URL}` + apiRoute
+  );
   return data;
 };
 
-export const getDataHeaderServer = async (apiRoute: string, headers: object  ) => {
-  const { data } = await http.get(apiRoute,headers);
-  return data;
-};
-
-export const postDataToServer = async (
-  apiRoute: string ,
-  body:  object 
+export const getDataHeaderServer = async (
+  apiRoute: string,
+  headers: object
 ) => {
-  const { data } = await http.post(  apiRoute, body);
+  const { data } = await http.get(apiRoute, headers);
+  return data;
+};
+
+export const postDataToServer = async (apiRoute: string, body: object) => {
+  const { data } = await http.post(apiRoute, body);
   return data;
 };
 
 export const postDataHeaderToServer = async (
-apiRoute: string ,
-body: object ,
- headers: object 
+  apiRoute: string,
+  body: object,
+  headers: object
 ) => {
-  const { data } = await http.post(  apiRoute, body, headers);
+  const { data } = await http.post(apiRoute, body, headers);
   return data;
 };
 
 export const PostDataParams = async (apiRoute: string, body: object) => {
-  const { data } = await http.post( apiRoute, body);
+  const { data } = await http.post(apiRoute, body);
 
   return data;
 };
 export const GetDataParams = async (apiRoute: string) => {
-  const { data } = await http.get( apiRoute);
+  const { data } = await http.get(apiRoute);
   return data;
 };
 export const DeleteDataParams = async (apiRoute: string) => {
@@ -43,10 +43,20 @@ export const DeleteDataParams = async (apiRoute: string) => {
   return data;
 };
 export const selectDataFromServer = async (apiRoute: { apiRoute: string }) => {
-  console.log("apiRoute",apiRoute)
+  console.log("apiRoute", apiRoute);
   // @ts-ignore
- const { data } = await http.get(apiRoute);
- return data;
+  const { data } = await http.get(apiRoute);
+  return data;
+};
+
+export const selectDataFromServerWithHeader = async (
+  apiRoute: string,
+  headers: object
+) => {
+  // console.log("apiRoute",apiRoute)
+  // @ts-ignore
+  const { data } = await http.get(apiRoute, headers);
+  return data;
 };
 
 export const EditDataParams = async (apiRoute: string, body: object) => {

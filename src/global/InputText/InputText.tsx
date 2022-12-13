@@ -27,12 +27,12 @@ const InputText = ({
   return (
     <div className={`flex flex-col ${wrapperClassName} `}>
       <div
-        className={`autocompleteWrapper ${classNames} ${error && "border-red-700"} ${
+        className={`autocompleteWrapper ${classNames} ${error && "border-red"} ${
           readOnly && "opacity-40"
         } `}
       >
         <div
-          className={`autocompleteLabel  ${error && "text-red-700"} top-[-17px]`}
+          className={`autocompleteLabel  ${error && "text-red"} top-[-17px]`}
         >
           {label}{" "}
           <span className="text-tomato font-extrabold text-lg h-4">

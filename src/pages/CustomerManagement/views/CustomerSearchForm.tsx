@@ -1,25 +1,20 @@
 import React, { memo, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
+import Chip from "../../../global/Chip/Chip";
+import CustomerPerfesionalFilter from "./CustomerPerfesionalFilter";
+import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import { customerData } from "../../../redux/CustomerManagement/CustomerManagementData";
-import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
-import SimpleButton from "../../../global/SimpleButton/SimpleButton";
-import Chip from "../../../global/Chip/Chip";
-import CustomerPerfesionalFilter from "../CustomerPerfesionalFilter";
-import axios from "axios";
 
 interface PropsData {
   isActive: Boolean | string;
   isUpdating: Boolean;
-  pageNumbers: any
+  pageNumbers: any;
 }
 
-const CustomerSearchForm: React.FC<PropsData> = ({
-  isActive,
-  isUpdating,
-  pageNumbers
-}): JSX.Element => {
+const CustomerSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageNumbers }): JSX.Element => {
   const dispatch = useDispatch();
   const [filterData, setFilterData] = useState({});
   const formik = useFormik({
@@ -51,42 +46,22 @@ const CustomerSearchForm: React.FC<PropsData> = ({
         pageNumber: pageNumbers,
       }) as any
     );
-    
   }, [isActive, filterData, isUpdating, pageNumbers]);
-
 
   return (
     <>
       <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col ">
-        <form
-          className="flex-start-start flex-wrap gap-5"
-          onSubmit={handleSubmit}
-        >
-          <AutocompleteInput
-            label={"کد مشتری"}
-            value={values.code}
-            onChange={(e) => setFieldValue("code", e.target.value)}
-          />
-          <AutocompleteInput
-            label={"نام مشتری"}
-            value={values.name}
-            onChange={(e) => setFieldValue("name", e.target.value)}
-          />
-          <AutocompleteInput
-            label={"شماره تماس"}
-            value={values.telNumber}
-            onChange={(e) => setFieldValue("telNumber", e.target.value)}
-          />
+        <form className="flex-start-start flex-wrap gap-5" onSubmit={handleSubmit}>
+          <AutocompleteInput label={"کد مشتری"} value={values.code} onChange={(e) => setFieldValue("code", e.target.value)} />
+          <AutocompleteInput label={"نام مشتری"} value={values.name} onChange={(e) => setFieldValue("name", e.target.value)} />
+          <AutocompleteInput label={"شماره تماس"} value={values.telNumber} onChange={(e) => setFieldValue("telNumber", e.target.value)} />
           <SimpleButton searchBtn />
-          <PerfesionalSearch formData={handleSubmit } handleReset={handleReset}>
-            <CustomerPerfesionalFilter
-              values={values}
-              setFieldValue={setFieldValue}
-            />
+          <PerfesionalSearch formData={handleSubmit} handleReset={handleReset}>
+            <CustomerPerfesionalFilter values={values} setFieldValue={setFieldValue} />
           </PerfesionalSearch>
         </form>
       </div>
-      {filterData && <Chip filterData={filterData} formData={formik}  />}
+      {filterData && <Chip filterData={filterData} formData={formik} />}
     </>
   );
 };
