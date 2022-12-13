@@ -9,7 +9,9 @@ import ProductDefineList from "../ProductDefineData/ProductDefineData";
 import CustomerDefineList from "../CustomerManagement/CustomerManagementData";
 import ServiceProvision from "../ServiceProvision/ServiceProvision";
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
-import EditHubTable from "../HubData/EditData"
+import EditHubTable from "../HubData/EditData";
+import VendorList from "../Transportation/vendor/VendorData";
+import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
 const persistConfig = {
   key: "root",
   storage,
@@ -24,8 +26,10 @@ const reducers = combineReducers({
   serviceDefine: ServiceData,
   productDefine: ProductDefineList,
   customerDefine: CustomerDefineList,
-   serviceProvision:ServiceProvision,
-   editHub:EditHubTable,
+  serviceProvision: ServiceProvision,
+  editHub: EditHubTable,
+  vendor: VendorList,
+  vehicleModel:VehicleModelLists
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -33,9 +37,9 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-  getDefaultMiddleware({
-    serializableCheck: false,
-  }),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export let persistor = persistStore(store);

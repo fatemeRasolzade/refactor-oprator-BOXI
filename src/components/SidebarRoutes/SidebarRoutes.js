@@ -19,7 +19,7 @@ import ProductInfo from '../../pages/ProductInfo/ProductInfo';
 import ServiceProvision from '../../pages/ServiceProvision/ServiceProvision';
 import Price from '../../pages/Price/Price';
 import Thirdparty from '../../pages/Thirdparty/Thirdparty';
-import Transportation from '../../pages/Transportation/Transportation';
+import Transportation from '../../pages/BasicInformations/Transportation';
 import ADMVehicle from '../../pages/ADMVehicle/ADMVehicle';
 import CustomerManagement from '../../pages/CustomerManagement/CustomerManagement';
 import ProductGroup from '../../pages/ProductGroup/ProductGroup';

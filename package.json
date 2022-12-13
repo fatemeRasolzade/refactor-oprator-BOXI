@@ -55,6 +55,7 @@
     "react-switch": "^7.0.0",
     "react-table": "^7.8.0",
     "react-table-6": "^6.11.0",
+    "react-tabs": "^6.0.0",
     "react-toastify": "^9.1.0",
     "redux-axios-middleware": "^4.0.1",
     "redux-persist": "^6.0.0",
