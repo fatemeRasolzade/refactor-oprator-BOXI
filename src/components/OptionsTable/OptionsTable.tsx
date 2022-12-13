@@ -1,13 +1,14 @@
 import { FC } from "react";
-import { BiPlus, BiEdit, BiTrash } from "react-icons/bi";
-import { GrDocumentPdf } from "react-icons/gr";
-import { Link, To } from "react-router-dom";
+
+import { BiPlus} from "react-icons/bi";
+
+import { Link } from "react-router-dom";
+
 import { GoDesktopDownload, GoGear } from "react-icons/go";
 
 import CustomSwitch from "./../../global/Switch/Switch";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
-import AddButton from "../../global/addButton/AddButton";
-import AddExcel from "../exel/AddExcel";
+
 
 interface OptionsTableProps {
   isActive?: boolean;
@@ -17,6 +18,7 @@ interface OptionsTableProps {
   customComponent?: () => JSX.Element;
   exportExcel?: any;
   btnLink?: string;
+  
 }
 const OptionsTable: FC<OptionsTableProps> = ({
   btnLink,
@@ -26,6 +28,7 @@ const OptionsTable: FC<OptionsTableProps> = ({
   addComponentProps,
   customComponent,
   exportExcel,
+ 
 }) => {
   return (
     <div className="mt-6">

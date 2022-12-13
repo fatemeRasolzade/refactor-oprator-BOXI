@@ -7,7 +7,7 @@ import InputSelect from '../../../../global/InputSelect/InputSelect'
 import { Formik,ErrorMessage } from "formik";
 import {useNavigate} from "react-router-dom"
 import { addHubschema } from '../../../../global/Validation/Validation'
-import { getDataFromServer, PostDataParams } from "../../../../services/Service_call"
+import { getDataFromServer, getDataHeaderServer, PostDataParams } from "../../../../services/Service_call"
 import { apiRoute } from "../../../../services/apiRoute"
 import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert"
 const HubAdd = () => {
@@ -16,22 +16,34 @@ const HubAdd = () => {
   useEffect(() => {
     function getDataSelect() {
       try {
-        getDataFromServer(apiRoute().get.get_hub_type).then((res) => {
+        getDataHeaderServer(apiRoute().get.get_hub_type,{headers:{
+          "Authorization":"Bearer " + localStorage.getItem("myToken")
+        }}).then((res) => {
           if (res.status === "OK") settypeHub(res.payload);
         });
-        getDataFromServer(apiRoute().get.select_hub_category).then((res) => {
+        getDataHeaderServer(apiRoute().get.select_hub_category,{headers:{
+          "Authorization":"Bearer " + localStorage.getItem("myToken")
+        }}).then((res) => {
           if (res.status === "OK") setCatHub(res.payload.content);
         });
-        getDataFromServer(apiRoute().get.get_province_city).then((res) => {
+        getDataHeaderServer(apiRoute().get.get_province_city,{headers:{
+          "Authorization":"Bearer " + localStorage.getItem("myToken")
+        }}).then((res) => {
           if (res.status === "OK") setCities(res.payload.content);
         });
-        getDataFromServer(apiRoute().get.get_province_loc).then((res) => {
+        getDataHeaderServer(apiRoute().get.get_province_loc,{headers:{
+          "Authorization":"Bearer " + localStorage.getItem("myToken")
+        }}).then((res) => {
           if (res.status === "OK") setProvinceLoc(res.payload.content);
         });
-        getDataFromServer(apiRoute().get.get_select_province).then((res) => {
+        getDataHeaderServer(apiRoute().get.get_select_province,{headers:{
+          "Authorization":"Bearer " + localStorage.getItem("myToken")
+        }}).then((res) => {
           if (res.status === "OK") setSelectProvince(res.payload.content);
         });
-        getDataFromServer(apiRoute().get.select_hub).then((res) => {
+        getDataHeaderServer(apiRoute().get.select_hub,{headers:{
+          "Authorization":"Bearer " + localStorage.getItem("myToken")
+        }}).then((res) => {
           if (res.status === "OK") setselectHub(res.payload.content);
         });
       } catch (error) {
@@ -111,26 +123,26 @@ const HubAdd = () => {
      <form onSubmit={formik.handleSubmit}>
      <div className='w-11/12 grid grid-cols-5 gap-2'>
        
-       <div ><InputText label='کدهاب' name="code" handleChange={formik.handleChange} values={formik.values.code} important type={"text"}/>
+       <div ><InputText label='کدهاب' name="code" handleChange={formik.handleChange} values={formik.values.code} important type={"text"} wrapperClassName="!w-full"/>
        <ErrorMessage name='codeHub' render={(messege)=>(<span className='text-tomato'>{messege}</span>)}/>
        </div>
-       <div ><InputText label='نام هاب' name="name" handleChange={formik.handleChange} values={formik.values.name} important type={"text"}/>
+       <div ><InputText label='نام هاب' name="name" handleChange={formik.handleChange} values={formik.values.name} important type={"text"} wrapperClassName="!w-full min-w-0"/>
        <ErrorMessage name='nameHub' render={(messege)=>(<span className='text-tomato'>{messege}</span>)}/>
        </div>
-        <div> <InputSelect label='نوع هاب' name="selectHubType" handleChange={formik.setFieldValue} values={formik.values.selectHubType} options={typeHub}/> 
+        <div> <InputSelect label='نوع هاب' name="selectHubType" handleChange={formik.setFieldValue} values={formik.values.selectHubType} options={typeHub} wrapperClassName="!w-full min-w-0"/> 
        
         <ErrorMessage name='typeHub' render={(messege)=>(<span className='text-tomato  block mt-5'>{messege}</span>)}/>
         </div>
        <div >
-        <InputSelect label='گونه هاب' name="selectHubCategory" handleChange={formik.setFieldValue} values={formik.values.selectHubCategory} options={catHub}/>
+        <InputSelect label='گونه هاب' name="selectHubCategory" handleChange={formik.setFieldValue} values={formik.values.selectHubCategory} options={catHub} wrapperClassName="!w-full min-w-0"/>
       
        </div>
         <div >
       
-          <InputSelect label='هاب والد' name="selectParentHub" handleChange={formik.setFieldValue} values={formik.values.selectParentHub} options={selectHub}/> 
+          <InputSelect label='هاب والد' name="selectParentHub" handleChange={formik.setFieldValue} values={formik.values.selectParentHub} options={selectHub} wrapperClassName="!w-full min-w-0"/> 
        
        </div> 
-       <div ><InputText label='پین کد'  name="pinCode" handleChange={formik.handleChange} values={formik.values.pinCode} type={"text"}/>
+       <div ><InputText label='پین کد'  name="pinCode" handleChange={formik.handleChange} values={formik.values.pinCode} type={"text"} wrapperClassName="!w-full min-w-0"/>
       
        </div>
        <div ><DatePickers title='تاریخ شروع فعالیت' name="locationStartDate" handleChange={formik.setFieldValue} values={formik.values.locationStartDate}/>
@@ -146,24 +158,24 @@ const HubAdd = () => {
       
        </div>
       <div >
-         <InputSelect label='استان' name="selectState" handleChange={formik.setFieldValue} values={formik.values.selectState} options={selectProvince}/> 
+         <InputSelect label='استان' name="selectState" handleChange={formik.setFieldValue} values={formik.values.selectState} options={selectProvince} wrapperClassName="!w-full min-w-0"/> 
      
       </div>
        <div >
-        <InputSelect label='شهر' name="selectCity" handleChange={formik.setFieldValue} values={formik.values.selectCity} options={citys}/> 
+        <InputSelect label='شهر' name="selectCity" handleChange={formik.setFieldValue} values={formik.values.selectCity} options={citys} wrapperClassName="!w-full min-w-0"/> 
       
        </div>
        <div >
-       <InputSelect label='منطقه' name="selectRegion" handleChange={formik.setFieldValue} values={formik.values.selectRegion} options={provinceLoc}/> 
+       <InputSelect label='منطقه' name="selectRegion" handleChange={formik.setFieldValue} values={formik.values.selectRegion} options={provinceLoc} wrapperClassName="!w-full min-w-0"/> 
       
        </div> 
-       <div ><InputText label='پلاک' name="plateNumber" handleChange={formik.handleChange} values={formik.values.plateNumber} type={"number"}/>
+       <div ><InputText label='پلاک' name="plateNumber" handleChange={formik.handleChange} values={formik.values.plateNumber} type={"number"} wrapperClassName="!w-full min-w-0"/>
        
        </div>
-       <div ><InputText label='آدرس 1' name="addressLine1" handleChange={formik.handleChange} values={formik.values.addressLine1} type={"text"}/>
+       <div ><InputText label='آدرس 1' name="addressLine1" handleChange={formik.handleChange} values={formik.values.addressLine1} type={"text"} wrapperClassName="!w-full min-w-0"/>
       
        </div>
-       <div className='!col-span-2 ' ><InputText label='آدرس 2' name="addressLine2" handleChange={formik.handleChange} values={formik.values.addressLine2} type={"text"}/>
+       <div className='!col-span-2 ' ><InputText label='آدرس 2' name="addressLine2" handleChange={formik.handleChange} values={formik.values.addressLine2} type={"text"} wrapperClassName="!w-full min-w-0"/>
       
        </div>
        <div>نقشه</div>

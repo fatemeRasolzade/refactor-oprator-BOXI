@@ -9,7 +9,7 @@ const Breadcrumb = ({
   const navigate = useNavigate();
 
   return (
-    <div className="flex-start-center text-xl">
+    <div className="flex-start-center text-xl mb-8">
       <h2 className="text-xl ">{curentPage}</h2>
       <span className="px-3">{">"}</span>
       <button className="border-none" onClick={() => navigate(-1)}>

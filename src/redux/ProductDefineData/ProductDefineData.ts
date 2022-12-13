@@ -1,18 +1,15 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import { postDataHeaderToServer, PostDataParams } from '../../services/Service_call';
+import { postDataHeaderToServer } from '../../services/Service_call';
 import { apiRoute } from '../../services/apiRoute';
-
+import { ErrorAlert } from "../../global/alert/Alert";
 
 export const productData=createAsyncThunk('productlists',async(body:any)=>{
-    console.log("body",body)
 
     const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
     var data = {};
     try {
         data = await postDataHeaderToServer(apiRoute().post.product + params, {
-          code:body.code,
-          name:body.name,
-          isActive:body.isActive
+        ...body
         },{
             headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
           });
@@ -23,21 +20,6 @@ export const productData=createAsyncThunk('productlists',async(body:any)=>{
 
     return data;
 })
-
-
-// export const productData=createAsyncThunk('productlists',async(body:any)=>{
-//     const params = `/filter?pageNumber=1&pageSize=20`;
-//     var data = {};
-//     try {
-   
-//         data = await PostDataParams(apiRoute().post.product + params, body);
-
-//     } catch (error) {
-//         console.log("error ", error);
-//     }
-//     return data;
-// })
-
 
 const initialState:any= {
     productLists:[],

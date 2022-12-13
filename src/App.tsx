@@ -25,7 +25,6 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/hub/add" element={<HubAdd />} />
         <Route path="/hub/edit" element={<HubEdit />} />
-
       </Routes>
     </div>
   );

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useTable, usePagination, useRowSelect } from "react-table";
 import Paginations from "../../global/Pagination/Pagination";
@@ -34,7 +35,7 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 );
 
-function Table({ columns, data, pageTable, selectable, setSelectedRows }) {
+function Table({ columns, data, pageTable, selectable, loading }) {
   const {
     selectedFlatRows,
     getTableProps,
@@ -135,11 +136,20 @@ function Table({ columns, data, pageTable, selectable, setSelectedRows }) {
         </tbody>
       </table>
 
-      {page.length === 0 && (
+      {loading ? (
+        <div className="h-20 cnetering w-full">
+          <ClipLoader />
+        </div>
+      ) : (
+        page.length === 0 && (
+          <div className="h-20 centering w-full"> موردی یافت نشد </div>
+        )
+      )}
+      {/* {page.length === 0 && (
         <div className="h-20 centering w-full">
           <>موردی یافت نشد</>
         </div>
-      )}
+      )} */}
       <div className="text-center my-5">
         <Paginations pageData={pageTable} />
       </div>
@@ -152,7 +162,7 @@ function StaticTable({
   column,
   pagination,
   selectable,
-  setSelectedRows = null,
+  loading = false,
 }) {
   return (
     <Table
@@ -160,7 +170,7 @@ function StaticTable({
       data={data}
       pageTable={pagination}
       selectable={selectable}
-      setSelectedRows={setSelectedRows}
+      loading={loading}
     />
   );
 }

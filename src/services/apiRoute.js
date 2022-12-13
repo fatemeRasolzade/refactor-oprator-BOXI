@@ -115,15 +115,15 @@ export const GET_CITIES = `${API_URL}/countryDevision/province/1/city?filter=`;
 export const GET_REGIONS = `${API_URL}/countryDevision/city/2/loc?filter=`;
 export const GET_ADDRESS_TYPE = `${API_CONSIGNMENT5}/address/addressType`;
 export const GET_PHONETYPE = `${API_CONSIGNMENT5}/telephone/phoneType`;
-export const DEL_ADDRESS = `${API_CONSIGNMENT5}/address/`
-export const DEL_TELEPHONE = `${API_CONSIGNMENT5}/telephone/`
+export const DEL_ADDRESS = `${API_CONSIGNMENT5}/address/`;
+export const DEL_TELEPHONE = `${API_CONSIGNMENT5}/telephone/`;
 
-
-
-//customer
+//Customer
 export const GET_CUSTOMER_TYPE = `${API_CONSIGNMENT5}/customer/customerType`;
 export const GET_CUSTOMER_PARENT = `${API_CONSIGNMENT5}/customer/select?filter=`;
 export const CREATE_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
 export const EDIT_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
+export const DELETE_CUSTOMER = `${API_CONSIGNMENT5}/customer/`;
 
-//thirdParty
+//ThirdParty
+
