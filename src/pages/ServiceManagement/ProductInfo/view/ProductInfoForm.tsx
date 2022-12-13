@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import React, { useCallback, useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import * as Yup from "yup";
+import Provinces from "../../../../components/provinces/Provinces";
 
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import InputText from "../../../../global/InputText/InputText";
@@ -11,76 +12,21 @@ import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import CustomSwitch from "../../../../global/Switch/Switch";
 
 const ProductInfoForm = () => {
-  const validation = Yup.object().shape(
-    {
-      toWeight: Yup.number().min(0),
-      fromWeight: Yup.number()
-        .min(0)
-        .when("toWeight", {
-          is: (value: number) => value,
-          then: Yup.number().nullable().required(),
-        }),
-      toDimension: Yup.number().min(0),
-      fromDim: Yup.number()
-        .min(0)
-
-        .when("toDimension", {
-          is: (value: number) => value,
-          then: Yup.number().nullable().required(),
-        }),
-      toValue: Yup.number().min(0),
-      fromValue: Yup.number()
-        .min(0)
-        .when("toValue", {
-          is: (value: number) => value,
-          then: Yup.number().nullable().required(),
-        }),
-
-      product: Yup.object().shape({
-        text: Yup.string().required(),
-        id: Yup.string().required(),
-      }),
-      timeCommitment: Yup.object().shape({
-        text: Yup.string().required(),
-        id: Yup.string().required(),
-      }),
-      toCountryDevision: Yup.object().shape({
-        text: Yup.string().required(),
-        id: Yup.string().required(),
-      }),
-      fromCountryDevision: Yup.object().shape({
-        text: Yup.string().required(),
-        id: Yup.string().required(),
-      }),
-      fromDestinationCity: Yup.object().shape({
-        text: Yup.string().required(),
-        id: Yup.string().required(),
-      }),
-      fromSourceCity: Yup.object().shape({
-        text: Yup.string().required(),
-        id: Yup.string().required(),
-      }),
-    },
-    [
-      ["fromSourceCity", "fromDestinationCity"],
-      ["fromSourceLocation", "fromDestinationLocation"],
-      ["fromWeight", "toWeight"],
-      ["toDimension", "fromDim"],
-      ["fromValue", "toValue"],
-    ]
-  );
+  const validation = Yup.object().shape({});
   const [valuesData, setValuesData] = useState({
     product: [],
     timeCommitment: [],
-    countryDevision: [],
   });
 
+  const [cityOption, setCityOption] = useState({
+    fromCity: [],
+    toCity: [],
+  });
   const getOptionsData = useCallback(async () => {
     const product = "http://boxi.local:40000/core-api/product/select?filter=";
     const timeCommitment =
       "http://boxi.local:40000/core-api/timecommitment/select?filter=";
-    const countryDevision =
-      "http://boxi.local:40000/core-api/countryDevision?filter";
+
     // const province = "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter=";
     // const city = "http://boxi.local:40000/core-api/countryDevision/city/13/loc?filter=";
     try {
@@ -97,27 +43,15 @@ const ProductInfoForm = () => {
             Authorization: "Bearer " + localStorage.getItem("myToken"),
           },
         }),
-        await axios({
-          url: countryDevision,
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("myToken"),
-          },
-        }),
       ]);
       res.then((response) =>
         setValuesData({
           product: response[0].data?.payload?.content,
           timeCommitment: response[1].data?.payload?.content,
-          countryDevision: response[2].data?.payload?.content,
         })
       );
     } catch (error) {}
   }, []);
-  const getOptionFromCity = useCallback(async () => {}, []);
-  const getOptionToCity = useCallback(async () => {}, []);
-
-  const getOptionFromScope = useCallback(async () => {}, []);
-  const getOptionToScope = useCallback(async () => {}, []);
 
   const saveData = useCallback(async () => {
     try {
@@ -140,11 +74,6 @@ const ProductInfoForm = () => {
       usingProduct: [],
       product: undefined,
       timeCommitment: undefined,
-      toCountryDevision: undefined,
-      fromCountryDevision: undefined,
-      fromDestinationCity: undefined,
-      fromSourceCity: undefined,
-      fromSourceLocation: undefined,
     },
     onSubmit: async (values, { resetForm }) => {},
   });
@@ -204,89 +133,7 @@ const ProductInfoForm = () => {
         </div>
       </div>
       <div className="grid grid-cols-5 gap-6">
-        <fieldset className="border rounded-xl p-6">
-          <legend className="px-3">مبداء</legend>
-          <InputSelect
-            important
-            wrapperClassName="w-full  z-[200]"
-            name="fromCountryDevision"
-            label="استان"
-            values={formik.values.fromCountryDevision}
-            handleChange={formik.setFieldValue}
-            options={valuesData.countryDevision}
-            error={
-              formik.touched.fromCountryDevision &&
-              formik.errors.fromCountryDevision
-            }
-          />
-          <InputSelect
-            important
-            wrapperClassName="w-full z-[100]"
-            name="fromSourceCity"
-            label="شهر"
-            values={formik.values.fromSourceCity}
-            handleChange={formik.setFieldValue}
-            options={[]}
-            error={
-              formik.touched.fromSourceCity && formik.errors.fromSourceCity
-            }
-          />
-          <InputSelect
-            important
-            wrapperClassName="w-full"
-            name="fromSourceLocation"
-            label="منطقه"
-            values={formik.values.fromSourceLocation}
-            handleChange={formik.setFieldValue}
-            options={[]}
-            error={
-              formik.touched.fromSourceLocation &&
-              formik.errors.fromSourceLocation
-            }
-          />
-        </fieldset>
-        <fieldset className="border rounded-xl p-6">
-          <legend className="px-3">مقصد</legend>
-          <InputSelect
-            important
-            wrapperClassName="w-full  z-[200]"
-            name="toCountryDevision"
-            label="استان"
-            values={formik.values.toCountryDevision}
-            handleChange={formik.setFieldValue}
-            options={valuesData.countryDevision}
-            error={
-              formik.touched.toCountryDevision &&
-              formik.errors.toCountryDevision
-            }
-          />
-          <InputSelect
-            important
-            wrapperClassName="w-full z-[100]"
-            name="fromDestinationCity"
-            label="شهر"
-            values={formik.values.fromDestinationCity}
-            handleChange={formik.setFieldValue}
-            options={[]}
-            error={
-              formik.touched.fromDestinationCity &&
-              formik.errors.fromDestinationCity
-            }
-          />
-          <InputSelect
-            important
-            wrapperClassName="w-full"
-            name="fromSourceLocation"
-            label="منطقه"
-            values={formik.values.fromSourceLocation}
-            handleChange={formik.setFieldValue}
-            options={[]}
-            error={
-              formik.touched.fromSourceLocation &&
-              formik.errors.fromSourceLocation
-            }
-          />
-        </fieldset>
+        <Provinces />
         <fieldset className="border rounded-xl p-6">
           <legend className="px-3">وزن کیلو گرم</legend>
           <InputText

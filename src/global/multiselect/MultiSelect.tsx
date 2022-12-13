@@ -36,7 +36,6 @@ const MultiSelect: FC<InputSelectProps> = ({
         ? "1px solid  #d32f2f"
         : " 1px solid #ababab",
       borderRadius: state.isFocused ? "0.5rem" : "0.5rem",
-      height: state.isFocused ? "2.5rem" : "2.5rem",
       "&:hover": {
         border: state.isFocused
           ? error
@@ -52,7 +51,7 @@ const MultiSelect: FC<InputSelectProps> = ({
     }),
   };
   return (
-    <div className={`relative min-w-[240px]  ${wrapperClassName}`}>
+    <div className={`relative min-w-[240px] h-fit custom-multi-select  ${wrapperClassName}`}>
       <label
         className={` absolute top-[-16px] right-5 bg-white z-10  px-2  text-sm ${
           error ? "text-red" : "text-darkGray"
@@ -65,6 +64,7 @@ const MultiSelect: FC<InputSelectProps> = ({
       </label>
       <Select
         isMulti
+        hideSelectedOptions={false}
         isDisabled={isDisabled}
         isLoading={options.length > 0 ? false : true}
         value={
@@ -95,7 +95,7 @@ const MultiSelect: FC<InputSelectProps> = ({
         placeholder=""
         isRtl
         name={name}
-        className="inputSelect focus:outline-none flex h-fit"
+        className="inputSelect focus:outline-none  basic-multi-select"
       />
       <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
