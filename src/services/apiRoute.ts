@@ -84,7 +84,7 @@ export const apiRoute = () => {
     delete: {
       role: createUrl(API_CONSIGNMENT2, "/role"),
       personnel: createUrl(API_CONSIGNMENT2, "/employee"),
-      VehicleModel:createUrl(API_CONSIGNMENT4,'/vehicleMake'),
+      VehicleModel: createUrl(API_CONSIGNMENT4, "/vehicleMake"),
       vendor: createUrl(API_CONSIGNMENT4, "/vendor"),
       serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
@@ -92,7 +92,7 @@ export const apiRoute = () => {
     },
     edit: {
       EditVendor: createUrl(API_CONSIGNMENT4, "/vendor"),
-      VehicleModel:createUrl(API_CONSIGNMENT4,'/vehicleMake'),
+      VehicleModel: createUrl(API_CONSIGNMENT4, "/vehicleMake"),
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
       EDIT_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
     },
@@ -116,3 +116,9 @@ export const EDIT_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
 export const DELETE_CUSTOMER = `${API_CONSIGNMENT5}/customer/`;
 
 //ThirdParty
+export const GET_THIRDPARTY_TYPE = `${API_CONSIGNMENT5}/thirdParty/thirdPartyType`;
+export const GET_THIRDPARTY_PARENT = `${API_CONSIGNMENT5}/thirdParty/select?filter=`;
+export const CREATE_THIRDPARTY = `${API_CONSIGNMENT5}/thirdParty`;
+export const EDIT_THIRDPARTY = `${API_CONSIGNMENT5}/thirdParty`;
+export const DELETE_THIRDPARTY = `${API_CONSIGNMENT5}/thirdParty/`;
+export const GET_THIRDPARTY_CATEGORY = `${API_CONSIGNMENT5}/thirdParty/thirdPartyCategory`;

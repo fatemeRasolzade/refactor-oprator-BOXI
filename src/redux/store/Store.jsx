@@ -6,7 +6,8 @@ import RolesList from "../RolsData/RolesData";
 import PageNumber from "../PaginationAction/PaginationAction";
 import PersonnelList from "../PersonData/PersonsData";
 import ProductDefineList from "../ProductDefineData/ProductDefineData";
-import CustomerDefineList from "../CustomerManagement/CustomerManagementData";
+import CustomerList from "../CustomerManagement/CustomerManagementData";
+import ThirdPartyList from "../ThirdParty/ThirdPartyData";
 import ServiceProvision from "../ServiceProvision/ServiceProvision";
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
 import EditHubTable from "../HubData/EditData";
@@ -25,11 +26,12 @@ const reducers = combineReducers({
   personnel: PersonnelList,
   serviceDefine: ServiceData,
   productDefine: ProductDefineList,
-  customerDefine: CustomerDefineList,
+  customer: CustomerList,
+  thirdParty: ThirdPartyList,
   serviceProvision: ServiceProvision,
   editHub: EditHubTable,
   vendor: VendorList,
-  vehicleModel:VehicleModelLists
+  vehicleModel: VehicleModelLists,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

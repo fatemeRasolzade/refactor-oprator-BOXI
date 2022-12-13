@@ -29,7 +29,7 @@ const CustomerManagement = () => {
     { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
   ];
 
-  const { customerList, isUpdating } = useSelector((state: any) => state.customerDefine);
+  const { customerList, isUpdating } = useSelector((state: any) => state.customer);
 
   const handleDeleteActionNewData = () => {
     setLoading(true);

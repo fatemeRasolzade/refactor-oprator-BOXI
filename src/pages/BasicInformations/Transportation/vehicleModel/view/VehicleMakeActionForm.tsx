@@ -149,12 +149,12 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
             <div>
               <InputText
                 label="کد شرکت"
-                // className="w-full"
+                wrapperClassName="z-50"
                 name="code"
                 handleChange={formik.handleChange}
                 values={formik.values.code}
                 important
-                type={"text"}
+                // // type={"text"}
                 error={formik.touched.code && formik.errors.code}
               />
             </div>
