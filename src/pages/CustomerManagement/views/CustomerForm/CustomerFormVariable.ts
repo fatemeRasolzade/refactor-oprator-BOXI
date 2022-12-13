@@ -1,15 +1,9 @@
 import * as Yup from "yup";
 
-import {
-  EconomicCodeValidate,
-  JustEngPasswordRegex,
-  NationalCodeRegex,
-  NationalCodeValidator,
-  NationalIDValidator,
-} from "../../../../tools/validations/ErrorHelper";
+import { JustEngPasswordRegex, NationalCodeRegex } from "../../../../tools/validations/ErrorHelper";
 import { UNMATCHPASSWORD, VALIDENGPASSWORD, VALIDNATIONALCODE } from "../../../../tools/validations/RegexKeywords";
 
-export const CustomerFormVariable = () => {
+export const CustomerFormValidation = () => {
   const CustomerAddValidation = Yup.object().shape({
     code: Yup.string().required(),
     name: Yup.string().required(),
@@ -67,7 +61,6 @@ export const CustomerFormVariable = () => {
     pickupPaperWithEmail: Yup.boolean().nullable(),
     isActive: Yup.boolean().nullable(),
   });
-
   return [CustomerAddValidation, CustomerEditValidation];
 };
 

@@ -2,20 +2,13 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { v4 as uuid } from "uuid";
 import { useFormik } from "formik";
-import Modal from "../../../global/Modal/Modal";
-import InputText from "../../../global/InputText/InputText";
-import { getPhoneType } from "../../../services/GlobalApi";
-import InputSelect from "../../../global/InputSelect/InputSelect";
-import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import Modal from "../../../../../global/Modal/Modal";
+import InputText from "../../../../../global/InputText/InputText";
+import { getPhoneType } from "../../../../../services/GlobalApi";
+import InputSelect from "../../../../../global/InputSelect/InputSelect";
+import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 
-const CustomerTelephoneForm = ({
-  open,
-  setOpen,
-  currentData,
-  setValue,
-  value,
-  ID,
-}: any) => {
+const CustomerTelephoneForm = ({ open, setOpen, currentData, setValue, value, ID }: any) => {
   const [PhoneType, setPhoneType] = useState([]);
 
   //get required data
@@ -72,15 +65,10 @@ const CustomerTelephoneForm = ({
   });
   // end formik configuration
 
-  const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
-    formik;
+  const { values, errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
 
   return (
-    <Modal
-      visible={open}
-      setVisible={setOpen}
-      title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}
-    >
+    <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}>
       <form onSubmit={handleSubmit}>
         <div className="inputRow">
           <InputSelect
@@ -110,16 +98,8 @@ const CustomerTelephoneForm = ({
           />
         </div>
         <div className="flex-end-center gap-3">
-          <SimpleButton
-            text="لغو"
-            className="full-lightTomato-btn"
-            handelClick={() => setOpen(false)}
-          />
-          <SimpleButton
-            type="submit"
-            className="full-tomato-btn"
-            text={currentData ? "ویرایش" : "افزودن"}
-          />
+          <SimpleButton text="لغو" className="full-lightTomato-btn" handelClick={() => setOpen(false)} />
+          <SimpleButton type="submit" className="full-tomato-btn" text={currentData ? "ویرایش" : "افزودن"} />
         </div>
       </form>
     </Modal>

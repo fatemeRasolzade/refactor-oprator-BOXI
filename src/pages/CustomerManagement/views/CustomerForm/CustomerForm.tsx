@@ -2,24 +2,21 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import Modal from "../../../../global/Modal/Modal";
-import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import CustomerTelephoneElements from "../CustomerTelephoneElements";
-import CustomerAddressElements from "../CustomerAddressElements";
-import { ReverseArray } from "../../../../tools/functions/Methods";
-import CustomerAddressForm from "../CustomerAddressForm";
-import CustomerTelephoneForm from "../CustomerTelephoneForm";
-import { createCustomer, editCustomer } from "../../../../services/CustomerApi";
-import { customerData } from "../../../../redux/CustomerManagement/CustomerManagementData";
-import { deleteAddress, deletePhone } from "../../../../services/GlobalApi";
 import { AiOutlineEdit } from "react-icons/ai";
-import AddButton from "../../../../global/addButton/AddButton";
+import Modal from "../../../../global/Modal/Modal";
 import AddExcel from "../../../../components/exel/AddExcel";
+import CustomerAddressForm from "./CustomerCommunicationInformation/CustomerAddressForm";
+import AddButton from "../../../../global/addButton/AddButton";
+import CustomerTelephoneForm from "./CustomerCommunicationInformation/CustomerTelephoneForm";
 import { CustomerExcel } from "../../../../tools/services/ExcelInfoFile";
-import { CusotmerFormInitialValues, CustomerFormCurrentValues, CustomerFormVariable } from "./CustomerFormVariable";
 import CustomerBasicInformation from "./CustomerBasicInformation";
+import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
+import { createCustomer, editCustomer } from "../../../../services/CustomerApi";
 import CustomerUsernameInformation from "./CustomerUsernameInformation";
 import CustomerNotificationInformation from "./CustomerNotificationInformation";
+import CustomerCommunicationInformation from "./CustomerCommunicationInformation/CustomerCommunicationInformation";
+import { customerData } from "../../../../redux/CustomerManagement/CustomerManagementData";
+import { CusotmerFormInitialValues, CustomerFormCurrentValues, CustomerFormValidation } from "./CustomerFormVariable";
 
 type CustomerFormProps = {
   currentData?: any;
@@ -31,49 +28,7 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
   const [OpenPhones, setOpenPhones] = useState(false);
   const [OpenExcel, setOpenExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
-
   const dispatch = useDispatch();
-  const handleOpenAddress = (kind?: any, data?: any, id?: any) => {
-    setAddressModalInfo({ kind, data, id });
-    setOpenAddresses(true);
-  };
-
-  const handleOpenPhone = (kind?: any, data?: any, id?: any) => {
-    setPhonesModalInfo({ kind, data, id });
-    setOpenPhones(true);
-  };
-
-  const handleDeleteAddressElements = (id?: any) => {
-    if (id.toString().includes("null")) {
-      const filtered = values.addresses.filter((a: any) => a.id !== id);
-      setFieldValue("addresses", filtered);
-    } else {
-      deleteAddress(id)
-        .then(() => {
-          const filtered = values.addresses.filter((a: any) => a.id !== id);
-          setFieldValue("addresses", filtered);
-        })
-        .catch(() => {
-          toast.error("حذف آدرس با مشکل مواجه شده است");
-        });
-    }
-  };
-
-  const handleDeleteTelephonesElements = (id: any) => {
-    if (id.toString().includes("null")) {
-      const filtered = values.telephones.filter((t: any) => t.id !== id);
-      setFieldValue("telephones", filtered);
-    } else {
-      deletePhone(id)
-        .then(() => {
-          const filtered = values.telephones.filter((t: any) => t.id !== id);
-          setFieldValue("telephones", filtered);
-        })
-        .catch(() => {
-          toast.error("حذف تلفن با مشکل مواجه شده است");
-        });
-    }
-  };
 
   const [addressModalInfo, setAddressModalInfo] = useState({
     kind: 1,
@@ -85,8 +40,15 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
     data: undefined,
     id: undefined,
   });
-
-  const [CustomerAddValidation, CustomerEditValidation] = CustomerFormVariable();
+  const handleOpenAddress = (kind?: any, data?: any, id?: any) => {
+    setAddressModalInfo({ kind, data, id });
+    setOpenAddresses(true);
+  };
+  const handleOpenPhone = (kind?: any, data?: any, id?: any) => {
+    setPhonesModalInfo({ kind, data, id });
+    setOpenPhones(true);
+  };
+  const [CustomerAddValidation, CustomerEditValidation] = CustomerFormValidation();
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: currentData ? CustomerEditValidation : CustomerAddValidation,
@@ -115,7 +77,7 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
     //   }
     //   return errors;
     // },
-    onSubmit: (values: any, { resetForm }) => {
+    onSubmit: (values: any) => {
       setLoading(true);
       if (currentData) {
         editCustomer({
@@ -166,8 +128,8 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
       }
     },
   });
-  const { values, handleSubmit, setFieldValue }: any = formik;
 
+  const { values, handleSubmit, setFieldValue, handleReset }: any = formik;
   const handleOpenModal = () => setOpen(true);
   const handleUploadFileAction = () => setOpenExcel(true);
 
@@ -175,6 +137,11 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
     { handleClick: handleOpenModal, name: "افزودن مشتری" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
+
+  const handleCloseCustomerForm = () => {
+    setOpen(false);
+    handleReset();
+  };
 
   return (
     <>
@@ -191,42 +158,9 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
           <CustomerBasicInformation formik={formik} open={open} />
           <CustomerUsernameInformation formik={formik} currentData={currentData} />
           <CustomerNotificationInformation formik={formik} />
-          <div className="flex justify-between items-start gap-10 ">
-            <div className="border rounded-lg px-4 py-8 mt-5 relative w-full">
-              <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">آدرس </span>
-              <p className="text-tomato text-sm cursor-pointer mb-5 text-right" onClick={() => handleOpenAddress(1)}>
-                + افزودن آدرس جدید
-              </p>
-              {values.addresses.length > 0 &&
-                ReverseArray(values.addresses).map((address: any) => (
-                  <>
-                    <CustomerAddressElements
-                      address={address}
-                      handleEdit={() => handleOpenAddress(2, address, address.id)}
-                      handleDelete={() => handleDeleteAddressElements(address.id)}
-                    />
-                  </>
-                ))}
-            </div>
-            <div className="border rounded-lg px-4 py-8 mt-5 relative w-full">
-              <span className="absolute -top-3 right-8 z-10 px-2 bg-light text-darkGray">اطلاعات تماس </span>
-              <p className="text-tomato text-sm cursor-pointer mb-5 text-right" onClick={() => handleOpenPhone(1)}>
-                + افزودن اطلاعات تماس جدید
-              </p>
-              {values.telephones.length > 0 &&
-                ReverseArray(values.telephones).map((phone: any) => (
-                  <>
-                    <CustomerTelephoneElements
-                      phone={phone}
-                      handleEdit={() => handleOpenPhone(2, phone, phone.id)}
-                      handleDelete={() => handleDeleteTelephonesElements(phone.id)}
-                    />
-                  </>
-                ))}
-            </div>
-          </div>
+          <CustomerCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} />
           <div className="flex-end-center mt-5 gap-3">
-            <SimpleButton handelClick={() => setOpen(false)} text="لغو" className="full-lightTomato-btn" />
+            <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
             <SimpleButton loading={Loading} type="submit" text={currentData ? "ویرایش" : "افزودن"} className="full-tomato-btn" />
           </div>
         </form>

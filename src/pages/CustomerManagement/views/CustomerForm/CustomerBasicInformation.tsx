@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import InputSelect from "../../../../global/InputSelect/InputSelect";
 import InputText from "../../../../global/InputText/InputText";
+import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getCustomerParent, getCustomerType } from "../../../../services/CustomerApi";
 
 const CustomerBasicInformation = ({ formik, open }: any) => {
