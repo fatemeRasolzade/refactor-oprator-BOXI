@@ -47,7 +47,7 @@ const TestCustomOptions = ({ options = [] }) => {
   };
 
   return (
-    <div className="flex-start-center gap-10">
+    <div className="flex-start-center ">
       {options.map((item) => SwitchOptions(item))}
     </div>
   );
