@@ -13,12 +13,14 @@ interface propsData {
   LeftIcon?: JSX.Element;
   children?: JSX.Element;
   handleReset?: any;
+  perfetionalClik?:any
 }
 
 const PerfesionalSearch = ({
   formData,
   handleReset,
   children,
+  perfetionalClik
 }: propsData): JSX.Element => {
   return (
     <div className="w-160 relative">
@@ -45,6 +47,7 @@ const PerfesionalSearch = ({
                 text="شخصی سازی"
                 icon={<BiCog color="gray" />}
                 className="centering p-0"
+              handelClick={perfetionalClik}
               />
               <SimpleButton
                 text="پاک کردن ورودی ها"

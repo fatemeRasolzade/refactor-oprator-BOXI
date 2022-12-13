@@ -107,3 +107,38 @@ export const PersonnelColumn = [
 
 
 ];
+
+export const ServiceProvisionColumns=[
+  {
+    Header: "کد",
+    accessor: "code",
+  },
+  {
+    Header: "عنوان",
+    accessor: "name",
+  },
+  {
+    Header: "سرویس",
+    accessor: "service",
+  },
+  {
+    Header: "وضعیت",
+    accessor: "isActive",
+  },
+  {
+    Header: "تاریخ اعتبار از",
+    accessor: "validDateFrom",
+  },
+  {
+    Header: "تاریخ اعتبار تا",
+    accessor: "validDateTo",
+  },
+  {
+    Header: "نوع تخفیف",
+    accessor: "type",
+  },
+  {
+    Header: "عملیات",
+    accessor: "handover",
+  },
+]

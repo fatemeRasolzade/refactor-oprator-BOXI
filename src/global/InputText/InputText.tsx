@@ -1,14 +1,14 @@
 type InputTextProps = {
   error?: any;
-  values: any;
-  label: string;
-  name: string;
+  values?: any;
+  label?: string;
+  name?: string;
   type?: string;
   placeholder?: string;
   important?: boolean;
   readOnly?: boolean;
   classNames?:string;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   wrapperClassName?: string
 };
 const InputText = ({

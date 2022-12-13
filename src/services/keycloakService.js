@@ -1,6 +1,7 @@
 //public client
 import axios from "axios";
 import keycloak from "keycloak-js";
+import { ErrorAlert } from "../global/alert/Alert";
 const _kc=new keycloak({
 	"url":"http://boxi.local:8080",
 	"realm":"hubRealm",
@@ -39,9 +40,9 @@ const initKeycloak = (onAuthenticatedCallback) => {
 	})
 		.then((authenticated) => {
 			if (authenticated) {
-				console.log('token')
-				axios.defaults.headers.common["Authorization"] = "Bearer " + getToken();
-				window.localStorage.setItem("myToken",getToken())
+				
+				axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token;
+				window.localStorage.setItem("myToken",_kc.token)
 			
 			} else {
 			  doLogin();
@@ -61,19 +62,20 @@ const hasClientRole = (role) => {
 }
 
 const  tokenExpired =_kc.onTokenExpired = () => {
-	console.log('token expired!: previous token', _kc.token);
+	
 
 	_kc.updateToken(5).then((response) => {
-		console.log('response',response);
+		
 		if (response) {
-			axios.defaults.headers.common["Authorization"] = "Bearer " + getToken();
-				window.localStorage.setItem("myToken",getToken())
-			console.log('successfully get a new token', _kc.token);
-		} /*else {
-      throw new Error('Something went wrong ...');
-    }*/
+			axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token;
+			window.localStorage.setItem("myToken",_kc.token)
+			
+		} else {
+			ErrorAlert('توکن آپدیت نشد')
+    	}
 	}).catch( err => {
-		console.log('400 response form server',err);
+		console.log("error token", err)
+		ErrorAlert('توکن آپدیت نشد')
 		doLogout()
 	});
 

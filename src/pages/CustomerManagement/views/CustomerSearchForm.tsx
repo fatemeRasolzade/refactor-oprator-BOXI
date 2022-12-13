@@ -7,6 +7,7 @@ import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import Chip from "../../../global/Chip/Chip";
 import CustomerPerfesionalFilter from "../CustomerPerfesionalFilter";
+import axios from "axios";
 
 interface PropsData {
   isActive: Boolean | string;
@@ -40,6 +41,7 @@ const CustomerSearchForm: React.FC<PropsData> = ({
   const { values, handleSubmit, setFieldValue, handleReset }: any = formik;
 
   useEffect(() => {
+
     dispatch(
       customerData({
         ...values,

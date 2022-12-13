@@ -1,11 +1,14 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
-
-export const serviceProvisionData=createAsyncThunk('post',async(page)=>{
+import { apiRoute } from "../../services/apiRoute"
+import { postDataHeaderToServer } from "../../services/Service_call"
+export const ServiceProvisionData=createAsyncThunk('ServiceProvision',async(page:number)=>{
     const params=`/filter?pageNumber=${page}&pageSize=10`
-    //const data=await PostDataParams(apiRoute().post.hub + params,{})
-     //return data
-   
-})
+    const {payload}=await postDataHeaderToServer(apiRoute().post.service_provision + params,{},{
+      headers: { Authorization: "Bearer " + localStorage.getItem("myToken") }
+    })
+    console.log("payload",payload)
+    return payload
+   })
 
 export interface StateData {
     serviceList: Array<any>;
@@ -26,21 +29,24 @@ const serviceProvision =createSlice({
     name:"serviceProvision",
     initialState:initialState,
     reducers:{
-
+      clearService:(state)=>{
+        state.serviceList=[]
+      }
+     
     },
     extraReducers:{
-        [serviceProvisionData.fulfilled as any]: (state, action) => {
+        [ServiceProvisionData.fulfilled as any]: (state, action) => {
             state.serviceList = action.payload;
             state.fetchPost = false;
           },
-          [serviceProvisionData.pending as any]: (state) => {
+          [ServiceProvisionData.pending as any]: (state) => {
             state.fetchPost = true;
           },
-          [serviceProvisionData.rejected as any]: (state) => {
+          [ServiceProvisionData.rejected as any]: (state) => {
             state.fetchPost = false;
             state.errorMessage = "wrong";
           },
     }
 })
-//export {}=serviceProvision.actions
+export const {clearService}=serviceProvision.actions
 export default serviceProvision.reducer
