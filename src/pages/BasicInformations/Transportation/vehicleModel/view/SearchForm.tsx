@@ -9,6 +9,7 @@ import { GetDataParams } from "../../../../../services/Service_call";
 import AutocompleteInput from "../../../../../global/Autocomplete/AutocompleteInput";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import Chip from "../../../../../global/Chip/Chip";
+import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
 
 interface PropsData {
   isActive: Boolean | string;
@@ -35,7 +36,7 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
 
   useEffect(() => {
     dispatch(
-      vendorData({
+      vehicleModel({
         search: formik.values.search,
         isActive: isActive,
         pageSize: 10,

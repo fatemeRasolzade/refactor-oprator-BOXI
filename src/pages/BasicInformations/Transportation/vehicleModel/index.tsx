@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import StaticTable from "../../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../../components/tableOperation/DeleteOperation";
+import { vehicleModel } from "../../../../redux/Transportation/vehicleModel/VehicleModel";
 import { vendorData } from "../../../../redux/Transportation/vendor/VendorData";
 import { apiRoute } from "../../../../services/apiRoute";
 import { ExportExcel } from "../../../../tools/functions/Methods";
@@ -18,7 +19,7 @@ const VehicleModel: React.FC = (): JSX.Element => {
   const { pageNumbers } = useSelector((state: any) => state.paginate);
   const handleDeleteActionNewData = () => {
     dispatch(
-      vendorData({
+      vehicleModel({
         search: "",
         isActive: isActive,
         pageSize: 10,
@@ -54,12 +55,12 @@ const VehicleModel: React.FC = (): JSX.Element => {
         addComponentProps={() => <VehicleMakeActionForms />}
         exportExcel={() => ExportExcel(vendorLists?.content)}
       />
-      <StaticTable
+      {/* <StaticTable
         data={data ? data : []}
         column={VendorColumns}
         pagination={vendorLists?.totalElements}
         selectable={false}
-      />
+      /> */}
     </div>
   );
 };
