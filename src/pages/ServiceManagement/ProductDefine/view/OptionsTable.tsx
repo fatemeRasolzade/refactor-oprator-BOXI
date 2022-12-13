@@ -30,7 +30,7 @@ const OptionsTable = ({ setIsActive, addComponentProps, exportExcel, isActive }:
               handelClick={exportExcel}
               text="خروجی اکسل"
               icon={<GoDesktopDownload color="black" />}
-              className="centering rounded-lg text-black"
+              className="centering rounded-lg text-black w-full"
             />
           </li>
         </>

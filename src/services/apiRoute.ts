@@ -54,7 +54,7 @@ export const apiRoute = () => {
       //CONNECTION
       GET_CONNECTION: createUrl(API_URL, "/connection/filter"),
       //PRODUCT
-      GET_PRODUCT: createUrl(API_CONSIGNMENT4, "/vendor/select?filter="),
+      GET_PRODUCT: createUrl(API_CONSIGNMENT4, "/product/select?filter="),
       //PRODUCT_GROUP
       GET_PRODUCT_GROUPS: createUrl(API_CONSIGNMENT4, "/productGroup/select?filter="),
       //SERVICE_TIME
@@ -63,6 +63,10 @@ export const apiRoute = () => {
       GET_ADM_VEHICLE: createUrl(API_URL, "/admVehicle/filter"),
       //Service
       GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
+      //Transportation
+    
+      selectfuelTypes:createUrl(API_CONSIGNMENT4, `/vehicleMake/selectFuelTypes`),
+      selectVendor:createUrl(API_CONSIGNMENT4, `/vendor/select?filter=`)
     },
     post: {
       // create

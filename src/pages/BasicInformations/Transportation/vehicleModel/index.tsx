@@ -6,8 +6,9 @@ import { vehicleModel } from "../../../../redux/Transportation/vehicleModel/Vehi
 import { vendorData } from "../../../../redux/Transportation/vendor/VendorData";
 import { apiRoute } from "../../../../services/apiRoute";
 import { ExportExcel } from "../../../../tools/functions/Methods";
+import { VehicleModelColumns } from "./view/Column";
 
-import { VendorColumns } from "./view/Column";
+
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
 import VehicleMakeActionForms from "./view/VehicleMakeActionForm";
@@ -15,7 +16,7 @@ import VehicleMakeActionForms from "./view/VehicleMakeActionForm";
 const VehicleModel: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
-  const { errorMessage, vendorLists, isUpdating } = useSelector((state: any) => state.vendor);
+  const { errorMessage, vehicleModelLists, isUpdating } = useSelector((state: any) => state.vehicleModel);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
   const handleDeleteActionNewData = () => {
     dispatch(
@@ -28,8 +29,8 @@ const VehicleModel: React.FC = (): JSX.Element => {
     );
   };
   const data =
-    vendorLists?.content?.length !== 0
-      ? vendorLists?.content?.map((item: any) => {
+    vehicleModelLists?.content?.length !== 0
+      ? vehicleModelLists?.content?.map((item: any) => {
           return {
             ...item,
             operation: (
@@ -53,14 +54,14 @@ const VehicleModel: React.FC = (): JSX.Element => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <VehicleMakeActionForms />}
-        exportExcel={() => ExportExcel(vendorLists?.content)}
+        exportExcel={() => ExportExcel(vehicleModelLists?.content)}
       />
-      {/* <StaticTable
+      <StaticTable
         data={data ? data : []}
-        column={VendorColumns}
-        pagination={vendorLists?.totalElements}
+        column={VehicleModelColumns}
+        pagination={vehicleModelLists?.totalElements}
         selectable={false}
-      /> */}
+      />
     </div>
   );
 };
