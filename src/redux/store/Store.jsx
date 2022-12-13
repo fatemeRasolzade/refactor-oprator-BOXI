@@ -11,6 +11,7 @@ import ServiceProvision from "../ServiceProvision/ServiceProvision";
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
 import EditHubTable from "../HubData/EditData";
 import VendorList from "../Transportation/vendor/VendorData";
+import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
 const persistConfig = {
   key: "root",
   storage,
@@ -28,6 +29,7 @@ const reducers = combineReducers({
   serviceProvision: ServiceProvision,
   editHub: EditHubTable,
   vendor: VendorList,
+  vehicleModel:VehicleModelLists
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

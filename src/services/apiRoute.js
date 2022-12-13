@@ -1,4 +1,3 @@
-
 export const Base_url = "http://192.168.1.153:20000";
 export const Base_url2 = "http://192.168.1.153:8090";
 export const Base_url3 = "http://172.16.55.144:8090";
@@ -21,18 +20,9 @@ export const apiRoute = () => {
   return {
     get: {
       get_city: createUrl(API_URL, "/countryDevision/city/2/loc?filter="),
-      get_province: createUrl(
-        API_URL,
-        "/countryDevision/province/1/city?filter="
-      ),
-      get_province_city: createUrl(
-        API_URL,
-        "/countryDevision/province/1/city?filter="
-      ),
-      get_province_loc: createUrl(
-        API_URL,
-        "/countryDevision/city/2/loc?filter="
-      ),
+      get_province: createUrl(API_URL, "/countryDevision/province/1/city?filter="),
+      get_province_city: createUrl(API_URL, "/countryDevision/province/1/city?filter="),
+      get_province_loc: createUrl(API_URL, "/countryDevision/city/2/loc?filter="),
       get_select_province: createUrl(API_URL, "/countryDevision?filter="),
       login_Url: createUrl(API_URL, "/auth/login"),
       user_url: createUrl(API_URL, "/users/all"),
@@ -46,10 +36,7 @@ export const apiRoute = () => {
       //select hub
       select_hub: createUrl(API_URL, "/hub/select?filter="),
       //CUSTOM_GEOGRAPHIC
-      get_custom_geographics: createUrl(
-        API_CONSIGNMENT,
-        "/customcountrydevision/filter"
-      ),
+      get_custom_geographics: createUrl(API_CONSIGNMENT, "/customcountrydevision/filter"),
       //VENDOR
       get_venders: createUrl(API_URL, "/vendor/filter"),
       //VEHICLE_MODEL
@@ -69,10 +56,7 @@ export const apiRoute = () => {
       //PRODUCT
       GET_PRODUCT: createUrl(API_CONSIGNMENT4, "/vendor/select?filter="),
       //PRODUCT_GROUP
-      GET_PRODUCT_GROUPS: createUrl(
-        API_CONSIGNMENT4,
-        "/productGroup/select?filter="
-      ),
+      GET_PRODUCT_GROUPS: createUrl(API_CONSIGNMENT4, "/productGroup/select?filter="),
       //SERVICE_TIME
       GET_SERVICE_TIME: createUrl(API_CONSIGNMENT, "/timecommitment/filter"),
       //ADM_VEHICLE
@@ -84,14 +68,15 @@ export const apiRoute = () => {
       // create
       hub: createUrl(API_URL, "/hub"),
       createProduct: createUrl(API_CONSIGNMENT4, "/product"),
-      createVendor:createUrl(API_CONSIGNMENT4, "/vendor"),
+      createVendor: createUrl(API_CONSIGNMENT4, "/vendor"),
+      VehicleModel: createUrl(API_CONSIGNMENT4, "/vehicleMake"),
       // filter
       filterRole: createUrl(API_CONSIGNMENT2, "/role"),
       // employee
       filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
       serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
       product: createUrl(API_CONSIGNMENT4, "/product"),
-      filterVendor:createUrl(API_CONSIGNMENT4,"/vendor")
+      filterVendor: createUrl(API_CONSIGNMENT4, "/vendor"),
     },
     postExcel: {
       exception: createUrl(API_CONSIGNMENT3, "/exception"),
@@ -99,13 +84,15 @@ export const apiRoute = () => {
     delete: {
       role: createUrl(API_CONSIGNMENT2, "/role"),
       personnel: createUrl(API_CONSIGNMENT2, "/employee"),
-      vendor:createUrl(API_CONSIGNMENT4,"/vendor"),
+      VehicleModel:createUrl(API_CONSIGNMENT4,'/vehicleMake'),
+      vendor: createUrl(API_CONSIGNMENT4, "/vendor"),
       serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
       hubTable: createUrl(API_CONSIGNMENT4, "/hub"),
     },
     edit: {
-      EditVendor:createUrl(API_CONSIGNMENT4,'/vendor'),
+      EditVendor: createUrl(API_CONSIGNMENT4, "/vendor"),
+      VehicleModel:createUrl(API_CONSIGNMENT4,'/vehicleMake'),
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
       EDIT_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
     },
@@ -129,4 +116,3 @@ export const EDIT_CUSTOMER = `${API_CONSIGNMENT5}/customer`;
 export const DELETE_CUSTOMER = `${API_CONSIGNMENT5}/customer/`;
 
 //ThirdParty
-

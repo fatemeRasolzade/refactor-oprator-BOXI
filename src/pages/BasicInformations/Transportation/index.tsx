@@ -21,7 +21,7 @@ const Transportation: React.FC = (): JSX.Element => {
             شرکت های نقلیه <span className="border  border-l-gary-200 relative right-4"></span>
           </Tab>
           <Tab>
-            وسایل نقلیه<span className="border  border-l-gary-200 relative right-4"></span>
+            مدل وسیله نقلیه<span className="border  border-l-gary-200 relative right-4"></span>
           </Tab>
         </TabList>
         <TabPanel>
