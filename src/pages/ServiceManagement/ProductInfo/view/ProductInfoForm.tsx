@@ -11,6 +11,64 @@ import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import CustomSwitch from "../../../../global/Switch/Switch";
 
 const ProductInfoForm = () => {
+  const validation = Yup.object().shape(
+    {
+      toWeight: Yup.number().min(0),
+      fromWeight: Yup.number()
+        .min(0)
+        .when("toWeight", {
+          is: (value: number) => value,
+          then: Yup.number().nullable().required(),
+        }),
+      toDimension: Yup.number().min(0),
+      fromDim: Yup.number()
+        .min(0)
+
+        .when("toDimension", {
+          is: (value: number) => value,
+          then: Yup.number().nullable().required(),
+        }),
+      toValue: Yup.number().min(0),
+      fromValue: Yup.number()
+        .min(0)
+        .when("toValue", {
+          is: (value: number) => value,
+          then: Yup.number().nullable().required(),
+        }),
+
+      product: Yup.object().shape({
+        text: Yup.string().required(),
+        id: Yup.string().required(),
+      }),
+      timeCommitment: Yup.object().shape({
+        text: Yup.string().required(),
+        id: Yup.string().required(),
+      }),
+      toCountryDevision: Yup.object().shape({
+        text: Yup.string().required(),
+        id: Yup.string().required(),
+      }),
+      fromCountryDevision: Yup.object().shape({
+        text: Yup.string().required(),
+        id: Yup.string().required(),
+      }),
+      fromDestinationCity: Yup.object().shape({
+        text: Yup.string().required(),
+        id: Yup.string().required(),
+      }),
+      fromSourceCity: Yup.object().shape({
+        text: Yup.string().required(),
+        id: Yup.string().required(),
+      }),
+    },
+    [
+      ["fromSourceCity", "fromDestinationCity"],
+      ["fromSourceLocation", "fromDestinationLocation"],
+      ["fromWeight", "toWeight"],
+      ["toDimension", "fromDim"],
+      ["fromValue", "toValue"],
+    ]
+  );
   const [valuesData, setValuesData] = useState({
     product: [],
     timeCommitment: [],
@@ -55,40 +113,16 @@ const ProductInfoForm = () => {
       );
     } catch (error) {}
   }, []);
-  const getOptionCity = useCallback(async () => {}, []);
+  const getOptionFromCity = useCallback(async () => {}, []);
+  const getOptionToCity = useCallback(async () => {}, []);
 
-  const getOptionScope = useCallback(async () => {}, []);
+  const getOptionFromScope = useCallback(async () => {}, []);
+  const getOptionToScope = useCallback(async () => {}, []);
 
   const saveData = useCallback(async () => {
     try {
     } catch (error) {}
   }, []);
-  const validation = Yup.object().shape({
-    product: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
-    timeCommitment: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
-    toCountryDevision: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
-    fromCountryDevision: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
-    fromDestinationCity: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
-    fromSourceCity: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
-  });
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -175,14 +209,14 @@ const ProductInfoForm = () => {
           <InputSelect
             important
             wrapperClassName="w-full  z-[200]"
-            name="toCountryDevision"
+            name="fromCountryDevision"
             label="استان"
             values={formik.values.fromCountryDevision}
             handleChange={formik.setFieldValue}
             options={valuesData.countryDevision}
             error={
-              formik.touched.toCountryDevision &&
-              formik.errors.toCountryDevision
+              formik.touched.fromCountryDevision &&
+              formik.errors.fromCountryDevision
             }
           />
           <InputSelect

@@ -10,6 +10,7 @@ import { RoleColumn } from "../../global/Column/Columns";
 import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
 import { clearRole, RoleData, updating } from "../../redux/RolsData/RolesData";
 import { apiRoute } from "../../services/apiRoute";
+import { ExportExcel } from "../../tools/functions/Methods";
 import AddEditRole from "./view/AddRole";
 import SearchFilter from "./view/SearchFilter";
 
@@ -56,7 +57,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                 <TooltipWrapper
                   textProps={item?.selectPermissions?.map(
                     (permissionItem: any) => (
-                      <div key={permissionItem.id }>{permissionItem.text}</div>
+                      <div key={permissionItem.id}>{permissionItem.text}</div>
                     )
                   )}
                 >
@@ -99,6 +100,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
       <Breadcrumb curentPage="مدیریت نقش" />
       <SearchFilter isActive={isActive} setFilterData={setFilterData} />
       <OptionsTable
+        exportExcel={() => ExportExcel(rolesList?.content)}
         isActive={isActive}
         setIsActive={(value: boolean) => {
           setFilterData({
