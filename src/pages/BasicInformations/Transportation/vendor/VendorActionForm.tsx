@@ -133,7 +133,7 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
+      {/* <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} /> */}
       <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[600px] w-[400px]"}>
         <div className="text-lg font-medium">{currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}</div>
         <form onSubmit={formik.handleSubmit}>
