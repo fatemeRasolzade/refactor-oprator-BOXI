@@ -159,6 +159,7 @@ const ProductInfoForm = () => {
         <fieldset className="border rounded-xl p-6">
           <legend className="px-3">وزن کیلو گرم</legend>
           <InputText
+            type="number"
             wrapperClassName="w-full"
             important
             label="از"
@@ -168,6 +169,7 @@ const ProductInfoForm = () => {
             error={formik.touched.fromWeight && formik.errors.fromWeight}
           />
           <InputText
+            type="number"
             wrapperClassName="w-full"
             important
             label="تا"
@@ -180,6 +182,7 @@ const ProductInfoForm = () => {
         <fieldset className="border rounded-xl p-6">
           <legend className="px-3">ابعاد (سانتی متر)</legend>
           <InputText
+            type="number"
             wrapperClassName="w-full"
             important
             label="از"
@@ -189,6 +192,7 @@ const ProductInfoForm = () => {
             error={formik.touched.fromDim && formik.errors.fromDim}
           />
           <InputText
+            type="number"
             wrapperClassName="w-full"
             important
             label="تا"
@@ -201,6 +205,7 @@ const ProductInfoForm = () => {
         <fieldset className="border rounded-xl p-6">
           <legend className="px-3">ارزش (ریال)</legend>
           <InputText
+            type="number"
             wrapperClassName="w-full"
             important
             label="از"
