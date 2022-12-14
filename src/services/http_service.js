@@ -7,15 +7,13 @@ axios.defaults.headers.common["Authorization"] =
   "Bearer " + localStorage.getItem("Authorization");
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 axios.interceptors.response.use(null, (error) => {
-  const errorStatus = error.response.status;
-  console.log("sd[vsp[dv", errorStatus);
+  const errorStatus = error?.response?.status;
+  
   if (errorStatus === 404) {
-    debugger;
     ErrorAlert(error?.response?.data?.errors?.message);
     toast.error(
       error?.response?.data?.errors?.message || "مقدار مورد نظر یافت نشد"
     );
-    debugger;
     return Promise.reject(error);
   }
   if (errorStatus >= 500) {

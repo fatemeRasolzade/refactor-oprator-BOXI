@@ -105,7 +105,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
     },
     onSubmit: async (values, { resetForm }) => {
       console.log("values table", values);
-
+      resetForm();
       setTableList(values);
     },
   });

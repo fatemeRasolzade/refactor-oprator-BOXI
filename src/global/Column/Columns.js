@@ -113,7 +113,7 @@ export const ProductInfoColumn = [
   },
   {
     Header: "قابل ارائه در محصول	",
-    accessor: "asd",
+    accessor: "usingProducts",
   },
   {
     Header: "وزن (کیلوگرم)	",
