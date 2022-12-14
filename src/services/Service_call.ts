@@ -63,3 +63,4 @@ export const EditDataParams = async (apiRoute: string, body: object) => {
   const { data } = await http.put(apiRoute, body);
   return data;
 };
+

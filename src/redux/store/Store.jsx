@@ -8,6 +8,7 @@ import PersonnelList from "../PersonData/PersonsData";
 import ProductDefineList from "../ProductDefineData/ProductDefineData";
 import CustomerList from "../CustomerManagement/CustomerManagementData";
 import ThirdPartyList from "../ThirdParty/ThirdPartyData";
+import ADMVehicleList from "../ADMVehicle/ADMVehicleData";
 import ServiceProvision from "../ServiceProvision/ServiceProvision";
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
 import EditHubTable from "../HubData/EditData";
@@ -28,6 +29,7 @@ const reducers = combineReducers({
   productDefine: ProductDefineList,
   customer: CustomerList,
   thirdParty: ThirdPartyList,
+  ADMVehicle: ADMVehicleList,
   serviceProvision: ServiceProvision,
   editHub: EditHubTable,
   vendor: VendorList,

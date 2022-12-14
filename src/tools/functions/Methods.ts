@@ -21,3 +21,24 @@ export const ExportExcel = (data: any) => {
 };
 
 export const ReverseArray = (arr: []) => [...arr].reverse();
+
+interface getPelakProps {
+  vehicleNumber0: string | number;
+  vehicleNumber1: string | number;
+  vehicleNumber2: string | number;
+  vehicleNumber3: string | number;
+}
+
+export const getPelak = (values: getPelakProps) =>
+  `${values.vehicleNumber0} - ${values.vehicleNumber2}  ${values.vehicleNumber1}   ${values.vehicleNumber3}`;
+
+interface getDayProps {
+  year: string | number;
+  month: string | number;
+  day: string | number;
+}
+
+export const getDay = (value: getDayProps) => {
+  const date = value.year + "/" + value.month + "/" + value.day;
+  return date;
+};
