@@ -34,9 +34,7 @@ const configure = () => {
   axios.interceptors.request.use((config) => {
     if (UserService.isLoggedIn()) {
       const cb = () => {
-        config.headers.Authorization = `Bearer ${localStorage.getItem(
-          "myToken"
-        )}`;
+        config.headers.Authorization = `Bearer ${localStorage.getItem("myToken")}`;
         return Promise.resolve(config);
       };
       return UserService.updateToken(cb);

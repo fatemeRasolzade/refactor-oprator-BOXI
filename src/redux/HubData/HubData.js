@@ -4,16 +4,27 @@ import { apiRoute } from './../../services/apiRoute';
 
 const initialState = {
   postLists: [],
-  
   fetchpost: false,
   errorMessage: null,
 };
 
+const bodys={
+  "hublist": [
+      {
+          "id": 463,
+          "label": "A100",
+          "name": "تست",
+          "parent": 0,
+          "children": []
+      }
+  ]
+}
+
 export const HubData = createAsyncThunk("post", async (page) => {
   const params = `/filter?pageNumber=${page}&pageSize=10`;
-  const data = postDataHeaderToServer(
+  const data =await postDataHeaderToServer(
     apiRoute().post.hub + params,
-    {},
+    bodys,
     {
       headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
     }
