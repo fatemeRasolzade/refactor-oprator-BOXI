@@ -10,6 +10,9 @@ import AutocompleteInput from "../../../../../global/Autocomplete/AutocompleteIn
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import Chip from "../../../../../global/Chip/Chip";
 import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
+import PerfesionalSearch from "../../../../../components/PerfesionalSearch/PerfesionalSearch";
+import InputSelect from "../../../../../global/InputSelect/InputSelect";
+import { useGetFuelTypeOptions, useGetVendorOptions } from "../../../../../global/hooks/useFetchOptions";
 
 interface PropsData {
   isActive: Boolean | string;
@@ -21,7 +24,8 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
   const [filterData, setFilterData] = useState({});
-
+  const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes);
+  const { vendorOptions } = useGetVendorOptions(apiRoute().get.selectVendor);
   const formik = useFormik({
     // enableReinitialize: true,
     initialValues: {
@@ -66,7 +70,6 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
     formik.setFieldValue(name, val);
   };
 
-
   return (
     <>
       <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col ">
@@ -84,6 +87,30 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
             icon={<FiSearch size={25} className="text-darkGray" />}
             text="جستجو"
           />
+          <PerfesionalSearch formData={formik.handleSubmit}>
+              <>
+              {/* <InputSelect    
+                label="نوع سوخت"
+                important
+                name="fuelTypeSelect"
+                handleChange={formik.setFieldValue}
+                values={formik.values.fuelTypeSelect}
+                error={formik.touched.fuelTypeSelect && formik.errors.fuelTypeSelect}
+                options={fuelOptions.options || []}
+              />
+              <InputSelect
+                label="نام شرکت نقلیه"
+                // important
+                name="vendorSelect"
+                handleChange={formik.setFieldValue}
+                values={formik.values.vendorSelect}
+                error={formik.touched.vendorSelect && formik.errors.vendorSelect}
+                options={vendorOptions.options}
+              /> */}
+              </>
+
+   
+          </PerfesionalSearch>
         </form>
       </div>
       {/* list of chip */}

@@ -24,7 +24,7 @@ export const useGetOptions = (url: string) => {
   return { options, error, loading };
 };
 
-export const useGetFuelTypeOptions = (url: string, isModalOpen: boolean) => {
+export const useGetFuelTypeOptions = (url: string, isModalOpen?: boolean) => {
   const [fuelOptions, setOptions] = useState({options:[],error:'',loading:false});
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export const useGetFuelTypeOptions = (url: string, isModalOpen: boolean) => {
 };
 
 
-export const useGetVendorOptions = (url: string, isModalOpen: boolean) => {
+export const useGetVendorOptions = (url: string, isModalOpen?: boolean) => {
 
   const [vendorOptions, setOptions] = useState({options:[],error:'',loading:false});
   // const [error, setError] = useState(null);
