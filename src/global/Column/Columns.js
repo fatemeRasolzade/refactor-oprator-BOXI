@@ -104,6 +104,43 @@ export const PersonnelColumn = [
     Header: "عملیات",
     accessor: "operation",
   },
+];
 
-
+export const ProductInfoColumn = [
+  {
+    Header: "محصول",
+    accessor: "product",
+  },
+  {
+    Header: "قابل ارائه در محصول	",
+    accessor: "asd",
+  },
+  {
+    Header: "وزن (کیلوگرم)	",
+    accessor: "weight",
+  },
+  {
+    Header: "ابعاد (سانتیمتر)	",
+    accessor: "dimension",
+  },
+  {
+    Header: "مدت ارائه خدمت	",
+    accessor: "timeCommitment",
+  },
+  {
+    Header: "مبدا",
+    accessor: "from",
+  },
+  {
+    Header: "مقصد",
+    accessor: "destination",
+  },
+  {
+    Header: "وضعیت",
+    accessor: "status",
+  },
+  {
+    Header: "عملیات",
+    accessor: "operation",
+  },
 ];

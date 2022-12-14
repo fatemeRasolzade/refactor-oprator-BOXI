@@ -1,10 +1,12 @@
 import axios from "axios";
-import { useFormik } from "formik";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import InputSelect from "../../global/InputSelect/InputSelect";
 import MultiSelect from "../../global/multiselect/MultiSelect";
 
-const Provinces = () => {
+interface ProvincesProps {
+  form: any;
+}
+const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
   const [countryOptions, setCountryOptions] = useState([]);
   const [cityOptions, setcityOptions] = useState([]);
 
@@ -12,23 +14,10 @@ const Provinces = () => {
     fromCity: [],
     toCity: [],
   });
-  const formik = useFormik({
-    enableReinitialize: true,
-    validationSchema: {},
-    initialValues: {
-      toCountryDevision: undefined,
-      fromCountryDevision: undefined,
-      fromDestinationCity: undefined,
-      fromSourceCity: undefined,
-      fromSourceLocation: undefined,
-    },
-    onSubmit: async (values, { resetForm }) => {},
-  });
+
   const getOptionsData = useCallback(async () => {
     const countryDevision =
       "http://boxi.local:40000/core-api/countryDevision?filter";
-    // const province = "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter=";
-    // const city = "http://boxi.local:40000/core-api/countryDevision/city/13/loc?filter=";
     try {
       const res = await axios({
         url: countryDevision,
@@ -40,7 +29,7 @@ const Provinces = () => {
     } catch (error) {}
   }, []);
 
-  const getOptionsCity = useCallback(async () => {
+  const getOptionsFromCity = useCallback(async () => {
     const province =
       "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter=";
 
@@ -51,10 +40,27 @@ const Provinces = () => {
           Authorization: "Bearer " + localStorage.getItem("myToken"),
         },
       });
-      setCountryOptions(res?.data?.payload?.content);
+      setCityOption((prev) => {
+        return { ...prev, fromCity: res?.data?.payload?.content };
+      });
     } catch (error) {}
   }, []);
-  
+  const getOptionsToCity = useCallback(async () => {
+    const province =
+      "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter=";
+
+    try {
+      const res = await axios({
+        url: province,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("myToken"),
+        },
+      });
+      setCityOption((prev) => {
+        return { ...prev, toCity: res?.data?.payload?.content };
+      });
+    } catch (error) {}
+  }, []);
   const getOptionsZone = useCallback(async () => {
     const province =
       "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter=";
@@ -75,8 +81,9 @@ const Provinces = () => {
   }, [getOptionsData]);
 
   useEffect(() => {
-    getOptionsCity();
-  }, [getOptionsCity]);
+    getOptionsFromCity();
+    getOptionsToCity();
+  }, [getOptionsFromCity, getOptionsToCity]);
 
   return (
     <>
@@ -86,33 +93,31 @@ const Provinces = () => {
           wrapperClassName="w-full z-[300]"
           label="استان"
           name="fromCountryDevision"
-          handleChange={formik.setFieldValue}
-          values={formik.values.fromCountryDevision}
+          handleChange={form.setFieldValue}
+          values={form.values.fromCountryDevision}
           options={countryOptions}
           error={
-            formik.touched.fromCountryDevision &&
-            formik.errors.fromCountryDevision
+            form.touched.fromCountryDevision && form.errors.fromCountryDevision
           }
         />
         <MultiSelect
           wrapperClassName="w-full z-[200]"
           label="شهر"
           name="fromSourceCity"
-          handleChange={formik.setFieldValue}
-          values={formik.values.fromSourceCity}
+          handleChange={form.setFieldValue}
+          values={form.values.fromSourceCity}
           options={cityOption.fromCity}
-          error={formik.touched.fromSourceCity && formik.errors.fromSourceCity}
+          error={form.touched.fromSourceCity && form.errors.fromSourceCity}
         />
 
         <MultiSelect
           wrapperClassName="w-full z-[100]"
           label="منطقه"
           name="fromSourceLocation"
-          handleChange={formik.setFieldValue}
+          handleChange={form.setFieldValue}
           options={[]}
           error={
-            formik.touched.fromSourceLocation &&
-            formik.errors.fromSourceLocation
+            form.touched.fromSourceLocation && form.errors.fromSourceLocation
           }
         />
       </fieldset>
@@ -122,35 +127,33 @@ const Provinces = () => {
           wrapperClassName="w-full z-[300]"
           label="استان"
           name="toCountryDevision"
-          handleChange={formik.setFieldValue}
-          values={formik.values.toCountryDevision}
+          handleChange={form.setFieldValue}
+          values={form.values.toCountryDevision}
           options={countryOptions}
           error={
-            formik.touched.toCountryDevision && formik.errors.toCountryDevision
+            form.touched.toCountryDevision && form.errors.toCountryDevision
           }
         />
         <MultiSelect
           wrapperClassName="w-full z-[200]"
           label="شهر"
           name="fromDestinationCity"
-          handleChange={formik.setFieldValue}
-          values={formik.values.fromDestinationCity}
+          handleChange={form.setFieldValue}
+          values={form.values.fromDestinationCity}
           options={cityOption.toCity}
           error={
-            formik.touched.fromDestinationCity &&
-            formik.errors.fromDestinationCity
+            form.touched.fromDestinationCity && form.errors.fromDestinationCity
           }
         />
         <MultiSelect
           wrapperClassName="w-full z-[100]"
           label="منطقه"
           name="fromSourceLocation"
-          handleChange={formik.setFieldValue}
-          values={formik.values.fromSourceLocation}
+          handleChange={form.setFieldValue}
+          values={form.values.fromSourceLocation}
           options={[]}
           error={
-            formik.touched.fromSourceLocation &&
-            formik.errors.fromSourceLocation
+            form.touched.fromSourceLocation && form.errors.fromSourceLocation
           }
         />
       </fieldset>

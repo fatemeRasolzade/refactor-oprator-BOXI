@@ -16,11 +16,11 @@ axios.interceptors.response.use(null, (error) => {
       error?.response?.data?.errors?.message || "مقدار مورد نظر یافت نشد"
     );
     debugger;
-    throw error;
+    return Promise.reject(error);
   }
   if (errorStatus >= 500) {
-    ErrorAlert("مشکلی از سمت سرور رخ داده است.");
-    throw error;
+    toast.error("مشکلی از سمت سرور رخ داده است.");
+    return Promise.reject(error);
   }
 
   //   const expectedErrors =
@@ -33,8 +33,7 @@ axios.interceptors.response.use(null, (error) => {
   //       closeOnClick: true,
   //     });
   //   }
-
-  throw error;
+  return Promise.reject(error);
 });
 const configure = () => {
   axios.interceptors.request.use((config) => {
