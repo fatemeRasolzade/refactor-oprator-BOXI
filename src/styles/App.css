@@ -85,3 +85,8 @@
   gap: 5px;
   padding: 0 20px;
 }
+.react-checkbox-tree{
+  min-height: 200px;
+  max-height: 200px;
+  overflow: auto;
+}
