@@ -14,6 +14,7 @@ import selectRowTable from "../selectRowTable/selectRowTable";
 
 import VendorList from "../Transportation/vendor/VendorData";
 import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
+import userInfoReducer from "../userInfo/userInfoReducer";
 const persistConfig = {
   key: "root",
   storage,
@@ -21,6 +22,7 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
+  userInfo:userInfoReducer,
   hub: HubList,
   role: RolesList,
   paginate: PageNumber,
