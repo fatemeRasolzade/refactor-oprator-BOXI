@@ -1,9 +1,11 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Vendor from "./vendor/vendor";
-import VehicleModel from "./vehicleModel/index";
+// import VehicleModel from "./vehicleModel/index";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
+import React,{Suspense} from "react";
 
+const VehicleModel = React.lazy(() => import("./vehicleModel/index"));
 const Transportation: React.FC = (): JSX.Element => {
     
   return (
@@ -24,12 +26,14 @@ const Transportation: React.FC = (): JSX.Element => {
             مدل وسیله نقلیه<span className="border  border-l-gary-200 relative right-4"></span>
           </Tab>
         </TabList>
+          <Suspense fallback={<p>...loading</p>}>
         <TabPanel>
           <Vendor />
         </TabPanel>
         <TabPanel>
           <VehicleModel />
         </TabPanel>
+          </Suspense>
       </Tabs>
       <style>
         {`

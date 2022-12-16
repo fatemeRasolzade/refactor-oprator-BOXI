@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import StaticTable from "../../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../../components/tableOperation/DeleteOperation";
 import { vehicleModel } from "../../../../redux/Transportation/vehicleModel/VehicleModel";
-import { vendorData } from "../../../../redux/Transportation/vendor/VendorData";
 import { apiRoute } from "../../../../services/apiRoute";
 import { ExportExcel } from "../../../../tools/functions/Methods";
 import { VehicleModelColumns } from "./view/Column";

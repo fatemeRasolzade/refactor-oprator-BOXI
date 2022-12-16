@@ -18,6 +18,7 @@ import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/V
 
 import AddExcel from "../../../../../components/exel/AddExcel";
 import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
+import Modal from "../../../../../global/Modal/Modal";
 interface PropsData {
   currentData?: any;
 }
@@ -158,10 +159,8 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
         </button>
       )}
       <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
-      {/* <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}> */}
-
-      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[60%] "}>
-        <div className="text-lg font-medium">{currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}</div>
+      <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}>
+      {/*<Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[60%] "}>*/}
         <form onSubmit={formik.handleSubmit}>
           <div className="  grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">
             <div>
@@ -172,7 +171,7 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
                 handleChange={formik.handleChange}
                 values={formik.values.name}
                 important
-                type={"text"}
+
                 error={formik.touched.name && formik.errors.name}
               />
             </div>
@@ -184,7 +183,6 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
                 handleChange={formik.handleChange}
                 values={formik.values.code}
                 important
-                type={"text"}
                 error={formik.touched.code && formik.errors.code}
               />
             </div>
@@ -259,7 +257,8 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
             />
           </div>
         </form>
-      </Dialog>
+      {/*</Dialog>*/}
+      </Modal>
     </>
   );
 };
