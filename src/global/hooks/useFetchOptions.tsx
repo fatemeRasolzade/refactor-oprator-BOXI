@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-import { selectDataFromServerWithHeader, selectHubFromServerWithHeader } from "../../services/Service_call";
+import {
+  postDataHeaderToServer,
+  selectDataFromServerWithHeader,
+  selectHubFromServerWithHeader
+} from "../../services/Service_call";
 import { ErrorAlert } from "../alert/Alert";
+import {apiRoute} from "../../services/apiRoute";
+import axios from "axios";
+import http from "../../services/http_service";
 
 export const useGetOptions = (url: string, isModalOpen?: boolean) => {
   const [options, setOptions] = useState([]);
@@ -24,18 +31,31 @@ export const useGetOptions = (url: string, isModalOpen?: boolean) => {
   return { options, error, loading };
 };
 export const useGetHubOptions = (url: string, isModalOpen?: boolean) => {
+  console.log("url is",url)
   const [hubOptions, setOptions] = useState({ options: [], error: "", loading: false });
 
   useEffect(() => {
     if (isModalOpen) {
       try {
         setOptions({ ...hubOptions, loading: true });
-        selectHubFromServerWithHeader(
-          url,
-          {
-            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-          },
-        ).then((res) => {
+
+        // postDataHeaderToServer(apiRoute().post.product + params, {
+        //   ...body
+        // },{
+        //   headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
+        // })
+        //
+         http.post('http://boxi.local:40000/hub/select?filter=',
+             {},
+             {headers: { Authorization: "Bearer " + localStorage.getItem("myToken") }
+             })
+        // selectHubFromServerWithHeader(
+        //   url,{ headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },},
+        //   {
+        //
+        //   },
+        // )
+        .then((res:any) => {
           if (res.status === "OK") setOptions({ ...hubOptions, options: res?.payload, loading: false });
         });
       } catch (error: any) {

@@ -4,10 +4,12 @@ import Vendor from "./vendor/vendor";
 // import VehicleModel from "./vehicleModel/index";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import React, { Suspense } from "react";
-import Route from "./route";
+// import Route from "./route";
 
 
 const VehicleModel = React.lazy(() => import("./vehicleModel/index"));
+const Route =React.lazy(()=>import ("./route/index"))
+
 const Transportation: React.FC = (): JSX.Element => {
   return (
     <>
