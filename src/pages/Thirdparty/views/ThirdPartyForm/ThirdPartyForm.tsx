@@ -147,7 +147,7 @@ const ThirdPartyForm = ({ currentData }: CustomerFormProps) => {
       <AddExcel excelInfo={ThirdPartyExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} />
       <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}>
         <form onSubmit={handleSubmit}>
-          <ThirdPartyBasicInformation formik={formik} open={open} />
+          <ThirdPartyBasicInformation formik={formik} open={open} currentData={currentData} />
           <ThirdPartyCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} />
           <div className="flex-end-center mt-5 gap-3">
             <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />

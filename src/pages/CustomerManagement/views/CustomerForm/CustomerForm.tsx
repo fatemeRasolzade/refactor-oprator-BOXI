@@ -55,17 +55,6 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
     validationSchema: currentData ? CustomerEditValidation : CustomerAddValidation,
     initialValues: currentData ? CustomerFormCurrentValues(currentData) : CusotmerFormInitialValues,
     validate: (values) => {
-      // const [isValidNC, errNC] = NationalIDValidator(values.nationalCode);
-      // const [isValidContact, errContact] = ContactNumberValidate(values.contactNumber);
-      // if (!isValidNC) {
-      //   // @ts-ignore
-      //   errors.nationalCode = errNC;
-      // }
-      // if (!isValidContact) {
-      //   // @ts-ignore
-      //   errors.contactNumber = errContact;
-      // }
-
       const errors = {};
       if (values.selectCustomerType?.id === 0) {
         const [isValidNC, errNC] = NationalCodeValidator(values.nationalCode, true);
@@ -166,7 +155,7 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
       <AddExcel excelInfo={CustomerExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} />
       <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}>
         <form onSubmit={handleSubmit}>
-          <CustomerBasicInformation formik={formik} open={open} />
+          <CustomerBasicInformation formik={formik} open={open} currentData={currentData} />
           <CustomerUsernameInformation formik={formik} currentData={currentData} />
           <CustomerNotificationInformation formik={formik} />
           <CustomerCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} />

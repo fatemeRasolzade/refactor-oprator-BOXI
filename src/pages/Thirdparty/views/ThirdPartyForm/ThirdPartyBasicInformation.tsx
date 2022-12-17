@@ -4,7 +4,7 @@ import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getThirdPartyCategory, getThirdPartyParent, getThirdPartyType } from "../../../../services/ThirdPartyApi";
 
-const ThirdPartyBasicInformation = ({ formik, open }: any) => {
+const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
   const [ThirdPartyType, setThirdPartyType] = useState([]);
   const [ThirdPartyParent, setThirdPartyParent] = useState([]);
   const [ThirdPartyCategory, setThirdPartyCategory] = useState([]);
@@ -39,7 +39,15 @@ const ThirdPartyBasicInformation = ({ formik, open }: any) => {
   return (
     <div className="border rounded-lg px-5 pt-10">
       <div className="inputRow">
-        <InputText important label="کد شخصیت" values={values.code} name="code" handleChange={handleChange} error={touched.code && errors.code} />
+        <InputText
+          important
+          label="کد شخصیت"
+          values={values.code}
+          name="code"
+          handleChange={handleChange}
+          error={touched.code && errors.code}
+          readOnly={currentData && true}
+        />
         <InputText important label="نام شخصیت" values={values.name} name="name" handleChange={handleChange} error={touched.name && errors.name} />
         <InputSelect
           options={ThirdPartyType}
@@ -106,7 +114,7 @@ const ThirdPartyBasicInformation = ({ formik, open }: any) => {
           error={touched.email && errors.email}
           placeholder="example@example.com"
         />
-        <div className=" mb-5">
+        <div className="mb-5 w-60 centering">
           <CustomSwitch active={values.isActive} handleChange={() => setFieldValue("isActive", !values.isActive)} />
         </div>
       </div>

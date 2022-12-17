@@ -18,7 +18,7 @@ const CustomerNotificationInformation = ({ formik }: any) => {
           />
         </div>
       </div>
-      <div className="centering w-6/12 mt-5">
+      <div className="centering w-60 mt-5">
         <CustomSwitch active={values.isActive} handleChange={() => setFieldValue("isActive", !values.isActive)} />
       </div>
     </div>

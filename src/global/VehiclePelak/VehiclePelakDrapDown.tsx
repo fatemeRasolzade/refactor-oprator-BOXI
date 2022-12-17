@@ -7,9 +7,10 @@ interface VehiclePelakDrapDownProps {
   value: any;
   setValue: any;
   name: string;
+  ReadOnly?: boolean;
 }
 
-const VehiclePelakDrapDown = ({ list = [], value, name, setValue }: VehiclePelakDrapDownProps) => {
+const VehiclePelakDrapDown = ({ list = [], value, name, setValue, ReadOnly }: VehiclePelakDrapDownProps) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -31,7 +32,7 @@ const VehiclePelakDrapDown = ({ list = [], value, name, setValue }: VehiclePelak
     <div className="relative flex-start-center w-12">
       <RiArrowDownSLine size={30} />
       <div ref={WrapperRef}>
-        <input className=" w-8 text-center" name="ffa" onFocus={() => setOpen(true)} value={value} onChange={handleChange} />
+        <input disabled={ReadOnly} className=" w-8 text-center" name="ffa" onFocus={() => setOpen(true)} value={value} onChange={handleChange} />
         {open && (
           <ul className="absolute shadow-md z-50 bg-light w-8 top-7 border">
             {/* <SimpleBar style={{ maxHeight: "10rem" }}> */}
@@ -40,7 +41,7 @@ const VehiclePelakDrapDown = ({ list = [], value, name, setValue }: VehiclePelak
                 <li
                   key={l}
                   onClick={() => handleClick(l)}
-                  className="px-1 py-1 transition-all duration-700 hover:cursor-pointer hover:bg-light-yellow text-main-grey text-center"
+                  className="px-1 py-1 transition-all duration-700 hover:cursor-pointer hover:bg-lightGray text-darkGray text-center"
                 >
                   {l}
                 </li>

@@ -53,7 +53,7 @@ const ADMVehicleForm = ({ currentData }: CustomerFormProps) => {
     },
   });
 
-  const { values, handleSubmit, setFieldValue, handleReset }: any = formik;
+  const { handleSubmit, handleReset }: any = formik;
   const handleOpenModal = () => setOpen(true);
   const handleUploadFileAction = () => setOpenExcel(true);
 
@@ -79,7 +79,7 @@ const ADMVehicleForm = ({ currentData }: CustomerFormProps) => {
       {/* <AddExcel excelInfo={ADMVehicleExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
       <Modal visible={open} setVisible={setOpen} title={currentData ? " ویرایش وسیله نقلیه اجاره ای " : "تعریف وسیله نقلیه اجاره ای "}>
         <form onSubmit={handleSubmit}>
-          <ADMVehicleInformation formik={formik} open={open} />
+          <ADMVehicleInformation formik={formik} open={open} currentData={currentData} />
           <div className="flex-end-center mt-5 gap-3">
             <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
             <SimpleButton loading={Loading} type="submit" text={currentData ? "ویرایش" : "افزودن"} className="full-tomato-btn" />

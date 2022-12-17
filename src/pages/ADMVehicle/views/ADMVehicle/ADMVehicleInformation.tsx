@@ -3,12 +3,12 @@ import CustomSwitch from "../../../../global/Switch/Switch";
 import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getVehicleMake } from "../../../../services/ADMVehicleApi";
-import { apiRoute, GET_ROUTE, HUB_SELECT } from "../../../../services/apiRoute";
+import { GET_ROUTE, HUB_SELECT } from "../../../../services/apiRoute";
 import { getDataFromServer, postDataToServer } from "../../../../services/Service_call";
 import DatePickers from "../../../../global/DatePicker/DatePicker";
 import VehiclePelak from "../../../../global/VehiclePelak/VehiclePelak";
 
-const ADMVehicleInformation = ({ formik, open }: any) => {
+const ADMVehicleInformation = ({ formik, open, currentData }: any) => {
   const [VehicleMake, setVehicleMake] = useState([]);
   const [Route, setRoute] = useState([]);
   const [Hub, setHub] = useState([]);
@@ -70,7 +70,7 @@ const ADMVehicleInformation = ({ formik, open }: any) => {
     <>
       <p className="mb-8">مشخصات وسیله نقلیه</p>
       <div className="inputRow">
-        <VehiclePelak formik={formik} important />
+        <VehiclePelak formik={formik} important ReadOnly={currentData && true} />
         <InputSelect
           options={VehicleMake}
           important
@@ -140,7 +140,7 @@ const ADMVehicleInformation = ({ formik, open }: any) => {
           timeValues={values.timeToFinishWork}
           error={(touched.dayToFinishWork && errors.dayToFinishWork) || (touched.timeToFinishWork && errors.timeToFinishWork)}
         />
-        <div className="mb-5 w-[30%] centering">
+        <div className="mb-5 w-60 centering">
           <CustomSwitch active={values.isActive} handleChange={() => setFieldValue("isActive", !values.isActive)} />
         </div>
       </div>
