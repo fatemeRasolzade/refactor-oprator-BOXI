@@ -90,7 +90,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
       <fieldset className="border rounded-xl p-6">
         <legend className="px-3">مبداء</legend>
         <MultiSelect
-          wrapperClassName="w-full z-[300]"
+          wrapperClassName="w-full z-[300] py-4"
           label="استان"
           name="fromCountryDevision"
           handleChange={form.setFieldValue}
@@ -101,7 +101,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           }
         />
         <MultiSelect
-          wrapperClassName="w-full z-[200]"
+          wrapperClassName="w-full z-[200] py-4"
           label="شهر"
           name="fromSourceCity"
           handleChange={form.setFieldValue}
@@ -111,7 +111,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
         />
 
         <MultiSelect
-          wrapperClassName="w-full z-[100]"
+          wrapperClassName="w-full z-[100] py-4"
           label="منطقه"
           name="fromSourceLocation"
           handleChange={form.setFieldValue}
@@ -124,7 +124,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
       <fieldset className="border rounded-xl p-6">
         <legend className="px-3">مقصد</legend>
         <MultiSelect
-          wrapperClassName="w-full z-[300]"
+          wrapperClassName="w-full z-[300] py-4"
           label="استان"
           name="toCountryDevision"
           handleChange={form.setFieldValue}
@@ -135,7 +135,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           }
         />
         <MultiSelect
-          wrapperClassName="w-full z-[200]"
+          wrapperClassName="w-full z-[200] py-4"
           label="شهر"
           name="fromDestinationCity"
           handleChange={form.setFieldValue}
@@ -146,14 +146,14 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           }
         />
         <MultiSelect
-          wrapperClassName="w-full z-[100]"
+          wrapperClassName="w-full z-[100] py-4"
           label="منطقه"
-          name="fromSourceLocation"
+          name="fromDestinationLocation"
           handleChange={form.setFieldValue}
-          values={form.values.fromSourceLocation}
+          values={form.values.fromDestinationLocation}
           options={[]}
           error={
-            form.touched.fromSourceLocation && form.errors.fromSourceLocation
+            form.touched.fromDestinationLocation && form.errors.fromDestinationLocation
           }
         />
       </fieldset>

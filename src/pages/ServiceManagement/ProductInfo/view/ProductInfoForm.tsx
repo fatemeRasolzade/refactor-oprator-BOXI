@@ -20,24 +20,99 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
   tableList,
   setTableList,
 }): JSX.Element => {
-  const validation = Yup.object().shape({
-    product: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
-    usingProduct: Yup.array().required(),
-    timeCommitment: Yup.object().shape({
-      text: Yup.string().required(),
-      id: Yup.string().required(),
-    }),
-    toWeight: Yup.number().min(0),
-    fromWeight: Yup.number()
-      .min(0)
-      .when("toWeight", {
-        is: (value: any) => value,
-        then: Yup.number().nullable().required(),
+  const validation = Yup.object().shape(
+    {
+      fromSourceCity: Yup.array().when(
+        "fromDestinationCity",
+        (val: any, schema: any) => {
+          if (val?.length > 0) {
+            return Yup.array().required();
+          } else {
+            return Yup.array().notRequired();
+          }
+        }
+      ),
+      fromDestinationCity: Yup.array().when(
+        "fromSourceCity",
+        (val: any, schema: any) => {
+          if (val?.length > 0) {
+            return Yup.array().required();
+          } else {
+            return Yup.array().notRequired();
+          }
+        }
+      ),
+      fromDestinationLocation: Yup.array().when(
+        "fromSourceLocation",
+        (val: any, schema: any) => {
+          if (val?.length > 0) {
+            return Yup.array().required();
+          } else {
+            return Yup.array().notRequired();
+          }
+        }
+      ),
+      fromSourceLocation: Yup.array().when(
+        "fromDestinationLocation",
+        (val: any, schema: any) => {
+          if (val) {
+            return Yup.array().required();
+          } else {
+            return Yup.array().notRequired();
+          }
+        }
+      ),
+      fromCountryDevision: Yup.array().required(),
+      toCountryDevision: Yup.array().required(),
+      usingProduct: Yup.array().required(),
+      timeCommitment: Yup.object().shape({
+        text: Yup.string().required(),
+        id: Yup.string().required(),
       }),
-  });
+      product: Yup.object().shape({
+        text: Yup.string().required(),
+        id: Yup.string().required(),
+      }),
+      toWeight: Yup.number().min(0),
+      fromWeight: Yup.number()
+        .min(0)
+        .when("toWeight", (val: any, schema: any) => {
+          if (val?.length > 0) {
+            return Yup.number().nullable().required();
+          } else {
+            return Yup.number().notRequired();
+          }
+        }),
+      fromDim: Yup.number()
+        .min(0)
+        .when("toDimension", (val: any, schema: any) => {
+          if (val?.length > 0) {
+            return Yup.number().nullable().required();
+          } else {
+            return Yup.number().notRequired();
+          }
+        }),
+      toDimension: Yup.number().min(0),
+      fromValue: Yup.number()
+        .min(0)
+        // .ensure()
+        .when("toValue", (val: any, schema: any) => {
+          if (val?.length > 0) {
+            return Yup.number().nullable().required();
+          } else {
+            return Yup.number().notRequired();
+          }
+        }),
+      toValue: Yup.number().min(0),
+    },
+    [
+      ["fromSourceLocation", "fromDestinationLocation"],
+      ["fromSourceCity", "fromDestinationCity"],
+      ["fromWeight", "toWeight"],
+      ["toDimension", "fromDim"],
+      ["fromValue", "toValue"],
+    ]
+  );
   const [valuesData, setValuesData] = useState({
     product: [],
     timeCommitment: [],
@@ -95,14 +170,83 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
       toValue: "",
       fromWeight: "",
       toWeight: "",
-      usingProduct: undefined,
+      usingProduct: "",
       product: undefined,
       timeCommitment: undefined,
+      fromCountryDevision: "",
+      toCountryDevision: "",
+      fromDestinationCity: "",
+      fromSourceCity: "",
+      fromSourceLocation: "",
+      fromDestinationLocation: "",
+    },
+    validate: (values) => {
+      let errors: any = {};
+
+      const [isValidDigit, errDigit] = DigitCompare(
+        values.fromWeight,
+        values.toWeight
+      );
+      const [isValidValue, errValue] = ValueCompare(
+        values.fromValue,
+        values.toValue
+      );
+      const [isValidDim, errDim] = dimCompare(
+        values.fromDim,
+        values.toDimension
+      );
+
+      if (!isValidValue) {
+        errors["fromValue"] = errValue;
+      }
+      if (!isValidDigit) {
+        errors.fromWeight = errDigit;
+      }
+      if (!isValidDim) {
+        errors.fromDim = errDim;
+      }
+      return errors;
     },
     onSubmit: async (values, { resetForm }) => {
       console.log("values table", values);
+      let fromCountryDevisiondsdsd: any = [];
+      let toCountryDevisiond: any = [];
+      let attributeDivition;
+      fromCountryDevisiondsdsd =
+        values.fromDestinationLocation?.length !== 0
+          ? values.fromDestinationLocation
+          : values.fromDestinationCity.length !== 0
+          ? values.fromDestinationCity
+          : values.fromCountryDevision.length !== 0
+          ? values.fromCountryDevision
+          : [];
+      toCountryDevisiond =
+        values.fromSourceLocation.length !== 0
+          ? values.fromSourceLocation
+          : values.fromSourceCity.length !== 0
+          ? values.fromSourceCity
+          : values.toCountryDevision.length !== 0
+          ? values.toCountryDevision
+          : [];
+      attributeDivition =
+        fromCountryDevisiondsdsd.length !== 0
+          ? convertToObjects(
+              fromCountryDevisiondsdsd,
+              toCountryDevisiond,
+              "from"
+            )
+          : [];
+      console.log("attributeDivition", attributeDivition);
+
+      const data = {
+        ...values,
+        attributeDivition: attributeDivition ? attributeDivition : [],
+        usingProduct: convertUsingProduct(values.usingProduct, values.product),
+      };
+      console.log("data", data);
+
+      setTableList(data);
       resetForm();
-      setTableList({ ...values, id: uuid() });
     },
   });
 
@@ -110,7 +254,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
     getOptionsData();
     console.log("loop");
   }, [getOptionsData]);
-  console.log("tableList", tableList);
+  console.log("tableList", formik.values.product);
 
   return (
     <form className=" w-full" onSubmit={formik.handleSubmit}>
@@ -118,7 +262,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
         <div className="col-span-2">
           <InputSelect
             important
-            wrapperClassName="w-full z-[600]"
+            wrapperClassName="w-full"
             name="product"
             label="محصول"
             values={formik.values.product}
@@ -135,13 +279,13 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
             handleChange={formik.setFieldValue}
             values={formik.values.usingProduct}
             options={valuesData.product}
-            error={formik.errors.product}
+            error={formik.touched.usingProduct && formik.errors.usingProduct}
           />
         </div>
         <div className="col-span-2">
           <InputSelect
             important
-            wrapperClassName="w-full"
+            wrapperClassName="w-full "
             name="timeCommitment"
             label="مدت ارائه خدمات"
             values={formik.values.timeCommitment}
@@ -166,8 +310,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
         <fieldset className="border rounded-xl p-6">
           <legend className="px-3">وزن کیلو گرم</legend>
           <InputText
-            type="number"
-            wrapperClassName="w-full"
+            wrapperClassName="w-full  py-4"
             important
             label="از"
             values={formik.values.fromWeight}
@@ -176,8 +319,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
             error={formik.touched.fromWeight && formik.errors.fromWeight}
           />
           <InputText
-            type="number"
-            wrapperClassName="w-full"
+            wrapperClassName="w-full py-4"
             important
             label="تا"
             values={formik.values.toWeight}
@@ -189,8 +331,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
         <fieldset className="border rounded-xl p-6">
           <legend className="px-3">ابعاد (سانتی متر)</legend>
           <InputText
-            type="number"
-            wrapperClassName="w-full"
+            wrapperClassName="w-full  py-4"
             important
             label="از"
             values={formik.values.fromDim}
@@ -199,8 +340,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
             error={formik.touched.fromDim && formik.errors.fromDim}
           />
           <InputText
-            type="number"
-            wrapperClassName="w-full"
+            wrapperClassName="w-full  py-4"
             important
             label="تا"
             values={formik.values.toDimension}
@@ -212,8 +352,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
         <fieldset className="border rounded-xl p-6">
           <legend className="px-3">ارزش (ریال)</legend>
           <InputText
-            type="number"
-            wrapperClassName="w-full"
+            wrapperClassName="w-full  py-4"
             important
             label="از"
             values={formik.values.fromValue}
@@ -222,8 +361,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
             error={formik.touched.fromValue && formik.errors.fromValue}
           />
           <InputText
-            type="number"
-            wrapperClassName="w-full"
+            wrapperClassName="w-full  py-4"
             important
             label="تا"
             values={formik.values.toValue}
@@ -292,4 +430,23 @@ export const ValueCompare = (digit1: string, digit2: string) => {
     isValidValue = true;
   }
   return [isValidValue, errValue];
+};
+const convertToObjects = (from: any, to: any, type: any) => {
+  let arr = [];
+  for (let i = 0; i < from.length; i++) {
+    for (let j = 0; j < to.length; j++) {
+      arr.push({ fromCountryDevision: from[i], toCountryDevision: to[j] });
+    }
+  }
+  return arr;
+};
+const convertUsingProduct = (usingProduct: any, product: any) => {
+  let arr = [];
+  for (let x of usingProduct) {
+    arr.push({
+      parent: product,
+      child: x,
+    });
+  }
+  return arr;
 };

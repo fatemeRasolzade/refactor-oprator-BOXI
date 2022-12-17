@@ -18,37 +18,32 @@ import UserService from "./services/keycloakService";
 
 function App() {
   const dispatch = useDispatch();
+  const username = localStorage.getItem("username");
   const userInfo = useSelector((state: any) => state.userInfo);
-  const handleGetuserInfo = useCallback(
-    async (userName: string) => {
-      try {
-        const res = await axios({
-          url: "http://172.16.55.144:20000/resource-api/permission/fetchPermissionsByUserName",
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("myToken"),
-          },
-          data: {
-            in: "alihash",
-            
-          },
-        });
+  const handleGetuserInfo = useCallback(async () => {
+    try {
+      const res = await axios({
+        url: "http://boxi.local:40000/resource-api/permission/fetchPermissionsByUserName",
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("myToken"),
+        },
+        data: {
+          in: username,
+        },
+      });
 
-        dispatch(getUserInfo(res.data));
-      } catch (error) {
-        alert("error");
-      }
-    },
-    [dispatch]
-  );
+      dispatch(getUserInfo(res.data));
+    } catch (error) {}
+  }, [dispatch, username]);
 
   useEffect(() => {
-    const userName = UserService.getUsername();
-
-    handleGetuserInfo(userName);
+    if (username) {
+      handleGetuserInfo();
+    }
 
     console.log("loop");
-  }, [handleGetuserInfo]);
+  }, [handleGetuserInfo, username]);
 
   return (
     <div className="App">
