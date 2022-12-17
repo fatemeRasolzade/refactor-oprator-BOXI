@@ -59,6 +59,17 @@ export const selectDataFromServerWithHeader = async (
   return data;
 };
 
+export const selectHubFromServerWithHeader = async (
+  apiRoute: string,
+  headers?: object,
+  body?:any
+) => {
+  // console.log("apiRoute",apiRoute)
+  // @ts-ignore
+  const { data } = await http.post(apiRoute,body,headers);
+  return data;
+};
+
 export const EditDataParams = async (apiRoute: string, body: object) => {
   const { data } = await http.put(apiRoute, body);
   return data;

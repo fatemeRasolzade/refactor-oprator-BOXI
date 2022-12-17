@@ -3,11 +3,12 @@ import "react-tabs/style/react-tabs.css";
 import Vendor from "./vendor/vendor";
 // import VehicleModel from "./vehicleModel/index";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
-import React,{Suspense} from "react";
+import React, { Suspense } from "react";
+import Route from "./route";
+
 
 const VehicleModel = React.lazy(() => import("./vehicleModel/index"));
 const Transportation: React.FC = (): JSX.Element => {
-    
   return (
     <>
       <Breadcrumb beforePage="حمل و نقل" curentPage="اطلاعات پایه " />
@@ -25,15 +26,21 @@ const Transportation: React.FC = (): JSX.Element => {
           <Tab>
             مدل وسیله نقلیه<span className="border  border-l-gary-200 relative right-4"></span>
           </Tab>
+          <Tab>
+            مسیر<span className="border  border-l-gary-200 relative right-4"></span>
+          </Tab>
         </TabList>
-          <Suspense fallback={<p>...loading</p>}>
-        <TabPanel>
-          <Vendor />
-        </TabPanel>
-        <TabPanel>
-          <VehicleModel />
-        </TabPanel>
-          </Suspense>
+        <Suspense fallback={<p>...loading</p>}>
+          <TabPanel>
+            <Vendor />
+          </TabPanel>
+          <TabPanel>
+            <VehicleModel />
+          </TabPanel>
+          <TabPanel>
+            <Route />
+          </TabPanel>
+        </Suspense>
       </Tabs>
       <style>
         {`

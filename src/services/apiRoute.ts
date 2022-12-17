@@ -69,6 +69,7 @@ export const apiRoute = () => {
       selectVendor:createUrl(API_CONSIGNMENT4, `/vendor/select?filter=`)
     },
     post: {
+      route:createUrl(API_CONSIGNMENT4,"route"),
       // create
       hub: createUrl(API_URL, "/hub"),
       createProduct: createUrl(API_CONSIGNMENT4, "/product"),
@@ -93,12 +94,14 @@ export const apiRoute = () => {
       serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
       hubTable: createUrl(API_CONSIGNMENT4, "/hub"),
+      route:createUrl(API_CONSIGNMENT4,"route")
     },
     edit: {
       EditVendor: createUrl(API_CONSIGNMENT4, "/vendor"),
       VehicleModel:createUrl(API_CONSIGNMENT4,'/vehicleMake'),
       productDefine: createUrl(API_CONSIGNMENT4, "/product"),
       EDIT_CUSTOMER: createUrl(API_CONSIGNMENT5, "/customer"),
+      route:createUrl(API_CONSIGNMENT4,"route")
     },
   };
 };

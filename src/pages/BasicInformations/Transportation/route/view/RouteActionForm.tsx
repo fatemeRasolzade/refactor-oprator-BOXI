@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { Button, Dialog } from "@material-tailwind/react";
 import { useFormik } from "formik";
+
 import { useDispatch } from "react-redux";
 import { AiOutlineEdit } from "react-icons/ai";
 import * as Yup from "yup";
 import { EditDataParams, PostDataParams } from "../../../../../services/Service_call";
 import { apiRoute } from "../../../../../services/apiRoute";
 import { SuccessAlert } from "../../../../../global/alert/Alert";
+import { vendorData } from "../../../../../redux/Transportation/vendor/VendorData";
 import AddButton from "../../../../../global/addButton/AddButton";
 import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
 import { useGetFuelTypeOptions, useGetVendorOptions } from "../../../../../global/hooks/useFetchOptions";
 import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
+
 import AddExcel from "../../../../../components/exel/AddExcel";
 import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
@@ -31,7 +35,7 @@ const validation = Yup.object().shape({
   }),
 });
 
-const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
+const RouteActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -49,7 +53,7 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
   };
 
   const ToggleOptions = [
-    { handleClick: handleAction, name: "افزودن مدل وسیله نقلیه" },
+    { handleClick: handleAction, name: "افزودن شرکت نقلیه" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
   const formik = useFormik({
@@ -259,4 +263,4 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
   );
 };
 
-export default VehicleMakeActionForms;
+export default RouteActionForms;
