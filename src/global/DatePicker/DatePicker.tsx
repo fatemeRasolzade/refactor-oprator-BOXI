@@ -12,13 +12,17 @@ interface PropType {
   time?: boolean;
   timeName?: string;
   timeValues?: any;
+  error?: any;
+  important?: boolean;
 }
 
-const DatePickers = ({ title, name, values, handleChange, time, timeValues, timeName }: PropType) => {
+const DatePickers = ({ title, name, values, handleChange, time, timeValues, timeName, error, important }: PropType) => {
   return (
-    <>
-      <div>
-        <span className="block">{title}</span>
+    <div className="flex flex-col">
+      <div className={`relative border ${error ? "border-red" : "border-darkBorder"} rounded-lg w-60`}>
+        <div className={`autocompleteLabel  ${error && "text-red"} z-10 -top-4`}>
+          {title} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
+        </div>
         <DatePicker
           className="red"
           calendar={persian}
@@ -39,7 +43,8 @@ const DatePickers = ({ title, name, values, handleChange, time, timeValues, time
           plugins={[<TimePicker position="bottom" hideSeconds />]}
         />
       </div>
-    </>
+      <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
+    </div>
   );
 };
 

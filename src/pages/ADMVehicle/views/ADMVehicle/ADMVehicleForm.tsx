@@ -23,12 +23,12 @@ const ADMVehicleForm = ({ currentData }: CustomerFormProps) => {
 
   const formik = useFormik({
     enableReinitialize: true,
-    // validationSchema: ADMVehicleFormValidation,
+    validationSchema: ADMVehicleFormValidation,
     initialValues: currentData ? ADMVehicleFormCurrentValues(currentData) : ADMVehicleFormInitialValues,
     onSubmit: (values: any) => {
       console.log("**************", values);
 
-      // setLoading(true);
+      setLoading(true);
       // if (currentData) {
       //   editADMVehicle({
       //     ...values,

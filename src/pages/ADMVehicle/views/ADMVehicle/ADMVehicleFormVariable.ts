@@ -6,8 +6,16 @@ export const ADMVehicleFormValidation = () =>
     vehicleNumber1: Yup.string().required(),
     vehicleNumber2: Yup.string().required(),
     vehicleNumber3: Yup.string().required(),
-    dayToStartWork: Yup.string().required(),
-    dayToFinishWork: Yup.string().required(),
+    dayToStartWork: Yup.object().shape({
+      day: Yup.number().required(),
+      month: Yup.number().required(),
+      year: Yup.number().required(),
+    }),
+    dayToFinishWork: Yup.object().shape({
+      day: Yup.number().required(),
+      month: Yup.number().required(),
+      year: Yup.number().required(),
+    }),
     timeToStartWork: Yup.string().required(),
     timeToFinishWork: Yup.string().required(),
     selectHub: Yup.object().shape({
@@ -36,7 +44,6 @@ export const ADMVehicleFormInitialValues = {
   dayToFinishWork: null,
   timeToStartWork: "",
   timeToFinishWork: "",
-  
   fleetTypeSelect: "",
   selectRoute: {},
   selectHub: {},

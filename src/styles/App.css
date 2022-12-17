@@ -24,14 +24,20 @@
   right: 64px !important;
 }
 
-/* .rmdp-input,
 .rmdp-container {
   width: 100% !important;
-  height: 36px !important;
-} */
+}
 .rmdp-input {
-  width: 15rem !important;
-  height: 2.5rem !important;
+  width: 100% !important;
+  height: 2.3rem !important;
+  /* margin-top: 0.25rem !important; */
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.25rem 0.5rem 0 0.5rem !important;
+}
+
+.icon-tabler-calendar-event {
+  left: 0.5rem !important;
 }
 
 .flex-rodal {

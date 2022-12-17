@@ -6,18 +6,18 @@ interface VehiclePelakProps {
 }
 
 const VehiclePelak = ({ formik, important }: VehiclePelakProps) => {
-  const { values, error, touched, handleChange, setFieldValue }: any = formik;
+  const { values, errors, touched, handleChange, setFieldValue }: any = formik;
 
   //   const Error =
-  const Error = "";
-  // (touched.vehicleNumber3 && error.vehicleNumber3) ||
-  // (touched.vehicleNumber2 && error.vehicleNumber2) ||
-  // (touched.vehicleNumber1 && error.vehicleNumber1) ||
-  // (touched.vehicleNumber0 && error.vehicleNumber0);
+  const Error =
+    (touched.vehicleNumber3 && errors.vehicleNumber3) ||
+    (touched.vehicleNumber2 && errors.vehicleNumber2) ||
+    (touched.vehicleNumber1 && errors.vehicleNumber1) ||
+    (touched.vehicleNumber0 && errors.vehicleNumber0);
 
   return (
     <div>
-      <div className="autocompleteWrapper w-60">
+      <div className={`autocompleteWrapper w-60 ${Error && "border-red"}`}>
         <div className={`autocompleteLabel  ${Error && "text-red"} top-[-17px]`}>
           شماره پلاک <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
         </div>

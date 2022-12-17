@@ -60,7 +60,6 @@ const ADMVehicleInformation = ({ formik, open }: any) => {
       },
     ]).then((res) => {
       console.log(res);
-
       setHub(res.payload.content);
     });
   };
@@ -118,12 +117,26 @@ const ADMVehicleInformation = ({ formik, open }: any) => {
       </div>
       <div className="inputRow">
         <DatePickers
+          time
+          important
           title="شروع کار"
           values={values.dayToStartWork}
           name="dayToStartWork"
           handleChange={setFieldValue}
           timeName="timeToStartWork"
           timeValues={values.timeToStartWork}
+          error={(touched.dayToStartWork && errors.dayToStartWork) || (touched.timeToStartWork && errors.timeToStartWork)}
+        />
+        <DatePickers
+          time
+          important
+          title="پایان کار"
+          values={values.dayToFinishWork}
+          name="dayToFinishWork"
+          handleChange={setFieldValue}
+          timeName="timeToFinishWork"
+          timeValues={values.timeToFinishWork}
+          error={(touched.dayToFinishWork && errors.dayToFinishWork) || (touched.timeToFinishWork && errors.timeToFinishWork)}
         />
         {/* <DatePicker /> */}
       </div>
