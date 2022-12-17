@@ -11,9 +11,11 @@ import InputText from "../../../../global/InputText/InputText";
 import MultiSelect from "../../../../global/multiselect/MultiSelect";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import CustomSwitch from "../../../../global/Switch/Switch";
+import { useLocation } from "react-router-dom";
 
 interface ProductInfoFormProps {
   tableList: any;
+  isEdit?: boolean;
   setTableList: (values: any) => void;
 }
 const ProductInfoForm: FC<ProductInfoFormProps> = ({
@@ -113,6 +115,8 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
       ["fromValue", "toValue"],
     ]
   );
+  const { state } = useLocation();
+
   const [valuesData, setValuesData] = useState({
     product: [],
     timeCommitment: [],
@@ -171,7 +175,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
       fromWeight: "",
       toWeight: "",
       usingProduct: "",
-      product: undefined,
+      product: state ? state : undefined,
       timeCommitment: undefined,
       fromCountryDevision: "",
       toCountryDevision: "",
@@ -209,6 +213,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
     },
     onSubmit: async (values, { resetForm }) => {
       console.log("values table", values);
+
       let fromCountryDevisiondsdsd: any = [];
       let toCountryDevisiond: any = [];
       let attributeDivition;
@@ -242,11 +247,11 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
         ...values,
         attributeDivition: attributeDivition ? attributeDivition : [],
         usingProduct: convertUsingProduct(values.usingProduct, values.product),
+        id: uuid(),
       };
       console.log("data", data);
 
       setTableList(data);
-      resetForm();
     },
   });
 
@@ -265,6 +270,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
             wrapperClassName="w-full"
             name="product"
             label="محصول"
+            isDisabled={state ? true : false}
             values={formik.values.product}
             handleChange={formik.setFieldValue}
             options={valuesData.product}

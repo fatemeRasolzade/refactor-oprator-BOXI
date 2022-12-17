@@ -153,7 +153,8 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           values={form.values.fromDestinationLocation}
           options={[]}
           error={
-            form.touched.fromDestinationLocation && form.errors.fromDestinationLocation
+            form.touched.fromDestinationLocation &&
+            form.errors.fromDestinationLocation
           }
         />
       </fieldset>
