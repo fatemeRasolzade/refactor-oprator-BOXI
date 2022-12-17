@@ -14,8 +14,8 @@ import SimpleButton from "../../global/SimpleButton/SimpleButton";
 
 interface AddExcelProps {
   excelInfo: any;
-  setOpenModal: any;
-  OpenModal: any;
+  setOpenModal: (value: boolean) => void;
+  OpenModal: boolean;
 }
 
 const AddExcel: FC<AddExcelProps> = ({
@@ -73,6 +73,7 @@ const AddExcel: FC<AddExcelProps> = ({
   };
 
   const handleClear = () => setTheFile(null);
+
   const handleOpenUpload = () => inputRef?.current?.click();
 
   const handleSubmit = async (e: SyntheticEvent) => {
@@ -82,33 +83,32 @@ const AddExcel: FC<AddExcelProps> = ({
       let bodyFormData = new FormData();
       bodyFormData.append("file", theFile);
       try {
-        axios({
+        const response = await axios({
           headers: headers,
           method: "post",
           url: process.env.REACT_APP_BASE_URL + excelInfo.url,
           data: bodyFormData,
-        }).then((response) => {
-          toast.success("اطلاعات مورد نظر اضافه شد ");
-          setOpenModal(false);
-          handleClear();
-          if (response.status) {
-            const convert = Object.entries(response.data.payload).map(
-              ([key, value]) =>
-                persianResponse[key]
-                  ? "تعداد" +
-                    " " +
-                    value +
-                    " " +
-                    persianResponse[key] +
-                    " " +
-                    "اضافه شد"
-                  : ` تعداد ${value} عدد اضافه شد`
-            );
-            convert.forEach((response) => {
-              toast.success(response);
-            });
-          }
         });
+        toast.success("اطلاعات مورد نظر اضافه شد ");
+        setOpenModal(false);
+        handleClear();
+        if (response.status) {
+          const convert = Object.entries(response.data.payload).map(
+            ([key, value]) =>
+              persianResponse[key]
+                ? "تعداد" +
+                  " " +
+                  value +
+                  " " +
+                  persianResponse[key] +
+                  " " +
+                  "اضافه شد"
+                : ` تعداد ${value} عدد اضافه شد`
+          );
+          convert.forEach((response) => {
+            toast.success(response);
+          });
+        }
       } catch (error) {}
     }
   };
@@ -137,14 +137,14 @@ const AddExcel: FC<AddExcelProps> = ({
                 <UploadFileIcon />
                 <p className="text-base text-darkGray leading-7">
                   فایل را در این قسمت بکشید و رها کنید <br />
-                  یا یک{" "}
-                  <span
+                  یا یک
+                  <button
+                    type="button"
                     className="px-1 text-tomato underline cursor-pointer"
                     onClick={handleOpenUpload}
                   >
-                    {" "}
-                    فایل آپلود{" "}
-                  </span>
+                    فایل آپلود
+                  </button>
                   کنید
                 </p>
                 <span className={`my-2 ${theFile ? "text-green" : "text-red"}`}>

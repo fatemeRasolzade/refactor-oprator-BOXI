@@ -10,8 +10,11 @@ import CustomerDefineList from "../CustomerManagement/CustomerManagementData";
 import ServiceProvision from "../ServiceProvision/ServiceProvision";
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
 import EditHubTable from "../HubData/EditData";
+import selectRowTable from "../selectRowTable/selectRowTable";
+
 import VendorList from "../Transportation/vendor/VendorData";
 import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
+import userInfoReducer from "../userInfo/userInfoReducer";
 const persistConfig = {
   key: "root",
   storage,
@@ -19,6 +22,7 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
+  userInfo:userInfoReducer,
   hub: HubList,
   role: RolesList,
   paginate: PageNumber,
@@ -28,6 +32,7 @@ const reducers = combineReducers({
   customerDefine: CustomerDefineList,
   serviceProvision: ServiceProvision,
   editHub: EditHubTable,
+  selectRowTable: selectRowTable,
   vendor: VendorList,
   vehicleModel:VehicleModelLists
 });

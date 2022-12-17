@@ -28,7 +28,13 @@
     @apply text-right;
   }
 }
-
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
 @layer components {
   .btn {
     @apply h-10 rounded-lg border-none text-dark px-5 py-2 centering gap-2 w-32;

@@ -6,8 +6,14 @@ import { useDispatch } from "react-redux";
 import { AiOutlineEdit } from "react-icons/ai";
 
 import * as Yup from "yup";
-import { ContactNumberValidate, NationalIDValidator } from "../../../../../tools/validations/ErrorHelper";
-import { EditDataParams, PostDataParams } from "../../../../../services/Service_call";
+import {
+  ContactNumberValidate,
+  NationalIDValidator,
+} from "../../../../../tools/validations/ErrorHelper";
+import {
+  EditDataParams,
+  PostDataParams,
+} from "../../../../../services/Service_call";
 import { apiRoute } from "../../../../../services/apiRoute";
 import { SuccessAlert } from "../../../../../global/alert/Alert";
 import { vendorData } from "../../../../../redux/Transportation/vendor/VendorData";
@@ -25,7 +31,9 @@ const validation = Yup.object().shape({
   contactNumber: Yup.number(),
 });
 
-const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
+const VehicleMakeActionForms: React.FC<PropsData> = ({
+  currentData,
+}): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -65,7 +73,9 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
     validate: (values) => {
       const errors = {};
       const [isValidNC, errNC] = NationalIDValidator(values.nationalCode);
-      const [isValidContact, errContact] = ContactNumberValidate(values.contactNumber);
+      const [isValidContact, errContact] = ContactNumberValidate(
+        values.contactNumber
+      );
       if (!isValidNC) {
         // @ts-ignore
         errors.nationalCode = errNC;
@@ -137,13 +147,26 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
       {!currentData ? (
         <AddButton ToggleOptions={ToggleOptions} />
       ) : (
-        <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
+        <button
+          className=" border-none	text-[14px]  w-[20px] h-[20px] "
+          onClick={() => setIsModalOpen(!isModalOpen)}
+        >
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
-      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[600px] w-[400px]"}>
-        <div className="text-lg font-medium">{currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}</div>
+      <AddExcel
+        setOpenModal={setUploadExcel}
+        OpenModal={uploadExcel}
+        excelInfo={""}
+      />
+      <Dialog
+        open={isModalOpen}
+        handler={setIsModalOpen}
+        className={"overflow-visible p-5 min-w-[600px] w-[400px]"}
+      >
+        <div className="text-lg font-medium">
+          {currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}
+        </div>
         <form onSubmit={formik.handleSubmit}>
           <div className="  grid grid-cols-2 mt-8 gap-y-4 gap-x-2 content-center">
             <div>
@@ -179,7 +202,9 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
                 handleChange={formik.handleChange}
                 values={formik.values.contactNumber}
                 type={"text"}
-                error={formik.touched.contactNumber && formik.errors.contactNumber}
+                error={
+                  formik.touched.contactNumber && formik.errors.contactNumber
+                }
               />
             </div>
 
@@ -192,13 +217,19 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
                 values={formik.values.nationalCode}
                 important
                 type={"text"}
-                error={formik.touched.nationalCode && formik.errors.nationalCode}
+                error={
+                  formik.touched.nationalCode && formik.errors.nationalCode
+                }
               />
             </div>
           </div>
 
           <div className="flex-end-center mt-5 gap-3">
-            <SimpleButton handelClick={() => setIsModalOpen(false)} text="لغو" className="full-lightTomato-btn" />
+            <SimpleButton
+              handelClick={() => setIsModalOpen(false)}
+              text="لغو"
+              className="full-lightTomato-btn"
+            />
             <SimpleButton
               // loading={Loading}
               type="submit"

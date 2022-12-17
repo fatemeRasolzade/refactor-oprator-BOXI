@@ -70,12 +70,14 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
                 onChange={(e) => formik.setFieldValue("name", e.target.value)}
               />
             </div>
-            <SimpleButton
-              type="submit"
-              className="full-gray-btn w-[160px] h-[40px] centering rounded-md"
-              icon={<BiSearch size={20} />}
-              text="جستجو"
-            />
+            <div className="mb-5">
+              <SimpleButton
+                type="submit"
+                className="full-gray-btn w-[160px] h-[40px] centering rounded-md"
+                icon={<BiSearch size={20} />}
+                text="جستجو"
+              />
+            </div>
           </div>
           <PerfesionalSearch
             text="جستجوی پیشرفته"

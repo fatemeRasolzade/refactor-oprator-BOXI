@@ -20,7 +20,6 @@ interface PersonnelProps {}
 
 const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   const dispatch = useDispatch();
-
   const { pageNumbers } = useSelector((state: any) => state.paginate);
   const { personnelList, isUpdating } = useSelector(
     (state: any) => state.personnel
