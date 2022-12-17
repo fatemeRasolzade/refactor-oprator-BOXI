@@ -2,10 +2,10 @@ import * as Yup from "yup";
 
 export const ADMVehicleFormValidation = () =>
   Yup.object().shape({
-    vehicleNumber0: Yup.number().required(),
+    vehicleNumber0: Yup.string().required(),
     vehicleNumber1: Yup.string().required(),
     vehicleNumber2: Yup.string().required(),
-    vehicleNumber3: Yup.number().required(),
+    vehicleNumber3: Yup.string().required(),
     dayToStartWork: Yup.string().required(),
     dayToFinishWork: Yup.string().required(),
     timeToStartWork: Yup.string().required(),

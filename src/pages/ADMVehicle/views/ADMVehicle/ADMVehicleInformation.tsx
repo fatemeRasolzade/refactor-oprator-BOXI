@@ -6,7 +6,8 @@ import { getVehicleMake } from "../../../../services/ADMVehicleApi";
 import { getRoute } from "../../../../services/RouteApi";
 import { apiRoute, HUB_SELECT } from "../../../../services/apiRoute";
 import { getDataFromServer, postDataToServer } from "../../../../services/Service_call";
-import DatePicker from "react-multi-date-picker";
+import DatePickers from "../../../../global/DatePicker/DatePicker";
+import VehiclePelak from "../../../../global/VehiclePelak/VehiclePelak";
 
 const ADMVehicleInformation = ({ formik, open }: any) => {
   const [VehicleMake, setVehicleMake] = useState([]);
@@ -59,7 +60,6 @@ const ADMVehicleInformation = ({ formik, open }: any) => {
       },
     ]).then((res) => {
       console.log(res);
-      console.log(res);
 
       setHub(res.payload.content);
     });
@@ -69,7 +69,7 @@ const ADMVehicleInformation = ({ formik, open }: any) => {
     <>
       {/* <p>مشخصات وسیله نقلیه</p> */}
       <div className="inputRow">
-        پلاک
+        <VehiclePelak formik={formik} important />
         <InputSelect
           options={VehicleMake}
           important
@@ -117,8 +117,15 @@ const ADMVehicleInformation = ({ formik, open }: any) => {
         />
       </div>
       <div className="inputRow">
-        <DatePicker />
-        <DatePicker />
+        <DatePickers
+          title="شروع کار"
+          values={values.dayToStartWork}
+          name="dayToStartWork"
+          handleChange={setFieldValue}
+          timeName="timeToStartWork"
+          timeValues={values.timeToStartWork}
+        />
+        {/* <DatePicker /> */}
       </div>
     </>
   );

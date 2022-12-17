@@ -95,7 +95,7 @@
     @apply w-full before:content-[attr(data-before)] focus-visible:outline-none relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0 mt-1 text-sm;
   }
   .autocompleteWrapper {
-    @apply flex-between-center relative h-10 pr-2 pl-2 min-w-[15rem] border border-darkBorder rounded-lg text-darkGray;
+    @apply flex-between-center relative h-10 px-2 min-w-[15rem] border border-darkBorder rounded-lg text-darkGray;
   }
   .autocompleteLabel {
     @apply absolute -top-3 right-5 bg-white   px-2 text-darkGray text-sm;

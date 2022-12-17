@@ -23,33 +23,35 @@ const ADMVehicleForm = ({ currentData }: CustomerFormProps) => {
 
   const formik = useFormik({
     enableReinitialize: true,
-    validationSchema: ADMVehicleFormValidation,
+    // validationSchema: ADMVehicleFormValidation,
     initialValues: currentData ? ADMVehicleFormCurrentValues(currentData) : ADMVehicleFormInitialValues,
     onSubmit: (values: any) => {
-      setLoading(true);
-      if (currentData) {
-        editADMVehicle({
-          ...values,
-          id: currentData.id,
-        })
-          .then((response) => {
-            dispatch(ADMVehicleData({}) as any);
-            setOpen(false);
-            response.status && toast.success("وسیله نقلیه ویرایش شد ");
-          })
-          .catch((error) => {})
-          .finally(() => setLoading(false));
-      } else {
-        createADMVehicle({
-          ...values,
-        })
-          .then(() => {
-            dispatch(ADMVehicleData({}) as any);
-            setOpen(false);
-            toast.success("وسیله نقلیه افزوده شد ");
-          })
-          .finally(() => setLoading(false));
-      }
+      console.log("**************", values);
+
+      // setLoading(true);
+      // if (currentData) {
+      //   editADMVehicle({
+      //     ...values,
+      //     id: currentData.id,
+      //   })
+      //     .then((response) => {
+      //       dispatch(ADMVehicleData({}) as any);
+      //       setOpen(false);
+      //       response.status && toast.success("وسیله نقلیه ویرایش شد ");
+      //     })
+      //     .catch((error) => {})
+      //     .finally(() => setLoading(false));
+      // } else {
+      //   createADMVehicle({
+      //     ...values,
+      //   })
+      //     .then(() => {
+      //       dispatch(ADMVehicleData({}) as any);
+      //       setOpen(false);
+      //       toast.success("وسیله نقلیه افزوده شد ");
+      //     })
+      //     .finally(() => setLoading(false));
+      // }
     },
   });
 
