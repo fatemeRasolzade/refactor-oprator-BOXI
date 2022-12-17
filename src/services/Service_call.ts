@@ -63,3 +63,8 @@ export const EditDataParams = async (apiRoute: string, body: object) => {
   const { data } = await http.put(apiRoute, body);
   return data;
 };
+
+export const DeleteWithHeader=async(apiRoute: string,header: object)=>{
+  const { data } = await http.delete(apiRoute,header);
+  return data;
+}

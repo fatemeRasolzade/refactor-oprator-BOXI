@@ -4,17 +4,17 @@ import { apiRoute } from './../../services/apiRoute';
 
 
 
-export const HubTypeData=createAsyncThunk("hubType",async()=>{
-     const params=`/filter?pageNumber=1&pageSize=20`
+export const HubTypeData=createAsyncThunk("hubType",async(page:number)=>{
+     const params=`/filter?pageNumber=${page}&pageSize=10`
     const {payload}=await postDataHeaderToServer(apiRoute().post.Type_Hub_table + params,{},{
         headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
       })
-      console.log("jjjjjjjjjjjjjj",payload)
+     console.log(payload)
     return payload
 })
 
 interface HubType{
-    TableType:Array<object>,
+    TableType:any,
     fetchpost:boolean,
     errorMessage:string 
 }
@@ -35,6 +35,12 @@ const initialState:HubType={
         clearHubType: (state) => {
             state.TableType = [];
           },
+          deleteTable:(state,action)=>{
+            state.TableType.content=state.TableType.content.filter((item:any)=>item.code !== action.payload)
+          },
+          addToTableType:(state,action)=>{
+            state.TableType.content=[...state.TableType.content,action.payload]
+          }
     },
     extraReducers: {
         [HubTypeData.fulfilled as any]: (state, action) => {
@@ -51,5 +57,5 @@ const initialState:HubType={
       },
  }) 
 
- export const {clearHubType}=HubTypeTable.actions
+ export const {clearHubType,deleteTable,addToTableType}=HubTypeTable.actions
  export default HubTypeTable.reducer

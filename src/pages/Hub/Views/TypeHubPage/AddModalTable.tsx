@@ -3,13 +3,20 @@ import React from 'react'
 import { BiXCircle } from 'react-icons/bi'
 import InputText from '../../../../global/InputText/InputText'
 import { ErrorMessage, useFormik } from 'formik';
+import { apiRoute } from './../../../../services/apiRoute';
 import * as Yup from "yup"
+import { postDataHeaderToServer } from '../../../../services/Service_call';
+import { ErrorAlert, SuccessAlert } from '../../../../global/alert/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToTableType, HubTypeData } from '../../../../redux/HubData/TypeHub';
 const AddModalTable = ({open,handleOpen}:{open:boolean,handleOpen:React.Dispatch<React.SetStateAction<boolean>>}) => {
 
+const dispatch=useDispatch()
+const {pageNumbers} =useSelector((state:any)=>state.paginate)
 const validationSchema=Yup.object({
     name:Yup.string().required("عنوان را وارد کنید"),
-    code:Yup.string().required("کد را وارد کنید"),
-    detail:Yup.string().required("توضیحات را وارد کنید"),
+    code:Yup.number().required("کد را وارد کنید"),
+    description:Yup.string().required("توضیحات را وارد کنید"),
 })
 
 
@@ -18,11 +25,21 @@ const formok=useFormik({
     initialValues:{
         name:"",
         code:"",
-        detail:""
+        description:""
     },
     validationSchema,
      onSubmit:(values)=>{
-        console.log(values)
+     
+      postDataHeaderToServer(apiRoute().post.Type_Hub_table,values,{ headers: { Authorization: "Bearer " + localStorage.getItem("myToken") }})
+     .then(res=>{
+      if(res.status==="OK"){
+        SuccessAlert("با موفقیت ساخته شد")
+        dispatch(HubTypeData(pageNumbers) as any)
+       }else{
+        ErrorAlert("با خطا مواجه شد")
+      }
+
+     })
     }
 })
 
@@ -58,8 +75,9 @@ const formok=useFormik({
                <InputText label='کد' wrapperClassName='w-full' name="code" handleChange={formok.handleChange} important values={formok.values.code} error={formok.touched.code && formok.errors.code}/>
                </div>
                 <div className='col-span-2'>
-                <InputText label='توضیحات' wrapperClassName='w-full' name='detail' handleChange={formok.handleChange} important values={formok.values.detail} error={formok.touched.detail && formok.errors.detail}/>
+                <InputText label='توضیحات' wrapperClassName='w-full' name='description' handleChange={formok.handleChange} important values={formok.values.description} error={formok.touched.description && formok.errors.description}/>
                 </div>
+
 
 
             </div>
