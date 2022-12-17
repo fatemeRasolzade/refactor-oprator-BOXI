@@ -17,6 +17,7 @@ interface PropType {
 }
 
 const DatePickers = ({ title, name, values, handleChange, time, timeValues, timeName, error, important }: PropType) => {
+  const timePlugin = [<TimePicker position="bottom" hideSeconds />];
   return (
     <div className="flex flex-col">
       <div className={`relative border ${error ? "border-red" : "border-darkBorder"} rounded-lg w-60`}>
@@ -40,7 +41,7 @@ const DatePickers = ({ title, name, values, handleChange, time, timeValues, time
             time && handleChange(timeName, date.hour + ":" + date.minute);
           }}
           render={<InputIcon />}
-          plugins={[<TimePicker position="bottom" hideSeconds />]}
+          plugins={time ? timePlugin : []}
         />
       </div>
       <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
