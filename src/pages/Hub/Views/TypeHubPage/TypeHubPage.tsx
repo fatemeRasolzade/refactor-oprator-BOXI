@@ -37,7 +37,7 @@ const datas=TableType.content && TableType.content.map((hubItem:any)=>{
     }
   }) 
 
-console.log('yyyyyyyy',datas)
+
   return (
     <>
           <Breadcrumb beforePage="برگشت" curentPage="گونه هاب" /> 
