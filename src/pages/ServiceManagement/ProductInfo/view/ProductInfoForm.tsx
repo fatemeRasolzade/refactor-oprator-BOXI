@@ -3,8 +3,9 @@ import { useFormik } from "formik";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import * as Yup from "yup";
-import Provinces from "../../../../components/provinces/Provinces";
+import { v4 as uuid } from "uuid";
 
+import Provinces from "../../../../components/provinces/Provinces";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import InputText from "../../../../global/InputText/InputText";
 import MultiSelect from "../../../../global/multiselect/MultiSelect";
@@ -20,27 +21,22 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
   setTableList,
 }): JSX.Element => {
   const validation = Yup.object().shape({
-    // fromWeight: Yup.number()
-    //   .min(0)
-    //   .when("toWeight", {
-    //     is: (value: any) => value,
-    //     then: Yup.number().nullable().required(),
-    //   }),
-    // toWeight: Yup.number().min(0),
-    // toValue: Yup.number().min(0),
-    // fromValue: Yup.number()
-    //   .min(0)
-    //   .when("toValue", {
-    //     is: (value: any) => value,
-    //     then: Yup.number().nullable().required(),
-    //   }),
-    // toDimension: Yup.number().min(0),
-    // fromDim: Yup.number()
-    //   .min(0)
-    //   .when("toDimension", {
-    //     is: (value: any) => value,
-    //     then: Yup.number().nullable().required(),
-    //   }),
+    product: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+    usingProduct: Yup.array().required(),
+    timeCommitment: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+    toWeight: Yup.number().min(0),
+    fromWeight: Yup.number()
+      .min(0)
+      .when("toWeight", {
+        is: (value: any) => value,
+        then: Yup.number().nullable().required(),
+      }),
   });
   const [valuesData, setValuesData] = useState({
     product: [],
@@ -87,7 +83,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
 
   const formik = useFormik({
     enableReinitialize: true,
-    // validationSchema: validation,
+
     validationSchema: validation,
     initialValues: {
       isActive: true,
@@ -99,14 +95,14 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
       toValue: "",
       fromWeight: "",
       toWeight: "",
-      usingProduct: [],
+      usingProduct: undefined,
       product: undefined,
       timeCommitment: undefined,
     },
     onSubmit: async (values, { resetForm }) => {
       console.log("values table", values);
       resetForm();
-      setTableList(values);
+      setTableList({ ...values, id: uuid() });
     },
   });
 
@@ -250,3 +246,50 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
 };
 
 export default ProductInfoForm;
+
+const dimCompare = (digit1: string, digit2: string) => {
+  let isValidDim = false;
+  let errDim;
+  if (digit1 === "" || digit2 === "") {
+    isValidDim = true;
+  }
+  if (Number(digit1) > Number(digit2)) {
+    errDim = "عدد اول بزرگ تر از عدد دوم است";
+  }
+
+  if (!errDim) {
+    isValidDim = true;
+  }
+  return [isValidDim, errDim];
+};
+export const DigitCompare = (digit1: string, digit2: string) => {
+  let isValidDigit = false;
+  let errDigit;
+  if (digit1 === "" || digit2 === "") {
+    isValidDigit = true;
+  }
+  if (Number(digit1) > Number(digit2)) {
+    errDigit = "عدد اول بزرگ تر از عدد دوم است";
+  }
+
+  if (!errDigit) {
+    isValidDigit = true;
+  }
+  return [isValidDigit, errDigit];
+};
+
+export const ValueCompare = (digit1: string, digit2: string) => {
+  let isValidValue = false;
+  let errValue;
+  if (digit1 === "" || digit2 === "") {
+    isValidValue = true;
+  }
+  if (Number(digit1) > Number(digit2)) {
+    errValue = "عدد اول بزرگ تر از عدد دوم است";
+  }
+
+  if (!errValue) {
+    isValidValue = true;
+  }
+  return [isValidValue, errValue];
+};

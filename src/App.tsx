@@ -11,32 +11,35 @@ import NotFound from "./pages/NotFound/NotFound";
 import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
 import YupDefault from "./tools/config/YupDefault";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "./redux/userInfo/userInfoReducer";
 import axios from "axios";
 import UserService from "./services/keycloakService";
 
 function App() {
   const dispatch = useDispatch();
-  const handleGetuserInfo = useCallback(async (userName: string) => {
-    try {
-      const res = await axios({
-        url: "http://192.168.1.153:20000/resource-api/permission/fetchPermissionsByUserName",
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("myToken"),
-        },
-        data: {
-          in: "ali-moj3",
-        },
-      });
-      debugger;
-      dispatch(getUserInfo(res.data));
-      debugger;
-    } catch (error) {
-      alert("error");
-    }
-  }, []);
+  const userInfo = useSelector((state: any) => state.userInfo);
+  const handleGetuserInfo = useCallback(
+    async (userName: string) => {
+      try {
+        const res = await axios({
+          url: "http://172.16.55.144:20000/resource-api/permission/fetchPermissionsByUserName",
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("myToken"),
+          },
+          data: {
+            in: "alihash",
+          },
+        });
+
+        dispatch(getUserInfo(res.data));
+      } catch (error) {
+        alert("error");
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     const userName = UserService.getUsername();

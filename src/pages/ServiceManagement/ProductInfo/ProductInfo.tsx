@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
+import { BiTrash } from "react-icons/bi";
 
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../../components/staticTable/StaticTable";
@@ -9,8 +11,12 @@ import ProductInfoForm from "./view/ProductInfoForm";
 
 const ProductInfo = () => {
   const [tableList, setTableList] = useState<Array<any>>([]);
-  const data = tableList.map((item) => {
+  const onDeleteHandler = (id: number) => {
+    setTableList(tableList.filter((item) => item.id !== id));
+  };
+  const data = tableList.map((item, index) => {
     return {
+      id: item.id,
       product: <span>{item.product.text}</span>,
       status: <span>{item.isActive ? "فعال" : "غیرفعال"}</span>,
       weight: (
@@ -67,7 +73,26 @@ const ProductInfo = () => {
           </TooltipWrapper>
         </div>
       ),
-      operation: <div>ulgdhj</div>,
+      operation: (
+        <div>
+          <div>
+            <button
+              className=" border-none	text-[14px]  w-[20px] h-[20px] "
+              // onClick={() => setIsModalOpen(!isModalOpen)}
+            >
+              <AiOutlineEdit className="w-full h-full" />
+            </button>
+          </div>
+          <div>
+            <button
+              className=" border-none	text-[14px]  w-[20px] h-[20px]"
+              onClick={() => onDeleteHandler(item.id)}
+            >
+              <BiTrash size={20} className="w-full h-full	" />
+            </button>
+          </div>
+        </div>
+      ),
     };
   });
 
