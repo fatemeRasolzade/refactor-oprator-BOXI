@@ -26,8 +26,6 @@ const ADMVehicleForm = ({ currentData }: CustomerFormProps) => {
     validationSchema: ADMVehicleFormValidation,
     initialValues: currentData ? ADMVehicleFormCurrentValues(currentData) : ADMVehicleFormInitialValues,
     onSubmit: (values: any) => {
-      console.log("**************", values);
-
       setLoading(true);
       // if (currentData) {
       //   editADMVehicle({

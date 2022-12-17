@@ -35,9 +35,12 @@ const ADMVehicle = () => {
     setLoading(true);
     dispatch(
       ADMVehicleData({
-        vehicleNumber: "",
-        hubName: "",
         hubCode: "",
+        hubName: "",
+        vehicleNumber0: "",
+        vehicleNumber1: "",
+        vehicleNumber2: "",
+        vehicleNumber3: "",
         isActive: isActive,
         pageSize: 10,
         pageNumber: pageNumbers,

@@ -26,11 +26,11 @@ export const ADMVehicleFormValidation = () =>
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
-
     volumeCapacity: Yup.number().required(),
     weightCapacity: Yup.number().required(),
     name: Yup.string(),
     code: Yup.string(),
+    isActive: Yup.boolean(),
   });
 
 export const ADMVehicleFormInitialValues = {
@@ -48,6 +48,7 @@ export const ADMVehicleFormInitialValues = {
   selectRoute: {},
   selectHub: {},
   vehicleMakeSelect: {},
+  isActive: true,
 };
 
 export const ADMVehicleFormCurrentValues = (currentData: any) => {

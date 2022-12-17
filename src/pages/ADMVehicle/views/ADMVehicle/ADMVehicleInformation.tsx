@@ -3,8 +3,7 @@ import CustomSwitch from "../../../../global/Switch/Switch";
 import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getVehicleMake } from "../../../../services/ADMVehicleApi";
-import { getRoute } from "../../../../services/RouteApi";
-import { apiRoute, HUB_SELECT } from "../../../../services/apiRoute";
+import { apiRoute, GET_ROUTE, HUB_SELECT } from "../../../../services/apiRoute";
 import { getDataFromServer, postDataToServer } from "../../../../services/Service_call";
 import DatePickers from "../../../../global/DatePicker/DatePicker";
 import VehiclePelak from "../../../../global/VehiclePelak/VehiclePelak";
@@ -30,9 +29,12 @@ const ADMVehicleInformation = ({ formik, open }: any) => {
   };
 
   const initRoute = () => {
-    getRoute().then((res) => {
-      setRoute(res);
+    getDataFromServer(GET_ROUTE).then((res) => {
+      setRoute(res.content);
     });
+    // getRoute().then((res) => {
+    //   setRoute(res);
+    // });
   };
 
   const initHub = () => {
@@ -66,7 +68,7 @@ const ADMVehicleInformation = ({ formik, open }: any) => {
 
   return (
     <>
-      {/* <p>مشخصات وسیله نقلیه</p> */}
+      <p className="mb-8">مشخصات وسیله نقلیه</p>
       <div className="inputRow">
         <VehiclePelak formik={formik} important />
         <InputSelect
@@ -138,7 +140,9 @@ const ADMVehicleInformation = ({ formik, open }: any) => {
           timeValues={values.timeToFinishWork}
           error={(touched.dayToFinishWork && errors.dayToFinishWork) || (touched.timeToFinishWork && errors.timeToFinishWork)}
         />
-        {/* <DatePicker /> */}
+        <div className="mb-5 w-[30%] centering">
+          <CustomSwitch active={values.isActive} handleChange={() => setFieldValue("isActive", !values.isActive)} />
+        </div>
       </div>
     </>
   );

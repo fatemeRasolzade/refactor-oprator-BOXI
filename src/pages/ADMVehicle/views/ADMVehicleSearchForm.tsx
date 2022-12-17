@@ -7,6 +7,8 @@ import ADMVehiclePerfesionalFilter from "./ADMVehiclePerfesionalFilter";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import { ADMVehicleData } from "../../../redux/ADMVehicle/ADMVehicleData";
+import VehiclePelak from "../../../global/VehiclePelak/VehiclePelak";
+import { getPelak } from "../../../tools/functions/Methods";
 
 interface PropsData {
   isActive: Boolean | string;
@@ -19,6 +21,10 @@ const ADMVehicleSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
   const [filterData, setFilterData] = useState({});
   const formik = useFormik({
     initialValues: {
+      vehicleNumber0: "",
+      vehicleNumber1: "",
+      vehicleNumber2: "",
+      vehicleNumber3: "",
       vehicleNumber: "",
       hubName: "",
       hubCode: "",
@@ -45,7 +51,7 @@ const ADMVehicleSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
     <>
       <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col ">
         <form className="flex-start-start flex-wrap gap-5" onSubmit={handleSubmit}>
-          <AutocompleteInput label={"شماره پلاک"} value={values.vehicleNumber} onChange={(e) => setFieldValue("vehicleNumber", e.target.value)} />
+          <VehiclePelak formik={formik} />
           <AutocompleteInput label={"هاب مرکز گزارش"} value={values.vehicleNumber} onChange={(e) => setFieldValue("vehicleNumber", e.target.value)} />
           <SimpleButton searchBtn />
           <PerfesionalSearch formData={handleSubmit} handleReset={handleReset}>
@@ -53,7 +59,7 @@ const ADMVehicleSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
           </PerfesionalSearch>
         </form>
       </div>
-      {filterData && <Chip filterData={filterData} formData={formik} />}
+      {filterData && <Chip filterData={{ ...filterData, pelak: getPelak(filterData) }} formData={formik} />}
     </>
   );
 };

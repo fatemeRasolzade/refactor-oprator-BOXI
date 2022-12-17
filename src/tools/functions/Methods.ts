@@ -29,8 +29,8 @@ interface getPelakProps {
   vehicleNumber3: string | number;
 }
 
-export const getPelak = (values: getPelakProps) =>
-  `${values.vehicleNumber0} - ${values.vehicleNumber2}  ${values.vehicleNumber1}   ${values.vehicleNumber3}`;
+export const getPelak = (values: any) =>
+  values.vehicleNumber3 ? `${values.vehicleNumber3} - ${values.vehicleNumber2}  ${values.vehicleNumber1}  ${values.vehicleNumber0}` : "";
 
 interface getDayProps {
   year: string | number;

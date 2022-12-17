@@ -11,15 +11,10 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
   const [chipData, setChipData] = useState<any>([]);
   const handleRemoveChipData = (id: number) => {
     const findData = chipData.find((item: { id: number }) => item.id === id);
-    const filterData = chipData.filter(
-      (item: { id: number }) => item.id !== id
-    );
+    const filterData = chipData.filter((item: { id: number }) => item.id !== id);
     const searchData = filterData.map((item: string) => item.search);
     setChipData(filterData);
-    if (
-      findData.mainTitle === "pelak" ||
-      findData.mainTitle === "vehicleNumber"
-    ) {
+    if (findData.mainTitle === "pelak" || findData.mainTitle === "vehicleNumber") {
       formData.setFieldValue("vehicleNumber0", "");
       formData.setFieldValue("vehicleNumber1", "");
       formData.setFieldValue("vehicleNumber2", "");
@@ -39,7 +34,7 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
   const persianName: any = {
     code: "کد ",
     name: "نام ",
-    search:'کد',
+    search: "کد",
     hub: "نام هاب",
     hubTypeId: "نوع هاب",
     hubCategoryId: "گونه هاب",
@@ -100,17 +95,16 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
   };
   useEffect(() => {
     delete filterData.isActive;
-    const convertObject = Object.entries(filterData).map(
-      ([key, value]: any, index) =>
-        value
-          ? {
-              search: { [`${key}`]: value },
-              id: index,
-              mainTitle: key,
-              title: persianName[key],
-              value: valueAccessor(value),
-            }
-          : ""
+    const convertObject = Object.entries(filterData).map(([key, value]: any, index) =>
+      value
+        ? {
+            search: { [`${key}`]: value },
+            id: index,
+            mainTitle: key,
+            title: persianName[key],
+            value: valueAccessor(value),
+          }
+        : ""
     );
     setChipData(convertObject.filter((item) => item));
   }, [filterData]);
@@ -129,10 +123,7 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
               item.mainTitle !== "vehicleNumber3"
           )
           .map(({ id, title, value }: any) => (
-            <div
-              key={id}
-              className="bg-mainGray w-fit py-1 px-3 flex-between-center rounded-lg  shadow"
-            >
+            <div key={id} className="bg-mainGray w-fit py-1 px-3 flex-between-center rounded-lg  shadow">
               <span className="text-darkGray pl-1">{title}:</span>
               <span className="text-dark">{value}</span>
               <span
@@ -146,12 +137,7 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
             </div>
           ))}
         {chipData.length > 0 ? (
-          <SimpleButton
-            handelClick={handleRemoveSearchFilters}
-            className="line-tomato-btn p-0"
-            text="حذف جستجوها"
-            icon={<BiX size={22} />}
-          />
+          <SimpleButton handelClick={handleRemoveSearchFilters} className="line-tomato-btn p-0" text="حذف جستجوها" icon={<BiX size={22} />} />
         ) : null}
       </div>
     </>
