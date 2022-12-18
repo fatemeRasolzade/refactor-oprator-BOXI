@@ -4,7 +4,7 @@ import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import InputText from "../../../global/InputText/InputText";
 import CustomSwitch from "../../../global/Switch/Switch";
@@ -28,6 +28,7 @@ import {
 } from "../../../tools/validations/RegexKeywords";
 import { Actionpage } from "../../../redux/PaginationAction/PaginationAction";
 import AddExcel from "../../../components/exel/AddExcel";
+import CheckBoxThree from "../../../components/checkbox/CheckBoxThree";
 
 interface AddEditPersonProps {
   currentData?: any;
@@ -71,6 +72,11 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   });
 
   const dispatch = useDispatch();
+  const userInfo = useSelector((state: any) => state.userInfo);
+
+  const [treeCheckedError, setTreeCheckedError] = useState("");
+  const [nodes, setNodes] = useState([]);
+  const [treeChecked, setTreeChecked] = useState<Array<string>>([]);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [options] = useState([
@@ -279,7 +285,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             )}
             <div
               className={`${
-                currentData ? "col-span-1" : "col-span-2 "
+                currentData ? "col-span-1" : "col-span-1 "
               } h-[40px] mb-[20px]`}
             >
               <CustomSwitch
@@ -287,6 +293,18 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 handleChange={(value) =>
                   formik.setFieldValue("isActive", value)
                 }
+              />
+            </div>
+            <div className="col-span-4">
+              <CheckBoxThree
+                nodes={userInfo?.hublist ? userInfo?.hublist : []}
+                loadingNode={false}
+                title="هاب"
+                treeCheckedError={treeCheckedError}
+                treeChecked={treeChecked}
+                setTreeChecked={(checked: Array<string>) => {
+                  setTreeChecked(checked);
+                }}
               />
             </div>
             {!currentData && (

@@ -104,6 +104,94 @@ export const PersonnelColumn = [
     Header: "عملیات",
     accessor: "operation",
   },
-
-
 ];
+
+export const ProductInfoColumn = [
+  {
+    Header: "محصول",
+    accessor: "product",
+  },
+  {
+    Header: "قابل ارائه در محصول	",
+    accessor: "usingProducts",
+  },
+  {
+    Header: "وزن (کیلوگرم)	",
+    accessor: "weight",
+  },
+  {
+    Header: "ابعاد (سانتیمتر)	",
+    accessor: "dimension",
+  },
+  {
+    Header: "مدت ارائه خدمت	",
+    accessor: "timeCommitment",
+  },
+  {
+    Header: "مبدا",
+    accessor: "from",
+  },
+  {
+    Header: "مقصد",
+    accessor: "destination",
+  },
+  {
+    Header: "وضعیت",
+    accessor: "status",
+  },
+  {
+    Header: "عملیات",
+    accessor: "operation",
+  },
+];
+
+export const ServiceProvisionColumns=[
+  {
+    Header: "کد",
+    accessor: "code",
+  },
+  {
+    Header: "عنوان",
+    accessor: "name",
+  },
+  {
+    Header: "سرویس",
+    accessor: "service",
+  },
+  {
+    Header: "وضعیت",
+    accessor: "isActive",
+  },
+  {
+    Header: "تاریخ اعتبار از",
+    accessor: "validDateFrom",
+  },
+  {
+    Header: "تاریخ اعتبار تا",
+    accessor: "validDateTo",
+  },
+  {
+    Header: "نوع تخفیف",
+    accessor: "type",
+  },
+  {
+    Header: "عملیات",
+    accessor: "handover",
+  },
+]
+
+export const HubCategoryColumn=[
+  {
+    Header: "عنوان",
+    accessor: "name",
+  },{
+    Header: "کد",
+    accessor: "code",
+  },{
+    Header: "توضیحات",
+    accessor: "description",
+  },{
+    Header: "عملیات",
+    accessor: "handover",
+  },
+]

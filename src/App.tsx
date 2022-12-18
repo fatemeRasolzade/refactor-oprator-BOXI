@@ -1,5 +1,8 @@
 import "./styles/App.css";
 import "react-table-6/react-table.css";
+import "react-checkbox-tree/lib/react-checkbox-tree.css";
+
+import { useCallback, useEffect } from "react";
 import { links } from "./components/SidebarRoutes/SidebarRoutes";
 import { Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -15,7 +18,6 @@ function App() {
     <div className="App">
       <YupDefault />
       <Routes>
-
         {links.map((item) =>
           item.childs.map((route) => (
             <Route path={route.to} element={route.component} />

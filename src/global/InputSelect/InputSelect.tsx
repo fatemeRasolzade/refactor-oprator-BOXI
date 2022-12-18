@@ -69,22 +69,22 @@ const InputSelect: FC<InputSelectProps> = ({
       </label>
       <Select
         isMulti={isMulti}
-        isLoading={options.length > 0 ? false : true}
+        isLoading={options ? false : true}
         value={
           options ? options.find((option: any) => option.label === values) : ""
         }
         defaultInputValue={values?.text}
         onChange={(option) =>
           handleChange(name, {
-            id: option.value,
-            text: option.label,
+            id: option?.value,
+            text: option?.label,
           })
         }
         styles={style}
-        options={options.map((res: any) => {
+        options={options && options.map((res: any) => {
           return {
-            label: res.text,
-            value: res.id,
+            label: res?.text,
+            value: res?.id,
           };
         })}
         placeholder=""

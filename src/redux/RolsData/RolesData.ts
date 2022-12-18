@@ -19,7 +19,7 @@ export const RoleData = createAsyncThunk("post", async (body: RoleDataBody ) => 
   var data = {};
   try {
     data = await PostDataParams(apiRoute().post.filterRole + params, {
-      permission:body.permission,
+      selectPermissions:body.permission ?  body.permission : [],
       name:body.name,
       isActive:body.isActive
     });

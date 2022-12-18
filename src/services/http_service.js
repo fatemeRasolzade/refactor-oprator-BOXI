@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { ErrorAlert } from "../global/alert/Alert";
 import UserService from "./keycloakService";
 
@@ -6,15 +7,18 @@ axios.defaults.headers.common["Authorization"] =
   "Bearer " + localStorage.getItem("Authorization");
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 axios.interceptors.response.use(null, (error) => {
-  const errorStatus = error.response.status;
-
+  const errorStatus = error?.response?.status;
+  
   if (errorStatus === 404) {
-    ErrorAlert(error.response.data.errors.message);
-    throw error;
+    ErrorAlert(error?.response?.data?.errors?.message);
+    toast.error(
+      error?.response?.data?.errors?.message || "مقدار مورد نظر یافت نشد"
+    );
+    return Promise.reject(error);
   }
   if (errorStatus >= 500) {
-    ErrorAlert("مشکلی از سمت سرور رخ داده است.");
-    throw error;
+    toast.error("مشکلی از سمت سرور رخ داده است.");
+    return Promise.reject(error);
   }
 
   //   const expectedErrors =
@@ -27,16 +31,13 @@ axios.interceptors.response.use(null, (error) => {
   //       closeOnClick: true,
   //     });
   //   }
-
-  throw error;
+  return Promise.reject(error);
 });
 const configure = () => {
   axios.interceptors.request.use((config) => {
     if (UserService.isLoggedIn()) {
       const cb = () => {
-        config.headers.Authorization = `Bearer ${localStorage.getItem(
-          "myToken"
-        )}`;
+        config.headers.Authorization = `Bearer ${localStorage.getItem("myToken")}`;
         return Promise.resolve(config);
       };
       return UserService.updateToken(cb);
