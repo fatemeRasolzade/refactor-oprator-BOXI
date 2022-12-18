@@ -25,17 +25,14 @@ export const ThirdPartyFormInitialValues = {
   name: "",
   selectThirdPartyType: {},
   nationalCode: "",
-
+  nationalId: "",
+  economicCode: "",
   selectThirdPartyCategory: undefined,
   selectParentThirdParty: undefined,
   email: "",
   isActive: true,
-
   telephones: [],
   addresses: [],
-
-  nationalId: "",
-  economicCode: "",
 };
 
 export const ThirdPartyFormCurrentValues = (currentData: any) => {
@@ -44,16 +41,13 @@ export const ThirdPartyFormCurrentValues = (currentData: any) => {
     name: currentData.name,
     selectThirdPartyType: currentData.selectThirdPartyType,
     nationalCode: currentData.nationalCode,
-
+    nationalId: currentData.nationalId,
+    economicCode: currentData.economicCode,
     selectThirdPartyCategory: currentData.selectThirdPartyCategory,
     selectParentThirdParty: currentData.selectParentThirdParty,
     email: currentData.email ? currentData.email : "",
     isActive: currentData.isActive,
-
     telephones: currentData.telephones,
     addresses: currentData.addresses,
-
-    nationalId: currentData.nationalId,
-    economicCode: currentData.economicCode,
   };
 };

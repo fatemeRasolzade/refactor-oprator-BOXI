@@ -18,6 +18,12 @@ const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
     }
   }, [open]);
 
+  useEffect(() => {
+    setFieldValue("nationalCode", "");
+    setFieldValue("nationalId", "");
+    setFieldValue("economicCode", "");
+  }, [setFieldValue, values.selectThirdPartyType.id]);
+
   const initThirdPartyType = () => {
     getThirdPartyType().then((res) => {
       setThirdPartyType(res);

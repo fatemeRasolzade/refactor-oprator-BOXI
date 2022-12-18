@@ -94,18 +94,20 @@ const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID
         let index = newArray.findIndex((a) => a.id === ID);
         newArray[index] = values;
         setValue("addresses", newArray);
-        resetForm({ values: "" });
         setOpen(false);
       } else {
         const id: string = uuid();
-        resetForm({ values: "" });
         setValue("addresses", [...value, { ...values, id: `null${id}` }]);
         setOpen(false);
       }
     },
   });
 
-  const { values, errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
+  const { values, errors, touched, handleChange, handleSubmit, setFieldValue, resetForm } = formik;
+
+  useEffect(() => {
+    resetForm({ values: "" });
+  }, [resetForm, open]);
 
   return (
     <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}>
