@@ -23,7 +23,7 @@ interface EditPersonRoleProps {
 const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
   const dispatch = useDispatch();
 
-  const { selectedRows } = useSelector((state: any) => state.selectedRows);
+  const { selectedRows } = useSelector((state: any) => state?.selectRowTable);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [rolesOptions, setRolesOptions] = useState<Array<any>>([]);
