@@ -5,6 +5,7 @@ import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getVehicleMake } from "../../../../services/ADMVehicleApi";
 import { GET_ROUTE, HUB_SELECT } from "../../../../services/apiRoute";
 import { getDataFromServer, postDataToServer } from "../../../../services/Service_call";
+import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
 
 const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
   const [VehicleMake, setVehicleMake] = useState([]);
@@ -16,7 +17,6 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
     if (open) {
       initVehicleMake();
       initRoute();
-      initHub();
     }
   }, [open]);
 
@@ -35,47 +35,32 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
     // });
   };
 
-  const initHub = () => {
-    postDataToServer(HUB_SELECT, [
-      {
-        id: 463,
-        label: "A100",
-        name: "تست",
-        parent: 0,
-        children: [],
-      },
-      {
-        id: 484,
-        label: "A100",
-        name: "تست",
-        parent: 0,
-        children: [],
-      },
-      {
-        id: 447,
-        label: "A100",
-        name: "تست",
-        parent: 0,
-        children: [],
-      },
-    ]).then((res) => {
-      console.log(res);
-      setHub(res.payload.content);
-    });
-  };
-
   return (
     <>
-      {/* <p className="mb-8">مشخصات وسیله نقلیه</p> */}
       <div className="inputRow">
-        <InputText important label="عنوان" values={values.name} name="name" handleChange={setFieldValue} error={touched.name && errors.name} />
+        <InputText
+          wrapperClassName="w-[31.3rem]"
+          important
+          label="عنوان"
+          values={values.name}
+          name="name"
+          handleChange={setFieldValue}
+          error={touched.name && errors.name}
+        />
         <div className="mb-5 w-60 centering">
           <CustomSwitch active={values.isActive} handleChange={() => setFieldValue("isActive", !values.isActive)} />
         </div>
       </div>
       <div className="inputRow">
-        <InputText important label="از " values={values.from} name="from" handleChange={handleChange} error={touched.from && errors.from} />
-        <InputText important label=" تا" values={values.to} name="to" handleChange={handleChange} error={touched.to && errors.to} />
+        <InputText
+          important
+          label="مدت ارائه خدمات از "
+          values={values.from}
+          name="from"
+          handleChange={handleChange}
+          error={touched.from && errors.from}
+        />
+        <InputText important label="مدت ارائه خدمات تا" values={values.to} name="to" handleChange={handleChange} error={touched.to && errors.to} />
         <InputSelect
           options={Hub}
           label="واحد  "
@@ -86,7 +71,7 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
         />
       </div>
       <div className="inputRow">
-        <InputText
+        <MultiLineText
           important
           label=" توضیحات"
           values={values.description}
