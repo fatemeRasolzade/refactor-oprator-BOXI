@@ -5,6 +5,7 @@ import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getVehicleMake } from "../../../../services/ADMVehicleApi";
 import { GET_ROUTE, HUB_SELECT } from "../../../../services/apiRoute";
 import { getDataFromServer, postDataToServer } from "../../../../services/Service_call";
+import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
 
 const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
   const [VehicleMake, setVehicleMake] = useState([]);
@@ -93,7 +94,7 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
         />
       </div>
       <div className="inputRow">
-        <InputText
+        <MultiLineText
           important
           label=" توضیحات"
           values={values.description}

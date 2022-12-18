@@ -8,10 +8,10 @@ type InputTextProps = {
   important?: boolean;
   readOnly?: boolean;
   classNames?: string;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   wrapperClassName?: string;
 };
-const InputText = ({
+const MultiLineText = ({
   classNames,
   label,
   name,
@@ -25,28 +25,16 @@ const InputText = ({
   wrapperClassName,
 }: InputTextProps) => {
   return (
-    <div className={`flex flex-col ${wrapperClassName}`}>
-      <div className={`autocompleteWrapper ${classNames} ${error && "border-red"} ${readOnly && "opacity-40"} `}>
+    <div className={`flex flex-col w-full ${wrapperClassName}`}>
+      <div className={`autocompleteWrapper !h-full !p-2 ${classNames} ${error && "border-red"} ${readOnly && "opacity-40"} `}>
         <div className={`autocompleteLabel  ${error && "text-red"} top-[-17px]`}>
           {label} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
         </div>
-        <input
-          disabled={readOnly}
-          className="autocompleteInput"
-          name={name}
-          value={values}
-          onChange={handleChange}
-          type={type}
-          placeholder={placeholder}
-        />
+        <textarea disabled={readOnly} className="autocompleteInput" name={name} value={values} onChange={handleChange} placeholder={placeholder} />
       </div>
       <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
   );
 };
 
-InputText.defaultProps = {
-  wrapperClassName: "w-60",
-};
-
-export default InputText;
+export default MultiLineText;
