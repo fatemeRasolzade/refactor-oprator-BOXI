@@ -24,6 +24,7 @@ import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/V
 import AddExcel from "../../../../../components/exel/AddExcel";
 import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
+import RouteActionForms from "./RouteActionForm";
 interface PropsData {
   currentData?: any;
 }
@@ -45,7 +46,7 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
-
+  const [openConnection,setOpenConnections]=useState(false) 
   //   const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes, isModalOpen);
   const { hubOptions } = useGetHubOptions(apiRoute().get.select_hub, isModalOpen);
 
@@ -81,7 +82,7 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
       connections: [],
     },
     onSubmit: (values) => {
-      let hubData:any
+      let hubData:any=[]
       for (let i = 0; i < parseInt(formik.values.nodes) ; i++) {
         hubData = [
           ...hubData,
@@ -113,16 +114,18 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
       };
       hubData.unshift(source);
       formik.setFieldValue("connections", [...hubData, target]);
-    //   setOpenConnections(!openConnection);
-    //   setOpen(false);
+      setIsModalOpen(!isModalOpen)
+      setOpenConnections(!openConnection);
     },
   });
-  useEffect(() => {
-    formik.resetForm({});
-  }, [isModalOpen]);
+  // useEffect(() => {
+  //   formik.resetForm({});
+  // }, [isModalOpen]);
 
   return (
     <>
+  
+      {openConnection && <RouteActionForms routeValue={formik.values}  isModalOpen={openConnection} setIsModalOpen={setOpenConnections}/>  }     
       <AddButton ToggleOptions={ToggleOptions} />
       <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={"افزودن مسیر"}>

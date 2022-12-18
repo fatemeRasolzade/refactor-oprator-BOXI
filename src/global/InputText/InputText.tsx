@@ -1,20 +1,22 @@
 type InputTextProps = {
   error?: any;
   values: any;
-  label: string;
+  label?: string;
   name: string;
   type?: string;
   placeholder?: string;
+  ref?:any;
   important?: boolean;
   readOnly?: boolean;
   classNames?:string;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   wrapperClassName?: string
 };
 const InputText = ({
   classNames,
   label,
   name,
+  ref,
   handleChange,
   type = "text",
   important,
@@ -40,6 +42,7 @@ const InputText = ({
           </span>
         </div>
         <input
+          ref={ref}
           disabled={readOnly}
           className="autocompleteInput"
           name={name}
