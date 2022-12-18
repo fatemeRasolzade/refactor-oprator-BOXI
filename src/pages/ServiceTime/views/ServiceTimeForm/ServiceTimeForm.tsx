@@ -79,7 +79,7 @@ const ServiceTimeForm = ({ currentData, TimeUnitType }: ServiceTimeFormProps) =>
       {/* <AddExcel excelInfo={ADMVehicleExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
       <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مدت ارائه خدمات" : "تعریف مدت ارائه خدمات"}>
         <form onSubmit={handleSubmit}>
-          <ServiceTimeInformation formik={formik} open={open} currentData={currentData} TimeUnitType={TimeUnitType} />
+          <ServiceTimeInformation formik={formik} TimeUnitType={TimeUnitType} />
           <div className="flex-end-center mt-5 gap-3">
             <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
             <SimpleButton loading={Loading} type="submit" text={currentData ? "ویرایش" : "افزودن"} className="full-tomato-btn" />

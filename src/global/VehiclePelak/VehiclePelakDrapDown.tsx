@@ -32,7 +32,14 @@ const VehiclePelakDrapDown = ({ list = [], value, name, setValue, ReadOnly }: Ve
     <div className="relative flex-start-center w-12">
       <RiArrowDownSLine size={30} />
       <div ref={WrapperRef}>
-        <input disabled={ReadOnly} className=" w-8 text-center" name="ffa" onFocus={() => setOpen(true)} value={value} onChange={handleChange} />
+        <input
+          disabled={ReadOnly}
+          className=" w-8 text-center focus:outline-none"
+          name="ffa"
+          onFocus={() => setOpen(true)}
+          value={value}
+          onChange={handleChange}
+        />
         {open && (
           <ul className="absolute shadow-md z-50 bg-light w-8 top-7 border">
             {/* <SimpleBar style={{ maxHeight: "10rem" }}> */}

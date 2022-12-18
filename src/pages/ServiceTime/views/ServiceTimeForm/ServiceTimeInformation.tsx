@@ -3,7 +3,7 @@ import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
 
-const ServiceTimeInformation = ({ formik, open, currentData, TimeUnitType }: any) => {
+const ServiceTimeInformation = ({ formik, TimeUnitType }: any) => {
   const { values, errors, touched, handleChange, setFieldValue }: any = formik;
 
   return (
