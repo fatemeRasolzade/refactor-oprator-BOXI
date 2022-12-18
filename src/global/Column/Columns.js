@@ -179,3 +179,19 @@ export const ServiceProvisionColumns=[
     accessor: "handover",
   },
 ]
+
+export const HubCategoryColumn=[
+  {
+    Header: "عنوان",
+    accessor: "name",
+  },{
+    Header: "کد",
+    accessor: "code",
+  },{
+    Header: "توضیحات",
+    accessor: "description",
+  },{
+    Header: "عملیات",
+    accessor: "handover",
+  },
+]

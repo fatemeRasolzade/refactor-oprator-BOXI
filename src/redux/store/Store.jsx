@@ -14,6 +14,7 @@ import selectRowTable from "../selectRowTable/selectRowTable";
 
 import VendorList from "../Transportation/vendor/VendorData";
 import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
+import HubTypeTable from "../HubData/TypeHub"
 import userInfoReducer from "../userInfo/userInfoReducer";
 const persistConfig = {
   key: "root",
@@ -34,7 +35,8 @@ const reducers = combineReducers({
   editHub: EditHubTable,
   selectRowTable: selectRowTable,
   vendor: VendorList,
-  vehicleModel:VehicleModelLists
+  vehicleModel:VehicleModelLists,
+  HubType:HubTypeTable
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

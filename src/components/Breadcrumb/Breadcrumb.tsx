@@ -10,11 +10,13 @@ const Breadcrumb = ({
 
   return (
     <div className="flex-start-center text-xl mb-8">
-      <h2 className="text-xl ">{curentPage}</h2>
-      <span className="px-3">{">"}</span>
+      
+      
       <button className="border-none" onClick={() => navigate(-1)}>
         <h2 className="text-xl">{beforePage}</h2>
       </button>
+      <span className="px-3">{">"}</span>
+      <h2 className="text-xl ">{curentPage}</h2>
     </div>
   );
 };

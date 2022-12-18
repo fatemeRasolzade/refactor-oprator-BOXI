@@ -78,6 +78,7 @@ export const apiRoute = () => {
       product: createUrl(API_CONSIGNMENT4, "/product"),
       service_provision:createUrl(API_CONSIGNMENT4, "/servicedeliveryservice"),
       filterVendor: createUrl(API_CONSIGNMENT4, "/vendor"),
+      Type_Hub_table:createUrl(API_CONSIGNMENT4 , "/hubCategory")
     },
     postExcel: {
       exception: createUrl(API_CONSIGNMENT3, "/exception"),

@@ -19,6 +19,7 @@ const doLogout = _kc.logout;
 const getToken = () => _kc.token;
 
 const isLoggedIn = () => !!_kc.token;
+console.log("isLoggedIn",isLoggedIn())
 
 const updateToken = (successCallback) =>{
 	console.log('updateToken');
@@ -32,7 +33,7 @@ const updateToken = (successCallback) =>{
 
 const initKeycloak = (onAuthenticatedCallback) => {
 	_kc.init({
-		onLoad: 'login-required',
+		onLoad: 'check-sso',
 		checkLoginIframe: false,
 		
 		//onLoad: 'check-sso'
@@ -43,6 +44,7 @@ const initKeycloak = (onAuthenticatedCallback) => {
 				
 				axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token;
 				window.localStorage.setItem("myToken",_kc.token)
+				window.localStorage.setItem("userName",_kc.tokenParsed?.preferred_username)
 			
 			} else {
 			  doLogin();
@@ -67,6 +69,7 @@ const  tokenExpired =_kc.onTokenExpired = () => {
 	_kc.updateToken(5).then((response) => {
 		
 		if (response) {
+			console.log("rrrrrrrr", _kc.token)
 			axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token;
 			window.localStorage.setItem("myToken",_kc.token)
 			
