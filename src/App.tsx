@@ -14,7 +14,7 @@ import YupDefault from "./tools/config/YupDefault";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getUserInfo } from "./redux/userInfo/userInfoReducer";
-import AddEditGeographic from "./pages/CustomGeographic/views/AddGeo/AddEditGeographicWrapper";
+import GeoWrapper from "./pages/CustomGeographic/views/AddGeo/GeoWrapper";
 
 function App() {
   const dispatch = useDispatch();
@@ -58,11 +58,11 @@ function App() {
         <Route path="/hub/edit" element={<HubEdit />} />
         <Route
           path="/basic-information/custom-geographic-category/add"
-          element={<AddEditGeographic />}
+          element={<GeoWrapper />}
         />
         <Route
           path="/basic-information/custom-geographic-category/edit"
-          element={<HubEdit />}
+          element={<GeoWrapper />}
         />
       </Routes>
     </div>

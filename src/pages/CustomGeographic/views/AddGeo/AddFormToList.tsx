@@ -22,8 +22,7 @@ const AddFormToList: FC<AddFormToListProps> = ({
 
   const validation = Yup.object().shape(
     {
-      name: Yup.string().required(),
-      code: Yup.number().required(),
+
       fromCountryDevision: Yup.array().required(),
       toCountryDevision: Yup.array().required(),
 
@@ -73,14 +72,27 @@ const AddFormToList: FC<AddFormToListProps> = ({
       ["fromSourceCity", "fromDestinationCity"],
     ]
   );
+  const validationTitle = Yup.object().shape({
+    name: Yup.string().required(),
+    code: Yup.number().required(),
+  });
+  const formikTitle = useFormik({
+    enableReinitialize: true,
+    validationSchema: validationTitle,
+    initialValues: {
+      isActive: true,
+      code: "",
+      name: "",
+    },
+    onSubmit: (values, { resetForm }) => {
+      resetForm();
+    },
+  });
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: validation,
     initialValues: {
       id: "",
-      code: "",
-      name: "",
-      isActive: true,
       fromCountryDevision: "",
       toCountryDevision: "",
       fromDestinationCity: "",
@@ -118,7 +130,6 @@ const AddFormToList: FC<AddFormToListProps> = ({
           : [];
 
       let data = {
-        ...values,
         id: values?.id ? values.id : uuid(),
         customDevisionDetails: attributeDivition,
       };
@@ -127,58 +138,62 @@ const AddFormToList: FC<AddFormToListProps> = ({
     },
   });
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="w-10/12 grid grid-cols-5 gap-2">
-        <div className="col-span-2">
-          <InputText
-            wrapperClassName="w-full col-span-2"
-            label="کد "
-            name="code"
-            handleChange={formik.handleChange}
-            values={formik.values.code}
-            important
-            type={"text"}
-            error={formik.touched.code && formik.errors.code}
+    <>
+      <form onSubmit={formikTitle.handleSubmit}>
+        <div className="w-10/12 grid grid-cols-5 gap-2">
+          <div className="col-span-2">
+            <InputText
+              wrapperClassName="w-full col-span-2"
+              label="کد "
+              name="code"
+              handleChange={formikTitle.handleChange}
+              values={formikTitle.values.code}
+              important
+              type={"text"}
+              error={formikTitle.touched.code && formikTitle.errors.code}
+            />
+          </div>
+          <div className="col-span-3">
+            <InputText
+              wrapperClassName="w-full "
+              label="عنوان"
+              name="name"
+              handleChange={formikTitle.handleChange}
+              values={formikTitle.values.name}
+              important
+              type={"text"}
+              error={formikTitle.touched.name && formikTitle.errors.name}
+            />
+          </div>
+        </div>
+      </form>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="w-10/12 grid grid-cols-5 gap-2">
+          <div className="col-span-4">
+            <fieldset className="border rounded-xl p-6">
+              <legend className="px-3"> جزئیات رده جغرافیایی</legend>
+              <div className="grid grid-cols-2 gap-6">
+                <Provinces form={formik} />
+              </div>
+            </fieldset>
+          </div>
+          <div className={` col-span-1  h-[40px] mt-[10px]`}>
+            <CustomSwitch
+              active={true}
+              handleChange={(value) => formikTitle.setFieldValue("isActive", value)}
+            />
+          </div>
+        </div>
+        <div className="w-full flex justify-end my-6">
+          <SimpleButton
+            icon={<BiPlus color="white" />}
+            type="submit"
+            text="درج در لیست"
+            className="full-tomato-btn px-[50px] w-fit "
           />
         </div>
-        <div className="col-span-3">
-          <InputText
-            wrapperClassName="w-full "
-            label="عنوان"
-            name="name"
-            handleChange={formik.handleChange}
-            values={formik.values.name}
-            important
-            type={"text"}
-            error={formik.touched.name && formik.errors.name}
-          />
-        </div>
-      </div>
-      <div className="w-10/12 grid grid-cols-5 gap-2">
-        <div className="col-span-4">
-          <fieldset className="border rounded-xl p-6">
-            <legend className="px-3"> جزئیات رده جغرافیایی</legend>
-            <div className="grid grid-cols-2 gap-6">
-              <Provinces form={formik} />
-            </div>
-          </fieldset>
-        </div>
-        <div className={` col-span-1  h-[40px] mt-[10px]`}>
-          <CustomSwitch
-            active={true}
-            handleChange={(value) => formik.setFieldValue("isActive", value)}
-          />
-        </div>
-      </div>
-      <div className="w-full flex justify-end my-6">
-        <SimpleButton
-          icon={<BiPlus color="white" />}
-          type="submit"
-          text="درج در لیست"
-          className="full-tomato-btn px-[50px] w-fit "
-        />
-      </div>
-    </form>
+      </form>
+    </>
   );
 };
 

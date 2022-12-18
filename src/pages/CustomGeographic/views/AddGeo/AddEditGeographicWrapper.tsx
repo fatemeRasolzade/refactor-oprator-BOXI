@@ -114,7 +114,7 @@ const AddEditGeographic = () => {
         pagination={7}
         selectable={false}
       />
-      <AddListToApi tableList={[]} />
+      
     </div>
   );
 };
