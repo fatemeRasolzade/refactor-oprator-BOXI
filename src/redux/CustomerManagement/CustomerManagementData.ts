@@ -2,42 +2,37 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postDataHeaderToServer } from "../../services/Service_call";
 import { CREATE_CUSTOMER } from "../../services/apiRoute";
 
-export const customerData = createAsyncThunk(
-  "customerList",
-  async (body: any) => {
-    const params = `/filter?pageNumber=${
-      body.pageNumber ? body.pageNumber : 1
-    }&pageSize=${body.pageSize ? body.pageSize : 10}`;
-    var data = {};
-    try {
-      data = await postDataHeaderToServer(
-        CREATE_CUSTOMER + params,
-        {
-          ...body,
-          pageNumber: undefined,
-          pageSize: undefined,
+export const customerData = createAsyncThunk("customerList", async (body: any) => {
+  const params = `/filter?pageNumber=${body.pageNumber ? body.pageNumber : 1}&pageSize=${body.pageSize ? body.pageSize : 10}`;
+  var data = {};
+  try {
+    data = await postDataHeaderToServer(
+      CREATE_CUSTOMER + params,
+      {
+        ...body,
+        pageNumber: undefined,
+        pageSize: undefined,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("myToken"),
         },
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("myToken"),
-          },
-        }
-      );
-    } catch (error) {
-      console.log("error ", error);
-    }
-    return data;
+      }
+    );
+  } catch (error) {
+    console.log("error ", error);
   }
-);
+  return data;
+});
 
 const initialState: any = {
-  productLists: [],
+  customerList: [],
   fetchpost: false,
   errorMessage: null,
   isUpdating: false,
 };
 
-const CustomerDefineList = createSlice({
+const CustomerList = createSlice({
   initialState: initialState,
   name: "customerList",
   reducers: {
@@ -60,5 +55,5 @@ const CustomerDefineList = createSlice({
   },
 });
 
-export const { updating } = CustomerDefineList.actions;
-export default CustomerDefineList.reducer;
+export const { updating } = CustomerList.actions;
+export default CustomerList.reducer;

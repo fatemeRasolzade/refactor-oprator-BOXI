@@ -3,14 +3,20 @@ import { Button, Dialog } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import InputText from "../../../../global/InputText/InputText";
 import { apiRoute } from "../../../../services/apiRoute";
-import { EditDataParams, PostDataParams, selectDataFromServer } from "../../../../services/Service_call";
-import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert";
+import {
+  EditDataParams,
+  PostDataParams,
+} from "../../../../services/Service_call";
+import {  SuccessAlert } from "../../../../global/alert/Alert";
 import { useDispatch } from "react-redux";
 import { AiOutlineEdit } from "react-icons/ai";
 import AddButton from "../../../../global/addButton/AddButton";
 import AddExcel from "../../../../components/exel/AddExcel";
 import { vendorData } from "../../../../redux/Transportation/vendor/VendorData";
-import { ContactNumberValidate, NationalIDValidator } from "../../../../tools/validations/ErrorHelper";
+import {
+  ContactNumberValidate,
+  NationalIDValidator,
+} from "../../../../tools/validations/ErrorHelper";
 import * as Yup from "yup";
 import { vehicleExcel } from "../../../../tools/services/ExcelInfoFile";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
@@ -24,7 +30,9 @@ const validation = Yup.object().shape({
   contactNumber: Yup.number().label("شماره تماس"),
 });
 
-const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
+const VendorActionForms: React.FC<PropsData> = ({
+  currentData,
+}): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
 
@@ -64,7 +72,9 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
     validate: (values) => {
       const errors = {};
       const [isValidNC, errNC] = NationalIDValidator(values.nationalCode);
-      const [isValidContact, errContact] = ContactNumberValidate(values.contactNumber);
+      const [isValidContact, errContact] = ContactNumberValidate(
+        values.contactNumber
+      );
       if (!isValidNC) {
         // @ts-ignore
         errors.nationalCode = errNC;
@@ -131,7 +141,10 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
       {!currentData ? (
         <AddButton ToggleOptions={ToggleOptions} />
       ) : (
-        <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
+        <button
+          className=" border-none	 text-[14px]  w-[20px] h-[20px] "
+          onClick={() => setIsModalOpen(!isModalOpen)}
+        >
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
@@ -174,7 +187,9 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
                 handleChange={formik.handleChange}
                 values={formik.values.contactNumber}
                 type={"text"}
-                error={formik.touched.contactNumber && formik.errors.contactNumber}
+                error={
+                  formik.touched.contactNumber && formik.errors.contactNumber
+                }
               />
             </div>
 
@@ -187,7 +202,9 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
                 values={formik.values.nationalCode}
                 important
                 type={"text"}
-                error={formik.touched.nationalCode && formik.errors.nationalCode}
+                error={
+                  formik.touched.nationalCode && formik.errors.nationalCode
+                }
               />
             </div>
           </div>
@@ -207,4 +224,4 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
   );
 };
 
-export default VendorActionForms;
+export default VendorActionForms

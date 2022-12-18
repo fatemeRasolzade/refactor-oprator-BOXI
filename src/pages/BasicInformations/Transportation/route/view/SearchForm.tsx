@@ -26,8 +26,7 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
   const [filterData, setFilterData] = useState({});
-  const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes);
-  const { vendorOptions } = useGetVendorOptions(apiRoute().get.selectVendor);
+
   const formik = useFormik({
     // enableReinitialize: true,
     initialValues: {
@@ -106,7 +105,7 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
                           handleChange={formik.setFieldValue}
                           values={formik.values.fuelTypeSelect}
                           error={formik.touched.fuelTypeSelect && formik.errors.fuelTypeSelect}
-                          options={fuelOptions.options || []}
+                          options={ []}
                       />
                       <InputSelect
                           label="نام شرکت نقلیه"
@@ -115,7 +114,7 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
                           handleChange={formik.setFieldValue}
                           values={formik.values.vendorSelect}
                           error={formik.touched.vendorSelect && formik.errors.vendorSelect}
-                          options={vendorOptions.options}
+                          options={[]}
                       />
                   </div>
                   <div>

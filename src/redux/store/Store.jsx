@@ -6,13 +6,20 @@ import RolesList from "../RolsData/RolesData";
 import PageNumber from "../PaginationAction/PaginationAction";
 import PersonnelList from "../PersonData/PersonsData";
 import ProductDefineList from "../ProductDefineData/ProductDefineData";
-import CustomerDefineList from "../CustomerManagement/CustomerManagementData";
+import CustomerList from "../CustomerManagement/CustomerManagementData";
+import ThirdPartyList from "../ThirdParty/ThirdPartyData";
+import ADMVehicleList from "../ADMVehicle/ADMVehicleData";
+import ServiceTimeList from "../ServiceTimeData/ServiceTimeData";
 import ServiceProvision from "../ServiceProvision/ServiceProvision";
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
 import EditHubTable from "../HubData/EditData";
+import selectRowTable from "../selectRowTable/selectRowTable";
+
 import VendorList from "../Transportation/vendor/VendorData";
 import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
 import RouteLists from '../Transportation/route/RouteData'
+import HubTypeTable from "../HubData/TypeHub"
+import userInfoReducer from "../userInfo/userInfoReducer";
 const persistConfig = {
   key: "root",
   storage,
@@ -20,18 +27,24 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
+  userInfo:userInfoReducer,
   hub: HubList,
   role: RolesList,
   paginate: PageNumber,
   personnel: PersonnelList,
   serviceDefine: ServiceData,
   productDefine: ProductDefineList,
-  customerDefine: CustomerDefineList,
+  customer: CustomerList,
+  thirdParty: ThirdPartyList,
+  ADMVehicle: ADMVehicleList,
+  serviceTime: ServiceTimeList,
   serviceProvision: ServiceProvision,
   editHub: EditHubTable,
+  selectRowTable: selectRowTable,
   vendor: VendorList,
   vehicleModel:VehicleModelLists,
-  route:RouteLists
+  route:RouteLists,
+  HubType:HubTypeTable
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

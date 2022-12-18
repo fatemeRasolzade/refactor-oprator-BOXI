@@ -1,12 +1,5 @@
 import axios from "axios";
-import {
-  SyntheticEvent,
-  FC,
-  DragEvent,
-  ChangeEvent,
-  useRef,
-  useState,
-} from "react";
+import { SyntheticEvent, FC, DragEvent, ChangeEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Modal from "../../global/Modal/Modal";
 import UploadFileIcon from "../../assets/icons/UploadFileIcon";
@@ -14,15 +7,11 @@ import SimpleButton from "../../global/SimpleButton/SimpleButton";
 
 interface AddExcelProps {
   excelInfo: any;
-  setOpenModal: any;
-  OpenModal: any;
+  setOpenModal: (value: boolean) => void;
+  OpenModal: boolean;
 }
 
-const AddExcel: FC<AddExcelProps> = ({
-  excelInfo,
-  setOpenModal,
-  OpenModal,
-}): JSX.Element => {
+const AddExcel: FC<AddExcelProps> = ({ excelInfo, setOpenModal, OpenModal }): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [theFile, setTheFile] = useState<any>();
@@ -52,10 +41,7 @@ const AddExcel: FC<AddExcelProps> = ({
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      if (
-        e.dataTransfer.files[0].type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      ) {
+      if (e.dataTransfer.files[0].type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
         setTheFile(e.dataTransfer.files[0]);
       } else {
         toast.error("فرمت فایل صحیح نیست");
@@ -73,6 +59,7 @@ const AddExcel: FC<AddExcelProps> = ({
   };
 
   const handleClear = () => setTheFile(null);
+
   const handleOpenUpload = () => inputRef?.current?.click();
 
   const handleSubmit = async (e: SyntheticEvent) => {
@@ -82,33 +69,32 @@ const AddExcel: FC<AddExcelProps> = ({
       let bodyFormData = new FormData();
       bodyFormData.append("file", theFile);
       try {
-        axios({
+        const response = await axios({
           headers: headers,
           method: "post",
           url: process.env.REACT_APP_BASE_URL + excelInfo.url,
           data: bodyFormData,
-        }).then((response) => {
-          toast.success("اطلاعات مورد نظر اضافه شد ");
-          setOpenModal(false);
-          handleClear();
-          if (response.status) {
-            const convert = Object.entries(response.data.payload).map(
-              ([key, value]) =>
-                persianResponse[key]
-                  ? "تعداد" +
-                    " " +
-                    value +
-                    " " +
-                    persianResponse[key] +
-                    " " +
-                    "اضافه شد"
-                  : ` تعداد ${value} عدد اضافه شد`
-            );
-            convert.forEach((response) => {
-              toast.success(response);
-            });
-          }
         });
+        toast.success("اطلاعات مورد نظر اضافه شد ");
+        setOpenModal(false);
+        handleClear();
+        if (response.status) {
+          const convert = Object.entries(response.data.payload).map(
+            ([key, value]) =>
+              persianResponse[key]
+                ? "تعداد" +
+                  " " +
+                  value +
+                  " " +
+                  persianResponse[key] +
+                  " " +
+                  "اضافه شد"
+                : ` تعداد ${value} عدد اضافه شد`
+          );
+          convert.forEach((response) => {
+            toast.success(response);
+          });
+        }
       } catch (error) {}
     }
   };
@@ -117,39 +103,27 @@ const AddExcel: FC<AddExcelProps> = ({
       <Modal visible={OpenModal} setVisible={setOpenModal} title="آپلود فایل">
         <form onSubmit={handleSubmit} className="centering flex-col w-[30rem]">
           <div className="text-center mb-5 w-full" onDragEnter={handleDrag}>
-            <input
-              accept=".xlsx"
-              type="file"
-              id="input-file-upload"
-              ref={inputRef}
-              multiple={true}
-              onChange={handleChange}
-              className="hidden"
-            />
+            <input accept=".xlsx" type="file" id="input-file-upload" ref={inputRef} multiple={true} onChange={handleChange} className="hidden" />
             <label
               id="label-file-upload"
               htmlFor="input-file-upload"
-              className={`centering border-2 border-dashed border-tomato  py-3 ${
-                dragActive ? "bg-lightTomato" : "bg-light"
-              } `}
+              className={`centering border-2 border-dashed border-tomato  py-3 ${dragActive ? "bg-lightTomato" : "bg-light"} `}
             >
               <div className="my-4 centering flex-col gap-3  ">
                 <UploadFileIcon />
-                <p className="text-base text-darkGray leading-7">
+                <p className="text-base text-darkGray leading-7 text-center">
                   فایل را در این قسمت بکشید و رها کنید <br />
-                  یا یک{" "}
-                  <span
+                  یا یک
+                  <button
+                    type="button"
                     className="px-1 text-tomato underline cursor-pointer"
                     onClick={handleOpenUpload}
                   >
-                    {" "}
-                    فایل آپلود{" "}
-                  </span>
+                    فایل آپلود
+                  </button>
                   کنید
                 </p>
-                <span className={`my-2 ${theFile ? "text-green" : "text-red"}`}>
-                  {theFile ? theFile?.name : "فایلی وجود ندارد"}
-                </span>
+                <span className={`my-2 ${theFile ? "text-green" : "text-red"}`}>{theFile ? theFile?.name : "فایلی وجود ندارد"}</span>
               </div>
             </label>
             {dragActive && (
@@ -175,17 +149,8 @@ const AddExcel: FC<AddExcelProps> = ({
             </a>
 
             <div className="flex-end-start gap-4">
-              <SimpleButton
-                className="full-gray-btn"
-                text="لغو"
-                handelClick={handleClear}
-              />
-              <SimpleButton
-                type="submit"
-                text="افزودن"
-                disabled={theFile ? false : true}
-                className="full-tomato-btn"
-              />
+              <SimpleButton className="full-gray-btn" text="لغو" handelClick={handleClear} />
+              <SimpleButton type="submit" text="افزودن" disabled={theFile ? false : true} className="full-tomato-btn" />
             </div>
           </div>
         </form>

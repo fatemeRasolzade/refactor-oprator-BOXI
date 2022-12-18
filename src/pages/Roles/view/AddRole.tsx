@@ -18,13 +18,12 @@ import { BiPlus } from "react-icons/bi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BeatLoader } from "react-spinners";
 
-import "react-checkbox-tree/lib/react-checkbox-tree.css";
-
 import CustomSwitch from "../../../global/Switch/Switch";
 import InputText from "../../../global/InputText/InputText";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { RoleData } from "../../../redux/RolsData/RolesData";
 import { SuccessAlert } from "../../../global/alert/Alert";
+import CheckBoxThree from "../../../components/checkbox/CheckBoxThree";
 
 interface EditRoleProps {
   currentData?: any;
@@ -175,6 +174,7 @@ const AddEditRole: FC<EditRoleProps> = ({
             <div className="w-full flex justify-between gap-x-12">
               <div className="w-[80%] flex-col">
                 <InputText
+                  wrapperClassName="w-full"
                   readOnly={isSomeEdit}
                   label="کدهاب"
                   name="name"
@@ -195,35 +195,18 @@ const AddEditRole: FC<EditRoleProps> = ({
               </div>
             </div>
             <div className="w-full mt-[15px]">
-              <div className="w-full relative">
-                <div className="flex justify-center pr-[10px] text-[0.875rem] font-sm text-[#686a68] dark:text-white absolute top-[-10px] right-[15px] bg-[white]">
-                  دسترسی ها
-                  <span className="text-[#ef5644]">&nbsp;* &nbsp;</span>
-                </div>
-                <div className="  border border-[#ababab] text-gray-900 text-sm rounded-lg w-[75%] focus:border-blue-500 block px-2.5 py-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  {loadingNode ? (
-                    <div className="flex w-full h-[200px] justify-center items-center">
-                      <BeatLoader color="#EF5644" />
-                    </div>
-                  ) : (
-                    <CheckboxTree
-                      direction="rtl"
-                      nodes={nodes}
-                      checked={treeChecked}
-                      expanded={expanded}
-                      onCheck={(checked: Array<string>) => {
-                        setTreeChecked(checked);
-                      }}
-                      onExpand={(expanded: any) => setExpanded(expanded)}
-                      icons={icons}
-                    />
-                  )}
-                </div>
-                <p className="text-[#d05372] text-[10px]">
-                  {treeCheckedError && treeCheckedError}
-                </p>
-              </div>
+              <CheckBoxThree
+                nodes={nodes}
+                treeCheckedError={treeCheckedError}
+                loadingNode={loadingNode}
+                title="دسترسی ها"
+                treeChecked={treeChecked}
+                setTreeChecked={(checked: Array<string>) => {
+                  setTreeChecked(checked);
+                }}
+              />
             </div>
+
             <div className="flex w-full justify-end gap-3 mt-3">
               <SimpleButton
                 type="submit"
@@ -245,20 +228,5 @@ const AddEditRole: FC<EditRoleProps> = ({
     </div>
   );
 };
-const icons = {
-  check: <MdCheckBox className="rct-icon rct-icon-check text-[#EF5644] " />,
-  uncheck: <MdCheckBoxOutlineBlank className="rct-icon rct-icon-uncheck" />,
-  halfCheck: (
-    <MdIndeterminateCheckBox className="rct-icon rct-icon-half-check" />
-  ),
-  expandClose: <MdChevronLeft className="rct-icon rct-icon-expand-close" />,
-  expandOpen: <MdKeyboardArrowDown className="rct-icon rct-icon-expand-open" />,
-  expandAll: <MdAddBox className="rct-icon rct-icon-expand-all" />,
-  collapseAll: (
-    <MdIndeterminateCheckBox className="rct-icon rct-icon-collapse-all" />
-  ),
-  parentClose: <></>,
-  parentOpen: <></>,
-  leaf: <></>,
-};
+
 export default AddEditRole;

@@ -31,7 +31,9 @@ const validation = Yup.object().shape({
   }),
 });
 
-const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
+const VehicleMakeActionForms: React.FC<PropsData> = ({
+  currentData,
+}): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -150,7 +152,10 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
       {!currentData ? (
         <AddButton ToggleOptions={ToggleOptions} />
       ) : (
-        <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
+        <button
+          className=" border-none	 text-[14px]  w-[20px] h-[20px] "
+          onClick={() => setIsModalOpen(!isModalOpen)}
+        >
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
@@ -244,7 +249,11 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
             </div>
           </div>
           <div className="flex-end-center mt-5 gap-3">
-            <SimpleButton handelClick={() => setIsModalOpen(false)} text="لغو" className="full-lightTomato-btn" />
+            <SimpleButton
+              handelClick={() => setIsModalOpen(false)}
+              text="لغو"
+              className="full-lightTomato-btn"
+            />
             <SimpleButton
               loading={Loading}
               type="submit"
@@ -259,4 +268,4 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({ currentData }): JSX.Eleme
   );
 };
 
-export default VehicleMakeActionForms;
+export default VehicleMakeActionForms

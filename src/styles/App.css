@@ -3,10 +3,7 @@
 .sidenav---sidenav-subnav---1EN61 {
   right: 70px;
 }
-.sidenav---sidenav-nav---3tvij
-  > .sidenav---sidenav-navitem---uwIJ-
-  > .sidenav---navitem---9uL5T
-  .sidenav---navicon---3gCRo {
+.sidenav---sidenav-nav---3tvij > .sidenav---sidenav-navitem---uwIJ- > .sidenav---navitem---9uL5T .sidenav---navicon---3gCRo {
   display: flex !important;
   justify-content: center;
   align-items: center;
@@ -27,10 +24,20 @@
   right: 64px !important;
 }
 
-.rmdp-input,
 .rmdp-container {
   width: 100% !important;
-  height: 36px !important;
+}
+.rmdp-input {
+  width: 100% !important;
+  height: 2.3rem !important;
+  /* margin-top: 0.25rem !important; */
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.25rem 0.5rem 0 0.5rem !important;
+}
+
+.icon-tabler-calendar-event {
+  left: 0.5rem !important;
 }
 
 .flex-rodal {
@@ -55,11 +62,6 @@
   display: none;
 }
 
-.inputSelect {
-  /* margin-bottom: 1rem; */
-  /* height:4rem; */
-}
-
 .css-1mskxrd-control {
   border-radius: 0.5rem !important;
   height: 2.5rem !important;
@@ -74,5 +76,18 @@
 .react-select-3-listbox {
   z-index: 50;
   height: 2.5rem !important;
-
+}
+.custom-multi-select .css-g1d714-ValueContainer{
+  height: 39px;
+  overflow:auto !important;
+  z-index: 400;
+  direction: ltr;
+  transform-origin: right ;
+  gap: 5px;
+  padding: 0 20px;
+}
+.react-checkbox-tree{
+  min-height: 200px;
+  max-height: 200px;
+  overflow: auto;
 }

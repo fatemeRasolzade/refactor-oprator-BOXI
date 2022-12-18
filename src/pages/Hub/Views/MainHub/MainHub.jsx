@@ -14,6 +14,7 @@ import { BiEditAlt, BiTrash } from "react-icons/bi";
 import {DeleteDataParams} from "../../../../services/Service_call"
 import { apiRoute } from "../../../../services/apiRoute";
 import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert";
+
 const Hub = () => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
@@ -52,11 +53,11 @@ const Hub = () => {
 dispatch(HubData(pageNumbers))
   },[pageNumbers])
 
-  useEffect(()=>{
- //dispatch(filterSwitch(ActiveSwitch))
+//   useEffect(()=>{
+//  //dispatch(filterSwitch(ActiveSwitch))
 
     
-  },[ActiveSwitch])
+//   },[ActiveSwitch])
 
 
 const handelDeleteHub=(id)=>{
@@ -65,9 +66,7 @@ const handelDeleteHub=(id)=>{
     if(res.status==="OK"){
       dispatch(deleteRow(id))
       SuccessAlert("با موفقیت پاک شد")
-      
-     
-    }else{
+      }else{
       ErrorAlert("خطا در برقراری ارتباط")
     }
   })
@@ -75,6 +74,8 @@ const handelDeleteHub=(id)=>{
 
   return (
     <div>
+
+
      <Breadcrumb beforePage="برگشت" curentPage="هاب" />
       <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" />
       <OptionsTable
@@ -82,8 +83,7 @@ const handelDeleteHub=(id)=>{
        btnLink="/hub/add"
        setIsActive={setActiveSwitch}
        isActive={ActiveSwitch}
-
-       />
+      />
      <StaticTable data={data} column={HubColumn} pagination={payload?.totalElements} />
     </div>
   );
