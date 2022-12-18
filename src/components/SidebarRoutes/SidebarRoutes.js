@@ -229,11 +229,11 @@ export const links = [
         component: <CustomerManagement />,
         label: "مدیریت مشتریان",
       },
-      {
-        to: "/basic-information/shelf-management",
-        component: <ShelfManagement />,
-        label: "مدیریت قفسه‌ها",
-      },
+      // {
+      //   to: "/basic-information/shelf-management",
+      //   component: <ShelfManagement />,
+      //   label: "مدیریت قفسه‌ها",
+      // },
       {
         to: "/basic-information/product-group",
         component: <ProductGroup />,
@@ -244,11 +244,11 @@ export const links = [
         component: <ServiceTime />,
         label: "تعریف مدت ارئه خدمت",
       },
-      {
-        to: "/basic-information/pincode-management",
-        component: <PincodeManagement />,
-        label: "مدیریت پین‌کد",
-      },
+      // {
+      //   to: "/basic-information/pincode-management",
+      //   component: <PincodeManagement />,
+      //   label: "مدیریت پین‌کد",
+      // },
       {
         to: "/basic-information/custom-geographic-category",
         component: <CustomGeographic />,
