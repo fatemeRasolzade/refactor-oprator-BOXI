@@ -7,6 +7,7 @@ const initialState: StateData = {
         code: "",
         fromCountryDevision: "",
         toCountryDevision: "",
+        isActive:true
     },
     geoData:{}
   };
@@ -19,9 +20,12 @@ const CustomGeoReducer = createSlice({
         },
         clearGeoList: (state)=>{
             state.geoData ={}
+        },
+        setFilter:(state, action) => {
+            state.filter= action.payload
         }
     }
 
 })
-export const { fetchGeoList ,clearGeoList } = CustomGeoReducer.actions;
+export const { fetchGeoList ,clearGeoList ,setFilter } = CustomGeoReducer.actions;
 export default CustomGeoReducer.reducer;

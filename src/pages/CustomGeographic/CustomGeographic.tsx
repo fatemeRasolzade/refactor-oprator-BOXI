@@ -10,7 +10,7 @@ import {
   clearGeoList,
   fetchGeoList,
 } from "../../redux/customGeo/customGeoReducer";
-import AddEditGeographic from "./views/AddGeo/AddEditGeographic";
+import AddEditGeographic from "./views/AddGeo/AddEditGeographicWrapper";
 import SearchFilter from "./views/SearchFilter";
 
 const CustomGeographic = () => {
@@ -23,13 +23,11 @@ const CustomGeographic = () => {
       const res = await axios({
         url: "http://boxi.local:40000/core-api/customcountrydevision/filter?pageNumber=1&pageSize=10",
         method: "POST",
-        data: filter,
+        data: { ...filter, isActive },
       });
       dispatch(fetchGeoList(res.data?.payload));
-
-      //
     } catch (error) {}
-  }, [dispatch, filter]);
+  }, [dispatch, filter, isActive]);
 
   useEffect(() => {
     getDataTable();

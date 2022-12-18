@@ -1,17 +1,30 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { BiChevronDown, BiSearch } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
+import Chip from "../../../global/Chip/Chip";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import { setFilter } from "../../../redux/customGeo/customGeoReducer";
 
 const SearchFilter = () => {
+  const dispatch = useDispatch();
+  const [filterDataChip, setFilterDataChip] = useState({});
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
+      name: "",
       code: "",
+      fromCountryDevision: "",
+      toCountryDevision: "",
     },
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      dispatch(setFilter(values));
+      setFilterDataChip(values);
+    },
   });
 
   return (
@@ -24,19 +37,15 @@ const SearchFilter = () => {
                 items={[]}
                 value={formik.values.code}
                 label={"کد "}
-                onChange={(e) =>
-                  formik.setFieldValue("personelCode", e.target.value)
-                }
+                onChange={(e) => formik.setFieldValue("code", e.target.value)}
               />
             </div>
             <div>
               <AutocompleteInput
                 items={[]}
-                value={formik.values.code}
+                value={formik.values.name}
                 label={"عنوان"}
-                onChange={(e) =>
-                  formik.setFieldValue("personelCode", e.target.value)
-                }
+                onChange={(e) => formik.setFieldValue("name", e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -59,18 +68,18 @@ const SearchFilter = () => {
               <div className="flex gap-6">
                 <AutocompleteInput
                   items={[]}
-                  value={formik.values.code}
-                  label={"عنوان"}
+                  value={formik.values.fromCountryDevision}
+                  label={"مبداء"}
                   onChange={(e) =>
-                    formik.setFieldValue("personelCode", e.target.value)
+                    formik.setFieldValue("fromCountryDevision", e.target.value)
                   }
                 />
                 <AutocompleteInput
                   items={[]}
-                  value={formik.values.code}
-                  label={"عنوان"}
+                  value={formik.values.toCountryDevision}
+                  label={"مقصد"}
                   onChange={(e) =>
-                    formik.setFieldValue("personelCode", e.target.value)
+                    formik.setFieldValue("toCountryDevision", e.target.value)
                   }
                 />
               </div>
@@ -78,6 +87,7 @@ const SearchFilter = () => {
           </PerfesionalSearch>
         </form>
       </div>
+      {filterDataChip && <Chip filterData={filterDataChip} formData={formik} />}
     </div>
   );
 };

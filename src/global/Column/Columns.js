@@ -201,11 +201,11 @@ export const HubCategoryColumn = [
 export const FetchGeoColumn = [
   {
     Header: "کد",
-    accessor: "name",
+    accessor: "code",
   },
   {
     Header: "عنوان",
-    accessor: "code",
+    accessor: "name",
   },
   {
     Header: "وضعیت",

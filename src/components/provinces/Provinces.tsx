@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { FC, useCallback, useEffect, useState } from "react";
+import { from } from "stylis";
 import InputSelect from "../../global/InputSelect/InputSelect";
 import MultiSelect from "../../global/multiselect/MultiSelect";
 
@@ -8,7 +9,10 @@ interface ProvincesProps {
 }
 const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
   const [countryOptions, setCountryOptions] = useState([]);
-  const [cityOptions, setcityOptions] = useState([]);
+  const [locationOption, setLocationOption] = useState({
+    fromLocation: [],
+    toLocation: [],
+  });
 
   const [cityOption, setCityOption] = useState({
     fromCity: [],
@@ -29,61 +33,62 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
     } catch (error) {}
   }, []);
 
-  const getOptionsFromCity = useCallback(async () => {
-    const province =
-      "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter=";
+  const getOptionsFromCity = useCallback(
+    async (data: any, type: "from" | "to") => {
+      const province = "http://172.16.55.144:40000/core-api/countryDevision";
 
-    try {
-      const res = await axios({
-        url: province,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("myToken"),
-        },
-      });
-      setCityOption((prev) => {
-        return { ...prev, fromCity: res?.data?.payload?.content };
-      });
-    } catch (error) {}
-  }, []);
-  const getOptionsToCity = useCallback(async () => {
-    const province =
-      "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter=";
+      try {
+        const res = await axios({
+          method: "POST",
+          url: province,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("myToken"),
+          },
+          data: data,
+        });
+        if (type === "from") {
+          setCityOption((prev) => {
+            return { ...prev, fromCity: res?.data?.payload?.content };
+          });
+        } else {
+          setCityOption((prev) => {
+            return { ...prev, toCity: res?.data?.payload?.content };
+          });
+        }
+      } catch (error) {}
+    },
+    []
+  );
+  const getOptionsFromLocation = useCallback(
+    async (data: any, type: "from" | "to") => {
+      const province = "http://172.16.55.144:40000/core-api/countryDevision";
 
-    try {
-      const res = await axios({
-        url: province,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("myToken"),
-        },
-      });
-      setCityOption((prev) => {
-        return { ...prev, toCity: res?.data?.payload?.content };
-      });
-    } catch (error) {}
-  }, []);
-  const getOptionsZone = useCallback(async () => {
-    const province =
-      "http://boxi.local:40000/core-api/countryDevision/province/1/city?filter=";
-
-    try {
-      const res = await axios({
-        url: province,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("myToken"),
-        },
-      });
-      setCountryOptions(res?.data?.payload?.content);
-    } catch (error) {}
-  }, []);
+      try {
+        const res = await axios({
+          method: "POST",
+          url: province,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("myToken"),
+          },
+          data: data,
+        });
+        if (type === "from") {
+          setLocationOption((prev) => {
+            return { ...prev, fromLocation: res?.data?.payload?.content };
+          });
+        } else {
+          setLocationOption((prev) => {
+            return { ...prev, toLocation: res?.data?.payload?.content };
+          });
+        }
+      } catch (error) {}
+    },
+    []
+  );
   useEffect(() => {
     getOptionsData();
     console.log("loop");
   }, [getOptionsData]);
-
-  useEffect(() => {
-    getOptionsFromCity();
-    getOptionsToCity();
-  }, [getOptionsFromCity, getOptionsToCity]);
 
   return (
     <>
@@ -93,7 +98,10 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           wrapperClassName="w-full z-[300] py-4"
           label="استان"
           name="fromCountryDevision"
-          handleChange={form.setFieldValue}
+          handleChange={(name: "string", value: any) => {
+            getOptionsFromCity(value, "from");
+            form.setFieldValue(name, value);
+          }}
           values={form.values.fromCountryDevision}
           options={countryOptions}
           error={
@@ -104,7 +112,10 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           wrapperClassName="w-full z-[200] py-4"
           label="شهر"
           name="fromSourceCity"
-          handleChange={form.setFieldValue}
+          handleChange={(name: "string", value: any) => {
+            getOptionsFromLocation(value, "from");
+            form.setFieldValue(name, value);
+          }}
           values={form.values.fromSourceCity}
           options={cityOption.fromCity}
           error={form.touched.fromSourceCity && form.errors.fromSourceCity}
@@ -115,7 +126,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           label="منطقه"
           name="fromSourceLocation"
           handleChange={form.setFieldValue}
-          options={[]}
+          options={locationOption.fromLocation}
           error={
             form.touched.fromSourceLocation && form.errors.fromSourceLocation
           }
@@ -127,7 +138,10 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           wrapperClassName="w-full z-[300] py-4"
           label="استان"
           name="toCountryDevision"
-          handleChange={form.setFieldValue}
+          handleChange={(name: "string", value: any) => {
+            getOptionsFromCity(value, "to");
+            form.setFieldValue(name, value);
+          }}
           values={form.values.toCountryDevision}
           options={countryOptions}
           error={
@@ -138,7 +152,10 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           wrapperClassName="w-full z-[200] py-4"
           label="شهر"
           name="fromDestinationCity"
-          handleChange={form.setFieldValue}
+          handleChange={(name: "string", value: any) => {
+            getOptionsFromLocation(value, "from");
+            form.setFieldValue(name, value);
+          }}
           values={form.values.fromDestinationCity}
           options={cityOption.toCity}
           error={
@@ -151,7 +168,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           name="fromDestinationLocation"
           handleChange={form.setFieldValue}
           values={form.values.fromDestinationLocation}
-          options={[]}
+          options={locationOption.toLocation}
           error={
             form.touched.fromDestinationLocation &&
             form.errors.fromDestinationLocation

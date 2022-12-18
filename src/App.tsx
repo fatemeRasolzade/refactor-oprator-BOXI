@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getUserInfo } from "./redux/userInfo/userInfoReducer";
 import CustomGeographic from "./pages/CustomGeographic/CustomGeographic";
-import AddEditGeographic from "./pages/CustomGeographic/views/AddGeo/AddEditGeographic";
+import AddEditGeographic from "./pages/CustomGeographic/views/AddGeo/AddEditGeographicWrapper";
 
 function App() {
   const dispatch = useDispatch();
