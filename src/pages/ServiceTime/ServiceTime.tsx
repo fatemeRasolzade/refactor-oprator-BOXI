@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ExportExcel, getDay, getPelak } from "../../tools/functions/Methods";
+import { ExportExcel } from "../../tools/functions/Methods";
 import { DELETE_SERVICETIME, GET_TIMEUNITTIPES } from "../../services/apiRoute";
 import StaticTable from "../../components/staticTable/StaticTable";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -56,8 +56,6 @@ const ServiceTime = () => {
       ? serviceTimeList?.content?.map((item: any) => {
           return {
             ...item,
-            pelak: getPelak(item),
-            timeWork: `(${getDay(item.dayToStartWork)} - ${item.timeToStartWork}) (${getDay(item.dayToFinishWork)} - ${item.timeToFinishWork})`,
             operation: (
               <div className="flex w-full gap-3 justify-center">
                 <DeleteOperation

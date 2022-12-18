@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -62,10 +62,11 @@ const ADMVehicleForm = ({ currentData }: CustomerFormProps) => {
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
 
-  const handleCloseCustomerForm = () => {
-    setOpen(false);
+  const handleCloseCustomerForm = () => setOpen(false);
+
+  useEffect(() => {
     handleReset();
-  };
+  }, [handleReset, open]);
 
   return (
     <>

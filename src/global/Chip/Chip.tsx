@@ -77,6 +77,8 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
     service: "سرویس",
     fromCountryDevision: "مبدا",
     toCountryDevision: "مقصد",
+    vehicleMakeSelect: "مدل",
+    selectRoute: "نام مسیر",
   };
   const valueAccessor = (value: any) => {
     if (value["label"]) {

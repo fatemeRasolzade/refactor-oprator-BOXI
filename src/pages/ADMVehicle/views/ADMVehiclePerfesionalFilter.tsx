@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import InputSelect from "../../../global/InputSelect/InputSelect";
-import { getThirdPartyCategory } from "../../../services/ThirdPartyApi";
+import { getVehicleMake } from "../../../services/ADMVehicleApi";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 
 type CustomerPerfesionalFilterProps = {
@@ -9,26 +9,25 @@ type CustomerPerfesionalFilterProps = {
 };
 
 const ADMVehiclePerfesionalFilter = ({ values, setFieldValue }: CustomerPerfesionalFilterProps) => {
-  const [ThirdPartyCategory, setThirdPartyCategory] = useState([]);
+  const [VehicleMake, setVehicleMake] = useState([]);
 
   useEffect(() => {
-    // getThirdPartyCategory().then((res) => setThirdPartyCategory(res));
+    initVehicleMake();
   }, []);
+
+  const initVehicleMake = () => {
+    getVehicleMake().then((res) => {
+      setVehicleMake(res);
+    });
+  };
 
   return (
     <>
       <div>
-        <AutocompleteInput label={"نام مسیر"} value={values.postalCode} onChange={(e) => setFieldValue("postalCode", e.target.value)} />
-        <InputSelect
-          label={"وضعیت تملک"}
-          name="selectThirdPartyCategory"
-          handleChange={setFieldValue}
-          values={values.selectThirdPartyCategory}
-          options={ThirdPartyCategory}
-        />
+        <AutocompleteInput label="نام مسیر" value={values.selectRoute} onChange={(e) => setFieldValue("selectRoute", e.target.value)} />
       </div>
       <div>
-        <AutocompleteInput label={"مدل"} value={values.address} onChange={(e) => setFieldValue("address", e.target.value)} />
+        <InputSelect label="مدل" name="vehicleMakeSelect" handleChange={setFieldValue} values={values.vehicleMakeSelect} options={VehicleMake} />
       </div>
     </>
   );

@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
+import DatePickers from "../../../../global/DatePicker/DatePicker";
 import { getVehicleMake } from "../../../../services/ADMVehicleApi";
+import VehiclePelak from "../../../../global/VehiclePelak/VehiclePelak";
 import { GET_ROUTE, HUB_SELECT } from "../../../../services/apiRoute";
 import { getDataFromServer, postDataToServer } from "../../../../services/Service_call";
-import DatePickers from "../../../../global/DatePicker/DatePicker";
-import VehiclePelak from "../../../../global/VehiclePelak/VehiclePelak";
 
 const ADMVehicleInformation = ({ formik, open, currentData }: any) => {
   const [VehicleMake, setVehicleMake] = useState([]);
@@ -32,9 +32,6 @@ const ADMVehicleInformation = ({ formik, open, currentData }: any) => {
     getDataFromServer(GET_ROUTE).then((res) => {
       setRoute(res.content);
     });
-    // getRoute().then((res) => {
-    //   setRoute(res);
-    // });
   };
 
   const initHub = () => {
