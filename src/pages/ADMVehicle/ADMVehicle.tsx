@@ -10,7 +10,7 @@ import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/Custo
 import { ADMVehicleColumn } from "./views/ADMVehicleColumn";
 import { ADMVehicleData, updating } from "../../redux/ADMVehicle/ADMVehicleData";
 import ADMVehicleSearchForm from "./views/ADMVehicleSearchForm";
-import ADMVehicleForm from "./views/ADMVehicle/ADMVehicleForm";
+import ADMVehicleForm from "./views/ADMVehicleForm/ADMVehicleForm";
 
 const ADMVehicle = () => {
   const [isActive, setIsActive] = useState(true);
