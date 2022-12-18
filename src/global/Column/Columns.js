@@ -145,7 +145,7 @@ export const ProductInfoColumn = [
   },
 ];
 
-export const ServiceProvisionColumns=[
+export const ServiceProvisionColumns = [
   {
     Header: "کد",
     accessor: "code",
@@ -178,20 +178,55 @@ export const ServiceProvisionColumns=[
     Header: "عملیات",
     accessor: "handover",
   },
-]
+];
 
-export const HubCategoryColumn=[
+export const HubCategoryColumn = [
   {
     Header: "عنوان",
     accessor: "name",
-  },{
+  },
+  {
     Header: "کد",
     accessor: "code",
-  },{
+  },
+  {
     Header: "توضیحات",
     accessor: "description",
-  },{
+  },
+  {
     Header: "عملیات",
     accessor: "handover",
   },
-]
+];
+export const FetchGeoColumn = [
+  {
+    Header: "کد",
+    accessor: "code",
+  },
+  {
+    Header: "عنوان",
+    accessor: "name",
+  },
+  {
+    Header: "وضعیت",
+    accessor: "status",
+  },
+  {
+    Header: "عملیات",
+    accessor: "operation",
+  },
+];
+export const AddGeoColumn = [
+  {
+    Header: "مبداء",
+    accessor: "fromCountryDevision",
+  },
+  {
+    Header: "مقصد",
+    accessor: "toCountryDevision",
+  },
+  {
+    Header: "عملیات",
+    accessor: "operation",
+  },
+];

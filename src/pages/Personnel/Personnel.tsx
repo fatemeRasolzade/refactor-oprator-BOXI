@@ -12,6 +12,7 @@ import {
   updating,
 } from "../../redux/PersonData/PersonsData";
 import { clearRows } from "../../redux/selectRowTable/selectRowTable";
+import { ExportExcel } from "../../tools/functions/Methods";
 import AddEditPerson from "./view/AddEditPerson";
 import EditPersonRole from "./view/EditPersonRole";
 import PersonnelSearchFrom from "./view/PersonnelSearchFrom";
@@ -67,7 +68,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف کارمند"}
-                  route={`http://boxi.local:40000/resource-api/employee/${item.id}`}
+                  route={`http://boxi.local:40000/resource-api/employee/${item?.id}`}
                   updating={updating}
                   handleDeleteActionNewData={handleGetnewDataOnDelete}
                 />
@@ -84,6 +85,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
       <PersonnelSearchFrom isActive={isActive} setFilterData={setFilterData} />
       <OptionsTable
         addComponentProps={() => <AddEditPerson />}
+        exportExcel={() => ExportExcel(personnelList?.content)}
         setIsActive={(value) => {
           setFilterData({
             ...filterData,

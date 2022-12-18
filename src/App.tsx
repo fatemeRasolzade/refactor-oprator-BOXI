@@ -11,8 +11,37 @@ import NotFound from "./pages/NotFound/NotFound";
 import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
 import YupDefault from "./tools/config/YupDefault";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { getUserInfo } from "./redux/userInfo/userInfoReducer";
+import GeoWrapper from "./pages/CustomGeographic/views/AddGeo/GeoWrapper";
 
 function App() {
+  const dispatch = useDispatch();
+  const username = localStorage.getItem("userName");
+  const handleGetuserInfo = useCallback(async () => {
+    try {
+      const res = await axios({
+        url: "http://boxi.local:40000/resource-api/permission/fetchPermissionsByUserName",
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("myToken"),
+        },
+        data: {
+          in: username,
+        },
+      });
+      dispatch(getUserInfo(res.data));
+    } catch (error) {}
+  }, [dispatch, username]);
+
+  useEffect(() => {
+    if (username) {
+      handleGetuserInfo();
+    }
+
+    console.log("loop");
+  }, [handleGetuserInfo, username]);
 
   return (
     <div className="App">
@@ -27,6 +56,14 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/hub/add" element={<HubAdd />} />
         <Route path="/hub/edit" element={<HubEdit />} />
+        <Route
+          path="/basic-information/custom-geographic-category/add"
+          element={<GeoWrapper />}
+        />
+        <Route
+          path="/basic-information/custom-geographic-category/edit"
+          element={<GeoWrapper />}
+        />
       </Routes>
     </div>
   );
