@@ -213,6 +213,6 @@ export const FetchGeoColumn = [
   },
   {
     Header: "عملیات",
-    accessor: "handover",
+    accessor: "operation",
   },
 ];

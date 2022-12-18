@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
+import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import { FetchGeoColumn } from "../../global/Column/Columns";
 import {
   clearGeoList,
@@ -29,6 +30,9 @@ const CustomGeographic = () => {
     } catch (error) {}
   }, [dispatch, filter, isActive]);
 
+  const handleGetnewDataOnDelete = () => {
+    getDataTable();
+  };
   useEffect(() => {
     getDataTable();
     return () => {
@@ -42,6 +46,18 @@ const CustomGeographic = () => {
           name: item?.name,
           code: item?.code,
           status: <span>{item?.isActive ? "فعال" : "غیر فعال"}</span>,
+          operation: (
+            <div className="">
+              <DeleteOperation
+                itemId={item.id}
+                title={"حذف کارمند"}
+                route={`http://boxi.local:40000/core-api/customcountrydevision/${item?.id}`}
+                handleDeleteActionNewData={handleGetnewDataOnDelete}
+              />
+
+              <button></button>
+            </div>
+          ),
         };
       })
     : [];
