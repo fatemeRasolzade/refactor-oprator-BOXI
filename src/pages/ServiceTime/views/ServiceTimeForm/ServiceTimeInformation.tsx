@@ -66,9 +66,16 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
 
   return (
     <>
-      {/* <p className="mb-8">مشخصات وسیله نقلیه</p> */}
       <div className="inputRow">
-        <InputText important label="عنوان" values={values.name} name="name" handleChange={setFieldValue} error={touched.name && errors.name} />
+        <InputText
+          wrapperClassName="w-[31.3rem]"
+          important
+          label="عنوان"
+          values={values.name}
+          name="name"
+          handleChange={setFieldValue}
+          error={touched.name && errors.name}
+        />
         <div className="mb-5 w-60 centering">
           <CustomSwitch active={values.isActive} handleChange={() => setFieldValue("isActive", !values.isActive)} />
         </div>
