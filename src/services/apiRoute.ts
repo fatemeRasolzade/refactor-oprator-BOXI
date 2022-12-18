@@ -1,17 +1,6 @@
-export const Base_url = "http://192.168.1.153:20000";
-export const Base_url2 = "http://192.168.1.153:8090";
-export const Base_url3 = "http://172.16.55.144:8090";
-export const Base_url4 = "http://boxi.local:40000";
-export const API_CONSIGNMENT = `${Base_url2}/core-api`;
-export const API_CONSIGNMENT2 = `${Base_url}/resource-api`;
-export const API_CONSIGNMENT3 = `${Base_url3}/core-api`;
-export const API_CONSIGNMENT4 = `${Base_url4}/core-api`;
-
-export const API_URL = `/core-api`;
-export const API_URL_2 = `/resource-api`;
-
 export const CORE_API = `${process.env.REACT_APP_BASE_URL}core-api`;
 export const RESOURCE_API = `${process.env.REACT_APP_BASE_URL}resource-api`;
+export const CONSIGNMENT_API = `${process.env.REACT_APP_BASE_URL}consignment-api`;
 
 const createUrl = (base: any, dir: any) => {
   return base + dir;
@@ -20,91 +9,91 @@ const createUrl = (base: any, dir: any) => {
 export const apiRoute = () => {
   return {
     get: {
-      get_city: createUrl(API_URL, "/countryDevision/city/2/loc?filter="),
-      get_province: createUrl(API_URL, "/countryDevision/province/1/city?filter="),
-      get_province_city: createUrl(API_URL, "/countryDevision/province/1/city?filter="),
-      get_province_loc: createUrl(API_URL, "/countryDevision/city/2/loc?filter="),
-      get_select_province: createUrl(API_URL, "/countryDevision?filter="),
-      login_Url: createUrl(API_URL, "/auth/login"),
-      user_url: createUrl(API_URL, "/users/all"),
-      filter_hub: createUrl(API_URL, "/hub/filter"),
-      get_hub_type: createUrl(API_URL, "/hubCategory/selectHubTypes"),
-      get_hub_category: createUrl(API_URL, "/hubCategory/select"),
+      get_city: createUrl(CORE_API, "/countryDevision/city/2/loc?filter="),
+      get_province: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),
+      get_province_city: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),
+      get_province_loc: createUrl(CORE_API, "/countryDevision/city/2/loc?filter="),
+      get_select_province: createUrl(CORE_API, "/countryDevision?filter="),
+      login_Url: createUrl(CORE_API, "/auth/login"),
+      user_url: createUrl(CORE_API, "/users/all"),
+      filter_hub: createUrl(CORE_API, "/hub/filter"),
+      get_hub_type: createUrl(CORE_API, "/hubCategory/selectHubTypes"),
+      get_hub_category: createUrl(CORE_API, "/hubCategory/select"),
       //hub_category
-      filter_hub_category: createUrl(API_URL, "/hubCategory/filter"),
+      filter_hub_category: createUrl(CORE_API, "/hubCategory/filter"),
       //select hub category
-      select_hub_category: createUrl(API_URL, "/hubCategory/select?filter"),
+      select_hub_category: createUrl(CORE_API, "/hubCategory/select?filter"),
       //select hub
-      select_hub: createUrl(API_URL, "/hub/select?filter="),
+      select_hub: createUrl(CORE_API, "/hub/select?filter="),
       //CUSTOM_GEOGRAPHIC
-      get_custom_geographics: createUrl(API_CONSIGNMENT, "/customcountrydevision/filter"),
+      get_custom_geographics: createUrl(CORE_API, "/customcountrydevision/filter"),
       //VENDOR
-      get_venders: createUrl(API_URL, "/vendor/filter"),
+      get_venders: createUrl(CORE_API, "/vendor/filter"),
       //VEHICLE_MODEL
-      GET_VEHICLE_MODEL: createUrl(API_URL, "/vehicleMake/filter"),
+      GET_VEHICLE_MODEL: createUrl(CORE_API, "/vehicleMake/filter"),
       //VEHICLE
-      GET_VEHICLE: createUrl(API_URL, "/vehicle/filter"),
+      GET_VEHICLE: createUrl(CORE_API, "/vehicle/filter"),
       //ROUTE
-      GET_ROUTE: createUrl(API_URL, "/route/filter"),
+      GET_ROUTE: createUrl(CORE_API, "/route/filter"),
       //Gate
-      GET_GATE: createUrl(API_URL, "/gate/filter"),
+      GET_GATE: createUrl(CORE_API, "/gate/filter"),
       //Dock
-      GET_DOCKS: createUrl(API_URL, "/dock/filter"),
+      GET_DOCKS: createUrl(CORE_API, "/dock/filter"),
       //BAG
-      GET_BAGS: createUrl(API_URL, "/bag/filter"),
+      GET_BAGS: createUrl(CORE_API, "/bag/filter"),
       //CONNECTION
-      GET_CONNECTION: createUrl(API_URL, "/connection/filter"),
+      GET_CONNECTION: createUrl(CORE_API, "/connection/filter"),
       //PRODUCT
-      GET_PRODUCT: createUrl(API_CONSIGNMENT4, "/vendor/select?filter="),
+      GET_PRODUCT: createUrl(CORE_API, "/vendor/select?filter="),
       //PRODUCT_GROUP
-      GET_PRODUCT_GROUPS: createUrl(API_CONSIGNMENT4, "/productGroup/select?filter="),
+      GET_PRODUCT_GROUPS: createUrl(CORE_API, "/productGroup/select?filter="),
       //SERVICE_TIME
-      GET_SERVICE_TIME: createUrl(API_CONSIGNMENT, "/timecommitment/filter"),
+      GET_SERVICE_TIME: createUrl(CORE_API, "/timecommitment/filter"),
       //ADM_VEHICLE
-      GET_ADM_VEHICLE: createUrl(API_URL, "/admVehicle/filter"),
+      GET_ADM_VEHICLE: createUrl(CORE_API, "/admVehicle/filter"),
       //Service
-      GET_SERVICES: createUrl(API_URL, `/service/select?fliter=`),
+      GET_SERVICES: createUrl(CORE_API, `/service/select?fliter=`),
     },
     post: {
       // create
-      hub: createUrl(API_URL, "/hub"),
-      createProduct: createUrl(API_CONSIGNMENT4, "/product"),
-      createVendor: createUrl(API_CONSIGNMENT4, "/vendor"),
-      VehicleModel: createUrl(API_CONSIGNMENT4, "/vehicleMake"),
+      hub: createUrl(CORE_API, "/hub"),
+      createProduct: createUrl(CORE_API, "/product"),
+      createVendor: createUrl(CORE_API, "/vendor"),
+      VehicleModel: createUrl(CORE_API, "/vehicleMake"),
       // filter
-      filterRole: createUrl(API_CONSIGNMENT2, "/role"),
-      // employee
-      filterPersonnel: createUrl(API_CONSIGNMENT2, "/employee"),
-      serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
-      product: createUrl(API_CONSIGNMENT4, "/product"),
-      service_provision:createUrl(API_CONSIGNMENT4, "/servicedeliveryservice"),
-      filterVendor: createUrl(API_CONSIGNMENT4, "/vendor"),
-      Type_Hub_table:createUrl(API_CONSIGNMENT4 , "/hubCategory")
+      filterRole: createUrl(RESOURCE_API, "/role"),
+      // employee,
+      service_provision: createUrl(CORE_API, "/servicedeliveryservice"),
+      filterVendor: createUrl(CORE_API, "/vendor"),
+      Type_Hub_table: createUrl(CORE_API, "/hubCategory"),
+      filterPersonnel: createUrl(RESOURCE_API, "/employee"),
+      serviceDefine: createUrl(CORE_API, "/service"),
+      product: createUrl(CORE_API, "/product"),
     },
     postExcel: {
-      exception: createUrl(API_CONSIGNMENT3, "/exception"),
+      exception: createUrl(CORE_API, "/exception"),
     },
     delete: {
-      role: createUrl(API_CONSIGNMENT2, "/role"),
-      personnel: createUrl(API_CONSIGNMENT2, "/employee"),
-      VehicleModel: createUrl(API_CONSIGNMENT4, "/vehicleMake"),
-      vendor: createUrl(API_CONSIGNMENT4, "/vendor"),
-      serviceDefine: createUrl(API_CONSIGNMENT4, "/service"),
-      productDefine: createUrl(API_CONSIGNMENT4, "/product"),
-      hubTable: createUrl(API_CONSIGNMENT4, "/hub"),
+      role: createUrl(RESOURCE_API, "/role"),
+      personnel: createUrl(RESOURCE_API, "/employee"),
+      VehicleModel: createUrl(CORE_API, "/vehicleMake"),
+      vendor: createUrl(CORE_API, "/vendor"),
+      serviceDefine: createUrl(CORE_API, "/service"),
+      productDefine: createUrl(CORE_API, "/product"),
+      hubTable: createUrl(CORE_API, "/hub"),
     },
     edit: {
-      EditVendor: createUrl(API_CONSIGNMENT4, "/vendor"),
-      VehicleModel: createUrl(API_CONSIGNMENT4, "/vehicleMake"),
-      productDefine: createUrl(API_CONSIGNMENT4, "/product"),
+      EditVendor: createUrl(CORE_API, "/vendor"),
+      VehicleModel: createUrl(CORE_API, "/vehicleMake"),
+      productDefine: createUrl(CORE_API, "/product"),
     },
   };
 };
 
 //Gloobal
-export const GET_PROVINCES = `${API_URL}/countryDevision/province/1/city?filter=`;
-export const GET_CITIES = `${API_URL}/countryDevision/province/1/city?filter=`;
-export const GET_REGIONS = `${API_URL}/countryDevision/city/2/loc?filter=`;
+export const GET_PROVINCES = `${CORE_API}/countryDevision/province/1/city?filter=`;
+export const GET_CITIES = `${CORE_API}/countryDevision/province/1/city?filter=`;
+export const GET_REGIONS = `${CORE_API}/countryDevision/city/2/loc?filter=`;
 export const GET_ADDRESS_TYPE = `${RESOURCE_API}/address/addressType`;
 export const GET_PHONETYPE = `${RESOURCE_API}/telephone/phoneType`;
 export const DEL_ADDRESS = `${RESOURCE_API}/address/`;
@@ -136,3 +125,10 @@ export const GET_ROUTE = `${CORE_API}/route/select?filter=`;
 
 //hub
 export const HUB_SELECT = `${CORE_API}/hub/select`;
+
+//ServiceTime
+// /timecommitment/selectTimeUnitTypes
+export const CREATE_SERVICETIME = `${CONSIGNMENT_API}/timecommitment`;
+export const EDIT_SERVICETIME = `${CONSIGNMENT_API}/timecommitment`;
+export const DELETE_SERVICETIME = `${CONSIGNMENT_API}/timecommitment/`;
+export const GET_TIMEUNITTIPES = `${CORE_API}/timecommitment/selectTimeUnitTypes`;
