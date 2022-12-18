@@ -126,4 +126,7 @@ export const HUB_SELECT = `${CORE_API}/hub/select`;
 
 //ServiceTime
 // /timecommitment/selectTimeUnitTypes
-
+export const CREATE_SERVICETIME = `${CONSIGNMENT_API}/timecommitment`;
+export const EDIT_SERVICETIME = `${CONSIGNMENT_API}/timecommitment`;
+export const DELETE_SERVICETIME = `${CONSIGNMENT_API}/timecommitment/`;
+export const GET_TIMEUNITTIPES = `${CORE_API}/timecommitment/selectTimeUnitTypes`;
