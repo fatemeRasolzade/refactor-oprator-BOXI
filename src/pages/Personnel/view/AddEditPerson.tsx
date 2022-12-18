@@ -368,7 +368,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               <SimpleButton
                 type="submit"
                 text="بله"
-                className="full-tomato-btn px-[50px] "
+                className="full-tomato-btn px-[90px] "
               />
               <SimpleButton
                 type="button"
