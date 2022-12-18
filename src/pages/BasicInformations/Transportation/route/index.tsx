@@ -10,6 +10,13 @@ import SearchForm from "./view/SearchForm";
 import RouteActionForm from "./view/RouteActionForm";
 import { filterRoute } from "../../../../redux/Transportation/route/RouteData";
 import AddRouteForms from "./view/AddRoute";
+import DatePicker from "react-multi-date-picker";
+import persian_fa from "react-date-object/locales/persian_fa";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import InputIcon from "react-multi-date-picker/components/input_icon";
+import persian from "react-date-object/calendars/persian";
+import "react-multi-date-picker/styles/colors/red.css";
+import TimePickers from "../../../../global/DatePicker/TimePicker";
 
 const Route: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
@@ -54,6 +61,7 @@ const Route: React.FC = (): JSX.Element => {
         addComponentProps={() => <AddRouteForms />}
         exportExcel={() => ExportExcel(routeLists?.content)}
       />
+       <TimePickers />
       <StaticTable
         data={data ? data : []}
         column={RouteColumns}
@@ -65,4 +73,3 @@ const Route: React.FC = (): JSX.Element => {
 };
 
 export default Route;
-

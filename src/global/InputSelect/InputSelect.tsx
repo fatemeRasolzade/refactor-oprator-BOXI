@@ -71,6 +71,7 @@ const InputSelect: FC<InputSelectProps> = ({
       </label>
       <Select
         isMulti={isMulti}
+        isDisabled={isDisabled}
         isLoading={options ? false : true}
         value={
           options ? options.find((option: any) => option.label === values) : ""
