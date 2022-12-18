@@ -16,8 +16,9 @@ import selectRowTable from "../selectRowTable/selectRowTable";
 
 import VendorList from "../Transportation/vendor/VendorData";
 import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
-import HubTypeTable from "../HubData/TypeHub"
+import HubTypeTable from "../HubData/TypeHub";
 import userInfoReducer from "../userInfo/userInfoReducer";
+import customGeoReducer from "../customGeo/customGeoReducer";
 const persistConfig = {
   key: "root",
   storage,
@@ -25,7 +26,7 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
-  userInfo:userInfoReducer,
+  userInfo: userInfoReducer,
   hub: HubList,
   role: RolesList,
   paginate: PageNumber,
@@ -39,8 +40,9 @@ const reducers = combineReducers({
   editHub: EditHubTable,
   selectRowTable: selectRowTable,
   vendor: VendorList,
-  vehicleModel:VehicleModelLists,
-  HubType:HubTypeTable
+  vehicleModel: VehicleModelLists,
+  HubType: HubTypeTable,
+  customGeo: customGeoReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
