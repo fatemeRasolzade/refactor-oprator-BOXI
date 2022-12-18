@@ -1,10 +1,5 @@
 import http from "./http_service";
-import {
-  CREATE_CUSTOMER,
-  EDIT_CUSTOMER,
-  GET_CUSTOMER_PARENT,
-  GET_CUSTOMER_TYPE,
-} from "./apiRoute";
+import { CREATE_CUSTOMER, EDIT_CUSTOMER, GET_CUSTOMER_PARENT, GET_CUSTOMER_TYPE } from "./apiRoute";
 
 export const getCustomerType = async () => {
   const { data } = await http.get(GET_CUSTOMER_TYPE);

@@ -6,9 +6,8 @@ import { apiRoute } from "../../../../services/apiRoute";
 import {
   EditDataParams,
   PostDataParams,
-  selectDataFromServer,
 } from "../../../../services/Service_call";
-import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert";
+import {  SuccessAlert } from "../../../../global/alert/Alert";
 import { useDispatch } from "react-redux";
 import { AiOutlineEdit } from "react-icons/ai";
 import AddButton from "../../../../global/addButton/AddButton";
@@ -141,7 +140,7 @@ const VendorActionForms: React.FC<PropsData> = ({
         <AddButton ToggleOptions={ToggleOptions} />
       ) : (
         <button
-          className=" border-none	text-[14px]  w-[20px] h-[20px] "
+          className=" border-none	 text-[14px]  w-[20px] h-[20px] "
           onClick={() => setIsModalOpen(!isModalOpen)}
         >
           <AiOutlineEdit className="w-full h-full" />
@@ -234,4 +233,4 @@ const VendorActionForms: React.FC<PropsData> = ({
   );
 };
 
-export default VendorActionForms;
+export default VendorActionForms

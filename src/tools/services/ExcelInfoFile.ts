@@ -54,3 +54,8 @@ export const ThirdPartyExcel = {
   url: "resource-api/thirdParty/importexcelfile?Entity=thirdParty",
   fileName: "thirdParty.xlsx",
 };
+
+export const ADMVehicleExcel = {
+  url: "",
+  fileName: "ADMVehicle.xlsx",
+};

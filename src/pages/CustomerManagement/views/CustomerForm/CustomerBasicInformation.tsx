@@ -3,16 +3,18 @@ import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getCustomerParent, getCustomerType } from "../../../../services/CustomerApi";
 
-const CustomerBasicInformation = ({ formik, open }: any) => {
+const CustomerBasicInformation = ({ formik, open, currentData }: any) => {
   const { values, errors, touched, handleChange, setFieldValue }: any = formik;
 
   const [customerType, setCustomerType] = useState([]);
   const [customerParent, setCustomerParent] = useState([]);
 
   useEffect(() => {
-    initCustomerType();
-    initParentCustomer();
-  }, []);
+    if (open) {
+      initCustomerType();
+      initParentCustomer();
+    }
+  }, [open]);
 
   const initCustomerType = () => {
     getCustomerType().then((res) => {
@@ -29,7 +31,15 @@ const CustomerBasicInformation = ({ formik, open }: any) => {
   return (
     <div className="border rounded-lg px-5 pt-10">
       <div className="inputRow">
-        <InputText important label="کد مشتری" values={values.code} name="code" handleChange={handleChange} error={touched.code && errors.code} />
+        <InputText
+          important
+          label="کد مشتری"
+          values={values.code}
+          name="code"
+          handleChange={handleChange}
+          error={touched.code && errors.code}
+          readOnly={currentData && true}
+        />
         <InputText important label="نام مشتری" values={values.name} name="name" handleChange={handleChange} error={touched.name && errors.name} />
         <InputSelect
           options={customerType}

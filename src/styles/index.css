@@ -91,17 +91,17 @@
     @apply w-64  relative before:absolute before:-top-14 before:right-14 before:bg-white before:z-10;
   }
   .chips .transition-colors {
-    @apply top-0 left-0;
+    @apply top-1 left-0 right-[92%] bg-transparent border border-gray-300;
   }
   .chips .-translate-y-2\/4 {
     @apply top-10 right-5;
   }
 
   .autocompleteInput {
-    @apply w-full before:content-[attr(data-before)] focus-visible:outline-none relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0 pt-1;
+    @apply w-full before:content-[attr(data-before)] focus-visible:outline-none relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0 mt-1 text-sm;
   }
   .autocompleteWrapper {
-    @apply flex-between-center relative h-10 pr-2 pl-2 min-w-[15rem] border border-darkBorder rounded-lg text-darkGray;
+    @apply flex-between-center relative h-10 px-2 min-w-[15rem] border border-darkBorder rounded-lg text-darkGray;
   }
   .autocompleteLabel {
     @apply absolute -top-3 right-5 bg-white   px-2 text-darkGray text-sm;
@@ -162,4 +162,5 @@
   .css-1mskxrd-control {
     @apply border !border-darkBorder !rounded-lg;
   }
+ 
 }

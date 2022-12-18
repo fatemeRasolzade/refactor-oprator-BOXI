@@ -12,9 +12,8 @@ import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
 import YupDefault from "./tools/config/YupDefault";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserInfo } from "./redux/userInfo/userInfoReducer";
 import axios from "axios";
-import UserService from "./services/keycloakService";
+import { getUserInfo } from "./redux/userInfo/userInfoReducer";
 
 function App() {
   const dispatch = useDispatch();

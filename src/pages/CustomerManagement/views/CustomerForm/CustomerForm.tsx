@@ -17,6 +17,7 @@ import CustomerNotificationInformation from "./CustomerNotificationInformation";
 import CustomerCommunicationInformation from "./CustomerCommunicationInformation/CustomerCommunicationInformation";
 import { customerData } from "../../../../redux/CustomerManagement/CustomerManagementData";
 import { CusotmerFormInitialValues, CustomerFormCurrentValues, CustomerFormValidation } from "./CustomerFormVariable";
+import { EconomicCodeValidate, NationalCodeValidator, NationalIDValidator } from "../../../../tools/validations/ErrorHelper";
 
 type CustomerFormProps = {
   currentData?: any;
@@ -53,30 +54,29 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
     enableReinitialize: true,
     validationSchema: currentData ? CustomerEditValidation : CustomerAddValidation,
     initialValues: currentData ? CustomerFormCurrentValues(currentData) : CusotmerFormInitialValues,
-    // validate: (values) => {
-    //   const errors = {};
-    //   const [isValidNC, errNC] = NationalCodeValidator(
-    //     values.nationalCode,
-    //     true
-    //   );
-    //   if (values.selectCustomerType?.id === 0 && !isValidNC) {
-    //     errors.nationalCode = errNC;
-    //   }
-    //   if (values.selectCustomerType?.id === 1) {
-    //     const [isValidNI, errNI] = NationalIDValidator(values.nationalId, true);
-    //     if (values.selectCustomerType?.id === 1 && !isValidNI) {
-    //       errors.nationalId = errNI;
-    //     }
-    //     const [isValidEC, errEC] = EconomicCodeValidate(
-    //       values.economicCode,
-    //       true
-    //     );
-    //     if (values.selectCustomerType?.id === 1 && !isValidEC) {
-    //       errors.economicCode = errEC;
-    //     }
-    //   }
-    //   return errors;
-    // },
+    validate: (values) => {
+      const errors = {};
+      if (values.selectCustomerType?.id === 0) {
+        const [isValidNC, errNC] = NationalCodeValidator(values.nationalCode, true);
+        if (!isValidNC) {
+          // @ts-ignore
+          errors.nationalCode = errNC;
+        }
+      }
+      if (values.selectCustomerType?.id === 1) {
+        const [isValidNI, errNI] = NationalIDValidator(values.nationalId, true);
+        if (!isValidNI) {
+          // @ts-ignore
+          errors.nationalId = errNI;
+        }
+        const [isValidEC, errEC] = EconomicCodeValidate(values.economicCode, true);
+        if (values.selectCustomerType?.id === 1 && !isValidEC) {
+          // @ts-ignore
+          errors.economicCode = errEC;
+        }
+      }
+      return errors;
+    },
     onSubmit: (values: any) => {
       setLoading(true);
       if (currentData) {
@@ -155,7 +155,7 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
       <AddExcel excelInfo={CustomerExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} />
       <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}>
         <form onSubmit={handleSubmit}>
-          <CustomerBasicInformation formik={formik} open={open} />
+          <CustomerBasicInformation formik={formik} open={open} currentData={currentData} />
           <CustomerUsernameInformation formik={formik} currentData={currentData} />
           <CustomerNotificationInformation formik={formik} />
           <CustomerCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} />

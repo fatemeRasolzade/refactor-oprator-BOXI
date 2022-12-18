@@ -144,3 +144,54 @@ export const ProductInfoColumn = [
     accessor: "operation",
   },
 ];
+
+export const ServiceProvisionColumns=[
+  {
+    Header: "کد",
+    accessor: "code",
+  },
+  {
+    Header: "عنوان",
+    accessor: "name",
+  },
+  {
+    Header: "سرویس",
+    accessor: "service",
+  },
+  {
+    Header: "وضعیت",
+    accessor: "isActive",
+  },
+  {
+    Header: "تاریخ اعتبار از",
+    accessor: "validDateFrom",
+  },
+  {
+    Header: "تاریخ اعتبار تا",
+    accessor: "validDateTo",
+  },
+  {
+    Header: "نوع تخفیف",
+    accessor: "type",
+  },
+  {
+    Header: "عملیات",
+    accessor: "handover",
+  },
+]
+
+export const HubCategoryColumn=[
+  {
+    Header: "عنوان",
+    accessor: "name",
+  },{
+    Header: "کد",
+    accessor: "code",
+  },{
+    Header: "توضیحات",
+    accessor: "description",
+  },{
+    Header: "عملیات",
+    accessor: "handover",
+  },
+]

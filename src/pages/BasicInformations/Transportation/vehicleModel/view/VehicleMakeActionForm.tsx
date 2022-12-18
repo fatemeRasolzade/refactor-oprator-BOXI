@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Dialog } from "@material-tailwind/react";
+import { Dialog } from "@material-tailwind/react";
 import { useFormik } from "formik";
 
 import { useDispatch } from "react-redux";
@@ -148,7 +148,7 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
         <AddButton ToggleOptions={ToggleOptions} />
       ) : (
         <button
-          className=" border-none	text-[14px]  w-[20px] h-[20px] "
+          className=" border-none	 text-[14px]  w-[20px] h-[20px] "
           onClick={() => setIsModalOpen(!isModalOpen)}
         >
           <AiOutlineEdit className="w-full h-full" />
@@ -172,12 +172,12 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
             <div>
               <InputText
                 label="کد شرکت"
-                // className="w-full"
+                wrapperClassName="z-50"
                 name="code"
                 handleChange={formik.handleChange}
                 values={formik.values.code}
                 important
-                type={"text"}
+                // // type={"text"}
                 error={formik.touched.code && formik.errors.code}
               />
             </div>
@@ -252,4 +252,4 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
   );
 };
 
-export default VehicleMakeActionForms;
+export default VehicleMakeActionForms

@@ -36,6 +36,7 @@ const CustomerSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageNum
   const { values, handleSubmit, setFieldValue, handleReset }: any = formik;
 
   useEffect(() => {
+
     dispatch(
       customerData({
         ...values,
