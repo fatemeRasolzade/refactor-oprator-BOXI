@@ -17,7 +17,6 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
     if (open) {
       initVehicleMake();
       initRoute();
-      initHub();
     }
   }, [open]);
 
@@ -34,35 +33,6 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
     // getRoute().then((res) => {
     //   setRoute(res);
     // });
-  };
-
-  const initHub = () => {
-    postDataToServer(HUB_SELECT, [
-      {
-        id: 463,
-        label: "A100",
-        name: "تست",
-        parent: 0,
-        children: [],
-      },
-      {
-        id: 484,
-        label: "A100",
-        name: "تست",
-        parent: 0,
-        children: [],
-      },
-      {
-        id: 447,
-        label: "A100",
-        name: "تست",
-        parent: 0,
-        children: [],
-      },
-    ]).then((res) => {
-      console.log(res);
-      setHub(res.payload.content);
-    });
   };
 
   return (
@@ -82,8 +52,15 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
         </div>
       </div>
       <div className="inputRow">
-        <InputText important label="از " values={values.from} name="from" handleChange={handleChange} error={touched.from && errors.from} />
-        <InputText important label=" تا" values={values.to} name="to" handleChange={handleChange} error={touched.to && errors.to} />
+        <InputText
+          important
+          label="مدت ارائه خدمات از "
+          values={values.from}
+          name="from"
+          handleChange={handleChange}
+          error={touched.from && errors.from}
+        />
+        <InputText important label="مدت ارائه خدمات تا" values={values.to} name="to" handleChange={handleChange} error={touched.to && errors.to} />
         <InputSelect
           options={Hub}
           label="واحد  "
