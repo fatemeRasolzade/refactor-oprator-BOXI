@@ -1,24 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ExportExcel, getDay, getPelak } from "../../tools/functions/Methods";
-import { DELETE_ADMVEHICLE } from "../../services/apiRoute";
+import { DELETE_SERVICETIME, GET_TIMEUNITTIPES } from "../../services/apiRoute";
 import StaticTable from "../../components/staticTable/StaticTable";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
 import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/CustomOptionsKeyword";
 import { ServiceTimeColumn } from "./views/ServiceTimeColumn";
-import { ADMVehicleData, updating } from "../../redux/ADMVehicle/ADMVehicleData";
-import ADMVehicleSearchForm from "./views/ServiceTimeSearchForm";
-import ADMVehicleForm from "./views/ServiceTimeForm/ServiceTimeForm";
+import { serviceTimeData, updating } from "../../redux/ServiceTimeData/ServiceTimeData";
+import ServiceTimeSearchForm from "./views/ServiceTimeSearchForm";
+import ServiceTimeForm from "./views/ServiceTimeForm/ServiceTimeForm";
+import { getDataFromServer } from "../../services/Service_call";
 
 const ServiceTime = () => {
   const [isActive, setIsActive] = useState(true);
   const [Loading, setLoading] = useState(false);
+  const [TimeUnitType, setTimeUnitType] = useState([]);
+
+  useEffect(() => {
+    getDataFromServer(GET_TIMEUNITTIPES).then((res) => setTimeUnitType(res));
+  }, []);
+
   const dispatch = useDispatch();
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
-  const handleGetExcel = () => ExportExcel(ADMVehicleList?.content);
+  const handleGetExcel = () => ExportExcel(serviceTimeList?.content);
 
   const options = [
     {
@@ -29,18 +36,13 @@ const ServiceTime = () => {
     { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
   ];
 
-  const { ADMVehicleList, isUpdating } = useSelector((state: any) => state.ADMVehicle);
+  const { serviceTimeList, isUpdating } = useSelector((state: any) => state.serviceTime);
 
   const handleDeleteActionNewData = () => {
     setLoading(true);
     dispatch(
-      ADMVehicleData({
-        hubCode: "",
-        hubName: "",
-        vehicleNumber0: "",
-        vehicleNumber1: "",
-        vehicleNumber2: "",
-        vehicleNumber3: "",
+      serviceTimeData({
+        name: "",
         isActive: isActive,
         pageSize: 10,
         pageNumber: pageNumbers,
@@ -50,8 +52,8 @@ const ServiceTime = () => {
   };
 
   const data =
-    ADMVehicleList?.content?.length !== 0
-      ? ADMVehicleList?.content?.map((item: any) => {
+    serviceTimeList?.content?.length !== 0
+      ? serviceTimeList?.content?.map((item: any) => {
           return {
             ...item,
             pelak: getPelak(item),
@@ -61,11 +63,11 @@ const ServiceTime = () => {
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف مدت ارائه خدمات"}
-                  route={DELETE_ADMVEHICLE + `/${item.id}`}
+                  route={DELETE_SERVICETIME + `/${item.id}`}
                   updating={updating}
                   handleDeleteActionNewData={handleDeleteActionNewData}
                 />
-                <ADMVehicleForm currentData={item} />
+                <ServiceTimeForm currentData={item} TimeUnitType={TimeUnitType} />
               </div>
             ),
           };
@@ -75,16 +77,16 @@ const ServiceTime = () => {
   return (
     <>
       <Breadcrumb beforePage="برگشت" curentPage="مدت ارائه خدمات" />
-      <ADMVehicleSearchForm isActive={isActive} isUpdating={isUpdating} pageNumbers={pageNumbers} />
+      <ServiceTimeSearchForm isActive={isActive} isUpdating={isUpdating} pageNumbers={pageNumbers} TimeUnitType={TimeUnitType} />
       <div className="flex-start-center gap-20 mt-6">
-        <ADMVehicleForm />
+        <ServiceTimeForm TimeUnitType={TimeUnitType} />
         <TestCustomOptions options={options} />
       </div>
       <StaticTable
         selectable={false}
         data={data ? data : []}
         column={ServiceTimeColumn}
-        pagination={ADMVehicleList?.totalElements}
+        pagination={serviceTimeList?.totalElements}
         loading={Loading}
       />
     </>

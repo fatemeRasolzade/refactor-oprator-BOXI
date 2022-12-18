@@ -2,8 +2,7 @@ import axios from "axios";
 import { ErrorAlert } from "../global/alert/Alert";
 import UserService from "./keycloakService";
 
-axios.defaults.headers.common["Authorization"] =
-  "Bearer " + localStorage.getItem("Authorization");
+axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("myToken");
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 axios.interceptors.response.use(null, (error) => {
   const errorStatus = error.response.status;
@@ -34,9 +33,7 @@ const configure = () => {
   axios.interceptors.request.use((config) => {
     if (UserService.isLoggedIn()) {
       const cb = () => {
-        config.headers.Authorization = `Bearer ${localStorage.getItem(
-          "myToken"
-        )}`;
+        config.headers.Authorization = `Bearer ${localStorage.getItem("myToken")}`;
         return Promise.resolve(config);
       };
       return UserService.updateToken(cb);
