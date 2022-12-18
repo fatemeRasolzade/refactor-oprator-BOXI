@@ -10,7 +10,7 @@ import { ServiceTimeFormCurrentValues, ServiceTimeFormInitialValues, ServiceTime
 import ServiceTimeInformation from "./ServiceTimeInformation";
 import { EditDataParams, postDataToServer } from "../../../../services/Service_call";
 import { CREATE_SERVICETIME, EDIT_SERVICETIME } from "../../../../services/apiRoute";
-import ServiceTimeData from "../../../../redux/ServiceTimeData/ServiceTimeData";
+import { serviceTimeData } from "../../../../redux/ServiceTimeData/ServiceTimeData";
 
 type ServiceTimeFormProps = {
   currentData?: any;
@@ -35,7 +35,7 @@ const ServiceTimeForm = ({ currentData, TimeUnitType }: ServiceTimeFormProps) =>
           id: currentData.id,
         })
           .then((response) => {
-            // dispatch(ServiceTimeData({}) as any);
+            dispatch(serviceTimeData({}) as any);
             setOpen(false);
             response.status && toast.success("مدت ارائه خدمات ویرایش شد");
           })
@@ -44,7 +44,7 @@ const ServiceTimeForm = ({ currentData, TimeUnitType }: ServiceTimeFormProps) =>
       } else {
         postDataToServer(CREATE_SERVICETIME, values)
           .then(() => {
-            // dispatch(ServiceTimeData({}) as any);
+            dispatch(serviceTimeData({}) as any);
             setOpen(false);
             toast.success("مدت ارائه خدمات افزوده شد");
           })

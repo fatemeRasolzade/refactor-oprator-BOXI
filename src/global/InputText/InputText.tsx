@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { BiHide, BiShow } from "react-icons/bi";
+
 type InputTextProps = {
   error?: any;
   values: any;
@@ -10,6 +13,7 @@ type InputTextProps = {
   classNames?: string;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   wrapperClassName?: string;
+  password?: boolean;
 };
 const InputText = ({
   classNames,
@@ -23,7 +27,9 @@ const InputText = ({
   readOnly,
   values,
   wrapperClassName,
+  password,
 }: InputTextProps) => {
+  const [ShowPassowrd, setShowPassowrd] = useState(false);
   return (
     <div className={`flex flex-col ${wrapperClassName}`}>
       <div className={`autocompleteWrapper ${classNames} ${error && "border-red"} ${readOnly && "opacity-40"} `}>
@@ -36,9 +42,14 @@ const InputText = ({
           name={name}
           value={values}
           onChange={handleChange}
-          type={type}
+          type={ShowPassowrd ? "password" : type}
           placeholder={placeholder}
         />
+        {password && (
+          <div className="text-darkBorder cursor-pointer" onClick={() => setShowPassowrd(!ShowPassowrd)}>
+            {ShowPassowrd ? <BiHide size={20} /> : <BiShow size={20} />}
+          </div>
+        )}
       </div>
       <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
