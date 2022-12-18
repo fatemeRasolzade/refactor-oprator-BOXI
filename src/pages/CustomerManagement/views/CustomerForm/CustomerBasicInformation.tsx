@@ -16,6 +16,12 @@ const CustomerBasicInformation = ({ formik, open, currentData }: any) => {
     }
   }, [open]);
 
+  useEffect(() => {
+    setFieldValue("nationalCode", "");
+    setFieldValue("nationalId", "");
+    setFieldValue("economicCode", "");
+  }, [setFieldValue, values.selectThirdPartyType.id]);
+
   const initCustomerType = () => {
     getCustomerType().then((res) => {
       setCustomerType(res);
