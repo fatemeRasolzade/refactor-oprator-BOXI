@@ -12,6 +12,7 @@ import MultiSelect from "../../../../global/multiselect/MultiSelect";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import { useLocation } from "react-router-dom";
+import { convertToObjects, convertUsingProduct } from "../../../../tools/functions/Methods";
 
 interface ProductInfoFormProps {
   tableList: any;
@@ -436,23 +437,4 @@ export const ValueCompare = (digit1: string, digit2: string) => {
     isValidValue = true;
   }
   return [isValidValue, errValue];
-};
-const convertToObjects = (from: any, to: any, type: any) => {
-  let arr = [];
-  for (let i = 0; i < from.length; i++) {
-    for (let j = 0; j < to.length; j++) {
-      arr.push({ fromCountryDevision: from[i], toCountryDevision: to[j] });
-    }
-  }
-  return arr;
-};
-const convertUsingProduct = (usingProduct: any, product: any) => {
-  let arr = [];
-  for (let x of usingProduct) {
-    arr.push({
-      parent: product,
-      child: x,
-    });
-  }
-  return arr;
 };

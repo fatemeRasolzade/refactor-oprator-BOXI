@@ -11,6 +11,7 @@ import {
   clearGeoList,
   fetchGeoList,
 } from "../../redux/customGeo/customGeoReducer";
+import { ExportExcel } from "../../tools/functions/Methods";
 import AddEditGeographic from "./views/AddGeo/AddEditGeographicWrapper";
 import SearchFilter from "./views/SearchFilter";
 
@@ -70,6 +71,7 @@ const CustomGeographic = () => {
       />
       <SearchFilter />
       <OptionsTable
+        exportExcel={() => ExportExcel(geoData?.content)}
         // addComponentProps={() => <AddEditGeographic />}
         btnLink="/basic-information/custom-geographic-category/add"
         setIsActive={(value) => {
@@ -80,6 +82,7 @@ const CustomGeographic = () => {
           setIsActive(!isActive);
         }}
         isActive={isActive}
+
         // customComponent={() => <AddEditGeographic isGroup={true} />}
       />
       <StaticTable

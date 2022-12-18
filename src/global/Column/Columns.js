@@ -216,3 +216,17 @@ export const FetchGeoColumn = [
     accessor: "operation",
   },
 ];
+export const AddGeoColumn = [
+  {
+    Header: "مبداء",
+    accessor: "fromCountryDevision",
+  },
+  {
+    Header: "مقصد",
+    accessor: "toCountryDevision",
+  },
+  {
+    Header: "عملیات",
+    accessor: "operation",
+  },
+];

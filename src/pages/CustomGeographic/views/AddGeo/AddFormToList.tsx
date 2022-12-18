@@ -3,18 +3,128 @@ import { useFormik } from "formik";
 import React, { FC } from "react";
 import { BiPlus } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { v4 as uuid } from "uuid";
+
 import Provinces from "../../../../components/provinces/Provinces";
 import InputText from "../../../../global/InputText/InputText";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import CustomSwitch from "../../../../global/Switch/Switch";
+import { convertToObjects } from "../../../../tools/functions/Methods";
 
-interface AddFormToListProps {}
-const AddFormToList: FC<AddFormToListProps> = (): JSX.Element => {
+interface AddFormToListProps {
+  setTableList: (values: any) => void;
+}
+const AddFormToList: FC<AddFormToListProps> = ({
+  setTableList,
+}): JSX.Element => {
   const navigate = useNavigate();
+
+  const validation = Yup.object().shape(
+    {
+      name: Yup.string().required(),
+      code: Yup.number().required(),
+      fromCountryDevision: Yup.array().required(),
+      toCountryDevision: Yup.array().required(),
+
+      fromSourceCity: Yup.array().when(
+        "fromDestinationCity",
+        (val: any, schema: any) => {
+          if (val?.length > 0) {
+            return Yup.array().required();
+          } else {
+            return Yup.array().notRequired();
+          }
+        }
+      ),
+      fromDestinationCity: Yup.array().when(
+        "fromSourceCity",
+        (val: any, schema: any) => {
+          if (val?.length > 0) {
+            return Yup.array().required();
+          } else {
+            return Yup.array().notRequired();
+          }
+        }
+      ),
+      fromDestinationLocation: Yup.array().when(
+        "fromSourceLocation",
+        (val: any, schema: any) => {
+          if (val?.length > 0) {
+            return Yup.array().required();
+          } else {
+            return Yup.array().notRequired();
+          }
+        }
+      ),
+      fromSourceLocation: Yup.array().when(
+        "fromDestinationLocation",
+        (val: any, schema: any) => {
+          if (val) {
+            return Yup.array().required();
+          } else {
+            return Yup.array().notRequired();
+          }
+        }
+      ),
+    },
+    [
+      ["fromSourceLocation", "fromDestinationLocation"],
+      ["fromSourceCity", "fromDestinationCity"],
+    ]
+  );
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: {},
-    onSubmit: async (values, { resetForm }) => {},
+    validationSchema: validation,
+    initialValues: {
+      id: "",
+      code: "",
+      name: "",
+      isActive: true,
+      fromCountryDevision: "",
+      toCountryDevision: "",
+      fromDestinationCity: "",
+      fromSourceCity: "",
+      fromSourceLocation: "",
+      fromDestinationLocation: "",
+    },
+    onSubmit: async (values, { resetForm }) => {
+      let fromCountryDevisiondsdsd: any = [];
+      let toCountryDevisiond: any = [];
+      let attributeDivition;
+      fromCountryDevisiondsdsd =
+        values.fromDestinationLocation?.length !== 0
+          ? values.fromDestinationLocation
+          : values.fromDestinationCity.length !== 0
+          ? values.fromDestinationCity
+          : values.fromCountryDevision.length !== 0
+          ? values.fromCountryDevision
+          : [];
+      toCountryDevisiond =
+        values.fromSourceLocation.length !== 0
+          ? values.fromSourceLocation
+          : values.fromSourceCity.length !== 0
+          ? values.fromSourceCity
+          : values.toCountryDevision.length !== 0
+          ? values.toCountryDevision
+          : [];
+      attributeDivition =
+        fromCountryDevisiondsdsd.length !== 0
+          ? convertToObjects(
+              fromCountryDevisiondsdsd,
+              toCountryDevisiond,
+              "from"
+            )
+          : [];
+
+      let data = {
+        ...values,
+        id: values?.id ? values.id : uuid(),
+        customDevisionDetails: attributeDivition,
+      };
+      setTableList(data);
+      resetForm();
+    },
   });
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -23,24 +133,24 @@ const AddFormToList: FC<AddFormToListProps> = (): JSX.Element => {
           <InputText
             wrapperClassName="w-full col-span-2"
             label="کد "
-            name="personelCode"
+            name="code"
             handleChange={formik.handleChange}
-            values={""}
+            values={formik.values.code}
             important
             type={"text"}
-            // error={formik.errors.personelCode}
+            error={formik.touched.code && formik.errors.code}
           />
         </div>
         <div className="col-span-3">
           <InputText
             wrapperClassName="w-full "
             label="عنوان"
-            name="personelCode"
+            name="name"
             handleChange={formik.handleChange}
-            values={""}
+            values={formik.values.name}
             important
             type={"text"}
-            // error={formik.errors.personelCode}
+            error={formik.touched.name && formik.errors.name}
           />
         </div>
       </div>

@@ -125,7 +125,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             email: values.email,
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
             isActive: currentData.isActive,
-            treeChecked: treeChecked,
+            hubCodes: treeChecked,
           }
         : {
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
@@ -137,7 +137,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             username: values.username,
             password: values.password,
             isActive: true,
-            treeChecked: treeChecked,
+            hubCodes: treeChecked,
           };
 
       try {

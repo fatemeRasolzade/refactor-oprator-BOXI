@@ -14,13 +14,11 @@ import YupDefault from "./tools/config/YupDefault";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getUserInfo } from "./redux/userInfo/userInfoReducer";
-import CustomGeographic from "./pages/CustomGeographic/CustomGeographic";
 import AddEditGeographic from "./pages/CustomGeographic/views/AddGeo/AddEditGeographicWrapper";
 
 function App() {
   const dispatch = useDispatch();
-  const username = localStorage.getItem("username");
-  const userInfo = useSelector((state: any) => state.userInfo);
+  const username = localStorage.getItem("userName");
   const handleGetuserInfo = useCallback(async () => {
     try {
       const res = await axios({
@@ -33,7 +31,6 @@ function App() {
           in: username,
         },
       });
-
       dispatch(getUserInfo(res.data));
     } catch (error) {}
   }, [dispatch, username]);
