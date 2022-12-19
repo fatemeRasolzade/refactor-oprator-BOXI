@@ -1,26 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Dialog } from "@material-tailwind/react";
 import { FormikProvider, FieldArray, useFormik } from "formik";
-
 import { useDispatch } from "react-redux";
-import { AiOutlineEdit } from "react-icons/ai";
 import * as Yup from "yup";
 import { EditDataParams, PostDataParams } from "../../../../../services/Service_call";
 import { apiRoute } from "../../../../../services/apiRoute";
 import { SuccessAlert } from "../../../../../global/alert/Alert";
-import { vendorData } from "../../../../../redux/Transportation/vendor/VendorData";
-import AddButton from "../../../../../global/addButton/AddButton";
 import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
-
 import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
-
-import AddExcel from "../../../../../components/exel/AddExcel";
-import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
 import { BiTrash } from "react-icons/bi";
 import { GrFormAdd } from "react-icons/gr";
+import { CalculateTime } from "../../../../../tools/validations/ErrorHelper";
+import { v4 as uuidv4 } from "uuid";
+import CustomSwitch from "../../../../../global/Switch/Switch";
 interface PropsData {
   currentData?: any;
   routeValue?: any;
@@ -53,18 +47,17 @@ const RouteActionForms: React.FC<PropsData> = ({
   isModalOpen,
   setIsModalOpen,
 }): JSX.Element => {
-  console.log(routeValue, "routeValue");
   const [checked, setChecked] = useState(true);
   const [disableNode, setDisableNodes] = useState(false);
   const [connectionSelect, setConnectionSelect] = useState<any>([]);
   const [serverIds, setServerIds] = useState<any>([]);
   const [nodeOptins, setNodeOptions] = useState([]);
-  const distanceRef = useRef();
-  const distanceVarianceRef = useRef();
-  const transitTimeRef = useRef();
-  const timeStoppageRef = useRef();
-  const checkBoxRef = useRef(null);
-
+  const distanceRef = useRef<any>(null);
+  const distanceVarianceRef = useRef<any>();
+  const transitTimeRef = useRef<any>();
+  const timeStoppageRef = useRef<any>();
+  const checkBoxRef = useRef<any>(null);
+  const [isActive, setIsACtive] = useState(true);
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [Loading, setLoading] = useState(false);
@@ -115,61 +108,74 @@ const RouteActionForms: React.FC<PropsData> = ({
           connections: routeValue?.connections,
         },
     onSubmit: (values) => {
-      if (!currentData) {
-        setLoading(true);
-        PostDataParams(apiRoute().post.VehicleModel, values).then((res) => {
-          if (res.status === "OK") {
-            SuccessAlert("با موفقیت ساخته شد");
-            setLoading(false);
-            dispatch(
-              vehicleModel({
-                search: "",
-                isActive: "",
-                pageSize: 10,
-                pageNumber: "",
-              }) as any
-            );
-          } else {
-            console.log("run error");
-            setLoading(false);
-            // ErrorAlert("خطا در برقراری اطلاعات");
-          }
+  
+      values.distance = distanceRef.current?.value;
+      values.distanceVariance = distanceVarianceRef.current?.value;
+      values.transitTime = transitTimeRef.current?.value;
 
-          // dispatch(updating(false));
+      values.timeStoppage = timeStoppageRef.current?.value;
+      console.log(values);
+      // if (!currentData) {
+      //   setLoading(true);
+      //   PostDataParams(apiRoute().post.VehicleModel, values).then((res) => {
+      //     if (res.status === "OK") {
+      //       SuccessAlert("با موفقیت ساخته شد");
+      //       setLoading(false);
+      //       dispatch(
+      //         vehicleModel({
+      //           search: "",
+      //           isActive: "",
+      //           pageSize: 10,
+      //           pageNumber: "",
+      //         }) as any
+      //       );
+      //     } else {
+      //       console.log("run error");
+      //       setLoading(false);
+      //       // ErrorAlert("خطا در برقراری اطلاعات");
+      //     }
 
-          setIsModalOpen(false);
-        });
-      } else {
-        setLoading(true);
-        EditDataParams(apiRoute().edit.VehicleModel, values).then((res) => {
-          // dispatch(updating(true));
-          console.log("run edit");
-          if (res.status === "OK") {
-            setLoading(false);
-            SuccessAlert("با موفقیت ویرایش شد");
-            dispatch(
-              vehicleModel({
-                search: "",
-                isActive: true,
-                pageSize: 10,
-                pageNumber: "",
-              }) as any
-            );
-          } else {
-            setLoading(false);
-            console.log("run error");
-            // ErrorAlert("خطا در برقراری اطلاعات");
-          }
+      //     // dispatch(updating(false));
 
-          setIsModalOpen(false);
-        });
-      }
+      //     setIsModalOpen(false);
+      //   });
+      // } else {
+      //   setLoading(true);
+      //   EditDataParams(apiRoute().edit.VehicleModel, values).then((res) => {
+      //     // dispatch(updating(true));
+      //     console.log("run edit");
+      //     if (res.status === "OK") {
+      //       setLoading(false);
+      //       SuccessAlert("با موفقیت ویرایش شد");
+      //       dispatch(
+      //         vehicleModel({
+      //           search: "",
+      //           isActive: true,
+      //           pageSize: 10,
+      //           pageNumber: "",
+      //         }) as any
+      //       );
+      //     } else {
+      //       setLoading(false);
+      //       console.log("run error");
+      //       // ErrorAlert("خطا در برقراری اطلاعات");
+      //     }
+
+      //     setIsModalOpen(false);
+      //   });
+      // }
     },
   });
   useEffect(() => {
     formik.resetForm({});
   }, [isModalOpen]);
 
+  const uncheck = () => {
+    let inputs = document.querySelectorAll(".check");
+    inputs.forEach((item: any) => {
+      item.checked = false;
+    });
+  };
   const addConnection = (e: any, push: any) => {
     e.preventDefault();
     setDisableNodes(true);
@@ -183,13 +189,12 @@ const RouteActionForms: React.FC<PropsData> = ({
       distanceVariance: "",
       transitTime: "",
       timeStoppage: "",
+      customId: uuidv4(),
     });
   };
   const deleteConnection = () => {
-    console.log("serverIds");
-
     const filterData = formik.values.connections.filter(
-      (item: any, index: any) => !connectionSelect.some((it: any) => it === item.id || it === index)
+      (item: any, index: any) => !connectionSelect.some((it: any) => it === item.id || it === item.customId)
     );
     const data = {
       deleteNodeIds: serverIds,
@@ -199,13 +204,14 @@ const RouteActionForms: React.FC<PropsData> = ({
       distanceVariance: (
         filterData.reduce((a: any, b: any) => a + Number(b.distanceVariance), 0) / filterData.length
       ).toFixed(1),
-      //  transitTime: calctransitTimeTime(filterData:any),
-      //  timeStoppage: calctimeStoppageTime(filterData:any),
+      transitTime: CalculateTime(filterData.map((item: any) => item.transitTime)),
+      timeStoppage: CalculateTime(filterData.map((item: any) => item.timeStoppage)),
     };
     // console.log(data);
     let isDeleteFromServer = formik.values.connections.some((item: any) => item.id);
 
     if (isDeleteFromServer) {
+      console.log("delete from server");
       // deleteConnections({ data })
       // .then((response) => {
       //   response.status && toast.success("گره با موفقیت پاک شد");
@@ -219,63 +225,29 @@ const RouteActionForms: React.FC<PropsData> = ({
       console.log(filterData);
       formik.setFieldValue("connections", filterData);
     }
-    //  uncheck();
+    uncheck();
 
     // console.log(distanceRef.current?.value)
   };
   const handleChangeCheckBox = (event: any, item: any, indexItem: any) => {
     const isChecked = event.target.checked;
-    const id = item?.id ? item.id : indexItem;
+    const id = item?.id ? item.id : item.customId;
     if (isChecked) {
+      // console.log("add id",id)
       item?.id && setServerIds([...serverIds, item?.id]);
       setConnectionSelect([...connectionSelect, id]);
     } else {
+      // console.log("removes id",id)
       let index = connectionSelect.findIndex((selected: any) => selected?.id === id);
       connectionSelect.splice(index, 1);
       setConnectionSelect(connectionSelect);
+
       let serverindex = serverIds.findIndex((selected: any) => selected?.id === item.id);
       serverIds.splice(serverindex, 1);
       setServerIds(serverIds);
     }
   };
-  const calctransitTimeTime = () => {
-    const data = formik.values.connections;
-    const transitTime=data.map((item:any)=>item.transitTime)
-    console.log("data", data);
-    //to save on server we must change format time from : to .
-    if (transitTime.length !== 0) {
 
-      var hours:number = 0;
-      let minutes:number  = 0;
-      var sum = "";
-      for(var i in transitTime){
-        console.log(transitTime[i],"transitTime[i]")
-       hours += parseInt(transitTime[i].split(":")[0])
-       minutes += parseInt(transitTime[i].split(":")[1])
-    
-      }
-    
-      if(minutes > 59){
-         // @ts-ignore
-        hours += parseInt(minutes / 60);
-         // @ts-ignore
-        minutes = parseInt(minutes % 60);
-      }
-      sum = hours + ":" + minutes ;
-      return sum
-      // console.log(sum);
-
-      // const sum = data.reduce((acc:any, time:any) => acc.add(moment.duration(time.transitTime)), moment.duration());
-      // return [Math.floor(sum.asHours()), sum.minutes()].join(":");
-    }
-  };
-  const calctimeStoppageTime = () => {
-    const data = formik.values.connections;
-    if (data.length !== 0) {
-      // const sum = data.reduce((acc:any, time:any) => acc.add(moment.duration(time.timeStoppage)), moment.duration());
-      // return [Math.floor(sum.asHours()), sum.minutes()].join(":");
-    }
-  };
   const { values, errors, touched, handleChange, handleSubmit, setValues, setFieldValue, setErrors } = formik;
   return (
     <>
@@ -340,13 +312,10 @@ const RouteActionForms: React.FC<PropsData> = ({
                       important
                       error={formik.touched.nodes && formik.errors.nodes}
                     />
-                    {/* <CustomSwitch
-                        type={"button"}
-                        dataName={"isActive"}
-                        formData={formik}
-                        setChecked={setChecked}
-                        checked={checked}
-                      /> */}
+                    <CustomSwitch
+                      active={values.isActive}
+                      handleChange={(value: any) => formik.setFieldValue("isActive", value)}
+                    />
                   </div>
 
                   <div className="  grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">
@@ -354,7 +323,6 @@ const RouteActionForms: React.FC<PropsData> = ({
                       readOnly={true}
                       label="مسافت کل مسیر"
                       ref={distanceRef}
-                      name="distance"
                       values={formik.values.connections.reduce(
                         (a: any, b: any) => a + Number(b.distanceFromPreviousHub),
                         0
@@ -363,7 +331,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                     />
                     <InputText
                       readOnly={true}
-                      label="مسافت کل مسیر"
+                      label="درصد کل انحراف مسافت"
                       ref={distanceVarianceRef}
                       name="distanceVariance"
                       values={(
@@ -376,8 +344,8 @@ const RouteActionForms: React.FC<PropsData> = ({
                       readOnly={true}
                       label="مدت کل مسیر"
                       ref={transitTimeRef}
-                      name="distanceVariance"
-                      values={calctransitTimeTime()}
+                      name="transitTime"
+                      values={CalculateTime(formik.values.connections.map((item: any) => item.transitTime))}
                     />
 
                     <InputText
@@ -385,7 +353,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                       label="مدت کل توقف"
                       ref={timeStoppageRef}
                       name="StoppageTime"
-                      values={calctimeStoppageTime()}
+                      values={CalculateTime(formik.values.connections.map((item: any) => item.timeStoppage))}
                     />
                   </div>
 
@@ -446,7 +414,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                           </thead>
 
                           <tbody>
-                            {formik.values.connections.map((item: any, index: any) => (
+                            {formik.values.connections.map((item: any, index:never) => (
                               <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>
@@ -469,16 +437,16 @@ const RouteActionForms: React.FC<PropsData> = ({
                                     handleChange={formik.setFieldValue}
                                     values={values?.connections[index].selectHub}
                                     isDisabled={(index === 0 || index === formik.values.connections.length - 1) && true}
-                                    //  error={
-                                    //   touched.connections &&
-                                    //   touched.connections[index] &&
-                                    //   touched.connections[index].selectHub &&
-                                    //   errors.connections &&
-                                    //   errors.connections[index] &&
-                                    //   errors.connections[index].selectHub && (
-                                    //   errors.connections[index].selectHub.id
-                                    //   )
-                                    // }
+                                     error={
+                                      touched.connections &&
+                                      touched.connections[index] &&
+                                      // @ts-ignore
+                                      touched.connections[index].selectHub &&
+                                      errors.connections &&
+                                      errors.connections[index] &&
+                                      // @ts-ignore
+                                      errors.connections[index].selectHub 
+                                    }
                                     options={nodeOptins}
                                   />
                                 </td>
@@ -586,8 +554,8 @@ const RouteActionForms: React.FC<PropsData> = ({
                                     classNames={"min-w-[12rem]"}
                                     readOnly={index === 0 && true}
                                     handleChange={formik.handleChange}
-                                    name={`connections.${index}.transitTime`}
-                                    values={values.connections[index].distanceVariance}
+                                    name={`connections.${index}.timeStoppage`}
+                                    values={values.connections[index].timeStoppage}
                                     placeholder="00:00"
                                     // error={
                                     //   touched.connections &&

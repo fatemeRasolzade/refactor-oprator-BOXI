@@ -18,7 +18,6 @@ interface PropType {
 
 const TimePickers = ({ title, name, values, handleChange, timeValues, timeName, error, important }: PropType) => {
   const timePlugin = [<TimePicker position="bottom" hideSeconds />];
-  const t="02:20"
   return (
     <div className="flex flex-col">
       <div className={`relative border ${error ? "border-red" : "border-darkBorder"} rounded-lg w-60`}>
@@ -26,6 +25,14 @@ const TimePickers = ({ title, name, values, handleChange, timeValues, timeName, 
           {title} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
         </div>
         <DatePicker
+          disableDayPicker
+          format="HH:mm"
+          calendar={persian}
+          value={"02:20"}
+          plugins={timePlugin}
+          // format="HH:mm YYYY/MM/DD"
+        />
+        {/* <DatePicker
           className="red"
           disableDayPicker
           editable={false}
@@ -42,7 +49,7 @@ const TimePickers = ({ title, name, values, handleChange, timeValues, timeName, 
           }}
 
           plugins={timePlugin}
-        />
+        /> */}
       </div>
       <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>

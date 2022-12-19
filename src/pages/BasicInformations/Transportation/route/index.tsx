@@ -17,12 +17,14 @@ import InputIcon from "react-multi-date-picker/components/input_icon";
 import persian from "react-date-object/calendars/persian";
 import "react-multi-date-picker/styles/colors/red.css";
 import TimePickers from "../../../../global/DatePicker/TimePicker";
+import { useFetchOptions } from "../../../../global/hooks/useFetchOptions";
 
 const Route: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
   const { errorMessage, routeLists, isUpdating } = useSelector((state: any) => state.route);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
+  const { dataOptions:hubOptions } = useFetchOptions(apiRoute().get.select_hub);
   const handleDeleteActionNewData = () => {
     dispatch(
       filterRoute({
@@ -58,10 +60,15 @@ const Route: React.FC = (): JSX.Element => {
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}
-        addComponentProps={() => <AddRouteForms />}
+        addComponentProps={() => <AddRouteForms  hubOptions={hubOptions}/>}
         exportExcel={() => ExportExcel(routeLists?.content)}
       />
-       <TimePickers />
+      <TimePickers />
+      {/* <DatePicker
+        value={"02:20 1401/08/15"}
+        plugins={[<TimePicker hideSeconds position="bottom" />]}
+        format="HH:mm YYYY/MM/DD"
+      /> */}
       <StaticTable
         data={data ? data : []}
         column={RouteColumns}

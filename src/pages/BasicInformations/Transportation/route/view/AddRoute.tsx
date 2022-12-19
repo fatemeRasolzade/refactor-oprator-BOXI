@@ -1,32 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Button, Dialog } from "@material-tailwind/react";
 import { useFormik } from "formik";
-
 import { useDispatch } from "react-redux";
-import { AiOutlineEdit } from "react-icons/ai";
 import * as Yup from "yup";
-import { EditDataParams, PostDataParams } from "../../../../../services/Service_call";
 import { apiRoute } from "../../../../../services/apiRoute";
-import { SuccessAlert } from "../../../../../global/alert/Alert";
-import { vendorData } from "../../../../../redux/Transportation/vendor/VendorData";
 import AddButton from "../../../../../global/addButton/AddButton";
 import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
-import {
-  useGetFuelTypeOptions,
-  useGetHubOptions,
-  useGetOptions,
-  useGetVendorOptions,
-} from "../../../../../global/hooks/useFetchOptions";
-import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
-
+import { useFetchOptions } from "../../../../../global/hooks/useFetchOptions";
 import AddExcel from "../../../../../components/exel/AddExcel";
 import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
 import RouteActionForms from "./RouteActionForm";
+import { v4 as uuidv4 } from "uuid";
 interface PropsData {
   currentData?: any;
+  hubOptions: any;
 }
 const validation = Yup.object().shape({
   code: Yup.number().required().label("کد مسیر"),
@@ -42,13 +31,15 @@ const validation = Yup.object().shape({
   }),
 });
 
-const AddRouteForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
+const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.Element => {
+  console.log(hubOptions)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
-  const [openConnection,setOpenConnections]=useState(false) 
+  const [openConnection, setOpenConnections] = useState(false);
+  const [targethubOptions, setTargetHubOptions] = useState(hubOptions);
+  const [desthubOptions, setdesttHubOptions] = useState(hubOptions);
   //   const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes, isModalOpen);
-  const { hubOptions } = useGetHubOptions(apiRoute().get.select_hub, isModalOpen);
 
   const dispatch = useDispatch();
 
@@ -63,6 +54,10 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
     { handleClick: handleAction, name: "افزودن شرکت نقلیه" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
+  // useEffect(()=>{
+  //   setOpenConnections(hubOptions)
+  //   setdesttHubOptions(hubOptions)
+  // },[])
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: validation,
@@ -82,8 +77,8 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
       connections: [],
     },
     onSubmit: (values) => {
-      let hubData:any=[]
-      for (let i = 0; i < parseInt(formik.values.nodes) ; i++) {
+      let hubData: any = [];
+      for (let i = 0; i < parseInt(formik.values.nodes); i++) {
         hubData = [
           ...hubData,
           {
@@ -95,6 +90,7 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
             distanceVariance: "",
             transitTime: "",
             timeStoppage: "",
+            customId: uuidv4(),
           },
         ];
       }
@@ -114,18 +110,34 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
       };
       hubData.unshift(source);
       formik.setFieldValue("connections", [...hubData, target]);
-      setIsModalOpen(!isModalOpen)
+      setIsModalOpen(!isModalOpen);
       setOpenConnections(!openConnection);
     },
   });
-  // useEffect(() => {
-  //   formik.resetForm({});
-  // }, [isModalOpen]);
+  useEffect(() => {
+    setTargetHubOptions(hubOptions);
+    setdesttHubOptions(hubOptions);
+    // formik.resetForm({});
+  }, [isModalOpen]);
+  const filterData = (item: any, route: any) => {
+    console.log(item,"item")
+    if (route === "source") {
+      const filter = hubOptions.options.filter((hub: any) => hub.value !== item.value);
+      console.log(filter,"filter","source")
+      setTargetHubOptions(filter);
+    } else if (route === "target") {
+
+      const filter = hubOptions.options.filter((hub: any) => hub.value !== item.value);
+      console.log(filter,"filter","target")
+      setdesttHubOptions(filter);
+    }
+  };
 
   return (
     <>
-  
-      {openConnection && <RouteActionForms routeValue={formik.values}  isModalOpen={openConnection} setIsModalOpen={setOpenConnections}/>  }     
+      {openConnection && (
+        <RouteActionForms routeValue={formik.values} isModalOpen={openConnection} setIsModalOpen={setOpenConnections} />
+      )}
       <AddButton ToggleOptions={ToggleOptions} />
       <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={"افزودن مسیر"}>
@@ -157,10 +169,17 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
                 label="مبدا"
                 important
                 name="selectSourceHub"
-                handleChange={formik.setFieldValue}
+                options={desthubOptions.options}
+                
+                handleChange={(value: any) => {
+                  console.log(value,"value")
+                  filterData(value, "source");
+                  formik.setFieldValue("selectSourceHub", { id: value.value, text: value.label });
+                }}
+                // handleChange={formik.setFieldValue}
                 values={formik.values.selectSourceHub}
                 error={formik.touched.selectSourceHub && formik.errors.selectSourceHub}
-                options={[{id:"1",text:"هاب اول"},{id:"2",text:"هاب دوم"}]}
+                // options={hubOptions.options}
               />
             </div>
 
@@ -169,10 +188,14 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
                 label="مقصد"
                 important
                 name="selectTargetHub"
-                handleChange={formik.setFieldValue}
+                handleChange={(value: any) => {
+                  
+                  filterData(value, "target");
+                  formik.setFieldValue("selectTargetHub", { id: value.value, text: value.label });
+                }}
                 values={formik.values.selectTargetHub}
                 error={formik.touched.selectTargetHub && formik.errors.selectTargetHub}
-                options={[{id:"1",text:"هاب اول"},{id:"2",text:"هاب دوم"}]}
+                options={targethubOptions.options}
               />
             </div>
 

@@ -9,6 +9,28 @@ import {apiRoute} from "../../services/apiRoute";
 import axios from "axios";
 import http from "../../services/http_service";
 
+
+export const useFetchOptions = (url: string, isModalOpen?: boolean) => {
+  const [dataOptions, setOptions] = useState({ options: [], error: "", loading: false });
+
+  useEffect(() => {
+      try {
+        setOptions({ ...dataOptions, loading: true });
+        selectDataFromServerWithHeader(url, {
+          headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
+        }).then((res) => {
+          if (res.status === "OK") setOptions({ ...dataOptions, options: res?.payload?.content || res?.payload, loading: false });
+        });
+      } catch (error: any) {
+        setOptions({ ...dataOptions, error: error, loading: false });
+        ErrorAlert("دریافت دیتا با خطلا مواجه شد");
+      }
+
+  }, [url]);
+  return { dataOptions };
+};
+
+
 export const useGetOptions = (url: string, isModalOpen?: boolean) => {
   const [options, setOptions] = useState([]);
   const [error, setError] = useState(null);
@@ -31,7 +53,7 @@ export const useGetOptions = (url: string, isModalOpen?: boolean) => {
   return { options, error, loading };
 };
 export const useGetHubOptions = (url: string, isModalOpen?: boolean) => {
-  console.log("url is",url)
+
   const [hubOptions, setOptions] = useState({ options: [], error: "", loading: false });
 
   useEffect(() => {

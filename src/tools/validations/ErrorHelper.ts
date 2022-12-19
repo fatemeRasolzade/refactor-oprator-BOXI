@@ -98,3 +98,32 @@ export const EconomicCodeValidate = (economicCode: any, req?: boolean) => {
   }
   return [true, ""];
 };
+
+//this function calculate sum of time with hours and minutes
+export const CalculateTime=(time:any)=>{
+  // console.log(time,"time")
+  if (time.length !== 0) {
+    var hours:number = 0;
+    let minutes:number  = 0;
+    var sum = "";
+    for(var i in time){
+      if(time[i] !==''){
+        hours += parseInt(time[i].split(":")[0])
+        minutes += parseInt(time[i].split(":")[1])
+  
+        if(isNaN(minutes)){
+          minutes=0
+        }
+      }
+    }
+    if(minutes > 59){
+       // @ts-ignore
+      hours += parseInt(minutes / 60);
+       // @ts-ignore
+      minutes = parseInt(minutes % 60);
+    }
+    sum = hours + ":" + minutes ;
+    // console.log(sum);
+    return sum
+}
+}
