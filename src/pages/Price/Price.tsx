@@ -59,7 +59,7 @@ const Price = () => {
                   updating={updating}
                   handleDeleteActionNewData={handleDeleteActionNewData}
                 />
-                {/* <PriceForm currentData={item} /> */}
+                <PriceForm currentData={item} />
               </div>
             ),
           };
@@ -71,7 +71,7 @@ const Price = () => {
       <Breadcrumb beforePage="برگشت" curentPage="نرخ نامه" />
       <PriceSearchForm isActive={isActive} isUpdating={isUpdating} pageNumbers={pageNumbers} />
       <div className="flex-start-center gap-20 mt-6">
-        {/* <PriceForm /> */}
+        <PriceForm />
         <TestCustomOptions options={options} />
       </div>
       <StaticTable selectable={false} data={data ? data : []} column={PriceColumn} pagination={priceList?.totalElements} loading={Loading} />
