@@ -132,3 +132,7 @@ export const GET_TIMEUNITTIPES = `${CORE_API}/timecommitment/selectTimeUnitTypes
 
 //Price
 export const PRICE_API = `${CORE_API}/pricelist`;
+export const GET_CONSIGNMENT_TYPE = `${CORE_API}/pricelist/consignmenttype`;
+
+//PRODUCT
+export const GET_PRODUCT_SELECT = `${CORE_API}/product/select?filter`;
