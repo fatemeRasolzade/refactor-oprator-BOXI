@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import StaticTable from "../../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../../components/tableOperation/DeleteOperation";
+import { useGetFuelTypeOptions, useGetVendorOptions } from "../../../../global/hooks/useFetchOptions";
 import { vehicleModel } from "../../../../redux/Transportation/vehicleModel/VehicleModel";
 import { apiRoute } from "../../../../services/apiRoute";
 import { ExportExcel } from "../../../../tools/functions/Methods";
@@ -17,6 +18,8 @@ const VehicleModel: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const { errorMessage, vehicleModelLists, isUpdating } = useSelector((state: any) => state.vehicleModel);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
+  const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes);
+  const { vendorOptions } = useGetVendorOptions(apiRoute().get.selectVendor);
   const handleDeleteActionNewData = () => {
     dispatch(
       vehicleModel({
@@ -40,7 +43,7 @@ const VehicleModel: React.FC = (): JSX.Element => {
                   handleDeleteActionNewData={handleDeleteActionNewData}
                   route={apiRoute().delete.vendor + `/${item.id}`}
                 />
-                <VehicleMakeActionForms currentData={item} />
+                <VehicleMakeActionForms currentData={item} fuelOptions={fuelOptions} vendorOptions={vendorOptions}/>
               </div>
             ),
           };
@@ -48,11 +51,11 @@ const VehicleModel: React.FC = (): JSX.Element => {
       : [];
   return (
     <div>
-      <SearchForm isActive={isActive} />
+      <SearchForm isActive={isActive} fuelOptions={fuelOptions} vendorOptions={vendorOptions}/>
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}
-        addComponentProps={() => <VehicleMakeActionForms />}
+        addComponentProps={() => <VehicleMakeActionForms  fuelOptions={fuelOptions} vendorOptions={vendorOptions}/>}
         exportExcel={() => ExportExcel(vehicleModelLists?.content)}
       />
       <StaticTable

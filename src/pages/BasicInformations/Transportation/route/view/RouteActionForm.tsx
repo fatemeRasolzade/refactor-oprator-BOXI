@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { FormikProvider, FieldArray, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { EditDataParams, PostDataParams } from "../../../../../services/Service_call";
-import { apiRoute } from "../../../../../services/apiRoute";
+import { '' EditDataParams, PostDataParams } from "../../../../../services/Service_call";
+import { apiRoute, deleteConnections } from "../../../../../services/apiRoute";
 import { SuccessAlert } from "../../../../../global/alert/Alert";
 import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
@@ -15,11 +15,15 @@ import { GrFormAdd } from "react-icons/gr";
 import { CalculateTime } from "../../../../../tools/validations/ErrorHelper";
 import { v4 as uuidv4 } from "uuid";
 import CustomSwitch from "../../../../../global/Switch/Switch";
+import { filterRoute } from "../../../../../redux/Transportation/route/RouteData";
+import { AiOutlineEdit } from "react-icons/ai";
+import { toast } from "react-toastify";
 interface PropsData {
   currentData?: any;
   routeValue?: any;
   isModalOpen?: boolean;
   setIsModalOpen?: any;
+  hubOptions?: any;
 }
 const validation = Yup.object().shape({
   code: Yup.number().required().label("کد مسیر"),
@@ -44,8 +48,9 @@ const validation = Yup.object().shape({
 const RouteActionForms: React.FC<PropsData> = ({
   currentData,
   routeValue,
-  isModalOpen,
-  setIsModalOpen,
+  // isModalOpen,
+  // setIsModalOpen,
+  hubOptions,
 }): JSX.Element => {
   const [checked, setChecked] = useState(true);
   const [disableNode, setDisableNodes] = useState(false);
@@ -58,7 +63,7 @@ const RouteActionForms: React.FC<PropsData> = ({
   const timeStoppageRef = useRef<any>();
   const checkBoxRef = useRef<any>(null);
   const [isActive, setIsACtive] = useState(true);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [Loading, setLoading] = useState(false);
 
@@ -108,62 +113,59 @@ const RouteActionForms: React.FC<PropsData> = ({
           connections: routeValue?.connections,
         },
     onSubmit: (values) => {
-  
       values.distance = distanceRef.current?.value;
       values.distanceVariance = distanceVarianceRef.current?.value;
       values.transitTime = transitTimeRef.current?.value;
 
       values.timeStoppage = timeStoppageRef.current?.value;
       console.log(values);
-      // if (!currentData) {
-      //   setLoading(true);
-      //   PostDataParams(apiRoute().post.VehicleModel, values).then((res) => {
-      //     if (res.status === "OK") {
-      //       SuccessAlert("با موفقیت ساخته شد");
-      //       setLoading(false);
-      //       dispatch(
-      //         vehicleModel({
-      //           search: "",
-      //           isActive: "",
-      //           pageSize: 10,
-      //           pageNumber: "",
-      //         }) as any
-      //       );
-      //     } else {
-      //       console.log("run error");
-      //       setLoading(false);
-      //       // ErrorAlert("خطا در برقراری اطلاعات");
-      //     }
+      if (!currentData) {
+        setLoading(true);
+        PostDataParams(apiRoute().post.route, values).then((res) => {
+          if (res.status === "OK") {
+            SuccessAlert("با موفقیت ساخته شد");
+            setLoading(false);
+            dispatch(
+              filterRoute({
+                search: "",
+                isActive: "",
+                pageSize: 10,
+                pageNumber: "",
+              }) as any
+            );
+          } else {
+            console.log("run error");
+            setLoading(false);
+            // ErrorAlert("خطا در برقراری اطلاعات");
+          }
 
-      //     // dispatch(updating(false));
+          // dispatch(updating(false));
 
-      //     setIsModalOpen(false);
-      //   });
-      // } else {
-      //   setLoading(true);
-      //   EditDataParams(apiRoute().edit.VehicleModel, values).then((res) => {
-      //     // dispatch(updating(true));
-      //     console.log("run edit");
-      //     if (res.status === "OK") {
-      //       setLoading(false);
-      //       SuccessAlert("با موفقیت ویرایش شد");
-      //       dispatch(
-      //         vehicleModel({
-      //           search: "",
-      //           isActive: true,
-      //           pageSize: 10,
-      //           pageNumber: "",
-      //         }) as any
-      //       );
-      //     } else {
-      //       setLoading(false);
-      //       console.log("run error");
-      //       // ErrorAlert("خطا در برقراری اطلاعات");
-      //     }
+          setIsModalOpen(false);
+        });
+      } else {
+        setLoading(true);
+        EditDataParams(apiRoute().edit.route, values).then((res) => {
+          if (res.status === "OK") {
+            setLoading(false);
+            SuccessAlert("با موفقیت ویرایش شد");
+            dispatch(
+              filterRoute({
+                search: "",
+                isActive: true,
+                pageSize: 10,
+                pageNumber: "",
+              }) as any
+            );
+          } else {
+            setLoading(false);
+            console.log("run error");
+            // ErrorAlert("خطا در برقراری اطلاعات");
+          }
 
-      //     setIsModalOpen(false);
-      //   });
-      // }
+          setIsModalOpen(false);
+        });
+      }
     },
   });
   useEffect(() => {
@@ -211,16 +213,17 @@ const RouteActionForms: React.FC<PropsData> = ({
     let isDeleteFromServer = formik.values.connections.some((item: any) => item.id);
 
     if (isDeleteFromServer) {
-      console.log("delete from server");
-      // deleteConnections({ data })
-      // .then((response) => {
-      //   response.status && toast.success("گره با موفقیت پاک شد");
-      //   setRefresh(!refresh)
-      //   formik.setFieldValue("connections", filterData);
-      // })
-      // .catch((e) => {
-      //   // toast.error("خطایی رخ داده است.");
-      // });
+      console.log("delete from server",data);
+      // DeleteWithBody(apiRoute().delete.deleteConnections, data )
+      deleteConnections(data )
+      // apiRoute().delete.vendor + `/${item.id}`
+      .then((response) => {
+        response.status && toast.success("گره با موفقیت پاک شد");
+        formik.setFieldValue("connections", filterData);
+      })
+      .catch((e) => {
+        // toast.error("خطایی رخ داده است.");
+      });
     } else {
       console.log(filterData);
       formik.setFieldValue("connections", filterData);
@@ -247,10 +250,17 @@ const RouteActionForms: React.FC<PropsData> = ({
       setServerIds(serverIds);
     }
   };
-
+ 
   const { values, errors, touched, handleChange, handleSubmit, setValues, setFieldValue, setErrors } = formik;
   return (
     <>
+  
+      {currentData  &&
+        <button className=" border-none	 text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
+          <AiOutlineEdit className="w-full h-full" />
+        </button>
+      }
+          
       <Modal
         visible={isModalOpen}
         setVisible={setIsModalOpen}
@@ -264,6 +274,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                 <>
                   <div className="  grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">
                     <InputText
+                      readOnly={true}
                       label="کد مسیر"
                       name="code"
                       handleChange={formik.handleChange}
@@ -281,30 +292,27 @@ const RouteActionForms: React.FC<PropsData> = ({
                       error={formik.touched.name && formik.errors.name}
                     />
                     <InputSelect
+                      isDisabled={true}
                       label="مبدا"
                       important
                       name="selectSourceHub"
                       handleChange={formik.setFieldValue}
                       values={formik.values.selectSourceHub}
                       error={formik.touched.selectSourceHub && formik.errors.selectSourceHub}
-                      options={[
-                        { id: "1", text: "هاب اول" },
-                        { id: "2", text: "هاب دوم" },
-                      ]}
+                      options={hubOptions?.options}
                     />
                     <InputSelect
+                      isDisabled={true}
                       label="مقصد"
                       important
                       name="selectTargetHub"
                       handleChange={formik.setFieldValue}
                       values={formik.values.selectTargetHub}
                       error={formik.touched.selectTargetHub && formik.errors.selectTargetHub}
-                      options={[
-                        { id: "1", text: "هاب اول" },
-                        { id: "2", text: "هاب دوم" },
-                      ]}
+                      options={hubOptions?.options}
                     />
                     <InputText
+                      readOnly={true}
                       label="تعداد گره"
                       name="nodes"
                       handleChange={formik.handleChange}
@@ -414,7 +422,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                           </thead>
 
                           <tbody>
-                            {formik.values.connections.map((item: any, index:never) => (
+                            {formik.values.connections.map((item: any, index: never) => (
                               <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>
@@ -437,7 +445,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                                     handleChange={formik.setFieldValue}
                                     values={values?.connections[index].selectHub}
                                     isDisabled={(index === 0 || index === formik.values.connections.length - 1) && true}
-                                     error={
+                                    error={
                                       touched.connections &&
                                       touched.connections[index] &&
                                       // @ts-ignore
@@ -445,9 +453,9 @@ const RouteActionForms: React.FC<PropsData> = ({
                                       errors.connections &&
                                       errors.connections[index] &&
                                       // @ts-ignore
-                                      errors.connections[index].selectHub 
+                                      errors.connections[index].selectHub
                                     }
-                                    options={nodeOptins}
+                                    options={hubOptions?.options}
                                   />
                                 </td>
                                 <td>
@@ -458,18 +466,16 @@ const RouteActionForms: React.FC<PropsData> = ({
                                     handleChange={formik.handleChange}
                                     name={`connections.${index}.distanceFromPreviousHub`}
                                     values={values.connections[index].distanceFromPreviousHub}
-                                    // error={
-                                    //   touched.connections &&
-                                    //   touched.connections[index] &&
-                                    //   touched.connections[index].distanceFromPreviousHub &&
-                                    //   errors.connections &&
-                                    //   errors.connections[index] &&
-                                    //   errors.connections[index].distanceFromPreviousHub && (
-                                    //     <div className="field-error">
-                                    //       {errors.connections[index].distanceFromPreviousHub}
-                                    //     </div>
-                                    //   )
-                                    // }
+                                    error={
+                                      touched.connections &&
+                                      touched.connections[index] &&
+                                      // @ts-ignore
+                                      touched.connections[index].distanceFromPreviousHub &&
+                                      errors.connections &&
+                                      errors.connections[index] &&
+                                      // @ts-ignore
+                                      errors.connections[index].distanceFromPreviousHub
+                                    }
                                   />
                                 </td>
                                 <td>
@@ -480,18 +486,16 @@ const RouteActionForms: React.FC<PropsData> = ({
                                     handleChange={formik.handleChange}
                                     name={`connections.${index}.distanceVariance`}
                                     values={values.connections[index].distanceVariance}
-                                    // error={
-                                    //   touched.connections &&
-                                    //   touched.connections[index] &&
-                                    //   touched.connections[index].distanceVariance &&
-                                    //   errors.connections &&
-                                    //   errors.connections[index] &&
-                                    //   errors.connections[index].distanceVariance && (
-                                    //     <div className="field-error">
-                                    //       {errors.connections[index].distanceVariance}
-                                    //     </div>
-                                    //   )
-                                    // }
+                                    error={
+                                      touched.connections &&
+                                      touched.connections[index] &&
+                                      // @ts-ignore
+                                      touched.connections[index].distanceVariance &&
+                                      errors.connections &&
+                                      errors.connections[index] &&
+                                      // @ts-ignore
+                                      errors.connections[index].distanceVariance
+                                    }
                                   />
                                 </td>
                                 <td>
@@ -503,16 +507,16 @@ const RouteActionForms: React.FC<PropsData> = ({
                                     name={`connections.${index}.transitTime`}
                                     values={values.connections[index].transitTime}
                                     placeholder="00:00"
-                                    // error={
-                                    //   touched.connections &&
-                                    //   touched.connections[index] &&
-                                    //   touched.connections[index].transitTime &&
-                                    //   errors.connections &&
-                                    //   errors.connections[index] &&
-                                    //   errors.connections[index].transitTime && (
-                                    //     <div className="field-error">{errors.connections[index].transitTime}</div>
-                                    //   )
-                                    // }
+                                    error={
+                                      touched.connections &&
+                                      touched.connections[index] &&
+                                      // @ts-ignore
+                                      touched.connections[index].transitTime &&
+                                      errors.connections &&
+                                      errors.connections[index] &&
+                                      // @ts-ignore
+                                      errors.connections[index].transitTime
+                                    }
                                   />
                                   {/* <FormGroup
                                       readOnly={index === 0 && true}
@@ -557,16 +561,16 @@ const RouteActionForms: React.FC<PropsData> = ({
                                     name={`connections.${index}.timeStoppage`}
                                     values={values.connections[index].timeStoppage}
                                     placeholder="00:00"
-                                    // error={
-                                    //   touched.connections &&
-                                    //   touched.connections[index] &&
-                                    //   touched.connections[index].transitTime &&
-                                    //   errors.connections &&
-                                    //   errors.connections[index] &&
-                                    //   errors.connections[index].transitTime && (
-                                    //     <div className="field-error">{errors.connections[index].transitTime}</div>
-                                    //   )
-                                    // }
+                                    error={
+                                      touched.connections &&
+                                      touched.connections[index] &&
+                                      // @ts-ignore
+                                      touched.connections[index].timeStoppage &&
+                                      errors.connections &&
+                                      errors.connections[index] &&
+                                      // @ts-ignore
+                                      errors.connections[index].timeStoppage
+                                    }
                                   />
                                   {/* <FormGroup
                                       width={"250px"}
@@ -615,7 +619,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                       text="لغو"
                       className="full-lightTomato-btn"
                     />
-                    <SimpleButton loading={Loading} type="submit" text={"افزودن"} className="full-tomato-btn" />
+                    <SimpleButton loading={Loading} type="submit" text={!currentData?"افزودن":"ویرایش"} className="full-tomato-btn" />
                   </div>
                 </>
               )}

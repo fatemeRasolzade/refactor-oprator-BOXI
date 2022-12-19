@@ -32,7 +32,6 @@ const validation = Yup.object().shape({
 });
 
 const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.Element => {
-  console.log(hubOptions)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -120,15 +119,14 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
     // formik.resetForm({});
   }, [isModalOpen]);
   const filterData = (item: any, route: any) => {
-    console.log(item,"item")
+    console.log(item, "item");
     if (route === "source") {
       const filter = hubOptions.options.filter((hub: any) => hub.value !== item.value);
-      console.log(filter,"filter","source")
+      console.log(filter, "filter", "source");
       setTargetHubOptions(filter);
     } else if (route === "target") {
-
       const filter = hubOptions.options.filter((hub: any) => hub.value !== item.value);
-      console.log(filter,"filter","target")
+      console.log(filter, "filter", "target");
       setdesttHubOptions(filter);
     }
   };
@@ -136,7 +134,7 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
   return (
     <>
       {openConnection && (
-        <RouteActionForms routeValue={formik.values} isModalOpen={openConnection} setIsModalOpen={setOpenConnections} />
+        <RouteActionForms hubOptions={hubOptions} routeValue={formik.values} isModalOpen={openConnection} setIsModalOpen={setOpenConnections} />
       )}
       <AddButton ToggleOptions={ToggleOptions} />
       <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
@@ -170,13 +168,12 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
                 important
                 name="selectSourceHub"
                 options={desthubOptions.options}
-                
-                handleChange={(value: any) => {
-                  console.log(value,"value")
-                  filterData(value, "source");
-                  formik.setFieldValue("selectSourceHub", { id: value.value, text: value.label });
-                }}
-                // handleChange={formik.setFieldValue}
+                // handleChange={(value: any) => {
+                //   console.log(value,"value")
+                //   filterData(value, "source");
+                //   formik.setFieldValue("selectSourceHub", { id: value.value, text: value.label });
+                // }}
+                handleChange={formik.setFieldValue}
                 values={formik.values.selectSourceHub}
                 error={formik.touched.selectSourceHub && formik.errors.selectSourceHub}
                 // options={hubOptions.options}
@@ -188,11 +185,12 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
                 label="مقصد"
                 important
                 name="selectTargetHub"
-                handleChange={(value: any) => {
-                  
-                  filterData(value, "target");
-                  formik.setFieldValue("selectTargetHub", { id: value.value, text: value.label });
-                }}
+                handleChange={formik.setFieldValue}
+                // handleChange={(value: any) => {
+
+                //   filterData(value, "target");
+                //   formik.setFieldValue("selectTargetHub", { id: value.value, text: value.label });
+                // }}
                 values={formik.values.selectTargetHub}
                 error={formik.touched.selectTargetHub && formik.errors.selectTargetHub}
                 options={targethubOptions.options}

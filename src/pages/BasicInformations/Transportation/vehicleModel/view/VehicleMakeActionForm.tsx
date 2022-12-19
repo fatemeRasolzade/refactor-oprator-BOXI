@@ -17,6 +17,8 @@ import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
 interface PropsData {
   currentData?: any;
+  fuelOptions:any;
+  vendorOptions :any
 }
 const validation = Yup.object().shape({
   name: Yup.string().required(),
@@ -32,14 +34,14 @@ const validation = Yup.object().shape({
 });
 
 const VehicleMakeActionForms: React.FC<PropsData> = ({
-  currentData,
+  currentData,fuelOptions,vendorOptions 
 }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
 
-  const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes, isModalOpen);
-  const { vendorOptions } = useGetVendorOptions(apiRoute().get.selectVendor, isModalOpen);
+  // const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes, isModalOpen);
+  // const { vendorOptions } = useGetVendorOptions(apiRoute().get.selectVendor, isModalOpen);
 
   const dispatch = useDispatch();
 

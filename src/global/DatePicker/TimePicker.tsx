@@ -26,11 +26,11 @@ const TimePickers = ({ title, name, values, handleChange, timeValues, timeName, 
         </div>
         <DatePicker
           disableDayPicker
-          format="HH:mm"
+          // format="HH:mm:ss"
           calendar={persian}
           value={"02:20"}
           plugins={timePlugin}
-          // format="HH:mm YYYY/MM/DD"
+          format="HH:mm"
         />
         {/* <DatePicker
           className="red"

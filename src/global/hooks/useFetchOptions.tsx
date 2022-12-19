@@ -92,7 +92,7 @@ export const useGetFuelTypeOptions = (url: string, isModalOpen?: boolean) => {
   const [fuelOptions, setOptions] = useState({ options: [], error: "", loading: false });
 
   useEffect(() => {
-    if (isModalOpen) {
+    // if (isModalOpen) {
       try {
         setOptions({ ...fuelOptions, loading: true });
         selectDataFromServerWithHeader(url, {
@@ -104,17 +104,14 @@ export const useGetFuelTypeOptions = (url: string, isModalOpen?: boolean) => {
         setOptions({ ...fuelOptions, error: error, loading: false });
         ErrorAlert("دریافت دیتا با خطلا مواجه شد");
       }
-    }
-  }, [isModalOpen]);
+    // }
+  }, []);
   return { fuelOptions };
 };
 
 export const useGetVendorOptions = (url: string, isModalOpen?: boolean) => {
   const [vendorOptions, setOptions] = useState({ options: [], error: "", loading: false });
-  // const [error, setError] = useState(null);
-  // const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (isModalOpen) {
       try {
         setOptions({ ...vendorOptions, loading: true });
         selectDataFromServerWithHeader(url, {
@@ -126,7 +123,7 @@ export const useGetVendorOptions = (url: string, isModalOpen?: boolean) => {
         setOptions({ ...vendorOptions, error: error, loading: false });
         ErrorAlert("دریافت دیتا با خطلا مواجه شد");
       }
-    }
+
   }, [isModalOpen]);
   return { vendorOptions };
 };

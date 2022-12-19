@@ -17,16 +17,19 @@ import InputText from "../../../../../global/InputText/InputText";
 
 interface PropsData {
   isActive: Boolean | string;
+  fuelOptions:any,
+  vendorOptions:any
+
 }
 
-const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
+const SearchForm: React.FC<PropsData> = ({ isActive,fuelOptions,vendorOptions }): JSX.Element => {
+  console.log(fuelOptions,vendorOptions)
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
   const [filterData, setFilterData] = useState({});
-  const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes);
-  const { vendorOptions } = useGetVendorOptions(apiRoute().get.selectVendor);
+
   const formik = useFormik({
     // enableReinitialize: true,
     initialValues: {
@@ -50,8 +53,8 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
         isActive: isActive,
         pageSize: 10,
         pageNumber: pageNumbers,
-        fuelTypeSelect:formik.values.fuelTypeSelect,
-        vendorSelect:formik.values.vendorSelect,
+        fuelTypeSelect:formik.values.fuelTypeSelect === ''? null:formik.values.fuelTypeSelect,
+        vendorSelect:formik.values.vendorSelect === ''? null:formik.values.vendorSelect,
         volumeCapacity:formik.values.volumeCapacity,
         weightCapacity:formik.values.weightCapacity,
         consignmentCapacity:formik.values.consignmentCapacity
