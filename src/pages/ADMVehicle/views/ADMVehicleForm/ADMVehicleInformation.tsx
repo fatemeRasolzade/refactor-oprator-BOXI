@@ -35,31 +35,8 @@ const ADMVehicleInformation = ({ formik, open, currentData }: any) => {
   };
 
   const initHub = () => {
-    postDataToServer(HUB_SELECT, [
-      {
-        id: 463,
-        label: "A100",
-        name: "تست",
-        parent: 0,
-        children: [],
-      },
-      {
-        id: 484,
-        label: "A100",
-        name: "تست",
-        parent: 0,
-        children: [],
-      },
-      {
-        id: 447,
-        label: "A100",
-        name: "تست",
-        parent: 0,
-        children: [],
-      },
-    ]).then((res) => {
-      console.log(res);
-      setHub(res.payload.content);
+    getDataFromServer(HUB_SELECT).then((res) => {
+      setHub(res.content);
     });
   };
 

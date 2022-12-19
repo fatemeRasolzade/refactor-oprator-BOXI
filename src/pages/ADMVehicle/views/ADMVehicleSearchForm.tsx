@@ -28,7 +28,7 @@ const ADMVehicleSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
       hubName: "",
       hubCode: "",
       vehicleMakeSelect: "",
-      selectRoute: "",
+      selectRoute: undefined,
     },
     onSubmit: (values) => {
       setFilterData(values);
@@ -56,7 +56,7 @@ const ADMVehicleSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
           <AutocompleteInput label="هاب مرکز گزارش" value={values.hubName} onChange={(e) => setFieldValue("hubName", e.target.value)} />
           <SimpleButton searchBtn />
           <PerfesionalSearch formData={handleSubmit} handleReset={handleReset}>
-            <ADMVehiclePerfesionalFilter values={values} setFieldValue={setFieldValue} />
+            <ADMVehiclePerfesionalFilter formik={formik} />
           </PerfesionalSearch>
         </form>
       </div>

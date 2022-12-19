@@ -1,33 +1,40 @@
 import { useEffect, useState } from "react";
 import InputSelect from "../../../global/InputSelect/InputSelect";
 import { getVehicleMake } from "../../../services/ADMVehicleApi";
-import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
+import { getDataFromServer } from "../../../services/Service_call";
+import { GET_ROUTE } from "../../../services/apiRoute";
+import InputText from "../../../global/InputText/InputText";
 
 type CustomerPerfesionalFilterProps = {
-  values: any;
-  setFieldValue: any;
+  formik: any;
 };
 
-const ADMVehiclePerfesionalFilter = ({ values, setFieldValue }: CustomerPerfesionalFilterProps) => {
+const ADMVehiclePerfesionalFilter = ({ formik }: CustomerPerfesionalFilterProps) => {
+  const [Route, setRoute] = useState([]);
   const [VehicleMake, setVehicleMake] = useState([]);
 
   useEffect(() => {
     initVehicleMake();
+    initRoute();
   }, []);
 
   const initVehicleMake = () => {
-    getVehicleMake().then((res) => {
-      setVehicleMake(res);
-    });
+    getVehicleMake().then((res) => setVehicleMake(res));
   };
+
+  const initRoute = () => {
+    getDataFromServer(GET_ROUTE).then((res) => setRoute(res.content));
+  };
+
+  const { values, setFieldValue, handleChange }: any = formik;
 
   return (
     <>
       <div>
-        <AutocompleteInput label="نام مسیر" value={values.selectRoute} onChange={(e) => setFieldValue("selectRoute", e.target.value)} />
+        <InputSelect options={Route} label="مسیر" values={values.selectRoute} name="selectRoute" handleChange={setFieldValue} />
       </div>
       <div>
-        <InputSelect label="مدل" name="vehicleMakeSelect" handleChange={setFieldValue} values={values.vehicleMakeSelect} options={VehicleMake} />
+        <InputText label="مدل" name="vehicleMakeSelect" handleChange={handleChange} values={values.vehicleMakeSelect} />
       </div>
     </>
   );
