@@ -125,8 +125,10 @@ export const GET_ROUTE = `${CORE_API}/route/select?filter=`;
 export const HUB_SELECT = `${CORE_API}/hub/select`;
 
 //ServiceTime
-// /timecommitment/selectTimeUnitTypes
 export const CREATE_SERVICETIME = `${CORE_API}/timecommitment`;
 export const EDIT_SERVICETIME = `${CORE_API}/timecommitment`;
 export const DELETE_SERVICETIME = `${CORE_API}/timecommitment/`;
 export const GET_TIMEUNITTIPES = `${CORE_API}/timecommitment/selectTimeUnitTypes`;
+
+//Price
+export const PRICE_API = `${CORE_API}/pricelist`;
