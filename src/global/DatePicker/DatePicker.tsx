@@ -29,9 +29,11 @@ const DatePickers = ({ title, name, values, handleChange, time, timeValues, time
           calendar={persian}
           name={name}
           locale={persian_fa}
-          format="MM/DD/YYYY HH:mm"
+          format={`MM/DD/YYYY  ${time ? "HH:mm" : ""} `}
           calendarPosition="bottom-right"
-          placeholder={`${values?.day} / ${values?.month} / ${values?.year}       ${time && `${timeValues?.hour}:${timeValues?.minute}`}`}
+          // value="02:20"
+          value={`${timeValues} ${values?.year + "/" + values?.month + "/" + values?.day}`}
+          //  value={`${values?.day} / ${values?.month} / ${values?.year}       ${time && `${timeValues?.hour}:${timeValues?.minute}`}`}
           onChange={(date: any) => {
             handleChange(name, {
               day: Number(date.day),
