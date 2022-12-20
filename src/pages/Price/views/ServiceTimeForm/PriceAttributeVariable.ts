@@ -7,19 +7,21 @@ export const PriceAttributeFormValidation = () =>
         text: Yup.string().required(),
         id: Yup.string().required(),
       }),
-      consignmentType: Yup.object().when("isParametric", (val: any, schema: any) => {
-        if (val) {
-          return Yup.object().required();
-        } else {
-          return Yup.object().notRequired();
-        }
-      }),
+      consignmentType: Yup.string()
+        .ensure()
+        .when("isParametric", (val: any, schema: any) => {
+          if (val === false) {
+            return Yup.object().required();
+          } else {
+            return Yup.string().nullable(true);
+          }
+        }),
       isParametric: Yup.boolean(),
       customDevision: Yup.object().when("classification", (val: any, schema: any) => {
         if (val.id === 1) {
           return Yup.object().required();
         } else {
-          return Yup.object().notRequired();
+          return Yup.string().nullable(true);
         }
       }),
       fromDestinationState: Yup.string()
