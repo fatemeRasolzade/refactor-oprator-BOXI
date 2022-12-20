@@ -28,18 +28,18 @@ import Roles from "../../pages/Roles/Roles";
 import ServiceInformation from "../../pages/ServiceInformation/ServiceInformation";
 import ProductInfo from "../../pages/ServiceManagement/ProductInfo/ProductInfo";
 
-import ServiceProvision from '../../pages/ServiceProvision/ServiceProvision';
-import Price from '../../pages/Price/Price';
-import Thirdparty from '../../pages/Thirdparty/Thirdparty';
-import Transportation from '../../pages/BasicInformations/Transportation';
-import ADMVehicle from '../../pages/ADMVehicle/ADMVehicle';
-import CustomerManagement from '../../pages/CustomerManagement/CustomerManagement';
-import ProductGroup from '../../pages/ProductGroup/ProductGroup';
-import ServiceTime from '../../pages/ServiceTime/ServiceTime';
-import PincodeManagement from '../../pages/PincodeManagement/PincodeManagement';
-import CustomGeographic from '../../pages/CustomGeographic/CustomGeographic';
+import ServiceProvision from "../../pages/ServiceProvision/ServiceProvision";
+import Price from "../../pages/Price/Price";
+import Thirdparty from "../../pages/Thirdparty/Thirdparty";
+import Transportation from "../../pages/BasicInformations/Transportation";
+import ADMVehicle from "../../pages/ADMVehicle/ADMVehicle";
+import CustomerManagement from "../../pages/CustomerManagement/CustomerManagement";
+import ProductGroup from "../../pages/ProductGroup/ProductGroup";
+import ServiceTime from "../../pages/ServiceTime/ServiceTime";
+import CustomGeographic from "../../pages/CustomGeographic/CustomGeographic";
 import ServiceDefinition from "../../pages/ServiceManagement/ServiceDefinition";
 import ProductDefine from "../../pages/ServiceManagement/ProductDefine";
+import PinCodeManageMent from "../../pages/BasicInformations/PinCodeManagement/PinCodeManageMent";
 
 export const links = [
   {
@@ -246,7 +246,7 @@ export const links = [
       },
       {
         to: "/basic-information/pincode-management",
-        component: <PincodeManagement />,
+        component: <PinCodeManageMent />,
         label: "مدیریت پین‌کد",
       },
       {

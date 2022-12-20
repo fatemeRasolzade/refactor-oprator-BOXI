@@ -42,3 +42,23 @@ export const getDay = (value: getDayProps) => {
   const date = value.year + "/" + value.month + "/" + value.day;
   return date;
 };
+export const convertToObjects = (from: any, to: any, type: any) => {
+  let arr = [];
+  for (let i = 0; i < from.length; i++) {
+    for (let j = 0; j < to.length; j++) {
+      arr.push({ fromCountryDevision: from[i], toCountryDevision: to[j] });
+    }
+  }
+  return arr;
+};
+export const convertUsingProduct = (usingProduct: any, product: any) => {
+  let arr = [];
+  for (let x of usingProduct) {
+    arr.push({
+      parent: product,
+      child: x,
+    });
+  }
+  return arr;
+};
+
