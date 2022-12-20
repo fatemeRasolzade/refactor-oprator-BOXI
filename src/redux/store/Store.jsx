@@ -20,6 +20,8 @@ import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
 import RouteLists from '../Transportation/route/RouteData'
 import HubTypeTable from "../HubData/TypeHub"
 import userInfoReducer from "../userInfo/userInfoReducer";
+import VehicleLists from '../Transportation/VehicleData/VehicleData';
+import BagsLists from '../Transportation/bags/Bags'
 import customGeoReducer from "../customGeo/customGeoReducer";
 const persistConfig = {
   key: "root",
@@ -45,7 +47,9 @@ const reducers = combineReducers({
   vendor: VendorList,
   vehicleModel:VehicleModelLists,
   route:RouteLists,
-  HubType:HubTypeTable
+  HubType:HubTypeTable,
+  Vehicle:VehicleLists,
+  bags:BagsLists,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -8,7 +8,7 @@ import { SuccessAlert } from "../../../../../global/alert/Alert";
 import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
-import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
+
 import Modal from "../../../../../global/Modal/Modal";
 import { BiTrash } from "react-icons/bi";
 import { GrFormAdd } from "react-icons/gr";
@@ -52,19 +52,16 @@ const RouteActionForms: React.FC<PropsData> = ({
   // setIsModalOpen,
   hubOptions,
 }): JSX.Element => {
-  const [checked, setChecked] = useState(true);
+
   const [disableNode, setDisableNodes] = useState(false);
   const [connectionSelect, setConnectionSelect] = useState<any>([]);
   const [serverIds, setServerIds] = useState<any>([]);
-  const [nodeOptins, setNodeOptions] = useState([]);
   const distanceRef = useRef<any>(null);
   const distanceVarianceRef = useRef<any>();
   const transitTimeRef = useRef<any>();
   const timeStoppageRef = useRef<any>();
   const checkBoxRef = useRef<any>(null);
-  const [isActive, setIsACtive] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [Loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();

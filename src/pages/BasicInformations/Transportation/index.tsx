@@ -4,6 +4,8 @@ import Vendor from "./vendor/vendor";
 // import VehicleModel from "./vehicleModel/index";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import React, { Suspense } from "react";
+import Vehicle from "./vehicle";
+import Bags from "./bags";
 // import Route from "./route";
 
 
@@ -29,7 +31,14 @@ const Transportation: React.FC = (): JSX.Element => {
             مدل وسیله نقلیه<span className="border  border-l-gary-200 relative right-4"></span>
           </Tab>
           <Tab>
+             وسیله نقلیه<span className="border  border-l-gary-200 relative right-4"></span>
+          </Tab>
+          
+          <Tab>
             مسیر<span className="border  border-l-gary-200 relative right-4"></span>
+          </Tab>
+          <Tab>
+            کیسه بندی<span className="border  border-l-gary-200 relative right-4"></span>
           </Tab>
         </TabList>
         <Suspense fallback={<p>...loading</p>}>
@@ -40,7 +49,13 @@ const Transportation: React.FC = (): JSX.Element => {
             <VehicleModel />
           </TabPanel>
           <TabPanel>
+            <Vehicle/> 
+          </TabPanel>  
+          <TabPanel>
             <Route />
+          </TabPanel>
+          <TabPanel>
+            <Bags />
           </TabPanel>
         </Suspense>
       </Tabs>
