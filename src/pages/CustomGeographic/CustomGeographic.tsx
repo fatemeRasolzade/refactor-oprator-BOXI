@@ -12,7 +12,6 @@ import {
   fetchGeoList,
 } from "../../redux/customGeo/customGeoReducer";
 import { ExportExcel } from "../../tools/functions/Methods";
-import AddEditGeographic from "./views/AddGeo/AddEditGeographicWrapper";
 import SearchFilter from "./views/SearchFilter";
 
 const CustomGeographic = () => {

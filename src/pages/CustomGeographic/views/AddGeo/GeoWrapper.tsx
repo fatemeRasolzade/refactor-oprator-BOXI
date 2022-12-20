@@ -1,5 +1,7 @@
+import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 import InputText from "../../../../global/InputText/InputText";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
@@ -22,8 +24,29 @@ const GeoWrapper = () => {
       code: "",
       name: "",
     },
-    onSubmit: (values, { resetForm }) => {
-      resetForm();
+    onSubmit: async (values, { resetForm }) => {
+      debugger;
+      const data = {
+        // id: values?.id,
+        code: values?.code,
+        isActive: values?.isActive,
+        name: values?.name,
+        customDevisionDetails: tableList
+          .map((item) => item.customDevisionDetails)
+          .flat(1),
+      };
+      try {
+        const res = await axios({
+          url: "http://boxi.local:40000/core-api/customcountrydevision",
+          method: "POST",
+          data: data,
+        });
+        console.log("res", res.data);
+        toast.success("رده جغرافیایی با موفقیت اضافه شد ");
+        resetForm();
+      } catch (error: any) {
+        toast.error(error?.response?.data?.errors?.message || "مشکلی پیش آمده");
+      }
     },
   });
   return (
@@ -67,13 +90,15 @@ const GeoWrapper = () => {
             type="submit"
             text="لغو"
             className="full-lightTomato-btn w-28 "
-            //   handelClick={() => setIsModalOpen(false)}
+            handelClick={() => formikTitle.resetForm()}
           />
           <SimpleButton
             type="submit"
             text="افزودن"
             className="full-tomato-btn w-28 "
-            handelClick={() => formikTitle.handleSubmit()}
+            handelClick={() => {
+              formikTitle.submitForm();
+            }}
           />
         </div>
       </div>
