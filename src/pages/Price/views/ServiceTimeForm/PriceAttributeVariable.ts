@@ -17,13 +17,20 @@ export const PriceAttributeFormValidation = () =>
           }
         }),
       isParametric: Yup.boolean(),
-      customDevision: Yup.object().when("classification", (val: any, schema: any) => {
-        if (val.id === 1) {
-          return Yup.object().required();
-        } else {
-          return Yup.string().nullable(true);
-        }
-      }),
+
+      // consignmentType: Yup.string().ensure()
+      // .when("isParametric", {
+      //   is: false,
+      //   then: Yup.string().required(),
+      //   otherwise: Yup.string().nullable(true), // unnecessary
+      // }),
+      // customDevision: Yup.object().when("classification", (val: any, schema: any) => {
+      //   if (val.id === 1) {
+      //     return Yup.object().required();
+      //   } else {
+      //     return Yup.string().nullable(true);
+      //   }
+      // }),
       fromDestinationState: Yup.string()
         .ensure()
         .when("classification", {
@@ -98,7 +105,7 @@ export const PriceAttributeFormInitialValues = {
   toValue: "",
   fromNumber: "",
   toNumber: "",
-  consignmentType: null,
+  consignmentType: undefined,
   priceList: null,
   customDevision: null,
   isActive: true,
