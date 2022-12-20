@@ -10,9 +10,12 @@ import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import { BiPlus } from "react-icons/bi";
 import PriceParameters from "./PriceParameters";
+import StaticTable from "../../../../components/staticTable/StaticTable";
+import { PriceAttributeColumn } from "./PriceAttributeColumn";
 
 const PriceAttributeForm = () => {
   const [Product, setProduct] = useState([]);
+  const [Attributes, setAttributes] = useState([]);
 
   const initProduct = () => {
     getDataFromServer(GET_PRODUCT_SELECT).then((res) => setProduct(res.content));
@@ -100,6 +103,7 @@ const PriceAttributeForm = () => {
       <div className="flex-end-end">
         <SimpleButton text="درج در لیست" className="full-tomato-btn w-40" icon={<BiPlus size={20} />} />
       </div>
+      <StaticTable selectable={false} data={Attributes ? Attributes : []} column={PriceAttributeColumn} pagination={1} loading={false} />
     </div>
   );
 };

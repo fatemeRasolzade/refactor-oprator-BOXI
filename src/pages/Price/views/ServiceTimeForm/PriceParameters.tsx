@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Provinces from "../../../../components/provinces/Provinces";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import InputText from "../../../../global/InputText/InputText";
 import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
@@ -26,18 +27,18 @@ const PriceParameters = ({ formik }: PriceParametersProps) => {
     getDataFromServer(GET_CONSIGNMENT_TYPE).then((res) => setConsignmentType(res));
   };
 
-  
+  const initCustomeDevision = () => {};
 
   const { values, errors, touched, handleChange, setFieldValue }: any = formik;
 
   return (
-    <div className="border rounded-lg px-5 pt-10 relative w-full">
+    <div className="border rounded-lg px-5 pt-10 relative w-full mb-5">
       <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">پارامتر های قیمت</span>
       <div className="flex-start-start gap-5 flex-wrap mb-6">
         <InputSelect
           important
           options={ConsignmentType}
-          label="نوع مرسوله  "
+          label="نوع مرسوله"
           values={values.consignmentType}
           name="consignmentType"
           handleChange={setFieldValue}
@@ -46,7 +47,7 @@ const PriceParameters = ({ formik }: PriceParametersProps) => {
         <div className="border rounded-lg px-5 pt-10 relative">
           <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray"> وزن (کیلوگرم)</span>
           <InputText
-            label=" از "
+            label="از "
             values={values.fromWeight}
             name="fromWeight"
             handleChange={handleChange}
@@ -78,28 +79,36 @@ const PriceParameters = ({ formik }: PriceParametersProps) => {
         </div>
       </div>
       <div className="inputRow">
-        <div className="border rounded-lg px-5 pt-10 relative flex-start-start gap-5">
+        <div className="border rounded-lg px-5 pt-10 pb-5 relative flex-start-start gap-5">
           <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray"> جزئیات رده جغرافیایی </span>
           <InputSelect
             important
             options={Classification}
-            label="نوع رده  "
+            label="نوع رده"
             values={values.classification}
             name="classification"
             handleChange={setFieldValue}
             error={touched.classification && errors.classification}
           />
-          <InputSelect
-            important
-            options={ConsignmentType}
-            label="رده جغرافیایی  "
-            values={values.customDevision}
-            name="customDevision"
-            handleChange={setFieldValue}
-            error={touched.customDevision && errors.customDevision}
-          />
+          {values.classification.id === 1 && (
+            <InputSelect
+              important
+              options={ConsignmentType}
+              label="رده جغرافیایی"
+              values={values.customDevision}
+              name="customDevision"
+              handleChange={setFieldValue}
+              error={touched.customDevision && errors.customDevision}
+            />
+          )}
+          {values.classification.id === 2 && (
+            <div className="flex-start-start gap-5 mt-[-0.7rem]">
+              <Provinces form={formik} />
+            </div>
+          )}
         </div>
-        <div className="mb-5 w-[19rem] centering mt-8">
+
+        <div className="mb-5  centering mt-8">
           <CustomSwitch label="محاسباتی" active={values.fixedPrice} handleChange={() => setFieldValue("fixedPrice", !values.fixedPrice)} />
         </div>
         {!values.fixedPrice ? (

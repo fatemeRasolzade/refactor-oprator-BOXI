@@ -106,7 +106,7 @@ export const PriceAttributeFormInitialValues = {
   customDevision: null,
   isActive: true,
   priceDetailDevisions: [],
-  classification: { id: "", text: "" },
+  classification: { id: 1, text: "سفارشی" },
   totalWight: { from: "", to: "" },
   totalDim: { from: "", to: "" },
   totalValue: { from: "", to: "" },
