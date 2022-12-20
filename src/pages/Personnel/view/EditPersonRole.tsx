@@ -190,6 +190,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
                   />
                 ) : (
                   <InputText
+                    readOnly={currentData ? true : false}
                     wrapperClassName="w-full"
                     label="نام کاربر"
                     name="name"

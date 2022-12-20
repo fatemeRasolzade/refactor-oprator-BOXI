@@ -20,6 +20,7 @@ import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
 import RouteLists from '../Transportation/route/RouteData'
 import HubTypeTable from "../HubData/TypeHub"
 import userInfoReducer from "../userInfo/userInfoReducer";
+import customGeoReducer from "../customGeo/customGeoReducer";
 const persistConfig = {
   key: "root",
   storage,
@@ -27,7 +28,7 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
-  userInfo:userInfoReducer,
+  userInfo: userInfoReducer,
   hub: HubList,
   role: RolesList,
   paginate: PageNumber,

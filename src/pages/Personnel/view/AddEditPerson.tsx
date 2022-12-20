@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
@@ -125,6 +125,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             email: values.email,
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
             isActive: currentData.isActive,
+            hubCodes: treeChecked,
           }
         : {
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
@@ -136,6 +137,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             username: values.username,
             password: values.password,
             isActive: true,
+            hubCodes: treeChecked,
           };
 
       try {
@@ -172,10 +174,27 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
       }
     },
   });
+  const handleGetuserData = useCallback(async (id: number) => {
+    try {
+      const res = await axios({
+        url: `http://boxi.local:40000/resource-api/employee/${id}`,
+        method: "GET",
+      });
+      console.log("res", res.data);
+    } catch (error) {}
+  }, []);
+
   const handleOpenModal = () => setIsModalOpen(!isModalOpen);
   const handleUploadFileAction = () => {
     setUploadExcel(!uploadExcel);
   };
+  useEffect(() => {
+    if (currentData && isModalOpen) {
+      handleGetuserData(currentData.id);
+    }
+    console.log("loop");
+  }, [handleGetuserData, currentData, isModalOpen]);
+
   const ToggleOptions = [
     { handleClick: handleOpenModal, name: "افزودن پرسنل" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
@@ -368,7 +387,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               <SimpleButton
                 type="submit"
                 text="بله"
-                className="full-tomato-btn px-[50px] "
+                className="full-tomato-btn px-[90px] "
               />
               <SimpleButton
                 type="button"

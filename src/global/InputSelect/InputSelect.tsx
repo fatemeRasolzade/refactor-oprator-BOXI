@@ -12,7 +12,7 @@ interface InputSelectProps {
   important?: boolean;
   wrapperClassName?: string;
   isMulti?: boolean;
-  isDisabled?:boolean;
+  isDisabled?: boolean;
 }
 
 const InputSelect: FC<InputSelectProps> = ({
@@ -26,10 +26,9 @@ const InputSelect: FC<InputSelectProps> = ({
   important,
   wrapperClassName,
   isMulti,
-  isDisabled
+  isDisabled,
 }): JSX.Element => {
-
-  //This is custom Style for react-select 
+  //This is custom Style for react-select
   const style = {
     control: (base: any, state: any) => ({
       ...base,
