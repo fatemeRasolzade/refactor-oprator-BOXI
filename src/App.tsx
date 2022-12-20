@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getUserInfo } from "./redux/userInfo/userInfoReducer";
 import GeoWrapper from "./pages/CustomGeographic/views/AddGeo/GeoWrapper";
+import GeoWrapperEdit from "./pages/CustomGeographic/views/editGeo/GeoWrapperEdit";
 
 function App() {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ function App() {
         />
         <Route
           path="/basic-information/custom-geographic-category/edit"
-          element={<GeoWrapper />}
+          element={<GeoWrapperEdit />}
         />
       </Routes>
     </div>
