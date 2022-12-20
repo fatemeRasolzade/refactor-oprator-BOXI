@@ -16,6 +16,7 @@ import { ExportExcel } from "../../tools/functions/Methods";
 import AddEditPerson from "./view/AddEditPerson";
 import EditPersonRole from "./view/EditPersonRole";
 import PersonnelSearchFrom from "./view/PersonnelSearchFrom";
+import ScopeOfOperation from "./view/ScopeOfOperation";
 
 interface PersonnelProps {}
 
@@ -73,6 +74,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
                   handleDeleteActionNewData={handleGetnewDataOnDelete}
                 />
                 <EditPersonRole currentData={item} />
+                <ScopeOfOperation currentData={item} />
               </div>
             ),
           };
