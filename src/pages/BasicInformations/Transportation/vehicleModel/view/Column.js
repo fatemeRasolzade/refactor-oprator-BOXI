@@ -1,27 +1,49 @@
-export const VendorColumns = [
+export const VehicleModelColumns = [
   {
-    accessor: "code",
-    Header: "کد شرکت ",
-
+    accessor: "id",
+    Header: "",
+    Cell: ({ row, cell }) => {
+      return <>{row.index + 1}</>;
+    },
   },
-  {
-    accessor: "nationalCode",
-    Header: "شناسه ملی شرکت ",
 
-  },
   {
     accessor: "name",
-    Header: "نام شرکت ",
-
+    Header: "نام مدل ",
   },
   {
-    accessor: "contactNumber",
-    Header: "شماره تماس شرکت",
+    accessor: "code",
+    Header: "کد مدل",
+  },
+  {
+    accessor: "weightCapacity",
+    Header: "ظرفیت وزنی (کیلوگرم)",
+  },
+  {
+    accessor: "volumeCapacity",
+    Header: "ظرفیت حجمی (متر مکعب)",
+  },
 
+  {
+    accessor: "consignmentCapacity",
+    Header: "ظرفیت مرسوله (تعداد)",
+  },
+  {
+    accessor: "fuelTypeSelect",
+    Header: "نوع سوخت",
+    Cell: ({ cell }) => {
+      return <span className="flex items-center ">{cell.value?.text}</span>;
+    },
+  },
+  {
+    accessor: "vendorSelect",
+    Header: "نام شرکت نقلیه",
+    Cell: ({ cell }) => {
+      return <span className="flex items-center ">{cell.value?.text}</span>;
+    },
   },
   {
     Header: "عملیات",
     accessor: "operation",
   },
- 
 ];

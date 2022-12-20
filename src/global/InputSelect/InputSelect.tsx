@@ -70,6 +70,7 @@ const InputSelect: FC<InputSelectProps> = ({
       </label>
       <Select
         isMulti={isMulti}
+
         isLoading={options ? false : true}
         value={
           options ? options.find((option: any) => option.label === values) : ""
@@ -88,10 +89,10 @@ const InputSelect: FC<InputSelectProps> = ({
             value: res?.id,
           };
         })}
+        isDisabled={isDisabled}
         placeholder=""
         isRtl
         name={name}
-        isDisabled={isDisabled}
         className="inputSelect focus:outline-none flex"
       />
       <p className="text-red text-xs pr-3 h-4 mt-1">{error?.text}</p>

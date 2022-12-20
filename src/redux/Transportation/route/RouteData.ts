@@ -3,12 +3,12 @@ import { apiRoute } from "../../../services/apiRoute";
 import { postDataHeaderToServer } from "../../../services/Service_call";
 
 
-export const vehicleModel=createAsyncThunk('vehicleModelLists',async(body:any)=>{
+export const filterRoute=createAsyncThunk('routeLists',async(body:any)=>{
 
     const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
     var data = {};
     try {
-        data = await postDataHeaderToServer(apiRoute().post.VehicleModel + params, {
+        data = await postDataHeaderToServer(apiRoute().post.route + params, {
         ...body
         },{
             headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
@@ -20,29 +20,29 @@ export const vehicleModel=createAsyncThunk('vehicleModelLists',async(body:any)=>
 })
 
 const initialState:any= {
-    vehicleModelLists:[],
+    routeLists:[],
     fetchpost:false,
     errorMessage:null,
     isUpdating: false,    
 }
 
-const VehicleModelLists= createSlice({
+const RouteLists= createSlice({
     initialState: initialState,
-    name: "vehicleModelLists",
+    name: "routeLists",
     reducers: {
         updating: (state:any, action:any) => {
             state.isUpdating = action.payload;
           },
     },
     extraReducers: {
-        [vehicleModel.fulfilled as any]: (state, action) => {
-            state.vehicleModelLists = action.payload.payload;
+        [filterRoute.fulfilled as any]: (state, action) => {
+            state.routeLists = action.payload.payload;
             state.fetchPost = false;
         },
-        [vehicleModel.pending as any]: (state) => {
+        [filterRoute.pending as any]: (state) => {
             state.fetchPost = true;
         },
-        [vehicleModel.rejected as any]: (state) => {
+        [filterRoute.rejected as any]: (state) => {
             state.fetchPost = false;
             state.errorMessage = "wrong";
         },
@@ -50,4 +50,4 @@ const VehicleModelLists= createSlice({
 });
 
 // export const {  updating } = ProductDefineList.actions;
-export default VehicleModelLists.reducer
+export default RouteLists.reducer
