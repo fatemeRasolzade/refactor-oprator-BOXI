@@ -11,7 +11,6 @@ import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 const CustomerTelephoneForm = ({ open, setOpen, currentData, setValue, value, ID }: any) => {
   const [PhoneType, setPhoneType] = useState([]);
 
-  //get required data
   const initPhoneType = () => {
     getPhoneType().then((res) => setPhoneType(res));
   };
@@ -20,7 +19,6 @@ const CustomerTelephoneForm = ({ open, setOpen, currentData, setValue, value, ID
     if (open) initPhoneType();
   }, [open]);
 
-  // start fromik configurations
   const validation = Yup.object().shape({
     selectPhoneType: Yup.object().shape({
       text: Yup.string().required(),
@@ -35,7 +33,6 @@ const CustomerTelephoneForm = ({ open, setOpen, currentData, setValue, value, ID
     validationSchema: validation,
     initialValues: currentData
       ? {
-          // edit feilds
           id: currentData.id,
           telNumber: currentData.telNumber,
           telephonePrefix: currentData.telephonePrefix,
@@ -50,7 +47,6 @@ const CustomerTelephoneForm = ({ open, setOpen, currentData, setValue, value, ID
       if (currentData) {
         // edit
         setOpen(false);
-        resetForm({ values: "" });
         let newArray = [...value];
         let index = newArray.findIndex((a) => a.id === ID);
         newArray[index] = values;
@@ -58,14 +54,16 @@ const CustomerTelephoneForm = ({ open, setOpen, currentData, setValue, value, ID
       } else {
         const id: string = uuid();
         setOpen(false);
-        resetForm({ values: "" });
         setValue("telephones", [...value, { ...values, id: `null${id}` }]);
       }
     },
   });
-  // end formik configuration
 
-  const { values, errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
+  const { values, errors, touched, handleChange, handleSubmit, setFieldValue, resetForm } = formik;
+
+  useEffect(() => {
+    resetForm({ values: "" });
+  }, [resetForm, open]);
 
   return (
     <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}>

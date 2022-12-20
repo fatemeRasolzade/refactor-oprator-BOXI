@@ -7,17 +7,17 @@ import Modal from "../../../../global/Modal/Modal";
 import AddButton from "../../../../global/addButton/AddButton";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import { ServiceTimeFormCurrentValues, ServiceTimeFormInitialValues, ServiceTimeFormValidation } from "./ServiceTimeFormVariable";
-import ServiceTimeInformation from "./ServiceTimeInformation";
 import { EditDataParams, postDataToServer } from "../../../../services/Service_call";
 import { CREATE_SERVICETIME, EDIT_SERVICETIME } from "../../../../services/apiRoute";
 import { serviceTimeData } from "../../../../redux/ServiceTimeData/ServiceTimeData";
+import PriceFormInformation from "./PriceFormInformation";
+import PriceAttributeForm from "./PriceAttributeForm";
 
 type ServiceTimeFormProps = {
   currentData?: any;
-  TimeUnitType: any;
 };
 
-const ServiceTimeForm = ({ currentData, TimeUnitType }: ServiceTimeFormProps) => {
+const PriceForm = ({ currentData }: ServiceTimeFormProps) => {
   const [open, setOpen] = useState(false);
   const [OpenExcel, setOpenExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -34,19 +34,19 @@ const ServiceTimeForm = ({ currentData, TimeUnitType }: ServiceTimeFormProps) =>
           ...values,
           id: currentData.id,
         })
-          .then((response) => {
+          .then(() => {
             dispatch(serviceTimeData({}) as any);
             setOpen(false);
-            response.status && toast.success("مدت ارائه خدمات ویرایش شد");
+            toast.success("نرخ نامه ویرایش شد");
           })
-          .catch((error) => {})
+          .catch(() => {})
           .finally(() => setLoading(false));
       } else {
         postDataToServer(CREATE_SERVICETIME, values)
           .then(() => {
             dispatch(serviceTimeData({}) as any);
             setOpen(false);
-            toast.success("مدت ارائه خدمات افزوده شد");
+            toast.success("نرخ نامه افزوده شد");
           })
           .finally(() => setLoading(false));
       }
@@ -58,7 +58,7 @@ const ServiceTimeForm = ({ currentData, TimeUnitType }: ServiceTimeFormProps) =>
   const handleUploadFileAction = () => setOpenExcel(true);
 
   const ToggleOptions = [
-    { handleClick: handleOpenModal, name: "افزودن مدت ارائه خدمات" },
+    { handleClick: handleOpenModal, name: "افزودن نرخ نامه" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
 
@@ -78,17 +78,24 @@ const ServiceTimeForm = ({ currentData, TimeUnitType }: ServiceTimeFormProps) =>
         <AddButton ToggleOptions={ToggleOptions} />
       )}
       {/* <AddExcel excelInfo={ADMVehicleExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
-      <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مدت ارائه خدمات" : "تعریف مدت ارائه خدمات"}>
+      <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش نرخ نامه" : "تعریف نرخ نامه"}>
         <form onSubmit={handleSubmit}>
-          <ServiceTimeInformation formik={formik} TimeUnitType={TimeUnitType} />
-          <div className="flex-end-center mt-5 gap-3">
-            <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
-            <SimpleButton loading={Loading} type="submit" text={currentData ? "ویرایش" : "افزودن"} className="full-tomato-btn" />
-          </div>
+          <PriceFormInformation formik={formik} />
         </form>
+        <PriceAttributeForm />
+        <div className="flex-end-center mt-5 gap-3">
+          <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
+          <SimpleButton
+            handelClick={handleSubmit}
+            loading={Loading}
+            type="submit"
+            text={currentData ? "ویرایش" : "افزودن"}
+            className="full-tomato-btn"
+          />
+        </div>
       </Modal>
     </>
   );
 };
 
-export default ServiceTimeForm;
+export default PriceForm;

@@ -3,8 +3,7 @@ import { toast } from "react-toastify";
 import { ErrorAlert } from "../global/alert/Alert";
 import UserService from "./keycloakService";
 
-axios.defaults.headers.common["Authorization"] =
-  "Bearer " + localStorage.getItem("Authorization");
+axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("myToken");
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 axios.interceptors.response.use(null, (error) => {
   const errorStatus = error?.response?.status;

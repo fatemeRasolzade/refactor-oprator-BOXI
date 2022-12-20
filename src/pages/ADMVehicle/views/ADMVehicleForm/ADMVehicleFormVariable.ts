@@ -76,10 +76,7 @@ export const ADMVehicleFormCurrentValues = (currentData: any) => {
       id: 0,
       text: "",
     },
-    selectRoute: {
-      id: currentData.selectRoute.id,
-      text: currentData.selectRoute.text,
-    },
+    selectRoute: currentData.selectRoute,
     selectHub: {
       id: currentData.selectHub.id,
       text: currentData.selectHub.text,

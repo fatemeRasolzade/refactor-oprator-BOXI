@@ -127,8 +127,14 @@ export const GET_ROUTE = `${CORE_API}/route/select?filter=`;
 export const HUB_SELECT = `${CORE_API}/hub/select`;
 
 //ServiceTime
-// /timecommitment/selectTimeUnitTypes
-export const CREATE_SERVICETIME = `${CONSIGNMENT_API}/timecommitment`;
-export const EDIT_SERVICETIME = `${CONSIGNMENT_API}/timecommitment`;
-export const DELETE_SERVICETIME = `${CONSIGNMENT_API}/timecommitment/`;
+export const CREATE_SERVICETIME = `${CORE_API}/timecommitment`;
+export const EDIT_SERVICETIME = `${CORE_API}/timecommitment`;
+export const DELETE_SERVICETIME = `${CORE_API}/timecommitment/`;
 export const GET_TIMEUNITTIPES = `${CORE_API}/timecommitment/selectTimeUnitTypes`;
+
+//Price
+export const PRICE_API = `${CORE_API}/pricelist`;
+export const GET_CONSIGNMENT_TYPE = `${CORE_API}/pricelist/consignmenttype`;
+
+//PRODUCT
+export const GET_PRODUCT_SELECT = `${CORE_API}/product/select?filter`;

@@ -6,7 +6,7 @@ export const ADMVehicleColumn = [
   {
     accessor: "vehicleMakeSelect",
     Header: "مدل",
-    Cell: ({ cell }) => <span className="flex flex-row">{cell.value?.text}</span>,
+    Cell: ({ cell }) => cell.value?.text,
   },
   {
     accessor: "weightCapacity",
@@ -19,7 +19,7 @@ export const ADMVehicleColumn = [
   {
     accessor: "selectHub",
     Header: "هاب مرکز گزارش",
-    Cell: ({ cell }) => <span className="flex flex-row">{cell.value?.text}</span>,
+    Cell: ({ cell }) => cell.value?.text,
   },
   {
     accessor: "timeWork",
@@ -28,7 +28,7 @@ export const ADMVehicleColumn = [
   {
     accessor: "selectRoute",
     Header: "مسیر",
-    Cell: ({ cell }) => <span className="flex flex-row">{cell.value?.text}</span>,
+    Cell: ({ cell }) => cell.value?.text,
   },
   {
     accessor: "operation",
