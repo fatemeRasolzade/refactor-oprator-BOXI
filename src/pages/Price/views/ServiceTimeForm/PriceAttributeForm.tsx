@@ -6,6 +6,10 @@ import { GET_PRODUCT_SELECT } from "../../../../services/apiRoute";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import InputText from "../../../../global/InputText/InputText";
 import { PriceAttributeFormInitialValues, PriceAttributeFormValidation } from "./PriceAttributeVariable";
+import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
+import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
+import { BiPlus } from "react-icons/bi";
+import PriceParameters from "./PriceParameters";
 
 const PriceAttributeForm = () => {
   const [Product, setProduct] = useState([]);
@@ -66,46 +70,35 @@ const PriceAttributeForm = () => {
         <div className="mb-5 w-60 centering">
           <CustomSwitch label="قیمت مقطوع" active={values.isParametric} handleChange={() => setFieldValue("isParametric", !values.isParametric)} />
         </div>
-        <div className="mb-5 w-60 centering">
-          <CustomSwitch label="محاسباتی" active={values.fixedPrice} handleChange={() => setFieldValue("fixedPrice", !values.fixedPrice)} />
-        </div>
-
-        {/* 
-        {!values.fixedPrice ? (
-								<FormGroup
-									required={true}
-									error={touched.price && errors.price}
-									input={{
-										name: "price",
-										value: values.price,
-										onChange: handleChange,
-										// onChange:(e)=>{
-										//
-										//   const {value}=e.target
-										//   !values.fixedPrice?
-										// 	formik.setFieldValue("price", value)
-										// 	:
-										// 	formik.setFieldValue("price", '')
-										//
-										// } ,
-									}}
-									label="قیمت"
-								/>
-							) : (
-								<FormGroup
-									width="w-full"
-									// error={touched.priceFormule && errors.priceFormule}
-									input={{
-										type: "textarea",
-										name: "priceFormule",
-										value: values.priceFormule,
-										onChange: handleChange,
-									}}
-									label="ویرایشگر"
-								/>
-							)} */}
-
-        <InputText important label=" قیمت " values={values.price} name="price" handleChange={handleChange} error={touched.price && errors.price} />
+        {values.isParametric && (
+          <>
+            <div className="mb-5 w-60 centering">
+              <CustomSwitch label="محاسباتی" active={values.fixedPrice} handleChange={() => setFieldValue("fixedPrice", !values.fixedPrice)} />
+            </div>
+            {!values.fixedPrice ? (
+              <InputText
+                important
+                label=" قیمت "
+                values={values.price}
+                name="price"
+                handleChange={handleChange}
+                error={touched.price && errors.price}
+              />
+            ) : (
+              <MultiLineText
+                label=" ویرایشگر "
+                values={values.priceFormule}
+                name="priceFormule"
+                handleChange={handleChange}
+                error={touched.priceFormule && errors.priceFormule}
+              />
+            )}
+          </>
+        )}
+      </div>
+      {!values.isParametric && <PriceParameters formik={formik} />}
+      <div className="flex-end-end">
+        <SimpleButton text="درج در لیست" className="full-tomato-btn w-40" icon={<BiPlus size={20} />} />
       </div>
     </div>
   );
