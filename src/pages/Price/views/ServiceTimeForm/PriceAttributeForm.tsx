@@ -15,7 +15,7 @@ import { PriceAttributeColumn } from "./PriceAttributeColumn";
 
 const PriceAttributeForm = () => {
   const [Product, setProduct] = useState([]);
-  const [Attributes, setAttributes] = useState([]);
+  const [Attributes, setAttributes] = useState<any>([]);
 
   const initProduct = () => {
     getDataFromServer(GET_PRODUCT_SELECT).then((res) => setProduct(res.content));
@@ -27,39 +27,54 @@ const PriceAttributeForm = () => {
 
   const formik = useFormik({
     enableReinitialize: true,
-    validationSchema: PriceAttributeFormValidation,
+    // validationSchema: PriceAttributeFormValidation,
     initialValues: PriceAttributeFormInitialValues,
     // currentData ? ServiceTimeFormCurrentValues(currentData) : ServiceTimeFormInitialValues,
     onSubmit: (values: any) => {
-      //   setLoading(true);
-      //   if (currentData) {
-      //     EditDataParams(EDIT_SERVICETIME, {
-      //       ...values,
-      //       id: currentData.id,
-      //     })
-      //       .then(() => {
-      //         dispatch(serviceTimeData({}) as any);
-      //         setOpen(false);
-      //         toast.success("نرخ نامه ویرایش شد");
-      //       })
-      //       .catch(() => {})
-      //       .finally(() => setLoading(false));
-      //   } else {
-      //     postDataToServer(CREATE_SERVICETIME, values)
-      //       .then(() => {
-      //         dispatch(serviceTimeData({}) as any);
-      //         setOpen(false);
-      //         toast.success("نرخ نامه افزوده شد");
-      //       })
-      //       .finally(() => setLoading(false));
-      //   }
+      alert("true");
+      if (values.isParametric) {
+        let data = {
+          id: values?.id,
+          product: values.product,
+          priceFormule: values.priceFormule,
+          price: values.price,
+        };
+        values = { ...formik.initialValues, ...data };
+      } else {
+        // values.fromDestinationState && values.fromDestinationState.length !== 0 && childRefUpdateData.current.updateData();
+        values.totalWight = { from: values.fromWeight, to: values.toWeight };
+        values.totalDim = { from: values.fromDim, to: values.toDimension };
+        values.totalValue = { from: values.fromValue, to: values.toValue };
+        values.totalNumber = { from: values.fromNumber, to: values.toNumber };
+        values.priceDetailDevisions = values.attributeDivition ? values.attributeDivition : [];
+      }
+
+      delete values.id;
+      const newArray = [...Attributes, values];
+      setAttributes([...Attributes, values]);
+      // if (!edit) {
+      // 	delete values.id;
+      // 	const type = attribute ? attribute : [];
+      // 	action({
+      // 		type: SET,
+      // 		path: "attribute",
+      // 		payload: [...type, temp],
+      // 	});
+      // } else {
+      // const findData = Attributes.findIndex((item, index) => index === editData);
+      // const copyAttributeProducts = [...attribute];
+      // copyAttributeProducts[findData] = temp;
+
+      // }
+      // setEdit(false);
+      // resetForm({ values: "" });
     },
   });
 
-  const { values, errors, touched, handleChange, setFieldValue }: any = formik;
+  const { values, errors, touched, handleChange, setFieldValue, handleSubmit }: any = formik;
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <div className="inputRow">
         <InputSelect
           important
@@ -101,10 +116,10 @@ const PriceAttributeForm = () => {
       </div>
       {!values.isParametric && <PriceParameters formik={formik} />}
       <div className="flex-end-end">
-        <SimpleButton text="درج در لیست" className="full-tomato-btn w-40" icon={<BiPlus size={20} />} />
+        <SimpleButton type="submit" text="درج در لیست" className="full-tomato-btn w-40" icon={<BiPlus size={20} />} />
       </div>
       <StaticTable selectable={false} data={Attributes ? Attributes : []} column={PriceAttributeColumn} pagination={1} loading={false} />
-    </div>
+    </form>
   );
 };
 
