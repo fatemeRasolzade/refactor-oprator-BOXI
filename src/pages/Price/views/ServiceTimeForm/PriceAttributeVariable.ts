@@ -18,19 +18,24 @@ export const PriceAttributeFormValidation = () =>
         }),
       isParametric: Yup.boolean(),
 
-      // consignmentType: Yup.string().ensure()
-      // .when("isParametric", {
-      //   is: false,
-      //   then: Yup.string().required(),
-      //   otherwise: Yup.string().nullable(true), // unnecessary
+      // customDevision: Yup.string().ensure()
+      // .when("classification", {
+      // is: (classification) =>(classification?.id === "1"  ? true : false),
+      // then: Yup.string().nullable(true).required(),
+      // otherwise: Yup.string(), // unnecessary
       // }),
-      // customDevision: Yup.object().when("classification", (val: any, schema: any) => {
-      //   if (val.id === 1) {
-      //     return Yup.object().required();
-      //   } else {
-      //     return Yup.string().nullable(true);
-      //   }
-      // }),
+
+      customDevision: Yup.string()
+        .ensure()
+        .when("classification", (val: any, schema: any) => {
+          console.log("VAL************", val);
+
+          if (val.id === "1") {
+            return Yup.object().required();
+          } else {
+            return Yup.string().nullable(true);
+          }
+        }),
       fromDestinationState: Yup.string()
         .ensure()
         .when("classification", {
@@ -110,7 +115,7 @@ export const PriceAttributeFormInitialValues = {
   customDevision: null,
   isActive: true,
   priceDetailDevisions: [],
-  classification: { id: 1, text: "سفارشی" },
+  classification: { id: "", text: "" },
   totalWight: { from: "", to: "" },
   totalDim: { from: "", to: "" },
   totalValue: { from: "", to: "" },

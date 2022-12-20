@@ -93,7 +93,7 @@ const PriceParameters = ({ formik }: PriceParametersProps) => {
             handleChange={setFieldValue}
             error={touched.classification && errors.classification}
           />
-          {values.classification.id === 1 && (
+          {values.classification.id !== 2 && (
             <InputSelect
               important
               options={CustomDevision}
