@@ -32,11 +32,11 @@ const ScopeOfOperation: FC<ScopeOfOperationProps> = ({ currentData }) => {
     onSubmit: async (values, { resetForm }) => {
       if (treeChecked?.length !== 0) {
         const data = {
-          employee: { id: values.id, text: values.text },
-          hubs: treeChecked,
+          selectemployee: { id: values.id, text: values.text },
+          selecthublist: treeChecked,
         };
         try {
-          const res = await axios({
+          await axios({
             url: "",
             method: "POST",
             data: data,
@@ -45,6 +45,7 @@ const ScopeOfOperation: FC<ScopeOfOperationProps> = ({ currentData }) => {
           setIsModalOpen(false);
           resetForm();
         } catch (error) {
+          setIsModalOpen(false);
           toast.error("مشکلی پیش آمده است");
         }
       } else {
