@@ -138,3 +138,5 @@ export const GET_CONSIGNMENT_TYPE = `${CORE_API}/pricelist/consignmenttype`;
 
 //PRODUCT
 export const GET_PRODUCT_SELECT = `${CORE_API}/product/select?filter`;
+//country devision
+export const GET_CUSTOM_COUNTRY_DEVISION = `${CORE_API}/customcountrydevision/select?filter=`;

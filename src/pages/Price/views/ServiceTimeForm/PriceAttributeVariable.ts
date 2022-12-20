@@ -7,21 +7,21 @@ export const PriceAttributeFormValidation = () =>
         text: Yup.string().required(),
         id: Yup.string().required(),
       }),
-      consignmentType: Yup.string()
-        .ensure()
-        .when("isParametric", {
-          is: false,
-          then: Yup.string().required(),
-          otherwise: Yup.string().nullable(true),
-        }),
+      consignmentType: Yup.object().when("isParametric", (val: any, schema: any) => {
+        if (val) {
+          return Yup.object().required();
+        } else {
+          return Yup.object().notRequired();
+        }
+      }),
       isParametric: Yup.boolean(),
-      customDevision: Yup.string()
-        .ensure()
-        .when("classification", {
-          is: (classification: any) => (classification?.id === "1" ? true : false),
-          then: Yup.string().nullable(true).required(),
-          otherwise: Yup.string(), // unnecessary
-        }),
+      customDevision: Yup.object().when("classification", (val: any, schema: any) => {
+        if (val.id === 1) {
+          return Yup.object().required();
+        } else {
+          return Yup.object().notRequired();
+        }
+      }),
       fromDestinationState: Yup.string()
         .ensure()
         .when("classification", {
@@ -69,7 +69,6 @@ export const PriceAttributeFormValidation = () =>
       fromNumber: Yup.number().min(0),
       toNumber: Yup.number().min(0),
     },
-
     [
       ["fromSourceCity", "fromDestinationCity"],
       ["fromSourceLocation", "fromDestinationLocation"],
@@ -80,10 +79,6 @@ export const PriceAttributeFormValidation = () =>
       ["isParametric", "toValue"],
       ["isParametric", "fromValue"],
       ["price", "fixedPrice"],
-      // ['isParametric','classification']
-      // ["isParametric","consignmentType"]
-      // ["customDevision", "classification"],
-      // ["fromDestinationState", "classification"],
     ]
   );
 

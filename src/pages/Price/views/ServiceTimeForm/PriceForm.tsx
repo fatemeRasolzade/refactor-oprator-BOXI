@@ -6,12 +6,13 @@ import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../../../../global/Modal/Modal";
 import AddButton from "../../../../global/addButton/AddButton";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import { ServiceTimeFormCurrentValues, ServiceTimeFormInitialValues, ServiceTimeFormValidation } from "./ServiceTimeFormVariable";
+// import { ServiceTimeFormCurrentValues, ServiceTimeFormInitialValues, ServiceTimeFormValidation } from "./PriceFormVariable";
 import { EditDataParams, postDataToServer } from "../../../../services/Service_call";
-import { CREATE_SERVICETIME, EDIT_SERVICETIME } from "../../../../services/apiRoute";
 import { serviceTimeData } from "../../../../redux/ServiceTimeData/ServiceTimeData";
 import PriceFormInformation from "./PriceFormInformation";
 import PriceAttributeForm from "./PriceAttributeForm";
+import { PriceFormCurrentValues, PriceFormInitialValues, PriceFormValidation } from "./PriceFormVariable";
+import { PRICE_API } from "../../../../services/apiRoute";
 
 type ServiceTimeFormProps = {
   currentData?: any;
@@ -25,30 +26,30 @@ const PriceForm = ({ currentData }: ServiceTimeFormProps) => {
 
   const formik = useFormik({
     enableReinitialize: true,
-    validationSchema: ServiceTimeFormValidation,
-    initialValues: currentData ? ServiceTimeFormCurrentValues(currentData) : ServiceTimeFormInitialValues,
+    validationSchema: PriceFormValidation,
+    initialValues: currentData ? PriceFormCurrentValues(currentData) : PriceFormInitialValues,
     onSubmit: (values: any) => {
       setLoading(true);
       if (currentData) {
-        EditDataParams(EDIT_SERVICETIME, {
-          ...values,
-          id: currentData.id,
-        })
-          .then(() => {
-            dispatch(serviceTimeData({}) as any);
-            setOpen(false);
-            toast.success("نرخ نامه ویرایش شد");
-          })
-          .catch(() => {})
-          .finally(() => setLoading(false));
+        // EditDataParams(PRICE_API, {
+        //   ...values,
+        //   id: currentData.id,
+        // })
+        //   .then(() => {
+        //     dispatch(serviceTimeData({}) as any);
+        //     setOpen(false);
+        //     toast.success("نرخ نامه ویرایش شد");
+        //   })
+        //   .catch(() => {})
+        //   .finally(() => setLoading(false));
       } else {
-        postDataToServer(CREATE_SERVICETIME, values)
-          .then(() => {
-            dispatch(serviceTimeData({}) as any);
-            setOpen(false);
-            toast.success("نرخ نامه افزوده شد");
-          })
-          .finally(() => setLoading(false));
+        // postDataToServer(PRICE_API, values)
+        //   .then(() => {
+        //     dispatch(serviceTimeData({}) as any);
+        //     setOpen(false);
+        //     toast.success("نرخ نامه افزوده شد");
+        //   })
+        //   .finally(() => setLoading(false));
       }
     },
   });

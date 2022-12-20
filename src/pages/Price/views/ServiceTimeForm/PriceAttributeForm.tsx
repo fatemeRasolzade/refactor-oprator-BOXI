@@ -27,10 +27,10 @@ const PriceAttributeForm = () => {
 
   const formik = useFormik({
     enableReinitialize: true,
-    // validationSchema: PriceAttributeFormValidation,
+    validationSchema: PriceAttributeFormValidation,
     initialValues: PriceAttributeFormInitialValues,
     // currentData ? ServiceTimeFormCurrentValues(currentData) : ServiceTimeFormInitialValues,
-    onSubmit: (values: any) => {
+    onSubmit: (values: any, { resetForm }) => {
       alert("true");
       if (values.isParametric) {
         let data = {
@@ -50,8 +50,9 @@ const PriceAttributeForm = () => {
       }
 
       delete values.id;
-      const newArray = [...Attributes, values];
       setAttributes([...Attributes, values]);
+      resetForm({ values: "" });
+
       // if (!edit) {
       // 	delete values.id;
       // 	const type = attribute ? attribute : [];

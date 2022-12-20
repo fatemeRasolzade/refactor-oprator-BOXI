@@ -4,7 +4,7 @@ import InputSelect from "../../../../global/InputSelect/InputSelect";
 import InputText from "../../../../global/InputText/InputText";
 import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
 import CustomSwitch from "../../../../global/Switch/Switch";
-import { GET_CONSIGNMENT_TYPE } from "../../../../services/apiRoute";
+import { GET_CONSIGNMENT_TYPE, GET_CUSTOM_COUNTRY_DEVISION } from "../../../../services/apiRoute";
 import { getDataFromServer } from "../../../../services/Service_call";
 
 interface PriceParametersProps {
@@ -21,13 +21,16 @@ const PriceParameters = ({ formik }: PriceParametersProps) => {
 
   useEffect(() => {
     initConsignmentType();
+    initCustomeDevision();
   }, []);
 
   const initConsignmentType = () => {
     getDataFromServer(GET_CONSIGNMENT_TYPE).then((res) => setConsignmentType(res));
   };
 
-  const initCustomeDevision = () => {};
+  const initCustomeDevision = () => {
+    getDataFromServer(GET_CUSTOM_COUNTRY_DEVISION).then((res) => setCustomDevision(res.content));
+  };
 
   const { values, errors, touched, handleChange, setFieldValue }: any = formik;
 
@@ -93,7 +96,7 @@ const PriceParameters = ({ formik }: PriceParametersProps) => {
           {values.classification.id === 1 && (
             <InputSelect
               important
-              options={ConsignmentType}
+              options={CustomDevision}
               label="رده جغرافیایی"
               values={values.customDevision}
               name="customDevision"
@@ -107,7 +110,6 @@ const PriceParameters = ({ formik }: PriceParametersProps) => {
             </div>
           )}
         </div>
-
         <div className="mb-5  centering mt-8">
           <CustomSwitch label="محاسباتی" active={values.fixedPrice} handleChange={() => setFieldValue("fixedPrice", !values.fixedPrice)} />
         </div>
