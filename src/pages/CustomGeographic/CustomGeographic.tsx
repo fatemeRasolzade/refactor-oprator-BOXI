@@ -87,7 +87,7 @@ const CustomGeographic = () => {
       <StaticTable
         data={data ? data : []}
         column={FetchGeoColumn}
-        pagination={7}
+        pagination={geoData?.totalElements}
         selectable={false}
       />
     </div>

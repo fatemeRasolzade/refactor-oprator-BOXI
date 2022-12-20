@@ -1,14 +1,18 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+
 import InputText from "../../../../global/InputText/InputText";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 
 import LocationForm from "./LocationForm";
 
 const GeoWrapper = () => {
+  const navigate = useNavigate();
+
   const validationTitle = Yup.object().shape({
     name: Yup.string().required(),
     code: Yup.number().required(),
@@ -25,7 +29,6 @@ const GeoWrapper = () => {
       name: "",
     },
     onSubmit: async (values, { resetForm }) => {
-      debugger;
       const data = {
         // id: values?.id,
         code: values?.code,
@@ -44,6 +47,7 @@ const GeoWrapper = () => {
         console.log("res", res.data);
         toast.success("رده جغرافیایی با موفقیت اضافه شد ");
         resetForm();
+        navigate("/basic-information/custom-geographic-category");
       } catch (error: any) {
         toast.error(error?.response?.data?.errors?.message || "مشکلی پیش آمده");
       }

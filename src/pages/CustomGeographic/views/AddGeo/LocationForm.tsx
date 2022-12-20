@@ -127,7 +127,17 @@ const LocationForm: FC<LocationFormProps> = ({
       let data = {
         ...values,
         id: values?.id ? values.id : uuid(),
-        customDevisionDetails: attributeDivition,
+        customDevisionDetails: attributeDivition.map((item) => {
+          return {
+            ...item,
+            id: "",
+            isActive: true,
+            customDevision: {
+              id: "",
+              text: "",
+            },
+          };
+        }),
       };
       setTableList(data);
       resetForm();
