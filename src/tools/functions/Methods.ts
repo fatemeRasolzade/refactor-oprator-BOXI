@@ -62,3 +62,11 @@ export const convertUsingProduct = (usingProduct: any, product: any) => {
   return arr;
 };
 
+
+
+export const SplitString=(value:string)=>{
+  return  value.split(/([0-9]+)/)[0]
+}
+export const SplitNumber=(value:string)=>{
+ return value.split(/([0-9]+)/)[1]
+}

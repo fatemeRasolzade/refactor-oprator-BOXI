@@ -14,21 +14,49 @@ export const useFetchOptions = (url: string, isModalOpen?: boolean) => {
   const [dataOptions, setOptions] = useState({ options: [], error: "", loading: false });
 
   useEffect(() => {
-      try {
-        setOptions({ ...dataOptions, loading: true });
-        selectDataFromServerWithHeader(url, {
-          headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-        }).then((res) => {
-          if (res.status === "OK") setOptions({ ...dataOptions, options: res?.payload?.content || res?.payload, loading: false });
-        });
-      } catch (error: any) {
-        setOptions({ ...dataOptions, error: error, loading: false });
-        ErrorAlert("دریافت دیتا با خطلا مواجه شد");
-      }
+  
+        try {
+          setOptions({ ...dataOptions, loading: true });
+          selectDataFromServerWithHeader(url, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
+          }).then((res) => {
+            if (res.status === "OK") setOptions({ ...dataOptions, options: res?.payload?.content || res?.payload, loading: false });
+          });
+        } catch (error: any) {
+          setOptions({ ...dataOptions, error: error, loading: false });
+          ErrorAlert("دریافت دیتا با خطلا مواجه شد");
+        }
+       
+     
 
   }, [url]);
   return { dataOptions };
 };
+
+
+export const useFetchOptionsOnModal = (url: string, isModalOpen: boolean) => {
+  const [dataOptions, setOptions] = useState({ options: [], error: "", loading: false });
+
+  useEffect(() => {
+       if(isModalOpen){
+        try {
+          setOptions({ ...dataOptions, loading: true });
+          selectDataFromServerWithHeader(url, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
+          }).then((res) => {
+            if (res.status === "OK") setOptions({ ...dataOptions, options: res?.payload?.content || res?.payload, loading: false });
+          });
+        } catch (error: any) {
+          setOptions({ ...dataOptions, error: error, loading: false });
+          ErrorAlert("دریافت دیتا با خطلا مواجه شد");
+        }
+       }
+     
+
+  }, [isModalOpen]);
+  return { dataOptions };
+};
+
 
 
 export const useGetOptions = (url: string, isModalOpen?: boolean) => {

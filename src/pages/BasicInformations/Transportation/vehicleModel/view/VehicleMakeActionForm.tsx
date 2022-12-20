@@ -10,7 +10,6 @@ import AddButton from "../../../../../global/addButton/AddButton";
 import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
-import { useGetFuelTypeOptions, useGetVendorOptions } from "../../../../../global/hooks/useFetchOptions";
 import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
 import AddExcel from "../../../../../components/exel/AddExcel";
 import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
