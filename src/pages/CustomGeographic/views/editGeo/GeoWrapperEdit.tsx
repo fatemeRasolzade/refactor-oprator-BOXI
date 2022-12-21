@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
@@ -12,21 +12,29 @@ import LocationForm from "./LocationForm";
 
 const GeoWrapperEdit = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log("location", location.state);
+  console.log(
+    "updateRespone",
+    updateRespone(location?.state?.customDevisionDetails)
+  );
 
   const validationTitle = Yup.object().shape({
     name: Yup.string().required(),
     code: Yup.number().required(),
   });
-
-  const [tableList, setTableList] = useState<Array<any>>([]);
+  const updatedData = location?.state
+    ? updateRespone(location?.state?.customDevisionDetails)
+    : [];
+  const [tableList, setTableList] = useState<Array<any>>(updatedData);
 
   const formikTitle = useFormik({
     enableReinitialize: true,
     validationSchema: validationTitle,
     initialValues: {
-      isActive: true,
-      code: "",
-      name: "",
+      isActive: location?.state ? location?.state?.isActive : true,
+      code: location?.state ? location?.state?.code : "",
+      name: location?.state ? location?.state?.name : "",
     },
     onSubmit: async (values, { resetForm }) => {
       const data = {
@@ -39,13 +47,13 @@ const GeoWrapperEdit = () => {
           .flat(1),
       };
       try {
-        const res = await axios({
+        await axios({
           url: "http://boxi.local:40000/core-api/customcountrydevision",
-          method: "POST",
+          method: "put",
           data: data,
         });
-        console.log("res", res.data);
-        toast.success("رده جغرافیایی با موفقیت اضافه شد ");
+
+        toast.success("رده جغرافیایی با موفقیت ویرایش شد ");
         resetForm();
         navigate("/basic-information/custom-geographic-category");
       } catch (error: any) {
@@ -94,7 +102,11 @@ const GeoWrapperEdit = () => {
             type="submit"
             text="لغو"
             className="full-lightTomato-btn w-28 "
-            handelClick={() => formikTitle.resetForm()}
+            handelClick={() => {
+              formikTitle.resetForm();
+              setTableList([]);
+              navigate("/basic-information/custom-geographic-category");
+            }}
           />
           <SimpleButton
             type="submit"
@@ -111,3 +123,122 @@ const GeoWrapperEdit = () => {
 };
 
 export default GeoWrapperEdit;
+
+const updateRespone = (response: any) => {
+  const data = response.map((item: any) => ({
+    id: item.id,
+    isActive: item?.isActive,
+    customDevision: item?.customDevision,
+    fromDestinationState: item.fromCountryDevision
+      // .map(from=>from.fromCountryDevision).flat(1)
+      .filter((division: any) => division.countryType === "PROVINCE")
+      .filter(
+        (elem: any, index: number, arr: any) =>
+          index === arr.findIndex((t: any) => t.id === elem.id)
+      ),
+    fromDestinationLocation: item.fromCountryDevision
+      .filter((division: any) => division.countryType === "REGION")
+      .filter(
+        (elem: any, index: number, arr: any) =>
+          index === arr.findIndex((t: any) => t.id === elem.id)
+      ),
+    fromDestinationCity: item.fromCountryDevision
+      .filter((division: any) => division.countryType === "CITY")
+      .filter(
+        (elem: any, index: number, arr: any) =>
+          index === arr.findIndex((t: any) => t.id === elem.id)
+      ),
+    fromSourceState: item.toCountryDevision
+      .filter((division: any) => division.countryType === "PROVINCE")
+      .filter(
+        (elem: any, index: number, arr: any) =>
+          index === arr.findIndex((t: any) => t.id === elem.id)
+      ),
+    fromSourceLocation: item.toCountryDevision
+      .filter((division: any) => division.countryType === "REGION")
+      .filter(
+        (elem: any, index: number, arr: any) =>
+          index === arr.findIndex((t: any) => t.id === elem.id)
+      ),
+    fromSourceCity: item.toCountryDevision
+      .filter((division: any) => division.countryType === "CITY")
+      .filter(
+        (elem: any, index: number, arr: any) =>
+          index === arr.findIndex((t: any) => t.id === elem.id)
+      ),
+  }));
+
+  const finalData = data.map((item: any) => ({
+    ...item,
+    customDevisionDetails:
+      item.fromDestinationLocation && item.fromDestinationLocation.length !== 0
+        ? convertResponseToObjects(
+            item.fromDestinationLocation,
+            item.fromSourceLocation,
+            item.id,
+            item.customDevision,
+            item.isActive,
+            "test",
+            null
+          )
+        : item.fromDestinationCity && item.fromDestinationCity.length !== 0
+        ? convertResponseToObjects(
+            item.fromDestinationCity,
+            item.fromSourceCity,
+            item.id,
+            item.customDevision,
+            item.isActive,
+            "test",
+            null
+          )
+        : item.fromDestinationState && item.fromDestinationState.length !== 0
+        ? convertResponseToObjects(
+            item.fromDestinationState,
+            item.fromSourceState,
+            item.id,
+            item.customDevision,
+            item.isActive,
+            "test",
+            null
+          )
+        : [],
+    fromCountryDevision: item.fromDestinationState,
+    toCountryDevision: item.fromSourceState,
+  }));
+
+  return finalData;
+};
+
+const convertResponseToObjects = (
+  from: any,
+  to: any,
+  id: any,
+  customDevision: any,
+  isActive: any,
+  type: any,
+  consignmenType: any | undefined
+) => {
+  let arr = [];
+  for (let i = 0; i < from.length; i++) {
+    for (let j = 0; j < to.length; j++) {
+      if (type === "pricelists") {
+        arr.push({
+          fromCountryDevision: from[i],
+          toCountryDevision: to[j],
+          id: id,
+          isActive: isActive,
+          consignmenType: consignmenType || null,
+        });
+      } else {
+        arr.push({
+          fromCountryDevision: from[i],
+          toCountryDevision: to[j],
+          id: id,
+          isActive: isActive,
+          customDevision: customDevision || { id: "", text: "" },
+        });
+      }
+    }
+  }
+  return arr;
+};

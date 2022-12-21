@@ -1,7 +1,5 @@
 import axios from "axios";
-import React, { FC, useCallback, useEffect, useState } from "react";
-import { from } from "stylis";
-import InputSelect from "../../global/InputSelect/InputSelect";
+import { FC, useCallback, useEffect, useState } from "react";
 import MultiSelect from "../../global/multiselect/MultiSelect";
 
 interface ProvincesProps {
@@ -87,7 +85,6 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
   );
   useEffect(() => {
     getOptionsData();
-    console.log("loop");
   }, [getOptionsData]);
 
   return (
