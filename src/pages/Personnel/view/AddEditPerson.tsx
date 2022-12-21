@@ -162,6 +162,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               username: "",
               isActive: true,
               pageNumber: 1,
+              hublist: userInfo?.hublist,
             }) as any
           );
           dispatch(Actionpage(1));
@@ -171,6 +172,8 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               : "کارمند با موفقیت اضافه گردید"
           );
           setIsModalOpen(false);
+          setTreeChecked([]);
+          setNodeChecked({});
           resetForm({});
         }
       } catch (error: any) {
@@ -185,7 +188,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
         url: `http://boxi.local:40000/resource-api/employee/${id}`,
         method: "GET",
       });
-      setTreeChecked(res?.data?.payload?.hubCodes);
+      setTreeChecked([res?.data?.payload?.hubcode]);
     } catch (error) {}
   }, []);
 

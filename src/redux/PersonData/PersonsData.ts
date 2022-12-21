@@ -12,7 +12,8 @@ interface PersonnelDataBody {
   email: string,
   username: string,
   isActive: boolean,
-  pageNumber:number
+  pageNumber:number,
+  hublist:any
 }
 export const PersonnelData = createAsyncThunk("post", async (body: PersonnelDataBody) => {
   const params = `/filter?pageNumber=${body.pageNumber}&pageSize=10`;
@@ -26,6 +27,7 @@ export const PersonnelData = createAsyncThunk("post", async (body: PersonnelData
       email: body.email,
       username: body.username,
       isActive: body.isActive,
+      hublist: body.hublist
     });
   } catch (error) {
     console.log("error ", error);
