@@ -16,7 +16,8 @@ axios.interceptors.response.use(null, (error) => {
   }
   if (errorStatus >= 500) {
     toast.error("مشکلی از سمت سرور رخ داده است.");
-    return Promise.reject(error);
+    Promise.reject(error);
+    throw error;
   }
 
   //   const expectedErrors =

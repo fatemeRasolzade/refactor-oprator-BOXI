@@ -12,7 +12,10 @@ import MultiSelect from "../../../../global/multiselect/MultiSelect";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import { useLocation } from "react-router-dom";
-import { convertToObjects, convertUsingProduct } from "../../../../tools/functions/Methods";
+import {
+  convertToObjects,
+  convertUsingProduct,
+} from "../../../../tools/functions/Methods";
 
 interface ProductInfoFormProps {
   tableList: any;
@@ -23,6 +26,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
   tableList,
   setTableList,
 }): JSX.Element => {
+  const { state } = useLocation();
   const validation = Yup.object().shape(
     {
       fromSourceCity: Yup.array().when(
@@ -116,7 +120,6 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
       ["fromValue", "toValue"],
     ]
   );
-  const { state } = useLocation();
 
   const [valuesData, setValuesData] = useState({
     product: [],
@@ -213,8 +216,6 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
       return errors;
     },
     onSubmit: async (values, { resetForm }) => {
-      console.log("values table", values);
-
       let fromCountryDevisiondsdsd: any = [];
       let toCountryDevisiond: any = [];
       let attributeDivition;
@@ -242,17 +243,24 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
               "from"
             )
           : [];
-      console.log("attributeDivition", attributeDivition);
 
       const data = {
         ...values,
+        totalValue:
+          values.fromValue && values.toValue
+            ? Number(values.fromValue) + Number(values.toValue)
+            : "",
+        totalWight:
+          values.toWeight && values.fromWeight
+            ? Number(values.fromWeight) + Number(values.toWeight)
+            : "",
         attributeDivition: attributeDivition ? attributeDivition : [],
         usingProduct: convertUsingProduct(values.usingProduct, values.product),
-        id: uuid(),
+        tableId: uuid(),
       };
-      console.log("data", data);
 
       setTableList(data);
+      resetForm();
     },
   });
 
@@ -260,7 +268,6 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
     getOptionsData();
     console.log("loop");
   }, [getOptionsData]);
-  console.log("tableList", formik.values.product);
 
   return (
     <form className=" w-full" onSubmit={formik.handleSubmit}>
@@ -268,7 +275,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
         <div className="col-span-2">
           <InputSelect
             important
-            wrapperClassName="w-full"
+            wrapperClassName="w-full z-[900]"
             name="product"
             label="محصول"
             isDisabled={state ? true : false}
