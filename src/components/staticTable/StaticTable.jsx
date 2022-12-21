@@ -149,9 +149,7 @@ function Table({ columns, data, pageTable, selectable, loading }) {
           <>موردی یافت نشد</>
         </div>
       )} */}
-      <div className="text-center my-5">
         <Paginations pageData={pageTable} />
-      </div>
     </div>
   );
 }

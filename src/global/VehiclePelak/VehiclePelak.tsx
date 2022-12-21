@@ -31,7 +31,7 @@ const VehiclePelak = ({ formik, important, ReadOnly }: VehiclePelakProps) => {
         <input
           disabled={ReadOnly}
           value={values.vehicleNumber2}
-          className="w-12 border-b text-center"
+          className="w-12 border-b text-center focus:outline-none"
           onChange={(e) => setFieldValue("vehicleNumber2", e.target.value)}
         />
         <VehiclePelakDrapDown
@@ -44,7 +44,7 @@ const VehiclePelak = ({ formik, important, ReadOnly }: VehiclePelakProps) => {
         <input
           disabled={ReadOnly}
           value={values.vehicleNumber0}
-          className="w-10 border-b text-center"
+          className="w-10 border-b text-center focus:outline-none"
           onChange={(e) => setFieldValue("vehicleNumber0", e.target.value)}
         />
       </div>

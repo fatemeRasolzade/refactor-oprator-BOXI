@@ -20,19 +20,20 @@ const OptionsTable = ({ setIsActive, addComponentProps, exportExcel, isActive }:
             {/* <SimpleButton text="افزودن" className="full-tomato-btn" icon={<BiPlus color="white" />} /> */}
           </li>
           <li>
+            <SimpleButton
+                handelClick={exportExcel}
+                text="خروجی اکسل"
+                icon={<GoDesktopDownload color="black" />}
+                className="centering rounded-lg text-black w-full"
+            />
+          </li>
+          <li>
             <CustomSwitch
               active={isActive ? isActive : false}
               handleChange={(value: any) => setIsActive && setIsActive(value as boolean)}
             />
           </li>
-          <li>
-            <SimpleButton
-              handelClick={exportExcel}
-              text="خروجی اکسل"
-              icon={<GoDesktopDownload color="black" />}
-              className="centering rounded-lg text-black w-full"
-            />
-          </li>
+
         </>
       </ul>
     </div>

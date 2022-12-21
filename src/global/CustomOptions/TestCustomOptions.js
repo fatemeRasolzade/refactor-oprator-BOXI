@@ -48,7 +48,7 @@ const TestCustomOptions = ({ options = [] }) => {
 
   return (
     <div className="flex-start-center ">
-      {options.map((item) => SwitchOptions(item))}
+      {options.map((item, index) => <div key={index}>{SwitchOptions(item)}</div> )}
     </div>
   );
 };

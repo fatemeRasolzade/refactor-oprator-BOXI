@@ -83,7 +83,7 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
       <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col ">
         <form className="flex-start-start flex-wrap gap-5" onSubmit={formik.handleSubmit}>
           <AutocompleteInput
-            label={"کد"}
+            label={"جستجو"}
             items={serviceCodeOptions}
             value={formik.values.search}
             onChange={(e) => handleChangeCode(e, "search")}

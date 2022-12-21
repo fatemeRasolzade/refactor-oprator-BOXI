@@ -18,6 +18,12 @@ const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
     }
   }, [open]);
 
+  useEffect(() => {
+    setFieldValue("nationalCode", "");
+    setFieldValue("nationalId", "");
+    setFieldValue("economicCode", "");
+  }, [setFieldValue, values.selectThirdPartyType.id]);
+
   const initThirdPartyType = () => {
     getThirdPartyType().then((res) => {
       setThirdPartyType(res);
@@ -49,7 +55,7 @@ const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
           readOnly={currentData && true}
         />
         <InputText important label="نام شخصیت" values={values.name} name="name" handleChange={handleChange} error={touched.name && errors.name} />
-        <InputSelect
+        {/* <InputSelect
           options={ThirdPartyType}
           important
           label="نوع شخصیت"
@@ -57,7 +63,7 @@ const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
           name="selectThirdPartyType"
           handleChange={setFieldValue}
           error={touched.selectThirdPartyType && errors.selectThirdPartyType}
-        />
+        /> */}
         {values.selectThirdPartyType.id === 0 && (
           <InputText
             important

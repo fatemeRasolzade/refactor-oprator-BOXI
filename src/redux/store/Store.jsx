@@ -10,6 +10,7 @@ import CustomerList from "../CustomerManagement/CustomerManagementData";
 import ThirdPartyList from "../ThirdParty/ThirdPartyData";
 import ADMVehicleList from "../ADMVehicle/ADMVehicleData";
 import ServiceTimeList from "../ServiceTimeData/ServiceTimeData";
+import PriceList from "../PriceData/PriceData";
 import ServiceProvision from "../ServiceProvision/ServiceProvision";
 import ServiceData from "../ServiceDefine/ServiceDefineReducer";
 import EditHubTable from "../HubData/EditData";
@@ -17,8 +18,11 @@ import selectRowTable from "../selectRowTable/selectRowTable";
 
 import VendorList from "../Transportation/vendor/VendorData";
 import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
-import HubTypeTable from "../HubData/TypeHub";
+import RouteLists from '../Transportation/route/RouteData'
+import HubTypeTable from "../HubData/TypeHub"
 import userInfoReducer from "../userInfo/userInfoReducer";
+import VehicleLists from '../Transportation/VehicleData/VehicleData';
+import BagsLists from '../Transportation/bags/Bags'
 import customGeoReducer from "../customGeo/customGeoReducer";
 const persistConfig = {
   key: "root",
@@ -38,13 +42,16 @@ const reducers = combineReducers({
   thirdParty: ThirdPartyList,
   ADMVehicle: ADMVehicleList,
   serviceTime: ServiceTimeList,
+  price: PriceList,
   serviceProvision: ServiceProvision,
   editHub: EditHubTable,
   selectRowTable: selectRowTable,
   vendor: VendorList,
-  vehicleModel: VehicleModelLists,
-  HubType: HubTypeTable,
-  customGeo: customGeoReducer,
+  vehicleModel:VehicleModelLists,
+  route:RouteLists,
+  HubType:HubTypeTable,
+  Vehicle:VehicleLists,
+  bags:BagsLists,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

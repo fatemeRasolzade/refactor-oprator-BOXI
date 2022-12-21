@@ -25,9 +25,10 @@ const ADMVehicleSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
       vehicleNumber1: "",
       vehicleNumber2: "",
       vehicleNumber3: "",
-      vehicleNumber: "",
       hubName: "",
       hubCode: "",
+      vehicleMakeSelect: "",
+      selectRoute: undefined,
     },
     onSubmit: (values) => {
       setFilterData(values);
@@ -52,10 +53,10 @@ const ADMVehicleSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
       <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col ">
         <form className="flex-start-start flex-wrap gap-5" onSubmit={handleSubmit}>
           <VehiclePelak formik={formik} />
-          <AutocompleteInput label={"هاب مرکز گزارش"} value={values.vehicleNumber} onChange={(e) => setFieldValue("vehicleNumber", e.target.value)} />
+          <AutocompleteInput label="هاب مرکز گزارش" value={values.hubName} onChange={(e) => setFieldValue("hubName", e.target.value)} />
           <SimpleButton searchBtn />
           <PerfesionalSearch formData={handleSubmit} handleReset={handleReset}>
-            <ADMVehiclePerfesionalFilter values={values} setFieldValue={setFieldValue} />
+            <ADMVehiclePerfesionalFilter formik={formik} />
           </PerfesionalSearch>
         </form>
       </div>
