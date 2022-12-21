@@ -59,36 +59,37 @@ const InputSelect: FC<InputSelectProps> = ({
   return (
     <div className={`relative  ${wrapperClassName}`}>
       <label
-        className={` absolute top-[-16px] right-5 bg-white z-10  px-2  text-sm ${
-          error ? "text-red" : "text-darkGray"
-        }`}
+        className={` absolute top-[-16px] right-5 bg-white z-10  px-2  text-sm ${error ? "text-red" : "text-darkGray"}`}
       >
-        {label}{" "}
-        <span className="text-tomato font-extrabold text-lg h-4">
-          {important ? "*" : " "}
-        </span>
+        {label} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
       </label>
       <Select
         isMulti={isMulti}
-
         isLoading={options ? false : true}
-        value={
-          options ? options.find((option: any) => option.label === values) : ""
-        }
-        defaultInputValue={values?.text}
-        onChange={(option) =>
+        // value={
+        //   options ? options.find((option: any) => option.label === values) : ""
+        // }
+        value={{
+          value: values?.id,
+          label: values?.text,
+        }}
+        // defaultInputValue={values?.text}
+        onChange={(option: any) =>
           handleChange(name, {
             id: option?.value,
             text: option?.label,
           })
         }
         styles={style}
-        options={options && options.map((res: any) => {
-          return {
-            label: res?.text,
-            value: res?.id,
-          };
-        })}
+        options={
+          options &&
+          options.map((res: any) => {
+            return {
+              label: res?.text,
+              value: res?.id,
+            };
+          })
+        }
         isDisabled={isDisabled}
         placeholder=""
         isRtl

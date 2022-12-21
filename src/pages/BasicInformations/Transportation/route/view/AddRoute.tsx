@@ -132,7 +132,7 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
   return (
     <>
       {openConnection && (
-        <RouteActionForms hubOptions={hubOptions} routeValue={formik.values} isModalOpen={openConnection} setIsModalOpen={setOpenConnections} />
+        <RouteActionForms hubOptions={hubOptions} routeValue={formik.values} addOpen={openConnection} setAddOpen={setOpenConnections} />
       )}
       <AddButton ToggleOptions={ToggleOptions} />
       <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />

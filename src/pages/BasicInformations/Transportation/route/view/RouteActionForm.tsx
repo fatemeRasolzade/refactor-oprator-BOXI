@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FormikProvider, FieldArray, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import {  EditDataParams, PostDataParams } from "../../../../../services/Service_call";
+import { EditDataParams, PostDataParams } from "../../../../../services/Service_call";
 import { apiRoute, deleteConnections } from "../../../../../services/apiRoute";
 import { SuccessAlert } from "../../../../../global/alert/Alert";
 import InputText from "../../../../../global/InputText/InputText";
@@ -18,12 +18,15 @@ import CustomSwitch from "../../../../../global/Switch/Switch";
 import { filterRoute } from "../../../../../redux/Transportation/route/RouteData";
 import { AiOutlineEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
+import axios from "axios";
 interface PropsData {
   currentData?: any;
   routeValue?: any;
   isModalOpen?: boolean;
   setIsModalOpen?: any;
   hubOptions?: any;
+  addOpen?:any,
+  setAddOpen?:any
 }
 const validation = Yup.object().shape({
   code: Yup.number().required().label("کد مسیر"),
@@ -48,6 +51,8 @@ const validation = Yup.object().shape({
 const RouteActionForms: React.FC<PropsData> = ({
   currentData,
   routeValue,
+  addOpen,
+  setAddOpen,
   // isModalOpen,
   // setIsModalOpen,
   hubOptions,
@@ -176,20 +181,22 @@ const RouteActionForms: React.FC<PropsData> = ({
     });
   };
   const addConnection = (e: any, push: any) => {
-    e.preventDefault();
-    setDisableNodes(true);
-    formik.setFieldValue("nodes", formik.values.connections.length + 1);
-    formik.values.connections.splice(formik.values.connections.length - 1, 0, {
-      selectHub: {
-        id: "",
-        text: "",
-      },
-      distanceFromPreviousHub: "",
-      distanceVariance: "",
-      transitTime: "",
-      timeStoppage: "",
-      customId: uuidv4(),
-    });
+    console.log(formik.values.connections);
+    
+    // e.preventDefault();
+    // setDisableNodes(true);
+    // formik.setFieldValue("nodes", formik.values.connections.length + 1);
+    // formik.values.connections.splice(formik.values.connections.length - 1, 0, {
+    //   selectHub: {
+    //     id: "",
+    //     text: "",
+    //   },
+    //   distanceFromPreviousHub: "",
+    //   distanceVariance: "",
+    //   transitTime: "",
+    //   timeStoppage: "",
+    //   customId: uuidv4(),
+    // });
   };
   const deleteConnection = () => {
     const filterData = formik.values.connections.filter(
@@ -206,21 +213,29 @@ const RouteActionForms: React.FC<PropsData> = ({
       transitTime: CalculateTime(filterData.map((item: any) => item.transitTime)),
       timeStoppage: CalculateTime(filterData.map((item: any) => item.timeStoppage)),
     };
+
     // console.log(data);
     let isDeleteFromServer = formik.values.connections.some((item: any) => item.id);
-
     if (isDeleteFromServer) {
       console.log("delete from server",data);
       // DeleteWithBody(apiRoute().delete.deleteConnections, data )
-      deleteConnections(data )
-      // apiRoute().delete.vendor + `/${item.id}`
+      // deleteConnections(data )
+      axios.delete(apiRoute().delete.deleteConnections,{data})
       .then((response) => {
-        response.status && toast.success("گره با موفقیت پاک شد");
-        formik.setFieldValue("connections", filterData);
-      })
-      .catch((e) => {
-        // toast.error("خطایی رخ داده است.");
-      });
+			  response.status && toast.success("گره با موفقیت پاک شد");
+			  formik.setFieldValue("connections", filterData);
+			})
+			.catch((e) => {
+			  // toast.error("خطایی رخ داده است.");
+			});
+      // apiRoute().delete.vendor + `/${item.id}`
+      // .then((response) => {
+      //   response.status && toast.success("گره با موفقیت پاک شد");
+      //   formik.setFieldValue("connections", filterData);
+      // })
+      // .catch((e) => {
+      //   // toast.error("خطایی رخ داده است.");
+      // });
     } else {
       console.log(filterData);
       formik.setFieldValue("connections", filterData);
@@ -253,14 +268,17 @@ const RouteActionForms: React.FC<PropsData> = ({
     <>
   
       {currentData  &&
-        <button className=" border-none	 text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
+        <button className=" border-none	 text-[14px]  w-[20px] h-[20px] " 
+        onClick={() => {
+          setIsModalOpen(!isModalOpen)
+          setAddOpen(false)
+          }}>
           <AiOutlineEdit className="w-full h-full" />
         </button>
       }
-          
       <Modal
-        visible={isModalOpen}
-        setVisible={setIsModalOpen}
+        visible={addOpen || isModalOpen}
+        setVisible={setAddOpen || setIsModalOpen }
         title={currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}
       >
         <form onSubmit={formik.handleSubmit}>
