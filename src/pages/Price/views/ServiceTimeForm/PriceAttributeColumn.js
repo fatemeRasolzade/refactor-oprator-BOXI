@@ -54,26 +54,8 @@ export const PriceAttributeColumn = [
     Header: "قیمت",
   },
 
-  // {
-  //     accessor: "handover",
-  //     Header: "عملیات",
-  //
-  //     Cell: ({ value, row }) => (
-  //         <div className="flex ">
-  //             <ActionButton
-  //                 theme={"mainButton"}
-  //                 onClick={() => handleManualDeletes(row.index, row.original, "حذف نرخ نامه")}
-  //             >
-  //                 {" "}
-  //                 <IconTrash />
-  //             </ActionButton>
-  //             <ActionButton
-  //                 theme={"mainButton"}
-  //                 onClick={() => handleAction(row.index, row.original)}
-  //             >
-  //                 <IconPencil />
-  //             </ActionButton>
-  //         </div>
-  //     ),
-  // },
+  {
+    accessor: "operation",
+    Header: "عملیات",
+  },
 ];
