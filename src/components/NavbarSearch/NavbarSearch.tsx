@@ -44,7 +44,7 @@ const NavbarSearch = ({ firstTextInput, secondTextInput }: { firstTextInput?: st
       onSubmit:(values)=>{
 
 const bodyData={...values,pageNumbers:pageNumbers}
-console.log("bodyData",bodyData)
+
          setFilterData(values )
            dispatch(HubData({...bodyData}) as any)
         }

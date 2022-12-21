@@ -24,6 +24,7 @@ import userInfoReducer from "../userInfo/userInfoReducer";
 import VehicleLists from '../Transportation/VehicleData/VehicleData';
 import BagsLists from '../Transportation/bags/Bags'
 import customGeoReducer from "../customGeo/customGeoReducer";
+import  ProductGroupsData  from "../ProductGroup/ProductGroup";
 const persistConfig = {
   key: "root",
   storage,
@@ -52,6 +53,7 @@ const reducers = combineReducers({
   HubType:HubTypeTable,
   Vehicle:VehicleLists,
   bags:BagsLists,
+  productG:ProductGroupsData
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -33,7 +33,7 @@ const InputText =React.forwardRef(({
 
 }: InputTextProps,ref:any) => {
   const [ShowPassowrd, setShowPassowrd] = useState(false);
-  console.log(error);
+
 
   return (
     <div className={`flex flex-col ${wrapperClassName}`}>

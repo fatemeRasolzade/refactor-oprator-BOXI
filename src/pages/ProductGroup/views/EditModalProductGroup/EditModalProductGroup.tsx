@@ -5,7 +5,7 @@ import InputText from './../../../../global/InputText/InputText';
 import CustomSwitch from '../../../../global/Switch/Switch';
 import MultiLineText from '../../../../global/MultiLineText/MultiLineText';
 import * as Yup from "yup"
-const AddModalProductGroup = ({isModalOpen,setIsModalOpen}:{isModalOpen:boolean,setIsModalOpen?:any}) => {
+const EditModalProductGroup = ({isModalOpen,setIsModalOpen,dataInput}:{isModalOpen:boolean,setIsModalOpen?:any,dataInput:any}) => {
 
     const validationSchema=Yup.object({
         name:Yup.string().required("عنوان را وارد کنید"),
@@ -25,16 +25,16 @@ const AddModalProductGroup = ({isModalOpen,setIsModalOpen}:{isModalOpen:boolean,
 <div className='p-3'>
 
     <div className='flex justify-between items-center p-2'>
-    <h5>تعریف گروه محصول</h5>
+    <h5>ویرایش گروه محصول</h5>
     <span onClick={()=>setIsModalOpen((prev:boolean)=>!prev)} className="cursor-pointer"><BiXCircle size={20} /></span>
     </div>
 <div className='w-full'>
 <Formik
 initialValues={{
-code:"",
-name:"",
-isActive:true,
-description:""
+code:dataInput.code ? dataInput.code : "",
+name:dataInput.name ? dataInput.name : "",
+isActive:dataInput?.isActive,
+description:dataInput.description ? dataInput.description : ""
 
 }}
 validationSchema={validationSchema}
@@ -92,4 +92,4 @@ console.log(values)
   )
 }
 
-export default AddModalProductGroup
+export default EditModalProductGroup

@@ -89,7 +89,7 @@ const handelDeleteHub=(id)=>{
      <Breadcrumb beforePage="برگشت" curentPage="هاب" />
       <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" />
       <OptionsTable
-       exportExcel={() => ExportExcel(payload?.content)}
+       exportExcel={() => ExportExcel(data)}
        btnLink="/hub/add"
        setIsActive={setActiveSwitch}
        isActive={ActiveSwitch}

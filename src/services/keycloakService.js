@@ -42,7 +42,7 @@ const initKeycloak = (onAuthenticatedCallback) => {
 	 })
 	 	 .then((authenticated) => {
 	 	 	 if (authenticated) {
-	 	 	 	 
+	 	 	 	 console.log("werwe4rwerwer",_kc.token)
 	 	 	 	 axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token;
 	 	 	 	 window.localStorage.setItem("myToken",_kc.token)
 	 	 	 	 window.localStorage.setItem("userName",_kc.tokenParsed?.preferred_username)
@@ -68,9 +68,9 @@ const  tokenExpired =_kc.onTokenExpired = () => {
 	 
 
 	 _kc.updateToken(5).then((response) => {
-	 	 
+		console.log("updateToken",response)
 	 	 if (response) {
-	 	 	 console.log("rrrrrrrr", _kc.token)
+			
 	 	 	 axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token;
 	 	 	 window.localStorage.setItem("myToken",_kc.token)
 	 	 	 

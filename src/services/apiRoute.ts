@@ -81,6 +81,7 @@ export const apiRoute = () => {
       filterPersonnel: createUrl(RESOURCE_API, "/employee"),
       serviceDefine: createUrl(CORE_API, "/service"),
       product: createUrl(CORE_API, "/product"),
+      
     },
     postExcel: {
       exception: createUrl(CORE_API, "/exception"),

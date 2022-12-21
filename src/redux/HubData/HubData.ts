@@ -1,5 +1,5 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import { PostDataParams,postDataHeaderToServer } from '../../services/Service_call';
+import {postDataHeaderToServer } from '../../services/Service_call';
 import { apiRoute } from '../../services/apiRoute';
 
 const initialState = {
