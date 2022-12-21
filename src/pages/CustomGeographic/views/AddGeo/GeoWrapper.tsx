@@ -87,6 +87,7 @@ const GeoWrapper = () => {
         tableList={tableList}
         setTableList={(value) => setTableList((prev) => [...prev, value])}
         formikTitle={formikTitle}
+        setDeletedList={(value) => setTableList(value)}
       />
       <div className="my-6">
         <div className="flex w-full justify-end gap-4">

@@ -18,17 +18,19 @@ interface LocationFormProps {
   tableList: Array<any>;
   formikTitle: any;
   setTableList: (values: any) => void;
+  setDeletedList: (values: Array<any>) => void;
 }
 
 const LocationForm: FC<LocationFormProps> = ({
   tableList,
   formikTitle,
   setTableList,
+  setDeletedList,
 }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onDeleteHandler = (id: number) => {
-    setTableList(tableList.filter((item) => item.id !== id));
+    setDeletedList(tableList.filter((item) => item.id !== id));
     setIsModalOpen(false);
   };
 

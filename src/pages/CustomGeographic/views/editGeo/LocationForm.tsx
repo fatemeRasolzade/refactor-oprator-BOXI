@@ -18,17 +18,19 @@ interface LocationFormProps {
   tableList: Array<any>;
   formikTitle: any;
   setTableList: (values: any) => void;
+  setDeletedList: (values: Array<any>) => void;
 }
 
 const LocationForm: FC<LocationFormProps> = ({
   tableList,
   formikTitle,
   setTableList,
+  setDeletedList,
 }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onDeleteHandler = (id: number) => {
-    setTableList(tableList.filter((item) => item.id !== id));
+    setDeletedList(tableList.filter((item) => item.id !== id));
     setIsModalOpen(false);
   };
 
@@ -180,8 +182,6 @@ const LocationForm: FC<LocationFormProps> = ({
               <div className="w-full flex justify-center">
                 <TooltipWrapper
                   textProps={item?.fromCountryDevision?.map((country: any) => {
-                    console.log("country", country);
-
                     return (
                       <div className="text-white" key={country.id}>
                         {country.text}
@@ -197,13 +197,11 @@ const LocationForm: FC<LocationFormProps> = ({
                   </div>
                 </TooltipWrapper>
 
-                {item?.fromSourceCity && (
+                {item?.fromSourceCity && item?.fromSourceCity.length !== 0 && (
                   <>
                     <span>&nbsp; - &nbsp;</span>
                     <TooltipWrapper
                       textProps={item?.fromSourceCity?.map((city: any) => {
-                        console.log("city", city);
-
                         return (
                           <div className="text-white" key={city.id}>
                             {city.text}
@@ -219,31 +217,30 @@ const LocationForm: FC<LocationFormProps> = ({
                     </TooltipWrapper>
                   </>
                 )}
-                {item?.fromSourceLocation && (
-                  <>
-                    <span>&nbsp; - &nbsp;</span>
-                    <TooltipWrapper
-                      textProps={item?.fromSourceLocation?.map(
-                        (location: any) => {
-                          console.log("location", location);
-
-                          return (
-                            <div className="text-white" key={location.id}>
-                              {location.text}
-                            </div>
-                          );
-                        }
-                      )}
-                    >
-                      <div>
-                        {item?.fromSourceLocation?.length !== 0 &&
-                          item?.fromSourceLocation[
-                            item?.fromSourceLocation?.length - 1
-                          ].text}
-                      </div>
-                    </TooltipWrapper>
-                  </>
-                )}
+                {item?.fromSourceLocation &&
+                  item?.fromSourceLocation.length !== 0 && (
+                    <>
+                      <span>&nbsp; - &nbsp;</span>
+                      <TooltipWrapper
+                        textProps={item?.fromSourceLocation?.map(
+                          (location: any) => {
+                            return (
+                              <div className="text-white" key={location.id}>
+                                {location.text}
+                              </div>
+                            );
+                          }
+                        )}
+                      >
+                        <div>
+                          {item?.fromSourceLocation?.length !== 0 &&
+                            item?.fromSourceLocation[
+                              item?.fromSourceLocation?.length - 1
+                            ].text}
+                        </div>
+                      </TooltipWrapper>
+                    </>
+                  )}
               </div>
             ),
             toCountryDevision: (
@@ -262,54 +259,54 @@ const LocationForm: FC<LocationFormProps> = ({
                       ].text}
                   </div>
                 </TooltipWrapper>
-                {item?.fromDestinationCity && (
-                  <>
-                    <span>&nbsp; - &nbsp;</span>
-                    <TooltipWrapper
-                      textProps={item?.fromDestinationCity?.map((city: any) => {
-                        console.log("city", city);
-
-                        return (
-                          <div className="text-white" key={city.id}>
-                            {city.text}
-                          </div>
-                        );
-                      })}
-                    >
-                      <div>
-                        {item?.fromDestinationCity?.length !== 0 &&
-                          item?.fromDestinationCity[
-                            item?.fromDestinationCity?.length - 1
-                          ].text}
-                      </div>
-                    </TooltipWrapper>
-                  </>
-                )}
-                {item?.fromDestinationLocation && (
-                  <>
-                    <span>&nbsp; - &nbsp;</span>
-                    <TooltipWrapper
-                      textProps={item?.fromDestinationLocation?.map(
-                        (location: any) => {
-                          console.log("location", location);
-
-                          return (
-                            <div className="text-white" key={location.id}>
-                              {location.text}
-                            </div>
-                          );
-                        }
-                      )}
-                    >
-                      <div>
-                        {item?.fromDestinationLocation?.length !== 0 &&
-                          item?.fromDestinationLocation[
-                            item?.fromDestinationLocation?.length - 1
-                          ].text}
-                      </div>
-                    </TooltipWrapper>
-                  </>
-                )}
+                {item?.fromDestinationCity &&
+                  item?.fromDestinationCity.length !== 0 && (
+                    <>
+                      <span>&nbsp; - &nbsp;</span>
+                      <TooltipWrapper
+                        textProps={item?.fromDestinationCity?.map(
+                          (city: any) => {
+                            return (
+                              <div className="text-white" key={city.id}>
+                                {city.text}
+                              </div>
+                            );
+                          }
+                        )}
+                      >
+                        <div>
+                          {item?.fromDestinationCity?.length !== 0 &&
+                            item?.fromDestinationCity[
+                              item?.fromDestinationCity?.length - 1
+                            ].text}
+                        </div>
+                      </TooltipWrapper>
+                    </>
+                  )}
+                {item?.fromDestinationLocation &&
+                  item?.fromDestinationLocation.length !== 0 && (
+                    <>
+                      <span>&nbsp; - &nbsp;</span>
+                      <TooltipWrapper
+                        textProps={item?.fromDestinationLocation?.map(
+                          (location: any) => {
+                            return (
+                              <div className="text-white" key={location.id}>
+                                {location.text}
+                              </div>
+                            );
+                          }
+                        )}
+                      >
+                        <div>
+                          {item?.fromDestinationLocation?.length !== 0 &&
+                            item?.fromDestinationLocation[
+                              item?.fromDestinationLocation?.length - 1
+                            ].text}
+                        </div>
+                      </TooltipWrapper>
+                    </>
+                  )}
               </div>
             ),
             operation: (
@@ -352,7 +349,9 @@ const LocationForm: FC<LocationFormProps> = ({
                           type="submit"
                           text="بله"
                           className="full-tomato-btn w-28 "
-                          handelClick={() => onDeleteHandler(item.id)}
+                          handelClick={() => {
+                            onDeleteHandler(item.id);
+                          }}
                         />
                       </div>
                     </div>

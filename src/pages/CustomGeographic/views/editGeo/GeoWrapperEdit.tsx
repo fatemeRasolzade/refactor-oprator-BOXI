@@ -13,11 +13,6 @@ import LocationForm from "./LocationForm";
 const GeoWrapperEdit = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("location", location.state);
-  console.log(
-    "updateRespone",
-    updateRespone(location?.state?.customDevisionDetails)
-  );
 
   const validationTitle = Yup.object().shape({
     name: Yup.string().required(),
@@ -95,6 +90,7 @@ const GeoWrapperEdit = () => {
         tableList={tableList}
         setTableList={(value) => setTableList((prev) => [...prev, value])}
         formikTitle={formikTitle}
+        setDeletedList={(value) => setTableList(value)}
       />
       <div className="my-6">
         <div className="flex w-full justify-end gap-4">
@@ -130,7 +126,6 @@ const updateRespone = (response: any) => {
     isActive: item?.isActive,
     customDevision: item?.customDevision,
     fromDestinationState: item.fromCountryDevision
-      // .map(from=>from.fromCountryDevision).flat(1)
       .filter((division: any) => division.countryType === "PROVINCE")
       .filter(
         (elem: any, index: number, arr: any) =>
