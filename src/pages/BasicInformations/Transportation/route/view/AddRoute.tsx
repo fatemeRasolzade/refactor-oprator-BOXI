@@ -209,7 +209,7 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
                 error={formik.touched.nodes && formik.errors.nodes}
               />
             </div>
-            <SimpleButton type="submit" text="ایجاد اتصال" className="bg-red-500" />
+            <SimpleButton type="submit" text="ایجاد اتصال" className="bg-[#3b3b3b] text-white" />
           </div>
           {/* <div className="flex-end-center mt-5 gap-3">
             <SimpleButton handelClick={() => setIsModalOpen(false)} text="لغو" className="full-lightTomato-btn" />

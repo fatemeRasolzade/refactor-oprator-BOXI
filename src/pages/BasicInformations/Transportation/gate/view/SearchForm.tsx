@@ -17,7 +17,6 @@ import { filterGate } from "../../../../../redux/Transportation/gate/GateData";
 
 interface PropsData {
   isActive: Boolean | string;
-
 }
 
 const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
@@ -31,13 +30,10 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
     initialValues: {
       isActive: isActive,
       code: "",
-			hub: "",
-     
+      hub: "",
     },
     onSubmit: (values) => {
-      const pelak = getPelak(values);
-      const finalData = { ...values, pelak };
-      setFilterData(finalData);
+      setFilterData(values);
     },
   });
 
@@ -66,20 +62,25 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
       <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col ">
         <form className="flex-start-start flex-wrap gap-5" onSubmit={formik.handleSubmit}>
           <AutocompleteInput
-            label={"شماره کیسه"}
+            label={"کد درب"}
             // items={serviceCodeOptions}
-            value={"k"}
-            onChange={(e) => handleChangeCode(e, "bagNumber")}
-            onSelect={(val: any) => handleSelect(val, "bagNumber")}
+            value={formik.values.code}
+            onChange={(e) => handleChangeCode(e, "code")}
+            onSelect={(val: any) => handleSelect(val, "code")}
           />
-         
+          <AutocompleteInput
+            label={"نام هاب"}
+            // items={serviceCodeOptions}
+            value={formik.values.hub}
+            onChange={(e) => handleChangeCode(e, "hub")}
+            onSelect={(val: any) => handleSelect(val, "hub")}
+          />
           <SimpleButton
             type={"submit"}
             className="full-gray-btn"
             icon={<FiSearch size={25} className="text-darkGray" />}
             text="جستجو"
           />
-      
         </form>
       </div>
       {/* list of chip */}

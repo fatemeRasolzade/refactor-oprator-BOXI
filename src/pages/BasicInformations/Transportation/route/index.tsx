@@ -11,6 +11,7 @@ import RouteActionForm from "./view/RouteActionForm";
 import { filterRoute } from "../../../../redux/Transportation/route/RouteData";
 import AddRouteForms from "./view/AddRoute";
 import { useFetchOptions } from "../../../../global/hooks/useFetchOptions";
+import TimePiker from "../../../../global/TimePicker/TimePiker";
 
 const Route: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
@@ -51,6 +52,7 @@ const Route: React.FC = (): JSX.Element => {
   return (
     <div>
       <SearchForm isActive={isActive} hubOptions={hubOptions}/>
+      <TimePiker />
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}

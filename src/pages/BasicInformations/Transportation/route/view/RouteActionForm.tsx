@@ -8,7 +8,6 @@ import { SuccessAlert } from "../../../../../global/alert/Alert";
 import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
-
 import Modal from "../../../../../global/Modal/Modal";
 import { BiTrash } from "react-icons/bi";
 import { GrFormAdd } from "react-icons/gr";
@@ -19,6 +18,8 @@ import { filterRoute } from "../../../../../redux/Transportation/route/RouteData
 import { AiOutlineEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "axios";
+
+import TimePiker from "../../../../../global/TimePicker/TimePiker";
 interface PropsData {
   currentData?: any;
   routeValue?: any;
@@ -83,16 +84,16 @@ const RouteActionForms: React.FC<PropsData> = ({
           transitTime: currentData?.transitTime,
           timeStoppage: currentData?.timeStoppage,
           selectSourceHub: {
-            id: currentData.selectSourceHub.id,
-            text: currentData.selectSourceHub.text,
+            id: currentData?.selectSourceHub?.id,
+            text: currentData?.selectSourceHub?.text,
           },
           selectTargetHub: {
-            id: currentData.selectTargetHub.id,
-            text: currentData.selectTargetHub.text,
+            id: currentData?.selectTargetHub?.id,
+            text: currentData?.selectTargetHub?.text,
           },
           isActive: currentData?.isActive,
           nodes: currentData?.nodes,
-          connections: currentData.connections,
+          connections: currentData?.connections,
         }
       : {
           code: routeValue?.code,
@@ -106,8 +107,8 @@ const RouteActionForms: React.FC<PropsData> = ({
             text: routeValue?.selectSourceHub.text,
           },
           selectTargetHub: {
-            id: routeValue?.selectTargetHub.id,
-            text: routeValue?.selectTargetHub.text,
+            id: routeValue?.selectTargetHub?.id,
+            text: routeValue?.selectTargetHub?.text,
           },
           isActive: true,
           nodes: routeValue?.nodes,
@@ -181,9 +182,10 @@ const RouteActionForms: React.FC<PropsData> = ({
   };
   const addConnection = (e: any, push: any) => {
     e.preventDefault();
+    const temp = [...formik.values.connections];
     setDisableNodes(true);
     formik.setFieldValue("nodes", formik.values.connections.length + 1);
-    formik.values.connections.splice(formik.values.connections.length - 1, 0, {
+    temp.splice(formik.values.connections.length - 1, 0, {
       selectHub: {
         id: "",
         text: "",
@@ -194,6 +196,8 @@ const RouteActionForms: React.FC<PropsData> = ({
       timeStoppage: "",
       customId: uuidv4(),
     });
+    // console.log("temp",temp)
+    formik.setFieldValue("connections", temp);
   };
   const deleteConnection = () => {
     const filterData = formik.values.connections.filter(
@@ -567,7 +571,50 @@ const RouteActionForms: React.FC<PropsData> = ({
                                     </FormGroup> */}
                                 </td>
                                 <td>
-                                  <InputText
+                                {/* <NumberFormat
+                                        readOnly={index === 0 && true}
+                                        className="text-center rounded-xl"
+                                        prefix=""
+                                        mask=""
+                                        placeholder="00:00"
+                                        name={`connections.${index}.transitTime`}
+                                        format="##:##"
+                                        value={values.connections[index].transitTime}
+                                         // @ts-ignore
+                                        onValueChange={({ formattedValue }) => {
+                                          setFieldValue(
+                                            `connections.${index}.transitTime`,
+                                            formattedValue
+                                      
+                                          );
+                                        }}
+                                      /> */}
+                                  {/* <TimePiker
+                                    disabled={index === 0 && true}
+                                    placeholder="00:00"
+                                    readOnly={index === 0 && true}
+                                    classNames={"min-w-[12rem]"}
+                                    name={`connections.${index}.timeStoppage`}
+                                    // handleChange={formik.setFieldValue}
+                                    handleChange={(value:any)=>{
+                                        // @ts-ignore
+                                      const time = new Date(null, null, null, value.hour, value.minute);
+                                      console.log("time is",time)
+                                      setFieldValue(`connections.${index}.timeStoppage`,value.hour+":"+value.minute);
+                                    }}
+                                    values={values.connections[index].timeStoppage}
+                                    error={
+                                      touched.connections &&
+                                      touched.connections[index] &&
+                                      // @ts-ignore
+                                      touched.connections[index].timeStoppage &&
+                                      errors.connections &&
+                                      errors.connections[index] &&
+                                      // @ts-ignore
+                                      errors.connections[index].timeStoppage
+                                    }
+                                  /> */}
+                                  {/* <InputText
                                     wrapperClassName={"w-30 "}
                                     classNames={"min-w-[12rem]"}
                                     readOnly={index === 0 && true}
@@ -585,7 +632,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                                       // @ts-ignore
                                       errors.connections[index].timeStoppage
                                     }
-                                  />
+                                  /> */}
                                   {/* <FormGroup
                                       width={"250px"}
                                       error={
