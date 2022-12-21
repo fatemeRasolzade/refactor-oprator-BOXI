@@ -41,7 +41,7 @@ const VehicleModel: React.FC = (): JSX.Element => {
                   itemId={item.id}
                   title={"حذف مدل وسیله نقلیه"}
                   handleDeleteActionNewData={handleDeleteActionNewData}
-                  route={apiRoute().delete.vendor + `/${item.id}`}
+                  route={apiRoute().delete.VehicleModel + `/${item.id}`}
                 />
                 <VehicleMakeActionForms currentData={item} fuelOptions={fuelOptions} vendorOptions={vendorOptions}/>
               </div>
