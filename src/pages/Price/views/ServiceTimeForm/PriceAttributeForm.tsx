@@ -39,21 +39,21 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
     validationSchema: PriceAttributeFormValidation,
     initialValues: PriceAttributeFormInitialValues,
     // currentData ? ServiceTimeFormCurrentValues(currentData) : ServiceTimeFormInitialValues,
-    validate: (values) => {
-      const errors = {};
-      if (values.isParametric === false) {
-        if (!values.classification.id) {
-          //@ts-ignore
-          errors.classification = REQUIRED;
-        }
-        if (!values.customDevision) {
-          //@ts-ignore
-          errors.customDevision = REQUIRED;
-        }
-      }
+    // validate: (values) => {
+    //   const errors = {};
+    //   if (values.isParametric === false) {
+    //     if (!values.classification.id) {
+    //       //@ts-ignore
+    //       errors.classification = REQUIRED;
+    //     }
+    //     if (!values.customDevision) {
+    //       //@ts-ignore
+    //       errors.customDevision = REQUIRED;
+    //     }
+    //   }
 
-      return errors;
-    },
+    //   return errors;
+    // },
     onSubmit: (values: any, { resetForm }) => {
       alert("true");
       if (values.isParametric) {
@@ -72,6 +72,7 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
         values.totalNumber = { from: values.fromNumber, to: values.toNumber };
         values.priceDetailDevisions = values.attributeDivition ? values.attributeDivition : [];
       }
+      console.log(values);
 
       const id: string = uuid();
       values.id = setAttributes([...Attributes, { ...values, id: `${id}` }]);
