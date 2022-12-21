@@ -18,6 +18,8 @@ import {
   NationalIDValidator,
 } from "../../../../tools/validations/ErrorHelper";
 import * as Yup from "yup";
+import { vehicleExcel } from "../../../../tools/services/ExcelInfoFile";
+import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 interface PropsData {
   currentData?: any;
 }
@@ -146,19 +148,10 @@ const VendorActionForms: React.FC<PropsData> = ({
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel
-        setOpenModal={setUploadExcel}
-        OpenModal={uploadExcel}
-        excelInfo={""}
-      />
-      <Dialog
-        open={isModalOpen}
-        handler={setIsModalOpen}
-        className={"overflow-visible p-5 min-w-[600px] w-[400px]"}
-      >
-        <div className="text-lg font-medium">
-          {currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}
-        </div>
+      <AddExcel excelInfo={vehicleExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      {/* <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} /> */}
+      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[600px] w-[400px]"}>
+        <div className="text-lg font-medium">{currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}</div>
         <form onSubmit={formik.handleSubmit}>
           <div className="  grid grid-cols-2 mt-8 gap-y-4 gap-x-2 content-center">
             <div>
@@ -216,16 +209,14 @@ const VendorActionForms: React.FC<PropsData> = ({
             </div>
           </div>
 
-          <div className="col-span-5 p-5 flex flex-row justify-end items-center">
-            <Button
-              className="border-none bg-secondaryColor text-dark"
-              onClick={() => setIsModalOpen(false)}
-            >
-              لغو
-            </Button>
-            <Button className="border-none bg-tomato mr-3" type="submit">
-              {currentData ? "ویرایش" : "افزودن"}
-            </Button>
+          <div className="flex-end-center mt-5 gap-3">
+            <SimpleButton handelClick={() => setIsModalOpen(false)} text="لغو" className="full-lightTomato-btn" />
+            <SimpleButton
+              // loading={Loading}
+              type="submit"
+              text={currentData ? "ویرایش" : "افزودن"}
+              className="full-tomato-btn"
+            />
           </div>
         </form>
       </Dialog>

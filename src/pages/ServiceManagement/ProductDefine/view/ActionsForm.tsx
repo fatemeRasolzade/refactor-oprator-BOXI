@@ -16,6 +16,7 @@ import { productDefineschema } from "./productDefineschema";
 import AddExcel from "./AddExcel";
 import { AiOutlineEdit } from "react-icons/ai";
 import AddButton from "../../../../global/addButton/AddButton";
+import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 
 interface PropsData {
   itemValue?: any;
@@ -43,7 +44,6 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
     if (isModalOpen) {
       getDataSelect();
     }
-    
   }, [isModalOpen]);
   const handleAction = () => {
     setIsModalOpen(!isModalOpen);
@@ -100,13 +100,15 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
               PostDataParams(apiRoute().post.createProduct, values).then((res) => {
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ساخته شد");
-                  productData({
-                    code: "",
-                    name: "",
-                    isActive: "",
-                    pageSize: 10,
-                    pageNumber: "",
-                  }) as any;
+                  dispatch(
+                    productData({
+                      code: "",
+                      name: "",
+                      isActive: "",
+                      pageSize: 10,
+                      pageNumber: "",
+                    }) as any
+                  );
                 } else {
                   console.log("run error");
                   // ErrorAlert("خطا در برقراری اطلاعات");
@@ -122,13 +124,15 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
                 console.log("run edit");
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ویرایش شد");
-                  productData({
-                    code: "",
-                    name: "",
-                    isActive: "",
-                    pageSize: 10,
-                    pageNumber: "",
-                  }) as any;
+                  dispatch(
+                    productData({
+                      code: "",
+                      name: "",
+                      isActive: "",
+                      pageSize: 10,
+                      pageNumber: "",
+                    }) as any
+                  );
                 } else {
                   console.log("run error");
                   // ErrorAlert("خطا در برقراری اطلاعات");
@@ -142,32 +146,28 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
           {(formik) => (
             <form onSubmit={formik.handleSubmit} className="p-5">
               <div className="  grid grid-cols-2 gap-y-6 gap-x-2 content-center">
-                <div>
-                  <InputText
-                    label="کد"
-                    // className="w-full"
-                    name="code"
-                    handleChange={formik.handleChange}
-                    values={formik.values.code}
-                    important
-                    type={"text"}
-                    error={formik.touched.code && formik.errors.code}
-                  />
-                  {/* <ErrorMessage name="code" render={(messege) => <span className="text-tomato">{messege}</span>} /> */}
-                </div>
-                <div>
-                  <InputText
-                    label="عنوان"
-                    // className="w-full"
-                    name="name"
-                    handleChange={formik.handleChange}
-                    values={formik.values.name}
-                    important
-                    type={"text"}
-                    error={formik.touched.name && formik.errors.name}
-                  />
-                  {/* <ErrorMessage name="name" render={(messege) => <span className="text-tomato">{messege}</span>} /> */}
-                </div>
+                <InputText
+                  label="کد"
+                  // className="w-full"
+                  name="code"
+                  handleChange={formik.handleChange}
+                  values={formik.values.code}
+                  important
+                  type={"text"}
+                  error={formik.touched.code && formik.errors.code}
+                />
+                {/* <ErrorMessage name="code" render={(messege) => <span className="text-tomato">{messege}</span>} /> */}
+                <InputText
+                  label="عنوان"
+                  // className="w-full"
+                  name="name"
+                  handleChange={formik.handleChange}
+                  values={formik.values.name}
+                  important
+                  type={"text"}
+                  error={formik.touched.name && formik.errors.name}
+                />
+                {/* <ErrorMessage name="name" render={(messege) => <span className="text-tomato">{messege}</span>} /> */}
                 {/* <div>
               <CustomSwitch />
               
@@ -211,13 +211,14 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
                 </div>
               </div>
 
-              <div className="col-span-5 p-5 flex flex-row justify-end items-center">
-                <Button className="border-none bg-secondaryColor text-dark" onClick={() => setIsModalOpen(false)}>
-                  لغو
-                </Button>
-                <Button className="border-none bg-tomato mr-3" type="submit">
-                  {itemValue ? "ویرایش" : "افزودن"}
-                </Button>
+              <div className="flex-end-center mt-5 gap-3">
+                <SimpleButton handelClick={() => setIsModalOpen(false)} text="لغو" className="full-lightTomato-btn" />
+                <SimpleButton
+                  // loading={Loading}
+                  type="submit"
+                  text={itemValue ? "ویرایش" : "افزودن"}
+                  className="full-tomato-btn"
+                />
               </div>
             </form>
           )}

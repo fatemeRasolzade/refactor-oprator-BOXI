@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -98,12 +98,12 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
             };
           }),
         })
-          .then((response) => {
+          .then(() => {
             dispatch(customerData({}) as any);
             setOpen(false);
-            response.status && toast.success("مشتری ویرایش شد ");
+            toast.success("مشتری ویرایش شد ");
           })
-          .catch((error) => {})
+          .catch(() => {})
           .finally(() => setLoading(false));
       } else {
         createCustomer({
@@ -138,10 +138,11 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
 
-  const handleCloseCustomerForm = () => {
-    setOpen(false);
+  const handleCloseCustomerForm = () => setOpen(false);
+
+  useEffect(() => {
     handleReset();
-  };
+  }, [handleReset, open]);
 
   return (
     <>
@@ -155,7 +156,7 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
       <AddExcel excelInfo={CustomerExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} />
       <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}>
         <form onSubmit={handleSubmit}>
-          <CustomerBasicInformation formik={formik} open={open} currentData={currentData} />
+       <CustomerBasicInformation formik={formik} open={open} currentData={currentData} />
           <CustomerUsernameInformation formik={formik} currentData={currentData} />
           <CustomerNotificationInformation formik={formik} />
           <CustomerCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} />

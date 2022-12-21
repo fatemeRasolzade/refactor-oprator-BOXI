@@ -1,11 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../components/tableOperation/DeleteOperation";
-import { productData, updating } from "../../../redux/ProductDefineData/ProductDefineData";
+import {
+  productData,
+  updating,
+} from "../../../redux/ProductDefineData/ProductDefineData";
 import { apiRoute } from "../../../services/apiRoute";
 import { ExportExcel } from "../../../tools/functions/Methods";
 import ActionForms from "./view/ActionsForm";
@@ -14,18 +18,21 @@ import { ProductColumns } from "./view/Column";
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
 // import {useGetOptions} from './view/serviceProvisionData'
-import {useGetOptions} from '../../../global/hooks/useFetchOptions'
+import { useGetOptions } from "../../../global/hooks/useFetchOptions";
+import { Link, useNavigate } from "react-router-dom";
 // import * as XLSX  from "xlsx-js-style"
 
 const ProductDefine = () => {
   // @ts-ignore
 
   // axios.get('http://boxi.local:40000/product/select?filter=')
-  const {options}=useGetOptions(apiRoute().get.GET_PRODUCT_GROUPS)
-
+  const { options } = useGetOptions(apiRoute().get.GET_PRODUCT_GROUPS);
+  const navigate = useNavigate();
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
-  const { errorMessage, productLists, isUpdating } = useSelector((state: any) => state.productDefine);
+  const { errorMessage, productLists, isUpdating } = useSelector(
+    (state: any) => state.productDefine
+  );
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
 
@@ -56,6 +63,15 @@ const ProductDefine = () => {
                   updating={updating}
                 />
                 <ActionForms itemValue={item} />
+                <button
+                  onClick={() => {
+                    navigate("/service-information/product-info", {
+                      state: { id: item.id, text: item.name },
+                    });
+                  }}
+                >
+                  <IoMdAddCircleOutline />
+                </button>
               </div>
             ),
           };
@@ -65,14 +81,23 @@ const ProductDefine = () => {
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="تعریف محصول" />
-      <SearchForm isActive={isActive} isUpdating={isUpdating}  productOptions={options} />
+      <SearchForm
+        isActive={isActive}
+        isUpdating={isUpdating}
+        productOptions={options}
+      />
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ActionForms />}
         exportExcel={() => ExportExcel(productLists?.content)}
       />
-      <StaticTable data={datas ? datas : []} column={ProductColumns} pagination={productLists?.totalElements} selectable={false}  />
+      <StaticTable
+        data={datas ? datas : []}
+        column={ProductColumns}
+        pagination={productLists?.totalElements}
+        selectable={false}
+      />
     </div>
   );
 };

@@ -19,7 +19,7 @@ interface PropsData {
 }
 
 const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating,productOptions }): JSX.Element => {
-  console.log("render searh form")
+
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
    // @ts-ignore

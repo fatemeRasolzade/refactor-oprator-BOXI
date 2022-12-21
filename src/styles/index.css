@@ -110,7 +110,7 @@
     @apply border-none bg-transparent text-dark shadow-none flex justify-around items-center;
   }
   .pagination_style {
-    @apply !bg-tomato text-white;
+    @apply !bg-tomato text-white py-5 text-center;
   }
   /* flex box */
   .centering {

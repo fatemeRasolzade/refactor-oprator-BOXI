@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
@@ -75,7 +75,6 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   const userInfo = useSelector((state: any) => state.userInfo);
 
   const [treeCheckedError, setTreeCheckedError] = useState("");
-  const [nodes, setNodes] = useState([]);
   const [treeChecked, setTreeChecked] = useState<Array<string>>([]);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -123,8 +122,10 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             name: values.name,
             mobile: values.mobile,
             email: values.email,
+            username: values.username,
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
             isActive: currentData.isActive,
+            hubCodes: treeChecked,
           }
         : {
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
@@ -136,8 +137,12 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             username: values.username,
             password: values.password,
             isActive: true,
+            hubCodes: treeChecked,
           };
-
+      if (treeChecked.length === 0) {
+        setTreeCheckedError("حداقل یک هاب باید انتخاب شود");
+        return;
+      }
       try {
         const res = await axios({
           url: "http://boxi.local:40000/resource-api/employee",
@@ -167,15 +172,35 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           setIsModalOpen(false);
           resetForm({});
         }
-      } catch (error) {
-        toast.error("مشکلی پیش آمده");
+      } catch (error: any) {
+        toast.error(error?.response?.data?.errors?.message || "مشکلی پیش آمده");
+        setIsModalOpen(false);
       }
     },
   });
+  const handleGetuserData = useCallback(async (id: number) => {
+    try {
+      const res = await axios({
+        url: `http://boxi.local:40000/resource-api/employee/${id}`,
+        method: "GET",
+      });
+      setTreeChecked(res?.data?.payload?.hubCodes);
+    } catch (error) {}
+  }, []);
+
   const handleOpenModal = () => setIsModalOpen(!isModalOpen);
   const handleUploadFileAction = () => {
     setUploadExcel(!uploadExcel);
   };
+  useEffect(() => {
+    if (currentData && isModalOpen) {
+      handleGetuserData(currentData.id);
+    }
+    if (treeChecked.length > 0) {
+      setTreeCheckedError("");
+    }
+  }, [handleGetuserData, currentData, isModalOpen, treeChecked.length]);
+
   const ToggleOptions = [
     { handleClick: handleOpenModal, name: "افزودن پرسنل" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
@@ -368,7 +393,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               <SimpleButton
                 type="submit"
                 text="بله"
-                className="full-tomato-btn px-[50px] "
+                className="full-tomato-btn px-[90px] "
               />
               <SimpleButton
                 type="button"

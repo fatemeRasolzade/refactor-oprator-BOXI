@@ -114,6 +114,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
       toast.success("نقش مورد نظر به کاربر اضافه کردید");
       setIsModalOpen(false);
       formik.resetForm();
+      dispatch(Actionpage(1));
       dispatch(
         PersonnelData({
           personelCode: "",
@@ -126,7 +127,6 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
           pageNumber: 1,
         }) as any
       );
-      dispatch(Actionpage(1));
     } catch (error: any) {}
   };
 
@@ -190,6 +190,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
                   />
                 ) : (
                   <InputText
+                    readOnly={currentData ? true : false}
                     wrapperClassName="w-full"
                     label="نام کاربر"
                     name="name"

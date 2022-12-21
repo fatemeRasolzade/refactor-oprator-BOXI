@@ -1,34 +1,40 @@
 import { useEffect, useState } from "react";
 import InputSelect from "../../../global/InputSelect/InputSelect";
-import { getThirdPartyCategory } from "../../../services/ThirdPartyApi";
-import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
+import { getVehicleMake } from "../../../services/ADMVehicleApi";
+import { getDataFromServer } from "../../../services/Service_call";
+import { GET_ROUTE } from "../../../services/apiRoute";
+import InputText from "../../../global/InputText/InputText";
 
 type CustomerPerfesionalFilterProps = {
-  values: any;
-  setFieldValue: any;
+  formik: any;
 };
 
-const ADMVehiclePerfesionalFilter = ({ values, setFieldValue }: CustomerPerfesionalFilterProps) => {
-  const [ThirdPartyCategory, setThirdPartyCategory] = useState([]);
+const ADMVehiclePerfesionalFilter = ({ formik }: CustomerPerfesionalFilterProps) => {
+  const [Route, setRoute] = useState([]);
+  const [VehicleMake, setVehicleMake] = useState([]);
 
   useEffect(() => {
-    // getThirdPartyCategory().then((res) => setThirdPartyCategory(res));
+    initVehicleMake();
+    initRoute();
   }, []);
+
+  const initVehicleMake = () => {
+    getVehicleMake().then((res) => setVehicleMake(res));
+  };
+
+  const initRoute = () => {
+    getDataFromServer(GET_ROUTE).then((res) => setRoute(res.content));
+  };
+
+  const { values, setFieldValue, handleChange }: any = formik;
 
   return (
     <>
       <div>
-        <AutocompleteInput label={"نام مسیر"} value={values.postalCode} onChange={(e) => setFieldValue("postalCode", e.target.value)} />
-        <InputSelect
-          label={"وضعیت تملک"}
-          name="selectThirdPartyCategory"
-          handleChange={setFieldValue}
-          values={values.selectThirdPartyCategory}
-          options={ThirdPartyCategory}
-        />
+        <InputSelect options={Route} label="مسیر" values={values.selectRoute} name="selectRoute" handleChange={setFieldValue} />
       </div>
       <div>
-        <AutocompleteInput label={"مدل"} value={values.address} onChange={(e) => setFieldValue("address", e.target.value)} />
+        <InputText label="مدل" name="vehicleMakeSelect" handleChange={handleChange} values={values.vehicleMakeSelect} />
       </div>
     </>
   );

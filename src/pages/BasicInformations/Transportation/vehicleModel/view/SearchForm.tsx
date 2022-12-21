@@ -9,12 +9,21 @@ import { GetDataParams } from "../../../../../services/Service_call";
 import AutocompleteInput from "../../../../../global/Autocomplete/AutocompleteInput";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import Chip from "../../../../../global/Chip/Chip";
+import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
+import PerfesionalSearch from "../../../../../components/PerfesionalSearch/PerfesionalSearch";
+import InputSelect from "../../../../../global/InputSelect/InputSelect";
+import { useGetFuelTypeOptions, useGetVendorOptions } from "../../../../../global/hooks/useFetchOptions";
+import InputText from "../../../../../global/InputText/InputText";
 
 interface PropsData {
   isActive: Boolean | string;
+  fuelOptions:any,
+  vendorOptions:any
+
 }
 
-const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
+const SearchForm: React.FC<PropsData> = ({ isActive,fuelOptions,vendorOptions }): JSX.Element => {
+  console.log(fuelOptions,vendorOptions)
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
   // @ts-ignore
@@ -26,7 +35,11 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
     initialValues: {
       search: "",
       isActive: isActive,
-      productGroup: "" as any,
+      fuelTypeSelect:'',
+      vendorSelect:"",
+      volumeCapacity:'',
+      weightCapacity:'',
+      consignmentCapacity:""
     },
     onSubmit: (values) => {
       setFilterData(values);
@@ -35,28 +48,32 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
 
   useEffect(() => {
     dispatch(
-      vendorData({
+      vehicleModel({
         search: formik.values.search,
         isActive: isActive,
         pageSize: 10,
         pageNumber: pageNumbers,
+        fuelTypeSelect:formik.values.fuelTypeSelect === ''? null:formik.values.fuelTypeSelect,
+        vendorSelect:formik.values.vendorSelect === ''? null:formik.values.vendorSelect,
+        volumeCapacity:formik.values.volumeCapacity,
+        weightCapacity:formik.values.weightCapacity,
+        consignmentCapacity:formik.values.consignmentCapacity
       }) as any
     );
   }, [isActive, filterData, pageNumbers]);
   const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     formik.setFieldValue(name, e.target.value);
     const params = `${e.target.value}`;
-    // setOptions(data.filter(item=>item.text.includes(e.target.value)))
-    GetDataParams(apiRoute().get.GET_PRODUCT + params).then((res) => {
-      //  console.log(res)
-      setServiceCodeOptions(
-        res.payload.content.map((item: { text: any }) => {
-          return {
-            label: item?.text,
-          };
-        })
-      );
-    });
+    // GetDataParams(apiRoute().get.GET_PRODUCT + params).then((res) => {
+    //   //  console.log(res)
+    //   setServiceCodeOptions(
+    //     res.payload.content.map((item: { text: any }) => {
+    //       return {
+    //         label: item?.text,
+    //       };
+    //     })
+    //   );
+    // });
   };
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     formik.setFieldValue(name, e.target.value);
@@ -64,7 +81,6 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
   const handleSelect = (val: any, name: string) => {
     formik.setFieldValue(name, val);
   };
-
 
   return (
     <>
@@ -83,6 +99,61 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
             icon={<FiSearch size={25} className="text-darkGray" />}
             text="جستجو"
           />
+          <PerfesionalSearch formData={formik.handleSubmit}>
+              <div className='flex flex-wrap gap-x-4 gap-y-2'>
+                  <div>
+                      <InputSelect
+                          label="نوع سوخت"
+                          name="fuelTypeSelect"
+                          handleChange={formik.setFieldValue}
+                          values={formik.values.fuelTypeSelect}
+                          error={formik.touched.fuelTypeSelect && formik.errors.fuelTypeSelect}
+                          options={fuelOptions.options || []}
+                      />
+                      <InputSelect
+                          label="نام شرکت نقلیه"
+                          //
+                          name="vendorSelect"
+                          handleChange={formik.setFieldValue}
+                          values={formik.values.vendorSelect}
+                          error={formik.touched.vendorSelect && formik.errors.vendorSelect}
+                          options={vendorOptions.options}
+                      />
+                  </div>
+                  <div>
+                      <InputText
+                          label=" ظرفیت وزنی (کیلوگرم)"
+                          // className="w-full"
+                          name="weightCapacity"
+                          handleChange={formik.handleChange}
+                          values={formik.values.weightCapacity}
+                          type={"text"}
+
+                      />
+
+                      <InputText
+                          label=" ظرفیت حجمی (متر مکعب)"
+                          // className="w-full"
+                          name="volumeCapacity"
+                          handleChange={formik.handleChange}
+                          values={formik.values.volumeCapacity}
+                          type={"text"}
+
+                      />
+                  </div>
+                  <div>
+                      <InputText
+                          label="ظرفیت مرسوله (تعداد)"
+                          // className="w-full"
+                          name="consignmentCapacity"
+                          handleChange={formik.handleChange}
+                          values={formik.values.consignmentCapacity}
+                          type={"text"}
+
+                      />
+                  </div>
+              </div>
+          </PerfesionalSearch>
         </form>
       </div>
       {/* list of chip */}

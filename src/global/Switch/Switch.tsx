@@ -2,20 +2,15 @@ import { FC } from "react";
 import Switch from "react-switch";
 interface CustomSwitchProps {
   active: boolean;
-  handleChange: (
-    checked: boolean,
-    event: MouseEvent | React.SyntheticEvent<MouseEvent | KeyboardEvent, Event>
-  ) => void;
+  handleChange: (checked: boolean, event: MouseEvent | React.SyntheticEvent<MouseEvent | KeyboardEvent, Event>) => void;
+  label?: string;
 }
 
-const CustomSwitch: FC<CustomSwitchProps> = ({
-  handleChange,
-  active,
-}): JSX.Element => {
+const CustomSwitch: FC<CustomSwitchProps> = ({ handleChange, active, label }): JSX.Element => {
   return (
     <div>
       <label className="flex justify-center items-center flex-row-reverse w-fit">
-        <span className="mr-2 w-20">{active ? "فعال" : "غیر فعال"}</span>
+        <span className="mr-2 w-20">{label ? label : active ? "فعال" : "غیر فعال"}</span>
         <Switch
           onChange={handleChange}
           checked={active}

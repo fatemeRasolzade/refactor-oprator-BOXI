@@ -8,7 +8,7 @@ export const vehicleModel=createAsyncThunk('vehicleModelLists',async(body:any)=>
     const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
     var data = {};
     try {
-        data = await postDataHeaderToServer(apiRoute().post.filterVendor + params, {
+        data = await postDataHeaderToServer(apiRoute().post.VehicleModel + params, {
         ...body
         });
       } catch (error) {
