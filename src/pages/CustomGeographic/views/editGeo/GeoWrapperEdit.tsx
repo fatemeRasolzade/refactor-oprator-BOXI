@@ -38,7 +38,7 @@ const GeoWrapperEdit = () => {
     },
     onSubmit: async (values, { resetForm }) => {
       const data = {
-        // id: values?.id,
+        id: location.state.id,
         code: values?.code,
         isActive: values?.isActive,
         name: values?.name,
