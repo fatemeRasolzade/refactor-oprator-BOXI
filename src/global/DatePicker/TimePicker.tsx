@@ -16,10 +16,8 @@ interface PropType {
   important?: boolean;
 }
 
-const DatePickers = ({ title, name, values, handleChange, time, timeValues, timeName, error, important }: PropType) => {
+const TimePickers = ({ title, name, values, handleChange, timeValues, timeName, error, important }: PropType) => {
   const timePlugin = [<TimePicker position="bottom" hideSeconds />];
-  // console.log({`${values?.year} / ${values?.month} / ${values?.day}`});
-  
   return (
     <div className="flex flex-col">
       <div className={`relative border ${error ? "border-red" : "border-darkBorder"} rounded-lg w-60`}>
@@ -27,36 +25,35 @@ const DatePickers = ({ title, name, values, handleChange, time, timeValues, time
           {title} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
         </div>
         <DatePicker
-          className="red"
+          disableDayPicker
+          // format="HH:mm:ss"
           calendar={persian}
-          name={name}
-          value={`${values.timeToStartWork} ${
-            values.dayToStartWork?.year +
-            "/" +
-            values.dayToStartWork?.month +
-            "/" +
-            values.dayToStartWork?.day
-          }`}
-          // value={`${values?.year} / ${values?.month} / ${values?.day}`}
-          locale={persian_fa}
-          format="YYYY/MM/DD"
-          calendarPosition="bottom-right"
-          // placeholder={`${values?.day} / ${values?.month} / ${values?.year}       ${time && `${timeValues?.hour}:${timeValues?.minute}`}`}
-          onChange={(date: any) => {
-            handleChange(name, {
-              day: Number(date.day),
-              month: Number(date.month),
-              year: Number(date.year),
-            });
-            time && handleChange(timeName, date.hour + ":" + date.minute);
-          }}
-          render={<InputIcon />}
-          plugins={time ? timePlugin : []}
+          value={"02:20"}
+          plugins={timePlugin}
+          format="HH:mm"
         />
+        {/* <DatePicker
+          className="red"
+          disableDayPicker
+          editable={false}
+          value={t}
+          calendar={persian}
+          name={'fdgfd'}
+          locale={persian_fa}
+          format="HH:mm"
+          calendarPosition="bottom-right"
+        //   placeholder= {`${time && `${timeValues?.hour}:${timeValues?.minute}`}
+          onChange={(date: any) => {
+            console.log("fsdfdfdhgfh",date.hour + ":" + date.minute)
+            //  handleChange(timeName, date.hour + ":" + date.minute);
+          }}
+
+          plugins={timePlugin}
+        /> */}
       </div>
       <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
   );
 };
 
-export default DatePickers;
+export default TimePickers;

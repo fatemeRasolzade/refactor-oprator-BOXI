@@ -3,26 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import StaticTable from "../../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../../components/tableOperation/DeleteOperation";
 import { useGetFuelTypeOptions, useGetVendorOptions } from "../../../../global/hooks/useFetchOptions";
-import { vehicleModel } from "../../../../redux/Transportation/vehicleModel/VehicleModel";
+import { filterVehicleModel } from "../../../../redux/Transportation/VehicleData/VehicleData";
 import { apiRoute } from "../../../../services/apiRoute";
-import { ExportExcel } from "../../../../tools/functions/Methods";
-import { VehicleModelColumns } from "./view/Column";
-
-
+import { ExportExcel, getPelak } from "../../../../tools/functions/Methods";
+import { VehicleColumns } from "./view/Column";
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
-import VehicleMakeActionForms from "./view/VehicleMakeActionForm";
-
-const VehicleModel: React.FC = (): JSX.Element => {
+import VehicleActionForms from "./view/VehicleActionForm";
+const Vehicle: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
-  const { errorMessage, vehicleModelLists, isUpdating } = useSelector((state: any) => state.vehicleModel);
+  const { errorMessage, vehicleData, isUpdating } = useSelector((state: any) => state.Vehicle);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
-  const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes);
-  const { vendorOptions } = useGetVendorOptions(apiRoute().get.selectVendor);
   const handleDeleteActionNewData = () => {
     dispatch(
-      vehicleModel({
+      filterVehicleModel({
         search: "",
         isActive: isActive,
         pageSize: 10,
@@ -31,19 +26,21 @@ const VehicleModel: React.FC = (): JSX.Element => {
     );
   };
   const data =
-    vehicleModelLists?.content?.length !== 0
-      ? vehicleModelLists?.content?.map((item: any) => {
+    vehicleData?.content?.length !== 0
+      ? vehicleData?.content?.map((item: any) => {
           return {
             ...item,
+            pelak: getPelak(item),
+            hubname:item?.selectHub?.text,
             operation: (
               <div className="flex w-full gap-3 justify-center">
                 <DeleteOperation
                   itemId={item.id}
-                  title={"حذف مدل وسیله نقلیه"}
+                  title={"حذف وسیله نقلیه"}
                   handleDeleteActionNewData={handleDeleteActionNewData}
-                  route={apiRoute().delete.VehicleModel + `/${item.id}`}
+                  route={apiRoute().delete.Vehicle + `/${item.id}`}
                 />
-                <VehicleMakeActionForms currentData={item} fuelOptions={fuelOptions} vendorOptions={vendorOptions}/>
+                <VehicleActionForms currentData={item} />
               </div>
             ),
           };
@@ -51,23 +48,22 @@ const VehicleModel: React.FC = (): JSX.Element => {
       : [];
   return (
     <div>
-      <SearchForm isActive={isActive} fuelOptions={fuelOptions} vendorOptions={vendorOptions}/>
+      <SearchForm isActive={isActive} />
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}
-        addComponentProps={() => <VehicleMakeActionForms  fuelOptions={fuelOptions} vendorOptions={vendorOptions}/>}
-        exportExcel={() => ExportExcel(vehicleModelLists?.content)}
+        addComponentProps={() => <VehicleActionForms  />}
+        exportExcel={() => ExportExcel(vehicleData?.content)}
       />
       <StaticTable
         data={data ? data : []}
-        column={VehicleModelColumns}
-        pagination={vehicleModelLists?.totalElements}
+        column={VehicleColumns}
+        pagination={vehicleData?.totalElements}
         selectable={false}
       />
     </div>
   );
 };
 
-export default VehicleModel;
+export default Vehicle;
 
-//vendorData

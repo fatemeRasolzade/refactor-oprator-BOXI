@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const CORE_API = `${process.env.REACT_APP_BASE_URL}core-api`;
 export const RESOURCE_API = `${process.env.REACT_APP_BASE_URL}resource-api`;
 export const CONSIGNMENT_API = `${process.env.REACT_APP_BASE_URL}consignment-api`;
@@ -19,6 +21,12 @@ export const apiRoute = () => {
       filter_hub: createUrl(CORE_API, "/hub/filter"),
       get_hub_type: createUrl(CORE_API, "/hubCategory/selectHubTypes"),
       get_hub_category: createUrl(CORE_API, "/hubCategory/select"),
+      selectFleetType:createUrl(CORE_API,"/vehicle/selectFleetTypes"),
+      selectVehicleMake:createUrl(CORE_API,'/vehicleMake/select?filter='),
+      selectVehicleCategory:createUrl(CORE_API,"/vehicleCategory/select?filter="),
+      selectfuelTypes:createUrl(CORE_API,"/vehicleMake/selectFuelTypes"),
+      selectVendor:createUrl(CORE_API,'/vendor/select?filter='),
+      selectBagTypes:createUrl(CORE_API,'/bag/selectBagTypes'),
       //hub_category
       filter_hub_category: createUrl(CORE_API, "/hubCategory/filter"),
       //select hub category
@@ -55,11 +63,15 @@ export const apiRoute = () => {
       GET_SERVICES: createUrl(CORE_API, `/service/select?fliter=`),
     },
     post: {
+      bags:createUrl(CORE_API,'/bag'),
+      route:createUrl(CORE_API,"/route"),
       // create
       hub: createUrl(CORE_API, "/hub"),
       createProduct: createUrl(CORE_API, "/product"),
       createVendor: createUrl(CORE_API, "/vendor"),
       VehicleModel: createUrl(CORE_API, "/vehicleMake"),
+      Vehicle: createUrl(CORE_API, "/vehicle"),
+
       // filter
       filterRole: createUrl(RESOURCE_API, "/role"),
       // employee,
@@ -74,15 +86,22 @@ export const apiRoute = () => {
       exception: createUrl(CORE_API, "/exception"),
     },
     delete: {
+      bags:createUrl(CORE_API,'/bag'),
       role: createUrl(RESOURCE_API, "/role"),
+      Vehicle: createUrl(CORE_API, "/vehicle"),
       personnel: createUrl(RESOURCE_API, "/employee"),
       VehicleModel: createUrl(CORE_API, "/vehicleMake"),
       vendor: createUrl(CORE_API, "/vendor"),
       serviceDefine: createUrl(CORE_API, "/service"),
       productDefine: createUrl(CORE_API, "/product"),
       hubTable: createUrl(CORE_API, "/hub"),
+      deleteConnections: createUrl(CORE_API, "/connection"),
+   
     },
     edit: {
+      bags:createUrl(CORE_API,'/bag'),
+      route:createUrl(CORE_API, "/route"),
+      Vehicle: createUrl(CORE_API, "/vehicle"),
       EditVendor: createUrl(CORE_API, "/vendor"),
       VehicleModel: createUrl(CORE_API, "/vehicleMake"),
       productDefine: createUrl(CORE_API, "/product"),
@@ -122,6 +141,8 @@ export const GET_VEHICLEMAKE = `${CORE_API}/vehicleMake/select?filter=`;
 
 //Route
 export const GET_ROUTE = `${CORE_API}/route/select?filter=`;
+export const DELETE_ROUTE= `${CORE_API}/route/`;
+export const deleteConnections = (data:any) => axios.delete(`${CORE_API}/connection`, data);
 
 //hub
 export const HUB_SELECT = `${CORE_API}/hub/select`;

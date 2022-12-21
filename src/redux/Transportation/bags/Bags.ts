@@ -1,14 +1,15 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import { postDataHeaderToServer } from '../../services/Service_call';
-import { apiRoute } from '../../services/apiRoute';
-import { ErrorAlert } from "../../global/alert/Alert";
+import { apiRoute } from "../../../services/apiRoute";
+import { postDataHeaderToServer } from "../../../services/Service_call";
 
-export const productData=createAsyncThunk('productlists',async(body:any)=>{
-     console.log("request run")
+
+
+export const filterBags=createAsyncThunk('filterData',async(body:any)=>{
+
     const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
     var data = {};
     try {
-        data = await postDataHeaderToServer(apiRoute().post.product + params, {
+        data = await postDataHeaderToServer(apiRoute().post.bags + params, {
         ...body
         },{
             headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
@@ -16,40 +17,38 @@ export const productData=createAsyncThunk('productlists',async(body:any)=>{
       } catch (error) {
         console.log("error ", error);
       }
-
-
     return data;
 })
 
 const initialState:any= {
-    productLists:[],
+    bagsData:[],
     fetchpost:false,
     errorMessage:null,
     isUpdating: false,    
 }
 
-const ProductDefineList = createSlice({
+const BagsLists= createSlice({
     initialState: initialState,
-    name: "productlists",
+    name: "filterData",
     reducers: {
         updating: (state:any, action:any) => {
             state.isUpdating = action.payload;
           },
     },
     extraReducers: {
-        [productData.fulfilled as any]: (state, action) => {
-            state.productLists = action.payload.payload;
+        [filterBags.fulfilled as any]: (state, action) => {
+            state.bagsData = action.payload.payload;
             state.fetchPost = false;
         },
-        [productData.pending as any]: (state) => {
+        [filterBags.pending as any]: (state) => {
             state.fetchPost = true;
         },
-        [productData.rejected as any]: (state) => {
+        [filterBags.rejected as any]: (state) => {
             state.fetchPost = false;
             state.errorMessage = "wrong";
         },
     },
 });
 
-export const {  updating } = ProductDefineList.actions;
-export default ProductDefineList.reducer
+// export const {  updating } = ProductDefineList.actions;
+export default BagsLists.reducer

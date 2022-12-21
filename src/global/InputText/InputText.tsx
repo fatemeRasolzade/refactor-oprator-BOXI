@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BiHide, BiShow } from "react-icons/bi";
+import React from "react";
 
 type InputTextProps = {
   error?: any;
@@ -11,14 +12,15 @@ type InputTextProps = {
   important?: boolean;
   readOnly?: boolean;
   classNames?: string;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   wrapperClassName?: string;
   password?: boolean;
 };
-const InputText = ({
+const InputText =React.forwardRef(({
   classNames,
   label,
   name,
+  
   handleChange,
   type = "text",
   important,
@@ -28,7 +30,8 @@ const InputText = ({
   values,
   wrapperClassName,
   password,
-}: InputTextProps) => {
+
+}: InputTextProps,ref:any) => {
   const [ShowPassowrd, setShowPassowrd] = useState(false);
   console.log(error);
 
@@ -39,6 +42,7 @@ const InputText = ({
           {label} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
         </div>
         <input
+          ref={ref}
           disabled={readOnly}
           className="autocompleteInput"
           name={name}
@@ -56,7 +60,7 @@ const InputText = ({
       <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
   );
-};
+});
 
 InputText.defaultProps = {
   wrapperClassName: "w-60",

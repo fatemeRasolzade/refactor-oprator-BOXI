@@ -14,16 +14,13 @@ import PerfesionalSearch from "../../../../../components/PerfesionalSearch/Perfe
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
 import { useGetFuelTypeOptions, useGetVendorOptions } from "../../../../../global/hooks/useFetchOptions";
 import InputText from "../../../../../global/InputText/InputText";
+import { filterRoute } from "../../../../../redux/Transportation/route/RouteData";
 
 interface PropsData {
   isActive: Boolean | string;
-  fuelOptions:any,
-  vendorOptions:any
-
 }
 
-const SearchForm: React.FC<PropsData> = ({ isActive,fuelOptions,vendorOptions }): JSX.Element => {
-  console.log(fuelOptions,vendorOptions)
+const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
   // @ts-ignore
@@ -48,13 +45,13 @@ const SearchForm: React.FC<PropsData> = ({ isActive,fuelOptions,vendorOptions })
 
   useEffect(() => {
     dispatch(
-      vehicleModel({
+      filterRoute({
         search: formik.values.search,
         isActive: isActive,
         pageSize: 10,
         pageNumber: pageNumbers,
-        fuelTypeSelect:formik.values.fuelTypeSelect === ''? null:formik.values.fuelTypeSelect,
-        vendorSelect:formik.values.vendorSelect === ''? null:formik.values.vendorSelect,
+        fuelTypeSelect:formik.values.fuelTypeSelect,
+        vendorSelect:formik.values.vendorSelect,
         volumeCapacity:formik.values.volumeCapacity,
         weightCapacity:formik.values.weightCapacity,
         consignmentCapacity:formik.values.consignmentCapacity
@@ -108,7 +105,7 @@ const SearchForm: React.FC<PropsData> = ({ isActive,fuelOptions,vendorOptions })
                           handleChange={formik.setFieldValue}
                           values={formik.values.fuelTypeSelect}
                           error={formik.touched.fuelTypeSelect && formik.errors.fuelTypeSelect}
-                          options={fuelOptions.options || []}
+                          options={ []}
                       />
                       <InputSelect
                           label="نام شرکت نقلیه"
@@ -117,7 +114,7 @@ const SearchForm: React.FC<PropsData> = ({ isActive,fuelOptions,vendorOptions })
                           handleChange={formik.setFieldValue}
                           values={formik.values.vendorSelect}
                           error={formik.touched.vendorSelect && formik.errors.vendorSelect}
-                          options={vendorOptions.options}
+                          options={[]}
                       />
                   </div>
                   <div>

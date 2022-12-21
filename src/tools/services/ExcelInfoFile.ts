@@ -30,6 +30,11 @@ export const vehicleExcel = {
   fileName: "vehicel.xlsx",
 };
 
+export const vehicleModelExcel = {
+  url: "core-api/vehicleMake/importexcelfile?Entity=vehicleMake",
+  fileName: "vehicelMake.xlsx",
+};
+
 export const BagExcel = {
   url: "core-api/bag/importexcelfile?Entity=bag",
   fileName: "bag.xlsx",
