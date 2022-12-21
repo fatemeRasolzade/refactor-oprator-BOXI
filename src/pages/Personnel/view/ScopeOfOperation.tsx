@@ -144,7 +144,8 @@ const ScopeOfOperation: FC<ScopeOfOperationProps> = ({ currentData }) => {
                 مقداری موجود ندارد
               </span>
             )}
-            <div className="min-h-[20px] w-full flex gap-4 my-3">
+            <div className="min-h-[20px] w-full flex gap-4 my-3 flex-wrap">
+              <span>مقادیر انتخاب شده :</span>
               {IsLoading ? (
                 <p className="w-full flex justify-center">
                   در حال دریافت اطلاعات...
