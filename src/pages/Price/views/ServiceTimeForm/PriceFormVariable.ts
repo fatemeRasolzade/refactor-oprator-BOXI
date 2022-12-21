@@ -4,9 +4,9 @@ export const PriceFormValidation = () =>
   Yup.object().shape({
     priceListCode: Yup.number().required(),
     priceListName: Yup.string().required(),
-    priceListDate: Yup.string().required(),
-    validDateFrom: Yup.string().required(),
-    validDateTo: Yup.string().required(),
+    priceListDate: Yup.object().required(),
+    validDateFrom: Yup.object().required(),
+    validDateTo: Yup.object().required(),
   });
 
 export const PriceFormInitialValues = {

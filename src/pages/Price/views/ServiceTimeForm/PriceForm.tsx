@@ -19,6 +19,7 @@ type ServiceTimeFormProps = {
 };
 
 const PriceForm = ({ currentData }: ServiceTimeFormProps) => {
+  const [Attributes, setAttributes] = useState<any>([]);
   const [open, setOpen] = useState(false);
   const [OpenExcel, setOpenExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -29,7 +30,8 @@ const PriceForm = ({ currentData }: ServiceTimeFormProps) => {
     validationSchema: PriceFormValidation,
     initialValues: currentData ? PriceFormCurrentValues(currentData) : PriceFormInitialValues,
     onSubmit: (values: any) => {
-      setLoading(true);
+      console.log(values.priceListDate);
+      // setLoading(true);
       if (currentData) {
         // EditDataParams(PRICE_API, {
         //   ...values,
@@ -43,13 +45,17 @@ const PriceForm = ({ currentData }: ServiceTimeFormProps) => {
         //   .catch(() => {})
         //   .finally(() => setLoading(false));
       } else {
-        // postDataToServer(PRICE_API, values)
-        //   .then(() => {
-        //     dispatch(serviceTimeData({}) as any);
-        //     setOpen(false);
-        //     toast.success("نرخ نامه افزوده شد");
-        //   })
-        //   .finally(() => setLoading(false));
+        // if (Attributes.length === 0) {
+        //   toast.error("هیچ رکوردی ثبت نشده است");
+        // } else {
+        //   postDataToServer(PRICE_API, values)
+        //     .then(() => {
+        //       dispatch(serviceTimeData({}) as any);
+        //       setOpen(false);
+        //       toast.success("نرخ نامه افزوده شد");
+        //     })
+        //     .finally(() => setLoading(false));
+        // }
       }
     },
   });
@@ -83,7 +89,7 @@ const PriceForm = ({ currentData }: ServiceTimeFormProps) => {
         <form onSubmit={handleSubmit}>
           <PriceFormInformation formik={formik} />
         </form>
-        <PriceAttributeForm />
+        <PriceAttributeForm Attributes={Attributes} setAttributes={setAttributes} />
         <div className="flex-end-center mt-5 gap-3">
           <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
           <SimpleButton

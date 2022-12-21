@@ -30,13 +30,13 @@ const DatePickers = ({ title, name, values, handleChange, time, timeValues, time
           className="red"
           calendar={persian}
           name={name}
-          value={`${values.timeToStartWork} ${
-            values.dayToStartWork?.year +
-            "/" +
-            values.dayToStartWork?.month +
-            "/" +
-            values.dayToStartWork?.day
-          }`}
+          // value={`${values.timeToStartWork} ${
+          //   values.dayToStartWork?.year +
+          //   "/" +
+          //   values.dayToStartWork?.month +
+          //   "/" +
+          //   values.dayToStartWork?.day
+          // }`}
           // value={`${values?.year} / ${values?.month} / ${values?.day}`}
           locale={persian_fa}
           format="YYYY/MM/DD"

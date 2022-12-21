@@ -14,9 +14,14 @@ import StaticTable from "../../../../components/staticTable/StaticTable";
 import { PriceAttributeColumn } from "./PriceAttributeColumn";
 import { REQUIRED } from "../../../../tools/validations/RegexKeywords";
 
-const PriceAttributeForm = () => {
+interface PriceAttributeFormProps {
+  Attributes: any ,
+  setAttributes: any,
+}
+
+const PriceAttributeForm = ({Attributes, setAttributes}: PriceAttributeFormProps) => {
   const [Product, setProduct] = useState([]);
-  const [Attributes, setAttributes] = useState<any>([]);
+ 
 
   const initProduct = () => {
     getDataFromServer(GET_PRODUCT_SELECT).then((res) => setProduct(res.content));
