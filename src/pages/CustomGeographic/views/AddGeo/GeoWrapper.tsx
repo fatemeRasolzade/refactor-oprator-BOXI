@@ -39,12 +39,11 @@ const GeoWrapper = () => {
           .flat(1),
       };
       try {
-        const res = await axios({
+        await axios({
           url: "http://boxi.local:40000/core-api/customcountrydevision",
           method: "POST",
           data: data,
         });
-        console.log("res", res.data);
         toast.success("رده جغرافیایی با موفقیت اضافه شد ");
         resetForm();
         navigate("/basic-information/custom-geographic-category");

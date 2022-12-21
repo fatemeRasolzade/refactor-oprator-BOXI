@@ -182,8 +182,6 @@ const LocationForm: FC<LocationFormProps> = ({
               <div className="w-full flex justify-center">
                 <TooltipWrapper
                   textProps={item?.fromCountryDevision?.map((country: any) => {
-                    console.log("country", country);
-
                     return (
                       <div className="text-white" key={country.id}>
                         {country.text}

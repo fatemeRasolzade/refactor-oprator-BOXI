@@ -30,6 +30,7 @@ const LocationForm: FC<LocationFormProps> = ({
   setDeletedList,
 }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const handleDeleteItem = useCallback(async (id: number) => {
     try {
       await axios({
