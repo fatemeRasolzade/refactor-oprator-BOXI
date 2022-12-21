@@ -1,5 +1,6 @@
+import { v4 as uuid } from "uuid";
 import { useFormik } from "formik";
-import { BiPlus } from "react-icons/bi";
+import { BiPlus, BiTrash } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getDataFromServer } from "../../../../services/Service_call";
@@ -12,24 +13,26 @@ import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import PriceParameters from "./PriceParameters";
 import StaticTable from "../../../../components/staticTable/StaticTable";
 import { PriceAttributeColumn } from "./PriceAttributeColumn";
+
 import { REQUIRED } from "../../../../tools/validations/RegexKeywords";
 
 interface PriceAttributeFormProps {
-  Attributes: any ,
-  setAttributes: any,
+  Attributes: any;
+  setAttributes: any;
+  open: boolean;
+  handleResetOuter: any;
 }
 
-const PriceAttributeForm = ({Attributes, setAttributes}: PriceAttributeFormProps) => {
+const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter }: PriceAttributeFormProps) => {
   const [Product, setProduct] = useState([]);
- 
 
   const initProduct = () => {
     getDataFromServer(GET_PRODUCT_SELECT).then((res) => setProduct(res.content));
   };
 
   useEffect(() => {
-    initProduct();
-  }, []);
+    if (open) initProduct();
+  }, [open]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -70,9 +73,9 @@ const PriceAttributeForm = ({Attributes, setAttributes}: PriceAttributeFormProps
         values.priceDetailDevisions = values.attributeDivition ? values.attributeDivition : [];
       }
 
-      delete values.id;
-      setAttributes([...Attributes, values]);
-      // resetForm({ values: "" });
+      const id: string = uuid();
+      values.id = setAttributes([...Attributes, { ...values, id: `${id}` }]);
+      handleReset();
 
       // if (!edit) {
       // 	delete values.id;
@@ -93,7 +96,34 @@ const PriceAttributeForm = ({Attributes, setAttributes}: PriceAttributeFormProps
     },
   });
 
-  const { values, errors, touched, handleChange, setFieldValue, handleSubmit }: any = formik;
+  const { values, errors, touched, handleChange, setFieldValue, handleSubmit, handleReset }: any = formik;
+
+  useEffect(() => {
+    handleReset();
+    handleResetOuter();
+    setAttributes([]);
+  }, [open, handleReset, handleResetOuter, setAttributes]);
+
+  const data =
+    Attributes?.length !== 0
+      ? Attributes?.map((item: any) => {
+          return {
+            ...item,
+            operation: (
+              <div className="flex w-full gap-3 justify-center">
+                <div onClick={() => handleDeleteAttributePrice(item.id)} className="text-[14px]  w-[20px] h-[20px] centering">
+                  <BiTrash size={20} className="w-full h-full	cursor-pointer" />
+                </div>
+              </div>
+            ),
+          };
+        })
+      : [];
+
+  const handleDeleteAttributePrice = (id: any) => {
+    const filtered = Attributes.filter((a: any) => a.id !== id);
+    setAttributes(filtered);
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -140,7 +170,7 @@ const PriceAttributeForm = ({Attributes, setAttributes}: PriceAttributeFormProps
       <div className="flex-end-end">
         <SimpleButton type="submit" text="درج در لیست" className="full-tomato-btn w-40" icon={<BiPlus size={20} />} />
       </div>
-      <StaticTable selectable={false} data={Attributes ? Attributes : []} column={PriceAttributeColumn} pagination={1} loading={false} />
+      <StaticTable selectable={false} data={data ? data : []} column={PriceAttributeColumn} pagination={1} loading={false} />
     </form>
   );
 };

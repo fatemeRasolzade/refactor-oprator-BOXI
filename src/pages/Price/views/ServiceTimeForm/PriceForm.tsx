@@ -6,19 +6,19 @@ import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../../../../global/Modal/Modal";
 import AddButton from "../../../../global/addButton/AddButton";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-// import { ServiceTimeFormCurrentValues, ServiceTimeFormInitialValues, ServiceTimeFormValidation } from "./PriceFormVariable";
-import { EditDataParams, postDataToServer } from "../../../../services/Service_call";
-import { serviceTimeData } from "../../../../redux/ServiceTimeData/ServiceTimeData";
+import { EditDataParams, getDataFromServer, postDataToServer } from "../../../../services/Service_call";
+
 import PriceFormInformation from "./PriceFormInformation";
 import PriceAttributeForm from "./PriceAttributeForm";
 import { PriceFormCurrentValues, PriceFormInitialValues, PriceFormValidation } from "./PriceFormVariable";
-import { PRICE_API } from "../../../../services/apiRoute";
+import { GET_PRODUCT_SELECT, PRICE_API } from "../../../../services/apiRoute";
+import { priceData } from "../../../../redux/PriceData/PriceData";
 
-type ServiceTimeFormProps = {
+type PriceFormFormProps = {
   currentData?: any;
 };
 
-const PriceForm = ({ currentData }: ServiceTimeFormProps) => {
+const PriceForm = ({ currentData }: PriceFormFormProps) => {
   const [Attributes, setAttributes] = useState<any>([]);
   const [open, setOpen] = useState(false);
   const [OpenExcel, setOpenExcel] = useState(false);
@@ -30,7 +30,6 @@ const PriceForm = ({ currentData }: ServiceTimeFormProps) => {
     validationSchema: PriceFormValidation,
     initialValues: currentData ? PriceFormCurrentValues(currentData) : PriceFormInitialValues,
     onSubmit: (values: any) => {
-      console.log(values.priceListDate);
       // setLoading(true);
       if (currentData) {
         // EditDataParams(PRICE_API, {
@@ -45,17 +44,18 @@ const PriceForm = ({ currentData }: ServiceTimeFormProps) => {
         //   .catch(() => {})
         //   .finally(() => setLoading(false));
       } else {
-        // if (Attributes.length === 0) {
-        //   toast.error("هیچ رکوردی ثبت نشده است");
-        // } else {
-        //   postDataToServer(PRICE_API, values)
-        //     .then(() => {
-        //       dispatch(serviceTimeData({}) as any);
-        //       setOpen(false);
-        //       toast.success("نرخ نامه افزوده شد");
-        //     })
-        //     .finally(() => setLoading(false));
-        // }
+        if (Attributes.length === 0) {
+          toast.error("هیچ رکوردی ثبت نشده است");
+        } else {
+          values.priceListDetails = Attributes;
+          postDataToServer(PRICE_API, values)
+            .then(() => {
+              dispatch(priceData({}) as any);
+              setOpen(false);
+              toast.success("نرخ نامه افزوده شد");
+            })
+            .finally(() => setLoading(false));
+        }
       }
     },
   });
@@ -89,7 +89,7 @@ const PriceForm = ({ currentData }: ServiceTimeFormProps) => {
         <form onSubmit={handleSubmit}>
           <PriceFormInformation formik={formik} />
         </form>
-        <PriceAttributeForm Attributes={Attributes} setAttributes={setAttributes} />
+        <PriceAttributeForm Attributes={Attributes} setAttributes={setAttributes} open={open} handleResetOuter={handleReset} />
         <div className="flex-end-center mt-5 gap-3">
           <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
           <SimpleButton
