@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import { BiPlus } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getDataFromServer } from "../../../../services/Service_call";
@@ -8,10 +9,10 @@ import InputText from "../../../../global/InputText/InputText";
 import { PriceAttributeFormInitialValues, PriceAttributeFormValidation } from "./PriceAttributeVariable";
 import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import { BiPlus } from "react-icons/bi";
 import PriceParameters from "./PriceParameters";
 import StaticTable from "../../../../components/staticTable/StaticTable";
 import { PriceAttributeColumn } from "./PriceAttributeColumn";
+import { REQUIRED } from "../../../../tools/validations/RegexKeywords";
 
 const PriceAttributeForm = () => {
   const [Product, setProduct] = useState([]);
@@ -30,6 +31,21 @@ const PriceAttributeForm = () => {
     validationSchema: PriceAttributeFormValidation,
     initialValues: PriceAttributeFormInitialValues,
     // currentData ? ServiceTimeFormCurrentValues(currentData) : ServiceTimeFormInitialValues,
+    validate: (values) => {
+      const errors = {};
+      if (values.isParametric === false) {
+        if (!values.classification.id) {
+          //@ts-ignore
+          errors.classification = REQUIRED;
+        }
+        if (!values.customDevision) {
+          //@ts-ignore
+          errors.customDevision = REQUIRED;
+        }
+      }
+
+      return errors;
+    },
     onSubmit: (values: any, { resetForm }) => {
       alert("true");
       if (values.isParametric) {
@@ -51,7 +67,7 @@ const PriceAttributeForm = () => {
 
       delete values.id;
       setAttributes([...Attributes, values]);
-      resetForm({ values: "" });
+      // resetForm({ values: "" });
 
       // if (!edit) {
       // 	delete values.id;

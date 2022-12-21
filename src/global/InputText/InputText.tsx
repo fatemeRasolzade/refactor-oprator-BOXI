@@ -30,6 +30,8 @@ const InputText = ({
   password,
 }: InputTextProps) => {
   const [ShowPassowrd, setShowPassowrd] = useState(false);
+  console.log(error);
+
   return (
     <div className={`flex flex-col ${wrapperClassName}`}>
       <div className={`autocompleteWrapper ${classNames} ${error && "border-red"} ${readOnly && "opacity-40"} `}>
