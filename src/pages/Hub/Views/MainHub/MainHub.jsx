@@ -20,7 +20,7 @@ const Hub = () => {
   const navigate=useNavigate()
   const {payload}=useSelector(state=>state.hub.postLists)
   const {pageNumbers} =useSelector(state=>state.paginate)
-  const [ActiveSwitch,setActiveSwitch]=useState(false)
+  const [ActiveSwitch,setActiveSwitch]=useState(true)
  
   var data=payload?.content?.length > 0 ? payload.content.map(hubItem=>{
     return{
@@ -44,20 +44,30 @@ const Hub = () => {
     }
   }) : []
 
+const BodyData={
+  code: "",
+    name: "",
+    hubTypeId: "",
+    hubCategoryId: "",
+    parentHubId: "",
+    pageNumbers:pageNumbers,
+    isActive:ActiveSwitch
+}
+
+
   useEffect(()=>{
-    dispatch(HubData(pageNumbers))
+    dispatch(HubData(BodyData))
    return()=>dispatch(clearHub())
   },[])
 
   useEffect(()=>{
-dispatch(HubData(pageNumbers))
+dispatch(HubData(BodyData))
   },[pageNumbers])
 
-//   useEffect(()=>{
-//  //dispatch(filterSwitch(ActiveSwitch))
-
+  useEffect(()=>{
+    dispatch(HubData(BodyData))
     
-//   },[ActiveSwitch])
+  },[ActiveSwitch])
 
 
 const handelDeleteHub=(id)=>{

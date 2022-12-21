@@ -8,10 +8,7 @@ export const useGetOptions=(url:string)=>{
    const [options,setOptions]=useState([])
    useEffect(()=>{
     try {
-      selectDataFromServerWithHeader(url,
-      {
-        headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-      })
+      selectDataFromServerWithHeader(url)
       .then((res) => {
         if (res.status === "OK") setOptions(res?.payload?.content);
       });

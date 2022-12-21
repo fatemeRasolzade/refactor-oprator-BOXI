@@ -68,11 +68,10 @@ const InputSelect: FC<InputSelectProps> = ({
         </span>
       </label>
       <Select
+        // isOptionDisabled={(option) => option.isdisabled}
         isMulti={isMulti}
         isLoading={options ? false : true}
-        value={
-          options ? options.find((option: any) => option.label === values) : ""
-        }
+        value={options ? options.find((option: any) => option.label === values) : ""}
         defaultInputValue={values?.text}
         onChange={(option) =>
           handleChange(name, {

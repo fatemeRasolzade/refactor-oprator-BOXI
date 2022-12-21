@@ -86,6 +86,7 @@ export const apiRoute = () => {
       EditVendor: createUrl(CORE_API, "/vendor"),
       VehicleModel: createUrl(CORE_API, "/vehicleMake"),
       productDefine: createUrl(CORE_API, "/product"),
+      Edithub_category:createUrl(CORE_API,"/hubCategory")
     },
   };
 };

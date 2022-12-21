@@ -7,42 +7,59 @@ import InputText from "../../global/InputText/InputText";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
 import CustomizeModal from "../PerfesionalSearch/CustomizeModal";
 import PerfesionalSearch from "./../PerfesionalSearch/PerfesionalSearch";
-import { Formik,ErrorMessage } from "formik";
-import { getDataHeaderServer } from "../../services/Service_call";
+import { Formik,ErrorMessage,useFormik } from "formik";
+import { getDataHeaderServer, postDataHeaderToServer } from "../../services/Service_call";
 import { apiRoute } from "../../services/apiRoute";
 import ModalPerfetional from "../../pages/Hub/Views/ModalPerfetional/ModalPerfetional";
+import AutocompleteInput from "../../global/Autocomplete/AutocompleteInput";
+import { FiSearch } from "react-icons/fi";
+import { useDispatch,useSelector } from "react-redux";
+import {HubData} from "../../redux/HubData/HubData";
+import {ThunkDispatch} from "@reduxjs/toolkit";
 const NavbarSearch = ({ firstTextInput, secondTextInput }: { firstTextInput?: string; secondTextInput?: string }) => {
   const [shelf, setShelf] = useState<string>("");
   const [hub, sethub] = useState<string>("");
+  const [filterData, setFilterData] = useState({});
+  const {pageNumbers} =useSelector((state:any)=>state.paginate)
+  const dispatch=useDispatch<any>()
+  interface bodyDataType{
+    pageNumbers: any;
+    name: string;
+    hubTypeId: string;
+    hubCategoryId: string;
+    parentHubId: string;
+    code: string;
+}
 
-  interface PropData {
-    label: string;
-    number: string;
-  }
+  const formik=useFormik({
+    initialValues:{
+      name:"",
+      hubTypeId:"",
+      hubCategoryId:"",
+      parentHubId:"",
+      code:""
+      
+      },
+
+      onSubmit:(values)=>{
+
+const bodyData={...values,pageNumbers:pageNumbers}
+console.log("bodyData",bodyData)
+         setFilterData(values )
+           dispatch(HubData({...bodyData}) as any)
+        }
+
+  })
 
 useEffect(()=>{
-  getDataHeaderServer(apiRoute().get.get_hub_type,{headers:{
-    "Authorization":"Bearer " + localStorage.getItem("myToken")
-  }}).then((res) => {
+  getDataHeaderServer(apiRoute().get.get_hub_type).then((res) => {
     if (res.status === "OK") settypeHub(res.payload);
   });
-  getDataHeaderServer(apiRoute().get.select_hub_category,{headers:{
-    "Authorization":"Bearer " + localStorage.getItem("myToken")
-  }}).then((res) => {
+  getDataHeaderServer(apiRoute().get.select_hub_category).then((res) => {
     if (res.status === "OK") setCatHub(res.payload.content);
   });
-  getDataHeaderServer(apiRoute().get.select_hub,{headers:{
-    "Authorization":"Bearer " + localStorage.getItem("myToken")
-  }}).then((res) => {
-    if (res.status === "OK") setselectHub(res.payload.content);
-  });
+  postDataHeaderToServer(apiRoute().get.select_hub,[]).then(res=>{if(res.status === "OK") setselectHub(res.payload.content)})
 },[])
-
-
-
-  const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
 
   const [typeHub, settypeHub] = useState([]);
   const [catHub, setCatHub] = useState([]);
@@ -57,65 +74,53 @@ const perfetionalClik=()=>{
   return (
     <>
       <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
-        <form onSubmit={handelSubmit}>
+       
+        <form onSubmit={formik.handleSubmit}>
           <div className=" flex gap-3 justify-start items-center flex-wrap">
             <div className="Max-sm:mb-3">
-              <InputIcon text={firstTextInput} handleOnSearch={setShelf} handleOnSelect={undefined} />
+            <AutocompleteInput
+      label={"کد هاب"}
+      items={[]}
+      value={formik.values.code}
+      onChange={(e) => formik.setFieldValue("code", e.target.value)}
+      onSelect={(val: any) => formik.setFieldValue( "code",val,)}
+    />
+
             </div>
             <div>
-              <InputIcon text={secondTextInput} handleOnSearch={sethub} handleOnSelect={undefined} />
+            <SimpleButton
+      type={'submit'}
+      className="full-gray-btn"
+      icon={<FiSearch size={25} className="text-darkGray" />}
+      text="جستجو"
+    />
             </div>
-
-            <SimpleButton className="full-gray-btn w-[160px] h-[40px] centering rounded-md" icon={<BiSearch size={20} />} text="جستجو" />
           </div>
         </form>
      
-
+       
         {/* <CustomizeModal/> */}
         
-<Formik
-initialValues={{
-name:"",
-selectHubType:{
-  id:0,
-  text:""
-},
-selectHubCategory:{
-  id:0,
-  text:""
-},
-selectParentHub:{
-  id:0,
-  text:""
-}
-}}
 
-onSubmit={(values)=>{
-console.log(values)
-}}
->
-  {(formik)=>(
     <form onSubmit={formik.handleSubmit}>
     <PerfesionalSearch formData={formik.handleSubmit} perfetionalClik={perfetionalClik}>
             <div className="grid grid-cols-2 gap-3">
              <InputText label="نام هاب" name="name" handleChange={formik.handleChange} values={formik.values.name} important/>
-             <InputSelect label="نوع هاب" handleChange={formik.setFieldValue} name="selectHubType" values={formik.values.selectHubCategory} options={typeHub}/>
-             <InputSelect label="گونه هاب" handleChange={formik.setFieldValue} name="selectHubCategory" values={formik.values.selectHubType} options={catHub}/>
-             <InputSelect label="هاب والد" handleChange={formik.setFieldValue} name="selectParentHub" values={formik.values.selectParentHub} options={selectHub}/>
+             <InputSelect label="نوع هاب" handleChange={formik.setFieldValue} name="hubTypeId" values={formik.values.hubTypeId} options={typeHub}/>
+             <InputSelect label="گونه هاب" handleChange={formik.setFieldValue} name="hubCategoryId" values={formik.values.hubCategoryId} options={catHub}/>
+             <InputSelect label="هاب والد" handleChange={formik.setFieldValue} name="parentHubId" values={formik.values.parentHubId} options={selectHub}/>
 
             </div>
       </PerfesionalSearch> 
       </form>
-  )}
-      
-
-      </Formik>
+  
 
 <ModalPerfetional open={active} handleOpen={setActive}/>
 
-      
+
 
       </div>
+      <div>{filterData && <Chip filterData={filterData} formData={formik}/>}</div>
     </>
   );
 };

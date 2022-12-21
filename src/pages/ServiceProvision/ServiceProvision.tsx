@@ -54,12 +54,12 @@ const {isUpdating}=useSelector((state:any)=>state.serviceProvision)
       <SearchForm isActive={isActive} isUpdating={isUpdating} />
       <OptionTableServiceProvision/>
 
-<StaticTable
+{/* <StaticTable
 data={data}
 column={ServiceProvisionColumns}
 pagination={serviceList.totalElements}
 selectable={false}
-/>
+/> */}
     </div>
   )
 }
