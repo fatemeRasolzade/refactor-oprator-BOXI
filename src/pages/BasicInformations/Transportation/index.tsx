@@ -6,6 +6,7 @@ import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import React, { Suspense } from "react";
 import Vehicle from "./vehicle";
 import Bags from "./bags";
+import Gate from "./gate";
 // import Route from "./route";
 
 
@@ -40,6 +41,9 @@ const Transportation: React.FC = (): JSX.Element => {
           <Tab>
             کیسه بندی<span className="border  border-l-gary-200 relative right-4"></span>
           </Tab>
+          <Tab>
+            درب<span className="border  border-l-gary-200 relative right-4"></span>
+          </Tab>
         </TabList>
         <Suspense fallback={<p>...loading</p>}>
           <TabPanel>
@@ -57,6 +61,10 @@ const Transportation: React.FC = (): JSX.Element => {
           <TabPanel>
             <Bags />
           </TabPanel>
+          <TabPanel>
+            <Gate />
+          </TabPanel>
+          
         </Suspense>
       </Tabs>
       <style>

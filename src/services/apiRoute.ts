@@ -65,6 +65,7 @@ export const apiRoute = () => {
     post: {
       bags:createUrl(CORE_API,'/bag'),
       route:createUrl(CORE_API,"/route"),
+      gate:createUrl(CORE_API,"/gate"),
       // create
       hub: createUrl(CORE_API, "/hub"),
       createProduct: createUrl(CORE_API, "/product"),
@@ -86,6 +87,8 @@ export const apiRoute = () => {
       exception: createUrl(CORE_API, "/exception"),
     },
     delete: {
+      gate:createUrl(CORE_API,"/gate"),
+      route:createUrl(CORE_API,"/route"),
       bags:createUrl(CORE_API,'/bag'),
       role: createUrl(RESOURCE_API, "/role"),
       Vehicle: createUrl(CORE_API, "/vehicle"),
@@ -99,6 +102,7 @@ export const apiRoute = () => {
    
     },
     edit: {
+      gate:createUrl(CORE_API,"/gate"),
       bags:createUrl(CORE_API,'/bag'),
       route:createUrl(CORE_API, "/route"),
       Vehicle: createUrl(CORE_API, "/vehicle"),
@@ -142,7 +146,7 @@ export const GET_VEHICLEMAKE = `${CORE_API}/vehicleMake/select?filter=`;
 //Route
 export const GET_ROUTE = `${CORE_API}/route/select?filter=`;
 export const DELETE_ROUTE= `${CORE_API}/route/`;
-export const deleteConnections = (data:any) => axios.delete(`${CORE_API}/connection`, data);
+
 
 //hub
 export const HUB_SELECT = `${CORE_API}/hub/select`;
