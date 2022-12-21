@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
@@ -16,6 +18,7 @@ import SearchFilter from "./views/SearchFilter";
 
 const CustomGeographic = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { filter, geoData } = useSelector((state: any) => state.customGeo);
 
   const [isActive, setIsActive] = useState<boolean>(true);
@@ -55,7 +58,18 @@ const CustomGeographic = () => {
                 handleDeleteActionNewData={handleGetnewDataOnDelete}
               />
 
-              <button></button>
+              <button
+                onClick={() => {
+                  navigate(
+                    "/basic-information/custom-geographic-category/edit",
+                    {
+                      state: item,
+                    }
+                  );
+                }}
+              >
+                <AiOutlineEdit className="w-full h-full" />
+              </button>
             </div>
           ),
         };
