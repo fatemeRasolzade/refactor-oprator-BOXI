@@ -11,9 +11,7 @@ export const filterBags=createAsyncThunk('filterData',async(body:any)=>{
     try {
         data = await postDataHeaderToServer(apiRoute().post.bags + params, {
         ...body
-        },{
-            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-          });
+        });
       } catch (error) {
         console.log("error ", error);
       }
