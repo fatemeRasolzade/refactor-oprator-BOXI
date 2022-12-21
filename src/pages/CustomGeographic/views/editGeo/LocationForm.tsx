@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import * as Yup from "yup";
 import { v4 as uuid } from "uuid";
 
@@ -13,6 +13,8 @@ import TooltipWrapper from "../../../../global/tooltip/TooltipWrapper";
 import { BiPlus, BiTrash } from "react-icons/bi";
 import { Dialog } from "@material-tailwind/react";
 import { GrFormClose } from "react-icons/gr";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 interface LocationFormProps {
   tableList: Array<any>;
@@ -28,9 +30,29 @@ const LocationForm: FC<LocationFormProps> = ({
   setDeletedList,
 }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const handleDeleteItem = useCallback(async (id: number) => {
+    try {
+      await axios({
+        url: `http://boxi.local:40000/core-api/customDevisiondetail/${id}`,
+        method: "DELETE",
+      });
+      toast.success("آیتم مورد نظر با موفقیت حذف شد ");
+      return true;
+    } catch (error) {
+      // toast.error("مشکلی");
+    }
+    return false;
+  }, []);
 
-  const onDeleteHandler = (id: number) => {
-    setDeletedList(tableList.filter((item) => item.id !== id));
+  const onDeleteHandler = async (id: number) => {
+    if (typeof id === "number") {
+      const isDeleted = await handleDeleteItem(id);
+      isDeleted && setDeletedList(tableList.filter((item) => item.id !== id));
+    } else {
+      setDeletedList(tableList.filter((item) => item.id !== id));
+      toast.success("آیتم مورد نظر با موفقیت حذف شد ");
+    }
     setIsModalOpen(false);
   };
 
@@ -349,7 +371,9 @@ const LocationForm: FC<LocationFormProps> = ({
                           type="submit"
                           text="بله"
                           className="full-tomato-btn w-28 "
-                          handelClick={() => onDeleteHandler(item.id)}
+                          handelClick={() => {
+                            onDeleteHandler(item.id);
+                          }}
                         />
                       </div>
                     </div>

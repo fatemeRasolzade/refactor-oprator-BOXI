@@ -11,7 +11,7 @@ const AddProductInfo: FC<AddProductInfoProps> = ({
 }): JSX.Element => {
   const saveDataHandler = useCallback(async () => {
     if (tableList.length === 0) {
-      toast.error("داده ای وجود ندارد");
+      toast.warning("داده ای وجود ندارد");
       return;
     }
     try {

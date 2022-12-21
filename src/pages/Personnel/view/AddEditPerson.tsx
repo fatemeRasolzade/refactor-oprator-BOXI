@@ -79,6 +79,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   const [treeChecked, setTreeChecked] = useState<Array<string>>([]);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [nodeChecked, setNodeChecked] = useState<any>({});
   const [options] = useState([
     { id: 0, text: "خیر" },
     { id: 1, text: "بله" },
@@ -126,7 +127,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             username: values.username,
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
             isActive: currentData.isActive,
-            hubCodes: treeChecked,
+            hubcode: nodeChecked.value,
           }
         : {
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
@@ -138,7 +139,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             username: values.username,
             password: values.password,
             isActive: true,
-            hubCodes: treeChecked,
+            hubcode: nodeChecked.value,
           };
       if (treeChecked.length === 0) {
         setTreeCheckedError("حداقل یک هاب باید انتخاب شود");
@@ -328,8 +329,10 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 title="هاب"
                 treeCheckedError={treeCheckedError}
                 treeChecked={treeChecked}
-                setTreeChecked={(checked: Array<string>) => {
-                  setTreeChecked(checked);
+                nodeChecked={(value) => {
+                  console.log("nodeChecked", value.value);
+                  setTreeChecked([value.value]);
+                  setNodeChecked(value);
                 }}
               />
             </div>
