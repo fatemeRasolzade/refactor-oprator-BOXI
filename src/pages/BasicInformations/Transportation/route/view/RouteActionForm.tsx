@@ -18,8 +18,8 @@ import { filterRoute } from "../../../../../redux/Transportation/route/RouteData
 import { AiOutlineEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Timeinput from "../../../../../global/TimePicker/TimeInput";
 
-import TimePiker from "../../../../../global/TimePicker/TimePiker";
 interface PropsData {
   currentData?: any;
   routeValue?: any;
@@ -184,7 +184,7 @@ const RouteActionForms: React.FC<PropsData> = ({
     e.preventDefault();
     const temp = [...formik.values.connections];
     setDisableNodes(true);
-    formik.setFieldValue("nodes", formik.values.connections.length + 1);
+    formik.setFieldValue("nodes", formik.values.connections.length - 1);
     temp.splice(formik.values.connections.length - 1, 0, {
       selectHub: {
         id: "",
@@ -216,6 +216,7 @@ const RouteActionForms: React.FC<PropsData> = ({
     };
 
     // console.log(data);
+    formik.setFieldValue("nodes", filterData.length - 2);
     let isDeleteFromServer = formik.values.connections.some((item: any) => item.id);
     if (isDeleteFromServer) {
       console.log("delete from server", data);
@@ -517,103 +518,81 @@ const RouteActionForms: React.FC<PropsData> = ({
                                   />
                                 </td>
                                 <td>
-                                  <InputText
-                                    readOnly={index === 0 && true}
-                                    wrapperClassName={"w-30 "}
-                                    classNames={"min-w-[12rem]"}
-                                    handleChange={formik.handleChange}
-                                    name={`connections.${index}.transitTime`}
-                                    values={values.connections[index].transitTime}
-                                    placeholder="00:00"
-                                    error={
-                                      touched.connections &&
-                                      touched.connections[index] &&
-                                      // @ts-ignore
-                                      touched.connections[index].transitTime &&
-                                      errors.connections &&
-                                      errors.connections[index] &&
-                                      // @ts-ignore
-                                      errors.connections[index].transitTime
-                                    }
-                                  />
-                                  {/* <FormGroup
+                                  <Timeinput
                                       readOnly={index === 0 && true}
-                                      width={"250px"}
-                                      error={
-                                        touched.connections &&
-                                        touched.connections[index] &&
-                                        touched.connections[index].transitTime &&
-                                        errors.connections &&
-                                        errors.connections[index] &&
-                                        errors.connections[index].transitTime && (
-                                          <div className="field-error">{errors.connections[index].transitTime}</div>
-                                        )
-                                      }
-                                    >
-                                      <NumberFormat
-                                        readOnly={index === 0 && true}
-                                        className="text-center rounded-xl"
-                                        prefix=""
-                                        mask=""
-                                        placeholder="00:00"
-                                        name={`connections.${index}.transitTime`}
-                                        format="##:##"
-                                        value={values.connections[index].transitTime}
-                                        onValueChange={({ formattedValue, value }) => {
-                                          setFieldValue(
+                                      wrapperClassName={"w-30 "}
+                                      classNames={"min-w-[12rem]"}
+                                      placeholder="00:00"
+                                      name={`connections.${index}.transitTime`}
+                                      format="##:##"
+                                      value={values.connections[index].transitTime}
+                                      // @ts-ignore
+                                      onValueChange={({ formattedValue }) => {
+                                        setFieldValue(
                                             `connections.${index}.transitTime`,
                                             formattedValue
-                                            // .replace("00", "0")
-                                            // .replace(":", ".")
-                                          );
-                                        }}
-                                      />
-                                    </FormGroup> */}
+
+                                        );
+                                      }}
+                                      error={
+                                          touched.connections &&
+                                          touched.connections[index] &&
+                                          // @ts-ignore
+                                          touched.connections[index].transitTime &&
+                                          errors.connections &&
+                                          errors.connections[index] &&
+                                          // @ts-ignore
+                                          errors.connections[index].transitTime
+                                      }
+                                  />
+                                  {/*<InputText*/}
+                                  {/*  readOnly={index === 0 && true}*/}
+                                  {/*  wrapperClassName={"w-30 "}*/}
+                                  {/*  classNames={"min-w-[12rem]"}*/}
+                                  {/*  handleChange={formik.handleChange}*/}
+                                  {/*  name={`connections.${index}.transitTime`}*/}
+                                  {/*  values={values.connections[index].transitTime}*/}
+                                  {/*  placeholder="00:00"*/}
+                                  {/*  error={*/}
+                                  {/*    touched.connections &&*/}
+                                  {/*    touched.connections[index] &&*/}
+                                  {/*    // @ts-ignore*/}
+                                  {/*    touched.connections[index].transitTime &&*/}
+                                  {/*    errors.connections &&*/}
+                                  {/*    errors.connections[index] &&*/}
+                                  {/*    // @ts-ignore*/}
+                                  {/*    errors.connections[index].transitTime*/}
+                                  {/*  }*/}
+                                  {/*/>*/}
                                 </td>
                                 <td>
-                                {/* <NumberFormat
+                                <Timeinput
                                         readOnly={index === 0 && true}
-                                        className="text-center rounded-xl"
-                                        prefix=""
-                                        mask=""
+                                        wrapperClassName={"w-30 "}
+                                        classNames={"min-w-[12rem]"}
                                         placeholder="00:00"
-                                        name={`connections.${index}.transitTime`}
+                                        name={`connections.${index}.timeStoppage`}
                                         format="##:##"
-                                        value={values.connections[index].transitTime}
+                                        value={values.connections[index].timeStoppage}
                                          // @ts-ignore
                                         onValueChange={({ formattedValue }) => {
                                           setFieldValue(
-                                            `connections.${index}.transitTime`,
+                                            `connections.${index}.timeStoppage`,
                                             formattedValue
-                                      
+
                                           );
                                         }}
-                                      /> */}
-                                  {/* <TimePiker
-                                    disabled={index === 0 && true}
-                                    placeholder="00:00"
-                                    readOnly={index === 0 && true}
-                                    classNames={"min-w-[12rem]"}
-                                    name={`connections.${index}.timeStoppage`}
-                                    // handleChange={formik.setFieldValue}
-                                    handleChange={(value:any)=>{
-                                        // @ts-ignore
-                                      const time = new Date(null, null, null, value.hour, value.minute);
-                                      console.log("time is",time)
-                                      setFieldValue(`connections.${index}.timeStoppage`,value.hour+":"+value.minute);
-                                    }}
-                                    values={values.connections[index].timeStoppage}
-                                    error={
-                                      touched.connections &&
-                                      touched.connections[index] &&
-                                      // @ts-ignore
-                                      touched.connections[index].timeStoppage &&
-                                      errors.connections &&
-                                      errors.connections[index] &&
-                                      // @ts-ignore
-                                      errors.connections[index].timeStoppage
-                                    }
-                                  /> */}
+                                          error={
+                                            touched.connections &&
+                                            touched.connections[index] &&
+                                            // @ts-ignore
+                                            touched.connections[index].timeStoppage &&
+                                            errors.connections &&
+                                            errors.connections[index] &&
+                                            // @ts-ignore
+                                            errors.connections[index].timeStoppage
+                                          }
+                                      />
                                   {/* <InputText
                                     wrapperClassName={"w-30 "}
                                     classNames={"min-w-[12rem]"}
@@ -633,38 +612,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                                       errors.connections[index].timeStoppage
                                     }
                                   /> */}
-                                  {/* <FormGroup
-                                      width={"250px"}
-                                      error={
-                                        touched.connections &&
-                                        touched.connections[index] &&
-                                        touched.connections[index].timeStoppage &&
-                                        errors.connections &&
-                                        errors.connections[index] &&
-                                        errors.connections[index].timeStoppage && (
-                                          <div className="field-error">{errors.connections[index].timeStoppage}</div>
-                                        )
-                                      }
-                                    >
-                                      <NumberFormat
-                                        readOnly={index === 0 && true}
-                                        className="text-center rounded-xl "
-                                        prefix=""
-                                        mask=""
-                                        placeholder="00:00"
-                                        name={`connections.${index}.timeStoppage`}
-                                        format="##:##"
-                                        value={values.connections[index].timeStoppage}
-                                        onValueChange={({ formattedValue, value }) => {
-                                          setFieldValue(
-                                            `connections.${index}.timeStoppage`,
-                                            formattedValue
-                                            // .replace("00", "0")
-                                            // .replace(":", ".")
-                                          );
-                                        }}
-                                      />
-                                    </FormGroup> */}
+
                                 </td>
                               </tr>
                             ))}
