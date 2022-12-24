@@ -34,7 +34,6 @@ const TimePiker = ({
   // @ts-ignore
   const time = new Date(null, null, null, values?.split(":")[0], values?.split(":")[1]);
 
-
   return (
     <>
       <div className={`flex flex-col ${wrapperClassName}`}>

@@ -1,11 +1,11 @@
 import React from "react";
-import NumberFormat from "react-number-format";
+import {NumberFormat} from "react-number-format";
 
 const CustomInput = (props) => {
 	return <input {...props}  style={{ direction: "ltr", textAlign: "center" }} className={`${props.className} ${props?.readOnly ? 'bg-[#f2f2f2]':''}`} />;
 };
 
-export default  (props) => {
+export default (props) => {
 
 	return (
 		<NumberFormat

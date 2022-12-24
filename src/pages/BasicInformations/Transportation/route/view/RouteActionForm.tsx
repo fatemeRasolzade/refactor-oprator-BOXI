@@ -18,8 +18,8 @@ import { filterRoute } from "../../../../../redux/Transportation/route/RouteData
 import { AiOutlineEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "axios";
-
-import TimePiker from "../../../../../global/TimePicker/TimePiker";
+import NumberFormat from "../../../../../global/TimePicker/TimeInput";
+// import TimePiker from "../../../../../global/TimePicker/TimePiker";
 interface PropsData {
   currentData?: any;
   routeValue?: any;
@@ -571,7 +571,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                                     </FormGroup> */}
                                 </td>
                                 <td>
-                                {/* <NumberFormat
+                                <NumberFormat
                                         readOnly={index === 0 && true}
                                         className="text-center rounded-xl"
                                         prefix=""
@@ -588,7 +588,7 @@ const RouteActionForms: React.FC<PropsData> = ({
                                       
                                           );
                                         }}
-                                      /> */}
+                                      />
                                   {/* <TimePiker
                                     disabled={index === 0 && true}
                                     placeholder="00:00"
@@ -596,10 +596,10 @@ const RouteActionForms: React.FC<PropsData> = ({
                                     classNames={"min-w-[12rem]"}
                                     name={`connections.${index}.timeStoppage`}
                                     // handleChange={formik.setFieldValue}
-                                    handleChange={(value:any)=>{
+                                    handleChange={(value:any,name:any)=>{
                                         // @ts-ignore
-                                      const time = new Date(null, null, null, value.hour, value.minute);
-                                      console.log("time is",time)
+                                      // const time = new Date(null, null, null, value.hour, value.minute);
+                                        console.log(name)
                                       setFieldValue(`connections.${index}.timeStoppage`,value.hour+":"+value.minute);
                                     }}
                                     values={values.connections[index].timeStoppage}
