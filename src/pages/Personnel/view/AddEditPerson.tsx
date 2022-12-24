@@ -326,6 +326,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             </div>
             <div className="col-span-4">
               <CheckBoxThree
+                noCascade
                 nodes={userInfo?.hublist ? userInfo?.hublist : []}
                 loadingNode={false}
                 title="هاب"

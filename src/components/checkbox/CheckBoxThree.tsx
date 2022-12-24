@@ -16,6 +16,7 @@ interface CheckBoxThreeProps {
   loadingNode: boolean;
   nodes: Array<any>;
   treeChecked: Array<string>;
+  noCascade?: boolean;
   setTreeChecked?: (value: Array<string>) => void;
   nodeChecked?: (value: any) => void;
 }
@@ -25,6 +26,7 @@ const CheckBoxThree: FC<CheckBoxThreeProps> = ({
   nodes,
   title,
   treeCheckedError,
+  noCascade,
   setTreeChecked,
   nodeChecked,
 }): JSX.Element => {
@@ -65,6 +67,7 @@ const CheckBoxThree: FC<CheckBoxThreeProps> = ({
               nodes={treeData}
               checked={treeChecked}
               expanded={expanded}
+              noCascade={noCascade}
               onCheck={(checked: Array<string>, node: any) => {
                 setTreeChecked && setTreeChecked(checked);
                 // nodeChecked &&
