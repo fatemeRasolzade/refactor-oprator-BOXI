@@ -10,9 +10,7 @@ export const productData=createAsyncThunk('productlists',async(body:any)=>{
     try {
         data = await postDataHeaderToServer(apiRoute().post.product + params, {
         ...body
-        },{
-            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-          });
+        });
       } catch (error) {
         console.log("error ", error);
       }

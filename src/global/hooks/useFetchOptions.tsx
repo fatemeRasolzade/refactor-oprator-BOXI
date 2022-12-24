@@ -17,9 +17,7 @@ export const useFetchOptions = (url: string, isModalOpen?: boolean) => {
   
         try {
           setOptions({ ...dataOptions, loading: true });
-          selectDataFromServerWithHeader(url, {
-            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-          }).then((res) => {
+          selectDataFromServerWithHeader(url).then((res) => {
             if (res.status === "OK") setOptions({ ...dataOptions, options: res?.payload?.content || res?.payload, loading: false });
           });
         } catch (error: any) {
@@ -41,9 +39,7 @@ export const useFetchOptionsOnModal = (url: string, isModalOpen: boolean) => {
        if(isModalOpen){
         try {
           setOptions({ ...dataOptions, loading: true });
-          selectDataFromServerWithHeader(url, {
-            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-          }).then((res) => {
+          selectDataFromServerWithHeader(url).then((res) => {
             if (res.status === "OK") setOptions({ ...dataOptions, options: res?.payload?.content || res?.payload, loading: false });
           });
         } catch (error: any) {
@@ -65,11 +61,8 @@ export const useGetOptions = (url: string, isModalOpen?: boolean) => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     try {
-      setLoading(true);
-      selectDataFromServerWithHeader(url, {
-        headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-      }).then((res) => {
-        setLoading(false);
+      selectDataFromServerWithHeader(url)
+      .then((res) => {
         if (res.status === "OK") setOptions(res?.payload?.content);
       });
     } catch (error: any) {
@@ -123,9 +116,7 @@ export const useGetFuelTypeOptions = (url: string, isModalOpen?: boolean) => {
     // if (isModalOpen) {
       try {
         setOptions({ ...fuelOptions, loading: true });
-        selectDataFromServerWithHeader(url, {
-          headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-        }).then((res) => {
+        selectDataFromServerWithHeader(url).then((res) => {
           if (res.status === "OK") setOptions({ ...fuelOptions, options: res?.payload, loading: false });
         });
       } catch (error: any) {
@@ -142,9 +133,7 @@ export const useGetVendorOptions = (url: string, isModalOpen?: boolean) => {
   useEffect(() => {
       try {
         setOptions({ ...vendorOptions, loading: true });
-        selectDataFromServerWithHeader(url, {
-          headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-        }).then((res) => {
+        selectDataFromServerWithHeader(url).then((res) => {
           if (res.status === "OK") setOptions({ ...vendorOptions, options: res?.payload?.content, loading: false });
         });
       } catch (error: any) {

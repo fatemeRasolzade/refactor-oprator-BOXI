@@ -64,6 +64,7 @@ const InputSelect: FC<InputSelectProps> = ({
         {label} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
       </label>
       <Select
+        // isOptionDisabled={(option) => option.isdisabled}
         isMulti={isMulti}
         isLoading={options ? false : true}
         // value={

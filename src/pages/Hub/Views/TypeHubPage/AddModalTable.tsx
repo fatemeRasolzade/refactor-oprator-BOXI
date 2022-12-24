@@ -8,7 +8,7 @@ import * as Yup from "yup"
 import { postDataHeaderToServer } from '../../../../services/Service_call';
 import { ErrorAlert, SuccessAlert } from '../../../../global/alert/Alert';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToTableType, HubTypeData } from '../../../../redux/HubData/TypeHub';
+import { HubTypeData } from '../../../../redux/HubData/TypeHub';
 const AddModalTable = ({open,handleOpen}:{open:boolean,handleOpen:React.Dispatch<React.SetStateAction<boolean>>}) => {
 
 const dispatch=useDispatch()
@@ -30,7 +30,7 @@ const formok=useFormik({
     validationSchema,
      onSubmit:(values)=>{
      
-      postDataHeaderToServer(apiRoute().post.Type_Hub_table,values,{ headers: { Authorization: "Bearer " + localStorage.getItem("myToken") }})
+      postDataHeaderToServer(apiRoute().post.Type_Hub_table,values)
      .then(res=>{
       if(res.status==="OK"){
         SuccessAlert("با موفقیت ساخته شد")

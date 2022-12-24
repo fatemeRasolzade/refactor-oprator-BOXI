@@ -1,0 +1,62 @@
+import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
+import { apiRoute } from '../../services/apiRoute';
+import {postDataHeaderToServer } from '../../services/Service_call';
+
+
+    export const ProductGroupsData=createAsyncThunk("ProductGroup",async(body:any)=>{
+
+    console.log("oooooooo",body)
+
+        const params=`/filter?pageNumber=${body.pageNumbers}&pageSize=20`
+        const {payload}=await postDataHeaderToServer(apiRoute().post.product + params , {
+                code:body.code ? body.code : "",
+                name: body.name ?  body.name : "",
+                description: body.description ? body.description : "",
+                isActive: body.isActive,
+        })
+           
+        return payload
+
+    })
+
+
+
+
+
+
+const initialState = {
+    ProductLists: [],
+    fetchpost: false,
+    errorMessage: "",
+  };
+
+  const ProductGroups=createSlice({
+    name:"ProductGroup",
+    initialState,
+
+reducers:{
+
+clearProductData:(state)=>{
+    state.ProductLists=[]
+}
+
+
+},
+
+    extraReducers: {
+        [ProductGroupsData.fulfilled as any]: (state, action) => {
+          state.ProductLists = action.payload;
+          state.fetchpost = false;
+        },
+        [ProductGroupsData.pending as any]: (state) => {
+          state.fetchpost = true;
+        },
+        [ProductGroupsData.rejected as any]: (state) => {
+          state.fetchpost = false;
+          state.errorMessage = "wrong";
+        },
+      },
+  })
+
+  export const {clearProductData} =ProductGroups.actions
+  export default ProductGroups.reducer

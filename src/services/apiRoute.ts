@@ -81,6 +81,7 @@ export const apiRoute = () => {
       filterPersonnel: createUrl(RESOURCE_API, "/employee"),
       serviceDefine: createUrl(CORE_API, "/service"),
       product: createUrl(CORE_API, "/product"),
+      
     },
     postExcel: {
       exception: createUrl(CORE_API, "/exception"),
@@ -105,6 +106,7 @@ export const apiRoute = () => {
       EditVendor: createUrl(CORE_API, "/vendor"),
       VehicleModel: createUrl(CORE_API, "/vehicleMake"),
       productDefine: createUrl(CORE_API, "/product"),
+      Edithub_category:createUrl(CORE_API,"/hubCategory")
     },
   };
 };

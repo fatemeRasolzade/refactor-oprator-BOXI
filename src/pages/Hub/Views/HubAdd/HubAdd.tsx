@@ -7,45 +7,38 @@ import InputSelect from '../../../../global/InputSelect/InputSelect'
 import { Formik,ErrorMessage } from "formik";
 import {useNavigate} from "react-router-dom"
 import { addHubschema } from '../../../../global/Validation/Validation'
-import { getDataHeaderServer, PostDataParams } from "../../../../services/Service_call"
+import { getDataHeaderServer, postDataHeaderToServer, PostDataParams } from "../../../../services/Service_call"
 import { apiRoute } from "../../../../services/apiRoute"
 import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert"
 const HubAdd = () => {
   const navigate = useNavigate();
-
+  const [typeHub, settypeHub] = useState([]);
+  const [catHub, setCatHub] = useState([]);
+  const [citys, setCities] = useState([]);
+  const [provinceLoc, setProvinceLoc] = useState([]);
+  const [selectProvince, setSelectProvince] = useState([]);
+  const [selectHub, setselectHub] = useState([]);
+  
   useEffect(() => {
     function getDataSelect() {
       try {
-        getDataHeaderServer(apiRoute().get.get_hub_type,{headers:{
-          "Authorization":"Bearer " + localStorage.getItem("myToken")
-        }}).then((res) => {
+        getDataHeaderServer(apiRoute().get.get_hub_type).then((res) => {
           if (res.status === "OK") settypeHub(res.payload);
         });
-        getDataHeaderServer(apiRoute().get.select_hub_category,{headers:{
-          "Authorization":"Bearer " + localStorage.getItem("myToken")
-        }}).then((res) => {
+        getDataHeaderServer(apiRoute().get.select_hub_category).then((res) => {
           if (res.status === "OK") setCatHub(res.payload.content);
         });
-        getDataHeaderServer(apiRoute().get.get_province_city,{headers:{
-          "Authorization":"Bearer " + localStorage.getItem("myToken")
-        }}).then((res) => {
+        getDataHeaderServer(apiRoute().get.get_province_city).then((res) => {
           if (res.status === "OK") setCities(res.payload.content);
         });
-        getDataHeaderServer(apiRoute().get.get_province_loc,{headers:{
-          "Authorization":"Bearer " + localStorage.getItem("myToken")
-        }}).then((res) => {
+        getDataHeaderServer(apiRoute().get.get_province_loc).then((res) => {
           if (res.status === "OK") setProvinceLoc(res.payload.content);
         });
-        getDataHeaderServer(apiRoute().get.get_select_province,{headers:{
-          "Authorization":"Bearer " + localStorage.getItem("myToken")
-        }}).then((res) => {
+        getDataHeaderServer(apiRoute().get.get_select_province).then((res) => {
           if (res.status === "OK") setSelectProvince(res.payload.content);
         });
-        getDataHeaderServer(apiRoute().get.select_hub,{headers:{
-          "Authorization":"Bearer " + localStorage.getItem("myToken")
-        }}).then((res) => {
-          if (res.status === "OK") setselectHub(res.payload.content);
-        });
+
+        postDataHeaderToServer(apiRoute().get.select_hub,[]).then(res=>{if(res.status === "OK") setselectHub(res.payload.content)})
       } catch (error) {
         ErrorAlert("دریافت دیتا با خطلا مواجه شد");
       }
@@ -53,12 +46,7 @@ const HubAdd = () => {
     getDataSelect();
   }, []);
 
-  const [typeHub, settypeHub] = useState([]);
-  const [catHub, setCatHub] = useState([]);
-  const [citys, setCities] = useState([]);
-  const [provinceLoc, setProvinceLoc] = useState([]);
-  const [selectProvince, setSelectProvince] = useState([]);
-  const [selectHub, setselectHub] = useState([]);
+
   return (
 <>
     <Formik
@@ -134,7 +122,7 @@ const HubAdd = () => {
         <ErrorMessage name='typeHub' render={(messege)=>(<span className='text-tomato  block mt-5'>{messege}</span>)}/>
         </div>
        <div >
-        <InputSelect label='گونه هاب' name="selectHubCategory" handleChange={formik.setFieldValue} values={formik.values.selectHubCategory} options={catHub} wrapperClassName="!w-full min-w-0"/>
+        <InputSelect label='گونه هاب' name="selectHubCategory" handleChange={formik.setFieldValue} values={formik.values.selectHubCategory} options={catHub} wrapperClassName="!w-full min-w-0" />
       
        </div>
         <div >

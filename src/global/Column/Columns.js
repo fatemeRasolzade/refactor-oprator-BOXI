@@ -230,3 +230,27 @@ export const AddGeoColumn = [
     accessor: "operation",
   },
 ];
+
+
+export const ProductGroupCulumn=[
+  {
+    Header: "کد",
+    accessor: "code",
+  },
+  {
+    Header: "عنوان",
+    accessor: "name",
+  },
+  {
+    Header: "توضیحات",
+    accessor: "description",
+  },
+  {
+    Header: "وضعیت",
+    accessor: "isActive",
+  },
+  {
+    Header: "عملیات",
+    accessor: "actionProduct",
+  },
+]
