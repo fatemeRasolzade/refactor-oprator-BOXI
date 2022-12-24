@@ -44,7 +44,9 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
     name: Yup.string().required(),
     mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
     email: Yup.string().email(),
-    username: Yup.string().matches(JustEngNameRegex, VALIDLATINUSERNAME).required(),
+    username: Yup.string()
+      .matches(JustEngNameRegex, VALIDLATINUSERNAME)
+      .required(),
     password: Yup.string()
       .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
       .required(),
@@ -223,7 +225,14 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
       ) : (
         <>
           <AddButton ToggleOptions={ToggleOptions} />
-          {/* <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} /> */}
+          <AddExcel
+            excelInfo={{
+              fileName: "employee.xlsx",
+              url: "resource-api/employee/importexcelfile?Entity=employee",
+            }}
+            OpenModal={uploadExcel}
+            setOpenModal={handleUploadFileAction}
+          />
         </>
       )}
       <Dialog
