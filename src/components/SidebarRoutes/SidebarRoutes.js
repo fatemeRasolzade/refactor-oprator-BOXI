@@ -40,6 +40,8 @@ import CustomGeographic from "../../pages/CustomGeographic/CustomGeographic";
 import ServiceDefinition from "../../pages/ServiceManagement/ServiceDefinition";
 import ProductDefine from "../../pages/ServiceManagement/ProductDefine";
 import PinCodeManageMent from "../../pages/BasicInformations/PinCodeManagement/PinCodeManageMent";
+import { BiLogOut } from "react-icons/bi";
+import UserService from "../../services/keycloakService";
 
 export const links = [
   {
@@ -255,5 +257,10 @@ export const links = [
         label: "رده جغرافیایی سفارشی",
       },
     ],
+  },
+  {
+    Icon: <BiLogOut size={"25"} onClick={() => UserService.doLogout()} />,
+    label: "خروج",
+    childs: [],
   },
 ];
