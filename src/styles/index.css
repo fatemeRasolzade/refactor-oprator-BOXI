@@ -162,5 +162,7 @@
   .css-1mskxrd-control {
     @apply border !border-darkBorder !rounded-lg;
   }
- 
+  .Pagination {
+    text-align: center !important;
+  }
 }
