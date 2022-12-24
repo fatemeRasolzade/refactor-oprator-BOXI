@@ -1,7 +1,5 @@
 import axios from "axios";
-import React, { FC, useCallback, useEffect, useState } from "react";
-import { from } from "stylis";
-import InputSelect from "../../global/InputSelect/InputSelect";
+import { FC, useCallback, useEffect, useState } from "react";
 import MultiSelect from "../../global/multiselect/MultiSelect";
 
 interface ProvincesProps {
@@ -35,7 +33,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
 
   const getOptionsFromCity = useCallback(
     async (data: any, type: "from" | "to") => {
-      const province = "http://172.16.55.144:40000/core-api/countryDevision";
+      const province = "http://boxi.local:40000/core-api/countryDevision";
 
       try {
         const res = await axios({
@@ -48,11 +46,11 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
         });
         if (type === "from") {
           setCityOption((prev) => {
-            return { ...prev, fromCity: res?.data?.payload?.content };
+            return { ...prev, fromCity: res?.data?.payload };
           });
         } else {
           setCityOption((prev) => {
-            return { ...prev, toCity: res?.data?.payload?.content };
+            return { ...prev, toCity: res?.data?.payload };
           });
         }
       } catch (error) {}
@@ -61,7 +59,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
   );
   const getOptionsFromLocation = useCallback(
     async (data: any, type: "from" | "to") => {
-      const province = "http://172.16.55.144:40000/core-api/countryDevision";
+      const province = "http://boxi.local:40000/core-api/countryDevision";
 
       try {
         const res = await axios({
@@ -74,11 +72,11 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
         });
         if (type === "from") {
           setLocationOption((prev) => {
-            return { ...prev, fromLocation: res?.data?.payload?.content };
+            return { ...prev, fromLocation: res?.data?.payload };
           });
         } else {
           setLocationOption((prev) => {
-            return { ...prev, toLocation: res?.data?.payload?.content };
+            return { ...prev, toLocation: res?.data?.payload };
           });
         }
       } catch (error) {}
@@ -87,7 +85,6 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
   );
   useEffect(() => {
     getOptionsData();
-    console.log("loop");
   }, [getOptionsData]);
 
   return (
@@ -126,6 +123,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           label="منطقه"
           name="fromSourceLocation"
           handleChange={form.setFieldValue}
+          values={form.values.fromSourceLocation}
           options={locationOption.fromLocation}
           error={
             form.touched.fromSourceLocation && form.errors.fromSourceLocation
@@ -153,7 +151,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           label="شهر"
           name="fromDestinationCity"
           handleChange={(name: "string", value: any) => {
-            getOptionsFromLocation(value, "from");
+            getOptionsFromLocation(value, "to");
             form.setFieldValue(name, value);
           }}
           values={form.values.fromDestinationCity}

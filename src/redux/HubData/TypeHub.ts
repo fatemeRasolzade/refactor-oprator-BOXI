@@ -4,12 +4,14 @@ import { apiRoute } from './../../services/apiRoute';
 
 
 
-export const HubTypeData=createAsyncThunk("hubType",async(page:number)=>{
-     const params=`/filter?pageNumber=${page}&pageSize=10`
-    const {payload}=await postDataHeaderToServer(apiRoute().post.Type_Hub_table + params,{},{
-        headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-      })
-     console.log(payload)
+export const HubTypeData=createAsyncThunk("hubType",async(body:any)=>{
+     const params=`/filter?pageNumber=${body.pageNumbers}&pageSize=10`
+    const {payload}=await postDataHeaderToServer(apiRoute().post.Type_Hub_table + params,{
+      name:body.name,
+        code: body.code,
+        description:body.description
+})
+
     return payload
 })
 
@@ -38,9 +40,14 @@ const initialState:HubType={
           deleteTable:(state,action)=>{
             state.TableType.content=state.TableType.content.filter((item:any)=>item.code !== action.payload)
           },
-          addToTableType:(state,action)=>{
-            state.TableType.content=[...state.TableType.content,action.payload]
+          filterTable:(state,action)=>{
+            if(action.payload){
+              state.TableType.content=state.TableType.content.filter((item:any)=>item.name.includes(action.payload))
+            }
+            
+
           }
+       
     },
     extraReducers: {
         [HubTypeData.fulfilled as any]: (state, action) => {
@@ -57,5 +64,5 @@ const initialState:HubType={
       },
  }) 
 
- export const {clearHubType,deleteTable,addToTableType}=HubTypeTable.actions
+ export const {clearHubType,deleteTable,filterTable}=HubTypeTable.actions
  export default HubTypeTable.reducer

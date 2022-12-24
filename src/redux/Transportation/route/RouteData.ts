@@ -10,9 +10,7 @@ export const filterRoute=createAsyncThunk('routeLists',async(body:any)=>{
     try {
         data = await postDataHeaderToServer(apiRoute().post.route + params, {
         ...body
-        },{
-            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-          });
+        });
       } catch (error) {
         console.log("error ", error);
       }

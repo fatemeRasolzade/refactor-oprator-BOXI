@@ -18,17 +18,19 @@ interface LocationFormProps {
   tableList: Array<any>;
   formikTitle: any;
   setTableList: (values: any) => void;
+  setDeletedList: (values: Array<any>) => void;
 }
 
 const LocationForm: FC<LocationFormProps> = ({
   tableList,
   formikTitle,
   setTableList,
+  setDeletedList,
 }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onDeleteHandler = (id: number) => {
-    setTableList(tableList.filter((item) => item.id !== id));
+    setDeletedList(tableList.filter((item) => item.id !== id));
     setIsModalOpen(false);
   };
 
@@ -127,7 +129,17 @@ const LocationForm: FC<LocationFormProps> = ({
       let data = {
         ...values,
         id: values?.id ? values.id : uuid(),
-        customDevisionDetails: attributeDivition,
+        customDevisionDetails: attributeDivition.map((item) => {
+          return {
+            ...item,
+            id: "",
+            isActive: true,
+            customDevision: {
+              id: "",
+              text: "",
+            },
+          };
+        }),
       };
       setTableList(data);
       resetForm();
@@ -170,8 +182,6 @@ const LocationForm: FC<LocationFormProps> = ({
               <div className="w-full flex justify-center">
                 <TooltipWrapper
                   textProps={item?.fromCountryDevision?.map((country: any) => {
-                    console.log("country", country);
-
                     return (
                       <div className="text-white" key={country.id}>
                         {country.text}
@@ -180,11 +190,57 @@ const LocationForm: FC<LocationFormProps> = ({
                   })}
                 >
                   <div>
-                    {item?.fromCountryDevision?.map(
-                      (country: any) => country.text
-                    )}
+                    {item?.fromCountryDevision?.length !== 0 &&
+                      item?.fromCountryDevision[
+                        item?.fromCountryDevision?.length - 1
+                      ].text}
                   </div>
                 </TooltipWrapper>
+
+                {item?.fromSourceCity && item?.fromSourceCity.length !== 0 && (
+                  <>
+                    <span>&nbsp; - &nbsp;</span>
+                    <TooltipWrapper
+                      textProps={item?.fromSourceCity?.map((city: any) => {
+                        return (
+                          <div className="text-white" key={city.id}>
+                            {city.text}
+                          </div>
+                        );
+                      })}
+                    >
+                      <div>
+                        {item?.fromSourceCity?.length !== 0 &&
+                          item?.fromSourceCity[item?.fromSourceCity?.length - 1]
+                            .text}
+                      </div>
+                    </TooltipWrapper>
+                  </>
+                )}
+                {item?.fromSourceLocation &&
+                  item?.fromSourceLocation.length !== 0 && (
+                    <>
+                      <span>&nbsp; - &nbsp;</span>
+                      <TooltipWrapper
+                        textProps={item?.fromSourceLocation?.map(
+                          (location: any) => {
+                            return (
+                              <div className="text-white" key={location.id}>
+                                {location.text}
+                              </div>
+                            );
+                          }
+                        )}
+                      >
+                        <div>
+                          {item?.fromSourceLocation?.length !== 0 &&
+                            item?.fromSourceLocation[
+                              item?.fromSourceLocation?.length - 1
+                            ].text}
+                        </div>
+                      </TooltipWrapper>
+                    </>
+                  )}
               </div>
             ),
             toCountryDevision: (
@@ -197,11 +253,60 @@ const LocationForm: FC<LocationFormProps> = ({
                   ))}
                 >
                   <div>
-                    {item?.toCountryDevision?.map(
-                      (country: any) => country.text
-                    )}
+                    {item?.toCountryDevision?.length !== 0 &&
+                      item?.toCountryDevision[
+                        item?.toCountryDevision?.length - 1
+                      ].text}
                   </div>
                 </TooltipWrapper>
+                {item?.fromDestinationCity &&
+                  item?.fromDestinationCity.length !== 0 && (
+                    <>
+                      <span>&nbsp; - &nbsp;</span>
+                      <TooltipWrapper
+                        textProps={item?.fromDestinationCity?.map(
+                          (city: any) => {
+                            return (
+                              <div className="text-white" key={city.id}>
+                                {city.text}
+                              </div>
+                            );
+                          }
+                        )}
+                      >
+                        <div>
+                          {item?.fromDestinationCity?.length !== 0 &&
+                            item?.fromDestinationCity[
+                              item?.fromDestinationCity?.length - 1
+                            ].text}
+                        </div>
+                      </TooltipWrapper>
+                    </>
+                  )}
+                {item?.fromDestinationLocation &&
+                  item?.fromDestinationLocation.length !== 0 && (
+                    <>
+                      <span>&nbsp; - &nbsp;</span>
+                      <TooltipWrapper
+                        textProps={item?.fromDestinationLocation?.map(
+                          (location: any) => {
+                            return (
+                              <div className="text-white" key={location.id}>
+                                {location.text}
+                              </div>
+                            );
+                          }
+                        )}
+                      >
+                        <div>
+                          {item?.fromDestinationLocation?.length !== 0 &&
+                            item?.fromDestinationLocation[
+                              item?.fromDestinationLocation?.length - 1
+                            ].text}
+                        </div>
+                      </TooltipWrapper>
+                    </>
+                  )}
               </div>
             ),
             operation: (

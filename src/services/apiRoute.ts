@@ -86,6 +86,7 @@ export const apiRoute = () => {
       filterPersonnel: createUrl(RESOURCE_API, "/employee"),
       serviceDefine: createUrl(CORE_API, "/service"),
       product: createUrl(CORE_API, "/product"),
+      
     },
     postExcel: {
       exception: createUrl(CORE_API, "/exception"),
@@ -117,6 +118,7 @@ export const apiRoute = () => {
       EditVendor: createUrl(CORE_API, "/vendor"),
       VehicleModel: createUrl(CORE_API, "/vehicleMake"),
       productDefine: createUrl(CORE_API, "/product"),
+      Edithub_category:createUrl(CORE_API,"/hubCategory")
     },
   };
 };
@@ -160,8 +162,16 @@ export const DELETE_ROUTE= `${CORE_API}/route/`;
 export const HUB_SELECT = `${CORE_API}/hub/select`;
 
 //ServiceTime
-// /timecommitment/selectTimeUnitTypes
-export const CREATE_SERVICETIME = `${CONSIGNMENT_API}/timecommitment`;
-export const EDIT_SERVICETIME = `${CONSIGNMENT_API}/timecommitment`;
-export const DELETE_SERVICETIME = `${CONSIGNMENT_API}/timecommitment/`;
+export const CREATE_SERVICETIME = `${CORE_API}/timecommitment`;
+export const EDIT_SERVICETIME = `${CORE_API}/timecommitment`;
+export const DELETE_SERVICETIME = `${CORE_API}/timecommitment/`;
 export const GET_TIMEUNITTIPES = `${CORE_API}/timecommitment/selectTimeUnitTypes`;
+
+//Price
+export const PRICE_API = `${CORE_API}/pricelist`;
+export const GET_CONSIGNMENT_TYPE = `${CORE_API}/pricelist/consignmenttype`;
+
+//PRODUCT
+export const GET_PRODUCT_SELECT = `${CORE_API}/product/select?filter`;
+//country devision
+export const GET_CUSTOM_COUNTRY_DEVISION = `${CORE_API}/customcountrydevision/select?filter=`;

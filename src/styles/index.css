@@ -110,7 +110,7 @@
     @apply border-none bg-transparent text-dark shadow-none flex justify-around items-center;
   }
   .pagination_style {
-    @apply !bg-tomato text-white;
+    @apply !bg-tomato text-white py-5 text-center;
   }
   /* flex box */
   .centering {
@@ -162,5 +162,7 @@
   .css-1mskxrd-control {
     @apply border !border-darkBorder !rounded-lg;
   }
- 
+  .Pagination {
+    text-align: center !important;
+  }
 }

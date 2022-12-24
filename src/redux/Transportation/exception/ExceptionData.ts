@@ -10,9 +10,7 @@ export const filterException=createAsyncThunk('exception',async(body:any)=>{
     try {
         data = await postDataHeaderToServer(apiRoute().post.exception + params, {
         ...body
-        },{
-            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-          });
+        });
       } catch (error) {
             console.log("error ", error);
       }

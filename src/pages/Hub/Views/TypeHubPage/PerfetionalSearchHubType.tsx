@@ -1,11 +1,9 @@
-import { Formik } from 'formik'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import PerfesionalSearch from '../../../../components/PerfesionalSearch/PerfesionalSearch'
-import InputSelect from '../../../../global/InputSelect/InputSelect'
 import InputText from '../../../../global/InputText/InputText'
 import ModalPerfetional from '../ModalPerfetional/ModalPerfetional'
 
-const PerfetionalSearchHubType = () => {
+const PerfetionalSearchHubType = ({formiks}:{formiks:any}) => {
 
     const[active,setActive]=useState(false)
     const perfetionalClik=()=>{
@@ -15,31 +13,17 @@ const PerfetionalSearchHubType = () => {
 
   return (
     <div>
-        <Formik
-initialValues={{
-code:"",
-detail:""
-
-}}
-
-onSubmit={(values)=>{
-console.log(values)
-}}
->
-  {(formik)=>(
-    <form onSubmit={formik.handleSubmit}>
-    <PerfesionalSearch formData={formik.handleSubmit} perfetionalClik={perfetionalClik}>
+  
+    <form onSubmit={formiks.handleSubmit}>
+    <PerfesionalSearch formData={formiks.handleSubmit} perfetionalClik={perfetionalClik}>
             <div className="grid grid-cols-2 gap-3">
-             <InputText label="کد" name="code" handleChange={formik.handleChange} values={formik.values.code} important/>
-             <InputText label="توضیحات" name="detail" handleChange={formik.handleChange} values={formik.values.detail} important/>
+             <InputText label="کد" name="code" handleChange={formiks.handleChange} values={formiks.values.code} important/>
+             <InputText label="توضیحات" name="description" handleChange={formiks.handleChange} values={formiks.values.description} important/>
 
             </div>
       </PerfesionalSearch> 
       </form>
-  )}
-      
-
-      </Formik>
+ 
 
 
       <ModalPerfetional open={active} handleOpen={setActive}/>

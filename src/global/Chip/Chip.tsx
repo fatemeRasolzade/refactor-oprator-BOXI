@@ -77,6 +77,8 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
     service: "سرویس",
     fromCountryDevision: "مبدا",
     toCountryDevision: "مقصد",
+    vehicleMakeSelect: "مدل",
+    selectRoute: "نام مسیر",
     fuelTypeSelect:"نوع سوخت",
     consignmentCapacity:"ظرفیت مرسوله",
     volumeCapacity:'ظرفیت حجمی',

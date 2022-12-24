@@ -21,6 +21,7 @@ const CustomerUsernameInformation = ({ formik, currentData }: any) => {
           {!currentData && (
             <>
               <InputText
+                password
                 important
                 label="گذر واژه "
                 values={values.password}
@@ -29,6 +30,7 @@ const CustomerUsernameInformation = ({ formik, currentData }: any) => {
                 error={touched.password && errors.password}
               />
               <InputText
+                password
                 important
                 label="تایید گذرواژه"
                 values={values.confirmPassword}

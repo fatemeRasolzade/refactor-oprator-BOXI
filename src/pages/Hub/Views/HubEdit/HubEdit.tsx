@@ -20,24 +20,12 @@ const HubEdit = () => {
 
         function getDataSelect() {
           try {
-            getDataHeaderServer(apiRoute().get.get_hub_type,{headers:{
-              "Authorization":"Bearer " + localStorage.getItem("myToken")
-            }}).then(res=>{if(res.status==="OK") settypeHub(res.payload)})
-            getDataHeaderServer(apiRoute().get.select_hub_category,{headers:{
-              "Authorization":"Bearer " + localStorage.getItem("myToken")
-            }}).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
-            getDataHeaderServer(apiRoute().get.get_province_city,{headers:{
-              "Authorization":"Bearer " + localStorage.getItem("myToken")
-            }}).then(res=>{if(res.status==="OK") setCities(res.payload.content)})
-            getDataHeaderServer(apiRoute().get.get_province_loc,{headers:{
-              "Authorization":"Bearer " + localStorage.getItem("myToken")
-            }}).then(res=>{if(res.status==="OK") setProvinceLoc(res.payload.content)})
-            getDataHeaderServer(apiRoute().get.get_select_province,{headers:{
-              "Authorization":"Bearer " + localStorage.getItem("myToken")
-            }}).then(res=>{if(res.status==="OK") setSelectProvince(res.payload.content)})
-            getDataHeaderServer(apiRoute().get.select_hub,{headers:{
-              "Authorization":"Bearer " + localStorage.getItem("myToken")
-            }}).then(res=>{if(res.status==="OK") setselectHub(res.payload.content)})
+            getDataHeaderServer(apiRoute().get.get_hub_type).then(res=>{if(res.status==="OK") settypeHub(res.payload)})
+            getDataHeaderServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
+            getDataHeaderServer(apiRoute().get.get_province_city).then(res=>{if(res.status==="OK") setCities(res.payload.content)})
+            getDataHeaderServer(apiRoute().get.get_province_loc).then(res=>{if(res.status==="OK") setProvinceLoc(res.payload.content)})
+            getDataHeaderServer(apiRoute().get.get_select_province).then(res=>{if(res.status==="OK") setSelectProvince(res.payload.content)})
+            getDataHeaderServer(apiRoute().get.select_hub).then(res=>{if(res.status==="OK") setselectHub(res.payload.content)})
     
           } catch (error) {
             ErrorAlert('دریافت دیتا با خطلا مواجه شد')

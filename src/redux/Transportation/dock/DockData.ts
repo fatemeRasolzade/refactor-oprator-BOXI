@@ -10,9 +10,7 @@ export const filterDock=createAsyncThunk('docklists',async(body:any)=>{
     try {
         data = await postDataHeaderToServer(apiRoute().post.dock + params, {
         ...body
-        },{
-            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-          });
+        });
       } catch (error) {
             console.log("error ", error);
       }

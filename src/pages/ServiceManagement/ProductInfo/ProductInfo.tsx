@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiTrash } from "react-icons/bi";
 import { GrFormClose } from "react-icons/gr";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../../components/staticTable/StaticTable";
@@ -20,7 +20,7 @@ const ProductInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onDeleteHandler = (id: number) => {
-    setTableList(tableList.filter((item) => item.id !== id));
+    setTableList(tableList.filter((item) => item.tableId !== id));
     setIsModalOpen(false);
   };
   const getProductInfoData = useCallback(() => {
@@ -41,7 +41,7 @@ const ProductInfo = () => {
 
   return (
     <div>
-      <Breadcrumb beforePage="تعریف مشخصات محصول" curentPage="مدیریت سرویس" />
+      <Breadcrumb curentPage="تعریف مشخصات محصول" beforePage="مدیریت سرویس" />
       <ProductInfoForm
         setTableList={(values) =>
           setTableList((prev) => {
@@ -59,13 +59,13 @@ const ProductInfo = () => {
             status: <span>{item.isActive ? "فعال" : "غیرفعال"}</span>,
             weight: (
               <span>
-                {item.fromWeight ? item.fromWeight : " - "}تا
+                {item.fromWeight ? item.fromWeight : " - "} &nbsp;تا &nbsp;
                 {item.toWeight ? item.toWeight : " - "}
               </span>
             ),
             dimension: (
               <span>
-                {item.fromDim ? item.fromDim : " - "}تا
+                {item.fromDim ? item.fromDim : " - "}&nbsp;تا &nbsp;
                 {item.toDimension ? item.toDimension : " - "}
               </span>
             ),
@@ -103,6 +103,50 @@ const ProductInfo = () => {
                     )}
                   </div>
                 </TooltipWrapper>
+                {item?.fromSourceCity && item?.fromSourceCity.length !== 0 && (
+                  <>
+                    <span>&nbsp; - &nbsp;</span>
+                    <TooltipWrapper
+                      textProps={item?.fromSourceCity?.map((city: any) => {
+                        return (
+                          <div className="text-white" key={city.id}>
+                            {city.text}
+                          </div>
+                        );
+                      })}
+                    >
+                      <div>
+                        {item?.fromSourceCity?.length !== 0 &&
+                          item?.fromSourceCity[item?.fromSourceCity?.length - 1]
+                            .text}
+                      </div>
+                    </TooltipWrapper>
+                  </>
+                )}
+                {item?.fromSourceLocation &&
+                  item?.fromSourceLocation.length !== 0 && (
+                    <>
+                      <span>&nbsp; - &nbsp;</span>
+                      <TooltipWrapper
+                        textProps={item?.fromSourceLocation?.map(
+                          (location: any) => {
+                            return (
+                              <div className="text-white" key={location.id}>
+                                {location.text}
+                              </div>
+                            );
+                          }
+                        )}
+                      >
+                        <div>
+                          {item?.fromSourceLocation?.length !== 0 &&
+                            item?.fromSourceLocation[
+                              item?.fromSourceLocation?.length - 1
+                            ].text}
+                        </div>
+                      </TooltipWrapper>
+                    </>
+                  )}
               </div>
             ),
             timeCommitment: <span>{item.timeCommitment.text}</span>,
@@ -121,6 +165,54 @@ const ProductInfo = () => {
                     )}
                   </div>
                 </TooltipWrapper>
+                {item?.fromDestinationCity &&
+                  item?.fromDestinationCity.length !== 0 && (
+                    <>
+                      <span>&nbsp; - &nbsp;</span>
+                      <TooltipWrapper
+                        textProps={item?.fromDestinationCity?.map(
+                          (city: any) => {
+                            return (
+                              <div className="text-white" key={city.id}>
+                                {city.text}
+                              </div>
+                            );
+                          }
+                        )}
+                      >
+                        <div>
+                          {item?.fromDestinationCity?.length !== 0 &&
+                            item?.fromDestinationCity[
+                              item?.fromDestinationCity?.length - 1
+                            ].text}
+                        </div>
+                      </TooltipWrapper>
+                    </>
+                  )}
+                {item?.fromDestinationLocation &&
+                  item?.fromDestinationLocation.length !== 0 && (
+                    <>
+                      <span>&nbsp; - &nbsp;</span>
+                      <TooltipWrapper
+                        textProps={item?.fromDestinationLocation?.map(
+                          (location: any) => {
+                            return (
+                              <div className="text-white" key={location.id}>
+                                {location.text}
+                              </div>
+                            );
+                          }
+                        )}
+                      >
+                        <div>
+                          {item?.fromDestinationLocation?.length !== 0 &&
+                            item?.fromDestinationLocation[
+                              item?.fromDestinationLocation?.length - 1
+                            ].text}
+                        </div>
+                      </TooltipWrapper>
+                    </>
+                  )}
               </div>
             ),
             operation: (
@@ -172,7 +264,7 @@ const ProductInfo = () => {
                             type="submit"
                             text="بله"
                             className="full-tomato-btn w-28 "
-                            handelClick={() => onDeleteHandler(item.id)}
+                            handelClick={() => onDeleteHandler(item.tableId)}
                           />
                         </div>
                       </div>
@@ -187,7 +279,7 @@ const ProductInfo = () => {
         pagination={7}
         selectable={false}
       />
-      <AddProductInfo tableList={tableList} />
+      <AddProductInfo tableList={tableList} setTableList={setTableList} />
     </div>
   );
 };

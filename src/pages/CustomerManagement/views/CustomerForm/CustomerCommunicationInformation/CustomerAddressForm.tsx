@@ -10,10 +10,8 @@ import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import { PostalCodeRegex } from "../../../../../tools/validations/ErrorHelper";
 import { VALIDPOSTALCODE } from "../../../../../tools/validations/RegexKeywords";
 import { getAddressType, getCities, getProvinces, getRegions } from "../../../../../services/GlobalApi";
-// import { Map } from "../../../../components/map";
 
 const CustomerAddressForm = ({ open, setOpen, currentData, setValue, value, ID }: any) => {
-  //get required data
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [regions, setRegions] = useState([]);
@@ -52,7 +50,6 @@ const CustomerAddressForm = ({ open, setOpen, currentData, setValue, value, ID }
     }
   }, [open]);
 
-  // start fromik configurations
   const validation = Yup.object().shape({
     selectAddressType: Yup.object().shape({
       text: Yup.string().required(),
@@ -84,7 +81,6 @@ const CustomerAddressForm = ({ open, setOpen, currentData, setValue, value, ID }
     validationSchema: validation,
     initialValues: currentData
       ? {
-          // edit feilds
           id: currentData.id,
           selectAddressType: currentData.selectAddressType,
           selectState: currentData.selectState,
@@ -117,19 +113,20 @@ const CustomerAddressForm = ({ open, setOpen, currentData, setValue, value, ID }
         let index = newArray.findIndex((a) => a.id === ID);
         newArray[index] = values;
         setValue("addresses", newArray);
-        resetForm({ values: "" });
         setOpen(false);
       } else {
         const id: string = uuid();
-        resetForm({ values: "" });
         setValue("addresses", [...value, { ...values, id: `null${id}` }]);
         setOpen(false);
       }
     },
   });
-  // end formik configuration
 
-  const { values, errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
+  const { values, errors, touched, handleChange, handleSubmit, setFieldValue, resetForm } = formik;
+
+  useEffect(() => {
+    resetForm({ values: "" });
+  }, [resetForm, open]);
 
   return (
     <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}>

@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Formik} from "formik"
 import AutocompleteInput from './../../../../global/Autocomplete/AutocompleteInput';
 import SimpleButton from './../../../../global/SimpleButton/SimpleButton';
 import { FiSearch } from 'react-icons/fi';
+import Chip from '../../../../global/Chip/Chip';
+import { useSelector,useDispatch } from 'react-redux';
+import { ProductGroupsData } from './../../../../redux/ProductGroup/ProductGroup';
 const NavbarProductGroup = () => {
+const [filterData,setfilterData]=useState({})
+const {pageNumbers} =useSelector((state:any)=>state.paginate)
+const dispatch=useDispatch()
   return (
     <div>
         <Formik
@@ -14,13 +20,16 @@ const NavbarProductGroup = () => {
 
         }}
         onSubmit={(values)=>{
-console.log(values)
+          setfilterData(values)
+          dispatch(ProductGroupsData({...values,pageNumbers:pageNumbers}) as any)
+
         }}
         
         
         >
 
         {(formik)=>(
+          <>
 <div className='flex-start-center gap-2 flex-wrap'>
 
 
@@ -49,10 +58,11 @@ console.log(values)
     />
    
 </div>
-
+ <div>{filterData && <Chip filterData={filterData} formData={formik}/>}</div>
+ </>
         )}
          </Formik>
-
+        
     </div>
   )
 }

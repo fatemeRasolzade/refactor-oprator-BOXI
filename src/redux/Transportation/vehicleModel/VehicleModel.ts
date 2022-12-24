@@ -10,9 +10,7 @@ export const vehicleModel=createAsyncThunk('vehicleModelLists',async(body:any)=>
     try {
         data = await postDataHeaderToServer(apiRoute().post.VehicleModel + params, {
         ...body
-        },{
-            headers: { Authorization: "Bearer " + localStorage.getItem("myToken") },
-          });
+        });
       } catch (error) {
         console.log("error ", error);
       }

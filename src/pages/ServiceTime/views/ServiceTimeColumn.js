@@ -14,12 +14,12 @@ export const ServiceTimeColumn = [
   {
     accessor: "selecttedtimeUnit",
     Header: "واحد ",
-    Cell: ({ cell }) => <span className="flex flex-row">{cell.value?.text}</span>,
+    Cell: ({ cell }) => cell.value?.text,
   },
   {
     accessor: "isActive",
     Header: "وضعیت",
-    Cell: ({ cell }) => <span className="centering">{cell.value ? "فعال" : "غیر فعال"}</span>,
+    Cell: ({ cell }) => (cell.value ? "فعال" : "غیر فعال"),
   },
   {
     accessor: "description",

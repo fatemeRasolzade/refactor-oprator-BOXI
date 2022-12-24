@@ -1,39 +1,10 @@
-import { useEffect, useState } from "react";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
-import { getVehicleMake } from "../../../../services/ADMVehicleApi";
-import { GET_ROUTE, HUB_SELECT } from "../../../../services/apiRoute";
-import { getDataFromServer, postDataToServer } from "../../../../services/Service_call";
 import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
 
-const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
-  const [VehicleMake, setVehicleMake] = useState([]);
-  const [Route, setRoute] = useState([]);
-  const [Hub, setHub] = useState([]);
+const ServiceTimeInformation = ({ formik, TimeUnitType }: any) => {
   const { values, errors, touched, handleChange, setFieldValue }: any = formik;
-
-  useEffect(() => {
-    if (open) {
-      initVehicleMake();
-      initRoute();
-    }
-  }, [open]);
-
-  const initVehicleMake = () => {
-    getVehicleMake().then((res) => {
-      setVehicleMake(res);
-    });
-  };
-
-  const initRoute = () => {
-    getDataFromServer(GET_ROUTE).then((res) => {
-      setRoute(res.content);
-    });
-    // getRoute().then((res) => {
-    //   setRoute(res);
-    // });
-  };
 
   return (
     <>
@@ -44,7 +15,7 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
           label="عنوان"
           values={values.name}
           name="name"
-          handleChange={setFieldValue}
+          handleChange={handleChange}
           error={touched.name && errors.name}
         />
         <div className="mb-5 w-60 centering">
@@ -62,7 +33,8 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
         />
         <InputText important label="مدت ارائه خدمات تا" values={values.to} name="to" handleChange={handleChange} error={touched.to && errors.to} />
         <InputSelect
-          options={Hub}
+          important
+          options={TimeUnitType}
           label="واحد  "
           values={values.selecttedtimeUnit}
           name="selecttedtimeUnit"
@@ -72,7 +44,6 @@ const ServiceTimeInformation = ({ formik, open, currentData }: any) => {
       </div>
       <div className="inputRow">
         <MultiLineText
-          important
           label=" توضیحات"
           values={values.description}
           name="description"

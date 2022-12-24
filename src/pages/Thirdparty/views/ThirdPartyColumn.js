@@ -12,7 +12,7 @@ export const ThirdPartyColumn = [
   {
     accessor: "selectThirdPartyType",
     Header: "نوع شخصیت",
-    Cell: ({ cell }) => <span className="centering">{cell.value?.text}</span>,
+    Cell: ({ cell }) => cell.value?.text,
   },
   {
     accessor: "nationalCode",
@@ -21,42 +21,41 @@ export const ThirdPartyColumn = [
   {
     accessor: "isActive",
     Header: "وضعیت",
-    Cell: ({ cell }) => <span className="centering">{cell.value ? "فعال" : "غیر فعال"}</span>,
+    Cell: ({ cell }) => (cell.value ? "فعال" : "غیر فعال"),
   },
   {
     accessor: "telephones",
     Header: "شماره تماس ",
     Cell: ({ cell }) =>
       cell.value.length > 1 ? (
-        <div className="centering">
-          <TooltipWrapper
-            textProps={cell?.value?.map((tel) => (
-              <div className="text-white">{tel.telNumber}</div>
-            ))}
-          >
-            {cell.value.length > 0 && (
-              <>
-                {cell.value[0].telephonePrefix}
-                {cell.value[0].telNumber}
-              </>
-            )}
-          </TooltipWrapper>
-        </div>
-      ) : (
-        <div className="centering">
+        <TooltipWrapper
+          textProps={cell?.value?.map((tel) => (
+            <div className="text-white">
+              {tel.telephonePrefix}
+              {tel.telNumber}
+            </div>
+          ))}
+        >
           {cell.value.length > 0 && (
             <>
               {cell.value[0].telephonePrefix}
               {cell.value[0].telNumber}
             </>
           )}
-        </div>
+        </TooltipWrapper>
+      ) : (
+        cell.value.length > 0 && (
+          <>
+            {cell.value[0].telephonePrefix}
+            {cell.value[0].telNumber}
+          </>
+        )
       ),
   },
   {
     accessor: "selectThirdPartyCategory",
     Header: "گروه شخصیت ",
-    Cell: ({ cell }) => <span className="centering">{cell.value?.text}</span>,
+    Cell: ({ cell }) => cell.value?.text,
   },
   {
     accessor: "email",

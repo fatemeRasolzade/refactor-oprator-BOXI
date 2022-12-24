@@ -1,12 +1,18 @@
+import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
+
 import InputText from "../../../../global/InputText/InputText";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 
 import LocationForm from "./LocationForm";
 
 const GeoWrapper = () => {
+  const navigate = useNavigate();
+
   const validationTitle = Yup.object().shape({
     name: Yup.string().required(),
     code: Yup.number().required(),
@@ -22,8 +28,28 @@ const GeoWrapper = () => {
       code: "",
       name: "",
     },
-    onSubmit: (values, { resetForm }) => {
-      resetForm();
+    onSubmit: async (values, { resetForm }) => {
+      const data = {
+        // id: values?.id,
+        code: values?.code,
+        isActive: values?.isActive,
+        name: values?.name,
+        customDevisionDetails: tableList
+          .map((item) => item.customDevisionDetails)
+          .flat(1),
+      };
+      try {
+        await axios({
+          url: "http://boxi.local:40000/core-api/customcountrydevision",
+          method: "POST",
+          data: data,
+        });
+        toast.success("رده جغرافیایی با موفقیت اضافه شد ");
+        resetForm();
+        navigate("/basic-information/custom-geographic-category");
+      } catch (error: any) {
+        toast.error(error?.response?.data?.errors?.message || "مشکلی پیش آمده");
+      }
     },
   });
   return (
@@ -60,6 +86,7 @@ const GeoWrapper = () => {
         tableList={tableList}
         setTableList={(value) => setTableList((prev) => [...prev, value])}
         formikTitle={formikTitle}
+        setDeletedList={(value) => setTableList(value)}
       />
       <div className="my-6">
         <div className="flex w-full justify-end gap-4">
@@ -67,13 +94,15 @@ const GeoWrapper = () => {
             type="submit"
             text="لغو"
             className="full-lightTomato-btn w-28 "
-            //   handelClick={() => setIsModalOpen(false)}
+            handelClick={() => formikTitle.resetForm()}
           />
           <SimpleButton
             type="submit"
             text="افزودن"
             className="full-tomato-btn w-28 "
-            handelClick={() => formikTitle.handleSubmit()}
+            handelClick={() => {
+              formikTitle.submitForm();
+            }}
           />
         </div>
       </div>

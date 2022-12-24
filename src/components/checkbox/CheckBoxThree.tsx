@@ -16,7 +16,9 @@ interface CheckBoxThreeProps {
   loadingNode: boolean;
   nodes: Array<any>;
   treeChecked: Array<string>;
-  setTreeChecked: (value: Array<string>) => void;
+  noCascade?: boolean;
+  setTreeChecked?: (value: Array<string>) => void;
+  nodeChecked?: (value: any) => void;
 }
 const CheckBoxThree: FC<CheckBoxThreeProps> = ({
   loadingNode,
@@ -24,7 +26,9 @@ const CheckBoxThree: FC<CheckBoxThreeProps> = ({
   nodes,
   title,
   treeCheckedError,
+  noCascade,
   setTreeChecked,
+  nodeChecked,
 }): JSX.Element => {
   const [expanded, setExpanded] = useState([]);
   const [filtertree, setFiltertree] = useState<string>("");
@@ -44,18 +48,18 @@ const CheckBoxThree: FC<CheckBoxThreeProps> = ({
         {title}
         <span className="text-[#ef5644]">&nbsp;* &nbsp;</span>
       </div>
-      <div className="h-[300px]  border border-[#ababab] text-gray-900 text-sm rounded-lg w-[75%] focus:border-blue-500 block px-2.5 py-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        {loadingNode && (
-          <div className="flex w-full h-[200px] justify-center items-center">
-            <BeatLoader color="#EF5644" />
-          </div>
-        )}
+      <div className="h-[300px]  border border-[#ababab] text-gray-900 text-sm rounded-lg w-[100%] focus:border-blue-500 block px-2.5 py-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         <input
           value={filtertree}
           placeholder="جستجو ..."
           onChange={onFilterChange}
           className="my-3 w-full  p-2 border  border-[#ababab] rounded-lg outline-0"
         />
+        {loadingNode && (
+          <div className="flex w-full h-[200px] justify-center items-center">
+            <BeatLoader color="#EF5644" />
+          </div>
+        )}
         {!loadingNode && (
           <>
             <CheckboxTree
@@ -63,8 +67,15 @@ const CheckBoxThree: FC<CheckBoxThreeProps> = ({
               nodes={treeData}
               checked={treeChecked}
               expanded={expanded}
-              onCheck={(checked: Array<string>) => {
-                setTreeChecked(checked);
+              noCascade={noCascade}
+              onCheck={(checked: Array<string>, node: any) => {
+                setTreeChecked && setTreeChecked(checked);
+                // nodeChecked &&
+                //   nodeChecked(getByID(node?.parent, node.value) || {});
+                nodeChecked && nodeChecked(node);
+                console.log("node", node);
+
+                console.log("sdgnsdvdv", getByID(node?.parent, node.value));
               }}
               onExpand={(expanded: any) => setExpanded(expanded)}
               icons={icons}
@@ -110,4 +121,17 @@ const filterBy = (arr: Array<any>, query: string): Array<any> => {
           : acc;
       }, [])
     : arr;
+};
+
+const getByID = (tree: any, value: string) => {
+  let result = null;
+
+  if (value === tree?.value) {
+    return tree;
+  } else {
+    if (tree.children) {
+      tree.children.some((node: any) => (result = getByID(node, value)));
+    }
+    return result;
+  }
 };

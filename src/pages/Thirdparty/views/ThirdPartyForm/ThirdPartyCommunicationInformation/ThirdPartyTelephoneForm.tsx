@@ -47,7 +47,6 @@ const ThirdPartyTelephoneForm = ({ open, setOpen, currentData, setValue, value, 
       if (currentData) {
         // edit
         setOpen(false);
-        resetForm({ values: "" });
         let newArray = [...value];
         let index = newArray.findIndex((a) => a.id === ID);
         newArray[index] = values;
@@ -55,12 +54,15 @@ const ThirdPartyTelephoneForm = ({ open, setOpen, currentData, setValue, value, 
       } else {
         const id: string = uuid();
         setOpen(false);
-        resetForm({ values: "" });
         setValue("telephones", [...value, { ...values, id: `null${id}` }]);
       }
     },
   });
-  const { values, errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
+  const { values, errors, touched, handleChange, handleSubmit, setFieldValue, resetForm } = formik;
+
+  useEffect(() => {
+    resetForm({ values: "" });
+  }, [resetForm, open]);
 
   return (
     <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}>
