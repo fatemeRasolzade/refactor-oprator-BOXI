@@ -279,7 +279,7 @@ const ProductInfo = () => {
         pagination={7}
         selectable={false}
       />
-      <AddProductInfo tableList={tableList} />
+      <AddProductInfo tableList={tableList} setTableList={setTableList} />
     </div>
   );
 };
