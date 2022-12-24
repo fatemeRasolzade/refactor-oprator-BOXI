@@ -14,7 +14,7 @@ const Paginations = ({ pageData }: any) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="App">
+    <div className="Pagination">
       <Pagination
         currentPage={pageNumbers}
         itemsPerPage={10}
