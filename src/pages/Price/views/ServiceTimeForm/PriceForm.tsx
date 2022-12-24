@@ -13,6 +13,7 @@ import PriceAttributeForm from "./PriceAttributeForm";
 import { PriceFormCurrentValues, PriceFormInitialValues, PriceFormValidation } from "./PriceFormVariable";
 import { GET_PRODUCT_SELECT, PRICE_API } from "../../../../services/apiRoute";
 import { priceData } from "../../../../redux/PriceData/PriceData";
+import { array } from "yup";
 
 type PriceFormFormProps = {
   currentData?: any;
@@ -24,6 +25,25 @@ const PriceForm = ({ currentData }: PriceFormFormProps) => {
   const [OpenExcel, setOpenExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (currentData) {
+      let array: any = [];
+      currentData?.priceListDetails.map((a: any) => {
+        let object = {
+          ...a,
+          totalWight: { from: a.fromWeight || "", to: a.toWeight || "" },
+          totalDim: { from: a.fromDim || "", to: a.toDimension || "" },
+          totalValue: { from: a.fromValue || "", to: a.toValue || "" },
+          totalNumber: { from: a.fromNumber || "", to: a.toNumber || "" },
+        };
+        array.push(object);
+      });
+      console.log(array);
+
+      setAttributes(array);
+    }
+  }, [currentData]);
 
   const formik = useFormik({
     enableReinitialize: true,

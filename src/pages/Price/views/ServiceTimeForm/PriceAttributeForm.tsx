@@ -120,9 +120,9 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
   const { values, errors, touched, handleChange, setFieldValue, handleSubmit, handleReset }: any = formik;
 
   useEffect(() => {
-    handleReset();
-    handleResetOuter();
-    setAttributes([]);
+    // handleReset();
+    // handleResetOuter();
+    // setAttributes([]);
   }, [open, handleReset, handleResetOuter, setAttributes]);
 
   const handleEditPriceAttributes = (id: any) => {
@@ -161,6 +161,8 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
     setFieldValue("fromDestinationLocation", data.fromDestinationLocation);
   };
 
+  // console.log("ATTRIBUTES", Attributes);
+
   const data =
     Attributes?.length !== 0
       ? Attributes?.map((item: any) => {
@@ -179,6 +181,8 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
           };
         })
       : [];
+
+  console.log("data***********", data);
 
   const handleDeleteAttributePrice = (id: any) => {
     const filtered = Attributes.filter((a: any) => a.id !== id);
