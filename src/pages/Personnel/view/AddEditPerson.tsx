@@ -400,7 +400,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             )}
             {currentData && (
               <>
-                <div className="col-span-1  relative">
+                <div className="col-span-2  relative">
                   <span>هاب انتخاب شده : </span>
                   {selectedHub}
                 </div>
