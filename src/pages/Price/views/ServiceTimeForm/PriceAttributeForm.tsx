@@ -15,6 +15,7 @@ import StaticTable from "../../../../components/staticTable/StaticTable";
 import { PriceAttributeColumn } from "./PriceAttributeColumn";
 
 import { REQUIRED } from "../../../../tools/validations/RegexKeywords";
+import { convertToObjects } from "../../../../tools/functions/Methods";
 
 interface PriceAttributeFormProps {
   Attributes: any;
@@ -72,21 +73,12 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
         values.totalNumber = { from: values.fromNumber, to: values.toNumber };
         values.priceDetailDevisions = values.attributeDivition ? values.attributeDivition : [];
       }
-
-      let convert = () => {
-        let data = []
-        for (let index = 0; index < values.fromSourceLocation.length; index++) {
-          for (let index = 0; index < values.fromdestinationLocation.length; index++) {
-            let element = {}
-            
-          }
-        }
-        // values.fromSourceLocation.
-      };
       console.log(values);
-
       const id: string = uuid();
-      values.id = setAttributes([...Attributes, { ...values, id: `${id}` }]);
+      values.id = setAttributes([
+        ...Attributes,
+        { ...values, id: `${id}`, priceDetailDevisions: convertToObjects(values.fromSourceLocation, values.fromDestinationLocation, "from") },
+      ]);
       handleReset();
 
       // if (!edit) {
