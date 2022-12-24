@@ -13,11 +13,7 @@ export const priceData = createAsyncThunk("priceList", async (body: any) => {
         pageNumber: undefined,
         pageSize: undefined,
       },
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("myToken"),
-        },
-      }
+    
     );
   } catch (error) {
     console.log("error ", error);

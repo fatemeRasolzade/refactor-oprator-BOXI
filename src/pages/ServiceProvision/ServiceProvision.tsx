@@ -27,19 +27,21 @@ useEffect(()=>{
   dispatch(ServiceProvisionData(pageNumbers) as any)
 },[pageNumbers])
 
-const data= serviceList?.content ? serviceList?.content.map((item:any)=>{
+const data=serviceList?.content?.length > 0 ?  serviceList.content.map((item:any)=>{
   return{
-    code:item?.code ? item?.code :"",
-    name:item?.name ? item?.name :"",
-    service:item?.service ? item?.service :"",
-    isActive:item?.isActive ? item?.isActive :"",
-    validDateForm:item?.validDateFrom ? item?.validDateFrom :"",
-    validDateTo:item?.validDateTo ? item?.validDateTo :"",
-    type:item?.type ? item?.type :"",
+    id: item.id ? item?.id :0,
+    code:item.code ? item?.code :"",
+    name:item.name ? item?.name :"",
+    service:item.service ? item?.service :"",
+    isActive:item.isActive ? item?.isActive :"",
+    validDateFrom:item.validDateFrom ? item?.validDateFrom :"",
+    validDateTo:item.validDateTo ? item?.validDateTo :"",
+    type:item.type ? item?.type :"",
     handover:<div><span><BiEditAlt size={20}/></span> <span></span><BiTrash size={20}/></div>
 
   }
 }) : []
+
 
 
 const {isUpdating}=useSelector((state:any)=>state.serviceProvision)
@@ -55,10 +57,11 @@ const {isUpdating}=useSelector((state:any)=>state.serviceProvision)
       <OptionTableServiceProvision/>
 
 <StaticTable
-data={data}
+data={data ? data : []}
 column={ServiceProvisionColumns}
-pagination={serviceList.totalElements}
+pagination={serviceList.totalElements && serviceList.totalElements}
 selectable={false}
+
 />
     </div>
   )

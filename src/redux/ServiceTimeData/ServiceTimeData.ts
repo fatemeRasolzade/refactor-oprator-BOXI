@@ -13,11 +13,7 @@ export const serviceTimeData = createAsyncThunk("serviceTimeList", async (body: 
         pageNumber: undefined,
         pageSize: undefined,
       },
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("myToken"),
-        },
-      }
+    
     );
   } catch (error) {
     console.log("error ", error);

@@ -174,6 +174,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
               </div> */}{" "}
                 <div>
                   <InputSelect
+                  
                     label="گروه بندی محصول"
                     important
                     name="productGroup"

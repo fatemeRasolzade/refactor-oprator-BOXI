@@ -5,8 +5,12 @@ export const getDataFromServer = async (apiRoute: string) => {
   return data.payload;
 };
 
-export const getDataHeaderServer = async (apiRoute: string, headers: object) => {
-  const { data } = await http.get(apiRoute, headers);
+export const getDataHeaderServer = async (apiRoute: string) => {
+  const { data } = await http.get(apiRoute, {
+    headers:{
+      "Authorization":"Bearer " + localStorage.getItem("myToken")
+    }
+  });
   return data;
 };
 
@@ -15,8 +19,10 @@ export const postDataToServer = async (apiRoute: string, body: object) => {
   return data;
 };
 
-export const postDataHeaderToServer = async (apiRoute: string, body: object, headers: object) => {
-  const { data } = await http.post(apiRoute, body, headers);
+export const postDataHeaderToServer = async (apiRoute: string, body: object) => {
+  const { data } = await http.post(apiRoute, body, {
+    headers:{"Authorization":"Bearer " + localStorage.getItem("myToken")}
+  });
   return data;
 };
 
@@ -40,10 +46,12 @@ export const selectDataFromServer = async (apiRoute: { apiRoute: string }) => {
   return data;
 };
 
-export const selectDataFromServerWithHeader = async (apiRoute: string, headers: object) => {
+export const selectDataFromServerWithHeader = async (apiRoute: string) => {
   // console.log("apiRoute",apiRoute)
   // @ts-ignore
-  const { data } = await http.get(apiRoute, headers);
+  const { data } = await http.get(apiRoute, {
+    headers:{"Authorization":"Bearer " + localStorage.getItem("myToken")}
+  });
   return data;
 };
 
@@ -63,7 +71,15 @@ export const EditDataParams = async (apiRoute: string, body: object) => {
   return data;
 };
 
-export const DeleteWithHeader=async(apiRoute: string,header: object)=>{
-  const { data } = await http.delete(apiRoute,header);
+export const DeleteWithHeader=async(apiRoute: string)=>{
+  const { data } = await http.delete(apiRoute,{
+    headers: { Authorization: "Bearer " + localStorage.getItem("myToken") }
+    }); 
+  return data;
+}
+export const PutWithHeader=async(apiRoute: string,body:object)=>{
+  const { data } = await http.put(apiRoute,body,{
+    headers: { Authorization: "Bearer " + localStorage.getItem("myToken") }
+  });
   return data;
 }

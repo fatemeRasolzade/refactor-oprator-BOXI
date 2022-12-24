@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
@@ -16,19 +18,21 @@ import SearchFilter from "./views/SearchFilter";
 
 const CustomGeographic = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { filter, geoData } = useSelector((state: any) => state.customGeo);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
 
   const [isActive, setIsActive] = useState<boolean>(true);
   const getDataTable = useCallback(async () => {
     try {
       const res = await axios({
-        url: "http://boxi.local:40000/core-api/customcountrydevision/filter?pageNumber=1&pageSize=10",
+        url: `http://boxi.local:40000/core-api/customcountrydevision/filter?pageNumber=${pageNumbers}&pageSize=10`,
         method: "POST",
         data: { ...filter, isActive },
       });
       dispatch(fetchGeoList(res.data?.payload));
     } catch (error) {}
-  }, [dispatch, filter, isActive]);
+  }, [dispatch, filter, isActive, pageNumbers]);
 
   const handleGetnewDataOnDelete = () => {
     getDataTable();
@@ -47,7 +51,7 @@ const CustomGeographic = () => {
           code: item?.code,
           status: <span>{item?.isActive ? "فعال" : "غیر فعال"}</span>,
           operation: (
-            <div className="">
+            <div className="flex w-full gap-3 justify-center">
               <DeleteOperation
                 itemId={item.id}
                 title={"حذف کارمند"}
@@ -55,7 +59,19 @@ const CustomGeographic = () => {
                 handleDeleteActionNewData={handleGetnewDataOnDelete}
               />
 
-              <button></button>
+              <button
+                className=" border-none	text-[14px]  w-[20px] h-[20px] "
+                onClick={() => {
+                  navigate(
+                    "/basic-information/custom-geographic-category/edit",
+                    {
+                      state: item,
+                    }
+                  );
+                }}
+              >
+                <AiOutlineEdit className="w-full h-full" />
+              </button>
             </div>
           ),
         };
@@ -87,7 +103,7 @@ const CustomGeographic = () => {
       <StaticTable
         data={data ? data : []}
         column={FetchGeoColumn}
-        pagination={7}
+        pagination={geoData?.totalElements}
         selectable={false}
       />
     </div>

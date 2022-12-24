@@ -40,6 +40,8 @@ import CustomGeographic from "../../pages/CustomGeographic/CustomGeographic";
 import ServiceDefinition from "../../pages/ServiceManagement/ServiceDefinition";
 import ProductDefine from "../../pages/ServiceManagement/ProductDefine";
 import PinCodeManageMent from "../../pages/BasicInformations/PinCodeManagement/PinCodeManageMent";
+import { BiLogOut } from "react-icons/bi";
+import UserService from "../../services/keycloakService";
 
 export const links = [
   {
@@ -229,11 +231,11 @@ export const links = [
         component: <CustomerManagement />,
         label: "مدیریت مشتریان",
       },
-      {
-        to: "/basic-information/shelf-management",
-        component: <ShelfManagement />,
-        label: "مدیریت قفسه‌ها",
-      },
+      // {
+      //   to: "/basic-information/shelf-management",
+      //   component: <ShelfManagement />,
+      //   label: "مدیریت قفسه‌ها",
+      // },
       {
         to: "/basic-information/product-group",
         component: <ProductGroup />,
@@ -244,16 +246,21 @@ export const links = [
         component: <ServiceTime />,
         label: "تعریف مدت ارئه خدمت",
       },
-      {
-        to: "/basic-information/pincode-management",
-        component: <PinCodeManageMent />,
-        label: "مدیریت پین‌کد",
-      },
+      // {
+      //   to: "/basic-information/pincode-management",
+      //   component: <PincodeManagement />,
+      //   label: "مدیریت پین‌کد",
+      // },
       {
         to: "/basic-information/custom-geographic-category",
         component: <CustomGeographic />,
         label: "رده جغرافیایی سفارشی",
       },
     ],
+  },
+  {
+    Icon: <BiLogOut size={"25"} onClick={() => UserService.doLogout()} />,
+    label: "خروج",
+    childs: [],
   },
 ];

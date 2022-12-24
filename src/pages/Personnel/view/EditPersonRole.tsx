@@ -24,7 +24,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
   const dispatch = useDispatch();
 
   const { selectedRows } = useSelector((state: any) => state?.selectRowTable);
-
+  const userInfo = useSelector((state: any) => state.userInfo);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [rolesOptions, setRolesOptions] = useState<Array<any>>([]);
 
@@ -99,6 +99,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
           username: "",
           isActive: true,
           pageNumber: 1,
+          hublist: userInfo?.hublist,
         }) as any
       );
       dispatch(Actionpage(1));
@@ -125,6 +126,7 @@ const EditPersonRole: FC<EditPersonRoleProps> = ({ currentData, isGroup }) => {
           username: "",
           isActive: true,
           pageNumber: 1,
+          hublist: userInfo?.hublist,
         }) as any
       );
     } catch (error: any) {}

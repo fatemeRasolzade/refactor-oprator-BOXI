@@ -12,11 +12,6 @@ export const customerData = createAsyncThunk("customerList", async (body: any) =
         ...body,
         pageNumber: undefined,
         pageSize: undefined,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("myToken"),
-        },
       }
     );
   } catch (error) {
