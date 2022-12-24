@@ -5,11 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import Chip from "../../../global/Chip/Chip";
+import { PersonnelColumn } from "../../../global/Column/Columns";
 
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import ModalPerfetional from "../../Hub/Views/ModalPerfetional/ModalPerfetional";
 interface PersonnelSearchFromProps {
   isActive: boolean;
   setFilterData: (value: any) => void;
+}
+interface SelectedColInterface {
+  accessor: string;
+  Header: string;
 }
 const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
   isActive,
@@ -19,7 +25,13 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
   const { pageNumbers } = useSelector((state: any) => state.paginate);
 
   const [filterDataChip, setFilterDataChip] = useState({});
-
+  const [active, setActive] = useState(false);
+  const [selectedCol, setSelectedCol] = useState<Array<SelectedColInterface>>(
+    []
+  );
+  const perfetionalClik = () => {
+    setActive((prev) => !prev);
+  };
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -85,6 +97,7 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
             formData={() => {
               formik.handleSubmit();
             }}
+            perfetionalClik={perfetionalClik}
           >
             <div className="flex flex-col gap-6 my-6">
               <div className="flex gap-6">
@@ -127,6 +140,15 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
           </PerfesionalSearch>
         </form>
       </div>
+      <ModalPerfetional
+        open={active}
+        handleOpen={setActive}
+        columns={PersonnelColumn}
+        selectedCol={selectedCol}
+        setSelectedCol={(value: Array<SelectedColInterface>) =>
+          setSelectedCol(value)
+        }
+      />
       {filterDataChip && <Chip filterData={filterDataChip} formData={formik} />}
     </div>
   );
