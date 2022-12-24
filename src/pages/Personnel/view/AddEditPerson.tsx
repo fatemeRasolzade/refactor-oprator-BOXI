@@ -30,6 +30,7 @@ import {
 import { Actionpage } from "../../../redux/PaginationAction/PaginationAction";
 import AddExcel from "../../../components/exel/AddExcel";
 import CheckBoxThree from "../../../components/checkbox/CheckBoxThree";
+import { findNode } from "../../../tools/functions/Methods";
 
 interface AddEditPersonProps {
   currentData?: any;
@@ -82,6 +83,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   const [uploadExcel, setUploadExcel] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [nodeChecked, setNodeChecked] = useState<any>({});
+  const [selectedHub, setSelectedHub] = useState("");
   const [options] = useState([
     { id: 0, text: "خیر" },
     { id: 1, text: "بله" },
@@ -185,15 +187,23 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
       }
     },
   });
-  const handleGetuserData = useCallback(async (id: number) => {
-    try {
-      const res = await axios({
-        url: `http://boxi.local:40000/resource-api/employee/${id}`,
-        method: "GET",
-      });
-      setTreeChecked([res?.data?.payload?.hubcode]);
-    } catch (error) {}
-  }, []);
+  const handleGetuserData = useCallback(
+    async (id: number) => {
+      try {
+        const res = await axios({
+          url: `http://boxi.local:40000/resource-api/employee/${id}`,
+          method: "GET",
+        });
+        setTreeChecked([res?.data?.payload?.hubcode]);
+
+        setSelectedHub(
+          findNode({ children: userInfo?.hublist }, res?.data?.payload?.hubcode)
+            .label
+        );
+      } catch (error) {}
+    },
+    [userInfo?.hublist]
+  );
 
   const handleOpenModal = () => setIsModalOpen(!isModalOpen);
   const handleUploadFileAction = () => {
@@ -343,9 +353,9 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 treeCheckedError={treeCheckedError}
                 treeChecked={treeChecked}
                 nodeChecked={(value) => {
-                  console.log("nodeChecked", value.value);
                   setTreeChecked([value.value]);
                   setNodeChecked(value);
+                  setSelectedHub(value.label);
                 }}
               />
             </div>
@@ -385,6 +395,14 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                     type={"password"}
                     error={formik.errors.confirmPassword}
                   />
+                </div>
+              </>
+            )}
+            {currentData && (
+              <>
+                <div className="col-span-1  relative">
+                  <span>هاب انتخاب شده : </span>
+                  {selectedHub}
                 </div>
               </>
             )}

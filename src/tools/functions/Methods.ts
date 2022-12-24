@@ -70,3 +70,19 @@ export const SplitString=(value:string)=>{
 export const SplitNumber=(value:string)=>{
  return value.split(/([0-9]+)/)[1]
 }
+
+
+export const findNode = (tree:any, value:string) => {
+	let result = null
+        if (value === tree.value) {
+            return tree
+        } else {
+   
+            if(tree.children ){
+              
+                tree.children.some((node:any )=> result = findNode(node, value));
+          
+            }
+            return result;
+        }
+}
