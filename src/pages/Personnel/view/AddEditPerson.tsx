@@ -22,6 +22,7 @@ import {
 import {
   UNMATCHPASSWORD,
   VALIDCOMPLEXREGEX,
+  VALIDLATINUSERNAME,
   VALIDMOBILE,
   VALIDNATIONALCODE,
   VALIDPOSTALCODE,
@@ -43,7 +44,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
     name: Yup.string().required(),
     mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
     email: Yup.string().email(),
-    username: Yup.string().matches(JustEngNameRegex).required(),
+    username: Yup.string().matches(JustEngNameRegex, VALIDLATINUSERNAME).required(),
     password: Yup.string()
       .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
       .required(),
