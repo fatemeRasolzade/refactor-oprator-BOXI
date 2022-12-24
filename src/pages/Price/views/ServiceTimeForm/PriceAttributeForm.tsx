@@ -36,7 +36,7 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
 
   const formik = useFormik({
     enableReinitialize: true,
-    validationSchema: PriceAttributeFormValidation,
+    // validationSchema: PriceAttributeFormValidation,
     initialValues: PriceAttributeFormInitialValues,
     // currentData ? ServiceTimeFormCurrentValues(currentData) : ServiceTimeFormInitialValues,
     // validate: (values) => {
@@ -72,6 +72,17 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
         values.totalNumber = { from: values.fromNumber, to: values.toNumber };
         values.priceDetailDevisions = values.attributeDivition ? values.attributeDivition : [];
       }
+
+      let convert = () => {
+        let data = []
+        for (let index = 0; index < values.fromSourceLocation.length; index++) {
+          for (let index = 0; index < values.fromdestinationLocation.length; index++) {
+            let element = {}
+            
+          }
+        }
+        // values.fromSourceLocation.
+      };
       console.log(values);
 
       const id: string = uuid();
