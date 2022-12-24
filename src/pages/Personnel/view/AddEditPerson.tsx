@@ -22,6 +22,7 @@ import {
 import {
   UNMATCHPASSWORD,
   VALIDCOMPLEXREGEX,
+  VALIDLATINUSERNAME,
   VALIDMOBILE,
   VALIDNATIONALCODE,
   VALIDPOSTALCODE,
@@ -43,7 +44,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
     name: Yup.string().required(),
     mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
     email: Yup.string().email(),
-    username: Yup.string().matches(JustEngNameRegex).required(),
+    username: Yup.string().matches(JustEngNameRegex, VALIDLATINUSERNAME).required(),
     password: Yup.string()
       .matches(ComplexPasswordRegex, VALIDCOMPLEXREGEX)
       .required(),
@@ -78,6 +79,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   const [treeChecked, setTreeChecked] = useState<Array<string>>([]);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [nodeChecked, setNodeChecked] = useState<any>({});
   const [options] = useState([
     { id: 0, text: "خیر" },
     { id: 1, text: "بله" },
@@ -125,7 +127,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             username: values.username,
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
             isActive: currentData.isActive,
-            hubCodes: treeChecked,
+            hubcode: nodeChecked.value,
           }
         : {
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
@@ -137,7 +139,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             username: values.username,
             password: values.password,
             isActive: true,
-            hubCodes: treeChecked,
+            hubcode: nodeChecked.value,
           };
       if (treeChecked.length === 0) {
         setTreeCheckedError("حداقل یک هاب باید انتخاب شود");
@@ -161,6 +163,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               username: "",
               isActive: true,
               pageNumber: 1,
+              hublist: userInfo?.hublist,
             }) as any
           );
           dispatch(Actionpage(1));
@@ -170,6 +173,8 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               : "کارمند با موفقیت اضافه گردید"
           );
           setIsModalOpen(false);
+          setTreeChecked([]);
+          setNodeChecked({});
           resetForm({});
         }
       } catch (error: any) {
@@ -184,7 +189,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
         url: `http://boxi.local:40000/resource-api/employee/${id}`,
         method: "GET",
       });
-      setTreeChecked(res?.data?.payload?.hubCodes);
+      setTreeChecked([res?.data?.payload?.hubcode]);
     } catch (error) {}
   }, []);
 
@@ -327,8 +332,10 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 title="هاب"
                 treeCheckedError={treeCheckedError}
                 treeChecked={treeChecked}
-                setTreeChecked={(checked: Array<string>) => {
-                  setTreeChecked(checked);
+                nodeChecked={(value) => {
+                  console.log("nodeChecked", value.value);
+                  setTreeChecked([value.value]);
+                  setNodeChecked(value);
                 }}
               />
             </div>
