@@ -26,7 +26,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   const { personnelList, isUpdating } = useSelector(
     (state: any) => state.personnel
   );
-
+  const userInfo = useSelector((state: any) => state.userInfo);
   const [isActive, setIsActive] = useState<boolean>(true);
 
   const [filterData, setFilterData] = useState({
@@ -38,20 +38,41 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     username: "",
     isActive: isActive,
     pageNumber: pageNumbers,
+    hubList: userInfo?.hublist,
   });
 
   const handleGetnewDataOnDelete = () => {
-    dispatch(PersonnelData({ ...filterData, pageNumber: pageNumbers }) as any);
+    dispatch(
+      PersonnelData({
+        ...filterData,
+        pageNumber: pageNumbers,
+        hublist: userInfo?.hublist,
+      }) as any
+    );
   };
 
   useEffect(() => {
-    dispatch(PersonnelData({ ...filterData, pageNumber: pageNumbers }) as any);
+    dispatch(
+      PersonnelData({
+        ...filterData,
+        pageNumber: pageNumbers,
+        hublist: userInfo?.hublist,
+      }) as any
+    );
 
     return () => {
       dispatch(clearPersonnel() as any);
       dispatch(clearRows());
+      console.log("loop");
     };
-  }, [dispatch, isUpdating, isActive, filterData, pageNumbers]);
+  }, [
+    dispatch,
+    isUpdating,
+    isActive,
+    filterData,
+    pageNumbers,
+    userInfo?.hublist,
+  ]);
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0
