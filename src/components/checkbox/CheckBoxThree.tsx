@@ -73,9 +73,6 @@ const CheckBoxThree: FC<CheckBoxThreeProps> = ({
                 // nodeChecked &&
                 //   nodeChecked(getByID(node?.parent, node.value) || {});
                 nodeChecked && nodeChecked(node);
-                console.log("node", node);
-
-                console.log("sdgnsdvdv", getByID(node?.parent, node.value));
               }}
               onExpand={(expanded: any) => setExpanded(expanded)}
               icons={icons}
