@@ -11,6 +11,7 @@ const createUrl = (base: any, dir: any) => {
 export const apiRoute = () => {
   return {
     get: {
+      
       get_city: createUrl(CORE_API, "/countryDevision/city/2/loc?filter="),
       get_province: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),
       get_province_city: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),
@@ -27,6 +28,7 @@ export const apiRoute = () => {
       selectfuelTypes:createUrl(CORE_API,"/vehicleMake/selectFuelTypes"),
       selectVendor:createUrl(CORE_API,'/vendor/select?filter='),
       selectBagTypes:createUrl(CORE_API,'/bag/selectBagTypes'),
+      selectException:createUrl(CORE_API,'/exception/exceptiontype'),
       //hub_category
       filter_hub_category: createUrl(CORE_API, "/hubCategory/filter"),
       //select hub category
@@ -66,6 +68,8 @@ export const apiRoute = () => {
       bags:createUrl(CORE_API,'/bag'),
       route:createUrl(CORE_API,"/route"),
       gate:createUrl(CORE_API,"/gate"),
+      dock:createUrl(CORE_API,"/dock"),
+      exception:createUrl(CORE_API,'/exception'),
       // create
       hub: createUrl(CORE_API, "/hub"),
       createProduct: createUrl(CORE_API, "/product"),
@@ -87,7 +91,9 @@ export const apiRoute = () => {
       exception: createUrl(CORE_API, "/exception"),
     },
     delete: {
+      exception:createUrl(CORE_API,'/exception'),
       gate:createUrl(CORE_API,"/gate"),
+      dock:createUrl(CORE_API,"/dock"),
       route:createUrl(CORE_API,"/route"),
       bags:createUrl(CORE_API,'/bag'),
       role: createUrl(RESOURCE_API, "/role"),
@@ -102,7 +108,9 @@ export const apiRoute = () => {
    
     },
     edit: {
+      exception:createUrl(CORE_API,'/exception'),
       gate:createUrl(CORE_API,"/gate"),
+      dock:createUrl(CORE_API,"/dock"),
       bags:createUrl(CORE_API,'/bag'),
       route:createUrl(CORE_API, "/route"),
       Vehicle: createUrl(CORE_API, "/vehicle"),

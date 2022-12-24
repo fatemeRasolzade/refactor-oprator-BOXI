@@ -23,6 +23,8 @@ import userInfoReducer from "../userInfo/userInfoReducer";
 import VehicleLists from '../Transportation/VehicleData/VehicleData';
 import BagsLists from '../Transportation/bags/Bags'
 import GateLists from '../Transportation/gate/GateData'
+import DockLists from '../Transportation/dock/DockData'
+import ExceptionLists from '../Transportation/exception/ExceptionData'
 import customGeoReducer from "../customGeo/customGeoReducer";
 const persistConfig = {
   key: "root",
@@ -51,7 +53,9 @@ const reducers = combineReducers({
   HubType:HubTypeTable,
   Vehicle:VehicleLists,
   bags:BagsLists,
-  gate:GateLists
+  gate:GateLists,
+  dock:DockLists,
+  exception:ExceptionLists
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

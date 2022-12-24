@@ -13,27 +13,30 @@ import InputSelect from "../../../../../global/InputSelect/InputSelect";
 import AddExcel from "../../../../../components/exel/AddExcel";
 import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
-
-
 import { useFetchOptionsOnModal } from "../../../../../global/hooks/useFetchOptions";
-import { filterGate } from "../../../../../redux/Transportation/gate/GateData";
+import { filterDock } from "../../../../../redux/Transportation/dock/DockData";
+import { filterException } from "../../../../../redux/Transportation/exception/ExceptionData";
+import CustomSwitch from "../../../../../global/Switch/Switch";
+import MultiLineText from "../../../../../global/MultiLineText/MultiLineText";
+
 interface PropsData {
   currentData?: any;
 }
 const validation = Yup.object().shape({
-  selectHub: Yup.object().shape({
-    text: Yup.string().required().label("کد هاب"),
+  code: Yup.string().required(),
+  type: Yup.object().shape({
+    text: Yup.string().required(),
     id: Yup.string().required(),
   }),
-  name: Yup.string().required().label("نام درب"),
-  code: Yup.number().required().label("کد درب"),
+  name: Yup.string().required(),
+  description: Yup.string(),
 });
 
-const GateActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
+const ExceptionActionForm: React.FC<PropsData> = ({ currentData }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
-  const { dataOptions: hubOptions } = useFetchOptionsOnModal(apiRoute().get.select_hub, isModalOpen);
+  const { dataOptions: exceptionType } = useFetchOptionsOnModal(apiRoute().get.selectException, isModalOpen);
   const dispatch = useDispatch();
 
   const handleAction = () => {
@@ -44,7 +47,7 @@ const GateActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
   };
 
   const ToggleOptions = [
-    { handleClick: handleAction, name: "افزودن درب" },
+    { handleClick: handleAction, name: "افزودن استثناء" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
   const formik = useFormik({
@@ -52,68 +55,57 @@ const GateActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
     validationSchema: validation,
     initialValues: currentData
       ? {
-          id: currentData?.id,
-          code: currentData?.code,
-          name: currentData?.name,
-          selectHub: {
-            id: currentData?.selectHub?.id,
-            text: currentData?.selectHub?.text,
-          },
+          id: currentData.id,
+          isActive: currentData.isActive,
+          description: currentData.description,
+          name: currentData.name,
+          code: currentData.code,
+          type: { id: currentData?.type?.value, text: currentData?.type?.type },
         }
       : {
-          code: "",
+          isActive: true,
+          description: "",
           name: "",
-          selectHub: {
-            id: "",
-            text: "",
-          },
+          code: "",
+          type: {},
         },
     onSubmit: (values) => {
       console.log(values);
-
+      const type = values?.type?.id ? values?.type?.id : {};
+      const finalData = { ...values, type };
       if (!currentData) {
         setLoading(true);
-        PostDataParams(apiRoute().post.gate, values).then((res) => {
+        PostDataParams(apiRoute().post.exception, finalData).then((res) => {
           if (res.status === "OK") {
             SuccessAlert("با موفقیت ساخته شد");
             setLoading(false);
             dispatch(
-              filterGate({
-                search: "",
-                isActive: "",
-                pageSize: 10,
-                pageNumber: "",
+              filterException({
+                // pageSize: 10,
+                // pageNumber: "",
               }) as any
             );
           } else {
             setLoading(false);
           }
-
-          // dispatch(updating(false));
-
           setIsModalOpen(false);
         });
       } else {
         setLoading(true);
-        EditDataParams(apiRoute().edit.gate, values).then((res) => {
-          // dispatch(updating(true));
-          console.log("run edit");
+        EditDataParams(apiRoute().edit.exception, finalData).then((res) => {
           if (res.status === "OK") {
             setLoading(false);
             SuccessAlert("با موفقیت ویرایش شد");
             dispatch(
-              filterGate({
-                search: "",
-                isActive: true,
-                pageSize: 10,
-                pageNumber: "",
+              filterException({
+                // pageSize: 10,
+                // pageNumber: "",
               }) as any
             );
           } else {
             setLoading(false);
             console.log("run error");
           }
-
           setIsModalOpen(false);
         });
       }
@@ -133,34 +125,51 @@ const GateActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
         </button>
       )}
       <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
-      <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={currentData ? "ویرایش درب" : "افزودن درب"}>
+      <Modal
+        visible={isModalOpen}
+        setVisible={setIsModalOpen}
+        title={currentData ? "ویرایش استثناء" : "افزودن استثناء"}
+      >
         <form onSubmit={formik.handleSubmit}>
-          <div className="grid grid-cols-2 mt-8 gap-y-4 gap-x-4 content-center">
+          <div className="grid grid-cols-4 mt-8 gap-y-4 gap-x-4 content-center">
             <InputText
-              label="نام درب"
-              name="name"
-              handleChange={formik.handleChange}
-              values={formik.values.name}
-              important
-              error={formik.touched.name && formik.errors.name}
-            />
-            <InputText
-              label="کد درب"
+              readOnly={currentData && true}
+              label="کد "
               name="code"
               handleChange={formik.handleChange}
               values={formik.values.code}
               important
               error={formik.touched.code && formik.errors.code}
             />
-
-            <InputSelect
-              label=" کد هاب"
+            <InputText
+              label="عنوان "
+              name="name"
+              handleChange={formik.handleChange}
+              values={formik.values.name}
               important
-              name="selectHub"
+              error={formik.touched.name && formik.errors.name}
+            />
+            <InputSelect
+              label="نوع"
+              important
+              name="type"
               handleChange={formik.setFieldValue}
-              values={formik.values.selectHub}
-              error={formik.touched.selectHub && formik.errors.selectHub}
-              options={hubOptions.options}
+              values={formik.values.type}
+              error={formik.touched.type && formik.errors.type}
+              options={exceptionType.options}
+            />
+            <CustomSwitch
+              active={formik.values.isActive}
+              handleChange={(value: any) => formik.setFieldValue("isActive", value)}
+            />
+          </div>
+          <div className="inputRow mt-5">
+            <MultiLineText
+              label=" توضیحات"
+              values={formik.values.description}
+              name="description"
+              handleChange={formik.handleChange}
+              error={formik.touched.description && formik.errors.description}
             />
           </div>
           <div className="flex-end-center mt-5 gap-3">
@@ -178,4 +187,4 @@ const GateActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
   );
 };
 
-export default GateActionForms;
+export default ExceptionActionForm;

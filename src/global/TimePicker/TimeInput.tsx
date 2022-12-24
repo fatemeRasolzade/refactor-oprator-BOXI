@@ -15,13 +15,10 @@ type PropTime = {
     onValueChange: any;
     value: any
 };
-
-
 const CustomInput = (props: any) => {
     return <input {...props} style={{direction: "ltr", textAlign: "center"}}
                   className={`w-full appearance-none focus:outline-none focus:shadow-outline ${props.className}   `}/>;
 };
-
 const Timeinput = ({
                        wrapperClassName,
                        classNames,
@@ -52,7 +49,6 @@ const Timeinput = ({
                     placeholder={placeholder}
                     onValueChange={onValueChange}
                     value={value}
-
                 />
             </div>
             <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>

@@ -1,6 +1,6 @@
 
 import {SplitString,SplitNumber} from '../../../../../tools/functions/Methods'
-export const GateColumns = [
+export const DockColumns = [
   {
     accessor: "id",
     Header: "",
@@ -23,17 +23,17 @@ export const GateColumns = [
     Header: "نام هاب",
     width: "auto",
     Cell: ({ cell }) => {
-      return <>{cell?.value?.text}</>;
+      return <>{SplitString(cell?.value?.text)}</>;
     },
   },
   {
     accessor: "code",
-    Header: "کد درب",
+    Header: "کد بارانداز",
     width: "auto",
   },
   {
     accessor: "name",
-    Header: "نام درب",
+    Header: "نام بارانداز",
     width: "auto",
   },
   {

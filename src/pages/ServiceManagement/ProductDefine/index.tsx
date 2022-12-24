@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -17,15 +17,14 @@ import { ProductColumns } from "./view/Column";
 
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
-// import {useGetOptions} from './view/serviceProvisionData'
+
 import { useGetOptions } from "../../../global/hooks/useFetchOptions";
-import { Link, useNavigate } from "react-router-dom";
-// import * as XLSX  from "xlsx-js-style"
+import { useNavigate } from "react-router-dom";
+
 
 const ProductDefine = () => {
   // @ts-ignore
 
-  // axios.get('http://boxi.local:40000/product/select?filter=')
   const { options } = useGetOptions(apiRoute().get.GET_PRODUCT_GROUPS);
   const navigate = useNavigate();
   const [isActive, setIsACtive] = useState(true);
