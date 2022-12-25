@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Button,
   Dialog,
@@ -9,23 +9,43 @@ import {
 import { BiXCircle } from "react-icons/bi";
 import CustomizeModal from "../../../../components/PerfesionalSearch/CustomizeModal";
 
+interface SearchFilterInterface {
+  valueName:
+    | "personelCode"
+    | "name"
+    | "nationalCode"
+    | "mobile"
+    | "email"
+    | "search"
+    | "username"
+    | "pageNumbers";
+
+  label: string;
+  isMain: boolean;
+  isShow: boolean;
+}
 interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
 }
-const ModalPerfetional = ({
+interface ModalPerfetionalProps {
+  open: boolean;
+  handleOpen?: any;
+  columns?: Array<any>;
+  searchFilterList: Array<any>;
+  selectedCol: Array<any>;
+  setSelectedCol: (selectedCol: Array<any>) => void;
+  setSearchFilterList: (selectedCol: Array<any>) => void;
+}
+const ModalPerfetional: FC<ModalPerfetionalProps> = ({
   open,
   handleOpen,
   columns,
   selectedCol,
+  searchFilterList,
   setSelectedCol,
-}: {
-  open: boolean;
-  handleOpen?: any;
-  columns?: Array<any>;
-  selectedCol: Array<SelectedColInterface>;
-  setSelectedCol: (selectedCol: Array<SelectedColInterface>) => void;
+  setSearchFilterList,
 }) => {
   return (
     <>
@@ -54,6 +74,8 @@ const ModalPerfetional = ({
             columns={columns ? columns : []}
             selectedCol={selectedCol}
             setSelectedCol={setSelectedCol}
+            searchFilterList={searchFilterList}
+            setSearchFilterList={setSearchFilterList}
           />
         </DialogBody>
         <DialogFooter>

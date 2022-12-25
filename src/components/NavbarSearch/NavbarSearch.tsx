@@ -159,6 +159,8 @@ const NavbarSearch = ({
           setSelectedCol={(value: Array<SelectedColInterface>) =>
             setSelectedCol(value)
           }
+          searchFilterList={[]}
+          setSearchFilterList={() => console.log()}
         />
       </div>
       <div>

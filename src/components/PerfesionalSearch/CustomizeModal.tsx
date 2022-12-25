@@ -9,15 +9,34 @@ interface SelectedColInterface {
   Header: string;
   isRequire: boolean;
 }
+interface SearchFilterInterface {
+  valueName:
+    | "personelCode"
+    | "name"
+    | "nationalCode"
+    | "mobile"
+    | "email"
+    | "search"
+    | "username"
+    | "pageNumbers";
+
+  label: string;
+  isMain: boolean;
+  isShow: boolean;
+}
 interface CustomizeModalProps {
   columns: Array<any>;
-  selectedCol: Array<SelectedColInterface>;
-  setSelectedCol: (selectedCol: Array<SelectedColInterface>) => void;
+  searchFilterList: Array<any>;
+  selectedCol: Array<any>;
+  setSelectedCol: (selectedCol: Array<any>) => void;
+  setSearchFilterList: (selectedCol: Array<any>) => void;
 }
 const CustomizeModal: FC<CustomizeModalProps> = ({
   columns,
   selectedCol,
+  searchFilterList,
   setSelectedCol,
+  setSearchFilterList,
 }) => {
   return (
     <>
@@ -39,7 +58,10 @@ const CustomizeModal: FC<CustomizeModalProps> = ({
         </TabPanel>
         <TabPanel>
           <div className="min-h-[400px] overflow-auto">
-            <SearchFilter />
+            <SearchFilter
+              setSearchFilterList={setSearchFilterList}
+              searchFilterList={searchFilterList}
+            />
           </div>
         </TabPanel>
         <TabPanel>

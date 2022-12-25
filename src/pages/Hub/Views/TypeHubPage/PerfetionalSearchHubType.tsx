@@ -49,6 +49,8 @@ const PerfetionalSearchHubType = ({ formiks }: { formiks: any }) => {
         setSelectedCol={(value: Array<SelectedColInterface>) =>
           setSelectedCol(value)
         }
+        searchFilterList={[]}
+        setSearchFilterList={() => console.log()}
       />
     </div>
   );

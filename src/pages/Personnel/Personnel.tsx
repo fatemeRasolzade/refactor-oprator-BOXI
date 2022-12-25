@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -23,6 +23,7 @@ interface SelectedColInterface {
   Header: string;
   isRequire: boolean;
 }
+
 interface PersonnelProps {}
 
 const Personnel: FC<PersonnelProps> = (): JSX.Element => {
@@ -66,6 +67,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
       }) as any
     );
   };
+  const handleGetPersonnelCustomization = useCallback(async () => {}, []);
 
   useEffect(() => {
     dispatch(
@@ -89,6 +91,9 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     pageNumbers,
     userInfo?.hublist,
   ]);
+  useEffect(() => {
+    handleGetPersonnelCustomization();
+  }, [handleGetPersonnelCustomization]);
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0
