@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
+import { CRMCustomerColumn } from "../../global/Column/Columns";
 import Modal from "../../global/Modal/Modal";
 import {
   clearCRMCustomer,
@@ -84,7 +85,12 @@ const CRMManagment = () => {
           </button>
         )}
       />
-      <StaticTable data={[]} column={[]} pagination={2} selectable={false} />
+      <StaticTable
+        data={[]}
+        column={CRMCustomerColumn}
+        pagination={2}
+        selectable={false}
+      />
       <Modal
         visible={isModalAddEdit.isOpen}
         setVisible={(e: any) =>
@@ -95,7 +101,10 @@ const CRMManagment = () => {
         title={isModalAddEdit.data ? "ویرایش" : "افزودن"}
       >
         <>
-          <AddEditCRMManagement currentData={isModalAddEdit.data} />
+          <AddEditCRMManagement
+            currentData={isModalAddEdit.data}
+            setIsModalAddEdit={setIsModalAddEdit}
+          />
         </>
       </Modal>
     </div>

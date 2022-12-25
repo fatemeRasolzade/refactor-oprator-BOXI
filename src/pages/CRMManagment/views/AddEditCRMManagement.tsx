@@ -8,8 +8,13 @@ import MultiSelect from "../../../global/multiselect/MultiSelect";
 import MultiLineText from "../../../global/MultiLineText/MultiLineText";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 
+interface SetIsModalAddEditInterface {
+  isOpen: boolean;
+  data: any;
+}
 interface AddEditCRMManagementProps {
   currentData?: any;
+  setIsModalAddEdit: (currentData: SetIsModalAddEditInterface) => void;
 }
 const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
   currentData,

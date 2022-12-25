@@ -264,3 +264,26 @@ export const ProductGroupCulumn = [
     accessor: "actionProduct",
   },
 ];
+
+export const CRMCustomerColumn = [
+  {
+    Header: "کد",
+    accessor: "code",
+  },
+  {
+    Header: "عنوان",
+    accessor: "name",
+  },
+  {
+    Header: "توضیحات",
+    accessor: "description",
+  },
+  {
+    Header: "وضعیت",
+    accessor: "isActive",
+  },
+  {
+    Header: "عملیات",
+    accessor: "actionProduct",
+  },
+];
