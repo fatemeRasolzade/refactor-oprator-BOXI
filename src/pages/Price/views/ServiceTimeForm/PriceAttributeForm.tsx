@@ -39,20 +39,20 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
     enableReinitialize: true,
     validationSchema: PriceAttributeFormValidation,
     initialValues: PriceAttributeFormInitialValues,
-    validate: (values) => {
-      const errors = {};
-      if (values.isParametric === false) {
-        if (!values.classification.id) {
-          //@ts-ignore
-          errors.classification = REQUIRED;
-        }
-        if (!values.customDevision) {
-          //@ts-ignore
-          errors.customDevision = REQUIRED;
-        }
-      }
-      return errors;
-    },
+    // validate: (values) => {
+    //   const errors = {};
+    //   if (values.isParametric === false) {
+    //     if (!values.classification.id) {
+    //       //@ts-ignore
+    //       errors.classification = REQUIRED;
+    //     }
+    //     if (!values.customDevision) {
+    //       //@ts-ignore
+    //       errors.customDevision = REQUIRED;
+    //     }
+    //   }
+    //   return errors;
+    // },
     onSubmit: (values: any) => {
       alert("true");
       if (values.isParametric) {

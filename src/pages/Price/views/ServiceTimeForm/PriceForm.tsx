@@ -14,6 +14,8 @@ import { PriceFormCurrentValues, PriceFormInitialValues, PriceFormValidation } f
 import { GET_PRODUCT_SELECT, PRICE_API } from "../../../../services/apiRoute";
 import { priceData } from "../../../../redux/PriceData/PriceData";
 import { array } from "yup";
+import { DigitCompare, ValueCompare } from "../../../ServiceManagement/ProductInfo/view/ProductInfoForm";
+import { DateCompare } from "../../../../tools/functions/Methods";
 
 type PriceFormFormProps = {
   currentData?: any;
@@ -101,6 +103,15 @@ const PriceForm = ({ currentData }: PriceFormFormProps) => {
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: PriceFormValidation,
+    validate: (values) => {
+      const errors = {};
+      const [isValid, errDate] = DateCompare(values.validDateFrom, values.validDateTo);
+      if (!isValid) {
+        // @ts-ignore
+        errors.validDateFrom = errDate;
+      }
+      return errors;
+    },
     initialValues: currentData ? PriceFormCurrentValues(currentData) : PriceFormInitialValues,
     onSubmit: (values: any) => {
       // setLoading(true);

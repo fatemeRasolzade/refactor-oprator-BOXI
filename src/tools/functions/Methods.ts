@@ -62,11 +62,22 @@ export const convertUsingProduct = (usingProduct: any, product: any) => {
   return arr;
 };
 
+export const DateCompare = (date1: any, date2: any) => {
+  let errDate;
+  let isValid = false;
+  const date1Format = new Date(date1.year + "-" + date1.month + "-" + date1.day);
+  const date2Format = new Date(date2.year + "-" + date2.month + "-" + date2.day);
+  if (date1Format > date2Format) {
+    errDate = "تاریخ شروع بزرگتر از تاریخ پایان است. ";
+  } else {
+    isValid = true;
+  }
+  return [isValid, errDate];
+};
 
-
-export const SplitString=(value:string)=>{
-  return  value.split(/([0-9]+)/)[0]
-}
-export const SplitNumber=(value:string)=>{
- return value.split(/([0-9]+)/)[1]
-}
+export const SplitString = (value: string) => {
+  return value.split(/([0-9]+)/)[0];
+};
+export const SplitNumber = (value: string) => {
+  return value.split(/([0-9]+)/)[1];
+};
