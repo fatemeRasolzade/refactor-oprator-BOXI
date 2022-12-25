@@ -21,8 +21,12 @@ import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
 import RouteLists from "../Transportation/route/RouteData";
 import HubTypeTable from "../HubData/TypeHub";
 import userInfoReducer from "../userInfo/userInfoReducer";
-import VehicleLists from "../Transportation/VehicleData/VehicleData";
-import BagsLists from "../Transportation/bags/Bags";
+import VehicleLists from '../Transportation/VehicleData/VehicleData';
+import BagsLists from '../Transportation/bags/Bags'
+import GateLists from '../Transportation/gate/GateData'
+import DockLists from '../Transportation/dock/DockData'
+import ExceptionLists from '../Transportation/exception/ExceptionData'
+
 import customGeoReducer from "../customGeo/customGeoReducer";
 import  ProductGroupsData  from "../ProductGroup/ProductGroup";
 const persistConfig = {
@@ -48,13 +52,17 @@ const reducers = combineReducers({
   editHub: EditHubTable,
   selectRowTable: selectRowTable,
   vendor: VendorList,
-  productG:ProductGroupsData,
-  vehicleModel: VehicleModelLists,
-  route: RouteLists,
-  HubType: HubTypeTable,
-  Vehicle: VehicleLists,
-  bags: BagsLists,
-  customGeo: customGeoReducer,
+  vehicleModel:VehicleModelLists,
+  route:RouteLists,
+  HubType:HubTypeTable,
+  Vehicle:VehicleLists,
+  bags:BagsLists,
+  gate:GateLists,
+  dock:DockLists,
+  exception:ExceptionLists
+  // productG:ProductGroupsData,
+
+  // customGeo: customGeoReducer,
 
 });
 

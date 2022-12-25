@@ -1,7 +1,6 @@
 import { GoDesktopDownload } from "react-icons/go";
-import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import CustomSwitch from "../../../../global/Switch/Switch";
-
+import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
+import CustomSwitch from "../../../../../global/Switch/Switch";
 
 
 interface propsData {
@@ -29,12 +28,7 @@ const OptionsTable = ({ setIsActive, addComponentProps, exportExcel, isActive }:
                 className="centering rounded-lg text-black w-full"
             />
           </li>
-          <li>
-            <CustomSwitch
-              active={isActive ? isActive : false}
-              handleChange={(value: any) => setIsActive && setIsActive(value as boolean)}
-            />
-          </li>
+         
 
 
       </ul>

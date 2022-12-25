@@ -3,12 +3,11 @@ import { FormikProvider, FieldArray, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { EditDataParams, PostDataParams } from "../../../../../services/Service_call";
-import { apiRoute, deleteConnections } from "../../../../../services/apiRoute";
+import { apiRoute } from "../../../../../services/apiRoute";
 import { SuccessAlert } from "../../../../../global/alert/Alert";
 import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
-
 import Modal from "../../../../../global/Modal/Modal";
 import { BiTrash } from "react-icons/bi";
 import { GrFormAdd } from "react-icons/gr";
@@ -19,14 +18,16 @@ import { filterRoute } from "../../../../../redux/Transportation/route/RouteData
 import { AiOutlineEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Timeinput from "../../../../../global/TimePicker/TimeInput";
+
 interface PropsData {
   currentData?: any;
   routeValue?: any;
   isModalOpen?: boolean;
   setIsModalOpen?: any;
   hubOptions?: any;
-  addOpen?:any,
-  setAddOpen?:any
+  addOpen?: any;
+  setAddOpen?: any;
 }
 const validation = Yup.object().shape({
   code: Yup.number().required().label("کد مسیر"),
@@ -57,8 +58,6 @@ const RouteActionForms: React.FC<PropsData> = ({
   // setIsModalOpen,
   hubOptions,
 }): JSX.Element => {
-
-  const [disableNode, setDisableNodes] = useState(false);
   const [connectionSelect, setConnectionSelect] = useState<any>([]);
   const [serverIds, setServerIds] = useState<any>([]);
   const distanceRef = useRef<any>(null);
@@ -84,16 +83,16 @@ const RouteActionForms: React.FC<PropsData> = ({
           transitTime: currentData?.transitTime,
           timeStoppage: currentData?.timeStoppage,
           selectSourceHub: {
-            id: currentData.selectSourceHub.id,
-            text: currentData.selectSourceHub.text,
+            id: currentData?.selectSourceHub?.id,
+            text: currentData?.selectSourceHub?.text,
           },
           selectTargetHub: {
-            id: currentData.selectTargetHub.id,
-            text: currentData.selectTargetHub.text,
+            id: currentData?.selectTargetHub?.id,
+            text: currentData?.selectTargetHub?.text,
           },
           isActive: currentData?.isActive,
           nodes: currentData?.nodes,
-          connections: currentData.connections,
+          connections: currentData?.connections,
         }
       : {
           code: routeValue?.code,
@@ -107,8 +106,8 @@ const RouteActionForms: React.FC<PropsData> = ({
             text: routeValue?.selectSourceHub.text,
           },
           selectTargetHub: {
-            id: routeValue?.selectTargetHub.id,
-            text: routeValue?.selectTargetHub.text,
+            id: routeValue?.selectTargetHub?.id,
+            text: routeValue?.selectTargetHub?.text,
           },
           isActive: true,
           nodes: routeValue?.nodes,
@@ -142,7 +141,7 @@ const RouteActionForms: React.FC<PropsData> = ({
           }
 
           // dispatch(updating(false));
-
+          setAddOpen && setAddOpen(false);
           setIsModalOpen(false);
         });
       } else {
@@ -164,7 +163,7 @@ const RouteActionForms: React.FC<PropsData> = ({
             console.log("run error");
             // ErrorAlert("خطا در برقراری اطلاعات");
           }
-
+          setAddOpen && setAddOpen(false);
           setIsModalOpen(false);
         });
       }
@@ -181,22 +180,23 @@ const RouteActionForms: React.FC<PropsData> = ({
     });
   };
   const addConnection = (e: any, push: any) => {
-    console.log(formik.values.connections);
-    
-    // e.preventDefault();
-    // setDisableNodes(true);
-    // formik.setFieldValue("nodes", formik.values.connections.length + 1);
-    // formik.values.connections.splice(formik.values.connections.length - 1, 0, {
-    //   selectHub: {
-    //     id: "",
-    //     text: "",
-    //   },
-    //   distanceFromPreviousHub: "",
-    //   distanceVariance: "",
-    //   transitTime: "",
-    //   timeStoppage: "",
-    //   customId: uuidv4(),
-    // });
+    e.preventDefault();
+    const temp = [...formik.values.connections];
+
+    formik.setFieldValue("nodes", formik.values.connections.length - 1);
+    temp.splice(formik.values.connections.length - 1, 0, {
+      selectHub: {
+        id: "",
+        text: "",
+      },
+      distanceFromPreviousHub: "",
+      distanceVariance: "",
+      transitTime: "",
+      timeStoppage: "",
+      customId: uuidv4(),
+    });
+    // console.log("temp",temp)
+    formik.setFieldValue("connections", temp);
   };
   const deleteConnection = () => {
     const filterData = formik.values.connections.filter(
@@ -215,19 +215,21 @@ const RouteActionForms: React.FC<PropsData> = ({
     };
 
     // console.log(data);
+    formik.setFieldValue("nodes", filterData.length - 2);
     let isDeleteFromServer = formik.values.connections.some((item: any) => item.id);
     if (isDeleteFromServer) {
-      console.log("delete from server",data);
+      console.log("delete from server", data);
       // DeleteWithBody(apiRoute().delete.deleteConnections, data )
       // deleteConnections(data )
-      axios.delete(apiRoute().delete.deleteConnections,{data})
-      .then((response) => {
-			  response.status && toast.success("گره با موفقیت پاک شد");
-			  formik.setFieldValue("connections", filterData);
-			})
-			.catch((e) => {
-			  // toast.error("خطایی رخ داده است.");
-			});
+      axios
+        .delete(apiRoute().delete.deleteConnections, { data })
+        .then((response) => {
+          response.status && toast.success("گره با موفقیت پاک شد");
+          formik.setFieldValue("connections", filterData);
+        })
+        .catch((e) => {
+          toast.error("خطایی رخ داده است.");
+        });
       // apiRoute().delete.vendor + `/${item.id}`
       // .then((response) => {
       //   response.status && toast.success("گره با موفقیت پاک شد");
@@ -262,24 +264,26 @@ const RouteActionForms: React.FC<PropsData> = ({
       setServerIds(serverIds);
     }
   };
- 
-  const { values, errors, touched, handleChange, handleSubmit, setValues, setFieldValue, setErrors } = formik;
+
+  const { values, errors, touched, setFieldValue } = formik;
   return (
     <>
-  
-      {currentData  &&
-        <button className=" border-none	 text-[14px]  w-[20px] h-[20px] " 
-        onClick={() => {
-          setIsModalOpen(!isModalOpen)
-          setAddOpen(false)
-          }}>
+      {currentData && (
+        <button
+          className=" border-none	 text-[14px]  w-[20px] h-[20px] "
+          onClick={() => {
+            setIsModalOpen(!isModalOpen);
+            setAddOpen && setAddOpen(false);
+          }}
+        >
           <AiOutlineEdit className="w-full h-full" />
         </button>
-      }
+      )}
+
       <Modal
         visible={addOpen || isModalOpen}
-        setVisible={setAddOpen || setIsModalOpen }
-        title={currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}
+        setVisible={setAddOpen || setIsModalOpen}
+        title={currentData ? "ویرایش مسیر" : "افزودن مسیر"}
       >
         <form onSubmit={formik.handleSubmit}>
           <FormikProvider value={formik}>
@@ -514,14 +518,18 @@ const RouteActionForms: React.FC<PropsData> = ({
                                   />
                                 </td>
                                 <td>
-                                  <InputText
+                                  <Timeinput
                                     readOnly={index === 0 && true}
                                     wrapperClassName={"w-30 "}
                                     classNames={"min-w-[12rem]"}
-                                    handleChange={formik.handleChange}
-                                    name={`connections.${index}.transitTime`}
-                                    values={values.connections[index].transitTime}
                                     placeholder="00:00"
+                                    name={`connections.${index}.transitTime`}
+                                    format="##:##"
+                                    value={values.connections[index].transitTime}
+                                    // @ts-ignore
+                                    onValueChange={({ formattedValue }) => {
+                                      setFieldValue(`connections.${index}.transitTime`, formattedValue);
+                                    }}
                                     error={
                                       touched.connections &&
                                       touched.connections[index] &&
@@ -533,49 +541,39 @@ const RouteActionForms: React.FC<PropsData> = ({
                                       errors.connections[index].transitTime
                                     }
                                   />
-                                  {/* <FormGroup
-                                      readOnly={index === 0 && true}
-                                      width={"250px"}
-                                      error={
-                                        touched.connections &&
-                                        touched.connections[index] &&
-                                        touched.connections[index].transitTime &&
-                                        errors.connections &&
-                                        errors.connections[index] &&
-                                        errors.connections[index].transitTime && (
-                                          <div className="field-error">{errors.connections[index].transitTime}</div>
-                                        )
-                                      }
-                                    >
-                                      <NumberFormat
-                                        readOnly={index === 0 && true}
-                                        className="text-center rounded-xl"
-                                        prefix=""
-                                        mask=""
-                                        placeholder="00:00"
-                                        name={`connections.${index}.transitTime`}
-                                        format="##:##"
-                                        value={values.connections[index].transitTime}
-                                        onValueChange={({ formattedValue, value }) => {
-                                          setFieldValue(
-                                            `connections.${index}.transitTime`,
-                                            formattedValue
-                                            // .replace("00", "0")
-                                            // .replace(":", ".")
-                                          );
-                                        }}
-                                      />
-                                    </FormGroup> */}
+                                  {/*<InputText*/}
+                                  {/*  readOnly={index === 0 && true}*/}
+                                  {/*  wrapperClassName={"w-30 "}*/}
+                                  {/*  classNames={"min-w-[12rem]"}*/}
+                                  {/*  handleChange={formik.handleChange}*/}
+                                  {/*  name={`connections.${index}.transitTime`}*/}
+                                  {/*  values={values.connections[index].transitTime}*/}
+                                  {/*  placeholder="00:00"*/}
+                                  {/*  error={*/}
+                                  {/*    touched.connections &&*/}
+                                  {/*    touched.connections[index] &&*/}
+                                  {/*    // @ts-ignore*/}
+                                  {/*    touched.connections[index].transitTime &&*/}
+                                  {/*    errors.connections &&*/}
+                                  {/*    errors.connections[index] &&*/}
+                                  {/*    // @ts-ignore*/}
+                                  {/*    errors.connections[index].transitTime*/}
+                                  {/*  }*/}
+                                  {/*/>*/}
                                 </td>
                                 <td>
-                                  <InputText
+                                  <Timeinput
+                                    readOnly={index === 0 && true}
                                     wrapperClassName={"w-30 "}
                                     classNames={"min-w-[12rem]"}
-                                    readOnly={index === 0 && true}
-                                    handleChange={formik.handleChange}
-                                    name={`connections.${index}.timeStoppage`}
-                                    values={values.connections[index].timeStoppage}
                                     placeholder="00:00"
+                                    name={`connections.${index}.timeStoppage`}
+                                    format="##:##"
+                                    value={values.connections[index].timeStoppage}
+                                    // @ts-ignore
+                                    onValueChange={({ formattedValue }) => {
+                                      setFieldValue(`connections.${index}.timeStoppage`, formattedValue);
+                                    }}
                                     error={
                                       touched.connections &&
                                       touched.connections[index] &&
@@ -587,38 +585,25 @@ const RouteActionForms: React.FC<PropsData> = ({
                                       errors.connections[index].timeStoppage
                                     }
                                   />
-                                  {/* <FormGroup
-                                      width={"250px"}
-                                      error={
-                                        touched.connections &&
-                                        touched.connections[index] &&
-                                        touched.connections[index].timeStoppage &&
-                                        errors.connections &&
-                                        errors.connections[index] &&
-                                        errors.connections[index].timeStoppage && (
-                                          <div className="field-error">{errors.connections[index].timeStoppage}</div>
-                                        )
-                                      }
-                                    >
-                                      <NumberFormat
+                                  {/* <InputText
+                                        wrapperClassName={"w-30 "}
+                                        classNames={"min-w-[12rem]"}
                                         readOnly={index === 0 && true}
-                                        className="text-center rounded-xl "
-                                        prefix=""
-                                        mask=""
-                                        placeholder="00:00"
+                                        handleChange={formik.handleChange}
                                         name={`connections.${index}.timeStoppage`}
-                                        format="##:##"
-                                        value={values.connections[index].timeStoppage}
-                                        onValueChange={({ formattedValue, value }) => {
-                                          setFieldValue(
-                                            `connections.${index}.timeStoppage`,
-                                            formattedValue
-                                            // .replace("00", "0")
-                                            // .replace(":", ".")
-                                          );
-                                        }}
-                                      />
-                                    </FormGroup> */}
+                                        values={values.connections[index].timeStoppage}
+                                        placeholder="00:00"
+                                        error={
+                                          touched.connections &&
+                                          touched.connections[index] &&
+                                          // @ts-ignore
+                                          touched.connections[index].timeStoppage &&
+                                          errors.connections &&
+                                          errors.connections[index] &&
+                                          // @ts-ignore
+                                          errors.connections[index].timeStoppage
+                                        }
+                                      /> */}
                                 </td>
                               </tr>
                             ))}
@@ -634,7 +619,12 @@ const RouteActionForms: React.FC<PropsData> = ({
                       text="لغو"
                       className="full-lightTomato-btn"
                     />
-                    <SimpleButton loading={Loading} type="submit" text={!currentData?"افزودن":"ویرایش"} className="full-tomato-btn" />
+                    <SimpleButton
+                      loading={Loading}
+                      type="submit"
+                      text={!currentData ? "افزودن" : "ویرایش"}
+                      className="full-tomato-btn"
+                    />
                   </div>
                 </>
               )}
@@ -642,6 +632,7 @@ const RouteActionForms: React.FC<PropsData> = ({
           </FormikProvider>
         </form>
       </Modal>
+
       <style>
         {`table td {
            padding: 5px;

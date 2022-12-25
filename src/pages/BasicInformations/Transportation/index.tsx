@@ -1,17 +1,17 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import Vendor from "./vendor/vendor";
-// import VehicleModel from "./vehicleModel/index";
 import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import React, { Suspense } from "react";
-import Vehicle from "./vehicle";
-import Bags from "./bags";
-// import Route from "./route";
 
 
 const VehicleModel = React.lazy(() => import("./vehicleModel/index"));
 const Route =React.lazy(()=>import ("./route/index"))
-
+const Vehicle = React.lazy(() => import("./vehicle/index"));
+const Bags = React.lazy(() => import("./bags/index"));
+const Gate = React.lazy(() => import("./gate/index"));
+const Exception = React.lazy(() => import("./exception/index"));
+const Vendor = React.lazy(() => import("./vendor/vendor"));
+const Dock = React.lazy(() => import("./dock/index"));
 const Transportation: React.FC = (): JSX.Element => {
   return (
     <>
@@ -33,12 +33,22 @@ const Transportation: React.FC = (): JSX.Element => {
           <Tab>
              وسیله نقلیه<span className="border  border-l-gary-200 relative right-4"></span>
           </Tab>
-          
+
+        
           <Tab>
             مسیر<span className="border  border-l-gary-200 relative right-4"></span>
           </Tab>
           <Tab>
+             استثناء<span className="border  border-l-gary-200 relative right-4"></span>
+          </Tab>
+          <Tab>
             کیسه بندی<span className="border  border-l-gary-200 relative right-4"></span>
+          </Tab>
+          <Tab>
+            بارانداز<span className="border  border-l-gary-200 relative right-4"></span>
+          </Tab>
+          <Tab>
+            درب<span className=" relative "></span>
           </Tab>
         </TabList>
         <Suspense fallback={<p>...loading</p>}>
@@ -55,8 +65,18 @@ const Transportation: React.FC = (): JSX.Element => {
             <Route />
           </TabPanel>
           <TabPanel>
+            <Exception />
+          </TabPanel>
+          <TabPanel>
             <Bags />
           </TabPanel>
+          <TabPanel>
+            <Dock />
+          </TabPanel>
+          <TabPanel>
+            <Gate />
+          </TabPanel>
+          
         </Suspense>
       </Tabs>
       <style>

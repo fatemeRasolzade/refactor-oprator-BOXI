@@ -1,52 +1,51 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import { postDataHeaderToServer } from '../../services/Service_call';
-import { apiRoute } from '../../services/apiRoute';
-import { ErrorAlert } from "../../global/alert/Alert";
+import { apiRoute } from "../../../services/apiRoute";
+import { postDataHeaderToServer } from "../../../services/Service_call";
 
-export const productData=createAsyncThunk('productlists',async(body:any)=>{
+
+export const filterGate=createAsyncThunk('routeLists',async(body:any)=>{
+
     const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
     var data = {};
     try {
-        data = await postDataHeaderToServer(apiRoute().post.product + params, {
+        data = await postDataHeaderToServer(apiRoute().post.gate + params, {
         ...body
         });
       } catch (error) {
         console.log("error ", error);
       }
-
-
     return data;
 })
 
 const initialState:any= {
-    productLists:[],
+    gateLists:[],
     fetchpost:false,
     errorMessage:null,
     isUpdating: false,    
 }
 
-const ProductDefineList = createSlice({
+const GateLists= createSlice({
     initialState: initialState,
-    name: "productlists",
+    name: "gateLists",
     reducers: {
         updating: (state:any, action:any) => {
             state.isUpdating = action.payload;
           },
     },
     extraReducers: {
-        [productData.fulfilled as any]: (state, action) => {
-            state.productLists = action.payload.payload;
+        [filterGate.fulfilled as any]: (state, action) => {
+            state.gateLists = action.payload.payload;
             state.fetchPost = false;
         },
-        [productData.pending as any]: (state) => {
+        [filterGate.pending as any]: (state) => {
             state.fetchPost = true;
         },
-        [productData.rejected as any]: (state) => {
+        [filterGate.rejected as any]: (state) => {
             state.fetchPost = false;
             state.errorMessage = "wrong";
         },
     },
 });
 
-export const {  updating } = ProductDefineList.actions;
-export default ProductDefineList.reducer
+// export const {  updating } = ProductDefineList.actions;
+export default GateLists.reducer

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, Dialog } from "@material-tailwind/react";
 
-import { Formik, ErrorMessage } from "formik";
+import { Formik } from "formik";
 
 import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
@@ -17,6 +16,8 @@ import AddExcel from "./AddExcel";
 import { AiOutlineEdit } from "react-icons/ai";
 import AddButton from "../../../../global/addButton/AddButton";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
+import Modal from "../../../../global/Modal/Modal";
+import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
 
 interface PropsData {
   itemValue?: any;
@@ -57,6 +58,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
 
+
   return (
     <>
       {!itemValue ? (
@@ -67,8 +69,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
         </button>
       )}
       <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
-      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[600px] w-[400px]"}>
-        <div className="text-lg font-medium">{itemValue ? "ویرایش محصول" : "افزودن محصول"}</div>
+      <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={itemValue ? "ویرایش  محصول" : "افزودن محصول"}>
         <Formik
           initialValues={
             !itemValue
@@ -145,10 +146,11 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
         >
           {(formik) => (
             <form onSubmit={formik.handleSubmit} className="p-5">
-              <div className="  grid grid-cols-2 gap-y-6 gap-x-2 content-center">
+              <div className="  grid grid-cols-2 gap-4 content-center items-center">
                 <InputText
                   label="کد"
                   // className="w-full"
+                  readOnly={itemValue?true:false}
                   name="code"
                   handleChange={formik.handleChange}
                   values={formik.values.code}
@@ -172,7 +174,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
               <CustomSwitch />
               
               </div> */}{" "}
-                <div>
+               
                   <InputSelect
                   
                     label="گروه بندی محصول"
@@ -181,32 +183,22 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
                     handleChange={formik.setFieldValue}
                     values={formik.values.productGroup}
                     error={formik.touched.productGroup && formik.errors.productGroup}
-                    // values={{
-                    //   value: formik.values?.productGroup?.id,
-                    //   label: 'formik.values?.productGroup?.text',
-                    // }}
-                    // options={[
-                    //   { value: "gg", label: "gdfg" },
-                    //   { value: "hj", label: "kjk" },
-                    //   { value: "weqe", label: "tyt" },
-                    // ]}
                     options={productOptions}
                   />
-                </div>
-                <div className="flex items-center">
+             
+
                   <CustomSwitch
                     active={formik.values.isActive}
                     handleChange={(value: any) => formik.setFieldValue("isActive", value)}
                   />
-                </div>
+        
                 <div className="!col-span-2 ">
-                  <InputText
-                    label="توضیحات"
+                  <MultiLineText
+                    label=" توضیحات"
+                    values={formik.values.description}
                     name="description"
                     handleChange={formik.handleChange}
-                    values={formik.values.description}
-                    type={"textarea"}
-                    wrapperClassName="w-full"
+                    error={formik.touched.description && formik.errors.description}
                   />
                 </div>
               </div>
@@ -223,7 +215,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
             </form>
           )}
         </Formik>
-      </Dialog>
+      </Modal>
     </>
   );
 };

@@ -23,7 +23,7 @@ export const RouteColumns = [
     Header: "مبدا",
     
     Cell: ({ cell }) => {
-      return <span className="flex items-center ">{cell.value.text.split(/([0-9]+)/)[0]}</span>;
+      return <>{cell?.value?.text.split(/([0-9]+)/)[0]}</>;
     },
   },
   {
@@ -31,7 +31,7 @@ export const RouteColumns = [
     Header: "مقصد",
     
     Cell: ({ cell }) => {
-      return <span className="flex items-center ">{cell.value.text.split(/([0-9]+)/)[0]}</span>;
+      return <>{cell?.value?.text.split(/([0-9]+)/)[0]}</>;
     },
   },
 

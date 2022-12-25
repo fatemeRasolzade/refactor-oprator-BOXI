@@ -4,25 +4,21 @@ import StaticTable from "../../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../../components/tableOperation/DeleteOperation";
 import { apiRoute } from "../../../../services/apiRoute";
 import { ExportExcel } from "../../../../tools/functions/Methods";
-import { RouteColumns } from "./view/Column";
+
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
-import RouteActionForm from "./view/RouteActionForm";
-import { filterRoute } from "../../../../redux/Transportation/route/RouteData";
-import AddRouteForms from "./view/AddRoute";
-import { useFetchOptions } from "../../../../global/hooks/useFetchOptions";
-import TimePiker from "../../../../global/TimePicker/TimePiker";
-
-const Route: React.FC = (): JSX.Element => {
+import { filterGate } from "../../../../redux/Transportation/gate/GateData";
+import DockActionForms from "./view/DockActionForm";
+import { DockColumns } from "./view/Column";
+const Dock: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
-  const { errorMessage, routeLists, isUpdating } = useSelector((state: any) => state.route);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { errorMessage, dockLists, isUpdating } = useSelector((state: any) => state.dock);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
-  const { dataOptions:hubOptions } = useFetchOptions(apiRoute().get.select_hub);
+
   const handleDeleteActionNewData = () => {
     dispatch(
-      filterRoute({
+      filterGate({
         search: "",
         isActive: isActive,
         pageSize: 10,
@@ -31,19 +27,21 @@ const Route: React.FC = (): JSX.Element => {
     );
   };
   const data =
-    routeLists?.content?.length !== 0
-      ? routeLists?.content?.map((item: any) => {
+    dockLists?.content?.length !== 0
+      ? dockLists?.content?.map((item: any) => {
           return {
             ...item,
+            // pelak: getPelak(item),
+            // hubname:item?.selectHub?.text,
             operation: (
               <div className="flex w-full gap-3 justify-center">
                 <DeleteOperation
                   itemId={item.id}
-                  title={"حذف مسیر"}
+                  title={"حذف بارانداز"}
                   handleDeleteActionNewData={handleDeleteActionNewData}
-                  route={apiRoute().delete.route + `/${item.id}`}
+                  route={apiRoute().delete.dock + `/${item.id}`}
                 />
-                <RouteActionForm currentData={item} hubOptions={hubOptions}/>
+                <DockActionForms currentData={item} />
               </div>
             ),
           };
@@ -51,21 +49,21 @@ const Route: React.FC = (): JSX.Element => {
       : [];
   return (
     <div>
-      <SearchForm isActive={isActive} hubOptions={hubOptions}/>
+      <SearchForm isActive={isActive} />
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}
-        addComponentProps={() => <AddRouteForms  hubOptions={hubOptions}/>}
-        exportExcel={() => ExportExcel(routeLists?.content)}
+        addComponentProps={() => <DockActionForms />}
+        exportExcel={() => ExportExcel(dockLists?.content)}
       />
       <StaticTable
         data={data ? data : []}
-        column={RouteColumns}
-        pagination={routeLists?.totalElements}
+        column={DockColumns}
+        pagination={dockLists?.totalElements}
         selectable={false}
       />
     </div>
   );
 };
 
-export default Route;
+export default Dock;
