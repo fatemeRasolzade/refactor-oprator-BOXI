@@ -96,7 +96,10 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
       if (Edit) {
         let newArray = [...Attributes];
         let index = newArray.findIndex((a) => a.id === values.id);
-        newArray[index] = values;
+        newArray[index] = {
+          ...values,
+          priceDetailDevisions: FromCountryDevision.length !== 0 ? convertToObjects(FromCountryDevision, ToCountryDevisiond, "from") : [],
+        };
         setAttributes(newArray);
         setEdit(false);
         handleReset();
