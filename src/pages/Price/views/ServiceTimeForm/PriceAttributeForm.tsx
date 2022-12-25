@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useFormik } from "formik";
 import { BiPlus, BiTrash } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getDataFromServer } from "../../../../services/Service_call";
 import { GET_PRODUCT_SELECT } from "../../../../services/apiRoute";
@@ -13,10 +14,8 @@ import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import PriceParameters from "./PriceParameters";
 import StaticTable from "../../../../components/staticTable/StaticTable";
 import { PriceAttributeColumn } from "./PriceAttributeColumn";
-
 import { REQUIRED } from "../../../../tools/validations/RegexKeywords";
 import { convertToObjects } from "../../../../tools/functions/Methods";
-import { AiOutlineEdit } from "react-icons/ai";
 
 interface PriceAttributeFormProps {
   Attributes: any;
@@ -28,7 +27,6 @@ interface PriceAttributeFormProps {
 const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter }: PriceAttributeFormProps) => {
   const [Product, setProduct] = useState([]);
   const [Edit, setEdit] = useState(false);
-
   const initProduct = () => {
     getDataFromServer(GET_PRODUCT_SELECT).then((res) => setProduct(res.content));
   };
@@ -41,22 +39,21 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
     enableReinitialize: true,
     validationSchema: PriceAttributeFormValidation,
     initialValues: PriceAttributeFormInitialValues,
-    // validate: (values) => {
-    //   const errors = {};
-    //   if (values.isParametric === false) {
-    //     if (!values.classification.id) {
-    //       //@ts-ignore
-    //       errors.classification = REQUIRED;
-    //     }
-    //     if (!values.customDevision) {
-    //       //@ts-ignore
-    //       errors.customDevision = REQUIRED;
-    //     }
-    //   }
-
-    //   return errors;
-    // },
-    onSubmit: (values: any, { resetForm }) => {
+    validate: (values) => {
+      const errors = {};
+      if (values.isParametric === false) {
+        if (!values.classification.id) {
+          //@ts-ignore
+          errors.classification = REQUIRED;
+        }
+        if (!values.customDevision) {
+          //@ts-ignore
+          errors.customDevision = REQUIRED;
+        }
+      }
+      return errors;
+    },
+    onSubmit: (values: any) => {
       alert("true");
       if (values.isParametric) {
         let data = {
@@ -74,7 +71,6 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
         values.totalNumber = { from: values.fromNumber, to: values.toNumber };
         values.priceDetailDevisions = values.attributeDivition ? values.attributeDivition : [];
       }
-
       let FromCountryDevision: any = [];
       let ToCountryDevisiond: any = [];
       FromCountryDevision =
@@ -115,8 +111,6 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
         ]);
         handleReset();
       }
-
-      console.log(values);
     },
   });
 
@@ -131,16 +125,12 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
   const handleEditPriceAttributes = (id: any) => {
     setEdit(true);
     let data = Attributes.find((at: any) => at.id === id);
-    console.log(data);
-
-    // data?.priceDetailDevisions?.length === 0
-    //   ? setFieldValue("classification", { id: "1", text: "سفارشی" })
-    //   : setFieldValue("classification", { id: "2", text: "استاندارد" });
-    setFieldValue("classification", data.classification);
+    data?.priceDetailDevisions?.length === 0
+      ? setFieldValue("classification", { id: "1", text: "سفارشی" })
+      : setFieldValue("classification", { id: "2", text: "استاندارد" });
+    // setFieldValue("classification", data.classification);
     data?.priceDetailDevisions?.length === 0 && data.customDevision === null && setFieldValue("classification", "");
     data.priceFormule ? setFieldValue("fixedPrice", true) : setFieldValue("fixedPrice", false);
-    // setEdit(true);
-    // setEditData(dataIndex);
     const { toValue, toNumber } = data;
     setFieldValue("id", data.id);
     setFieldValue("isActive", data.isActive);
@@ -153,7 +143,7 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
     setFieldValue("product", data.product);
     setFieldValue("price", data.price === null ? "" : data.price);
     setFieldValue("consignmentType", data.consignmentType);
-    setFieldValue("customDevision", data?.customDevision);
+    setFieldValue("customDevision", data.customDevision ? { id: data.customDevision?.id, text: data.customDevision?.name } : null);
     setFieldValue("priceFormule", data?.priceFormule);
     setFieldValue("isParametric", data?.isParametric);
     setFieldValue("fromCountryDevision", data.fromCountryDevision);
@@ -162,9 +152,8 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
     setFieldValue("toCountryDevision", data.toCountryDevision);
     setFieldValue("fromDestinationCity", data.fromDestinationCity);
     setFieldValue("fromDestinationLocation", data.fromDestinationLocation);
+    console.log(values);
   };
-
-  // console.log("ATTRIBUTES", Attributes);
 
   const data =
     Attributes?.length !== 0
@@ -184,8 +173,6 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
           };
         })
       : [];
-
-  console.log("data***********", data);
 
   const handleDeleteAttributePrice = (id: any) => {
     const filtered = Attributes.filter((a: any) => a.id !== id);

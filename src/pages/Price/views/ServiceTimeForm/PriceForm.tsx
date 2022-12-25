@@ -91,12 +91,9 @@ const PriceForm = ({ currentData }: PriceFormFormProps) => {
                   .filter((division: any) => division.countryType === "CITY")
                   .filter((elem: any, index: any, arr: any) => index === arr.findIndex((t: any) => t.id === elem.id))
               : "",
-          // priceDetailDevisions: [],
         };
         array.push(object);
       });
-      console.log(array);
-
       setAttributes(array);
     }
   }, [currentData]);
@@ -124,7 +121,9 @@ const PriceForm = ({ currentData }: PriceFormFormProps) => {
             .catch(() => {})
             .finally(() => setLoading(false));
         } else {
-          values.priceListDetails = Attributes;
+          values.priceListDetails = Attributes.map((a: any) => {
+            return { ...a, id: undefined };
+          });
           postDataToServer(PRICE_API, values)
             .then(() => {
               dispatch(priceData({}) as any);

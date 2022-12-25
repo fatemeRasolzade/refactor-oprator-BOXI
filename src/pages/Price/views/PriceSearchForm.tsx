@@ -30,15 +30,18 @@ const PriceSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageNumber
   const { values, handleSubmit, setFieldValue, handleReset }: any = formik;
 
   useEffect(() => {
+    const priceListDetails = values?.product ? { product: values?.product } : undefined;
+    delete values?.product;
     dispatch(
       priceData({
         ...values,
+        priceListDetails,
         isActive: isActive,
         pageSize: 10,
         pageNumber: pageNumbers,
       }) as any
     );
-  }, [isActive, filterData, isUpdating, pageNumbers]);
+  }, [isActive, filterData, isUpdating, pageNumbers, dispatch]);
 
   return (
     <>
