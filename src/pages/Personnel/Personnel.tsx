@@ -81,7 +81,6 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     return () => {
       dispatch(clearPersonnel() as any);
       dispatch(clearRows());
-      console.log("loop");
     };
   }, [
     dispatch,

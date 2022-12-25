@@ -29,6 +29,7 @@ import ExceptionLists from '../Transportation/exception/ExceptionData'
 
 import customGeoReducer from "../customGeo/customGeoReducer";
 import  ProductGroupsData  from "../ProductGroup/ProductGroup";
+import CRMCustomerGroupReducer from "../CRMCustomerGroup/CRMCustomerGroupReducer";
 const persistConfig = {
   key: "root",
   storage,
@@ -59,7 +60,8 @@ const reducers = combineReducers({
   bags:BagsLists,
   gate:GateLists,
   dock:DockLists,
-  exception:ExceptionLists
+  exception:ExceptionLists,
+  crmCustomer:CRMCustomerGroupReducer
   // productG:ProductGroupsData,
 
   // customGeo: customGeoReducer,
