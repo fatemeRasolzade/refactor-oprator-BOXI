@@ -84,7 +84,7 @@ const ProductDefine = () => {
       <SearchForm
         isActive={isActive}
         isUpdating={isUpdating}
-        productOptions={options}
+       
       />
       <OptionsTable
         setIsActive={setIsACtive}

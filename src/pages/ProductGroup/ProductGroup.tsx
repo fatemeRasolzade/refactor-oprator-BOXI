@@ -51,13 +51,15 @@ React.useEffect(()=>{
     return{
       id:item.id ? item.id : "",
       code:item.code ? item?.code : "",
-      name:item.name ? item?.name : "",
-      description:item.description ? item?.description : "",
+       name:item.name ? item?.name : "",
+       discription:"ertertert",
+       isActive:item?.isActive===true ? "فعال" : "غیرفعال",
+      // discription:item?.discription ? item.discription : "",
       actionProduct:<div className='flex justify-center items-center gap-2'><span className='cursor-pointer' ><BiEditAlt size={20} onClick={()=>{
         setEditModalData(item)
         setEditModal(prev=>!prev)
        }}/></span> <span  className='cursor-pointer' onClick={()=>{
-        DeleteWithHeader(apiRoute().post.product + `/${item.id}`).then(res=>{
+        DeleteWithHeader(apiRoute().post.Product_Group + `/${item.id}`).then(res=>{
           if(res.status==="OK"){
             SuccessAlert("با موفقیت پاک شد")
             dispatch(ProductGroupsData(bodyProduct) as any)
@@ -75,9 +77,9 @@ React.useEffect(()=>{
  <Breadcrumb beforePage="اطلاعات پایه" curentPage="تعریف گروه محصول" />
 <NavbarProductGroup/>
 <OptionTableProductGroup addGroup={()=>setShowModal(prev=>!prev)} ExportExcel={()=>ExportExcel(ProductData)}/>
-<AddModalProductGroup isModalOpen={showModal} setIsModalOpen={()=>setShowModal(prev=>!prev)}/>
-<EditModalProductGroup isModalOpen={EditModal} setIsModalOpen={setEditModal} dataInput={EditModalData}/>
- <StaticTable column={ProductGroupCulumn} data={ProductData ? ProductData : []} pagination={ProductLists?.totalElements} selectable={false}/> 
+<AddModalProductGroup isModalOpen={showModal} setIsModalOpen={()=>setShowModal(prev=>!prev)} bodyProduct={bodyProduct}/>
+<EditModalProductGroup isModalOpen={EditModal} setIsModalOpen={setEditModal} dataInput={EditModalData} bodyProduct={bodyProduct}/>
+ <StaticTable column={ProductGroupCulumn} data={ProductData ? ProductData : []} pagination={ProductLists?.totalElements && ProductLists?.totalElements} selectable={false}/> 
 
     </>
   )

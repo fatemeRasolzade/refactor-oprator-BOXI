@@ -27,20 +27,18 @@ useEffect(()=>{
   dispatch(ServiceProvisionData(pageNumbers) as any)
 },[pageNumbers])
 
-const data=serviceList?.content?.length > 0 ?  serviceList.content.map((item:any)=>{
+const data=serviceList?.content &&  serviceList.content.map((item:any)=>{
   return{
-    id: item.id ? item?.id :0,
-    code:item.code ? item?.code :"",
-    name:item.name ? item?.name :"",
-    service:item.service ? item?.service :"",
-    isActive:item.isActive ? item?.isActive :"",
-    validDateFrom:item.validDateFrom ? item?.validDateFrom :"",
-    validDateTo:item.validDateTo ? item?.validDateTo :"",
-    type:item.type ? item?.type :"",
-    handover:<div><span><BiEditAlt size={20}/></span> <span></span><BiTrash size={20}/></div>
-
+    code:item?.code,
+    name:item?.name,
+    service:item?.service?.text,
+    isActive:item?.isActive ===true ? "فعال" : "غیر فعال",
+    validDateFrom:<span>{`${item?.validDateFrom.year}/${item?.validDateFrom.month}/${item?.validDateFrom.day}`}</span>,
+    validDateTo:<span>{`${item?.validDateTo?.year}/${item?.validDateTo?.month}/${item?.validDateTo?.day}`}</span>,
+    type:item?.type?.text,
+    handover:<div className='flex justify-center items-center gap-x-2'><span className='cursor-pointer'><BiEditAlt size={20}/></span> <span className='cursor-pointer'><BiTrash size={20}/></span></div>
   }
-}) : []
+})
 
 
 
@@ -49,17 +47,14 @@ const {isUpdating}=useSelector((state:any)=>state.serviceProvision)
   const [isActive, setIsACtive] = useState(true);
   return (
     <div>
-
-
-
       <Breadcrumb beforePage="مدیریت سرویس" curentPage="ارایه سرویس" />
       <SearchForm isActive={isActive} isUpdating={isUpdating} />
       <OptionTableServiceProvision/>
 
-<StaticTable
+<StaticTable 
 data={data ? data : []}
 column={ServiceProvisionColumns}
-pagination={serviceList.totalElements && serviceList.totalElements}
+pagination={serviceList?.totalElements}
 selectable={false}
 
 />

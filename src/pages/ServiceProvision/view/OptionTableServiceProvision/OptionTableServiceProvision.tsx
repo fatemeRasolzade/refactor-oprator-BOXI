@@ -36,7 +36,7 @@ const handleUploadFileAction=()=>{
 <Dialog open={isModalOpen} handler={setIsModalOpen} className="p-5 !w-[80%] max-w-[60%] overflow-visible">
     <div className='flex-between-start'>
     <h3>ارائه سرویس</h3>
-    <span><BiXCircle size={20}/></span>
+    <span className='cursor-pointer' onClick={()=>setIsModalOpen(prev=>!prev)}><BiXCircle size={20}/></span>
     </div>
 
    <AddModalService isModal={setIsModalOpen}/>

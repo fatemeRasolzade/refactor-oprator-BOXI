@@ -25,7 +25,7 @@ console.log(active)
     <div className='flex-start-center mt-5 gap-3'>
 <SimpleButton
       type={'button'}
-      className="w-[240px] h-[40px] bg-tomato text-white flex flex-row-reverse "
+      className="w-[240px] h-[40px] bg-tomato text-white flex flex-row-reverse"
       icon={<BiPlus size={25} className="text-white" />}
       text="افزودن گروه محصول"
       handelClick={addGroup}
