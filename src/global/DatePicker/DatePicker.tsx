@@ -19,7 +19,7 @@ interface PropType {
 const DatePickers = ({ title, name, values, handleChange, time, timeValues, timeName, error, important }: PropType) => {
   const timePlugin = [<TimePicker position="bottom" hideSeconds />];
   // console.log({`${values?.year} / ${values?.month} / ${values?.day}`});
-  
+
   return (
     <div className="flex flex-col">
       <div className={`relative border ${error ? "border-red" : "border-darkBorder"} rounded-lg w-60`}>
@@ -30,16 +30,9 @@ const DatePickers = ({ title, name, values, handleChange, time, timeValues, time
           className="red"
           calendar={persian}
           name={name}
-          // value={`${values.timeToStartWork} ${
-          //   values.dayToStartWork?.year +
-          //   "/" +
-          //   values.dayToStartWork?.month +
-          //   "/" +
-          //   values.dayToStartWork?.day
-          // }`}
-          // value={`${values?.year} / ${values?.month} / ${values?.day}`}
+          value={`${values?.year + "/" + values?.month + "/" + values?.day}`}
           locale={persian_fa}
-          format="YYYY/MM/DD"
+          format={time ? `YYYY/MM/DD HH:mm` : "YYYY/MM/DD"}
           calendarPosition="bottom-right"
           // placeholder={`${values?.day} / ${values?.month} / ${values?.year}       ${time && `${timeValues?.hour}:${timeValues?.minute}`}`}
           onChange={(date: any) => {

@@ -97,7 +97,7 @@ const InputSelect: FC<InputSelectProps> = ({
         placeholder=""
         isRtl
         name={name}
-        className="inputSelect focus:outline-none flex"
+        className=" focus:outline-none flex"
       />
       <p className="text-red text-xs pr-3 h-4 mt-1">{error?.text}</p>
     </div>

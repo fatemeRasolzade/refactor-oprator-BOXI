@@ -206,7 +206,7 @@ const VehicleActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =
         setVisible={setIsModalOpen}
         title={currentData ? "ویرایش وسیله نقلیه" : "افزودن وسیله نقلیه"}
       >
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} autoComplete="off">
           <div className="grid grid-cols-4 mt-8 gap-y-4 gap-x-4 content-center">
             <VehiclePelak formik={formik} />
             <InputSelect
@@ -241,7 +241,7 @@ const VehicleActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =
 
             <InputSelect
               label="نوع وسیله نقلیه"
-              important
+              isClearable
               name="vehicleCategorySelect"
               handleChange={formik.setFieldValue}
               values={formik.values.vehicleCategorySelect}

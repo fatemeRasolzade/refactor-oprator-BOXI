@@ -29,6 +29,8 @@ export const apiRoute = () => {
       selectVendor:createUrl(CORE_API,'/vendor/select?filter='),
       selectBagTypes:createUrl(CORE_API,'/bag/selectBagTypes'),
       selectException:createUrl(CORE_API,'/exception/exceptiontype'),
+      selectPriceLists:createUrl(CORE_API,'/pricelist/select?filter='),
+      selectProducts:createUrl(CORE_API,'/product/select?filter='),
       //hub_category
       filter_hub_category: createUrl(CORE_API, "/hubCategory/filter"),
       //select hub category
@@ -118,7 +120,8 @@ export const apiRoute = () => {
       EditVendor: createUrl(CORE_API, "/vendor"),
       VehicleModel: createUrl(CORE_API, "/vehicleMake"),
       productDefine: createUrl(CORE_API, "/product"),
-      Edithub_category:createUrl(CORE_API,"/hubCategory")
+      Edithub_category:createUrl(CORE_API,"/hubCategory"),
+      serviceDefine: createUrl(CORE_API, "/service"),
     },
   };
 };
