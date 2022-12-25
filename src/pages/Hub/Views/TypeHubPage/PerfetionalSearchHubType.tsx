@@ -5,6 +5,7 @@ import ModalPerfetional from "../ModalPerfetional/ModalPerfetional";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
+  isRequire: boolean;
 }
 const PerfetionalSearchHubType = ({ formiks }: { formiks: any }) => {
   const [active, setActive] = useState(false);

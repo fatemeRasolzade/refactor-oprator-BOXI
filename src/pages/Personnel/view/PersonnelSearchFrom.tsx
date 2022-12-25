@@ -9,26 +9,30 @@ import { PersonnelColumn } from "../../../global/Column/Columns";
 
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import ModalPerfetional from "../../Hub/Views/ModalPerfetional/ModalPerfetional";
-interface PersonnelSearchFromProps {
-  isActive: boolean;
-  setFilterData: (value: any) => void;
-}
+
 interface SelectedColInterface {
   accessor: string;
   Header: string;
+  isRequire: boolean;
+}
+interface PersonnelSearchFromProps {
+  isActive: boolean;
+  selectedCol: Array<SelectedColInterface>;
+  setFilterData: (value: any) => void;
+  setSelectedCol: (selectedCol: Array<SelectedColInterface>) => void;
 }
 const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
   isActive,
+  selectedCol,
   setFilterData,
+  setSelectedCol,
 }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { pageNumbers } = useSelector((state: any) => state.paginate);
 
   const [filterDataChip, setFilterDataChip] = useState({});
   const [active, setActive] = useState(false);
-  const [selectedCol, setSelectedCol] = useState<Array<SelectedColInterface>>(
-    []
-  );
+
   const perfetionalClik = () => {
     setActive((prev) => !prev);
   };
@@ -145,9 +149,7 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
         handleOpen={setActive}
         columns={PersonnelColumn}
         selectedCol={selectedCol}
-        setSelectedCol={(value: Array<SelectedColInterface>) =>
-          setSelectedCol(value)
-        }
+        setSelectedCol={setSelectedCol}
       />
       {filterDataChip && <Chip filterData={filterDataChip} formData={formik} />}
     </div>

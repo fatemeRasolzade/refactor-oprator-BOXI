@@ -7,6 +7,7 @@ import SearchFilter from "../../pages/Hub/Views/PerfetionalModalHub/ColumnsTable
 interface SelectedColInterface {
   accessor: string;
   Header: string;
+  isRequire: boolean;
 }
 interface CustomizeModalProps {
   columns: Array<any>;

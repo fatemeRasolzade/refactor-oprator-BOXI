@@ -12,6 +12,7 @@ import CustomizeModal from "../../../../components/PerfesionalSearch/CustomizeMo
 interface SelectedColInterface {
   accessor: string;
   Header: string;
+  isRequire: boolean;
 }
 const ModalPerfetional = ({
   open,

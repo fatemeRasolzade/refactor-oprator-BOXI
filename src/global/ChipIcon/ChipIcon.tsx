@@ -4,10 +4,12 @@ import React, { useState } from "react";
 const ChipIcon = ({
   text,
   value,
+  isRequire,
   setDelete,
 }: {
   text?: string | undefined;
   value?: string;
+  isRequire?: boolean;
   setDelete?: (value: string) => void;
 }) => {
   const [show, setShow] = useState(true);
@@ -22,7 +24,7 @@ const ChipIcon = ({
         }}
         dismissible={{
           onClose: () => {
-            setShow(false);
+            !isRequire && setShow(false);
             setDelete && setDelete(value ? value : "");
           },
         }}

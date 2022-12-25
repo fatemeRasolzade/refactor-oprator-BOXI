@@ -6,6 +6,7 @@ import Checkbox from "./../../../../../components/checkbox/Checkbox";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
+  isRequire: boolean;
 }
 interface ColumnsTableProps {
   columns: Array<SelectedColInterface>;
@@ -18,11 +19,14 @@ const ColumnsTable: FC<ColumnsTableProps> = ({
   selectedCol,
   setSelectedCol,
 }) => {
-  const addvalueHandler = useCallback((value: any, isCheck: boolean) => {
-    if (isCheck) {
-      setSelectedCol([...selectedCol, value]);
-    }
-  }, [selectedCol, setSelectedCol]);
+  const addvalueHandler = useCallback(
+    (value: any, isCheck: boolean) => {
+      if (isCheck) {
+        setSelectedCol([...selectedCol, value]);
+      }
+    },
+    [selectedCol, setSelectedCol]
+  );
   console.log("selectedCol", selectedCol);
 
   return (
@@ -65,11 +69,15 @@ const ColumnsTable: FC<ColumnsTableProps> = ({
               return (
                 <React.Fragment key={index}>
                   <ChipIcon
+                    isRequire={items.isRequire}
                     text={items.Header}
                     value={items.accessor}
                     setDelete={(value: string) =>
+                      !items.isRequire &&
                       setSelectedCol(
-                        selectedCol.filter((item) => item.accessor !== value)
+                        selectedCol.filter(
+                          (item) => !item.accessor.includes(value)
+                        )
                       )
                     }
                   />

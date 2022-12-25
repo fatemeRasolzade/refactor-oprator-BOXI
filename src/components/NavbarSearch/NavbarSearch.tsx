@@ -23,6 +23,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
+  isRequire: boolean;
 }
 const NavbarSearch = ({
   firstTextInput,
