@@ -163,3 +163,4 @@ export const GET_PRODUCT_SELECT = `${CORE_API}/product/select?filter`;
 export const GET_CUSTOM_COUNTRY_DEVISION = `${CORE_API}/customcountrydevision/select?filter=`;
 //User
 export const GET_USER_PROFILE = `${RESOURCE_API}/employee/info?username=`;
+export const CHANGE_USER_PASSWORD = `${RESOURCE_API}/changepassword/changepassword`;

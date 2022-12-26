@@ -3,6 +3,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../services/keycloakService";
+import ChangePasswordModal from "../Navbar/ChangePasswordModal";
 import ProfileModal from "../Navbar/ProfileModal";
 const Breadcrumb = ({ curentPage, beforePage }: { curentPage?: string; beforePage?: string }) => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const Breadcrumb = ({ curentPage, beforePage }: { curentPage?: string; beforePag
         </div>
       </div>
       <ProfileModal open={OpenProfile} setOpen={setOpenProfile} />
+      <ChangePasswordModal open={OpenChangePassword} setOpen={setOpenChangePassword} />
     </div>
   );
 };
