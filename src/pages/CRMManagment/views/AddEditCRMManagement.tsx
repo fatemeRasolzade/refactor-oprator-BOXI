@@ -18,29 +18,126 @@ interface AddEditCRMManagementProps {
 }
 const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
   currentData,
+  setIsModalAddEdit,
 }): JSX.Element => {
+  console.log("currentData", currentData);
+
   const [selectOptions, setSelectOptions] = useState([]);
-  const validation = Yup.object().shape({});
+  const [selectedCustomer, setSelectedCustomer] = useState<any>({});
+
+  const validation = Yup.object().shape({
+    name: Yup.string().required(),
+    code: Yup.string().required(),
+    selectcustomer: Yup.array(),
+  });
 
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: validation,
-    initialValues: {},
-    onSubmit: async (values, { resetForm }) => {},
+    initialValues: {
+      code: currentData ? currentData.code : "",
+      name: currentData ? currentData.name : "",
+      description: currentData ? currentData.description : "",
+      selectcustomer: selectedCustomer
+        ? selectedCustomer?.segmentCustomers?.map((item: any) => {
+            return {
+              id: item.selectcustomer.id,
+              text: item.selectcustomer.text,
+            };
+          })
+        : [],
+      isActive: true,
+    },
+    onSubmit: async (values, { resetForm }) => {
+      const data = {
+        id: currentData && currentData.id,
+        isActive: values.isActive,
+        code: values.code,
+        name: values.name,
+        description: values.description,
+        segmentCustomers:
+          values.selectcustomer &&
+          values.selectcustomer?.map((item: any) => {
+            return {
+              selectcustomer: {
+                id: item.id,
+                text: item.text,
+              },
+            };
+          }),
+      };
+      const updateData = {
+        id: currentData && currentData.id,
+        isActive: values.isActive,
+        code: values.code,
+        name: values.name,
+        description: values.description,
+        segmentCustomers:
+          values.selectcustomer &&
+          values.selectcustomer?.map((item: any) => {
+            return {
+              selectcustomer: {
+                id: item.id,
+                text: item.text,
+              },
+            };
+          }),
+      };
+
+      try {
+        await axios({
+          url: "http://boxi.local:40000/core-api/customersegment",
+          method: currentData ? "PUT" : "POST",
+          data: data,
+        });
+        setIsModalAddEdit({
+          isOpen: false,
+          data: {},
+        });
+        resetForm();
+      } catch (error) {}
+    },
   });
 
   const handleGetSelectData = useCallback(async () => {
     try {
       const res = await axios({
-        url: "http://boxi.local:40000/core-api/customersegment/select?filter=",
+        url: "http://boxi.local:40000/resource-api/customer/select?filter=",
         method: "GET",
       });
-      setSelectOptions(res.data?.payload);
+      setSelectOptions(res.data?.payload?.content);
     } catch (error) {}
   }, []);
+
+  const handleGetEditInfo = useCallback(async (id: number) => {
+    try {
+      const res = await axios({
+        url: `http://boxi.local:40000/core-api/customersegment/${id}`,
+        method: "GET",
+      });
+
+      setSelectedCustomer(res.data?.payload);
+      console.log(
+        "res",
+        res.data?.payload?.segmentCustomers?.map((item: any) => {
+          return {
+            id: item.selectcustomer.id,
+            text: item.selectcustomer.text,
+          };
+        })
+      );
+    } catch (error) {}
+  }, []);
+
   useEffect(() => {
     handleGetSelectData();
   }, [handleGetSelectData]);
+
+  useEffect(() => {
+    if (currentData) {
+      handleGetEditInfo(currentData.id);
+    }
+  }, [currentData, handleGetEditInfo]);
 
   return (
     <div>
@@ -49,41 +146,48 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
           <div className="col-span-2 ">
             <InputText
               wrapperClassName="w-full"
-              label="کد پرسنلی"
-              name="personelCode"
+              label="کد"
+              name="code"
               handleChange={formik.handleChange}
-              // values={formik.values.personelCode}
+              values={formik.values.code}
+              readOnly={currentData ? true : false}
               important
               type={"text"}
-              // error={formik.errors.personelCode}
+              error={formik.touched.code && formik.errors.code}
             />
           </div>
           <div className="col-span-2 ">
             <InputText
               wrapperClassName="w-full"
-              label="کد پرسنلی"
-              name="personelCode"
+              label="عنوان"
+              name="name"
               handleChange={formik.handleChange}
-              // values={formik.values.personelCode}
+              values={formik.values.name}
               important
               type={"text"}
-              // error={formik.errors.personelCode}
+              error={formik.touched.code && formik.errors.name}
             />
           </div>
           <div className={"col-span-1 h-[40px] mb-[20px]"}>
             <CustomSwitch
-              active={true}
+              active={formik.values.isActive}
               handleChange={(value) => formik.setFieldValue("isActive", value)}
             />
           </div>
           <div className="col-span-5">
-            <MultiSelect wrapperClassName="w-full" options={selectOptions} />
+            <MultiSelect
+              wrapperClassName="w-full"
+              options={selectOptions}
+              values={formik.values.selectcustomer}
+              name="selectcustomer"
+              handleChange={formik.setFieldValue}
+            />
           </div>
           <div className="col-span-5">
             <MultiLineText
               label=" ویرایشگر"
-              values={"sd"}
-              name="description"
+              values={""}
+              name="descriptsdion"
               handleChange={formik.handleChange}
               //   error={formik.touched.description && formik.errors.description}
             />
@@ -91,10 +195,10 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
           <div className="col-span-5">
             <MultiLineText
               label=" توضیحات"
-              values={"sd"}
+              values={formik.values.description}
               name="description"
               handleChange={formik.handleChange}
-              //   error={formik.touched.description && formik.errors.description}
+              error={formik.touched.description && formik.errors.description}
             />
           </div>
         </div>
@@ -110,8 +214,12 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
               text="خیر"
               className="full-lightTomato-btn px-[90px]"
               handelClick={() => {
-                // setIsModalOpen(false);
+                setIsModalAddEdit({
+                  isOpen: false,
+                  data: {},
+                });
                 formik.resetForm();
+                setSelectedCustomer({});
               }}
             />
           </div>

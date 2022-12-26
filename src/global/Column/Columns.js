@@ -294,6 +294,6 @@ export const CRMCustomerColumn = [
   },
   {
     Header: "عملیات",
-    accessor: "actionProduct",
+    accessor: "operation",
   },
 ];

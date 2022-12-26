@@ -21,14 +21,14 @@ import VehicleModelLists from "../Transportation/vehicleModel/VehicleModel";
 import RouteLists from "../Transportation/route/RouteData";
 import HubTypeTable from "../HubData/TypeHub";
 import userInfoReducer from "../userInfo/userInfoReducer";
-import VehicleLists from '../Transportation/VehicleData/VehicleData';
-import BagsLists from '../Transportation/bags/Bags'
-import GateLists from '../Transportation/gate/GateData'
-import DockLists from '../Transportation/dock/DockData'
-import ExceptionLists from '../Transportation/exception/ExceptionData'
-import SalesChannelList from '../SaleChannel/SalesChannelReducer'
+import VehicleLists from "../Transportation/VehicleData/VehicleData";
+import BagsLists from "../Transportation/bags/Bags";
+import GateLists from "../Transportation/gate/GateData";
+import DockLists from "../Transportation/dock/DockData";
+import ExceptionLists from "../Transportation/exception/ExceptionData";
+import SalesChannelList from "../SaleChannel/SalesChannelReducer";
 import customGeoReducer from "../customGeo/customGeoReducer";
-import  ProductGroupsData  from "../ProductGroup/ProductGroup";
+import ProductGroupsData from "../ProductGroup/ProductGroup";
 import CRMCustomerGroupReducer from "../CRMCustomerGroup/CRMCustomerGroupReducer";
 const persistConfig = {
   key: "root",
@@ -53,20 +53,18 @@ const reducers = combineReducers({
   editHub: EditHubTable,
   selectRowTable: selectRowTable,
   vendor: VendorList,
-  vehicleModel:VehicleModelLists,
-  route:RouteLists,
-  HubType:HubTypeTable,
-  Vehicle:VehicleLists,
-  bags:BagsLists,
-  gate:GateLists,
-  dock:DockLists,
-  exception:ExceptionLists,
-  saleChannel:SalesChannelList
-  // crmCustomer:CRMCustomerGroupReducer
+  vehicleModel: VehicleModelLists,
+  route: RouteLists,
+  HubType: HubTypeTable,
+  Vehicle: VehicleLists,
+  bags: BagsLists,
+  gate: GateLists,
+  dock: DockLists,
+  exception: ExceptionLists,
+  saleChannel: SalesChannelList,
+  crmCustomer: CRMCustomerGroupReducer,
+  customGeo: customGeoReducer,
   // productG:ProductGroupsData,
-
-  // customGeo: customGeoReducer,
-
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
