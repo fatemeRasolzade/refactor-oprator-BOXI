@@ -5,9 +5,11 @@ import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 
 interface AddProductInfoProps {
   tableList: Array<any>;
+  setTableList: (tableList: Array<any>) => void;
 }
 const AddProductInfo: FC<AddProductInfoProps> = ({
   tableList,
+  setTableList,
 }): JSX.Element => {
   const saveDataHandler = useCallback(async () => {
     if (tableList.length === 0) {
@@ -21,8 +23,9 @@ const AddProductInfo: FC<AddProductInfoProps> = ({
         data: tableList,
       });
       toast.success("مقادیر مورد نظر با موفقیت اضافه گردید");
+      setTableList([]);
     } catch (error) {}
-  }, [tableList]);
+  }, [setTableList, tableList]);
 
   return (
     <div className="my-6">

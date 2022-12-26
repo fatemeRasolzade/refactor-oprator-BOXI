@@ -127,3 +127,18 @@ export const CalculateTime=(time:any)=>{
     return sum
 }
 }
+
+export const DateCompare = (date1:any, date2:any) => {
+  // console.log(date1,date2)
+	let errDate;
+	let isValid = false;
+	const date1Format = new Date(date1.year + "-" + date1.month + "-" + date1.day);
+	const date2Format = new Date(date2.year + "-" + date2.month + "-" + date2.day);
+  console.log(date1Format>date2Format)
+	if (date1Format > date2Format) {
+		errDate = "تاریخ شروع بزرگتر از تاریخ پایان است. ";
+	} else {
+		isValid = true;
+	}
+	return [isValid, errDate];
+};

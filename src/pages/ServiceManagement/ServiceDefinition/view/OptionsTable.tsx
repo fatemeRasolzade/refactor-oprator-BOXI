@@ -1,55 +1,42 @@
-import { BiPlus, BiEdit, BiTrash } from "react-icons/bi";
-import { GrDocumentPdf } from "react-icons/gr";
-import { GoDesktopDownload, GoGear } from "react-icons/go";
-import CustomSwitch from "../../../../global/Switch/Switch";
+import { GoDesktopDownload } from "react-icons/go";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
+import CustomSwitch from "../../../../global/Switch/Switch";
 
-import { useNavigate } from "react-router-dom";
-import AddButton from "../../../../pages/ServiceManagement/ServiceDefinition/view/AddButton";
+
 
 interface propsData {
-  actions?: any;
+  setIsActive?: (value: boolean) => void;
+  isActive: boolean;
+  addComponentProps?: () => JSX.Element;
+  exportExcel: () => void;
 }
 
-const OptionsTable = ({ actions }: propsData) => {
+const OptionsTable = ({ setIsActive, addComponentProps, exportExcel, isActive }: propsData) => {
   return (
     <div className="mt-6">
-      <ul className="flex gap-4 justify-start items-center flex-wrap">
-        <>
+      <ul className="flex gap-6 justify-start items-center flex-wrap">
+
           <li>
-            <AddButton />
+            {addComponentProps ? addComponentProps() : ""}
+            {/*<AddButton   />*/}
             {/* <SimpleButton text="افزودن" className="full-tomato-btn" icon={<BiPlus color="white" />} /> */}
           </li>
           <li>
             <SimpleButton
-              text="افزودن گروهی"
-              icon={<GrDocumentPdf color="black" />}
+                handelClick={exportExcel}
+                text="خروجی اکسل"
+                icon={<GoDesktopDownload color="black" />}
+                className="centering rounded-lg text-black w-full"
             />
-          </li>
-          <li>
-            <SimpleButton text="ویرایش" icon={<BiEdit color="black" />} />
-          </li>
-          <li>
-            <SimpleButton text="حذف" icon={<BiTrash color="black" />} />
           </li>
           <li>
             <CustomSwitch
-              active={true}
-              handleChange={(checked: any) =>
-                console.log("isactive", checked)
-              }
+              active={isActive ? isActive : false}
+              handleChange={(value: any) => setIsActive && setIsActive(value as boolean)}
             />
           </li>
-          <li>
-            <SimpleButton
-              text="خروجی اکسل"
-              icon={<GoDesktopDownload color="black" />}
-            />
-          </li>
-          <li>
-            <SimpleButton text="شخصی سازی" icon={<GoGear color="black" />} />
-          </li>
-        </>
+
+
       </ul>
     </div>
   );

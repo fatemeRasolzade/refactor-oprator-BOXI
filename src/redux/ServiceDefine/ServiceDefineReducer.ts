@@ -1,18 +1,21 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import { PostDataParams } from './../../services/Service_call';
+import { postDataHeaderToServer } from './../../services/Service_call';
 import { apiRoute } from './../../services/apiRoute';
 
 
 export const ServiceData=createAsyncThunk('servicelist',async(body:any)=>{
-    const params = `/filter?pageNumber=1&pageSize=20`;
+    const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
     var data = {};
     try {
-        data = await PostDataParams(apiRoute().post.serviceDefine + params, body);
-    } catch (error) {
+        data = await postDataHeaderToServer(apiRoute().post.serviceDefine + params, {
+        ...body
+        });
+      } catch (error) {
         console.log("error ", error);
-    }
+      }
     return data;
-})
+    })
+
 
 
 const initialState:any= {

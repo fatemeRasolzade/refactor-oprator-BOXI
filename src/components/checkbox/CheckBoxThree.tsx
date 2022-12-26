@@ -49,17 +49,17 @@ const CheckBoxThree: FC<CheckBoxThreeProps> = ({
         <span className="text-[#ef5644]">&nbsp;* &nbsp;</span>
       </div>
       <div className="h-[300px]  border border-[#ababab] text-gray-900 text-sm rounded-lg w-[100%] focus:border-blue-500 block px-2.5 py-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        {loadingNode && (
-          <div className="flex w-full h-[200px] justify-center items-center">
-            <BeatLoader color="#EF5644" />
-          </div>
-        )}
         <input
           value={filtertree}
           placeholder="جستجو ..."
           onChange={onFilterChange}
           className="my-3 w-full  p-2 border  border-[#ababab] rounded-lg outline-0"
         />
+        {loadingNode && (
+          <div className="flex w-full h-[200px] justify-center items-center">
+            <BeatLoader color="#EF5644" />
+          </div>
+        )}
         {!loadingNode && (
           <>
             <CheckboxTree
@@ -73,9 +73,6 @@ const CheckBoxThree: FC<CheckBoxThreeProps> = ({
                 // nodeChecked &&
                 //   nodeChecked(getByID(node?.parent, node.value) || {});
                 nodeChecked && nodeChecked(node);
-                console.log("node", node);
-
-                console.log("sdgnsdvdv", getByID(node?.parent, node.value));
               }}
               onExpand={(expanded: any) => setExpanded(expanded)}
               icons={icons}

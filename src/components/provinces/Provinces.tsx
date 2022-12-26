@@ -98,6 +98,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           handleChange={(name: "string", value: any) => {
             getOptionsFromCity(value, "from");
             form.setFieldValue(name, value);
+            form.setFieldValue("fromSourceCity", []);
           }}
           values={form.values.fromCountryDevision}
           options={countryOptions}
@@ -112,6 +113,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           handleChange={(name: "string", value: any) => {
             getOptionsFromLocation(value, "from");
             form.setFieldValue(name, value);
+            form.setFieldValue("fromSourceLocation", []);
           }}
           values={form.values.fromSourceCity}
           options={cityOption.fromCity}
@@ -139,6 +141,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           handleChange={(name: "string", value: any) => {
             getOptionsFromCity(value, "to");
             form.setFieldValue(name, value);
+            form.setFieldValue("fromDestinationCity", []);
           }}
           values={form.values.toCountryDevision}
           options={countryOptions}
@@ -153,6 +156,7 @@ const Provinces: FC<ProvincesProps> = ({ form }): JSX.Element => {
           handleChange={(name: "string", value: any) => {
             getOptionsFromLocation(value, "to");
             form.setFieldValue(name, value);
+            form.setFieldValue("fromDestinationLocation", []);
           }}
           values={form.values.fromDestinationCity}
           options={cityOption.toCity}
