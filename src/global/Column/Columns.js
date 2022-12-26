@@ -65,42 +65,53 @@ export const RoleColumn = [
 ];
 export const PersonnelColumn = [
   {
+    isRequire: true,
     Header: "کد پرسنلی",
     accessor: "personelCode",
   },
   {
+    isRequire: false,
+
     Header: "کد ملی",
     accessor: "nationalCode",
   },
   {
+    isRequire: false,
     Header: "نام و نام خانوادگی",
     accessor: "name",
   },
   {
+    isRequire: false,
     Header: "شماره موبایل",
     accessor: "mobile",
   },
   {
+    isRequire: false,
     Header: "پست الکترونیک",
     accessor: "email",
   },
   {
+    isRequire: false,
     Header: "آخرین ورود",
     accessor: "lastlogin",
   },
   {
+    isRequire: false,
     Header: "ایجاد شده در ",
     accessor: "createdat",
   },
   {
+    isRequire: false,
     Header: " آخرین بروز رسانی توسط ",
     accessor: "lastupdatedatperson",
   },
   {
+    isRequire: false,
     Header: "تاریخ آخرین بروز رسانی",
     accessor: "lastupdatedat",
   },
   {
+    isRequire: true,
     Header: "عملیات",
     accessor: "operation",
   },
@@ -231,8 +242,7 @@ export const AddGeoColumn = [
   },
 ];
 
-
-export const ProductGroupCulumn=[
+export const ProductGroupCulumn = [
   {
     Header: "کد",
     accessor: "code",
@@ -253,4 +263,27 @@ export const ProductGroupCulumn=[
     Header: "عملیات",
     accessor: "actionProduct",
   },
-]
+];
+
+export const CRMCustomerColumn = [
+  {
+    Header: "کد",
+    accessor: "code",
+  },
+  {
+    Header: "عنوان",
+    accessor: "name",
+  },
+  {
+    Header: "توضیحات",
+    accessor: "description",
+  },
+  {
+    Header: "وضعیت",
+    accessor: "isActive",
+  },
+  {
+    Header: "عملیات",
+    accessor: "actionProduct",
+  },
+];
