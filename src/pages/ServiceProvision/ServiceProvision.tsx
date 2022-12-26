@@ -7,14 +7,17 @@ import StaticTable from './../../components/staticTable/StaticTable';
 import { clearService, ServiceProvisionData } from '../../redux/ServiceProvision/ServiceProvision';
 import { ServiceProvisionColumns } from '../../global/Column/Columns';
 import { BiEditAlt, BiTrash } from 'react-icons/bi';
-
+import DeleteModal from './view/DeleteModal/DeleteModal';
+import {apiRoute} from "../../services/apiRoute"
+import AddModalService from './view/AddModalService/AddModalService';
 const ServiceProvision = () => {
   const dispatch=useDispatch()
 const {serviceList} =useSelector((state:any)=>state.serviceProvision) 
 const {pageNumbers} =useSelector((state:any)=>state.paginate)
-
-
-
+const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
+const [deleteItemId,setdeleteItemId]=useState<number>(0)
+const [isModalEdit, setIsModalEdit] = useState(false);
+const [DataEditModal,setDataEditModal]=useState({})
 useEffect(()=>{
   dispatch(ServiceProvisionData(pageNumbers) as any)
 return()=>{
@@ -29,6 +32,7 @@ useEffect(()=>{
 
 const data=serviceList?.content &&  serviceList.content.map((item:any)=>{
   return{
+    id:item?.id,
     code:item?.code,
     name:item?.name,
     service:item?.service?.text,
@@ -36,10 +40,23 @@ const data=serviceList?.content &&  serviceList.content.map((item:any)=>{
     validDateFrom:<span>{`${item?.validDateFrom.year}/${item?.validDateFrom.month}/${item?.validDateFrom.day}`}</span>,
     validDateTo:<span>{`${item?.validDateTo?.year}/${item?.validDateTo?.month}/${item?.validDateTo?.day}`}</span>,
     type:item?.type?.text,
-    handover:<div className='flex justify-center items-center gap-x-2'><span className='cursor-pointer'><BiEditAlt size={20}/></span> <span className='cursor-pointer'><BiTrash size={20}/></span></div>
+    handover:<div className='flex justify-center items-center gap-x-2'><span className='cursor-pointer'><BiEditAlt size={20} onClick={()=>{
+      console.log(item)
+      setDataEditModal(item)
+      setIsModalEdit(prev=>!prev)
+
+    }}/></span> 
+    
+    <span className='cursor-pointer'><BiTrash size={20} onClick={()=>{
+      setdeleteItemId(item?.id)
+      setIsModalOpenDelete(prev=>!prev)
+    }}/></span></div>
   }
 })
 
+const handelActionAfterDelete=()=>{
+  dispatch(ServiceProvisionData(pageNumbers) as any)
+}
 
 
 const {isUpdating}=useSelector((state:any)=>state.serviceProvision)
@@ -50,7 +67,8 @@ const {isUpdating}=useSelector((state:any)=>state.serviceProvision)
       <Breadcrumb beforePage="مدیریت سرویس" curentPage="ارایه سرویس" />
       <SearchForm isActive={isActive} isUpdating={isUpdating} />
       <OptionTableServiceProvision/>
-
+<DeleteModal isModalOpenDelete={isModalOpenDelete} setIsModalOpenDelete={setIsModalOpenDelete} title="حذف سرویس" itemId={deleteItemId} route={apiRoute().post.service_provision + `/${deleteItemId}`} handleDeleteActionNewData={handelActionAfterDelete}/>
+<AddModalService setIsModalOpen={setIsModalEdit} isModalOpen={isModalEdit} currentData={DataEditModal}/>
 <StaticTable 
 data={data ? data : []}
 column={ServiceProvisionColumns}

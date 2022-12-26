@@ -5,7 +5,7 @@ import InputText from '../../../../global/InputText/InputText';
 import CustomSwitch from '../../../../global/Switch/Switch';
 import DatePickers from '../../../../global/DatePicker/DatePicker';
 import InputSelect from "../../../../global/InputSelect/InputSelect"
-import { Button } from '@material-tailwind/react';
+import { Button, Dialog } from '@material-tailwind/react';
 import { serviceProvitionSchema } from '../validationService/validationService';
 import { postDataHeaderToServer, selectDataFromServerWithHeader } from '../../../../services/Service_call';
 import { apiRoute } from '../../../../services/apiRoute';
@@ -13,15 +13,21 @@ import { ErrorAlert } from '../../../../global/alert/Alert';
 import MultiSelect from '../../../../global/multiselect/MultiSelect';
 import SubTableFormTwo from './SubTableFormTwo';
 import SubTableOne from './SubTableOne';
-const AddModalService = ({isModal}:{isModal:React.Dispatch<React.SetStateAction<boolean>>}) => {
+const AddModalService = ({setIsModalOpen,isModalOpen,currentData}:{setIsModalOpen:React.Dispatch<React.SetStateAction<boolean>>,isModalOpen?:any,currentData?:any}) => {
 
 const [isActive,setIsActive]=useState(true)
 const [subForm,setSubForm]=useState(false)
-const [deliveryDiscountsState,setdeliveryDiscountsState]=useState([])
+
 const [ChanelSale,setChanelSale]=useState([])
 const [DeliveryService,setDeliveryService]=useState([])
 const [SegmentCustomer,setSegmentCustomer]=useState([])
 const [catHub, setCatHub] = useState([]);
+
+const [deliveryTableOne,setdeliveryTableOne]=useState([])
+const [deleveryTableTwo,setdeleveryTableTwo]=useState([])
+
+
+
 useEffect(()=>{
   selectDataFromServerWithHeader(apiRoute().get.Filter_saleschannel).then(res=>{
     if(res.status==="OK"){setChanelSale(res.payload)}else{ErrorAlert("دیتای کانال فروش بارگزاری نشد")}
@@ -40,6 +46,7 @@ useEffect(()=>{
 
 
 
+
 const dicountType=[
   {
     id:0,
@@ -51,42 +58,88 @@ const dicountType=[
   }
 ]
 
-const formik=useFormik({
-  initialValues:{
-    code:"",
-    type:{
-        id: "",
-        text: ""
-    },
-    name:"",
-    description:"",
-    validDateFrom:{
-       day: "",
-       month: "",
-       year: ""
-       },
-    validDateTo:{
-       day: "",
-       month: "",
-       year: ""
-       },
-    deliveryDiscounts:deliveryDiscountsState,
-    service:null,
-    customerSegments:null,
-    serviceDeliveryCustomers:null,
-    saleschannels:null,
-    discountPercent:"",
-    isActive:isActive
-    },
-    // validationSchema:{serviceProvitionSchema},
-    onSubmit:(values)=>{
-console.log(values)
-    }
-})
+// const formik=useFormik({
+//   // enableReinitialize:true,
+
+   
+//   initialValues:{
+//     code:"",
+//     type:{
+//         id: "",
+//         text: ""
+//     },
+//     name:"",
+//     description:"",
+//     validDateFrom:{
+//        day: "",
+//        month: "",
+//        year: ""
+//        },
+//     validDateTo:{
+//        day: "",
+//        month: "",
+//        year: ""
+//        },
+//      deliveryDiscounts:[],
+//     service:null,
+//     customerSegments:null,
+//     serviceDeliveryCustomers:null,
+//     saleschannels:null,
+//     discountPercent:"",
+//     isActive:isActive
+//    },
+   
+//    onSubmit:(values)=>{
+//  // console.log(values)
+//  values.deliveryDiscounts=[...deliveryTableOne ,...deleveryTableTwo]
+//  console.log("oooooo",values)
+//    }
+// })
 
   return (
+<>
+    <Dialog open={isModalOpen} handler={setIsModalOpen} className="p-5 !w-[80%] max-w-[60%] overflow-visible">
+    <div className='flex-between-start'>
+    <h3>ارائه سرویس</h3>
+    <span className='cursor-pointer' onClick={()=>setIsModalOpen(prev=>!prev)}><BiXCircle size={20}/></span>
+    </div>
     <div className='w-full'>
- 
+ <Formik
+ initialValues={{
+  code:currentData?.code ? currentData?.code : "",
+  type:currentData?.type ?  currentData?.type : {
+      id: "",
+      text: ""
+  },
+  name:currentData?.name ? currentData?.name : "",
+  description:currentData?.description ? currentData?.description : "",
+  validDateFrom:currentData?.validDateFrom ? currentData?.validDateFrom : {
+     day: "",
+     month: "",
+     year: ""
+     },
+  validDateTo:currentData?.validDateTo ? currentData?.validDateTo : {
+     day: "",
+     month: "",
+     year: ""
+     },
+   deliveryDiscounts:currentData?.deliveryDiscounts ? currentData?.deliveryDiscounts : [],
+  service:currentData?.service ? currentData?.service : null,
+  customerSegments:currentData?.customerSegments ? currentData?.customerSegments : null,
+  serviceDeliveryCustomers:currentData?.serviceDeliveryCustomers ? currentData?.serviceDeliveryCustomers : null,
+  saleschannels:currentData?.saleschannels ? currentData?.saleschannels : null,
+  discountPercent:currentData?.discountPercent ? currentData?.discountPercent : "",
+  isActive:currentData?.isActive ? currentData?.isActive : isActive
+ }
+
+}
+ onSubmit={(values)=>{
+  values.deliveryDiscounts=[...deliveryTableOne ,...deleveryTableTwo]
+  console.log("oooooo",values)
+ }}
+ >{(formik)=>(
+<>
+
 <form onSubmit={formik.handleSubmit} className="grid grid-cols-4 gap-2 mt-5">
 <div className='col-span-2'><InputText label='عنوان' name="name" handleChange={formik.handleChange} values={formik.values.name} important type={"text"} wrapperClassName="!w-full"/></div>
  
@@ -161,35 +214,40 @@ console.log(values)
 
 </div>
 
+ 
+
+
+
 
 
 </form>
 
-
-
-
-     {formik.values.type.text==="محاسباتی" ? 
+{formik.values.type.text==="محاسباتی" ? 
 <div className='col-span-4 grid grid-cols-2 gap-2'>
-<SubTableOne title="تعداد" setdeliveryDiscountsState={setdeliveryDiscountsState} deliveryDiscountsState={deliveryDiscountsState}/>
-<SubTableFormTwo title="ریال"/>
+<SubTableOne title="تعداد" setTableOne={setdeliveryTableOne}/>
+<SubTableFormTwo title="ریال" setTableTwo={setdeleveryTableTwo}/>
 
 </div> 
 
 : null}
 
-
 <div className="col-span-5 flex flex-row justify-end items-center mt-3">
                 <Button
                   className="border-none bg-secondaryColor text-dark"
-                  onClick={() =>isModal(prev=>!prev)}
-                >
+                  onClick={() =>setIsModalOpen(prev=>!prev)}>
                   بازگشت
                 </Button>
-                <Button className="border-none bg-tomato mr-3" type="submit" onClick={()=>formik.handleSubmit}>
+                <Button className="border-none bg-tomato mr-3"  onClick={()=>formik.handleSubmit()}>
                   افزودن
                 </Button>
               </div>
+</>
+ )}</Formik>
+  
+ 
     </div>
+    </Dialog>
+    </>
   )
 }
 
