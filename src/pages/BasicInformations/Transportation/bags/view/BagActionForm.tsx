@@ -17,9 +17,9 @@ import Modal from "../../../../../global/Modal/Modal";
 import { filterBags } from "../../../../../redux/Transportation/bags/Bags";
 interface PropsData {
   currentData?: any;
-  vendorOptions:any;
-  bagOptions:any;
-  hubOptions:any;
+  vendorOptions: any;
+  bagOptions: any;
+  hubOptions: any;
 }
 const validation = Yup.object().shape({
   bagNumber: Yup.number().required(),
@@ -37,7 +37,7 @@ const validation = Yup.object().shape({
   }),
 });
 
-const BagActionForms: React.FC<PropsData> = ({ currentData,vendorOptions,bagOptions,hubOptions }): JSX.Element => {
+const BagActionForms: React.FC<PropsData> = ({ currentData, vendorOptions, bagOptions, hubOptions }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -136,7 +136,7 @@ const BagActionForms: React.FC<PropsData> = ({ currentData,vendorOptions,bagOpti
         setLoading(true);
         EditDataParams(apiRoute().edit.bags, values).then((res) => {
           // dispatch(updating(true));
-          console.log("run edit");
+
           if (res.status === "OK") {
             setLoading(false);
             SuccessAlert("با موفقیت ویرایش شد");
@@ -178,6 +178,7 @@ const BagActionForms: React.FC<PropsData> = ({ currentData,vendorOptions,bagOpti
             <InputText
               label="شماره کیسه"
               name="bagNumber"
+              readOnly={currentData && true}
               handleChange={formik.handleChange}
               values={formik.values.bagNumber}
               important

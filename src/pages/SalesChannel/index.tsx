@@ -14,7 +14,7 @@ import SearchForm from "./view/SearchForm";
 const SaleChannel: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
-  const { errorMessage, sChannelLists, isUpdating } = useSelector((state: any) => state.saleChannel);
+  const { sChannelLists } = useSelector((state: any) => state?.saleChannel);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
   const handleDeleteActionNewData = () => {
     dispatch(

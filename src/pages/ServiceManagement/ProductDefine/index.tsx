@@ -41,6 +41,7 @@ const ProductDefine = () => {
       ? productLists?.content?.map((item: any) => {
           return {
             ...item,
+          
             operation: (
               <div className="flex w-full gap-3 justify-center">
                 <DeleteOperation
@@ -88,3 +89,5 @@ const ProductDefine = () => {
 };
 
 export default ProductDefine;
+
+

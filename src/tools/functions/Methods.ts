@@ -1,6 +1,7 @@
 import * as XLSX from "xlsx-js-style";
 
 export const ExportExcel = (data: any) => {
+  //  console.log(data,"data is")
   // let row = [
   //   { v: "Courier: 24", t: "s", s: { font: { name: "Courier", sz: 24 } } },
   //   {
@@ -12,12 +13,33 @@ export const ExportExcel = (data: any) => {
   //   { v: "line\nbreak", t: "s", s: { alignment: { wrapText: true } } },
   // ];
   // XLSX.utils.aoa_to_sheet([row]);
+  let row = [
+    { v: "Courier: 24", t: "s", s: { font: { name: "Courier", sz: 24 } } },
+    { v: "bold & color", t: "s", s: { font: { bold: true, color: { rgb: "FF0000" } } } },
+    { v: "fill: color", t: "s", s: { fill: { fgColor: { rgb: "E9E9E9" } } } },
+    { v: "line\nbreak", t: "s", s: { alignment: { wrapText: true } } },
+  ];
 
-  let web = XLSX.utils.book_new(),
-    ws = XLSX.utils.json_to_sheet(data);
 
-  XLSX.utils.book_append_sheet(web, ws, "myfile");
-  XLSX.writeFile(web, "MyExcel.xlsx");
+  let myRow=data.map((item:any)=>{
+    return { v: item.id, t: "s", s: { font: { name: "Courier", sz: 24,color: { rgb: "FF0000" }  } } }
+  })
+  
+//  console.log(myRow.flat(1))
+  let web = XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet([myRow]);
+  XLSX.utils.book_append_sheet(web, ws, "readme demo");
+  XLSX.writeFile(web, "xlsx-js-style-demo.xlsx");
+
+
+
+
+
+
+  // let web = XLSX.utils.book_new(),
+  //   ws = XLSX.utils.json_to_sheet(data);
+  // XLSX.utils.book_append_sheet(web, ws, "myfile");
+  // XLSX.writeFile(web, "MyExcel.xlsx");
 };
 
 export const ReverseArray = (arr: []) => [...arr].reverse();
