@@ -26,7 +26,7 @@ import BagsLists from '../Transportation/bags/Bags'
 import GateLists from '../Transportation/gate/GateData'
 import DockLists from '../Transportation/dock/DockData'
 import ExceptionLists from '../Transportation/exception/ExceptionData'
-
+import SalesChannelList from '../SaleChannel/SalesChannelReducer'
 import customGeoReducer from "../customGeo/customGeoReducer";
 import  ProductGroupsData  from "../ProductGroup/ProductGroup";
 import CRMCustomerGroupReducer from "../CRMCustomerGroup/CRMCustomerGroupReducer";
@@ -61,7 +61,8 @@ const reducers = combineReducers({
   gate:GateLists,
   dock:DockLists,
   exception:ExceptionLists,
-  crmCustomer:CRMCustomerGroupReducer
+  saleChannel:SalesChannelList
+  // crmCustomer:CRMCustomerGroupReducer
   // productG:ProductGroupsData,
 
   // customGeo: customGeoReducer,

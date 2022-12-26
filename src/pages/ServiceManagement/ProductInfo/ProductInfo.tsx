@@ -18,36 +18,38 @@ const ProductInfo = () => {
   const { state } = useLocation();
   const [tableList, setTableList] = useState<Array<any>>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [currentData,setCurrentData]=useState()
+   
   const onDeleteHandler = (id: number) => {
     setTableList(tableList.filter((item) => item.tableId !== id));
     setIsModalOpen(false);
   };
-  const getProductInfoData = useCallback(() => {
-    axios({
-      url: "http://boxi.local:40000/core-api/productattribute/filter?pageNumber=1&pageSize=20",
-      method: "POST",
-      data: {
-        product: state,
-      },
-    });
-  }, [state]);
+  // const getProductInfoData = useCallback(() => {
+  //   axios({
+  //     url: "http://boxi.local:40000/core-api/productattribute/filter?pageNumber=1&pageSize=20",
+  //     method: "POST",
+  //     data: {
+  //       product: state,
+  //     },
+  //   }).then(res=>{
+  //     setTableList(res.data.payload)
+  //   })
+  // }, [state]);
 
-  useEffect(() => {
-    if (state) {
-      getProductInfoData();
-    }
-  }, [getProductInfoData, state]);
-
+  // useEffect(() => {
+  //   if (state) {
+  //     getProductInfoData();
+      
+  //   }
+  // }, [getProductInfoData, state]);
+    
   return (
     <div>
       <Breadcrumb curentPage="تعریف مشخصات محصول" beforePage="مدیریت سرویس" />
       <ProductInfoForm
-        setTableList={(values) =>
-          setTableList((prev) => {
-            return [...prev, values];
-          })
-        }
+        currentData={currentData}
+        setCurrentData={setCurrentData}
+        setTableList={setTableList }
         tableList={tableList}
         isEdit
       />
@@ -55,7 +57,7 @@ const ProductInfo = () => {
         data={tableList.map((item, index) => {
           return {
             id: item.id,
-            product: <span>{item.product.text}</span>,
+            product: <span>{item?.product?.text}</span>,
             status: <span>{item.isActive ? "فعال" : "غیرفعال"}</span>,
             weight: (
               <span>
@@ -75,14 +77,14 @@ const ProductInfo = () => {
                   textProps={item?.usingProduct?.map(
                     (item: any, index: number) => (
                       <div className="text-white" key={index}>
-                        {item?.child.text}
+                        {item?.child?.text}
                       </div>
                     )
                   )}
                 >
                   <div>
                     {item?.usingProduct?.map(
-                      (item: any, index: number) => item?.child.text
+                      (item: any, index: number) => item?.child?.text
                     )}
                   </div>
                 </TooltipWrapper>
@@ -149,7 +151,7 @@ const ProductInfo = () => {
                   )}
               </div>
             ),
-            timeCommitment: <span>{item.timeCommitment.text}</span>,
+            timeCommitment: <span>{item.timeCommitment?.text}</span>,
             destination: (
               <div className="w-full flex justify-center">
                 <TooltipWrapper
@@ -222,7 +224,7 @@ const ProductInfo = () => {
                     className=" border-none	text-[14px]  w-[20px] h-[20px] "
                     // onClick={() => setIsModalOpen(!isModalOpen)}
                   >
-                    <AiOutlineEdit className="w-full h-full" />
+                    <AiOutlineEdit className="w-full h-full" onClick={()=>setCurrentData({...item,index})} />
                   </button>
                 </div>
                 <div>

@@ -35,6 +35,11 @@ export const vehicleModelExcel = {
   fileName: "vehicelMake.xlsx",
 };
 
+export const routeExcel = {
+  url: "core-api/route/importexcelfile?Entity=route",
+  fileName: "route.xlsx",
+};
+
 export const BagExcel = {
   url: "core-api/bag/importexcelfile?Entity=bag",
   fileName: "bag.xlsx",

@@ -12,63 +12,49 @@ import MultiSelect from "../../../../global/multiselect/MultiSelect";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import { useLocation } from "react-router-dom";
-import {
-  convertToObjects,
-  convertUsingProduct,
-} from "../../../../tools/functions/Methods";
+import { convertToObjects, convertUsingProduct } from "../../../../tools/functions/Methods";
 
 interface ProductInfoFormProps {
   tableList: any;
   isEdit?: boolean;
   setTableList: (values: any) => void;
+  currentData: any;
+  setCurrentData:(values: any)=> void
 }
-const ProductInfoForm: FC<ProductInfoFormProps> = ({
-  tableList,
-  setTableList,
-}): JSX.Element => {
+const ProductInfoForm: FC<ProductInfoFormProps> = ({ tableList, setTableList, currentData,setCurrentData }): JSX.Element => {
+     console.log(currentData,"currentData");
+     
   const { state } = useLocation();
   const validation = Yup.object().shape(
     {
-      fromSourceCity: Yup.array().when(
-        "fromDestinationCity",
-        (val: any, schema: any) => {
-          if (val?.length > 0) {
-            return Yup.array().required();
-          } else {
-            return Yup.array().notRequired();
-          }
+      fromSourceCity: Yup.array().when("fromDestinationCity", (val: any, schema: any) => {
+        if (val?.length > 0) {
+          return Yup.array().required();
+        } else {
+          return Yup.array().notRequired();
         }
-      ),
-      fromDestinationCity: Yup.array().when(
-        "fromSourceCity",
-        (val: any, schema: any) => {
-          if (val?.length > 0) {
-            return Yup.array().required();
-          } else {
-            return Yup.array().notRequired();
-          }
+      }),
+      fromDestinationCity: Yup.array().when("fromSourceCity", (val: any, schema: any) => {
+        if (val?.length > 0) {
+          return Yup.array().required();
+        } else {
+          return Yup.array().notRequired();
         }
-      ),
-      fromDestinationLocation: Yup.array().when(
-        "fromSourceLocation",
-        (val: any, schema: any) => {
-          if (val?.length > 0) {
-            return Yup.array().required();
-          } else {
-            return Yup.array().notRequired();
-          }
+      }),
+      fromDestinationLocation: Yup.array().when("fromSourceLocation", (val: any, schema: any) => {
+        if (val?.length > 0) {
+          return Yup.array().required();
+        } else {
+          return Yup.array().notRequired();
         }
-      ),
-      fromSourceLocation: Yup.array().when(
-        "fromDestinationLocation",
-        (val: any, schema: any) => {
-          if (val) {
-            return Yup.array().required();
-          } else {
-            return Yup.array().notRequired();
-          }
+      }),
+      fromSourceLocation: Yup.array().when("fromDestinationLocation", (val: any, schema: any) => {
+        if (val) {
+          return Yup.array().required();
+        } else {
+          return Yup.array().notRequired();
         }
-      ),
+      }),
       fromCountryDevision: Yup.array().required(),
       toCountryDevision: Yup.array().required(),
       usingProduct: Yup.array().required(),
@@ -133,8 +119,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
 
   const getOptionsData = useCallback(async () => {
     const product = "http://boxi.local:40000/core-api/product/select?filter=";
-    const timeCommitment =
-      "http://boxi.local:40000/core-api/timecommitment/select?filter=";
+    const timeCommitment = "http://boxi.local:40000/core-api/timecommitment/select?filter=";
     try {
       const res = Promise.all([
         await axios({
@@ -168,41 +153,53 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
     enableReinitialize: true,
 
     validationSchema: validation,
-    initialValues: {
-      isActive: true,
-      totalValue: "",
-      totalWight: "",
-      fromDim: "",
-      toDimension: "",
-      fromValue: "",
-      toValue: "",
-      fromWeight: "",
-      toWeight: "",
-      usingProduct: "",
-      product: state ? state : undefined,
-      timeCommitment: undefined,
-      fromCountryDevision: "",
-      toCountryDevision: "",
-      fromDestinationCity: "",
-      fromSourceCity: "",
-      fromSourceLocation: "",
-      fromDestinationLocation: "",
-    },
+    initialValues: !!currentData
+      ? {
+          isActive: currentData.isActive,
+          totalValue: currentData.totalValue,
+          totalWight: currentData.totalWight,
+          fromDim: currentData.fromDim,
+          toDimension: currentData.toDimension,
+          fromValue: currentData.fromValue,
+          toValue: currentData.toValue,
+          fromWeight: currentData.fromWeight,
+          toWeight: currentData?.toWeight,
+          usingProduct: currentData?.usingProduct,
+          product: currentData?.product,
+          timeCommitment: currentData.timeCommitment,
+          fromCountryDevision: currentData.fromCountryDevision,
+          toCountryDevision: currentData.toCountryDevision,
+          fromDestinationCity: currentData.fromDestinationCity,
+          fromSourceCity: currentData.fromSourceCity,
+          fromSourceLocation: currentData.fromSourceLocation,
+          fromDestinationLocation: currentData.fromDestinationLocation,
+        }
+      : {
+          isActive: true,
+          totalValue: "",
+          totalWight: "",
+          fromDim: "",
+          toDimension: "",
+          fromValue: "",
+          toValue: "",
+          fromWeight: "",
+          toWeight: "",
+          usingProduct: "",
+          product: state ? state : undefined,
+          timeCommitment: undefined,
+          fromCountryDevision: "",
+          toCountryDevision: "",
+          fromDestinationCity: "",
+          fromSourceCity: "",
+          fromSourceLocation: "",
+          fromDestinationLocation: "",
+        },
     validate: (values) => {
       let errors: any = {};
 
-      const [isValidDigit, errDigit] = DigitCompare(
-        values.fromWeight,
-        values.toWeight
-      );
-      const [isValidValue, errValue] = ValueCompare(
-        values.fromValue,
-        values.toValue
-      );
-      const [isValidDim, errDim] = dimCompare(
-        values.fromDim,
-        values.toDimension
-      );
+      const [isValidDigit, errDigit] = DigitCompare(values.fromWeight, values.toWeight);
+      const [isValidValue, errValue] = ValueCompare(values.fromValue, values.toValue);
+      const [isValidDim, errDim] = dimCompare(values.fromDim, values.toDimension);
 
       if (!isValidValue) {
         errors["fromValue"] = errValue;
@@ -216,10 +213,11 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
       return errors;
     },
     onSubmit: async (values, { resetForm }) => {
-      let fromCountryDevisiondsdsd: any = [];
+      // console.log(values)
+      let fromCountryDevision: any = [];
       let toCountryDevisiond: any = [];
       let attributeDivition;
-      fromCountryDevisiondsdsd =
+      fromCountryDevision =
         values.fromDestinationLocation?.length !== 0
           ? values.fromDestinationLocation
           : values.fromDestinationCity.length !== 0
@@ -228,7 +226,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           ? values.fromCountryDevision
           : [];
       toCountryDevisiond =
-        values.fromSourceLocation.length !== 0
+        values.fromSourceLocation?.length !== 0
           ? values.fromSourceLocation
           : values.fromSourceCity.length !== 0
           ? values.fromSourceCity
@@ -236,37 +234,34 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           ? values.toCountryDevision
           : [];
       attributeDivition =
-        fromCountryDevisiondsdsd.length !== 0
-          ? convertToObjects(
-              fromCountryDevisiondsdsd,
-              toCountryDevisiond,
-              "from"
-            )
+        fromCountryDevision.length !== 0
+          ? convertToObjects(fromCountryDevision, toCountryDevisiond, "from")
           : [];
 
       const data = {
         ...values,
-        totalValue:
-          values.fromValue && values.toValue
-            ? Number(values.fromValue) + Number(values.toValue)
-            : "",
-        totalWight:
-          values.toWeight && values.fromWeight
-            ? Number(values.fromWeight) + Number(values.toWeight)
-            : "",
+        totalValue: values.fromValue && values.toValue ? Number(values.fromValue) + Number(values.toValue) : "",
+        totalWight: values.toWeight && values.fromWeight ? Number(values.fromWeight) + Number(values.toWeight) : "",
         attributeDivition: attributeDivition ? attributeDivition : [],
         usingProduct: convertUsingProduct(values.usingProduct, values.product),
-        tableId: uuid(),
+        tableId: !!currentData ? currentData.tableId : uuid(),
       };
 
-      setTableList(data);
+      if (!!currentData) {
+        const findData = tableList.findIndex((item: any, index: any) => currentData.tableId === item.tableId);
+        const copyAttributeProducts = [...tableList];
+        copyAttributeProducts[findData] = data;
+        setTableList(copyAttributeProducts);
+        setCurrentData('')
+      } else {
+        setTableList([...tableList, data]);
+      }
       resetForm();
     },
   });
 
   useEffect(() => {
     getOptionsData();
-    console.log("loop");
   }, [getOptionsData]);
 
   return (
@@ -305,17 +300,13 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
             values={formik.values.timeCommitment}
             handleChange={formik.setFieldValue}
             options={valuesData.timeCommitment}
-            error={
-              formik.touched.timeCommitment && formik.errors.timeCommitment
-            }
+            error={formik.touched.timeCommitment && formik.errors.timeCommitment}
           />
         </div>
         <div className="py-3 col-span-1">
           <CustomSwitch
             active={formik.values.isActive}
-            handleChange={(checked: any) =>
-              formik.setFieldValue("isActive", checked)
-            }
+            handleChange={(checked: any) => formik.setFieldValue("isActive", checked)}
           />
         </div>
       </div>
@@ -325,7 +316,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           <legend className="px-3">وزن کیلو گرم</legend>
           <InputText
             wrapperClassName="w-full  py-4"
-            important
+
             label="از"
             values={formik.values.fromWeight}
             name="fromWeight"
@@ -334,7 +325,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           />
           <InputText
             wrapperClassName="w-full py-4"
-            important
+      
             label="تا"
             values={formik.values.toWeight}
             name="toWeight"
@@ -346,7 +337,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           <legend className="px-3">ابعاد (سانتی متر)</legend>
           <InputText
             wrapperClassName="w-full  py-4"
-            important
+  
             label="از"
             values={formik.values.fromDim}
             name="fromDim"
@@ -355,7 +346,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           />
           <InputText
             wrapperClassName="w-full  py-4"
-            important
+       
             label="تا"
             values={formik.values.toDimension}
             name="toDimension"
@@ -367,7 +358,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           <legend className="px-3">ارزش (ریال)</legend>
           <InputText
             wrapperClassName="w-full  py-4"
-            important
+        
             label="از"
             values={formik.values.fromValue}
             name="fromValue"
@@ -376,7 +367,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           />
           <InputText
             wrapperClassName="w-full  py-4"
-            important
+       
             label="تا"
             values={formik.values.toValue}
             name="toValue"
