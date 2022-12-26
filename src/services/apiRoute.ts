@@ -164,3 +164,5 @@ export const GET_CUSTOM_COUNTRY_DEVISION = `${CORE_API}/customcountrydevision/se
 //User
 export const GET_USER_PROFILE = `${RESOURCE_API}/employee/info?username=`;
 export const CHANGE_USER_PASSWORD = `${RESOURCE_API}/changepassword/changepassword`;
+export const GET_RECOVERY_CODE = `${RESOURCE_API}/changepassword/forgotpassword`;
+export const CHECK_RECOVERY_CODE = `${RESOURCE_API}/changepassword/checktoken`;

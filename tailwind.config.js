@@ -28,6 +28,7 @@ module.exports = withMT({
       },
       fontFamily: {
         shabnam: ["yekan", "Roboto", "Arial", "sans-serif"],
+        Julee: ["Julee", "sans-serif"],
       },
     },
   },
