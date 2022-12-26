@@ -24,24 +24,24 @@ const ProductInfo = () => {
     setTableList(tableList.filter((item) => item.tableId !== id));
     setIsModalOpen(false);
   };
-  const getProductInfoData = useCallback(() => {
-    axios({
-      url: "http://boxi.local:40000/core-api/productattribute/filter?pageNumber=1&pageSize=20",
-      method: "POST",
-      data: {
-        product: state,
-      },
-    }).then(res=>{
-      setTableList(res.data.payload)
-    })
-  }, [state]);
+  // const getProductInfoData = useCallback(() => {
+  //   axios({
+  //     url: "http://boxi.local:40000/core-api/productattribute/filter?pageNumber=1&pageSize=20",
+  //     method: "POST",
+  //     data: {
+  //       product: state,
+  //     },
+  //   }).then(res=>{
+  //     setTableList(res.data.payload)
+  //   })
+  // }, [state]);
 
-  useEffect(() => {
-    if (state) {
-      getProductInfoData();
+  // useEffect(() => {
+  //   if (state) {
+  //     getProductInfoData();
       
-    }
-  }, [getProductInfoData, state]);
+  //   }
+  // }, [getProductInfoData, state]);
     
   return (
     <div>
