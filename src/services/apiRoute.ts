@@ -21,12 +21,12 @@ export const apiRoute = () => {
       filter_hub: createUrl(CORE_API, "/hub/filter"),
       get_hub_type: createUrl(CORE_API, "/hubCategory/selectHubTypes"),
       get_hub_category: createUrl(CORE_API, "/hubCategory/select"),
-      selectFleetType:createUrl(CORE_API,"/vehicle/selectFleetTypes"),
-      selectVehicleMake:createUrl(CORE_API,'/vehicleMake/select?filter='),
-      selectVehicleCategory:createUrl(CORE_API,"/vehicleCategory/select?filter="),
-      selectfuelTypes:createUrl(CORE_API,"/vehicleMake/selectFuelTypes"),
-      selectVendor:createUrl(CORE_API,'/vendor/select?filter='),
-      selectBagTypes:createUrl(CORE_API,'/bag/selectBagTypes'),
+      selectFleetType: createUrl(CORE_API, "/vehicle/selectFleetTypes"),
+      selectVehicleMake: createUrl(CORE_API, "/vehicleMake/select?filter="),
+      selectVehicleCategory: createUrl(CORE_API, "/vehicleCategory/select?filter="),
+      selectfuelTypes: createUrl(CORE_API, "/vehicleMake/selectFuelTypes"),
+      selectVendor: createUrl(CORE_API, "/vendor/select?filter="),
+      selectBagTypes: createUrl(CORE_API, "/bag/selectBagTypes"),
       //hub_category
       filter_hub_category: createUrl(CORE_API, "/hubCategory/filter"),
       //select hub category
@@ -63,8 +63,8 @@ export const apiRoute = () => {
       GET_SERVICES: createUrl(CORE_API, `/service/select?fliter=`),
     },
     post: {
-      bags:createUrl(CORE_API,'/bag'),
-      route:createUrl(CORE_API,"/route"),
+      bags: createUrl(CORE_API, "/bag"),
+      route: createUrl(CORE_API, "/route"),
       // create
       hub: createUrl(CORE_API, "/hub"),
       createProduct: createUrl(CORE_API, "/product"),
@@ -81,13 +81,12 @@ export const apiRoute = () => {
       filterPersonnel: createUrl(RESOURCE_API, "/employee"),
       serviceDefine: createUrl(CORE_API, "/service"),
       product: createUrl(CORE_API, "/product"),
-      
     },
     postExcel: {
       exception: createUrl(CORE_API, "/exception"),
     },
     delete: {
-      bags:createUrl(CORE_API,'/bag'),
+      bags: createUrl(CORE_API, "/bag"),
       role: createUrl(RESOURCE_API, "/role"),
       Vehicle: createUrl(CORE_API, "/vehicle"),
       personnel: createUrl(RESOURCE_API, "/employee"),
@@ -97,16 +96,15 @@ export const apiRoute = () => {
       productDefine: createUrl(CORE_API, "/product"),
       hubTable: createUrl(CORE_API, "/hub"),
       deleteConnections: createUrl(CORE_API, "/connection"),
-   
     },
     edit: {
-      bags:createUrl(CORE_API,'/bag'),
-      route:createUrl(CORE_API, "/route"),
+      bags: createUrl(CORE_API, "/bag"),
+      route: createUrl(CORE_API, "/route"),
       Vehicle: createUrl(CORE_API, "/vehicle"),
       EditVendor: createUrl(CORE_API, "/vendor"),
       VehicleModel: createUrl(CORE_API, "/vehicleMake"),
       productDefine: createUrl(CORE_API, "/product"),
-      Edithub_category:createUrl(CORE_API,"/hubCategory")
+      Edithub_category: createUrl(CORE_API, "/hubCategory"),
     },
   };
 };
@@ -143,8 +141,8 @@ export const GET_VEHICLEMAKE = `${CORE_API}/vehicleMake/select?filter=`;
 
 //Route
 export const GET_ROUTE = `${CORE_API}/route/select?filter=`;
-export const DELETE_ROUTE= `${CORE_API}/route/`;
-export const deleteConnections = (data:any) => axios.delete(`${CORE_API}/connection`, data);
+export const DELETE_ROUTE = `${CORE_API}/route/`;
+export const deleteConnections = (data: any) => axios.delete(`${CORE_API}/connection`, data);
 
 //hub
 export const HUB_SELECT = `${CORE_API}/hub/select`;
@@ -163,3 +161,5 @@ export const GET_CONSIGNMENT_TYPE = `${CORE_API}/pricelist/consignmenttype`;
 export const GET_PRODUCT_SELECT = `${CORE_API}/product/select?filter`;
 //country devision
 export const GET_CUSTOM_COUNTRY_DEVISION = `${CORE_API}/customcountrydevision/select?filter=`;
+//User
+export const GET_USER_PROFILE = `${RESOURCE_API}/employee/info?username=`;

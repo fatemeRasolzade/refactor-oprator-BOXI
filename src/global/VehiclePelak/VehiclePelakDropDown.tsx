@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { useOnClickOutSide } from "../../tools/hooks/click-outSide-handler";
 
-interface VehiclePelakDrapDownProps {
+interface VehiclePelakDropDownProps {
   list?: Array<string>;
   value: any;
   setValue: any;
@@ -10,7 +10,7 @@ interface VehiclePelakDrapDownProps {
   ReadOnly?: boolean;
 }
 
-const VehiclePelakDrapDown = ({ list = [], value, name, setValue, ReadOnly }: VehiclePelakDrapDownProps) => {
+const VehiclePelakDropDown = ({ list = [], value, name, setValue, ReadOnly }: VehiclePelakDropDownProps) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -64,4 +64,4 @@ const VehiclePelakDrapDown = ({ list = [], value, name, setValue, ReadOnly }: Ve
   );
 };
 
-export default VehiclePelakDrapDown;
+export default VehiclePelakDropDown;
