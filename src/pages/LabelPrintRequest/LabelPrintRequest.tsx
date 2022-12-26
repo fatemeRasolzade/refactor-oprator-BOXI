@@ -1,9 +1,7 @@
-import React from 'react'
+import NotFound from "../../components/NotFound/NotFound";
 
 const LabelPrintRequest = () => {
-  return (
-    <div>LabelPrintRequest</div>
-  )
-}
+  return <NotFound />;
+};
 
-export default LabelPrintRequest
+export default LabelPrintRequest;

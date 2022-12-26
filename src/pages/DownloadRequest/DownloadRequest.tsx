@@ -1,9 +1,7 @@
-import React from 'react'
+import NotFound from "../../components/NotFound/NotFound";
 
 const DownloadRequest = () => {
-  return (
-    <div>DownloadRequest</div>
-  )
-}
+  return <NotFound />;
+};
 
-export default DownloadRequest
+export default DownloadRequest;
