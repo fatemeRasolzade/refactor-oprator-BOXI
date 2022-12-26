@@ -7,7 +7,7 @@ import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
 import AddExcel from "../../../../../components/exel/AddExcel";
-import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
+import { routeExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
 import RouteActionForms from "./RouteActionForm";
 import { v4 as uuidv4 } from "uuid";
@@ -141,7 +141,7 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
         />
       )}
       <AddButton ToggleOptions={ToggleOptions} />
-      <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={routeExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={"افزودن مسیر"}>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">

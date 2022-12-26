@@ -26,7 +26,7 @@ import BagsLists from '../Transportation/bags/Bags'
 import GateLists from '../Transportation/gate/GateData'
 import DockLists from '../Transportation/dock/DockData'
 import ExceptionLists from '../Transportation/exception/ExceptionData'
-
+import SalesChannelList from '../SaleChannel/SalesChannelReducer'
 import customGeoReducer from "../customGeo/customGeoReducer";
 import  ProductGroupsData  from "../ProductGroup/ProductGroup";
 const persistConfig = {
@@ -59,7 +59,8 @@ const reducers = combineReducers({
   bags:BagsLists,
   gate:GateLists,
   dock:DockLists,
-  exception:ExceptionLists
+  exception:ExceptionLists,
+  saleChannel:SalesChannelList
   // productG:ProductGroupsData,
 
   // customGeo: customGeoReducer,

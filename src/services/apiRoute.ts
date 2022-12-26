@@ -67,6 +67,7 @@ export const apiRoute = () => {
       GET_SERVICES: createUrl(CORE_API, `/service/select?fliter=`),
     },
     post: {
+      salesChannel:createUrl(CORE_API,'/saleschannel'),
       bags:createUrl(CORE_API,'/bag'),
       route:createUrl(CORE_API,"/route"),
       gate:createUrl(CORE_API,"/gate"),
@@ -94,6 +95,7 @@ export const apiRoute = () => {
       exception: createUrl(CORE_API, "/exception"),
     },
     delete: {
+      salesChannel:createUrl(CORE_API,'/saleschannel'),
       exception:createUrl(CORE_API,'/exception'),
       gate:createUrl(CORE_API,"/gate"),
       dock:createUrl(CORE_API,"/dock"),
@@ -111,6 +113,7 @@ export const apiRoute = () => {
    
     },
     edit: {
+      salesChannel:createUrl(CORE_API,'/saleschannel'),
       exception:createUrl(CORE_API,'/exception'),
       gate:createUrl(CORE_API,"/gate"),
       dock:createUrl(CORE_API,"/dock"),

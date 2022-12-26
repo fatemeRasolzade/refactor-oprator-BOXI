@@ -18,7 +18,8 @@ interface PropType {
 
 const DatePickers = ({ title, name, values, handleChange, time, timeValues, timeName, error, important }: PropType) => {
   const timePlugin = [<TimePicker position="bottom" hideSeconds />];
-  // console.log({`${values?.year} / ${values?.month} / ${values?.day}`});
+   // @ts-ignore
+  // const timeConvert=time && new Date(null,null,null,timeValues?.split(":")[0],timeValues?.split(":")[1])
 
   return (
     <div className="flex flex-col">
@@ -30,7 +31,11 @@ const DatePickers = ({ title, name, values, handleChange, time, timeValues, time
           className="red"
           calendar={persian}
           name={name}
-          value={`${values?.year + "/" + values?.month + "/" + values?.day}`}
+          value={
+            time
+              ? `${values?.year + "/" + values?.month + "/" + values?.day} ${timeValues}`
+              : `${values?.year + "/" + values?.month + "/" + values?.day}`
+          }
           locale={persian_fa}
           format={time ? `YYYY/MM/DD HH:mm` : "YYYY/MM/DD"}
           calendarPosition="bottom-right"
