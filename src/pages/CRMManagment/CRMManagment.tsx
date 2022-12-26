@@ -1,9 +1,7 @@
-import React from 'react'
+import NotFound from "../../components/NotFound/NotFound";
 
 const CRMManagment = () => {
-  return (
-    <div>CRMManagment</div>
-  )
-}
+  return <NotFound />;
+};
 
-export default CRMManagment
+export default CRMManagment;

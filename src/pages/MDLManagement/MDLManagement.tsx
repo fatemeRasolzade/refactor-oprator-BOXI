@@ -1,9 +1,7 @@
-import React from 'react'
+import NotFound from "../../components/NotFound/NotFound"
 
 const MDLManagement = () => {
-  return (
-    <div>MDLManagement</div>
-  )
+  return <NotFound/>
 }
 
 export default MDLManagement

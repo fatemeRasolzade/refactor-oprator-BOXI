@@ -1,9 +1,7 @@
-import React from 'react'
+import NotFound from "../../components/NotFound/NotFound";
 
 const ConsignmentManage = () => {
-  return (
-    <div>ConsignmentManage</div>
-  )
-}
+  return <NotFound />;
+};
 
-export default ConsignmentManage
+export default ConsignmentManage;

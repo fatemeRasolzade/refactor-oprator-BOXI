@@ -1,9 +1,7 @@
-import React from 'react'
+import NotFound from "../../components/NotFound/NotFound";
 
 const CollectManagement = () => {
-  return (
-    <div>CollectManagement</div>
-  )
-}
+  return <NotFound />;
+};
 
-export default CollectManagement
+export default CollectManagement;
