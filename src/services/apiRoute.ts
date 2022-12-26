@@ -1,4 +1,4 @@
-import axios from "axios";
+
 
 export const CORE_API = `${process.env.REACT_APP_BASE_URL}core-api`;
 export const RESOURCE_API = `${process.env.REACT_APP_BASE_URL}resource-api`;

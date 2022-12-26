@@ -7,6 +7,7 @@ import axios from "axios";
 import MultiSelect from "../../../global/multiselect/MultiSelect";
 import MultiLineText from "../../../global/MultiLineText/MultiLineText";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import { toast } from "react-toastify";
 
 interface SetIsModalAddEditInterface {
   isOpen: boolean;
@@ -43,6 +44,7 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
             return {
               id: item.selectcustomer.id,
               text: item.selectcustomer.text,
+              csID: item?.id,
             };
           })
         : [],
@@ -50,7 +52,6 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
     },
     onSubmit: async (values, { resetForm }) => {
       const data = {
-        id: currentData && currentData.id,
         isActive: values.isActive,
         code: values.code,
         name: values.name,
@@ -75,26 +76,44 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
         segmentCustomers:
           values.selectcustomer &&
           values.selectcustomer?.map((item: any) => {
-            return {
-              selectcustomer: {
-                id: item.id,
-                text: item.text,
-              },
-            };
+            const exists = selectedCustomer?.segmentCustomers.findIndex(
+              (element: any) => element.selectcustomer.text === item.text
+            );
+
+            if (exists > -1) {
+              return {
+                id: selectedCustomer?.segmentCustomers[exists].id,
+                selectcustomer: {
+                  id: item.id,
+                  text: item.text,
+                },
+              };
+            } else {
+              return {
+                selectcustomer: {
+                  id: item.id,
+                  text: item.text,
+                },
+              };
+            }
           }),
       };
 
       try {
         await axios({
           url: "http://boxi.local:40000/core-api/customersegment",
-          method: currentData ? "PUT" : "POST",
-          data: data,
+          method: currentData ? "put" : "POST",
+          data: currentData ? updateData : data,
         });
         setIsModalAddEdit({
           isOpen: false,
           data: {},
         });
         resetForm();
+        setSelectedCustomer({});
+        toast.success(
+          currentData ? "آیتم با موفقیت ویرایش شد " : "آیتم با موفقیت اضافه شد "
+        );
       } catch (error) {}
     },
   });

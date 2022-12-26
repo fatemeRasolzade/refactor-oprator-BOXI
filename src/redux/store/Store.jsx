@@ -28,7 +28,7 @@ import DockLists from "../Transportation/dock/DockData";
 import ExceptionLists from "../Transportation/exception/ExceptionData";
 import SalesChannelList from "../SaleChannel/SalesChannelReducer";
 import customGeoReducer from "../customGeo/customGeoReducer";
-import ProductGroupsData from "../ProductGroup/ProductGroup";
+// import ProductGroupsData from "../ProductGroup/ProductGroup";
 import CRMCustomerGroupReducer from "../CRMCustomerGroup/CRMCustomerGroupReducer";
 const persistConfig = {
   key: "root",
