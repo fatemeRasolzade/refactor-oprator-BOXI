@@ -10,6 +10,7 @@ import { PersonnelColumn } from "../../../global/Column/Columns";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import ModalPerfetional from "../../Hub/Views/ModalPerfetional/ModalPerfetional";
 interface SearchFilterInterface {
+  id: string;
   valueName:
     | "personelCode"
     | "name"
@@ -28,6 +29,7 @@ interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
+  id: string;
 }
 interface PersonnelSearchFromProps {
   isActive: boolean;
@@ -43,6 +45,7 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
 }) => {
   // const dispatch = useDispatch();
   const { pageNumbers } = useSelector((state: any) => state.paginate);
+  console.log(crypto.randomUUID());
 
   const [filterDataChip, setFilterDataChip] = useState({});
   const [searchFilterList, setSearchFilterList] = useState<
@@ -164,36 +167,42 @@ export default PersonnelSearchFrom;
 
 var searchFilterListInit: Array<SearchFilterInterface> = [
   {
+    id: crypto.randomUUID(),
     valueName: "personelCode",
     label: "کد پرسنلی",
     isMain: true,
     isShow: false,
   },
   {
+    id: crypto.randomUUID(),
     label: "نام و نام خانوادگی",
     valueName: "name",
     isMain: false,
     isShow: false,
   },
   {
+    id: crypto.randomUUID(),
     label: "کد ملی",
     valueName: "nationalCode",
     isMain: false,
     isShow: false,
   },
   {
+    id: crypto.randomUUID(),
     label: "شماره موبایل",
     valueName: "mobile",
     isMain: false,
     isShow: false,
   },
   {
+    id: crypto.randomUUID(),
     label: "پست الکترونیک",
     valueName: "email",
     isMain: false,
     isShow: false,
   },
   {
+    id: crypto.randomUUID(),
     label: "نام کاربری",
     valueName: "username",
     isMain: false,

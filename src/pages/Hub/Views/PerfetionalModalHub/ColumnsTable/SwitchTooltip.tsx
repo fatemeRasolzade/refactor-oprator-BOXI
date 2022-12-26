@@ -15,7 +15,7 @@ const SwitchTooltip = ({
   return (
     <div className="flex justify-between items-center ">
       <div className="px-2 w-full">
-        <ChipIcon text={tooltipText} />
+        <ChipIcon text={tooltipText} id="" />
       </div>
 
       <div className="px-2 w-full flex justify-end">
