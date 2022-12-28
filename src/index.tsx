@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
@@ -9,7 +8,7 @@ import App from "./App";
 import Layout from "./components/Layout/Layout";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
-import UserService from "./services/keycloakService";
+// import UserService from "./services/keycloakService";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
@@ -30,6 +29,6 @@ root.render(
   //  </ReactKeycloakProvider>
 );
 
- UserService.initKeycloak(root);
+//  UserService.initKeycloak(root);
 
 reportWebVitals();

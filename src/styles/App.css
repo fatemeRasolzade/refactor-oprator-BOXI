@@ -23,7 +23,9 @@
 .sidenav---sidenav-subnav---1EN61 {
   right: 64px !important;
 }
-
+.css-26l3qy-menu {
+  z-index: 20 !important;
+}
 .rmdp-container {
   width: 100% !important;
 }

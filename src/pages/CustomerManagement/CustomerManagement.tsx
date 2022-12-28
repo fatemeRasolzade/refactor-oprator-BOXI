@@ -16,8 +16,7 @@ const CustomerManagement = () => {
   const [isActive, setIsActive] = useState(true);
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  // @ts-ignore
-  const { pageNumbers } = useSelector((state) => state.paginate);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
   const handleGetExcel = () => ExportExcel(customerList?.content);
 
   const options = [

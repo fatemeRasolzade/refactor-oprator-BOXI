@@ -11,11 +11,12 @@ import NotFound from "./pages/NotFound/NotFound";
 import HubAdd from "./pages/Hub/Views/HubAdd/HubAdd";
 import HubEdit from "./pages/Hub/Views/HubEdit/HubEdit";
 import YupDefault from "./tools/config/YupDefault";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { getUserInfo } from "./redux/userInfo/userInfoReducer";
 import GeoWrapper from "./pages/CustomGeographic/views/AddGeo/GeoWrapper";
 import GeoWrapperEdit from "./pages/CustomGeographic/views/editGeo/GeoWrapperEdit";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,23 +49,13 @@ function App() {
     <div className="App">
       <YupDefault />
       <Routes>
-        {links.map((item) =>
-          item.childs.map((route) => (
-            <Route path={route.to} element={route.component} />
-          ))
-        )}
-
+        {links.map((item) => item.childs.map((route) => <Route path={route.to} element={route.component} />))}
         <Route path="*" element={<NotFound />} />
         <Route path="/hub/add" element={<HubAdd />} />
         <Route path="/hub/edit" element={<HubEdit />} />
-        <Route
-          path="/basic-information/custom-geographic-category/add"
-          element={<GeoWrapper />}
-        />
-        <Route
-          path="/basic-information/custom-geographic-category/edit"
-          element={<GeoWrapperEdit />}
-        />
+        <Route path="/basic-information/custom-geographic-category/add" element={<GeoWrapper />} />
+        <Route path="/basic-information/custom-geographic-category/edit" element={<GeoWrapperEdit />} />
+        <Route path="/forgot_password" element={<ForgotPassword />} />
       </Routes>
     </div>
   );

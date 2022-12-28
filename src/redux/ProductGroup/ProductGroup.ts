@@ -4,17 +4,14 @@ import {postDataHeaderToServer } from '../../services/Service_call';
 
 
     export const ProductGroupsData=createAsyncThunk("ProductGroup",async(body:any)=>{
-
-    console.log("oooooooo",body)
-
-        const params=`/filter?pageNumber=${body.pageNumbers}&pageSize=20`
-        const {payload}=await postDataHeaderToServer(apiRoute().post.product + params , {
+        const params=`/filter?pageNumber=${body.pageNumbers}&pageSize=10`
+        const {payload}=await postDataHeaderToServer(apiRoute().post.Product_Group + params , {
                 code:body.code ? body.code : "",
                 name: body.name ?  body.name : "",
-                description: body.description ? body.description : "",
+                description: body?.description ,
                 isActive: body.isActive,
         })
-           
+          
         return payload
 
     })

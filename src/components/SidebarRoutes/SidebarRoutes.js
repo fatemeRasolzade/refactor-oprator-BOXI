@@ -25,7 +25,6 @@ import MDLManagement from "../../pages/MDLManagement/MDLManagement";
 import Trips from "../../pages/Trips/Trips";
 import CRMManagment from "../../pages/CRMManagment/CRMManagment";
 import Roles from "../../pages/Roles/Roles";
-import ServiceInformation from "../../pages/ServiceInformation/ServiceInformation";
 import ProductInfo from "../../pages/ServiceManagement/ProductInfo/ProductInfo";
 
 import ServiceProvision from "../../pages/ServiceProvision/ServiceProvision";
@@ -40,7 +39,6 @@ import CustomGeographic from "../../pages/CustomGeographic/CustomGeographic";
 import ServiceDefinition from "../../pages/ServiceManagement/ServiceDefinition";
 import ProductDefine from "../../pages/ServiceManagement/ProductDefine";
 import SaleChannel from '../../pages/SalesChannel/index'
-import PinCodeManageMent from "../../pages/BasicInformations/PinCodeManagement/PinCodeManageMent";
 import { BiLogOut } from "react-icons/bi";
 import UserService from "../../services/keycloakService";
 

@@ -31,7 +31,7 @@ const SimpleButton = ({
       type={searchBtn ? "submit" : type}
       className={`btn ${searchBtn && "bg-red"} ${
         disabled && "opacity-60"
-      } ${className}`}
+      } ${className} px-0`}
       onClick={handelClick}
     >
       <span>{searchBtn ? "جستجو" : text}</span>
