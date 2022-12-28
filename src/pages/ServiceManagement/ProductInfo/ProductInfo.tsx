@@ -1,6 +1,6 @@
 import { Dialog } from "@material-tailwind/react";
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+
+import { useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiTrash } from "react-icons/bi";
 import { GrFormClose } from "react-icons/gr";
@@ -15,11 +15,11 @@ import AddProductInfo from "./view/AddProductInfo";
 import ProductInfoForm from "./view/ProductInfoForm";
 
 const ProductInfo = () => {
-  const { state } = useLocation();
+  // const { state } = useLocation();
   const [tableList, setTableList] = useState<Array<any>>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentData,setCurrentData]=useState()
-   
+  const [currentData, setCurrentData] = useState();
+
   const onDeleteHandler = (id: number) => {
     setTableList(tableList.filter((item) => item.tableId !== id));
     setIsModalOpen(false);
@@ -39,17 +39,17 @@ const ProductInfo = () => {
   // useEffect(() => {
   //   if (state) {
   //     getProductInfoData();
-      
+
   //   }
   // }, [getProductInfoData, state]);
-    
+
   return (
     <div>
       <Breadcrumb curentPage="تعریف مشخصات محصول" beforePage="مدیریت سرویس" />
       <ProductInfoForm
         currentData={currentData}
         setCurrentData={setCurrentData}
-        setTableList={setTableList }
+        setTableList={setTableList}
         tableList={tableList}
         isEdit
       />
@@ -224,7 +224,10 @@ const ProductInfo = () => {
                     className=" border-none	text-[14px]  w-[20px] h-[20px] "
                     // onClick={() => setIsModalOpen(!isModalOpen)}
                   >
-                    <AiOutlineEdit className="w-full h-full" onClick={()=>setCurrentData({...item,index})} />
+                    <AiOutlineEdit
+                      className="w-full h-full"
+                      onClick={() => setCurrentData({ ...item, index })}
+                    />
                   </button>
                 </div>
                 <div>

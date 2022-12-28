@@ -70,7 +70,7 @@ const ProductDefine = () => {
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="تعریف محصول" />
-      <SearchForm isActive={isActive} isUpdating={isUpdating} productOptions={options} />
+      <SearchForm isActive={isActive} isUpdating={isUpdating}/>
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}

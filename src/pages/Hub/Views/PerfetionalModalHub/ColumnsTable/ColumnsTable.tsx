@@ -28,7 +28,6 @@ const ColumnsTable: FC<ColumnsTableProps> = ({
     },
     [selectedCol, setSelectedCol]
   );
-  console.log("selectedCol", selectedCol);
 
   return (
     <div>
@@ -74,12 +73,12 @@ const ColumnsTable: FC<ColumnsTableProps> = ({
                     isRequire={items.isRequire}
                     text={items.Header}
                     value={items.accessor}
-                    setDelete={(value: string) =>
+                    setDelete={(value: string) => {
                       !items.isRequire &&
-                      setSelectedCol(
-                        selectedCol.filter((item: any) => item.id !== value)
-                      )
-                    }
+                        setSelectedCol(
+                          selectedCol.filter((item: any) => item.id !== value)
+                        );
+                    }}
                   />
                 </React.Fragment>
               );

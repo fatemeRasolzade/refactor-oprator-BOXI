@@ -45,7 +45,6 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
 }) => {
   // const dispatch = useDispatch();
   const { pageNumbers } = useSelector((state: any) => state.paginate);
-  console.log(crypto.randomUUID());
 
   const [filterDataChip, setFilterDataChip] = useState({});
   const [searchFilterList, setSearchFilterList] = useState<

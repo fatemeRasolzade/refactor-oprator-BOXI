@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export const CORE_API = `${process.env.REACT_APP_BASE_URL}core-api`;
 export const RESOURCE_API = `${process.env.REACT_APP_BASE_URL}resource-api`;
 export const CONSIGNMENT_API = `${process.env.REACT_APP_BASE_URL}consignment-api`;
@@ -11,7 +12,12 @@ const createUrl = (base: any, dir: any) => {
 export const apiRoute = () => {
   return {
     get: {
-      
+    //start select service delivery
+        Fliter_customerSegment:createUrl(CORE_API, "/customersegment/select?filter="),
+        Fliter_Service:createUrl(CORE_API, "/service/select?filter="),
+        Filter_saleschannel:createUrl(CORE_API, "/saleschannel/select?filter="),
+        Filter_servicedeliverycustomers:createUrl(CORE_API, "/servicedeliverycustomers/select?filter="),
+// end  service delivery
       get_city: createUrl(CORE_API, "/countryDevision/city/2/loc?filter="),
       get_province: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),
       get_province_city: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),
@@ -89,6 +95,8 @@ export const apiRoute = () => {
       filterPersonnel: createUrl(RESOURCE_API, "/employee"),
       serviceDefine: createUrl(CORE_API, "/service"),
       product: createUrl(CORE_API, "/product"),
+      Product_Group:createUrl(CORE_API, "/productGroup")
+      
     },
     postExcel: {
       exception: createUrl(CORE_API, "/exception"),
