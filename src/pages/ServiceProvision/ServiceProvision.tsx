@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import SearchForm from '../ServiceManagement/ProductDefine/view/SearchForm';
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,7 +41,7 @@ const data=serviceList?.content &&  serviceList.content.map((item:any)=>{
     validDateTo:<span>{`${item?.validDateTo?.year}/${item?.validDateTo?.month}/${item?.validDateTo?.day}`}</span>,
     type:item?.type?.text,
     handover:<div className='flex justify-center items-center gap-x-2'><span className='cursor-pointer'><BiEditAlt size={20} onClick={()=>{
-      console.log(item)
+     
       setDataEditModal(item)
       setIsModalEdit(prev=>!prev)
 

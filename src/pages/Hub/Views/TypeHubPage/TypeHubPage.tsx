@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import Breadcrumb from '../../../../components/Breadcrumb/Breadcrumb'
 import StaticTable from '../../../../components/staticTable/StaticTable'
 import { HubCategoryColumn } from '../../../../global/Column/Columns'
@@ -6,7 +6,7 @@ import AddModalTable from './AddModalTable'
 import NavbarTypeHub from './NavbarTypeHub'
 import OptionsTableType from './OptionTableType'
 import { useDispatch, useSelector } from 'react-redux';
-import { clearHubType, deleteTable, HubTypeData } from '../../../../redux/HubData/TypeHub'
+import { clearHubType, HubTypeData } from '../../../../redux/HubData/TypeHub'
 import { BiEditAlt,BiTrash } from 'react-icons/bi';
 import { DeleteWithHeader } from '../../../../services/Service_call'
 import { apiRoute } from './../../../../services/apiRoute';
