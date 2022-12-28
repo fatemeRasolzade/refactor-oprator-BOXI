@@ -82,19 +82,6 @@ const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating,productOptions }
   const handleSelect = (val: any, name: string) => {
     formik.setFieldValue(name, val);
   };
-  // useEffect(() => {
-  //   function getDataSelect() {
-  //     try {
-  //       selectDataFromServer(apiRoute().get.GET_PRODUCT_GROUPS).then((res: any) => {
-  //         if (res.status === "OK") setProductOptions(res?.payload?.content);
-  //       });
-  //       // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
-  //     } catch (error) {
-  //       ErrorAlert("دریافت دیتا با خطلا مواجه شد");
-  //     }
-  //   }
-  //   getDataSelect();
-  // }, []);
 
   return (
     <>
