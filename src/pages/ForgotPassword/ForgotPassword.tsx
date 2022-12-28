@@ -61,7 +61,6 @@ const ForgotPassword = () => {
       authenticationCode: auth,
     })
       .then((res) => {
-        console.log(res.data.payload);
         setStep(3);
       })
       .catch(() => {})
@@ -87,7 +86,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex justify-center items-center bg-[#e5e5e5] h-screen">
+    <div className="centering bg-[#e5e5e5] h-screen">
       <div className="w-[23rem] h-[23rem] xl:w-[25rem] xl:h-[27rem] bg-white flex-center-start flex-col p-8 rounded-3xl">
         <h1 className="text-center mb-10 mt-5 !font-Julee text-[3.5rem] tracking-[1rem] text-tomato">BOXI</h1>
         {Step === 1 && <FirstStepRecovery formik={formik} loading={loading} />}
