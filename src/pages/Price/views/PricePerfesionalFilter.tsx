@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import InputSelect from "../../../global/InputSelect/InputSelect";
-import InputText from "../../../global/InputText/InputText";
 import DatePickers from "../../../global/DatePicker/DatePicker";
 import { getDataFromServer } from "../../../services/Service_call";
 import { GET_CONSIGNMENT_TYPE, GET_PRODUCT_SELECT } from "../../../services/apiRoute";
@@ -30,7 +29,7 @@ const PricePerfesionalFilter = ({ formik }: CustomerPerfesionalFilterProps) => {
     getDataFromServer(GET_PRODUCT_SELECT).then((res) => setProduct(res.content));
   };
 
-  const { values, setFieldValue, handleChange }: any = formik;
+  const { values, setFieldValue }: any = formik;
 
   return (
     <>
@@ -47,7 +46,6 @@ const PricePerfesionalFilter = ({ formik }: CustomerPerfesionalFilterProps) => {
           handleChange={setFieldValue}
         />
         <InputSelect options={Classification} label="رده" values={values.classification} name="classification" handleChange={setFieldValue} />
-        {/* <InputText label="مدل" name="vehicleMakeSelect" handleChange={handleChange} values={values.vehicleMakeSelect} /> */}
       </div>
     </>
   );

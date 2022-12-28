@@ -64,35 +64,6 @@ export const PriceAttributeFormValidation = () =>
           return Yup.array().notRequired();
         }
       }),
-
-      // fromSourceState: Yup.string().when("fromDestinationState", {
-      //   is: (value: any) => value,
-      //   then: Yup.string().required(),
-      // }),
-      // fromDestinationCity: Yup.string()
-      //   .ensure()
-      //   .when("fromSourceCity", {
-      //     is: (value: any) => value,
-      //     then: Yup.string().nullable().required(),
-      //   }),
-      // fromSourceCity: Yup.string()
-      //   .ensure()
-      //   .when("fromDestinationCity", {
-      //     is: (value: any) => value,
-      //     then: Yup.string().nullable().required(),
-      //   }),
-      // fromDestinationLocation: Yup.string()
-      //   .ensure()
-      //   .when("fromSourceLocation", {
-      //     is: (value: any) => value,
-      //     then: Yup.string().nullable().required(),
-      //   }),
-      // fromSourceLocation: Yup.string()
-      //   .ensure()
-      //   .when("fromDestinationLocation", {
-      //     is: (value: any) => value,
-      //     then: Yup.string().nullable().required(),
-      //   }),
       price: Yup.number()
         .min(0)
         .when("fixedPrice", {

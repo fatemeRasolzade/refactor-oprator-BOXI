@@ -89,7 +89,6 @@ export const apiRoute = () => {
       filterPersonnel: createUrl(RESOURCE_API, "/employee"),
       serviceDefine: createUrl(CORE_API, "/service"),
       product: createUrl(CORE_API, "/product"),
-      
     },
     postExcel: {
       exception: createUrl(CORE_API, "/exception"),
@@ -110,7 +109,6 @@ export const apiRoute = () => {
       productDefine: createUrl(CORE_API, "/product"),
       hubTable: createUrl(CORE_API, "/hub"),
       deleteConnections: createUrl(CORE_API, "/connection"),
-   
     },
     edit: {
       salesChannel:createUrl(CORE_API,'/saleschannel'),
@@ -161,8 +159,8 @@ export const GET_VEHICLEMAKE = `${CORE_API}/vehicleMake/select?filter=`;
 
 //Route
 export const GET_ROUTE = `${CORE_API}/route/select?filter=`;
-export const DELETE_ROUTE= `${CORE_API}/route/`;
-
+export const DELETE_ROUTE = `${CORE_API}/route/`;
+export const deleteConnections = (data: any) => axios.delete(`${CORE_API}/connection`, data);
 
 //hub
 export const HUB_SELECT = `${CORE_API}/hub/select`;
@@ -181,3 +179,8 @@ export const GET_CONSIGNMENT_TYPE = `${CORE_API}/pricelist/consignmenttype`;
 export const GET_PRODUCT_SELECT = `${CORE_API}/product/select?filter`;
 //country devision
 export const GET_CUSTOM_COUNTRY_DEVISION = `${CORE_API}/customcountrydevision/select?filter=`;
+//User
+export const GET_USER_PROFILE = `${RESOURCE_API}/employee/info?username=`;
+export const CHANGE_USER_PASSWORD = `${RESOURCE_API}/changepassword/changepassword`;
+export const GET_RECOVERY_CODE = `${RESOURCE_API}/changepassword/forgotpassword`;
+export const CHECK_RECOVERY_CODE = `${RESOURCE_API}/changepassword/checktoken`;

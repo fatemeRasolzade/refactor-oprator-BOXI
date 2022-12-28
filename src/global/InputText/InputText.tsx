@@ -35,7 +35,7 @@ const InputText = React.forwardRef(
     }: InputTextProps,
     ref: any
   ) => {
-    const [ShowPassowrd, setShowPassowrd] = useState(false);
+    const [HidePassword, setHidePassword] = useState(true);
     // console.log(error);
 
     return (
@@ -51,12 +51,12 @@ const InputText = React.forwardRef(
             name={name}
             value={values}
             onChange={handleChange}
-            type={ShowPassowrd ? "password" : type}
+            type={HidePassword ? "password" : type}
             placeholder={placeholder}
           />
           {password && (
-            <div className="text-darkBorder cursor-pointer" onClick={() => setShowPassowrd(!ShowPassowrd)}>
-              {ShowPassowrd ? <BiHide size={20} /> : <BiShow size={20} />}
+            <div className="text-darkBorder cursor-pointer" onClick={() => setHidePassword(!HidePassword)}>
+              {HidePassword ? <BiHide size={20} /> : <BiShow size={20} />}
             </div>
           )}
         </div>

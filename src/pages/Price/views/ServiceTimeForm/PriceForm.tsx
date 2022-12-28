@@ -6,15 +6,12 @@ import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../../../../global/Modal/Modal";
 import AddButton from "../../../../global/addButton/AddButton";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
-import { EditDataParams, getDataFromServer, postDataToServer } from "../../../../services/Service_call";
-
+import { EditDataParams, postDataToServer } from "../../../../services/Service_call";
 import PriceFormInformation from "./PriceFormInformation";
 import PriceAttributeForm from "./PriceAttributeForm";
 import { PriceFormCurrentValues, PriceFormInitialValues, PriceFormValidation } from "./PriceFormVariable";
-import { GET_PRODUCT_SELECT, PRICE_API } from "../../../../services/apiRoute";
+import { PRICE_API } from "../../../../services/apiRoute";
 import { priceData } from "../../../../redux/PriceData/PriceData";
-import { array } from "yup";
-import { DigitCompare, ValueCompare } from "../../../ServiceManagement/ProductInfo/view/ProductInfoForm";
 import { DateCompare } from "../../../../tools/functions/Methods";
 
 type PriceFormFormProps = {
@@ -114,7 +111,7 @@ const PriceForm = ({ currentData }: PriceFormFormProps) => {
     },
     initialValues: currentData ? PriceFormCurrentValues(currentData) : PriceFormInitialValues,
     onSubmit: (values: any) => {
-      // setLoading(true);
+      setLoading(true);
       if (Attributes.length === 0) {
         toast.error("هنوز رکوردی ثبت نشده است");
       } else {
