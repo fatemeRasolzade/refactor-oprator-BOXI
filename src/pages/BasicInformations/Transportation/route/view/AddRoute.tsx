@@ -7,7 +7,7 @@ import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
 import AddExcel from "../../../../../components/exel/AddExcel";
-import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
+import { routeExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
 import RouteActionForms from "./RouteActionForm";
 import { v4 as uuidv4 } from "uuid";
@@ -30,12 +30,13 @@ const validation = Yup.object().shape({
 });
 
 const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.Element => {
+ 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [openConnection, setOpenConnections] = useState(false);
-  const [targethubOptions, setTargetHubOptions] = useState(hubOptions);
-  const [desthubOptions, setdesttHubOptions] = useState(hubOptions);
+  const [targethubOptions, setTargetHubOptions] = useState(hubOptions.options);
+  const [desthubOptions, setdesttHubOptions] = useState(hubOptions.options);
   //   const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes, isModalOpen);
 
   const dispatch = useDispatch();
@@ -112,19 +113,19 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
     },
   });
   useEffect(() => {
-    setTargetHubOptions(hubOptions);
-    setdesttHubOptions(hubOptions);
-    // formik.resetForm({});
+    setTargetHubOptions(hubOptions.options);
+    setdesttHubOptions(hubOptions.options);
+    if (isModalOpen) {
+      formik.resetForm({});
+    }
   }, [isModalOpen]);
   const filterData = (item: any, route: any) => {
     console.log(item, "item");
     if (route === "source") {
-      const filter = hubOptions.options.filter((hub: any) => hub.value !== item.value);
-      console.log(filter, "filter", "source");
+      const filter = hubOptions.options.filter((hub: any) => hub.id !== item.id);
       setTargetHubOptions(filter);
     } else if (route === "target") {
-      const filter = hubOptions.options.filter((hub: any) => hub.value !== item.value);
-      console.log(filter, "filter", "target");
+      const filter = hubOptions.options.filter((hub: any) => hub.id !== item.id);
       setdesttHubOptions(filter);
     }
   };
@@ -132,10 +133,15 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
   return (
     <>
       {openConnection && (
-        <RouteActionForms hubOptions={hubOptions} routeValue={formik.values} addOpen={openConnection} setAddOpen={setOpenConnections} />
+        <RouteActionForms
+          hubOptions={hubOptions}
+          routeValue={formik.values}
+          addOpen={openConnection}
+          setAddOpen={setOpenConnections}
+        />
       )}
       <AddButton ToggleOptions={ToggleOptions} />
-      <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={routeExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={"افزودن مسیر"}>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">
@@ -165,13 +171,12 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
                 label="مبدا"
                 important
                 name="selectSourceHub"
-                options={desthubOptions.options}
-                // handleChange={(value: any) => {
-                //   console.log(value,"value")
-                //   filterData(value, "source");
-                //   formik.setFieldValue("selectSourceHub", { id: value.value, text: value.label });
-                // }}
-                handleChange={formik.setFieldValue}
+                options={desthubOptions}
+                handleChange={(name: string, value: any) => {
+                  filterData(value, "source");
+                  formik.setFieldValue("selectSourceHub", { id: value.id, text: value.text });
+                }}
+                // handleChange={formik.setFieldValue}
                 values={formik.values.selectSourceHub}
                 error={formik.touched.selectSourceHub && formik.errors.selectSourceHub}
                 // options={hubOptions.options}
@@ -183,15 +188,14 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
                 label="مقصد"
                 important
                 name="selectTargetHub"
-                handleChange={formik.setFieldValue}
-                // handleChange={(value: any) => {
-
-                //   filterData(value, "target");
-                //   formik.setFieldValue("selectTargetHub", { id: value.value, text: value.label });
-                // }}
+                // handleChange={formik.setFieldValue}
+                handleChange={(name: string, value: any) => {
+                  filterData(value, "target");
+                  formik.setFieldValue("selectTargetHub", { id: value.id, text: value.text });
+                }}
                 values={formik.values.selectTargetHub}
                 error={formik.touched.selectTargetHub && formik.errors.selectTargetHub}
-                options={targethubOptions.options}
+                options={targethubOptions}
               />
             </div>
 
@@ -205,7 +209,7 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
                 error={formik.touched.nodes && formik.errors.nodes}
               />
             </div>
-            <SimpleButton type="submit" text="ایجاد اتصال" className="bg-red-500" />
+            <SimpleButton type="submit" text="ایجاد اتصال" className="bg-[#3b3b3b] text-white" />
           </div>
           {/* <div className="flex-end-center mt-5 gap-3">
             <SimpleButton handelClick={() => setIsModalOpen(false)} text="لغو" className="full-lightTomato-btn" />

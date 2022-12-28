@@ -1,9 +1,7 @@
-import React from 'react'
+import NotFound from "../../components/NotFound/NotFound";
 
 const TripManagement = () => {
-  return (
-    <div>TripManagement</div>
-  )
-}
+  return <NotFound />;
+};
 
-export default TripManagement
+export default TripManagement;

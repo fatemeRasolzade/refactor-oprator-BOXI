@@ -39,6 +39,7 @@ import ServiceTime from "../../pages/ServiceTime/ServiceTime";
 import CustomGeographic from "../../pages/CustomGeographic/CustomGeographic";
 import ServiceDefinition from "../../pages/ServiceManagement/ServiceDefinition";
 import ProductDefine from "../../pages/ServiceManagement/ProductDefine";
+import SaleChannel from '../../pages/SalesChannel/index'
 import PinCodeManageMent from "../../pages/BasicInformations/PinCodeManagement/PinCodeManageMent";
 import { BiLogOut } from "react-icons/bi";
 import UserService from "../../services/keycloakService";
@@ -149,7 +150,12 @@ export const links = [
       {
         to: "/CRM-managment/consignment",
         component: <CRMManagment />,
-        label: "مرسوله",
+        label: "گروه بندی مشتریان",
+      },
+      {
+        to: "/CRM-managment/salesChannel",
+        component: <SaleChannel />,
+        label: "کانال فروش",
       },
     ],
   },

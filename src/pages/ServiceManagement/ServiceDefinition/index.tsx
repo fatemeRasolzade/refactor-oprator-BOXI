@@ -1,47 +1,68 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ServiceData } from "../../../redux/ServiceDefine/ServiceDefineReducer";
-import { ServiceDefineColumns } from "./view/Column";
-import SearchForm from "./view/SearchForm";
+import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../../components/staticTable/StaticTable";
-import Operation from "./view/Operation";
+import DeleteOperation from "../../../components/tableOperation/DeleteOperation";
+import { useFetchOptions } from "../../../global/hooks/useFetchOptions";
+import { ServiceData } from "../../../redux/ServiceDefine/ServiceDefineReducer";
+import { apiRoute } from "../../../services/apiRoute";
+import { ExportExcel } from "../../../tools/functions/Methods";
+import ServiceDefineActionForms from "./view/ActionsForm";
+import { ServiceDefineColumns } from "./view/Column";
 import OptionsTable from "./view/OptionsTable";
+import SearchForm from "./view/SearchForm";
 
-const ServiceDefinition = () => {
+const ServiceDefinition: React.FC = (): JSX.Element => {
+  const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
-  // @ts-ignore
-  const { fetchpost, errorMessage, postLists, isUpdating } = useSelector(
-    (state: any) => state.serviceDefine
-  );
-  useEffect(() => {
+  const { errorMessage, postLists, isUpdating } = useSelector((state: any) => state.serviceDefine);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
+  const { dataOptions: productOptions } = useFetchOptions(apiRoute().get.selectProducts);
+  const { dataOptions: priceOptions } = useFetchOptions(apiRoute().get.selectPriceLists);
+
+  const handleDeleteActionNewData = () => {
     dispatch(
       ServiceData({
-        code: "",
-        name: "",
-        isActive: true,
+        search: "",
+        isActive: isActive,
+        pageSize: 10,
+        pageNumber: pageNumbers,
       }) as any
     );
-  }, [isUpdating]);
+  };
   const data =
     postLists?.content?.length !== 0
       ? postLists?.content?.map((item: any) => {
           return {
             ...item,
-            operation: <Operation itemValue={item} />,
+            operation: (
+              <div className="flex w-full gap-3 justify-center">
+                <DeleteOperation
+                  itemId={item.id}
+                  title={"حذف سرویس"}
+                  handleDeleteActionNewData={handleDeleteActionNewData}
+                  route={apiRoute().delete.serviceDefine + `/${item.id}`}
+                />
+                <ServiceDefineActionForms currentData={item} productOptions={productOptions} priceOptions={priceOptions}/>
+              </div>
+            ),
           };
         })
       : [];
-
-  if (fetchpost) return <p>Loading...</p>;
   return (
     <div>
-      <SearchForm />
-      <OptionsTable />
+      <Breadcrumb beforePage="برگشت" curentPage="تعریف سرویس" />
+      <SearchForm  isActive={isActive} productOptions={productOptions} priceOptions={priceOptions}/>
+      <OptionsTable
+        setIsActive={setIsACtive}
+        isActive={isActive}
+        addComponentProps={() => <ServiceDefineActionForms  productOptions={productOptions} priceOptions={priceOptions}/>}
+        exportExcel={() => ExportExcel(postLists?.content)}
+      />
       <StaticTable
         data={data ? data : []}
         column={ServiceDefineColumns}
-        pagination
+        pagination={postLists?.totalElements}
         selectable={false}
       />
     </div>
@@ -49,3 +70,4 @@ const ServiceDefinition = () => {
 };
 
 export default ServiceDefinition;
+//vendorData

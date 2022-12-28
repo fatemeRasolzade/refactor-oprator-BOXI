@@ -11,6 +11,7 @@ import RouteActionForm from "./view/RouteActionForm";
 import { filterRoute } from "../../../../redux/Transportation/route/RouteData";
 import AddRouteForms from "./view/AddRoute";
 import { useFetchOptions } from "../../../../global/hooks/useFetchOptions";
+import TimePiker from "../../../../global/TimePicker/TimePiker";
 
 const Route: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
@@ -40,7 +41,7 @@ const Route: React.FC = (): JSX.Element => {
                   itemId={item.id}
                   title={"حذف مسیر"}
                   handleDeleteActionNewData={handleDeleteActionNewData}
-                  route={apiRoute().delete.vendor + `/${item.id}`}
+                  route={apiRoute().delete.route + `/${item.id}`}
                 />
                 <RouteActionForm currentData={item} hubOptions={hubOptions}/>
               </div>
@@ -50,7 +51,7 @@ const Route: React.FC = (): JSX.Element => {
       : [];
   return (
     <div>
-      <SearchForm isActive={isActive} />
+      <SearchForm isActive={isActive} hubOptions={hubOptions}/>
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}

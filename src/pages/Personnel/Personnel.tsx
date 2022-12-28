@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -18,6 +18,13 @@ import EditPersonRole from "./view/EditPersonRole";
 import PersonnelSearchFrom from "./view/PersonnelSearchFrom";
 import ScopeOfOperation from "./view/ScopeOfOperation";
 
+interface SelectedColInterface {
+  accessor: string;
+  Header: string;
+  isRequire: boolean;
+  id: string;
+}
+
 interface PersonnelProps {}
 
 const Personnel: FC<PersonnelProps> = (): JSX.Element => {
@@ -28,7 +35,20 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   );
   const userInfo = useSelector((state: any) => state.userInfo);
   const [isActive, setIsActive] = useState<boolean>(true);
-
+  const [selectedCol, setSelectedCol] = useState<Array<SelectedColInterface>>([
+    {
+      id: crypto.randomUUID(),
+      isRequire: true,
+      Header: "کد پرسنلی",
+      accessor: "personelCode",
+    },
+    {
+      id: crypto.randomUUID(),
+      isRequire: true,
+      Header: "عملیات",
+      accessor: "operation",
+    },
+  ]);
   const [filterData, setFilterData] = useState({
     personelCode: "",
     name: "",
@@ -50,6 +70,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
       }) as any
     );
   };
+  const handleGetPersonnelCustomization = useCallback(async () => {}, []);
 
   useEffect(() => {
     dispatch(
@@ -63,7 +84,6 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     return () => {
       dispatch(clearPersonnel() as any);
       dispatch(clearRows());
-      console.log("loop");
     };
   }, [
     dispatch,
@@ -73,6 +93,9 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
     pageNumbers,
     userInfo?.hublist,
   ]);
+  useEffect(() => {
+    handleGetPersonnelCustomization();
+  }, [handleGetPersonnelCustomization]);
 
   const data: any =
     personnelList?.content || personnelList?.content?.length !== 0
@@ -105,7 +128,14 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   return (
     <div>
       <Breadcrumb curentPage="مدیریت پرسنل" />
-      <PersonnelSearchFrom isActive={isActive} setFilterData={setFilterData} />
+      <PersonnelSearchFrom
+        isActive={isActive}
+        setFilterData={setFilterData}
+        selectedCol={selectedCol}
+        setSelectedCol={(value: Array<SelectedColInterface>) =>
+          setSelectedCol(value)
+        }
+      />
       <OptionsTable
         addComponentProps={() => <AddEditPerson />}
         exportExcel={() => ExportExcel(personnelList?.content)}
@@ -122,7 +152,7 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
 
       <StaticTable
         data={data ? data : []}
-        column={PersonnelColumn}
+        column={selectedCol.length > 2 ? selectedCol : PersonnelColumn}
         pagination={personnelList?.totalElements}
         selectable={true}
       />

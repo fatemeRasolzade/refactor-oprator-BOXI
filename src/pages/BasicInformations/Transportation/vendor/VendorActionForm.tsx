@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Button, Dialog } from "@material-tailwind/react";
+
 import { useFormik } from "formik";
 import InputText from "../../../../global/InputText/InputText";
 import { apiRoute } from "../../../../services/apiRoute";
-import {
-  EditDataParams,
-  PostDataParams,
-} from "../../../../services/Service_call";
-import {  SuccessAlert } from "../../../../global/alert/Alert";
+import { EditDataParams, PostDataParams } from "../../../../services/Service_call";
+import { SuccessAlert } from "../../../../global/alert/Alert";
 import { useDispatch } from "react-redux";
 import { AiOutlineEdit } from "react-icons/ai";
 import AddButton from "../../../../global/addButton/AddButton";
 import AddExcel from "../../../../components/exel/AddExcel";
 import { vendorData } from "../../../../redux/Transportation/vendor/VendorData";
-import {
-  ContactNumberValidate,
-  NationalIDValidator,
-} from "../../../../tools/validations/ErrorHelper";
+import { ContactNumberValidate, NationalIDValidator } from "../../../../tools/validations/ErrorHelper";
 import * as Yup from "yup";
-import { vehicleExcel } from "../../../../tools/services/ExcelInfoFile";
+import {  VendorExcel } from "../../../../tools/services/ExcelInfoFile";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
+import CustomSwitch from "../../../../global/Switch/Switch";
+import Modal from "../../../../global/Modal/Modal";
 interface PropsData {
   currentData?: any;
 }
@@ -30,9 +26,7 @@ const validation = Yup.object().shape({
   contactNumber: Yup.number().label("شماره تماس"),
 });
 
-const VendorActionForms: React.FC<PropsData> = ({
-  currentData,
-}): JSX.Element => {
+const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
 
@@ -59,7 +53,7 @@ const VendorActionForms: React.FC<PropsData> = ({
           name: currentData?.name,
           contactNumber: currentData?.contactNumber,
           nationalCode: currentData?.nationalCode,
-          isActive: true,
+          isActive: currentData?.isActive,
         }
       : {
           code: "",
@@ -72,9 +66,7 @@ const VendorActionForms: React.FC<PropsData> = ({
     validate: (values) => {
       const errors = {};
       const [isValidNC, errNC] = NationalIDValidator(values.nationalCode);
-      const [isValidContact, errContact] = ContactNumberValidate(
-        values.contactNumber
-      );
+      const [isValidContact, errContact] = ContactNumberValidate(values.contactNumber);
       if (!isValidNC) {
         // @ts-ignore
         errors.nationalCode = errNC;
@@ -141,23 +133,25 @@ const VendorActionForms: React.FC<PropsData> = ({
       {!currentData ? (
         <AddButton ToggleOptions={ToggleOptions} />
       ) : (
-        <button
-          className=" border-none	 text-[14px]  w-[20px] h-[20px] "
-          onClick={() => setIsModalOpen(!isModalOpen)}
-        >
+        <button className=" border-none	 text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={vehicleExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={VendorExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
       {/* <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} /> */}
-      <Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[600px] w-[400px]"}>
-        <div className="text-lg font-medium">{currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}</div>
+
+      <Modal
+        visible={isModalOpen}
+        setVisible={setIsModalOpen}
+        title={currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}
+      >
         <form onSubmit={formik.handleSubmit}>
-          <div className="  grid grid-cols-2 mt-8 gap-y-4 gap-x-2 content-center">
+          <div className="  grid grid-cols-2 mt-8 gap-4 content-center">
             <div>
               <InputText
                 label="کد شرکت"
                 // className="w-full"
+                readOnly={currentData?true:false}
                 name="code"
                 handleChange={formik.handleChange}
                 values={formik.values.code}
@@ -187,9 +181,7 @@ const VendorActionForms: React.FC<PropsData> = ({
                 handleChange={formik.handleChange}
                 values={formik.values.contactNumber}
                 type={"text"}
-                error={
-                  formik.touched.contactNumber && formik.errors.contactNumber
-                }
+                error={formik.touched.contactNumber && formik.errors.contactNumber}
               />
             </div>
 
@@ -202,11 +194,13 @@ const VendorActionForms: React.FC<PropsData> = ({
                 values={formik.values.nationalCode}
                 important
                 type={"text"}
-                error={
-                  formik.touched.nationalCode && formik.errors.nationalCode
-                }
+                error={formik.touched.nationalCode && formik.errors.nationalCode}
               />
             </div>
+            <CustomSwitch
+              active={formik.values.isActive}
+              handleChange={(value: any) => formik.setFieldValue("isActive", value)}
+            />
           </div>
 
           <div className="flex-end-center mt-5 gap-3">
@@ -219,9 +213,10 @@ const VendorActionForms: React.FC<PropsData> = ({
             />
           </div>
         </form>
-      </Dialog>
+        </Modal>
+      {/* </Dialog> */}
     </>
   );
 };
 
-export default VendorActionForms
+export default VendorActionForms;

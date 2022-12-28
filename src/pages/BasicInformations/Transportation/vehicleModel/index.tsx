@@ -7,8 +7,6 @@ import { vehicleModel } from "../../../../redux/Transportation/vehicleModel/Vehi
 import { apiRoute } from "../../../../services/apiRoute";
 import { ExportExcel } from "../../../../tools/functions/Methods";
 import { VehicleModelColumns } from "./view/Column";
-
-
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
 import VehicleMakeActionForms from "./view/VehicleMakeActionForm";

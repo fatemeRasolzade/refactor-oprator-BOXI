@@ -165,4 +165,7 @@
   .Pagination {
     text-align: center !important;
   }
+  .searchForm {
+    @apply flex-start-start mt-6 gap-4 flex-wrap;
+  }
 }

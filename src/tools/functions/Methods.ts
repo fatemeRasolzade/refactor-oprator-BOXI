@@ -22,13 +22,6 @@ export const ExportExcel = (data: any) => {
 
 export const ReverseArray = (arr: []) => [...arr].reverse();
 
-interface getPelakProps {
-  vehicleNumber0: string | number;
-  vehicleNumber1: string | number;
-  vehicleNumber2: string | number;
-  vehicleNumber3: string | number;
-}
-
 export const getPelak = (values: any) =>
   values.vehicleNumber3 ? `${values.vehicleNumber3} - ${values.vehicleNumber2}  ${values.vehicleNumber1}  ${values.vehicleNumber0}` : "";
 
@@ -62,11 +55,34 @@ export const convertUsingProduct = (usingProduct: any, product: any) => {
   return arr;
 };
 
+export const DateCompare = (date1: any, date2: any) => {
+  let errDate;
+  let isValid = false;
+  const date1Format = new Date(date1.year + "-" + date1.month + "-" + date1.day);
+  const date2Format = new Date(date2.year + "-" + date2.month + "-" + date2.day);
+  if (date1Format > date2Format) {
+    errDate = "تاریخ شروع بزرگتر از تاریخ پایان است. ";
+  } else {
+    isValid = true;
+  }
+  return [isValid, errDate];
+};
 
+export const SplitString = (value: string) => {
+  return value.split(/([0-9]+)/)[0];
+};
+export const SplitNumber = (value: string) => {
+  return value.split(/([0-9]+)/)[1];
+};
 
-export const SplitString=(value:string)=>{
-  return  value.split(/([0-9]+)/)[0]
-}
-export const SplitNumber=(value:string)=>{
- return value.split(/([0-9]+)/)[1]
-}
+export const findNode = (tree: any, value: string) => {
+  let result = null;
+  if (value === tree.value) {
+    return tree;
+  } else {
+    if (tree.children) {
+      tree.children.some((node: any) => (result = findNode(node, value)));
+    }
+    return result;
+  }
+};

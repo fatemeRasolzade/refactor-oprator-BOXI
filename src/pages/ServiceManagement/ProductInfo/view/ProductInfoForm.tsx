@@ -21,11 +21,17 @@ interface ProductInfoFormProps {
   tableList: any;
   isEdit?: boolean;
   setTableList: (values: any) => void;
+  currentData: any;
+  setCurrentData: (values: any) => void;
 }
 const ProductInfoForm: FC<ProductInfoFormProps> = ({
   tableList,
   setTableList,
+  currentData,
+  setCurrentData,
 }): JSX.Element => {
+  console.log(currentData, "currentData");
+
   const { state } = useLocation();
   const validation = Yup.object().shape(
     {
@@ -126,11 +132,6 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
     timeCommitment: [],
   });
 
-  const [cityOption, setCityOption] = useState({
-    fromCity: [],
-    toCity: [],
-  });
-
   const getOptionsData = useCallback(async () => {
     const product = "http://boxi.local:40000/core-api/product/select?filter=";
     const timeCommitment =
@@ -159,35 +160,53 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
     } catch (error) {}
   }, []);
 
-  const saveData = useCallback(async () => {
-    try {
-    } catch (error) {}
-  }, []);
+ 
 
   const formik = useFormik({
     enableReinitialize: true,
 
     validationSchema: validation,
-    initialValues: {
-      isActive: true,
-      totalValue: "",
-      totalWight: "",
-      fromDim: "",
-      toDimension: "",
-      fromValue: "",
-      toValue: "",
-      fromWeight: "",
-      toWeight: "",
-      usingProduct: "",
-      product: state ? state : undefined,
-      timeCommitment: undefined,
-      fromCountryDevision: "",
-      toCountryDevision: "",
-      fromDestinationCity: "",
-      fromSourceCity: "",
-      fromSourceLocation: "",
-      fromDestinationLocation: "",
-    },
+    initialValues: !!currentData
+      ? {
+          isActive: currentData.isActive,
+          totalValue: currentData.totalValue,
+          totalWight: currentData.totalWight,
+          fromDim: currentData.fromDim,
+          toDimension: currentData.toDimension,
+          fromValue: currentData.fromValue,
+          toValue: currentData.toValue,
+          fromWeight: currentData.fromWeight,
+          toWeight: currentData?.toWeight,
+          usingProduct: currentData?.usingProduct,
+          product: currentData?.product,
+          timeCommitment: currentData.timeCommitment,
+          fromCountryDevision: currentData.fromCountryDevision,
+          toCountryDevision: currentData.toCountryDevision,
+          fromDestinationCity: currentData.fromDestinationCity,
+          fromSourceCity: currentData.fromSourceCity,
+          fromSourceLocation: currentData.fromSourceLocation,
+          fromDestinationLocation: currentData.fromDestinationLocation,
+        }
+      : {
+          isActive: true,
+          totalValue: "",
+          totalWight: "",
+          fromDim: "",
+          toDimension: "",
+          fromValue: "",
+          toValue: "",
+          fromWeight: "",
+          toWeight: "",
+          usingProduct: "",
+          product: state ? state : undefined,
+          timeCommitment: undefined,
+          fromCountryDevision: "",
+          toCountryDevision: "",
+          fromDestinationCity: "",
+          fromSourceCity: "",
+          fromSourceLocation: "",
+          fromDestinationLocation: "",
+        },
     validate: (values) => {
       let errors: any = {};
 
@@ -216,10 +235,11 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
       return errors;
     },
     onSubmit: async (values, { resetForm }) => {
-      let fromCountryDevisiondsdsd: any = [];
+      // console.log(values)
+      let fromCountryDevision: any = [];
       let toCountryDevisiond: any = [];
       let attributeDivition;
-      fromCountryDevisiondsdsd =
+      fromCountryDevision =
         values.fromDestinationLocation?.length !== 0
           ? values.fromDestinationLocation
           : values.fromDestinationCity.length !== 0
@@ -228,7 +248,7 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           ? values.fromCountryDevision
           : [];
       toCountryDevisiond =
-        values.fromSourceLocation.length !== 0
+        values.fromSourceLocation?.length !== 0
           ? values.fromSourceLocation
           : values.fromSourceCity.length !== 0
           ? values.fromSourceCity
@@ -236,12 +256,8 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           ? values.toCountryDevision
           : [];
       attributeDivition =
-        fromCountryDevisiondsdsd.length !== 0
-          ? convertToObjects(
-              fromCountryDevisiondsdsd,
-              toCountryDevisiond,
-              "from"
-            )
+        fromCountryDevision.length !== 0
+          ? convertToObjects(fromCountryDevision, toCountryDevisiond, "from")
           : [];
 
       const data = {
@@ -256,17 +272,26 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
             : "",
         attributeDivition: attributeDivition ? attributeDivition : [],
         usingProduct: convertUsingProduct(values.usingProduct, values.product),
-        tableId: uuid(),
+        tableId: !!currentData ? currentData.tableId : uuid(),
       };
 
-      setTableList(data);
+      if (!!currentData) {
+        const findData = tableList.findIndex(
+          (item: any, index: any) => currentData.tableId === item.tableId
+        );
+        const copyAttributeProducts = [...tableList];
+        copyAttributeProducts[findData] = data;
+        setTableList(copyAttributeProducts);
+        setCurrentData("");
+      } else {
+        setTableList([...tableList, data]);
+      }
       resetForm();
     },
   });
 
   useEffect(() => {
     getOptionsData();
-    console.log("loop");
   }, [getOptionsData]);
 
   return (
@@ -325,7 +350,6 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           <legend className="px-3">وزن کیلو گرم</legend>
           <InputText
             wrapperClassName="w-full  py-4"
-            important
             label="از"
             values={formik.values.fromWeight}
             name="fromWeight"
@@ -334,7 +358,6 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           />
           <InputText
             wrapperClassName="w-full py-4"
-            important
             label="تا"
             values={formik.values.toWeight}
             name="toWeight"
@@ -346,7 +369,6 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           <legend className="px-3">ابعاد (سانتی متر)</legend>
           <InputText
             wrapperClassName="w-full  py-4"
-            important
             label="از"
             values={formik.values.fromDim}
             name="fromDim"
@@ -355,7 +377,6 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           />
           <InputText
             wrapperClassName="w-full  py-4"
-            important
             label="تا"
             values={formik.values.toDimension}
             name="toDimension"
@@ -367,7 +388,6 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           <legend className="px-3">ارزش (ریال)</legend>
           <InputText
             wrapperClassName="w-full  py-4"
-            important
             label="از"
             values={formik.values.fromValue}
             name="fromValue"
@@ -376,7 +396,6 @@ const ProductInfoForm: FC<ProductInfoFormProps> = ({
           />
           <InputText
             wrapperClassName="w-full  py-4"
-            important
             label="تا"
             values={formik.values.toValue}
             name="toValue"

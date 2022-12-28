@@ -13,12 +13,14 @@ interface InputSelectProps {
   wrapperClassName?: string;
   isMulti?: boolean;
   isDisabled?: boolean;
+  isClearable?: boolean;
 }
 
 const InputSelect: FC<InputSelectProps> = ({
   label,
   name,
   // blure,
+  isClearable,
   values,
   options,
   handleChange,
@@ -64,7 +66,7 @@ const InputSelect: FC<InputSelectProps> = ({
         {label} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
       </label>
       <Select
-        // isOptionDisabled={(option) => option.isdisabled}
+        isClearable={isClearable}
         isMulti={isMulti}
         isLoading={options ? false : true}
         // value={
@@ -95,7 +97,7 @@ const InputSelect: FC<InputSelectProps> = ({
         placeholder=""
         isRtl
         name={name}
-        className="inputSelect focus:outline-none flex"
+        className=" focus:outline-none flex"
       />
       <p className="text-red text-xs pr-3 h-4 mt-1">{error?.text}</p>
     </div>

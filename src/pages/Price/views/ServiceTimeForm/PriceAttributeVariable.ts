@@ -17,59 +17,82 @@ export const PriceAttributeFormValidation = () =>
           }
         }),
       isParametric: Yup.boolean(),
-      // customDevision: Yup.string().ensure()
-      // .when("classification", {
-      // is: (classification) =>(classification?.id === "1"  ? true : false),
-      // then: Yup.string().nullable(true).required(),
-      // otherwise: Yup.string(), // unnecessary
-      // }),
-      // customDevision: Yup.string()
-      //   .ensure()
-      //   .when("classification", (val: any, schema: any) => {
-      //     console.log("VAL************", val);
+      fromCountryDevision: Yup.string()
+        .ensure()
+        .when("classification", (val: any, schema: any) => {
+          if (val.id === 2) {
+            return Yup.array().required();
+          } else {
+            return Yup.string().nullable(true);
+          }
+        }),
+      toCountryDevision: Yup.string()
+        .ensure()
+        .when("classification", (val: any, schema: any) => {
+          if (val.id === 2) {
+            return Yup.array().required();
+          } else {
+            return Yup.string().nullable(true);
+          }
+        }),
 
-      //     if (val.id === 1) {
-      //       return Yup.object().required();
-      //     }
-          
-      //     else {
-      //       return Yup.string().nullable(true);
-      //     }
-      //   }),
-      fromDestinationState: Yup.string()
-        .ensure()
-        .when("classification", {
-          is: (classification: any) => (classification?.id === "2" ? true : false),
-          then: Yup.string().required(),
-        }),
-      fromSourceState: Yup.string().when("fromDestinationState", {
-        is: (value: any) => value,
-        then: Yup.string().required(),
+      fromSourceCity: Yup.array().when("fromDestinationCity", (val: any, schema: any) => {
+        if (val?.length > 0) {
+          return Yup.array().required();
+        } else {
+          return Yup.array().notRequired();
+        }
       }),
-      fromDestinationCity: Yup.string()
-        .ensure()
-        .when("fromSourceCity", {
-          is: (value: any) => value,
-          then: Yup.string().nullable().required(),
-        }),
-      fromSourceCity: Yup.string()
-        .ensure()
-        .when("fromDestinationCity", {
-          is: (value: any) => value,
-          then: Yup.string().nullable().required(),
-        }),
-      fromDestinationLocation: Yup.string()
-        .ensure()
-        .when("fromSourceLocation", {
-          is: (value: any) => value,
-          then: Yup.string().nullable().required(),
-        }),
-      fromSourceLocation: Yup.string()
-        .ensure()
-        .when("fromDestinationLocation", {
-          is: (value: any) => value,
-          then: Yup.string().nullable().required(),
-        }),
+      fromDestinationCity: Yup.array().when("fromSourceCity", (val: any, schema: any) => {
+        if (val?.length > 0) {
+          return Yup.array().required();
+        } else {
+          return Yup.array().notRequired();
+        }
+      }),
+      fromDestinationLocation: Yup.array().when("fromSourceLocation", (val: any, schema: any) => {
+        if (val?.length > 0) {
+          return Yup.array().required();
+        } else {
+          return Yup.array().notRequired();
+        }
+      }),
+      fromSourceLocation: Yup.array().when("fromDestinationLocation", (val: any, schema: any) => {
+        if (val) {
+          return Yup.array().required();
+        } else {
+          return Yup.array().notRequired();
+        }
+      }),
+
+      // fromSourceState: Yup.string().when("fromDestinationState", {
+      //   is: (value: any) => value,
+      //   then: Yup.string().required(),
+      // }),
+      // fromDestinationCity: Yup.string()
+      //   .ensure()
+      //   .when("fromSourceCity", {
+      //     is: (value: any) => value,
+      //     then: Yup.string().nullable().required(),
+      //   }),
+      // fromSourceCity: Yup.string()
+      //   .ensure()
+      //   .when("fromDestinationCity", {
+      //     is: (value: any) => value,
+      //     then: Yup.string().nullable().required(),
+      //   }),
+      // fromDestinationLocation: Yup.string()
+      //   .ensure()
+      //   .when("fromSourceLocation", {
+      //     is: (value: any) => value,
+      //     then: Yup.string().nullable().required(),
+      //   }),
+      // fromSourceLocation: Yup.string()
+      //   .ensure()
+      //   .when("fromDestinationLocation", {
+      //     is: (value: any) => value,
+      //     then: Yup.string().nullable().required(),
+      //   }),
       price: Yup.number()
         .min(0)
         .when("fixedPrice", {
@@ -114,6 +137,12 @@ export const PriceAttributeFormInitialValues = {
   priceList: null,
   customDevision: null,
   isActive: true,
+  fromCountryDevision: "",
+  toCountryDevision: "",
+  fromDestinationCity: "",
+  fromSourceCity: "",
+  fromSourceLocation: "",
+  fromDestinationLocation: "",
   priceDetailDevisions: [],
   classification: { id: "", text: "" },
   totalWight: { from: "", to: "" },

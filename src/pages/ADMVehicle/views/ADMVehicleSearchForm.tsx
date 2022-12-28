@@ -50,16 +50,15 @@ const ADMVehicleSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
 
   return (
     <>
-      <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col ">
-        <form className="flex-start-start flex-wrap gap-5" onSubmit={handleSubmit}>
-          <VehiclePelak formik={formik} />
-          <AutocompleteInput label="هاب مرکز گزارش" value={values.hubName} onChange={(e) => setFieldValue("hubName", e.target.value)} />
-          <SimpleButton searchBtn />
-          <PerfesionalSearch formData={handleSubmit} handleReset={handleReset}>
-            <ADMVehiclePerfesionalFilter formik={formik} />
-          </PerfesionalSearch>
-        </form>
-      </div>
+      <form className="searchForm" onSubmit={handleSubmit}>
+        <VehiclePelak formik={formik} />
+        <AutocompleteInput label="هاب مرکز گزارش" value={values.hubName} onChange={(e) => setFieldValue("hubName", e.target.value)} />
+        <SimpleButton searchBtn />
+        <PerfesionalSearch formData={handleSubmit} handleReset={handleReset}>
+          <ADMVehiclePerfesionalFilter formik={formik} />
+        </PerfesionalSearch>
+      </form>
+
       {filterData && <Chip filterData={{ ...filterData, pelak: getPelak(filterData) }} formData={formik} />}
     </>
   );

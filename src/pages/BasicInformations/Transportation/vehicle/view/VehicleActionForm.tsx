@@ -15,7 +15,7 @@ import {
 } from "../../../../../global/hooks/useFetchOptions";
 
 import AddExcel from "../../../../../components/exel/AddExcel";
-import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
+import { vehicleExcel, vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
 import VehiclePelak from "../../../../../global/VehiclePelak/VehiclePelak";
 import Checkbox from "../../../../../components/checkbox/Checkbox";
@@ -200,13 +200,13 @@ const VehicleActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={vehicleExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
       <Modal
         visible={isModalOpen}
         setVisible={setIsModalOpen}
         title={currentData ? "ویرایش وسیله نقلیه" : "افزودن وسیله نقلیه"}
       >
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} autoComplete="off">
           <div className="grid grid-cols-4 mt-8 gap-y-4 gap-x-4 content-center">
             <VehiclePelak formik={formik} />
             <InputSelect
@@ -241,7 +241,7 @@ const VehicleActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =
 
             <InputSelect
               label="نوع وسیله نقلیه"
-              important
+              isClearable
               name="vehicleCategorySelect"
               handleChange={formik.setFieldValue}
               values={formik.values.vehicleCategorySelect}

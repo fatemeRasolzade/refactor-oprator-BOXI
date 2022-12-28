@@ -14,6 +14,7 @@ import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/V
 import AddExcel from "../../../../../components/exel/AddExcel";
 import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
+import CustomSwitch from "../../../../../global/Switch/Switch";
 interface PropsData {
   currentData?: any;
   fuelOptions:any;
@@ -39,8 +40,6 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
 
-  // const { fuelOptions } = useGetFuelTypeOptions(apiRoute().get.selectfuelTypes, isModalOpen);
-  // const { vendorOptions } = useGetVendorOptions(apiRoute().get.selectVendor, isModalOpen);
 
   const dispatch = useDispatch();
 
@@ -161,10 +160,10 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
         </button>
       )}
       <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
-      <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}>
+      <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={currentData ?"ویرایش مدل وسیله نقلیه" : "تعریف مدل وسیله نقلیه"}>
       {/*<Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[60%] "}>*/}
         <form onSubmit={formik.handleSubmit}>
-          <div className="  grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">
+          <div className="  grid grid-cols-4 mt-8 gap-4 content-center items-center">
             <div>
               <InputText
                 label="نام مدل"
@@ -181,6 +180,7 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
               <InputText
                 label="کد مدل"
                 // className="w-full"
+                readOnly={currentData ? true: false}
                 name="code"
                 handleChange={formik.handleChange}
                 values={formik.values.code}
@@ -241,13 +241,19 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
               <InputSelect
                 label="نام شرکت نقلیه"
                 // important
+                isClearable={true}
                 name="vendorSelect"
                 handleChange={formik.setFieldValue}
                 values={formik.values.vendorSelect}
                 error={formik.touched.vendorSelect && formik.errors.vendorSelect}
                 options={vendorOptions.options}
               />
+
             </div>
+            <CustomSwitch
+              active={formik.values.isActive}
+              handleChange={(value: any) => formik.setFieldValue("isActive", value)}
+            />
           </div>
           <div className="flex-end-center mt-5 gap-3">
             <SimpleButton

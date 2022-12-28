@@ -29,7 +29,7 @@ const SimpleButton = ({
     <button
       disabled={loading ? true : disabled}
       type={searchBtn ? "submit" : type}
-      className={`btn ${searchBtn && "full-gray-btn"} ${
+      className={`btn ${searchBtn && "bg-red"} ${
         disabled && "opacity-60"
       } ${className} px-0`}
       onClick={handelClick}

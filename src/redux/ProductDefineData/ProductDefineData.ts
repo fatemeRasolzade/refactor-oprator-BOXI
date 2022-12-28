@@ -4,7 +4,6 @@ import { apiRoute } from '../../services/apiRoute';
 import { ErrorAlert } from "../../global/alert/Alert";
 
 export const productData=createAsyncThunk('productlists',async(body:any)=>{
-     console.log("request run")
     const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
     var data = {};
     try {

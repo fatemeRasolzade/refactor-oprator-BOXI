@@ -49,17 +49,15 @@ const ThirdPartySearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
 
   return (
     <>
-      <div className="flex-center-start mt-6 gap-4 flex-wrap flex-col ">
-        <form className="flex-start-start flex-wrap gap-5" onSubmit={handleSubmit}>
-          <AutocompleteInput label={"کد شخصیت"} value={values.code} onChange={(e) => setFieldValue("code", e.target.value)} />
-          <AutocompleteInput label={"نام شخصیت"} value={values.name} onChange={(e) => setFieldValue("name", e.target.value)} />
-          <AutocompleteInput label={"شماره تماس"} value={values.telNumber} onChange={(e) => setFieldValue("telNumber", e.target.value)} />
-          <SimpleButton searchBtn />
-          <PerfesionalSearch formData={handleSubmit} handleReset={handleReset}>
-            <ThirdPartyPerfesionalFilter values={values} setFieldValue={setFieldValue} />
-          </PerfesionalSearch>
-        </form>
-      </div>
+      <form className="searchForm" onSubmit={handleSubmit}>
+        <AutocompleteInput label={"کد شخصیت"} value={values.code} onChange={(e) => setFieldValue("code", e.target.value)} />
+        <AutocompleteInput label={"نام شخصیت"} value={values.name} onChange={(e) => setFieldValue("name", e.target.value)} />
+        <AutocompleteInput label={"شماره تماس"} value={values.telNumber} onChange={(e) => setFieldValue("telNumber", e.target.value)} />
+        <SimpleButton searchBtn />
+        <PerfesionalSearch formData={handleSubmit} handleReset={handleReset}>
+          <ThirdPartyPerfesionalFilter values={values} setFieldValue={setFieldValue} />
+        </PerfesionalSearch>
+      </form>
       {filterData && <Chip filterData={filterData} formData={formik} />}
     </>
   );
