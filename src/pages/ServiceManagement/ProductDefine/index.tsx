@@ -15,6 +15,8 @@ import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
 import { useGetOptions } from "../../../global/hooks/useFetchOptions";
 import { useNavigate } from "react-router-dom";
+import ExcelExportHelper from "../../../tools/functions/ExcelExport";
+
 
 const ProductDefine = () => {
   const { options } = useGetOptions(apiRoute().get.GET_PRODUCT_GROUPS);
@@ -78,6 +80,7 @@ const ProductDefine = () => {
         addComponentProps={() => <ActionForms />}
         exportExcel={() => ExportExcel(productLists?.content)}
       />
+      <ExcelExportHelper />
       <StaticTable
         data={datas ? datas : []}
         column={ProductColumns}

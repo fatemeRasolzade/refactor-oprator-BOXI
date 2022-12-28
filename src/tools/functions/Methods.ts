@@ -98,55 +98,83 @@ export const ExportExcel = (data: any) => {
       persianName[item]?persianName[item]:item
   )
 
-let myRow=datas.map((item:any)=>
-  [
-      {
-          v: item.name, s: {
-              font: {name: "Courier", sz: 14, color: {rgb: "FF0000"}}, border: {
-                  bottom: {
-                      color: {rgb: "FFFFAA00"}, style: "thin"
-                  },
-                  left: {
-                      color: {rgb: "FFFFAA00"}, style: "thin"
-                  },
-                  right: {
-                      color: {rgb: "FFFFAA00"}, style: "thin"
-                  },
-                  top: {
-                      color: {rgb: "FFFFAA00"}, style: "thin"
-                  }
-              },
-          }
-      },
-      {
-          v: item.productGroup.text, s: {
-              font: {name: "Courier", sz: 14, color: {rgb: "FF0000"}}, border: {
-                  bottom: {
-                      color: {rgb: "FFFFAA00"}, style: "thin"
-                  },
-                  left: {
-                      color: {rgb: "FFFFAA00"}, style: "thin"
-                  },
-                  right: {
-                      color: {rgb: "FFFFAA00"}, style: "thin"
-                  },
-                  top: {
-                      color: {rgb: "FFFFAA00"}, style: "thin"
-                  }
-              },
-          }
-      }
+// let myRow=datas.map((item:any)=>
+//   [
+//       {
+//           v: item.name, s: {
+//               font: {name: "Courier", sz: 10, color: {rgb: "FF0000"}}, border: {
+//                   bottom: {
+//                       color: {rgb: "#5c5c5c"}, style: "thin"
+//                   },
+//                   left: {
+//                       color: {rgb: "#5c5c5c"}, style: "thin"
+//                   },
+//                   right: {
+//                       color: {rgb: "#5c5c5c"}, style: "thin"
+//                   },
+//                   top: {
+//                       color: {rgb: "#5c5c5c"}, style: "thin"
+//                   }
+//               },
+//               alignment:{readingOrder:2}
+//           }
+//       },
+//       {
+//           v: item.productGroup.text, s: {
+//               font: {name: "Courier", sz: 10, color: {rgb: "FF0000"}}, border: {
+//                   bottom: {
+//                       color: {rgb: "#5c5c5c"}, style: "thin"
+//                   },
+//                   left: {
+//                       color: {rgb: "#5c5c5c"}, style: "thin"
+//                   },
+//                   right: {
+//                       color: {rgb: "#5c5c5c"}, style: "thin"
+//                   },
+//                   top: {
+//                       color: {rgb: "#5c5c5c"}, style: "thin"
+//                   }
+//               },
+//               alignment:{readingOrder:2}
+//           }
+//       }
 
-  ]
-)
+//   ]
+// )
 
-      let web = XLSX.utils.book_new();
-      const ws = XLSX.utils.json_to_sheet(myRow);
-       XLSX.utils.sheet_add_aoa(ws, [persianHeaders])
-       // const max_width = data.reduce((w:any, r:any) => Math.max(w, r.name.length), 10);
-        // ws["!cols"] = [ { wch: max_width } ];
-      XLSX.utils.book_append_sheet(web, ws, "readme demo");
-      XLSX.writeFile(web, "xlsx-js-style-demo.xlsx");
+let myRow:any=[]
+
+datas.map((item)=>{
+  Object.entries(item).forEach(([k, v]) => {
+    myRow.push(  {
+	  v: v, s: {
+		font: {name: "Courier", sz: 10, color: {rgb: "FF0000"}},
+		alignment:{readingOrder:2}
+	  }
+	},
+  )
+
+  })
+})
+
+
+
+
+   console.log(myRow);
+   
+
+    //   let web = XLSX.utils.book_new();
+    //   const ws = XLSX.utils.json_to_sheet(myRow);
+    //    XLSX.utils.sheet_add_aoa(ws, [persianHeaders])
+    //    var wscols = [
+    //     {wch:20},
+    //     {wch:20},
+    // ];
+    // ws['!cols'] = wscols;
+    //    // const max_width = data.reduce((w:any, r:any) => Math.max(w, r.name.length), 10);
+    //     // ws["!cols"] = [ { wch: 20} ];
+    //   XLSX.utils.book_append_sheet(web, ws, "readme demo");
+    //   XLSX.writeFile(web, "xlsx-js-style-demo.xlsx");
 
       // let web = XLSX.utils.book_new(),
       //   ws = XLSX.utils.json_to_sheet(newArr);
