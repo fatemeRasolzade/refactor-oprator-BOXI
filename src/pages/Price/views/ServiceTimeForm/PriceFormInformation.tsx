@@ -9,7 +9,6 @@ const PriceFormInformation = ({ formik }: any) => {
     <>
       <div className="inputRow">
         <InputText
-          // wrapperClassName="w-[31.3rem]"
           important
           label="عنوان"
           values={values.priceListName}

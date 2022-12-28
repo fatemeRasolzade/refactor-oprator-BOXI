@@ -22,7 +22,7 @@
   a,
   ul,
   li {
-    @apply text-dark;
+    @apply text-darkGray;
   }
   p {
     @apply text-right;
