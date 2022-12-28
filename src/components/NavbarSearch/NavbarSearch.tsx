@@ -24,6 +24,7 @@ interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
+  id:string
 }
 const NavbarSearch = ({
   firstTextInput,

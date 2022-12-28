@@ -22,6 +22,7 @@ interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
+  id: string;
 }
 
 interface PersonnelProps {}
@@ -36,11 +37,13 @@ const Personnel: FC<PersonnelProps> = (): JSX.Element => {
   const [isActive, setIsActive] = useState<boolean>(true);
   const [selectedCol, setSelectedCol] = useState<Array<SelectedColInterface>>([
     {
+      id: crypto.randomUUID(),
       isRequire: true,
       Header: "کد پرسنلی",
       accessor: "personelCode",
     },
     {
+      id: crypto.randomUUID(),
       isRequire: true,
       Header: "عملیات",
       accessor: "operation",

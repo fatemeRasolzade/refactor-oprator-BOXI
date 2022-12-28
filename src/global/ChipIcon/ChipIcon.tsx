@@ -5,11 +5,13 @@ const ChipIcon = ({
   text,
   value,
   isRequire,
+  id,
   setDelete,
 }: {
   text?: string | undefined;
   value?: string;
   isRequire?: boolean;
+  id: string;
   setDelete?: (value: string) => void;
 }) => {
   const [show, setShow] = useState(true);
@@ -25,7 +27,7 @@ const ChipIcon = ({
         dismissible={{
           onClose: () => {
             !isRequire && setShow(false);
-            setDelete && setDelete(value ? value : "");
+            setDelete && setDelete(id);
           },
         }}
         value={`${text}`}

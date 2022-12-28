@@ -65,52 +65,62 @@ export const RoleColumn = [
 ];
 export const PersonnelColumn = [
   {
+    id: crypto.randomUUID(),
     isRequire: true,
     Header: "کد پرسنلی",
     accessor: "personelCode",
   },
   {
+    id: crypto.randomUUID(),
     isRequire: false,
 
     Header: "کد ملی",
     accessor: "nationalCode",
   },
   {
+    id: crypto.randomUUID(),
     isRequire: false,
     Header: "نام و نام خانوادگی",
     accessor: "name",
   },
   {
+    id: crypto.randomUUID(),
     isRequire: false,
     Header: "شماره موبایل",
     accessor: "mobile",
   },
   {
+    id: crypto.randomUUID(),
     isRequire: false,
     Header: "پست الکترونیک",
     accessor: "email",
   },
   {
+    id: crypto.randomUUID(),
     isRequire: false,
     Header: "آخرین ورود",
     accessor: "lastlogin",
   },
   {
+    id: crypto.randomUUID(),
     isRequire: false,
     Header: "ایجاد شده در ",
     accessor: "createdat",
   },
   {
+    id: crypto.randomUUID(),
     isRequire: false,
     Header: " آخرین بروز رسانی توسط ",
     accessor: "lastupdatedatperson",
   },
   {
+    id: crypto.randomUUID(),
     isRequire: false,
     Header: "تاریخ آخرین بروز رسانی",
     accessor: "lastupdatedat",
   },
   {
+    id: crypto.randomUUID(),
     isRequire: true,
     Header: "عملیات",
     accessor: "operation",
@@ -284,6 +294,6 @@ export const CRMCustomerColumn = [
   },
   {
     Header: "عملیات",
-    accessor: "actionProduct",
+    accessor: "operation",
   },
 ];

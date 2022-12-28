@@ -1,9 +1,7 @@
-import React from 'react'
+import NotFound from "../../components/NotFound/NotFound";
 
 const DeliveryManagement = () => {
-  return (
-    <div>DeliveryManagement</div>
-  )
-}
+  return <NotFound />;
+};
 
-export default DeliveryManagement
+export default DeliveryManagement;

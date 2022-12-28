@@ -29,7 +29,7 @@ const ActionProfetional = () => {
           <div className="h-300 overflow-auto mt-5" dir="ltr">
             <div dir="rtl">
               {checkboxed.map((item) => {
-                return <ChipIcon text="text" />;
+                return <ChipIcon text="text" id="" />;
               })}
             </div>
           </div>

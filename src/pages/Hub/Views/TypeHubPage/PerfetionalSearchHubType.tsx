@@ -6,6 +6,7 @@ interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
+  id:string
 }
 const PerfetionalSearchHubType = ({ formiks }: { formiks: any }) => {
   const [active, setActive] = useState(false);

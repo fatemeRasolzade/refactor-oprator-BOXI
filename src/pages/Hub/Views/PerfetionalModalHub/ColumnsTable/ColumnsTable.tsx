@@ -7,6 +7,7 @@ interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
+  id: string;
 }
 interface ColumnsTableProps {
   columns: Array<SelectedColInterface>;
@@ -27,7 +28,6 @@ const ColumnsTable: FC<ColumnsTableProps> = ({
     },
     [selectedCol, setSelectedCol]
   );
-  console.log("selectedCol", selectedCol);
 
   return (
     <div>
@@ -69,17 +69,16 @@ const ColumnsTable: FC<ColumnsTableProps> = ({
               return (
                 <React.Fragment key={index}>
                   <ChipIcon
+                    id={items.id}
                     isRequire={items.isRequire}
                     text={items.Header}
                     value={items.accessor}
-                    setDelete={(value: string) =>
+                    setDelete={(value: string) => {
                       !items.isRequire &&
-                      setSelectedCol(
-                        selectedCol.filter(
-                          (item) => !item.accessor.includes(value)
-                        )
-                      )
-                    }
+                        setSelectedCol(
+                          selectedCol.filter((item: any) => item.id !== value)
+                        );
+                    }}
                   />
                 </React.Fragment>
               );
