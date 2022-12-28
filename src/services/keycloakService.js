@@ -20,7 +20,6 @@ const logout = _kc.logout;
 const getToken = () => _kc.token;
 
 const isLoggedIn = () => !!_kc.token;
-console.log("isLoggedIn", isLoggedIn());
 
 const updateToken = (successCallback) => {
   console.log("updateToken");
