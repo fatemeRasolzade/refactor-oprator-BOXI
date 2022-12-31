@@ -7,6 +7,7 @@ import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import { RoleColumn } from "../../global/Column/Columns";
+import Modal from "../../global/Modal/Modal";
 import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
 import { clearRole, RoleData, updating } from "../../redux/RolsData/RolesData";
 import { apiRoute } from "../../services/apiRoute";
@@ -21,6 +22,10 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   const { rolesList } = useSelector((state: any) => state.role);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
 
+  const [ruleAddEditModal, setRuleAddEditModal] = useState({
+    isOpen: false,
+    data: {},
+  });
   const [isActive, setIsActive] = useState<boolean>(true);
   const [filterData, setFilterData] = useState({
     permission: "",
@@ -57,7 +62,9 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                 <TooltipWrapper
                   textProps={item?.selectPermissions?.map(
                     (permissionItem: any) => (
-                      <div className="text-white" key={permissionItem.id }>{permissionItem.text}</div>
+                      <div className="text-white" key={permissionItem.id}>
+                        {permissionItem.text}
+                      </div>
                     )
                   )}
                 >
@@ -122,6 +129,13 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
         pagination={rolesList?.totalElements}
         selectable={false}
       />
+      <Modal
+        visible={() => setRuleAddEditModal({ isOpen: false, data: {} })}
+        setVisible={ruleAddEditModal.isOpen}
+        title={ruleAddEditModal.data ? "ویرایش  نقش" : "افزودن  نقش"}
+      >
+        <></>
+      </Modal>
     </div>
   );
 };

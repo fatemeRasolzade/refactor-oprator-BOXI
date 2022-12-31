@@ -9,9 +9,10 @@ import Layout from "./components/Layout/Layout";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
 import UserService from "./services/keycloakService";
-// import UserService from "./services/keycloakService";
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 
 root.render(
   // <ReactKeycloakProvider authClient={keycloakConfigs}>
@@ -19,7 +20,11 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Layout>
-          <ToastContainer closeButton={false} autoClose={3000} toastClassName="rounded-md p-4 font-medium" />
+          <ToastContainer
+            closeButton={false}
+            autoClose={3000}
+            toastClassName="rounded-md p-4 font-medium"
+          />
           <ThemeProvider>
             <App />
           </ThemeProvider>
