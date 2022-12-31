@@ -1,4 +1,3 @@
-import React from 'react'
 import InputIcon from '../../../../../global/InputIcon/InputIcon'
 import SwitchTooltip from './SwitchTooltip'
 

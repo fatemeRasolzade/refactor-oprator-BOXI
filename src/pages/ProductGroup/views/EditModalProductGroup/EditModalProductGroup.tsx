@@ -5,7 +5,16 @@ import InputText from './../../../../global/InputText/InputText';
 import CustomSwitch from '../../../../global/Switch/Switch';
 import MultiLineText from '../../../../global/MultiLineText/MultiLineText';
 import * as Yup from "yup"
-const EditModalProductGroup = ({isModalOpen,setIsModalOpen,dataInput}:{isModalOpen:boolean,setIsModalOpen?:any,dataInput:any}) => {
+import { PutWithHeader } from './../../../../services/Service_call';
+import { apiRoute } from '../../../../services/apiRoute';
+import { ErrorAlert, SuccessAlert } from './../../../../global/alert/Alert';
+import { useDispatch } from 'react-redux';
+import { ProductGroupsData } from '../../../../redux/ProductGroup/ProductGroup';
+
+const EditModalProductGroup = ({isModalOpen,setIsModalOpen,dataInput,bodyProduct}:{isModalOpen:boolean,setIsModalOpen?:any,dataInput:any,bodyProduct?:object}) => {
+
+  
+
 
     const validationSchema=Yup.object({
         name:Yup.string().required("عنوان را وارد کنید"),
@@ -13,7 +22,7 @@ const EditModalProductGroup = ({isModalOpen,setIsModalOpen,dataInput}:{isModalOp
         description:Yup.string(),
     })
 
-
+    const dispatch=useDispatch()
 
   return (
      <Dialog
@@ -31,6 +40,7 @@ const EditModalProductGroup = ({isModalOpen,setIsModalOpen,dataInput}:{isModalOp
 <div className='w-full'>
 <Formik
 initialValues={{
+  id:dataInput?.id,
 code:dataInput.code ? dataInput.code : "",
 name:dataInput.name ? dataInput.name : "",
 isActive:dataInput?.isActive,
@@ -39,7 +49,19 @@ description:dataInput.description ? dataInput.description : ""
 }}
 validationSchema={validationSchema}
 onSubmit={(values)=>{
-console.log(values)
+
+ PutWithHeader(apiRoute().post.Product_Group,values).then(res=>{
+  if(res.status==="OK"){
+    SuccessAlert('با موفقیت ویرایش شد')
+    dispatch(ProductGroupsData(bodyProduct) as any)
+  }else{
+    ErrorAlert("با خطا مواجه شد")
+  }
+ })
+
+
+
+ console.log(values)
 }}
 
 >
@@ -52,6 +74,8 @@ console.log(values)
 <div className='col-span-2'>
 <InputText label='عنوان' wrapperClassName='w-full ' name="name" handleChange={formik.handleChange} important values={formik.values.name} error={formik.touched.name && formik.errors.name}/>
 </div>
+
+
 
 <div>
     <CustomSwitch active={formik.values.isActive} handleChange={(checked: any) =>formik.setFieldValue("isActive", checked)}/>

@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
@@ -30,6 +29,6 @@ root.render(
   //  </ReactKeycloakProvider>
 );
 
- UserService.initKeycloak(root);
+UserService.initKeycloak(root);
 
 reportWebVitals();

@@ -14,7 +14,6 @@ import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import PriceParameters from "./PriceParameters";
 import StaticTable from "../../../../components/staticTable/StaticTable";
 import { PriceAttributeColumn } from "./PriceAttributeColumn";
-import { REQUIRED } from "../../../../tools/validations/RegexKeywords";
 import { convertToObjects } from "../../../../tools/functions/Methods";
 
 interface PriceAttributeFormProps {
@@ -116,11 +115,11 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
 
   const { values, errors, touched, handleChange, setFieldValue, handleSubmit, handleReset }: any = formik;
 
-  useEffect(() => {
+  // useEffect(() => {
     // handleReset();
     // handleResetOuter();
     // setAttributes([]);
-  }, [open, handleReset, handleResetOuter, setAttributes]);
+  // }, [open, handleReset, handleResetOuter, setAttributes]);
 
   const handleEditPriceAttributes = (id: any) => {
     setEdit(true);
@@ -128,7 +127,6 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
     data?.priceDetailDevisions?.length === 0
       ? setFieldValue("classification", { id: "1", text: "سفارشی" })
       : setFieldValue("classification", { id: "2", text: "استاندارد" });
-    // setFieldValue("classification", data.classification);
     data?.priceDetailDevisions?.length === 0 && data.customDevision === null && setFieldValue("classification", "");
     data.priceFormule ? setFieldValue("fixedPrice", true) : setFieldValue("fixedPrice", false);
     const { toValue, toNumber } = data;

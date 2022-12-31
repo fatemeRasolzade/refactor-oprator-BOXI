@@ -1,10 +1,36 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
 import { apiRoute } from "../../services/apiRoute"
 import { postDataHeaderToServer } from "../../services/Service_call"
-export const ServiceProvisionData=createAsyncThunk('ServiceProvision',async(page:number)=>{
-    const params=`/filter?pageNumber=${page}&pageSize=10`
-    const {payload}=await postDataHeaderToServer(apiRoute().post.service_provision + params,{})
-    console.log("payload",payload)
+export const ServiceProvisionData=createAsyncThunk('ServiceProvision',async(body:any)=>{
+    const params=`/filter?pageNumber=${body.pageNumbers}&pageSize=10`
+    const {payload}=await postDataHeaderToServer(apiRoute().post.service_provision + params,
+    {
+     code:body.code ? body.code : "",
+        type:body.type ? body.type :{
+            id: 0,
+            text: "ثابت"
+        },
+        name:body.name ? body.name : "",
+        description:"",
+        validDateFrom:{
+           day: "",
+           month: "",
+           year: ""
+           },
+        validDateTo:{
+           day: "",
+           month: "",
+           year: ""
+           },
+        deliveryDiscounts:[],
+        service:body.service ? body.service : null,
+        customerSegments:body.customerSegments ? body.customerSegments :null,
+        serviceDeliveryCustomers:body.serviceDeliveryCustomers ? body.serviceDeliveryCustomers : null,
+        saleschannels:body.saleschannels ? body.saleschannels : null,
+        discountPercent:body.discountPercent ? body.discountPercent : "",
+        isActive:body.isActive ? body.isActive : true
+})
+  
     return payload
    })
 

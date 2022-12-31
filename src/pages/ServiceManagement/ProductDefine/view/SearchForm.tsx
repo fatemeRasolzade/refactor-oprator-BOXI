@@ -6,20 +6,19 @@ import AutocompleteInput from "../../../../global/Autocomplete/AutocompleteInput
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import { productData } from "../../../../redux/ProductDefineData/ProductDefineData";
 import { apiRoute } from "../../../../services/apiRoute";
-import { GetDataParams, selectDataFromServer } from "../../../../services/Service_call";
+import { GetDataParams, selectDataFromServerWithHeader } from "../../../../services/Service_call";
 import { FiSearch } from "react-icons/fi";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
-import { ErrorAlert } from "../../../../global/alert/Alert";
-
+import {ErrorAlert} from "../../../../global/alert/Alert"
 
 interface PropsData {
   isActive: Boolean | string;
   isUpdating: Boolean;
-  productOptions?:any
+
 }
 
-const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating,productOptions }): JSX.Element => {
-
+const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating, }): JSX.Element => {
+const [productOptions,setproductOptions]=useState([])
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
    // @ts-ignore
@@ -35,6 +34,7 @@ const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating,productOptions }
       productGroup: "" as any,
     },
     onSubmit: (values) => {
+      console.log(values)
       setFilterData(values);
     },
   });

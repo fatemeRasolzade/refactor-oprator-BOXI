@@ -29,9 +29,9 @@ const SimpleButton = ({
     <button
       disabled={loading ? true : disabled}
       type={searchBtn ? "submit" : type}
-      className={`btn ${searchBtn && "bg-red"} ${
+      className={`btn ${searchBtn && "full-gray-btn"} ${
         disabled && "opacity-60"
-      } ${className}`}
+      } ${className} px-0`}
       onClick={handelClick}
     >
       <span>{searchBtn ? "جستجو" : text}</span>

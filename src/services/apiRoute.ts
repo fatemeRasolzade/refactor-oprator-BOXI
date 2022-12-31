@@ -1,3 +1,4 @@
+import axios from "axios";
 
 
 export const CORE_API = `${process.env.REACT_APP_BASE_URL}core-api`;
@@ -11,7 +12,12 @@ const createUrl = (base: any, dir: any) => {
 export const apiRoute = () => {
   return {
     get: {
-      
+    //start select service delivery
+        Fliter_customerSegment:createUrl(CORE_API, "/customersegment/select?filter="),
+        Fliter_Service:createUrl(CORE_API, "/service/select?filter="),
+        Filter_saleschannel:createUrl(CORE_API, "/saleschannel/select?filter="),
+        Filter_servicedeliverycustomers:createUrl(CORE_API, "/servicedeliverycustomers/select?filter="),
+// end  service delivery
       get_city: createUrl(CORE_API, "/countryDevision/city/2/loc?filter="),
       get_province: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),
       get_province_city: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),
@@ -89,6 +95,7 @@ export const apiRoute = () => {
       filterPersonnel: createUrl(RESOURCE_API, "/employee"),
       serviceDefine: createUrl(CORE_API, "/service"),
       product: createUrl(CORE_API, "/product"),
+      Product_Group:createUrl(CORE_API, "/productGroup")
       
     },
     postExcel: {
@@ -110,7 +117,6 @@ export const apiRoute = () => {
       productDefine: createUrl(CORE_API, "/product"),
       hubTable: createUrl(CORE_API, "/hub"),
       deleteConnections: createUrl(CORE_API, "/connection"),
-   
     },
     edit: {
       salesChannel:createUrl(CORE_API,'/saleschannel'),
@@ -161,8 +167,8 @@ export const GET_VEHICLEMAKE = `${CORE_API}/vehicleMake/select?filter=`;
 
 //Route
 export const GET_ROUTE = `${CORE_API}/route/select?filter=`;
-export const DELETE_ROUTE= `${CORE_API}/route/`;
-
+export const DELETE_ROUTE = `${CORE_API}/route/`;
+export const deleteConnections = (data: any) => axios.delete(`${CORE_API}/connection`, data);
 
 //hub
 export const HUB_SELECT = `${CORE_API}/hub/select`;
@@ -181,3 +187,8 @@ export const GET_CONSIGNMENT_TYPE = `${CORE_API}/pricelist/consignmenttype`;
 export const GET_PRODUCT_SELECT = `${CORE_API}/product/select?filter`;
 //country devision
 export const GET_CUSTOM_COUNTRY_DEVISION = `${CORE_API}/customcountrydevision/select?filter=`;
+//User
+export const GET_USER_PROFILE = `${RESOURCE_API}/employee/info?username=`;
+export const CHANGE_USER_PASSWORD = `${RESOURCE_API}/changepassword/changepassword`;
+export const GET_RECOVERY_CODE = `${RESOURCE_API}/changepassword/forgotpassword`;
+export const CHECK_RECOVERY_CODE = `${RESOURCE_API}/changepassword/checktoken`;

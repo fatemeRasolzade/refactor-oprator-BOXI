@@ -1,11 +1,11 @@
-import { Button, Dialog, DialogBody, DialogFooter, DialogHeader } from '@material-tailwind/react'
+import { Button, Dialog, DialogBody, DialogHeader } from '@material-tailwind/react'
 import React,{memo} from 'react'
 import { BiXCircle } from 'react-icons/bi'
 import InputText from '../../../../global/InputText/InputText'
-import { ErrorMessage, useFormik ,Formik} from 'formik';
+import {Formik} from 'formik';
 import { apiRoute } from './../../../../services/apiRoute';
 import * as Yup from "yup"
-import { postDataHeaderToServer, PutWithHeader } from '../../../../services/Service_call';
+import { PutWithHeader } from '../../../../services/Service_call';
 import { ErrorAlert, SuccessAlert } from '../../../../global/alert/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import {HubTypeData } from '../../../../redux/HubData/TypeHub';

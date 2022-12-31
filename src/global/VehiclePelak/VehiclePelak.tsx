@@ -1,4 +1,4 @@
-import VehiclePelakDrapDown from "./VehiclePelakDrapDown";
+import VehiclePelakDropDown from "./VehiclePelakDropDown";
 
 interface VehiclePelakProps {
   formik: any;
@@ -21,7 +21,7 @@ const VehiclePelak = ({ formik, important, ReadOnly }: VehiclePelakProps) => {
         <div className={`autocompleteLabel  ${Error && "text-red"} top-[-17px]`}>
           شماره پلاک <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
         </div>
-        <VehiclePelakDrapDown
+        <VehiclePelakDropDown
           ReadOnly={ReadOnly}
           value={values.vehicleNumber3}
           name="vehicleNumber3"
@@ -34,7 +34,7 @@ const VehiclePelak = ({ formik, important, ReadOnly }: VehiclePelakProps) => {
           className="w-12 border-b text-center focus:outline-none"
           onChange={(e) => setFieldValue("vehicleNumber2", e.target.value)}
         />
-        <VehiclePelakDrapDown
+        <VehiclePelakDropDown
           ReadOnly={ReadOnly}
           value={values.vehicleNumber1}
           name="vehicleNumber1"

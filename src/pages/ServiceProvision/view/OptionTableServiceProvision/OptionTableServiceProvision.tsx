@@ -1,21 +1,25 @@
 import React, { useState } from 'react'
 import AddButton from '../../../../global/addButton/AddButton'
 import SimpleButton from '../../../../global/SimpleButton/SimpleButton';
-import CustomSwitch from '../../../../global/Switch/Switch';
 import { GoDesktopDownload } from 'react-icons/go';
-import { Dialog } from '@material-tailwind/react';
 import AddModalService from '../AddModalService/AddModalService';
-import { BiXCircle } from 'react-icons/bi';
+import CustomSwitch from '../../../../global/Switch/Switch';
 
 const OptionTableServiceProvision = ({exportExcel}:{exportExcel?:React.MouseEventHandler<HTMLButtonElement>}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [Active,setActive]=useState(true)
 
 const handleAction=()=>setIsModalOpen(prev=>!prev)
   
+const handelActive=()=>{
+  setActive(prev=>!prev)
 
+}
+
+// useEffect()
 
 const handleUploadFileAction=()=>{
-    console.log("second")
+    
 }
     const ToggleOptions = [
         { handleClick: handleAction, name: "افزودن محصول" },
@@ -33,17 +37,10 @@ const handleUploadFileAction=()=>{
             className="centering rounded-lg text-black"
           />
 
-<Dialog open={isModalOpen} handler={setIsModalOpen} className="p-5 !w-[80%] max-w-[60%] overflow-visible">
-    <div className='flex-between-start'>
-    <h3>ارائه سرویس</h3>
-    <span><BiXCircle size={20}/></span>
-    </div>
+          <CustomSwitch active={Active} handleChange={handelActive}/>
 
-   <AddModalService isModal={setIsModalOpen}/>
-</Dialog>
-
-
-    </div>
+      <AddModalService setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen}/>
+</div>
   )
 }
 

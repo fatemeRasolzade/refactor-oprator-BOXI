@@ -88,14 +88,7 @@ function Table({ columns, data, pageTable, selectable, loading }) {
       ]);
     }
   );
-  // Render the UI for your table
-  // useEffect(() => {
-  // console.log(";oop");
-  // dispatch(updateRows();
-  // if(setSelectedRows){
-  // setSelectedRows(selectedFlatRows.map((row) => row.original))
-  // }
-  // }, [selectedRowIds]);
+
 
   return (
     <div className="overflow-auto bg-white rounded-lg shadow-md  mt-6">
@@ -144,11 +137,7 @@ function Table({ columns, data, pageTable, selectable, loading }) {
           <div className="h-20 centering w-full"> موردی یافت نشد </div>
         )
       )}
-      {/* {page.length === 0 && (
-        <div className="h-20 centering w-full">
-          <>موردی یافت نشد</>
-        </div>
-      )} */}
+     
         <Paginations pageData={pageTable} />
     </div>
   );

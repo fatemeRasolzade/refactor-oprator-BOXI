@@ -23,8 +23,7 @@ const ServiceTime = () => {
   }, []);
 
   const dispatch = useDispatch();
-  // @ts-ignore
-  const { pageNumbers } = useSelector((state) => state.paginate);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
   const handleGetExcel = () => ExportExcel(serviceTimeList?.content);
 
   const options = [
