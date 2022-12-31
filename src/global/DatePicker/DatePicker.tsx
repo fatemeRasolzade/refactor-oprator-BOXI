@@ -60,7 +60,7 @@ const DatePickers = ({ title, name, values, handleChange, time, timeValues, time
 };
 
 DatePickers.defaultProps = {
-  wrapperClassName: "w-60",
+  WrapperClassName: "w-60",
 };
 
 export default DatePickers;
