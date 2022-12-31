@@ -3,10 +3,7 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { useDispatch, useSelector } from "react-redux";
 import OptionTableServiceProvision from "./view/OptionTableServiceProvision/OptionTableServiceProvision";
 import StaticTable from "./../../components/staticTable/StaticTable";
-import {
-  clearService,
-  ServiceProvisionData,
-} from "../../redux/ServiceProvision/ServiceProvision";
+import { clearService, ServiceProvisionData } from "../../redux/ServiceProvision/ServiceProvision";
 import { ServiceProvisionColumns } from "../../global/Column/Columns";
 import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { apiRoute } from "../../services/apiRoute";
@@ -22,17 +19,12 @@ const ServiceProvision = () => {
   const [deleteItemId, setdeleteItemId] = useState<number>(0);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [DataEditModal, setDataEditModal] = useState({});
-
   useEffect(() => {
-    dispatch(ServiceProvisionData({ pageNumbers: pageNumbers }) as any);
+    dispatch(ServiceProvisionData(pageNumbers) as any);
     return () => {
       dispatch(clearService());
     };
-  }, []);
-
-  useEffect(() => {
-    dispatch(ServiceProvisionData({ pageNumbers: pageNumbers }) as any);
-  }, [pageNumbers]);
+  }, [dispatch, pageNumbers]);
 
   const data =
     serviceList?.content &&
@@ -48,11 +40,7 @@ const ServiceProvision = () => {
         ) : (
           ""
         ),
-        validDateTo: item?.validDateTo?.year ? (
-          <span>{`${item?.validDateTo?.year}/${item?.validDateTo?.month}/${item?.validDateTo?.day}`}</span>
-        ) : (
-          ""
-        ),
+        validDateTo: item?.validDateTo?.year ? <span>{`${item?.validDateTo?.year}/${item?.validDateTo?.month}/${item?.validDateTo?.day}`}</span> : "",
         type: item?.type?.text ? item?.type?.text : "",
         handover: (
           <div className="flex justify-center items-center gap-x-2">
@@ -97,17 +85,8 @@ const ServiceProvision = () => {
         route={deleteUrls.servicedeliveryservice}
         handleDeleteActionNewData={handelActionAfterDelete}
       />
-      <AddModalService
-        setIsModalOpen={setIsModalEdit}
-        isModalOpen={isModalEdit}
-        currentData={DataEditModal}
-      />
-      <StaticTable
-        data={data ? data : []}
-        column={ServiceProvisionColumns}
-        pagination={serviceList?.totalElements}
-        selectable={false}
-      />
+      <AddModalService setIsModalOpen={setIsModalEdit} isModalOpen={isModalEdit} currentData={DataEditModal} />
+      <StaticTable data={data ? data : []} column={ServiceProvisionColumns} pagination={serviceList?.totalElements} selectable={false} />
     </div>
   );
 };

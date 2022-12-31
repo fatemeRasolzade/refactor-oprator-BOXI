@@ -7,7 +7,7 @@ const CustomerUsernameInformation = ({ formik, currentData }: any) => {
   return (
     <div className="inputRow">
       <div className="border rounded-lg px-5 pt-10 mt-10 relative">
-        <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">اطلاعات کاربری</span>
+        <span className="absolute -top-3 right-8 px-2 text-darkGray">اطلاعات کاربری</span>
         <div className="inputRow">
           <InputText
             important

@@ -5,7 +5,6 @@ import { persistor, store } from "./redux/store/Store";
 import { BrowserRouter } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
-import Layout from "./components/Layout/Layout";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
 import UserService from "./services/keycloakService";
@@ -19,16 +18,10 @@ root.render(
   <BrowserRouter>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Layout>
-          <ToastContainer
-            closeButton={false}
-            autoClose={3000}
-            toastClassName="rounded-md p-4 font-medium"
-          />
-          <ThemeProvider>
-            <App />
-          </ThemeProvider>
-        </Layout>
+        <ToastContainer closeButton={false} autoClose={3000} toastClassName="rounded-md p-4 font-medium" />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </PersistGate>
     </Provider>
   </BrowserRouter>

@@ -146,7 +146,7 @@ const ThirdPartyForm = ({ currentData }: CustomerFormProps) => {
         <AddButton ToggleOptions={ToggleOptions} />
       )}
       <AddExcel excelInfo={ThirdPartyExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} />
-      <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}>
+      <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش شخصیت" : "افزودن شخصیت"}>
         <form onSubmit={handleSubmit}>
           <ThirdPartyBasicInformation formik={formik} open={open} currentData={currentData} />
           <ThirdPartyCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} />

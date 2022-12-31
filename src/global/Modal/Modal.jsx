@@ -9,7 +9,7 @@ const Modal = ({ visible, setVisible, children, title }) => {
       onClose={() => setVisible(false)}
     >
       <div className="inline-block align-bottom bg-white rounded-xl p-5 shadow-lg transition sm:align-middle z-20">
-        <div className="flex-between-center mb-5">
+        <div className="flex-between-center mb-7">
           <span className="text-dark text-base">{title}</span>
           <BiXCircle
             size={25}
