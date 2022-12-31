@@ -36,7 +36,6 @@ const InputText = React.forwardRef(
     ref: any
   ) => {
     const [HidePassword, setHidePassword] = useState(true);
-    console.log("valuesinput", values);
 
     return (
       <div className={`flex flex-col ${wrapperClassName}`}>
