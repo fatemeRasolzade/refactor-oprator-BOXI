@@ -10,6 +10,7 @@ import {apiRoute} from "../../services/apiRoute"
 import AddModalService from './view/AddModalService/AddModalService';
 import SearchFilterTable from './view/SearchFilterTable/SearchFilterTable';
 import DeleteModal from '../../global/DeleteModal/DeleteModal';
+import { ExportExcel } from '../../tools/functions/Methods';
 const ServiceProvision = () => {
   const dispatch=useDispatch()
 const {serviceList} =useSelector((state:any)=>state.serviceProvision) 
@@ -24,7 +25,6 @@ useEffect(()=>{
 return()=>{
   dispatch(clearService())
 }
-
 },[])
 
 useEffect(()=>{
@@ -61,7 +61,7 @@ const handelActionAfterDelete=()=>{
     <div>
       <Breadcrumb beforePage="مدیریت سرویس" curentPage="ارایه سرویس" />
       <SearchFilterTable/>
-      <OptionTableServiceProvision/>
+      <OptionTableServiceProvision exportExcel={()=>ExportExcel(data)}/>
 <DeleteModal isModalOpenDelete={isModalOpenDelete} setIsModalOpenDelete={setIsModalOpenDelete} title="حذف سرویس" itemId={deleteItemId} route={apiRoute().post.service_provision + `/${deleteItemId}`} handleDeleteActionNewData={handelActionAfterDelete}/>
 <AddModalService setIsModalOpen={setIsModalEdit} isModalOpen={isModalEdit} currentData={DataEditModal}/>
 <StaticTable 

@@ -4,10 +4,16 @@ import SimpleButton from '../../../../global/SimpleButton/SimpleButton';
 import { GoDesktopDownload } from 'react-icons/go';
 import AddModalService from '../AddModalService/AddModalService';
 import CustomSwitch from '../../../../global/Switch/Switch';
+import { useSelector,useDispatch} from 'react-redux';
+import { ServiceProvisionData } from '../../../../redux/ServiceProvision/ServiceProvision';
 
 const OptionTableServiceProvision = ({exportExcel}:{exportExcel?:React.MouseEventHandler<HTMLButtonElement>}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [Active,setActive]=useState(true)
+    const {pageNumbers} =useSelector((state:any)=>state.paginate)
+const dispatch=useDispatch()
+
+
 
 const handleAction=()=>setIsModalOpen(prev=>!prev)
   
@@ -16,7 +22,11 @@ const handelActive=()=>{
 
 }
 
-// useEffect()
+ React.useEffect(()=>{
+
+  dispatch(ServiceProvisionData({pageNumbers:pageNumbers,isActive:Active}) as any)
+
+ },[Active])
 
 const handleUploadFileAction=()=>{
     
