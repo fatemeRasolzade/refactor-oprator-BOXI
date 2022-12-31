@@ -6,6 +6,10 @@ import { BiSearch } from "react-icons/bi";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import MultiSelect from "../../../global/multiselect/MultiSelect";
+import { useDispatch } from "react-redux";
+import { setFilter } from "../../../redux/RolsData/RolesData";
+import { selectUrls } from "../../../services/api.enums";
+import { getAPI } from "../../../services/CRUDServices";
 
 interface MyFormValues {
   permission: Array<any>;
@@ -15,13 +19,11 @@ interface MyFormValues {
 
 interface SearchFilterProps {
   isActive: boolean;
-  setFilterData: (newFilter: any) => void;
 }
 
-const SearchFilter: FC<SearchFilterProps> = ({
-  isActive,
-  setFilterData,
-}): JSX.Element => {
+const SearchFilter: FC<SearchFilterProps> = ({ isActive }): JSX.Element => {
+  const dispatch = useDispatch();
+
   const initialValues: MyFormValues = { permission: [], name: "" };
 
   const [permissionOptions, setPermissionOptions] = useState([]);
@@ -30,21 +32,19 @@ const SearchFilter: FC<SearchFilterProps> = ({
     enableReinitialize: true,
     initialValues,
     onSubmit: async (values) => {
-      setFilterData({
-        permission: values.permission,
-        name: values.name,
-        isActive: isActive,
-        pageSize: 10,
-        pageNumber: 1,
-      });
+      dispatch(
+        setFilter({
+          permission: values.permission,
+          name: values.name,
+          isActive: isActive,
+        })
+      );
     },
   });
 
   const getRoleFilterData = useCallback(async () => {
     try {
-      const res = await axios.get(
-        "http://boxi.local:40000/resource-api/permission/select"
-      );
+      const res = await getAPI(selectUrls.rulesFilter);
       setPermissionOptions(
         res.data.payload.content ? res.data.payload.content : []
       );

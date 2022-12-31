@@ -9,5 +9,7 @@ export enum deleteUrls {
   rule = "resource-api/role",
   servicedeliveryservice = "core-api/servicedeliveryservice",
 }
-export enum selectUrls {}
+export enum selectUrls {
+  rulesFilter = "resource-api/permission/select",
+}
 export enum selectGetUrls {}
