@@ -5,12 +5,21 @@ import { useNavigate } from "react-router-dom";
 import UserService from "../../services/keycloakService";
 import ChangePasswordModal from "../Navbar/ChangePasswordModal";
 import ProfileModal from "../Navbar/ProfileModal";
-const Breadcrumb = ({ curentPage, beforePage }: { curentPage?: string; beforePage?: string }) => {
+const Breadcrumb = ({
+  curentPage,
+  beforePage,
+}: {
+  curentPage?: string;
+  beforePage?: string;
+}) => {
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
   const [OpenProfile, setOpenProfile] = useState(false);
   const [OpenChangePassword, setOpenChangePassword] = useState(false);
-  const handleBlur = (e: { currentTarget: { contains: (arg0: any) => any }; relatedTarget: any }) => {
+  const handleBlur = (e: {
+    currentTarget: { contains: (arg0: any) => any };
+    relatedTarget: any;
+  }) => {
     if (!e.currentTarget.contains(e.relatedTarget)) setToggle(false);
   };
 
@@ -25,9 +34,12 @@ const Breadcrumb = ({ curentPage, beforePage }: { curentPage?: string; beforePag
       </div>
       <div className="flex-start-center gap-3">
         <AiOutlineUser size={23} />
-        <p className="text-base">فاطمه رسول زاده</p>
+        <p className="text-base">{UserService.getUsername()}</p>
         <div className="relative centering" onBlur={handleBlur}>
-          <button className={`${toggle && "rotate-180"} transition-all duration-500`} onClick={() => setToggle(!toggle)}>
+          <button
+            className={`${toggle && "rotate-180"} transition-all duration-500`}
+            onClick={() => setToggle(!toggle)}
+          >
             <RiArrowDownSLine size={23} />
           </button>
           {toggle ? (
@@ -35,13 +47,22 @@ const Breadcrumb = ({ curentPage, beforePage }: { curentPage?: string; beforePag
               <button className="ToggleElements" onClick={() => navigate("/")}>
                 داشبورد
               </button>
-              <button className="ToggleElements" onClick={() => setOpenProfile(true)}>
+              <button
+                className="ToggleElements"
+                onClick={() => setOpenProfile(true)}
+              >
                 پروفایل
               </button>
-              <button className="ToggleElements" onClick={() => setOpenChangePassword(true)}>
+              <button
+                className="ToggleElements"
+                onClick={() => setOpenChangePassword(true)}
+              >
                 تغییر رمز عبور
               </button>
-              <button className="ToggleElements" onClick={() => UserService.doLogout()}>
+              <button
+                className="ToggleElements"
+                onClick={() => UserService.doLogout()}
+              >
                 خروج
               </button>
             </div>
@@ -49,7 +70,10 @@ const Breadcrumb = ({ curentPage, beforePage }: { curentPage?: string; beforePag
         </div>
       </div>
       <ProfileModal open={OpenProfile} setOpen={setOpenProfile} />
-      <ChangePasswordModal open={OpenChangePassword} setOpen={setOpenChangePassword} />
+      <ChangePasswordModal
+        open={OpenChangePassword}
+        setOpen={setOpenChangePassword}
+      />
     </div>
   );
 };

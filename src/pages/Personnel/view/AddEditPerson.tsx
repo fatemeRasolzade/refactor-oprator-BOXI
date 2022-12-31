@@ -242,6 +242,21 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             }}
             OpenModal={uploadExcel}
             setOpenModal={handleUploadFileAction}
+            setUpdate={() =>
+              dispatch(
+                PersonnelData({
+                  personelCode: "",
+                  name: "",
+                  nationalCode: "",
+                  mobile: "",
+                  email: "",
+                  username: "",
+                  isActive: true,
+                  pageNumber: 1,
+                  hublist: userInfo?.hublist,
+                }) as any
+              )
+            }
           />
         </>
       )}

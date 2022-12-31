@@ -136,15 +136,6 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
       });
 
       setSelectedCustomer(res.data?.payload);
-      console.log(
-        "res",
-        res.data?.payload?.segmentCustomers?.map((item: any) => {
-          return {
-            id: item.selectcustomer.id,
-            text: item.selectcustomer.text,
-          };
-        })
-      );
     } catch (error) {}
   }, []);
 
