@@ -27,7 +27,11 @@ const initialState: StateData = {
 export const fetchUpdateRuleData = createAsyncThunk(
   "fetchRuleData",
   async (data: RoleDataBody) => {
-    const body = data;
+    const body = {
+      permission: data.permission,
+      name: data.name,
+      isActive: data.isActive,
+    };
     try {
       const res = await filterTableDataAPI(
         filterUrls.rule,
