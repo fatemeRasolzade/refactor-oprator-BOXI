@@ -5,6 +5,7 @@ import DeleteOperation from "../../../../components/tableOperation/DeleteOperati
 import { useGetFuelTypeOptions, useGetVendorOptions } from "../../../../global/hooks/useFetchOptions";
 import { vehicleModel } from "../../../../redux/Transportation/vehicleModel/VehicleModel";
 import { apiRoute } from "../../../../services/apiRoute";
+import { exportExcel } from "../../../../tools/functions/ExcelExport";
 import { ExportExcel } from "../../../../tools/functions/Methods";
 import { VehicleModelColumns } from "./view/Column";
 import OptionsTable from "./view/OptionsTable";
@@ -54,7 +55,8 @@ const VehicleModel: React.FC = (): JSX.Element => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <VehicleMakeActionForms  fuelOptions={fuelOptions} vendorOptions={vendorOptions}/>}
-        exportExcel={() => ExportExcel(vehicleModelLists?.content)}
+        // exportExcel={() => ExportExcel(vehicleModelLists?.content)}
+        exportExcel={() =>  exportExcel(data)}
       />
       <StaticTable
         data={data ? data : []}

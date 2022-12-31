@@ -6,6 +6,7 @@ import DeleteOperation from "../../../components/tableOperation/DeleteOperation"
 import { useFetchOptions } from "../../../global/hooks/useFetchOptions";
 import { ServiceData } from "../../../redux/ServiceDefine/ServiceDefineReducer";
 import { apiRoute } from "../../../services/apiRoute";
+import { exportExcel } from "../../../tools/functions/ExcelExport";
 import { ExportExcel } from "../../../tools/functions/Methods";
 import ServiceDefineActionForms from "./view/ActionsForm";
 import { ServiceDefineColumns } from "./view/Column";
@@ -63,7 +64,7 @@ const ServiceDefinition: React.FC = (): JSX.Element => {
         addComponentProps={() => (
           <ServiceDefineActionForms productOptions={productOptions} priceOptions={priceOptions} />
         )}
-        exportExcel={() => ExportExcel(postLists?.content)}
+        exportExcel={() =>  exportExcel(data)}
       />
       <StaticTable
         data={data ? data : []}

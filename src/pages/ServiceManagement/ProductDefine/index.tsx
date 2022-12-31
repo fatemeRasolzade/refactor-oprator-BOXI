@@ -15,7 +15,8 @@ import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
 import { useGetOptions } from "../../../global/hooks/useFetchOptions";
 import { useNavigate } from "react-router-dom";
-import ExcelExportHelper from "../../../tools/functions/ExcelExport";
+import { exportExcel } from "../../../tools/functions/ExcelExport";
+
 
 
 const ProductDefine = () => {
@@ -70,6 +71,7 @@ const ProductDefine = () => {
         })
       : [];
 
+   
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="تعریف محصول" />
@@ -78,9 +80,10 @@ const ProductDefine = () => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ActionForms />}
-        exportExcel={() => ExportExcel(productLists?.content)}
+        exportExcel={() => exportExcel(datas)}
+        // exportExcel={<ExcelExportHelper data={datas}  />}
       />
-      <ExcelExportHelper />
+      
       <StaticTable
         data={datas ? datas : []}
         column={ProductColumns}
