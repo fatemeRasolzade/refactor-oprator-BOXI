@@ -10,6 +10,8 @@ import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { RoleData } from "../../../redux/RolsData/RolesData";
 import { SuccessAlert } from "../../../global/alert/Alert";
 import CheckBoxThree from "../../../components/checkbox/CheckBoxThree";
+import { addDataAPI, filterDataAPI } from "../../../services/CRUDServices";
+import { addEditUrls, filterUrls } from "../../../services/api.unums";
 
 interface setRuleAddEditModal {
   isOpen: boolean;
@@ -64,11 +66,11 @@ const AddEditRole: FC<EditRoleProps> = ({
           };
       if (treeChecked?.length !== 0) {
         try {
-          const res = await axios({
-            url: "http://boxi.local:40000/resource-api/role",
-            method: currentData ? "put" : "post",
-            data: data,
-          });
+          const res = await addDataAPI(
+            addEditUrls.rule,
+            currentData ? "put" : "post",
+            data
+          );
           if (200 <= res.status && res.status < 300) {
             dispatch(
               RoleData({
@@ -102,12 +104,8 @@ const AddEditRole: FC<EditRoleProps> = ({
   const handleAccess = async () => {
     try {
       setLoadingNode(true);
-      const data = await axios({
-        method: "post",
-        url: "http://boxi.local:40000/resource-api/permission/fetchPermissions",
-        data: {
-          in: "hojjat",
-        },
+      const data = await filterDataAPI(filterUrls.rulePermissions, {
+        in: "hojjat",
       });
       setNodes(data.data ? data.data : []);
       setLoadingNode(false);

@@ -1,0 +1,9 @@
+export enum filterUrls {
+  rulePermissions = "resource-api/permission/fetchPermissions",
+}
+export enum addEditUrls {
+  rule = "resource-api/role",
+}
+export enum deleteUrls {}
+export enum selectUrls {}
+export enum selectGetUrls {}
