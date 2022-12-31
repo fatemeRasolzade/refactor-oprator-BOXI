@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { BiXCircle } from 'react-icons/bi';
-import { Formik,ErrorMessage,useFormik} from "formik";
+import { Formik} from "formik";
 import InputText from '../../../../global/InputText/InputText';
 import CustomSwitch from '../../../../global/Switch/Switch';
 import DatePickers from '../../../../global/DatePicker/DatePicker';
 import InputSelect from "../../../../global/InputSelect/InputSelect"
 import { Button, Dialog } from '@material-tailwind/react';
-import { serviceProvitionSchema } from '../validationService/validationService';
-import { postDataHeaderToServer, selectDataFromServerWithHeader } from '../../../../services/Service_call';
+// import { serviceProvitionSchema } from '../validationService/validationService';
+import {  postDataHeaderToServer, selectDataFromServerWithHeader,PutWithHeader } from '../../../../services/Service_call';
 import { apiRoute } from '../../../../services/apiRoute';
-import { ErrorAlert } from '../../../../global/alert/Alert';
+import { ErrorAlert, SuccessAlert } from '../../../../global/alert/Alert';
 import MultiSelect from '../../../../global/multiselect/MultiSelect';
 import SubTableFormTwo from './SubTableFormTwo';
 import SubTableOne from './SubTableOne';
+import {useDispatch,useSelector} from "react-redux"
+import { clearService, ServiceProvisionData } from '../../../../redux/ServiceProvision/ServiceProvision';
 const AddModalService = ({setIsModalOpen,isModalOpen,currentData}:{setIsModalOpen:React.Dispatch<React.SetStateAction<boolean>>,isModalOpen?:any,currentData?:any}) => {
-
+const dispatch=useDispatch()
+const {pageNumbers} =useSelector((state:any)=>state.paginate)
 const [isActive,setIsActive]=useState(true)
-const [subForm,setSubForm]=useState(false)
-
 const [ChanelSale,setChanelSale]=useState([])
 const [DeliveryService,setDeliveryService]=useState([])
 const [SegmentCustomer,setSegmentCustomer]=useState([])
-const [catHub, setCatHub] = useState([]);
-
+const [ServiceList, setServiceList] = useState([]);
 const [deliveryTableOne,setdeliveryTableOne]=useState([])
 const [deleveryTableTwo,setdeleveryTableTwo]=useState([])
 
@@ -38,14 +38,19 @@ useEffect(()=>{
   selectDataFromServerWithHeader(apiRoute().get.Filter_servicedeliverycustomers).then(res=>{
     if(res.status==="OK"){setDeliveryService(res.payload)}else{ErrorAlert("دیتای کانال فروش بارگزاری نشد")}
   })
-  selectDataFromServerWithHeader(apiRoute().get.select_hub_category).then((res) => {
-    if (res.status === "OK") setCatHub(res.payload.content);
+  selectDataFromServerWithHeader(apiRoute().get.Fliter_Service).then((res) => {
+    if (res.status === "OK") setServiceList(res.payload);
   });
 
+
+return()=>{
+  dispatch(clearService())
+  setChanelSale([])
+  setDeliveryService([])
+  setSegmentCustomer([])
+}
+
 },[])
-
-
-
 
 const dicountType=[
   {
@@ -58,43 +63,6 @@ const dicountType=[
   }
 ]
 
-// const formik=useFormik({
-//   // enableReinitialize:true,
-
-   
-//   initialValues:{
-//     code:"",
-//     type:{
-//         id: "",
-//         text: ""
-//     },
-//     name:"",
-//     description:"",
-//     validDateFrom:{
-//        day: "",
-//        month: "",
-//        year: ""
-//        },
-//     validDateTo:{
-//        day: "",
-//        month: "",
-//        year: ""
-//        },
-//      deliveryDiscounts:[],
-//     service:null,
-//     customerSegments:null,
-//     serviceDeliveryCustomers:null,
-//     saleschannels:null,
-//     discountPercent:"",
-//     isActive:isActive
-//    },
-   
-//    onSubmit:(values)=>{
-//  // console.log(values)
-//  values.deliveryDiscounts=[...deliveryTableOne ,...deleveryTableTwo]
-//  console.log("oooooo",values)
-//    }
-// })
 
   return (
 <>
@@ -105,37 +73,89 @@ const dicountType=[
     </div>
     <div className='w-full'>
  <Formik
- initialValues={{
-  code:currentData?.code ? currentData?.code : "",
-  type:currentData?.type ?  currentData?.type : {
-      id: "",
-      text: ""
-  },
-  name:currentData?.name ? currentData?.name : "",
-  description:currentData?.description ? currentData?.description : "",
-  validDateFrom:currentData?.validDateFrom ? currentData?.validDateFrom : {
-     day: "",
-     month: "",
-     year: ""
-     },
-  validDateTo:currentData?.validDateTo ? currentData?.validDateTo : {
-     day: "",
-     month: "",
-     year: ""
-     },
-   deliveryDiscounts:currentData?.deliveryDiscounts ? currentData?.deliveryDiscounts : [],
-  service:currentData?.service ? currentData?.service : null,
-  customerSegments:currentData?.customerSegments ? currentData?.customerSegments : null,
-  serviceDeliveryCustomers:currentData?.serviceDeliveryCustomers ? currentData?.serviceDeliveryCustomers : null,
-  saleschannels:currentData?.saleschannels ? currentData?.saleschannels : null,
-  discountPercent:currentData?.discountPercent ? currentData?.discountPercent : "",
-  isActive:currentData?.isActive ? currentData?.isActive : isActive
- }
+ initialValues={
+  currentData ? {
+    id:currentData?.id ? currentData?.id : null,
+    code:currentData?.code ? currentData?.code : "",
+    type:currentData?.type ?  currentData?.type : {
+        id: "",
+        text: ""
+    },
+    name:currentData?.name ? currentData?.name : "",
+    description:currentData?.description ? currentData?.description : "",
+    validDateFrom:currentData?.validDateFrom ? currentData?.validDateFrom : {
+       day: "",
+       month: "",
+       year: ""
+       },
+    validDateTo:currentData?.validDateTo ? currentData?.validDateTo : {
+       day: "",
+       month: "",
+       year: ""
+       },
+     deliveryDiscounts:currentData?.deliveryDiscounts ? currentData?.deliveryDiscounts : [],
+    service:currentData?.service ? currentData?.service : null,
+    customerSegments:currentData?.customerSegments ? currentData?.customerSegments : null,
+    serviceDeliveryCustomers:currentData?.serviceDeliveryCustomers ? currentData?.serviceDeliveryCustomers : null,
+    saleschannels:currentData?.saleschannels ? currentData?.saleschannels : null,
+    discountPercent:currentData?.discountPercent ? currentData?.discountPercent : 0,
+    isActive:currentData?.isActive ? currentData?.isActive : isActive
+   }:{
+ 
+    code:currentData?.code ? currentData?.code : "",
+    type:currentData?.type ?  currentData?.type : {
+        id: "",
+        text: ""
+    },
+    name:currentData?.name ? currentData?.name : "",
+    description:currentData?.description ? currentData?.description : "",
+    validDateFrom:currentData?.validDateFrom ? currentData?.validDateFrom : {
+       day: "",
+       month: "",
+       year: ""
+       },
+    validDateTo:currentData?.validDateTo ? currentData?.validDateTo : {
+       day: "",
+       month: "",
+       year: ""
+       },
+     deliveryDiscounts:currentData?.deliveryDiscounts ? currentData?.deliveryDiscounts : [],
+    service:currentData?.service ? currentData?.service : null,
+    customerSegments:currentData?.customerSegments ? currentData?.customerSegments : null,
+    serviceDeliveryCustomers:currentData?.serviceDeliveryCustomers ? currentData?.serviceDeliveryCustomers : null,
+    saleschannels:currentData?.saleschannels ? currentData?.saleschannels : null,
+    discountPercent:currentData?.discountPercent ? currentData?.discountPercent : 0,
+    isActive:currentData?.isActive ? currentData?.isActive : isActive
+
+   }
 
 }
  onSubmit={(values)=>{
   values.deliveryDiscounts=[...deliveryTableOne ,...deleveryTableTwo]
-  console.log("oooooo",values)
+  if(currentData){
+   
+    PutWithHeader(apiRoute().post.service_provision,values).then(res=>{
+      if(res.status==="OK"){
+        SuccessAlert("با موفقیت ایجاد شد")
+        dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)
+      }else{
+        ErrorAlert("با خطا مواجه شد")
+      }
+    })
+
+  }else{
+   
+postDataHeaderToServer(apiRoute().post.service_provision,values).then(res=>{
+    if(res.status==="OK"){
+      SuccessAlert("با موفقیت ایجاد شد")
+      dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)
+    }else{
+      ErrorAlert("با خطا مواجه شد")
+    }
+  })
+
+  }
+ 
  }}
  >{(formik)=>(
 <>
@@ -152,7 +172,7 @@ const dicountType=[
 <div className='col-span-2'>
   <InputSelect label='سرویس' name="service"
  handleChange={formik.setFieldValue} values={formik.values.service}
-  options={catHub} wrapperClassName="w-full"
+  options={ServiceList} wrapperClassName="w-full"
   error={formik.touched.service && formik.errors.service}
   /></div>
 
@@ -212,14 +232,8 @@ const dicountType=[
 }
 
 
+
 </div>
-
- 
-
-
-
-
-
 </form>
 
 {formik.values.type.text==="محاسباتی" ? 

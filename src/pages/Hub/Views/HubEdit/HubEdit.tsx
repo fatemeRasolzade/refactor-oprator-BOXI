@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import {useNavigate, useLocation} from "react-router-dom"
+import  { useEffect, useState } from 'react'
+import {useNavigate} from "react-router-dom"
 import { Formik,ErrorMessage } from "formik";
 import { Button } from '@material-tailwind/react';
 import InputText from '../../../../global/InputText/InputText';
@@ -93,10 +93,6 @@ const HubEdit = () => {
       addressLine2:editData?.addressLine2,
       locLate: editData?.locLate,
       locLong: editData?.locLong,
-     
-      // fullName:"",
-      // phone:"",
-      // email:""
     }}
      //validationSchema={addHubschema}
     onSubmit={(values)=>{
@@ -170,21 +166,7 @@ const HubEdit = () => {
        <div className='!col-span-2 ' ><InputText label='آدرس 2' name="addressLine2" handleChange={formik.handleChange} values={formik.values.addressLine2} type={"text"} wrapperClassName="!w-full"/>
       
        </div>
-       <div>نقشه</div>
- 
-     {/* <div className='grid col-span-5 mt-10 gap-2'>
-       <div className='grid grid-cols-5 gap-3 Max-md:grid-cols-1 Max-sm:grid-cols-1 Max-xs:grid-cols-1 Max-lg:grid-cols-2'>
-       <div ><InputText title='نام و نام خانوادگی' name="fullName" handleChange={formik.handleChange} values={formik.values.fullName} type={"text"}/>
-      
-       </div>
-       <div ><InputText title='تلفن' name='phone' handleChange={formik.handleChange} values={formik.values.phone} type={"number"}/>
-      
-       </div>
-       <div ><InputText title='پست الکترونیک' name='email' handleChange={formik.handleChange} values={formik.values.email} type={"email"}/>
-      
-       </div>
-      </div>
-     </div> */}
+       {/* <div>نقشه</div> */}
  
      <div className='col-span-5 flex flex-row justify-end items-center'>
        <Button className='border-none bg-secondaryColor text-dark' onClick={()=>navigate(-1)}>بازگشت</Button>

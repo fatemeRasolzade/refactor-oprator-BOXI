@@ -1,23 +1,7 @@
-import React, { FC, memo, useCallback, useState } from "react";
-import ChipIcon from "../../../../../global/ChipIcon/ChipIcon";
+import  { FC, memo } from "react";
 import InputIcon from "../../../../../global/InputIcon/InputIcon";
-import CustomSwitch from "../../../../../global/Switch/Switch";
 import SwitchTooltip from "./SwitchTooltip";
-interface SearchFilterInterface {
-  valueName:
-    | "personelCode"
-    | "name"
-    | "nationalCode"
-    | "mobile"
-    | "email"
-    | "search"
-    | "username"
-    | "pageNumbers";
 
-  label: string;
-  isMain: boolean;
-  isShow: boolean;
-}
 interface SearchFilterProps {
   searchFilterList: Array<any>;
   setSearchFilterList: (selectedCol: Array<any>) => void;

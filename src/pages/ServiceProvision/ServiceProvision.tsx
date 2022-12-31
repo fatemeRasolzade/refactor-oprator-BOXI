@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
-import SearchForm from '../ServiceManagement/ProductDefine/view/SearchForm';
 import { useDispatch, useSelector } from 'react-redux';
 import OptionTableServiceProvision from './view/OptionTableServiceProvision/OptionTableServiceProvision';
 import StaticTable from './../../components/staticTable/StaticTable';
 import { clearService, ServiceProvisionData } from '../../redux/ServiceProvision/ServiceProvision';
 import { ServiceProvisionColumns } from '../../global/Column/Columns';
 import { BiEditAlt, BiTrash } from 'react-icons/bi';
-import DeleteModal from './view/DeleteModal/DeleteModal';
 import {apiRoute} from "../../services/apiRoute"
 import AddModalService from './view/AddModalService/AddModalService';
+import SearchFilterTable from './view/SearchFilterTable/SearchFilterTable';
+import DeleteModal from '../../global/DeleteModal/DeleteModal';
 const ServiceProvision = () => {
   const dispatch=useDispatch()
 const {serviceList} =useSelector((state:any)=>state.serviceProvision) 
@@ -18,8 +18,9 @@ const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
 const [deleteItemId,setdeleteItemId]=useState<number>(0)
 const [isModalEdit, setIsModalEdit] = useState(false);
 const [DataEditModal,setDataEditModal]=useState({})
+
 useEffect(()=>{
-  dispatch(ServiceProvisionData(pageNumbers) as any)
+  dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)
 return()=>{
   dispatch(clearService())
 }
@@ -27,25 +28,23 @@ return()=>{
 },[])
 
 useEffect(()=>{
-  dispatch(ServiceProvisionData(pageNumbers) as any)
+  dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)
 },[pageNumbers])
 
 const data=serviceList?.content &&  serviceList.content.map((item:any)=>{
   return{
-    id:item?.id,
-    code:item?.code,
-    name:item?.name,
-    service:item?.service?.text,
+    id:item?.id ? item?.id : "",
+    code:item?.code ? item?.code : "",
+    name:item?.name ? item?.name : "",
+    service:item?.service?.text ? item?.service?.text : "",
     isActive:item?.isActive ===true ? "فعال" : "غیر فعال",
-    validDateFrom:<span>{`${item?.validDateFrom.year}/${item?.validDateFrom.month}/${item?.validDateFrom.day}`}</span>,
-    validDateTo:<span>{`${item?.validDateTo?.year}/${item?.validDateTo?.month}/${item?.validDateTo?.day}`}</span>,
-    type:item?.type?.text,
+    validDateFrom:item?.validDateFrom.year ?  <span>{`${item?.validDateFrom.year}/${item?.validDateFrom.month}/${item?.validDateFrom.day}`}</span> : "",
+    validDateTo:item?.validDateTo?.year ?  <span>{`${item?.validDateTo?.year}/${item?.validDateTo?.month}/${item?.validDateTo?.day}`}</span> : "",
+    type:item?.type?.text ? item?.type?.text : "",
     handover:<div className='flex justify-center items-center gap-x-2'><span className='cursor-pointer'><BiEditAlt size={20} onClick={()=>{
-      console.log(item)
-      setDataEditModal(item)
+     setDataEditModal(item)
       setIsModalEdit(prev=>!prev)
-
-    }}/></span> 
+}}/></span> 
     
     <span className='cursor-pointer'><BiTrash size={20} onClick={()=>{
       setdeleteItemId(item?.id)
@@ -54,18 +53,14 @@ const data=serviceList?.content &&  serviceList.content.map((item:any)=>{
   }
 })
 
-const handelActionAfterDelete=()=>{
-  dispatch(ServiceProvisionData(pageNumbers) as any)
+const handelActionAfterDelete=()=>{ 
+  dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)
 }
 
-
-const {isUpdating}=useSelector((state:any)=>state.serviceProvision)
-
-  const [isActive, setIsACtive] = useState(true);
   return (
     <div>
       <Breadcrumb beforePage="مدیریت سرویس" curentPage="ارایه سرویس" />
-      <SearchForm isActive={isActive} isUpdating={isUpdating} />
+      <SearchFilterTable/>
       <OptionTableServiceProvision/>
 <DeleteModal isModalOpenDelete={isModalOpenDelete} setIsModalOpenDelete={setIsModalOpenDelete} title="حذف سرویس" itemId={deleteItemId} route={apiRoute().post.service_provision + `/${deleteItemId}`} handleDeleteActionNewData={handelActionAfterDelete}/>
 <AddModalService setIsModalOpen={setIsModalEdit} isModalOpen={isModalEdit} currentData={DataEditModal}/>

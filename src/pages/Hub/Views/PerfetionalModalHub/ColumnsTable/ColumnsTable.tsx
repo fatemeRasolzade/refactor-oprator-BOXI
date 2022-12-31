@@ -1,5 +1,4 @@
-import { Chip } from "@material-tailwind/react";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback } from "react";
 import ChipIcon from "../../../../../global/ChipIcon/ChipIcon";
 import InputIcon from "../../../../../global/InputIcon/InputIcon";
 import Checkbox from "./../../../../../components/checkbox/Checkbox";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import ChipIcon from "../../../../../global/ChipIcon/ChipIcon";
 import CustomSwitch from "../../../../../global/Switch/Switch";
 

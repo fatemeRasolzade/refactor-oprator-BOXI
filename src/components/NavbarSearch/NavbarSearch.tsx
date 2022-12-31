@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { BiSearch, BiX, BiChevronDown } from "react-icons/bi";
 import Chip from "../../global/Chip/Chip";
-import InputIcon from "../../global/InputIcon/InputIcon";
 import InputSelect from "../../global/InputSelect/InputSelect";
 import InputText from "../../global/InputText/InputText";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
-import CustomizeModal from "../PerfesionalSearch/CustomizeModal";
 import PerfesionalSearch from "./../PerfesionalSearch/PerfesionalSearch";
-import { Formik, ErrorMessage, useFormik } from "formik";
+import {useFormik } from "formik";
 import {
   getDataHeaderServer,
   postDataHeaderToServer,
@@ -18,7 +15,6 @@ import AutocompleteInput from "../../global/Autocomplete/AutocompleteInput";
 import { FiSearch } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { HubData } from "../../redux/HubData/HubData";
-import { ThunkDispatch } from "@reduxjs/toolkit";
 
 interface SelectedColInterface {
   accessor: string;
@@ -26,29 +22,14 @@ interface SelectedColInterface {
   isRequire: boolean;
   id:string
 }
-const NavbarSearch = ({
-  firstTextInput,
-  secondTextInput,
-}: {
-  firstTextInput?: string;
-  secondTextInput?: string;
-}) => {
+const NavbarSearch = () => {
   const [selectedCol, setSelectedCol] = useState<Array<SelectedColInterface>>(
     []
   );
-  const [shelf, setShelf] = useState<string>("");
-  const [hub, sethub] = useState<string>("");
+
   const [filterData, setFilterData] = useState({});
   const { pageNumbers } = useSelector((state: any) => state.paginate);
   const dispatch = useDispatch<any>();
-  interface bodyDataType {
-    pageNumbers: any;
-    name: string;
-    hubTypeId: string;
-    hubCategoryId: string;
-    parentHubId: string;
-    code: string;
-  }
 
   const formik = useFormik({
     initialValues: {

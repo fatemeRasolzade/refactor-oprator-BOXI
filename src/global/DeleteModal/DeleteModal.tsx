@@ -1,9 +1,9 @@
 import { FC} from "react";
 import { GrFormClose } from "react-icons/gr";
 import { Dialog } from "@material-tailwind/react";
-import { DeleteDataParams } from "../../../../services/Service_call";
-import { SuccessAlert } from "../../../../global/alert/Alert";
-import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
+import { DeleteDataParams } from "../../services/Service_call";
+import { SuccessAlert } from "../../global/alert/Alert";
+import SimpleButton from "../../global/SimpleButton/SimpleButton";
 
 interface DeleteOperationProps {
   title: string;
