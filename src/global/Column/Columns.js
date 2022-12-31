@@ -297,3 +297,14 @@ export const CRMCustomerColumn = [
     accessor: "operation",
   },
 ];
+
+export const ConsignmentManageCol = [
+  {
+    Header: "شماره مرسوله",
+    accessor: "code",
+  },
+  {
+    Header: "عملیات",
+    accessor: "operation",
+  },
+];
