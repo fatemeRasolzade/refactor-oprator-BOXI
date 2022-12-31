@@ -14,14 +14,16 @@ import SimpleButton from "../../global/SimpleButton/SimpleButton";
 
 interface AddExcelProps {
   excelInfo: any;
-  setOpenModal: (value: boolean) => void;
   OpenModal: boolean;
+  setOpenModal: (value: boolean) => void;
+  setUpdate?: () => void;
 }
 
 const AddExcel: FC<AddExcelProps> = ({
   excelInfo,
-  setOpenModal,
   OpenModal,
+  setOpenModal,
+  setUpdate,
 }): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -95,6 +97,7 @@ const AddExcel: FC<AddExcelProps> = ({
         toast.success("اطلاعات مورد نظر اضافه شد ");
         setOpenModal(false);
         handleClear();
+        setUpdate && setUpdate();
         if (response.status) {
           const convert = Object.entries(response.data.payload).map(
             ([key, value]) =>
