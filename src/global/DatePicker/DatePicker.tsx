@@ -14,21 +14,23 @@ interface PropType {
   timeValues?: any;
   error?: any;
   important?: boolean;
+  WrapperClassName?: string;
 }
 
-const DatePickers = ({ title, name, values, handleChange, time, timeValues, timeName, error, important }: PropType) => {
+const DatePickers = ({ title, name, values, handleChange, time, timeValues, timeName, error, important, WrapperClassName }: PropType) => {
   const timePlugin = [<TimePicker position="bottom" hideSeconds />];
-   // @ts-ignore
+  // @ts-ignore
   // const timeConvert=time && new Date(null,null,null,timeValues?.split(":")[0],timeValues?.split(":")[1])
 
   return (
-    <div className="flex flex-col">
-      <div className={`relative border ${error ? "border-red" : "border-darkBorder"} rounded-lg w-60`}>
+    <div className={`flex flex-col ${WrapperClassName}`}>
+      <div className={`relative border ${error ? "border-red" : "border-darkBorder"} rounded-lg w-full`}>
         <div className={`autocompleteLabel  ${error && "text-red"} z-10 -top-4`}>
           {title} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
         </div>
         <DatePicker
-          className="red"
+          style={{ zIndex: "none" }}
+          className="red z-0"
           calendar={persian}
           name={name}
           value={
@@ -55,6 +57,10 @@ const DatePickers = ({ title, name, values, handleChange, time, timeValues, time
       <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
     </div>
   );
+};
+
+DatePickers.defaultProps = {
+  wrapperClassName: "w-60",
 };
 
 export default DatePickers;
