@@ -1,5 +1,6 @@
 export enum filterUrls {
   rulePermissions = "resource-api/permission/fetchPermissions",
+  rule = "resource-api/role/filter",
 }
 export enum addEditUrls {
   rule = "resource-api/role",
