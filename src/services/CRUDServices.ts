@@ -21,6 +21,7 @@ export const filterTableDataAPI = async (
   return await mainService({
     url: url + `?pageNumber=${pageNumber}&pageSize=10`,
     data: body,
+    method: "POST",
     headers: tokenRequired
       ? {
           Authorization: `Bearer ${localStorage.getItem("myToken")}`,

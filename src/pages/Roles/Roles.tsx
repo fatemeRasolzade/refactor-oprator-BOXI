@@ -1,20 +1,22 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiPlus, BiTrash } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
-import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import { RoleColumn } from "../../global/Column/Columns";
 import DeleteModal from "../../global/DeleteModal/DeleteModal";
 import Modal from "../../global/Modal/Modal";
 import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
-import { clearRole, RoleData, updating } from "../../redux/RolsData/RolesData";
+import {
+  clearRole,
+  fetchRuleData,
+  RoleData,
+} from "../../redux/RolsData/RolesData";
 import { deleteUrls } from "../../services/api.enums";
-import { apiRoute } from "../../services/apiRoute";
+import { filterTableDataAPI } from "../../services/CRUDServices";
 import { ExportExcel } from "../../tools/functions/Methods";
 import AddEditRole from "./view/AddRole";
 import SearchFilter from "./view/SearchFilter";
@@ -49,23 +51,30 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
     pageSize: 10,
     pageNumber: pageNumbers,
   });
+  const handleGetTableData = useCallback(async () => {
+    try {
+      try {
+        const res = await filterTableDataAPI(
+          "resource-api/role/filter",
+          pageNumbers,
+          {
+            ...filterData,
+          }
+        );
+        dispatch(fetchRuleData(res.data.payload));
+      } catch (error) {
+        console.log("error ", error);
+      }
+    } catch (error) {}
+  }, [dispatch, filterData, pageNumbers]);
 
   useEffect(() => {
-    dispatch(RoleData({ ...filterData, pageNumber: pageNumbers }) as any);
-
+    handleGetTableData();
     return () => dispatch(clearRole() as any);
-  }, [dispatch, isActive, pageNumbers, filterData]);
+  }, [dispatch, isActive, pageNumbers, filterData, handleGetTableData]);
 
   const handleDeleteActionNewData = () => {
-    dispatch(
-      RoleData({
-        permission: "",
-        name: "",
-        isActive: isActive,
-        pageSize: 10,
-        pageNumber: pageNumbers,
-      }) as any
-    );
+    handleGetTableData();
   };
   const data =
     rolesList?.content?.length !== 0
@@ -103,13 +112,6 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                 >
                   <AiOutlineEdit size={20} className="w-full h-full" />
                 </button>
-                {/* <DeleteOperation
-                  itemId={item.id}
-                  title={"حذف نقش"}
-                  route={apiRoute().delete.role + `/${item.id}`}
-                  updating={updating}
-                  handleDeleteActionNewData={handleDeleteActionNewData}
-                /> */}
                 <button
                   className=" border-none	text-[14px]  w-[20px] h-[20px]"
                   onClick={() =>
