@@ -87,11 +87,6 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
             ),
             operation: (
               <div className="flex w-full gap-3 justify-center">
-                {/* <AddEditRole
-                  currentData={item}
-                  title="تغییر مدیریت نقش"
-                  isActive={isActive}
-                /> */}
                 <button
                   className=" border-none	text-[14px]  w-[20px] h-[20px] "
                   onClick={() =>
@@ -109,12 +104,6 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                   updating={updating}
                   handleDeleteActionNewData={handleDeleteActionNewData}
                 />
-                {/* <AddEditRole
-                  isSomeEdit={true}
-                  currentData={item}
-                  title="تغییر مدیریت نقش"
-                  isActive={isActive}
-                /> */}
                 <button
                   className=" border-none	text-[14px]  w-[20px] h-[20px] "
                   onClick={() =>
