@@ -1,11 +1,9 @@
-import React from 'react'
-
 const NotFound = () => {
   return (
     <div>
-        <h2>محتوایی یافت نشد</h2>
+      <h2>محتوایی یافت نشد</h2>
     </div>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFound;

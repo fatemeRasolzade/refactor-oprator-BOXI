@@ -17,6 +17,7 @@ import { getUserInfo } from "./redux/userInfo/userInfoReducer";
 import GeoWrapper from "./pages/CustomGeographic/views/AddGeo/GeoWrapper";
 import GeoWrapperEdit from "./pages/CustomGeographic/views/editGeo/GeoWrapperEdit";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import DashboardLayout from "./components/Layout/DashboardLayout";
 
 function App() {
   const dispatch = useDispatch();
@@ -49,13 +50,17 @@ function App() {
     <div className="App">
       <YupDefault />
       <Routes>
-        {links.map((item) => item.childs.map((route) => <Route path={route.to} element={route.component} />))}
-        <Route path="*" element={<NotFound />} />
-        <Route path="/hub/add" element={<HubAdd />} />
-        <Route path="/hub/edit" element={<HubEdit />} />
-        <Route path="/basic-information/custom-geographic-category/add" element={<GeoWrapper />} />
-        <Route path="/basic-information/custom-geographic-category/edit" element={<GeoWrapperEdit />} />
         <Route path="/forgot_password" element={<ForgotPassword />} />
+        <Route path="/" element={<DashboardLayout />}>
+          {/* <Route path="*" element={<NotFound />} /> */}
+          {links.map((item) => item.childs.map((route) => <Route path={route.to} element={route.component} />))}
+          <Route path="*" element={<NotFound />} />
+          <Route path="/hub/add" element={<HubAdd />} />
+          <Route path="/hub/edit" element={<HubEdit />} />
+          <Route path="/basic-information/custom-geographic-category/add" element={<GeoWrapper />} />
+          <Route path="/basic-information/custom-geographic-category/edit" element={<GeoWrapperEdit />} />
+          <Route path="/forgot_password" element={<ForgotPassword />} />
+        </Route>
       </Routes>
     </div>
   );

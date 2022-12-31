@@ -23,12 +23,7 @@ useEffect(()=>{
 return()=>{
   dispatch(clearService())
 }
-
-},[])
-
-useEffect(()=>{
-  dispatch(ServiceProvisionData(pageNumbers) as any)
-},[pageNumbers])
+},[dispatch, pageNumbers])
 
 const data=serviceList?.content &&  serviceList.content.map((item:any)=>{
   return{
