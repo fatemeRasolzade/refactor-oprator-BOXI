@@ -21,32 +21,12 @@ const ConsignmentManage = () => {
       <Breadcrumb curentPage="مدیریت مرسوله" />
       <SearchConsignmentFilter />
       <OptionsTable
+        btnLink="/consignment-manage/add"
         exportExcel={() => ExportExcel([])}
         isActive={isActive}
         setIsActive={(value: boolean) => {
           setIsActive(value);
         }}
-        addComponentProps={() => (
-          <>
-            <button
-              className={`btn full-tomato-btn w-full`}
-              // onClick={() =>
-              //   setRuleAddEditModal((prev) => {
-              //     return {
-              //       ...prev,
-              //       isOpen: !prev.isOpen,
-              //       data: undefined,
-              //     };
-              //   })
-              // }
-            >
-              <span className="px-5">افزودن</span>
-              <span>
-                <BiPlus color="white" />
-              </span>
-            </button>
-          </>
-        )}
       />
       <StaticTable
         data={[]}
