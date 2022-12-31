@@ -11,7 +11,7 @@ import { RoleData } from "../../../redux/RolsData/RolesData";
 import { SuccessAlert } from "../../../global/alert/Alert";
 import CheckBoxThree from "../../../components/checkbox/CheckBoxThree";
 import { addDataAPI, filterDataAPI } from "../../../services/CRUDServices";
-import { addEditUrls, filterUrls } from "../../../services/api.unums";
+import { addEditUrls, filterUrls } from "../../../services/api.enums";
 
 interface setRuleAddEditModal {
   isOpen: boolean;
