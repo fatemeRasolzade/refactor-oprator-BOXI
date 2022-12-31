@@ -321,11 +321,12 @@ import SimpleButton from "../../global/SimpleButton/SimpleButton";
        
     var headerIndexes = [2];
     // finalData.forEach((data, index) => (data["A"] === "isActive" ? headerIndexes.push(index) : null));
-    console.log(headerIndexes, "range");
+    // console.log(headerIndexes, "range");
     const totalRecords = data.length;
     const dataInfo = {
       titleCell: "A2",
       titleRange: `A1:${range[range.length - 1]}2`,
+      // titleRange: `A1:${range[range.length - 1]}2`,
       tbodyRange: `A${headerIndexes[0] + 2}:${range[range.length - 1]}${finalData.length}`,
       theadRange:
         headerIndexes?.length >= 1
