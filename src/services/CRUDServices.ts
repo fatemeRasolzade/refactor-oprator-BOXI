@@ -34,7 +34,15 @@ export const deleteDataAPI = async (
   id: number,
   tokenRequired: boolean = true
 ) => {
-  return await mainService.delete(url + `/${id}`);
+  return await mainService({
+    url: url + `/${id}`,
+    method: "DELETE",
+    headers: tokenRequired
+      ? {
+          Authorization: `Bearer ${localStorage.getItem("myToken")}`,
+        }
+      : {},
+  });
 };
 
 export const addDataAPI = async (

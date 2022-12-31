@@ -31,8 +31,6 @@ const validation = yup.object().shape({
 });
 const AddEditRole: FC<EditRoleProps> = ({
   currentData,
-  title,
-  isActive,
   isSomeEdit,
   setRuleAddEditModal,
 }): JSX.Element => {

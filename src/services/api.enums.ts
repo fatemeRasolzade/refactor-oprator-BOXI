@@ -4,6 +4,9 @@ export enum filterUrls {
 export enum addEditUrls {
   rule = "resource-api/role",
 }
-export enum deleteUrls {}
+export enum deleteUrls {
+  rule = "resource-api/role",
+  servicedeliveryservice = "core-api/servicedeliveryservice",
+}
 export enum selectUrls {}
 export enum selectGetUrls {}

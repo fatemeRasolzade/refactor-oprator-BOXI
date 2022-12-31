@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
-import { BiPlus } from "react-icons/bi";
+import { BiPlus, BiTrash } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -9,9 +9,11 @@ import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import { RoleColumn } from "../../global/Column/Columns";
+import DeleteModal from "../../global/DeleteModal/DeleteModal";
 import Modal from "../../global/Modal/Modal";
 import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
 import { clearRole, RoleData, updating } from "../../redux/RolsData/RolesData";
+import { deleteUrls } from "../../services/api.enums";
 import { apiRoute } from "../../services/apiRoute";
 import { ExportExcel } from "../../tools/functions/Methods";
 import AddEditRole from "./view/AddRole";
@@ -35,6 +37,10 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
       data: undefined,
     }
   );
+  const [isOpenModalDelete, setIsOpenModalDelete] = useState({
+    isOpen: false,
+    id: undefined,
+  });
   const [isActive, setIsActive] = useState<boolean>(true);
   const [filterData, setFilterData] = useState({
     permission: "",
@@ -97,13 +103,23 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                 >
                   <AiOutlineEdit size={20} className="w-full h-full" />
                 </button>
-                <DeleteOperation
+                {/* <DeleteOperation
                   itemId={item.id}
                   title={"حذف نقش"}
                   route={apiRoute().delete.role + `/${item.id}`}
                   updating={updating}
                   handleDeleteActionNewData={handleDeleteActionNewData}
-                />
+                /> */}
+                <button
+                  className=" border-none	text-[14px]  w-[20px] h-[20px]"
+                  onClick={() =>
+                    setIsOpenModalDelete((prev) => {
+                      return { ...prev, isOpen: !prev.isOpen, id: item.id };
+                    })
+                  }
+                >
+                  <BiTrash size={20} className="w-full h-full	" />
+                </button>
                 <button
                   className=" border-none	text-[14px]  w-[20px] h-[20px] "
                   onClick={() =>
@@ -188,6 +204,18 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
           />
         </div>
       </Modal>
+      <DeleteModal
+        isModalOpenDelete={isOpenModalDelete.isOpen}
+        setIsModalOpenDelete={() =>
+          setIsOpenModalDelete((prev) => {
+            return { ...prev, isOpen: false, id: undefined };
+          })
+        }
+        title="حذف نقش"
+        itemId={isOpenModalDelete.id}
+        route={deleteUrls.rule}
+        handleDeleteActionNewData={handleDeleteActionNewData}
+      />
     </div>
   );
 };
