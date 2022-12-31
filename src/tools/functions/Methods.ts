@@ -58,7 +58,7 @@ export const ExportExcel = (data: any) => {
       vendorSelect:"شرکت نقلیه",
   };
 
-  const datas=[{name:"محصول اول",productGroup:{id:"1",text:"گروه محصول اول"}},{name:"محصول دوم",productGroup:{id:"10",text:"گروه محصول دوم"}}]
+
 
   const flattenObj = (ob:any) => {
       // The object which contains the
@@ -88,12 +88,12 @@ export const ExportExcel = (data: any) => {
       return result;
   };
  let newArr:any=[]
-      datas.map((item:any)=>{
+      data.map((item:any)=>{
             newArr.push(flattenObj(item))
          })
 
   let headers=[]
-  headers=Object.keys(Object.assign({}, ...datas))
+  headers=Object.keys(Object.assign({}, ...data))
   let persianHeaders=headers.map((item:any)=>
       persianName[item]?persianName[item]:item
   )
@@ -142,25 +142,25 @@ export const ExportExcel = (data: any) => {
 //   ]
 // )
 
-let myRow:any=[]
+// let myRow:any=[]
 
-datas.map((item)=>{
-  Object.entries(item).forEach(([k, v]) => {
-    myRow.push(  {
-	  v: v, s: {
-		font: {name: "Courier", sz: 10, color: {rgb: "FF0000"}},
-		alignment:{readingOrder:2}
-	  }
-	},
-  )
+// datas.map((item)=>{
+//   Object.entries(item).forEach(([k, v]) => {
+//     myRow.push(  {
+// 	  v: v, s: {
+// 		font: {name: "Courier", sz: 10, color: {rgb: "FF0000"}},
+// 		alignment:{readingOrder:2}
+// 	  }
+// 	},
+//   )
 
-  })
-})
-
-
+//   })
+// })
 
 
-   console.log(myRow);
+
+
+  //  console.log(myRow);
    
 
     //   let web = XLSX.utils.book_new();
@@ -176,10 +176,10 @@ datas.map((item)=>{
     //   XLSX.utils.book_append_sheet(web, ws, "readme demo");
     //   XLSX.writeFile(web, "xlsx-js-style-demo.xlsx");
 
-      // let web = XLSX.utils.book_new(),
-      //   ws = XLSX.utils.json_to_sheet(newArr);
-      // XLSX.utils.book_append_sheet(web, ws, "myfile");
-      // XLSX.writeFile(web, "MyExcel.xlsx");
+      let web = XLSX.utils.book_new(),
+        ws = XLSX.utils.json_to_sheet(newArr);
+      XLSX.utils.book_append_sheet(web, ws, "myfile");
+      XLSX.writeFile(web, "MyExcel.xlsx");
 };
 
 export const ReverseArray = (arr: []) => [...arr].reverse();
