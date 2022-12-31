@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { filterUrls } from "../../services/api.enums";
 
-import { apiRoute } from "../../services/apiRoute";
 import { filterTableDataAPI } from "../../services/CRUDServices";
-import { PostDataParams } from "../../services/Service_call";
 import { StateData } from "./state-model";
 
 interface RoleDataBody {
@@ -13,71 +12,66 @@ interface RoleDataBody {
   pageNumber: number;
 }
 
-export const RoleData = createAsyncThunk("post", async (body: RoleDataBody) => {
-  const params = `/filter?pageNumber=${body.pageNumber}&pageSize=${body.pageSize}`;
-  // http://boxi.local:40000/resource-api/role/filter?pageNumber=1&pageSize=10
-  const bodyData = {
-    selectPermissions: body.permission ? body.permission : [],
-    name: body.name,
-    isActive: body.isActive,
-  };
-  var data = {};
-  try {
-    return await filterTableDataAPI("resource-api/role/filter", 10, bodyData);
-
-    // data = await PostDataParams(apiRoute().post.filterRole + params, {
-    //   selectPermissions: body.permission ? body.permission : [],
-    //   name: body.name,
-    //   isActive: body.isActive,
-    // });
-  } catch (error) {
-    console.log("error ", error);
-  }
-
-  return data;
-});
-
 const initialState: StateData = {
   rolesList: [],
   fetchPost: false,
   errorMessage: null,
   isUpdating: false,
+  filter: {
+    permission: "",
+    name: "",
+    isActive: true,
+  },
 };
 
+export const fetchUpdateRuleData = createAsyncThunk(
+  "fetchRuleData",
+  async (data: RoleDataBody) => {
+    const body = {
+      permission: data.permission,
+      name: data.name,
+      isActive: data.isActive,
+    };
+    try {
+      const res = await filterTableDataAPI(
+        filterUrls.rule,
+        data.pageNumber,
+        body
+      );
+      return res.data;
+    } catch (error) {
+      return {};
+    }
+  }
+);
 const RolesList = createSlice({
   initialState: initialState,
   name: "rolesList",
   reducers: {
-    fetchRuleData: (state, action) => {
-      state.rolesList = action.payload;
-    },
     clearRole: (state) => {
       state.rolesList = [];
     },
     updating: (state, action) => {
       state.isUpdating = action?.payload;
     },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
   },
-  extraReducers: {
-    [RoleData.fulfilled as any]: (state, action) => {
-      state.rolesList = action?.payload?.payload;
-      state.fetchPost = false;
-      state.errorMessage = null;
-      state.isUpdating = false;
-    },
-    [RoleData.pending as any]: (state) => {
-      state.fetchPost = true;
-      state.rolesList = [];
-      state.errorMessage = null;
-      state.isUpdating = false;
-    },
-    [RoleData.rejected as any]: (state) => {
-      state.fetchPost = false;
-      state.errorMessage = "wrong";
-      state.rolesList = [];
-      state.isUpdating = false;
-    },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchUpdateRuleData.pending, (state) => {
+        state.isUpdating = true;
+      })
+      .addCase(fetchUpdateRuleData.fulfilled, (state, action) => {
+        state.isUpdating = false;
+        // Add any fetched posts to the array
+        state.rolesList = action?.payload?.payload;
+      })
+      .addCase(fetchUpdateRuleData.rejected, (state) => {
+        state.isUpdating = false;
+      });
   },
 });
-export const { clearRole, updating, fetchRuleData } = RolesList.actions;
+export const { clearRole, updating, setFilter } = RolesList.actions;
 export default RolesList.reducer;

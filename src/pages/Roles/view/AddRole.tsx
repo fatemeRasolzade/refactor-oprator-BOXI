@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import * as yup from "yup";
 import { useFormik } from "formik";
@@ -7,11 +7,11 @@ import { useFormik } from "formik";
 import CustomSwitch from "../../../global/Switch/Switch";
 import InputText from "../../../global/InputText/InputText";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
-import { RoleData } from "../../../redux/RolsData/RolesData";
 import { SuccessAlert } from "../../../global/alert/Alert";
 import CheckBoxThree from "../../../components/checkbox/CheckBoxThree";
 import { addDataAPI, filterDataAPI } from "../../../services/CRUDServices";
 import { addEditUrls, filterUrls } from "../../../services/api.enums";
+import { fetchUpdateRuleData } from "../../../redux/RolsData/RolesData";
 
 interface setRuleAddEditModal {
   isOpen: boolean;
@@ -35,6 +35,8 @@ const AddEditRole: FC<EditRoleProps> = ({
   setRuleAddEditModal,
 }): JSX.Element => {
   const dispatch = useDispatch();
+  const { filter } = useSelector((state: any) => state.role);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
 
   const [treeChecked, setTreeChecked] = useState<Array<string>>([]);
 
@@ -71,12 +73,10 @@ const AddEditRole: FC<EditRoleProps> = ({
           );
           if (200 <= res.status && res.status < 300) {
             dispatch(
-              RoleData({
-                permission: "",
-                name: "",
-                isActive: true,
+              fetchUpdateRuleData({
+                ...filter,
                 pageSize: 10,
-                pageNumber: 1,
+                pageNumber: pageNumbers,
               }) as any
             );
             SuccessAlert(

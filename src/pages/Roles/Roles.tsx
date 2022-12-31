@@ -12,11 +12,10 @@ import Modal from "../../global/Modal/Modal";
 import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
 import {
   clearRole,
-  fetchRuleData,
-  RoleData,
+  fetchUpdateRuleData,
+  setFilter,
 } from "../../redux/RolsData/RolesData";
 import { deleteUrls, filterUrls } from "../../services/api.enums";
-import { filterTableDataAPI } from "../../services/CRUDServices";
 import { ExportExcel } from "../../tools/functions/Methods";
 import AddEditRole from "./view/AddRole";
 import SearchFilter from "./view/SearchFilter";
@@ -29,7 +28,7 @@ interface RolesProps {}
 
 const Roles: FC<RolesProps> = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { rolesList } = useSelector((state: any) => state.role);
+  const { rolesList, filter } = useSelector((state: any) => state.role);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
 
   const [ruleAddEditModal, setRuleAddEditModal] = useState<setRuleAddEditModal>(
@@ -44,30 +43,25 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
     id: undefined,
   });
   const [isActive, setIsActive] = useState<boolean>(true);
-  const [filterData, setFilterData] = useState({
-    permission: "",
-    name: "",
-    isActive: isActive,
-    pageSize: 10,
-    pageNumber: pageNumbers,
-  });
   const handleGetTableData = useCallback(async () => {
     try {
       try {
-        const res = await filterTableDataAPI(filterUrls.rule, pageNumbers, {
-          ...filterData,
-        });
-        dispatch(fetchRuleData(res.data.payload));
+        dispatch(
+          fetchUpdateRuleData({ ...filter, pageNumber: pageNumbers }) as any
+        );
       } catch (error) {
         console.log("error ", error);
       }
     } catch (error) {}
-  }, [dispatch, filterData, pageNumbers]);
+  }, [dispatch, pageNumbers, filter]);
 
   useEffect(() => {
     handleGetTableData();
-    return () => dispatch(clearRole() as any);
-  }, [dispatch, isActive, pageNumbers, filterData, handleGetTableData]);
+
+    return () => {
+      dispatch(clearRole() as any);
+    };
+  }, [dispatch, handleGetTableData]);
 
   const handleDeleteActionNewData = () => {
     handleGetTableData();
@@ -142,19 +136,13 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   return (
     <div>
       <Breadcrumb curentPage="مدیریت نقش" />
-      <SearchFilter isActive={isActive} setFilterData={setFilterData} />
+      <SearchFilter isActive={isActive} />
       <OptionsTable
         exportExcel={() => ExportExcel(rolesList?.content)}
         isActive={isActive}
         setIsActive={(value: boolean) => {
-          setFilterData({
-            permission: "",
-            name: "",
-            isActive: value,
-            pageSize: 10,
-            pageNumber: pageNumbers,
-          });
           setIsActive(value);
+          dispatch(setFilter({ ...filter, isActive: value }));
         }}
         addComponentProps={() => (
           <button
