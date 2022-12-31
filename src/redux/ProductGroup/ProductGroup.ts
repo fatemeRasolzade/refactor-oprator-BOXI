@@ -10,10 +10,8 @@ import {postDataHeaderToServer } from '../../services/Service_call';
                 name: body.name ?  body.name : "",
                 description: body?.description ,
                 isActive: body.isActive,
-        })
-          
+        }) 
         return payload
-
     })
 
 

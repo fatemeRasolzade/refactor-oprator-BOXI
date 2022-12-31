@@ -7,7 +7,7 @@ import DatePickers from '../../../../global/DatePicker/DatePicker';
 import InputSelect from "../../../../global/InputSelect/InputSelect"
 import { Button, Dialog } from '@material-tailwind/react';
 // import { serviceProvitionSchema } from '../validationService/validationService';
-import {  postDataHeaderToServer, selectDataFromServerWithHeader } from '../../../../services/Service_call';
+import {  postDataHeaderToServer, selectDataFromServerWithHeader,PutWithHeader } from '../../../../services/Service_call';
 import { apiRoute } from '../../../../services/apiRoute';
 import { ErrorAlert, SuccessAlert } from '../../../../global/alert/Alert';
 import MultiSelect from '../../../../global/multiselect/MultiSelect';
@@ -52,9 +52,6 @@ return()=>{
 
 },[])
 
-
-
-
 const dicountType=[
   {
     id:0,
@@ -76,45 +73,89 @@ const dicountType=[
     </div>
     <div className='w-full'>
  <Formik
- initialValues={{
-  code:currentData?.code ? currentData?.code : "",
-  type:currentData?.type ?  currentData?.type : {
-      id: "",
-      text: ""
-  },
-  name:currentData?.name ? currentData?.name : "",
-  description:currentData?.description ? currentData?.description : "",
-  validDateFrom:currentData?.validDateFrom ? currentData?.validDateFrom : {
-     day: "",
-     month: "",
-     year: ""
-     },
-  validDateTo:currentData?.validDateTo ? currentData?.validDateTo : {
-     day: "",
-     month: "",
-     year: ""
-     },
-   deliveryDiscounts:currentData?.deliveryDiscounts ? currentData?.deliveryDiscounts : [],
-  service:currentData?.service ? currentData?.service : null,
-  customerSegments:currentData?.customerSegments ? currentData?.customerSegments : null,
-  serviceDeliveryCustomers:currentData?.serviceDeliveryCustomers ? currentData?.serviceDeliveryCustomers : null,
-  saleschannels:currentData?.saleschannels ? currentData?.saleschannels : null,
-  discountPercent:currentData?.discountPercent ? currentData?.discountPercent : "",
-  isActive:currentData?.isActive ? currentData?.isActive : isActive
- }
+ initialValues={
+  currentData ? {
+    id:currentData?.id ? currentData?.id : null,
+    code:currentData?.code ? currentData?.code : "",
+    type:currentData?.type ?  currentData?.type : {
+        id: "",
+        text: ""
+    },
+    name:currentData?.name ? currentData?.name : "",
+    description:currentData?.description ? currentData?.description : "",
+    validDateFrom:currentData?.validDateFrom ? currentData?.validDateFrom : {
+       day: "",
+       month: "",
+       year: ""
+       },
+    validDateTo:currentData?.validDateTo ? currentData?.validDateTo : {
+       day: "",
+       month: "",
+       year: ""
+       },
+     deliveryDiscounts:currentData?.deliveryDiscounts ? currentData?.deliveryDiscounts : [],
+    service:currentData?.service ? currentData?.service : null,
+    customerSegments:currentData?.customerSegments ? currentData?.customerSegments : null,
+    serviceDeliveryCustomers:currentData?.serviceDeliveryCustomers ? currentData?.serviceDeliveryCustomers : null,
+    saleschannels:currentData?.saleschannels ? currentData?.saleschannels : null,
+    discountPercent:currentData?.discountPercent ? currentData?.discountPercent : 0,
+    isActive:currentData?.isActive ? currentData?.isActive : isActive
+   }:{
+ 
+    code:currentData?.code ? currentData?.code : "",
+    type:currentData?.type ?  currentData?.type : {
+        id: "",
+        text: ""
+    },
+    name:currentData?.name ? currentData?.name : "",
+    description:currentData?.description ? currentData?.description : "",
+    validDateFrom:currentData?.validDateFrom ? currentData?.validDateFrom : {
+       day: "",
+       month: "",
+       year: ""
+       },
+    validDateTo:currentData?.validDateTo ? currentData?.validDateTo : {
+       day: "",
+       month: "",
+       year: ""
+       },
+     deliveryDiscounts:currentData?.deliveryDiscounts ? currentData?.deliveryDiscounts : [],
+    service:currentData?.service ? currentData?.service : null,
+    customerSegments:currentData?.customerSegments ? currentData?.customerSegments : null,
+    serviceDeliveryCustomers:currentData?.serviceDeliveryCustomers ? currentData?.serviceDeliveryCustomers : null,
+    saleschannels:currentData?.saleschannels ? currentData?.saleschannels : null,
+    discountPercent:currentData?.discountPercent ? currentData?.discountPercent : 0,
+    isActive:currentData?.isActive ? currentData?.isActive : isActive
+
+   }
 
 }
  onSubmit={(values)=>{
   values.deliveryDiscounts=[...deliveryTableOne ,...deleveryTableTwo]
+  if(currentData){
+   
+    PutWithHeader(apiRoute().post.service_provision,values).then(res=>{
+      if(res.status==="OK"){
+        SuccessAlert("با موفقیت ایجاد شد")
+        dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)
+      }else{
+        ErrorAlert("با خطا مواجه شد")
+      }
+    })
 
-  postDataHeaderToServer(apiRoute().post.service_provision,values).then(res=>{
+  }else{
+   
+postDataHeaderToServer(apiRoute().post.service_provision,values).then(res=>{
     if(res.status==="OK"){
       SuccessAlert("با موفقیت ایجاد شد")
-      dispatch(ServiceProvisionData(pageNumbers) as any)
+      dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)
+    }else{
+      ErrorAlert("با خطا مواجه شد")
     }
   })
 
-  console.log("oooooo",values)
+  }
+ 
  }}
  >{(formik)=>(
 <>
