@@ -140,7 +140,7 @@ const AddEditRole: FC<EditRoleProps> = ({
 
   return (
     <div>
-      {currentData ? (
+      {/* {currentData ? (
         <button
           className=" border-none	text-[14px]  w-[20px] h-[20px] "
           onClick={() => setIsModalOpen(!isModalOpen)}
@@ -168,7 +168,7 @@ const AddEditRole: FC<EditRoleProps> = ({
         </button>
         <h3 className="flex w-full justify-center text-gray-700 font-bold text-lg">
           {title}
-        </h3>
+        </h3> */}
         <form className="grid grid-cols-1  p-6" onSubmit={handleSubmit}>
           <div>
             <div className="w-full flex justify-between gap-x-12">
@@ -224,7 +224,7 @@ const AddEditRole: FC<EditRoleProps> = ({
             </div>
           </div>
         </form>
-      </Dialog>
+      {/* </Dialog> */}
     </div>
   );
 };

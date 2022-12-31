@@ -1,4 +1,6 @@
 import { FC, useEffect, useState } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
+import { BiPlus } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -24,6 +26,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
 
   const [ruleAddEditModal, setRuleAddEditModal] = useState({
     isOpen: false,
+    isActive: false,
     data: {},
   });
   const [isActive, setIsActive] = useState<boolean>(true);
@@ -83,6 +86,16 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                   title="تغییر مدیریت نقش"
                   isActive={isActive}
                 />
+                <button
+                  className=" border-none	text-[14px]  w-[20px] h-[20px] "
+                  onClick={() =>
+                    setRuleAddEditModal((prev) => {
+                      return { ...prev, isOpen: !prev.isOpen, data: item };
+                    })
+                  }
+                >
+                  <AiOutlineEdit size={20} className="w-full h-full" />
+                </button>
                 <DeleteOperation
                   itemId={item.id}
                   title={"حذف نقش"}
@@ -90,12 +103,27 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                   updating={updating}
                   handleDeleteActionNewData={handleDeleteActionNewData}
                 />
-                <AddEditRole
+                {/* <AddEditRole
                   isSomeEdit={true}
                   currentData={item}
                   title="تغییر مدیریت نقش"
                   isActive={isActive}
-                />
+                /> */}
+                <button
+                  className=" border-none	text-[14px]  w-[20px] h-[20px] "
+                  onClick={() =>
+                    setRuleAddEditModal((prev) => {
+                      return {
+                        ...prev,
+                        isOpen: !prev.isOpen,
+                        data: item,
+                        isActive: true,
+                      };
+                    })
+                  }
+                >
+                  <AiOutlineEdit size={20} className="w-full h-full" />
+                </button>
               </div>
             ),
           };
@@ -120,7 +148,23 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
           setIsActive(value);
         }}
         addComponentProps={() => (
-          <AddEditRole title="تغییر مدیریت نقش" isActive={isActive} />
+          <button
+            className={`btn full-tomato-btn w-full`}
+            onClick={() =>
+              setRuleAddEditModal((prev) => {
+                return {
+                  ...prev,
+                  isOpen: !prev.isOpen,
+                  data: {},
+                };
+              })
+            }
+          >
+            <span className="px-5">افزودن</span>{" "}
+            <span>
+              <BiPlus color="white" />
+            </span>
+          </button>
         )}
       />
       <StaticTable
@@ -130,11 +174,19 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
         selectable={false}
       />
       <Modal
-        visible={() => setRuleAddEditModal({ isOpen: false, data: {} })}
-        setVisible={ruleAddEditModal.isOpen}
-        title={ruleAddEditModal.data ? "ویرایش  نقش" : "افزودن  نقش"}
+        visible={ruleAddEditModal.isOpen}
+        setVisible={() =>
+          setRuleAddEditModal({ isOpen: false, data: {}, isActive: false })
+        }
+        title={ruleAddEditModal.isOpen ? "ویرایش  نقش" : "افزودن  نقش"}
       >
-        <></>
+        <>
+          <AddEditRole
+            currentData={ruleAddEditModal.data}
+            title="تغییر مدیریت نقش"
+            isActive={ruleAddEditModal.isActive}
+          />
+        </>
       </Modal>
     </div>
   );
