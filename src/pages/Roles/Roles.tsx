@@ -16,7 +16,11 @@ import { apiRoute } from "../../services/apiRoute";
 import { ExportExcel } from "../../tools/functions/Methods";
 import AddEditRole from "./view/AddRole";
 import SearchFilter from "./view/SearchFilter";
-
+interface setRuleAddEditModal {
+  isOpen: boolean;
+  isActive: boolean;
+  data: object | undefined;
+}
 interface RolesProps {}
 
 const Roles: FC<RolesProps> = (): JSX.Element => {
@@ -24,11 +28,13 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   const { rolesList } = useSelector((state: any) => state.role);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
 
-  const [ruleAddEditModal, setRuleAddEditModal] = useState({
-    isOpen: false,
-    isActive: false,
-    data: {},
-  });
+  const [ruleAddEditModal, setRuleAddEditModal] = useState<setRuleAddEditModal>(
+    {
+      isOpen: false,
+      isActive: false,
+      data: undefined,
+    }
+  );
   const [isActive, setIsActive] = useState<boolean>(true);
   const [filterData, setFilterData] = useState({
     permission: "",
@@ -81,11 +87,11 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
             ),
             operation: (
               <div className="flex w-full gap-3 justify-center">
-                <AddEditRole
+                {/* <AddEditRole
                   currentData={item}
                   title="تغییر مدیریت نقش"
                   isActive={isActive}
-                />
+                /> */}
                 <button
                   className=" border-none	text-[14px]  w-[20px] h-[20px] "
                   onClick={() =>
@@ -155,7 +161,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                 return {
                   ...prev,
                   isOpen: !prev.isOpen,
-                  data: {},
+                  data: undefined,
                 };
               })
             }
@@ -176,17 +182,22 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
       <Modal
         visible={ruleAddEditModal.isOpen}
         setVisible={() =>
-          setRuleAddEditModal({ isOpen: false, data: {}, isActive: false })
+          setRuleAddEditModal({
+            isOpen: false,
+            data: undefined,
+            isActive: false,
+          })
         }
-        title={ruleAddEditModal.isOpen ? "ویرایش  نقش" : "افزودن  نقش"}
+        title={ruleAddEditModal.data ? "ویرایش  نقش" : "افزودن  نقش"}
       >
-        <>
+        <div className="min-w-[700px]">
           <AddEditRole
+            setRuleAddEditModal={setRuleAddEditModal}
             currentData={ruleAddEditModal.data}
             title="تغییر مدیریت نقش"
-            isActive={ruleAddEditModal.isActive}
+            isSomeEdit={ruleAddEditModal.isActive}
           />
-        </>
+        </div>
       </Modal>
     </div>
   );

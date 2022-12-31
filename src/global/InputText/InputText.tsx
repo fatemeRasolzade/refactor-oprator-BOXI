@@ -36,13 +36,22 @@ const InputText = React.forwardRef(
     ref: any
   ) => {
     const [HidePassword, setHidePassword] = useState(true);
-    // console.log(error);
+    console.log("valuesinput", values);
 
     return (
       <div className={`flex flex-col ${wrapperClassName}`}>
-        <div className={`autocompleteWrapper ${classNames} ${error && "border-red"} ${readOnly && "opacity-40"} `}>
-          <div className={`autocompleteLabel  ${error && "text-red"} top-[-17px]`}>
-            {label} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
+        <div
+          className={`autocompleteWrapper ${classNames} ${
+            error && "border-red"
+          } ${readOnly && "opacity-40"} `}
+        >
+          <div
+            className={`autocompleteLabel  ${error && "text-red"} top-[-17px]`}
+          >
+            {label}{" "}
+            <span className="text-tomato font-extrabold text-lg h-4">
+              {important ? "*" : " "}
+            </span>
           </div>
           <input
             ref={ref}
@@ -51,11 +60,14 @@ const InputText = React.forwardRef(
             name={name}
             value={values}
             onChange={handleChange}
-            type={HidePassword ? "password" : type}
+            type={!HidePassword ? "password" : type}
             placeholder={placeholder}
           />
           {password && (
-            <div className="text-darkBorder cursor-pointer" onClick={() => setHidePassword(!HidePassword)}>
+            <div
+              className="text-darkBorder cursor-pointer"
+              onClick={() => setHidePassword(!HidePassword)}
+            >
               {HidePassword ? <BiHide size={20} /> : <BiShow size={20} />}
             </div>
           )}
