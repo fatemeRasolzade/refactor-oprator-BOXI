@@ -8,6 +8,7 @@ import App from "./App";
 import Layout from "./components/Layout/Layout";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
+import UserService from "./services/keycloakService";
 // import UserService from "./services/keycloakService";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
@@ -29,6 +30,6 @@ root.render(
   //  </ReactKeycloakProvider>
 );
 
-//  UserService.initKeycloak(root);
+UserService.initKeycloak(root);
 
 reportWebVitals();
