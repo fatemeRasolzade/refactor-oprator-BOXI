@@ -1,8 +1,7 @@
 import React from "react";
 import * as XLSX from "xlsx";
 import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
-import { GoDesktopDownload } from "react-icons/go";
-import SimpleButton from "../../global/SimpleButton/SimpleButton";
+
 // const data2 = [
 //   {
 //     id: 1,
@@ -176,14 +175,13 @@ import SimpleButton from "../../global/SimpleButton/SimpleButton";
   };
 
 
-
  export  const exportExcel = (data) => {
   console.log("data is",data)
     handleExport(data).then((url) => {
       // console.log(url);
       const downloadAnchorNode = document.createElement("a");
       downloadAnchorNode.setAttribute("href", url);
-      downloadAnchorNode.setAttribute("download", "student_report.xlsx");
+      downloadAnchorNode.setAttribute("download", "excel.xlsx");
       downloadAnchorNode.click();
       downloadAnchorNode.remove();
     });
@@ -283,7 +281,7 @@ import SimpleButton from "../../global/SimpleButton/SimpleButton";
     let headersAlphabetic = [obj3];
     let range = Object.keys(Object.assign({}, ...headersAlphabetic));
     /////////////////////////////////////////////////////////////////////////////////////////
-    const title = [{ A: "title" }, {}];
+    const title = [{ A: "" }, {}];
     let table1 = [obj3];
     const output = [];
 
@@ -312,7 +310,7 @@ import SimpleButton from "../../global/SimpleButton/SimpleButton";
       skipHeader: true,
     });
 
-    XLSX.utils.book_append_sheet(wb, sheet, "student_report");
+    XLSX.utils.book_append_sheet(wb, sheet, "excel");
 
     // binary large object
     // Since blobs can store binary data, they can be used to store images or other multimedia files.
@@ -325,7 +323,7 @@ import SimpleButton from "../../global/SimpleButton/SimpleButton";
     const totalRecords = data.length;
     const dataInfo = {
       titleCell: "A2",
-      titleRange: `A1:${range[range.length - 1]}2`,
+      titleRange: `A1:A1`,
       // titleRange: `A1:${range[range.length - 1]}2`,
       tbodyRange: `A${headerIndexes[0] + 2}:${range[range.length - 1]}${finalData.length}`,
       theadRange:
@@ -338,6 +336,7 @@ import SimpleButton from "../../global/SimpleButton/SimpleButton";
       tLastColumnRange:
         headerIndexes?.length >= 1 ? `G${headerIndexes[0] + 1}:G${totalRecords + headerIndexes[0] + 1}` : null,
     };
+    
      console.log(table1,"table1");
     return addStyle(workbookBlob, dataInfo, range);
   };
