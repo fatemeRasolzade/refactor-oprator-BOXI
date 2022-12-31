@@ -1,43 +1,42 @@
-import { FC} from "react";
+import { FC } from "react";
 import { GrFormClose } from "react-icons/gr";
 import { Dialog } from "@material-tailwind/react";
-import { DeleteDataParams } from "../../../../services/Service_call";
-import { SuccessAlert } from "../../../../global/alert/Alert";
-import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
+import { DeleteDataParams } from "../../services/Service_call";
+import { SuccessAlert } from "../../global/alert/Alert";
+import SimpleButton from "../../global/SimpleButton/SimpleButton";
+import { deleteDataAPI } from "../../services/CRUDServices";
 
 interface DeleteOperationProps {
   title: string;
-  itemId: number;
+  itemId: number | undefined;
   route: string;
   updating?: any;
+  isModalOpenDelete: boolean;
   handleDeleteActionNewData?: any;
-  setIsModalOpenDelete?:any,
-  isModalOpenDelete?:any
+  setIsModalOpenDelete: (value: boolean) => void;
 }
 const DeleteModal: FC<DeleteOperationProps> = ({
   title,
   itemId,
   route,
   handleDeleteActionNewData,
+  isModalOpenDelete,
   setIsModalOpenDelete,
-  isModalOpenDelete
 }): JSX.Element => {
- 
-
-  const deleteHandler = async (id: number) => {
+  const deleteHandler = async () => {
     try {
-      await DeleteDataParams(route);
+      itemId && await deleteDataAPI(route, itemId);
       SuccessAlert("با موفقیت حذف شد");
       setIsModalOpenDelete(false);
       handleDeleteActionNewData && handleDeleteActionNewData();
     } catch (error) {
-        setIsModalOpenDelete(false);
+      setIsModalOpenDelete(false);
       ErrorAlert("خطایی رخ داده است.");
     }
   };
   return (
     <>
-    <Dialog
+      <Dialog
         open={isModalOpenDelete}
         handler={setIsModalOpenDelete}
         className="min-w-[400px] w-[500px]"
@@ -67,7 +66,7 @@ const DeleteModal: FC<DeleteOperationProps> = ({
                 type="submit"
                 text="بله"
                 className="full-tomato-btn w-28 "
-                handelClick={() => deleteHandler(itemId)}
+                handelClick={() => deleteHandler()}
               />
             </div>
           </div>

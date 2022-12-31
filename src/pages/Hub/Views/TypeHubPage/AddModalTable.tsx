@@ -1,8 +1,8 @@
-import { Button, Dialog, DialogBody, DialogFooter, DialogHeader } from '@material-tailwind/react'
+import { Button, Dialog, DialogBody, DialogHeader } from '@material-tailwind/react'
 import React from 'react'
 import { BiXCircle } from 'react-icons/bi'
 import InputText from '../../../../global/InputText/InputText'
-import { ErrorMessage, useFormik } from 'formik';
+import {useFormik } from 'formik';
 import { apiRoute } from './../../../../services/apiRoute';
 import * as Yup from "yup"
 import { postDataHeaderToServer } from '../../../../services/Service_call';

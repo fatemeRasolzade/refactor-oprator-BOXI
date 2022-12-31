@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom"
 import StaticTable from '../../../../components/staticTable/StaticTable';
 import {HubColumn} from "../../../../global/Column/Columns"
 import {useDispatch,useSelector} from "react-redux"
-import {clearHub, deleteRow, filterSwitch, HubData} from "../../../../redux/HubData/HubData";
+import {clearHub, deleteRow, HubData} from "../../../../redux/HubData/HubData";
 import {editHub} from "../../../../redux/HubData/EditData"
 import Breadcrumb from "../../../../components//Breadcrumb/Breadcrumb";
 import NavbarSearch from "../../../../components/NavbarSearch/NavbarSearch";
@@ -84,8 +84,6 @@ const handelDeleteHub=(id)=>{
 
   return (
     <div>
-
-
      <Breadcrumb beforePage="برگشت" curentPage="هاب" />
       <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" />
       <OptionsTable

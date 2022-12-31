@@ -120,7 +120,6 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
     }
   }, [isModalOpen]);
   const filterData = (item: any, route: any) => {
-    console.log(item, "item");
     if (route === "source") {
       const filter = hubOptions.options.filter((hub: any) => hub.id !== item.id);
       setTargetHubOptions(filter);
@@ -138,6 +137,8 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
           routeValue={formik.values}
           addOpen={openConnection}
           setAddOpen={setOpenConnections}
+          targetHub={formik.values.selectTargetHub}
+					sourceHub={formik.values.selectSourceHub}
         />
       )}
       <AddButton ToggleOptions={ToggleOptions} />

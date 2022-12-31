@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import InputText from "../../../../global/InputText/InputText";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import { BiPlus } from "react-icons/bi";
@@ -6,6 +7,16 @@ import { useFormik } from "formik";
 import { BiTrash } from "react-icons/bi";
 import * as Yup from "yup";
 import { useState } from "react";
+=======
+import InputText from '../../../../global/InputText/InputText'
+import SimpleButton from '../../../../global/SimpleButton/SimpleButton'
+import { BiPlus } from 'react-icons/bi';
+import StaticTable from '../../../../components/staticTable/StaticTable';
+import {useFormik} from "formik"
+import { BiTrash } from 'react-icons/bi';
+import * as Yup from "yup"
+import { useState } from 'react';
+>>>>>>> 4ed856f3a22b506646a7ebb8dd102effef5dd037
 
 const SubTableTwo = ({ title, setTableTwo }: { title?: string; formik?: any; setTableTwo?: any }) => {
   const validationSchema = Yup.object().shape({

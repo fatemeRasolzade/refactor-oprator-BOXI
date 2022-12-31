@@ -166,22 +166,7 @@ const HubAdd = () => {
        <div className='!col-span-2 ' ><InputText label='آدرس 2' name="addressLine2" handleChange={formik.handleChange} values={formik.values.addressLine2} type={"text"} wrapperClassName="!w-full min-w-0"/>
       
        </div>
-       <div>نقشه</div>
- 
-     {/* <div className='grid col-span-5 mt-10 gap-2'>
-       <div className='grid grid-cols-5 gap-3 Max-md:grid-cols-1 Max-sm:grid-cols-1 Max-xs:grid-cols-1 Max-lg:grid-cols-2'>
-       <div ><InputText title='نام و نام خانوادگی' name="fullName" handleChange={formik.handleChange} values={formik.values.fullName} type={"text"}/>
-      
-       </div>
-       <div ><InputText title='تلفن' name='phone' handleChange={formik.handleChange} values={formik.values.phone} type={"number"}/>
-      
-       </div>
-       <div ><InputText title='پست الکترونیک' name='email' handleChange={formik.handleChange} values={formik.values.email} type={"email"}/>
-      
-       </div>
-      </div>
-     </div> */}
-
+       {/* <div>نقشه</div> */}
               <div className="col-span-5 flex flex-row justify-end items-center">
                 <Button
                   className="border-none bg-secondaryColor text-dark"

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import {
   Button,
   Dialog,
@@ -9,26 +9,7 @@ import {
 import { BiXCircle } from "react-icons/bi";
 import CustomizeModal from "../../../../components/PerfesionalSearch/CustomizeModal";
 
-interface SearchFilterInterface {
-  valueName:
-    | "personelCode"
-    | "name"
-    | "nationalCode"
-    | "mobile"
-    | "email"
-    | "search"
-    | "username"
-    | "pageNumbers";
 
-  label: string;
-  isMain: boolean;
-  isShow: boolean;
-}
-interface SelectedColInterface {
-  accessor: string;
-  Header: string;
-  isRequire: boolean;
-}
 interface ModalPerfetionalProps {
   open: boolean;
   handleOpen?: any;

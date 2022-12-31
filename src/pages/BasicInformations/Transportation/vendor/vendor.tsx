@@ -4,6 +4,7 @@ import StaticTable from "../../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../../components/tableOperation/DeleteOperation";
 import { vendorData } from "../../../../redux/Transportation/vendor/VendorData";
 import { apiRoute } from "../../../../services/apiRoute";
+import { exportExcel } from "../../../../tools/functions/ExcelExport";
 import { ExportExcel } from "../../../../tools/functions/Methods";
 import { VendorColumns } from "./Column";
 import OptionsTable from "./OptionsTable";
@@ -51,7 +52,8 @@ const Vendor: React.FC = (): JSX.Element => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <VendorActionForms />}
-        exportExcel={() => ExportExcel(vendorLists?.content)}
+        exportExcel={() =>  exportExcel(data)}
+        // exportExcel={() => ExportExcel(vendorLists?.content)}
       />
       <StaticTable
         data={data ? data : []}
