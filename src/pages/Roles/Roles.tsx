@@ -15,7 +15,7 @@ import {
   fetchRuleData,
   RoleData,
 } from "../../redux/RolsData/RolesData";
-import { deleteUrls } from "../../services/api.enums";
+import { deleteUrls, filterUrls } from "../../services/api.enums";
 import { filterTableDataAPI } from "../../services/CRUDServices";
 import { ExportExcel } from "../../tools/functions/Methods";
 import AddEditRole from "./view/AddRole";
@@ -54,13 +54,9 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
   const handleGetTableData = useCallback(async () => {
     try {
       try {
-        const res = await filterTableDataAPI(
-          "resource-api/role/filter",
-          pageNumbers,
-          {
-            ...filterData,
-          }
-        );
+        const res = await filterTableDataAPI(filterUrls.rule, pageNumbers, {
+          ...filterData,
+        });
         dispatch(fetchRuleData(res.data.payload));
       } catch (error) {
         console.log("error ", error);
