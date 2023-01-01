@@ -1,3 +1,6 @@
+import StatusBar from "../../components/StatusBar/StatusBar";
+
+// return <StatusBar Options={Options} />;
 import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -34,9 +37,11 @@ const ConsignmentManage = () => {
     },
   ]);
   const handleDeleteActionNewData = () => {};
+
   return (
     <>
       <Breadcrumb curentPage="مدیریت مرسوله" />
+      <StatusBar Options={Options} />
       <SearchConsignmentFilter />
       <OptionsTable
         btnLink="/consignment-manage/add"
@@ -46,13 +51,7 @@ const ConsignmentManage = () => {
           setIsActive(value);
         }}
       />
-      <StaticTable
-        data={[]}
-        column={ConsignmentManageCol}
-        pagination={7}
-        selectable={false}
-        THWrapper={"min-w-[130px]"}
-      />
+      <StaticTable data={[]} column={ConsignmentManageCol} pagination={7} selectable={false} THWrapper={"min-w-[130px]"} />
       <DeleteModal
         isModalOpenDelete={isOpenModalDelete.isOpen}
         setIsModalOpenDelete={() =>
@@ -70,3 +69,17 @@ const ConsignmentManage = () => {
 };
 
 export default ConsignmentManage;
+
+const Options = [
+  { name: "All", value: 10000 },
+  { name: "Planned", value: 1000 },
+  { name: "NotPlanned", value: 1000 },
+  { name: "InTransit", value: 1000 },
+  { name: "SuccessfulDelivery", value: 1000 },
+  { name: "UnsuccessfulDelivery", value: 1000 },
+  { name: "ScanInHub", value: 1000 },
+  { name: "Bagged", value: 1000 },
+  { name: "Loaded", value: 1000 },
+  { name: "EntranceToHub", value: 1000 },
+  { name: "BackToOrigin", value: 1000 },
+];

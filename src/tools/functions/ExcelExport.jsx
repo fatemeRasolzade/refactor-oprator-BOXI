@@ -1,4 +1,3 @@
-import React from "react";
 import * as XLSX from "xlsx";
 import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 
