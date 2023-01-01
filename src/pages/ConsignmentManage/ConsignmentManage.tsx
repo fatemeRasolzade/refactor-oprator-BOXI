@@ -1,8 +1,5 @@
 import StatusBar from "../../components/StatusBar/StatusBar";
-
-// return <StatusBar Options={Options} />;
 import { useState } from "react";
-import { BiPlus } from "react-icons/bi";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
