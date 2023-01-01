@@ -148,6 +148,8 @@ import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
     };
     const flatobj = [];
     // convert null and undefind to empty string
+
+    
     data.map((obj) => {
       delete obj?.operation;
       delete obj?.isDeleted;

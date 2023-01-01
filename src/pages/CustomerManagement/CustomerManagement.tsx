@@ -7,6 +7,7 @@ import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/Custo
 import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
 import { customerData, updating } from "../../redux/CustomerManagement/CustomerManagementData";
 import { DELETE_CUSTOMER } from "../../services/apiRoute";
+import { exportExcel } from "../../tools/functions/ExcelExport";
 import { ExportExcel } from "../../tools/functions/Methods";
 import { CustomerColumns } from "./views/CustomerColumn";
 import CustomerForm from "./views/CustomerForm/CustomerForm";
@@ -17,16 +18,9 @@ const CustomerManagement = () => {
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { pageNumbers } = useSelector((state: any) => state.paginate);
-  const handleGetExcel = () => ExportExcel(customerList?.content);
 
-  const options = [
-    {
-      name: ACTIVE_OPTION,
-      handleClick: () => setIsActive(!isActive),
-      value: isActive,
-    },
-    { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
-  ];
+  
+
 
   const { customerList, isUpdating } = useSelector((state: any) => state.customer);
 
@@ -69,7 +63,15 @@ const CustomerManagement = () => {
           };
         })
       : [];
-
+      const handleGetExcel = () =>exportExcel(data) ;
+      const options = [
+        {
+          name: ACTIVE_OPTION,
+          handleClick: () => setIsActive(!isActive),
+          value: isActive,
+        },
+        { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
+      ];
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="مدیریت مشتریان" />
