@@ -91,7 +91,7 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
               (item: SearchFilterInterface, index: number) => {
                 if (item.isMain || item.isShow) {
                   return (
-                    <div className="Max-sm:mb-3">
+                    <div className="Max-sm:mb-3" key={item.id}>
                       <AutocompleteInput
                         items={[]}
                         value={formik.values[item.valueName]}
