@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { FC, useState } from "react";
 
 import { BiChevronDown, BiSearch } from "react-icons/bi";
+import Checkbox from "../../../components/checkbox/Checkbox";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import Chip from "../../../global/Chip/Chip";
@@ -24,7 +25,13 @@ interface SelectedColInterface {
   Header: string;
   isRequire: boolean;
   id: string;
-  type: "operation" | "text" | "inputSelect" | "multiSelect" | "status" | "time";
+  type:
+    | "operation"
+    | "text"
+    | "inputSelect"
+    | "multiSelect"
+    | "status"
+    | "time";
 }
 interface SearchConsignmentFilterProps {
   isActive: boolean;
@@ -32,10 +39,14 @@ interface SearchConsignmentFilterProps {
   // setFilterData: (value: any) => void;
   setSelectedCol: (selectedCol: Array<SelectedColInterface>) => void;
 }
-const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({ isActive, selectedCol, setSelectedCol }) => {
-  const [searchFilterList, setSearchFilterList] = useState<Array<SearchFilterInterface>>(
-    searchFilterListInitConsignment ? searchFilterListInitConsignment : []
-  );
+const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({
+  isActive,
+  selectedCol,
+  setSelectedCol,
+}) => {
+  const [searchFilterList, setSearchFilterList] = useState<
+    Array<SearchFilterInterface>
+  >(searchFilterListInitConsignment ? searchFilterListInitConsignment : []);
   const [active, setActive] = useState(false);
   const [filterDataChip, setFilterDataChip] = useState({});
   const perfetionalClik = () => {
@@ -65,14 +76,19 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({ isActive, s
                             items={[]}
                             value={"sdf"}
                             label={item.label}
-                            onChange={(e) => formik.setFieldValue(item.valueName, e.target.value)}
+                            onChange={(e) =>
+                              formik.setFieldValue(
+                                item.valueName,
+                                e.target.value
+                              )
+                            }
                           />
                         </div>
                       );
                     case "multiSelect":
                       return (
                         <MultiSelect
-                          wrapperClassName="w-full z-[300]"
+                          wrapperClassName="w-60 z-[300]"
                           label={item.label}
                           name={item.valueName}
                           handleChange={formik.setFieldValue}
@@ -81,9 +97,26 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({ isActive, s
                         />
                       );
                     case "inputSelect":
-                      return <InputSelect label={item.label} handleChange={formik.setFieldValue} name={item.valueName} values={{}} options={[]} />;
+                      return (
+                        <InputSelect
+                          label={item.label}
+                          handleChange={formik.setFieldValue}
+                          name={item.valueName}
+                          values={{}}
+                          options={[]}
+                        />
+                      );
                     case "status":
-                      return <>status</>;
+                      return (
+                        <>
+                          <Checkbox
+                            handleChange={() => console.log()}
+                            name={item.valueName}
+                            values={false}
+                            title={item.label}
+                          />
+                        </>
+                      );
                     default:
                       break;
                   }
@@ -119,7 +152,12 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({ isActive, s
                               items={[]}
                               value={"sdf"}
                               label={item.label}
-                              onChange={(e) => formik.setFieldValue(item.valueName, e.target.value)}
+                              onChange={(e) =>
+                                formik.setFieldValue(
+                                  item.valueName,
+                                  e.target.value
+                                )
+                              }
                             />
                           </div>
                         );
@@ -135,9 +173,26 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({ isActive, s
                           />
                         );
                       case "inputSelect":
-                        return <InputSelect label={item.label} handleChange={formik.setFieldValue} name={item.valueName} values={{}} options={[]} />;
+                        return (
+                          <InputSelect
+                            label={item.label}
+                            handleChange={formik.setFieldValue}
+                            name={item.valueName}
+                            values={{}}
+                            options={[]}
+                          />
+                        );
                       case "status":
-                        return <>status</>;
+                        return (
+                          <>
+                            <Checkbox
+                              handleChange={() => console.log()}
+                              name={item.valueName}
+                              values={false}
+                              title={item.label}
+                            />
+                          </>
+                        );
                       default:
                         break;
                     }
@@ -157,7 +212,9 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({ isActive, s
           setSelectedCol={setSelectedCol}
           setSearchFilterList={setSearchFilterList}
         />
-        {filterDataChip && <Chip filterData={filterDataChip} formData={formik} />}
+        {filterDataChip && (
+          <Chip filterData={filterDataChip} formData={formik} />
+        )}
       </div>
     </>
   );
