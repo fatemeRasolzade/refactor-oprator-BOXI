@@ -17,6 +17,7 @@ import { getUserInfo } from "./redux/userInfo/userInfoReducer";
 import GeoWrapper from "./pages/CustomGeographic/views/AddGeo/GeoWrapper";
 import GeoWrapperEdit from "./pages/CustomGeographic/views/editGeo/GeoWrapperEdit";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import UserService from './services/keycloakService';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ function App() {
     if (username) {
       handleGetuserInfo();
     }
-
+   
     console.log("loop");
   }, [handleGetuserInfo, username]);
 

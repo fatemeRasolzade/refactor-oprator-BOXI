@@ -21,7 +21,7 @@ const [isModalEdit, setIsModalEdit] = useState(false);
 const [DataEditModal,setDataEditModal]=useState({})
 
 useEffect(()=>{
-  dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)
+ 
 return()=>{
   dispatch(clearService())
 }
@@ -31,7 +31,7 @@ useEffect(()=>{
   dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)
 },[pageNumbers])
 
-const data=serviceList?.content &&  serviceList.content.map((item:any)=>{
+const data=serviceList?.content ?  serviceList.content.map((item:any)=>{
   return{
     id:item?.id ? item?.id : "",
     code:item?.code ? item?.code : "",
@@ -51,7 +51,7 @@ const data=serviceList?.content &&  serviceList.content.map((item:any)=>{
       setIsModalOpenDelete(prev=>!prev)
     }}/></span></div>
   }
-})
+}) : []
 
 const handelActionAfterDelete=()=>{ 
   dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)

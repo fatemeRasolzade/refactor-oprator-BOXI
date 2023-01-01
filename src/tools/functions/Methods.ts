@@ -15,7 +15,6 @@ export const ExportExcel = (data: any) => {
 
   let web = XLSX.utils.book_new(),
     ws = XLSX.utils.json_to_sheet(data);
-
   XLSX.utils.book_append_sheet(web, ws, "myfile");
   XLSX.writeFile(web, "MyExcel.xlsx");
 };

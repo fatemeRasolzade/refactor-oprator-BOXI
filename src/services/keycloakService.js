@@ -4,13 +4,14 @@ import keycloak from "keycloak-js";
 import { ErrorAlert } from "../global/alert/Alert";
 
 const _kc = new keycloak({
-  url: "http://boxi.local:8080",
-  realm: "hubRealm",
+  "url": "http://boxi.local:8080",
+  "realm": "hubRealm",
   "ssl-required": "none",
   "public-client": true,
   "confidential-port": 0,
-  clientId: "react-client",
+  "clientId": "react-client",
   "auth-server-url": "http://boxi.local:8080",
+
 });
 
 const doLogin = _kc.login;
@@ -21,9 +22,10 @@ const getToken = () => _kc.token;
 
 const isLoggedIn = () => !!_kc.token;
 
+const Auth=()=>_kc.authenticated
 const updateToken = (successCallback) => {
-  console.log("updateToken");
-  return _kc.updateToken(5).then(successCallback).catch(doLogin);
+ console.log("update token")
+  return _kc.updateToken(70).then(successCallback).catch(doLogin);
 };
 
 const doLogout = () => {
@@ -31,24 +33,18 @@ const doLogout = () => {
   logout();
 };
 
-const initKeycloak = (onAuthenticatedCallback) => {
-  _kc
-    .init({
-      onLoad: "check-sso",
-      checkLoginIframe: false,
-
-      //onLoad: 'check-sso'
-    })
+const initKeycloak = (onAuthenticatedCallback) => {_kc.init({onLoad: "login-required"})
     .then((authenticated) => {
+      console.log("first",_kc.authenticated)
+    console.log("auth",authenticated)
       if (authenticated) {
-        axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token;
+        console.log("rrrr",localStorage.getItem("myToken"))
         window.localStorage.setItem("myToken", _kc.token);
-        window.localStorage.setItem(
-          "userName",
-          _kc.tokenParsed?.preferred_username
-        );
+        axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token.toString();
+        window.localStorage.setItem("userName",_kc.tokenParsed?.preferred_username);
       } else {
         doLogin();
+       
       }
     });
 };
@@ -63,11 +59,10 @@ const hasClientRole = (role) => {
 };
 
 const tokenExpired = (_kc.onTokenExpired = () => {
-  _kc
-    .updateToken(5)
+  _kc.updateToken(70)
     .then((response) => {
       if (response) {
-        console.log("rrrrrrrr", _kc.token);
+       
         axios.defaults.headers.common["Authorization"] = "Bearer " + _kc.token;
         window.localStorage.setItem("myToken", _kc.token);
       } else {
@@ -115,6 +110,7 @@ const UserService = {
   hasRole,
   tokenExpired,
   hasClientRole,
+  Auth
 };
 
 export default UserService;

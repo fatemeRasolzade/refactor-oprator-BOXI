@@ -23,6 +23,7 @@ const handelActive=()=>{
 }
 
  React.useEffect(()=>{
+  console.log("rrrrrrrrr")
 
   dispatch(ServiceProvisionData({pageNumbers:pageNumbers,isActive:Active}) as any)
 
