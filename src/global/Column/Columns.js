@@ -313,7 +313,7 @@ export const ConsignmentManageCol = [
   },
   {
     Header: "نوع مرسوله",
-    accessor: "type",
+    accessor: "ConsignmentType",
   },
   {
     Header: "تخصیص شده به سفر",
@@ -558,12 +558,9 @@ export const ConsignmentManageCol = [
   },
   {
     Header: "بازه زمانی تحویل",
-    accessor: "DeliveryTime",
+    accessor: "DeliveryTimePeriod",
   },
-  {
-    Header: "بازه زمانی تحویل",
-    accessor: "DeliveryTime",
-  },
+
   {
     Header: "مبلغ قابل پرداخت",
     accessor: "TheAmountPayable",

@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
-import React, { FC, useState } from "react";
+import  { FC, useState } from "react";
 import { BiChevronDown, BiSearch } from "react-icons/bi";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import Chip from "../../../global/Chip/Chip";
