@@ -19,7 +19,7 @@ interface SelectedColInterface {
   Header: string;
   isRequire: boolean;
   id: string;
-  type: "operation" | "text" | "multiSelect" | "status" | "time";
+  type: "operation" | "text" |"inputSelect" | "multiSelect" | "status" | "time";
 }
 const ConsignmentManage = () => {
   const [isOpenModalDelete, setIsOpenModalDelete] = useState({
