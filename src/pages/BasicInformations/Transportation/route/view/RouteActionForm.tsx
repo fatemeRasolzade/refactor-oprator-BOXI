@@ -18,16 +18,18 @@ import { filterRoute } from "../../../../../redux/Transportation/route/RouteData
 import { AiOutlineEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "axios";
-import Timeinput from "../../../../../global/TimePicker/TimeInput";
+import TimeInput from "../../../../../global/TimePicker/TimeInput";
 
 interface PropsData {
   currentData?: any;
   routeValue?: any;
   isModalOpen?: boolean;
-  setIsModalOpen?: any;
+  setIsModalOpen?: (value: boolean) => void;
   hubOptions?: any;
-  addOpen?: any;
-  setAddOpen?: any;
+  addOpen?: boolean;
+  setAddOpen?:any;
+  targetHub?: any;
+  sourceHub?: any;
 }
 const validation = Yup.object().shape({
   code: Yup.number().required().label("کد مسیر"),
@@ -54,8 +56,8 @@ const RouteActionForms: React.FC<PropsData> = ({
   routeValue,
   addOpen,
   setAddOpen,
-  // isModalOpen,
-  // setIsModalOpen,
+  targetHub,
+  sourceHub,
   hubOptions,
 }): JSX.Element => {
   const [connectionSelect, setConnectionSelect] = useState<any>([]);
@@ -67,6 +69,7 @@ const RouteActionForms: React.FC<PropsData> = ({
   const checkBoxRef = useRef<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [Loading, setLoading] = useState(false);
+  const [nodeOptins, setNodeOptions] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -171,6 +174,10 @@ const RouteActionForms: React.FC<PropsData> = ({
   });
   useEffect(() => {
     formik.resetForm({});
+    setConnectionSelect([]);
+    setServerIds([]);
+    uncheck();
+    filterConnectionHub();
   }, [isModalOpen]);
 
   const uncheck = () => {
@@ -178,6 +185,19 @@ const RouteActionForms: React.FC<PropsData> = ({
     inputs.forEach((item: any) => {
       item.checked = false;
     });
+  };
+  const filterConnectionHub = () => {
+    // console.log(optionHubs ,targetHub, sourceHub)
+
+    if (currentData) {
+      setNodeOptions(
+        hubOptions.options.filter(
+          (item: any) => item.id !== currentData?.selectSourceHub.id && item.id !== currentData?.selectTargetHub.id
+        )
+      );
+    } else {
+      setNodeOptions(hubOptions.options.filter((item: any) => item.id !== targetHub.id && item.id !== sourceHub.id));
+    }
   };
   const addConnection = (e: any, push: any) => {
     e.preventDefault();
@@ -214,13 +234,10 @@ const RouteActionForms: React.FC<PropsData> = ({
       timeStoppage: CalculateTime(filterData.map((item: any) => item.timeStoppage)),
     };
 
-    // console.log(data);
     formik.setFieldValue("nodes", filterData.length - 2);
     let isDeleteFromServer = formik.values.connections.some((item: any) => item.id);
+
     if (isDeleteFromServer) {
-      console.log("delete from server", data);
-      // DeleteWithBody(apiRoute().delete.deleteConnections, data )
-      // deleteConnections(data )
       axios
         .delete(apiRoute().delete.deleteConnections, { data })
         .then((response) => {
@@ -230,16 +247,7 @@ const RouteActionForms: React.FC<PropsData> = ({
         .catch((e) => {
           toast.error("خطایی رخ داده است.");
         });
-      // apiRoute().delete.vendor + `/${item.id}`
-      // .then((response) => {
-      //   response.status && toast.success("گره با موفقیت پاک شد");
-      //   formik.setFieldValue("connections", filterData);
-      // })
-      // .catch((e) => {
-      //   // toast.error("خطایی رخ داده است.");
-      // });
     } else {
-      console.log(filterData);
       formik.setFieldValue("connections", filterData);
     }
     uncheck();
@@ -279,359 +287,330 @@ const RouteActionForms: React.FC<PropsData> = ({
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
+      {(isModalOpen || addOpen) && (
+        <Modal
+          visible={addOpen || isModalOpen}
+          setVisible={setAddOpen || setIsModalOpen}
+          title={currentData ? "ویرایش مسیر" : "افزودن مسیر"}
+        >
+          <form onSubmit={formik.handleSubmit}>
+            <FormikProvider value={formik}>
+              <FieldArray
+                name="connections"
+                render={({ remove, push }) => (
+                  <>
+                    <div className="  grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">
+                      <InputText
+                        readOnly={true}
+                        label="کد مسیر"
+                        name="code"
+                        handleChange={formik.handleChange}
+                        values={formik.values.code}
+                        important
+                        error={formik.touched.code && formik.errors.code}
+                      />
 
-      <Modal
-        visible={addOpen || isModalOpen}
-        setVisible={setAddOpen || setIsModalOpen}
-        title={currentData ? "ویرایش مسیر" : "افزودن مسیر"}
-      >
-        <form onSubmit={formik.handleSubmit}>
-          <FormikProvider value={formik}>
-            <FieldArray
-              name="connections"
-              render={({ remove, push }) => (
-                <>
-                  <div className="  grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">
-                    <InputText
-                      readOnly={true}
-                      label="کد مسیر"
-                      name="code"
-                      handleChange={formik.handleChange}
-                      values={formik.values.code}
-                      important
-                      error={formik.touched.code && formik.errors.code}
-                    />
+                      <InputText
+                        label="نام مسیر"
+                        name="name"
+                        handleChange={formik.handleChange}
+                        values={formik.values.name}
+                        important
+                        error={formik.touched.name && formik.errors.name}
+                      />
+                      <InputSelect
+                        isDisabled={true}
+                        label="مبدا"
+                        important
+                        name="selectSourceHub"
+                        handleChange={formik.setFieldValue}
+                        values={formik.values.selectSourceHub}
+                        error={formik.touched.selectSourceHub && formik.errors.selectSourceHub}
+                        options={hubOptions?.options}
+                      />
+                      <InputSelect
+                        isDisabled={true}
+                        label="مقصد"
+                        important
+                        name="selectTargetHub"
+                        handleChange={formik.setFieldValue}
+                        values={formik.values.selectTargetHub}
+                        error={formik.touched.selectTargetHub && formik.errors.selectTargetHub}
+                        options={hubOptions?.options}
+                      />
+                      <InputText
+                        readOnly={true}
+                        label="تعداد گره"
+                        name="nodes"
+                        handleChange={formik.handleChange}
+                        values={formik.values.nodes}
+                        important
+                        error={formik.touched.nodes && formik.errors.nodes}
+                      />
+                      <CustomSwitch
+                        active={values.isActive}
+                        handleChange={(value: any) => formik.setFieldValue("isActive", value)}
+                      />
+                    </div>
 
-                    <InputText
-                      label="نام مسیر"
-                      name="name"
-                      handleChange={formik.handleChange}
-                      values={formik.values.name}
-                      important
-                      error={formik.touched.name && formik.errors.name}
-                    />
-                    <InputSelect
-                      isDisabled={true}
-                      label="مبدا"
-                      important
-                      name="selectSourceHub"
-                      handleChange={formik.setFieldValue}
-                      values={formik.values.selectSourceHub}
-                      error={formik.touched.selectSourceHub && formik.errors.selectSourceHub}
-                      options={hubOptions?.options}
-                    />
-                    <InputSelect
-                      isDisabled={true}
-                      label="مقصد"
-                      important
-                      name="selectTargetHub"
-                      handleChange={formik.setFieldValue}
-                      values={formik.values.selectTargetHub}
-                      error={formik.touched.selectTargetHub && formik.errors.selectTargetHub}
-                      options={hubOptions?.options}
-                    />
-                    <InputText
-                      readOnly={true}
-                      label="تعداد گره"
-                      name="nodes"
-                      handleChange={formik.handleChange}
-                      values={formik.values.nodes}
-                      important
-                      error={formik.touched.nodes && formik.errors.nodes}
-                    />
-                    <CustomSwitch
-                      active={values.isActive}
-                      handleChange={(value: any) => formik.setFieldValue("isActive", value)}
-                    />
-                  </div>
+                    <div className="  grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">
+                      <InputText
+                        readOnly={true}
+                        label="مسافت کل مسیر"
+                        ref={distanceRef}
+                        values={formik?.values?.connections?.reduce(
+                          (a: any, b: any) => a + Number(b.distanceFromPreviousHub),
+                          0
+                        )}
+                        placeholder="کیلومتر"
+                      />
+                      <InputText
+                        readOnly={true}
+                        label="درصد کل انحراف مسافت"
+                        ref={distanceVarianceRef}
+                        name="distanceVariance"
+                        values={(
+                          formik?.values?.connections?.reduce((a: any, b: any) => a + Number(b.distanceVariance), 0) /
+                          formik.values.connections.length
+                        ).toFixed(1)}
+                        placeholder="درصد کل انحراف مسافت"
+                      />
+                      <InputText
+                        readOnly={true}
+                        label="مدت کل مسیر"
+                        ref={transitTimeRef}
+                        name="transitTime"
+                        values={CalculateTime(formik.values.connections.map((item: any) => item.transitTime))}
+                      />
 
-                  <div className="  grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">
-                    <InputText
-                      readOnly={true}
-                      label="مسافت کل مسیر"
-                      ref={distanceRef}
-                      values={formik.values.connections.reduce(
-                        (a: any, b: any) => a + Number(b.distanceFromPreviousHub),
-                        0
-                      )}
-                      placeholder="کیلومتر"
-                    />
-                    <InputText
-                      readOnly={true}
-                      label="درصد کل انحراف مسافت"
-                      ref={distanceVarianceRef}
-                      name="distanceVariance"
-                      values={(
-                        formik.values.connections.reduce((a: any, b: any) => a + Number(b.distanceVariance), 0) /
-                        formik.values.connections.length
-                      ).toFixed(1)}
-                      placeholder="درصد کل انحراف مسافت"
-                    />
-                    <InputText
-                      readOnly={true}
-                      label="مدت کل مسیر"
-                      ref={transitTimeRef}
-                      name="transitTime"
-                      values={CalculateTime(formik.values.connections.map((item: any) => item.transitTime))}
-                    />
+                      <InputText
+                        readOnly={true}
+                        label="مدت کل توقف"
+                        ref={timeStoppageRef}
+                        name="StoppageTime"
+                        values={CalculateTime(formik.values.connections.map((item: any) => item.timeStoppage))}
+                      />
+                    </div>
 
-                    <InputText
-                      readOnly={true}
-                      label="مدت کل توقف"
-                      ref={timeStoppageRef}
-                      name="StoppageTime"
-                      values={CalculateTime(formik.values.connections.map((item: any) => item.timeStoppage))}
-                    />
-                  </div>
+                    <div className="addroute mt-20 ">
+                      <>
+                        <div className="flex  items-center gap-6">
+                          <div
+                            className="cursor-pointer flex gap-1 items-center"
+                            onClick={(e) => addConnection(e, push)}
+                          >
+                            <GrFormAdd size={30} />
+                            <p className="cursor-pointer">افزودن اتصال</p>
+                          </div>
 
-                  <div className="addroute mt-20 ">
-                    <>
-                      <div className="flex  items-center gap-6">
-                        <div className="cursor-pointer flex gap-1 items-center" onClick={(e) => addConnection(e, push)}>
-                          <GrFormAdd size={30} />
-                          <p className="cursor-pointer">افزودن اتصال</p>
+                          <button
+                            type="button"
+                            className=" border-none	text-[14px]  flex gap-1 h-[20px] "
+                            onClick={(e) => deleteConnection()}
+                          >
+                            <BiTrash size={20} className="w-full h-full	" />
+                            <span>حذف</span>
+                          </button>
                         </div>
 
-                        <button
-                          type="button"
-                          className=" border-none	text-[14px]  flex gap-1 h-[20px] "
-                          onClick={(e) => deleteConnection()}
-                        >
-                          <BiTrash size={20} className="w-full h-full	" />
-                          <span>حذف</span>
-                        </button>
-                      </div>
+                        {formik.values.connections.length !== 0 && (
+                          <table className="mt-5 w-md text-center">
+                            <thead>
+                              <th>ردیف</th>
+                              <th></th>
+                              <th>
+                                <label className="block mb-1 text-sm font-semibold text-gray-700">
+                                  هاب
+                                  <span className="text-red-600">*</span>
+                                </label>
+                              </th>
+                              <th>
+                                <label className="block mb-1 text-sm font-semibold text-gray-700">
+                                  فاصله از هاب قبلی (کیلومتر)
+                                  <span className="text-red-600">*</span>
+                                </label>
+                              </th>
+                              <th>
+                                <label className="block mb-1 text-sm font-semibold text-gray-700">
+                                  درصد انحراف از مسافت
+                                  <span className="text-red-600">*</span>
+                                </label>
+                              </th>
+                              <th>
+                                <label className="block mb-1 text-sm font-semibold text-gray-700">
+                                  مدت مسیر
+                                  <span className="text-red-600">*</span>
+                                </label>
+                              </th>
+                              <th>
+                                <label className="block mb-1 text-sm font-semibold text-gray-700">
+                                  مدت توقف
+                                  <span className="text-red-600">*</span>
+                                </label>
+                              </th>
+                              {/*<th></th>*/}
+                            </thead>
 
-                      {formik.values.connections.length !== 0 && (
-                        <table className="mt-5 w-md">
-                          <thead>
-                            <th>ردیف</th>
-                            <th></th>
-                            <th>
-                              <label className="block mb-1 text-sm font-semibold text-gray-700">
-                                هاب
-                                <span className="text-red-600">*</span>
-                              </label>
-                            </th>
-                            <th>
-                              <label className="block mb-1 text-sm font-semibold text-gray-700">
-                                فاصله از هاب قبلی (کیلومتر)
-                                <span className="text-red-600">*</span>
-                              </label>
-                            </th>
-                            <th>
-                              <label className="block mb-1 text-sm font-semibold text-gray-700">
-                                درصد انحراف از مسافت
-                                <span className="text-red-600">*</span>
-                              </label>
-                            </th>
-                            <th>
-                              <label className="block mb-1 text-sm font-semibold text-gray-700">
-                                مدت مسیر
-                                <span className="text-red-600">*</span>
-                              </label>
-                            </th>
-                            <th>
-                              <label className="block mb-1 text-sm font-semibold text-gray-700">
-                                مدت توقف
-                                <span className="text-red-600">*</span>
-                              </label>
-                            </th>
-                            {/*<th></th>*/}
-                          </thead>
-
-                          <tbody>
-                            {formik.values.connections.map((item: any, index: never) => (
-                              <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>
-                                  {index !== 0 && index !== formik.values.connections.length - 1 ? (
-                                    <input
-                                      onChange={(event) => handleChangeCheckBox(event, item, index)}
-                                      ref={checkBoxRef}
-                                      // checked={connectionSelect.length===0 ?false:''}
-                                      type="checkbox"
-                                      className="rounded-md check"
+                            <tbody>
+                              {formik.values.connections.map((item: any, index: never) => (
+                                <tr key={index}>
+                                  <td>{index + 1}</td>
+                                  <td>
+                                    {index !== 0 && index !== formik.values.connections.length - 1 ? (
+                                      <input
+                                        onChange={(event) => handleChangeCheckBox(event, item, index)}
+                                        ref={checkBoxRef}
+                                        // checked={connectionSelect.length===0 ?false:''}
+                                        type="checkbox"
+                                        className="rounded-md check"
+                                      />
+                                    ) : (
+                                      ""
+                                    )}
+                                  </td>
+                                  <td>
+                                    <InputSelect
+                                      wrapperClassName={"w-50"}
+                                      name={`connections.${index}.selectHub`}
+                                      handleChange={formik.setFieldValue}
+                                      values={values?.connections[index].selectHub}
+                                      isDisabled={
+                                        (index === 0 || index === formik.values.connections.length - 1) && true
+                                      }
+                                      error={
+                                        touched.connections &&
+                                        touched.connections[index] &&
+                                        // @ts-ignore
+                                        touched.connections[index].selectHub &&
+                                        errors.connections &&
+                                        errors.connections[index] &&
+                                        // @ts-ignore
+                                        errors.connections[index].selectHub
+                                      }
+                                      options={nodeOptins}
                                     />
-                                  ) : (
-                                    ""
-                                  )}
-                                </td>
-                                <td>
-                                  <InputSelect
-                                    wrapperClassName={"w-50"}
-                                    name={`connections.${index}.selectHub`}
-                                    handleChange={formik.setFieldValue}
-                                    values={values?.connections[index].selectHub}
-                                    isDisabled={(index === 0 || index === formik.values.connections.length - 1) && true}
-                                    error={
-                                      touched.connections &&
-                                      touched.connections[index] &&
+                                  </td>
+                                  <td>
+                                    <InputText
+                                      wrapperClassName={"w-30 "}
+                                      classNames={"min-w-[12rem]"}
+                                      readOnly={index === 0 && true}
+                                      handleChange={formik.handleChange}
+                                      name={`connections.${index}.distanceFromPreviousHub`}
+                                      values={values.connections[index].distanceFromPreviousHub}
+                                      error={
+                                        touched.connections &&
+                                        touched.connections[index] &&
+                                        // @ts-ignore
+                                        touched.connections[index].distanceFromPreviousHub &&
+                                        errors.connections &&
+                                        errors.connections[index] &&
+                                        // @ts-ignore
+                                        errors.connections[index].distanceFromPreviousHub
+                                      }
+                                    />
+                                  </td>
+                                  <td>
+                                    <InputText
+                                      wrapperClassName={"w-30 "}
+                                      classNames={"min-w-[12rem]"}
+                                      readOnly={index === 0 && true}
+                                      handleChange={formik.handleChange}
+                                      name={`connections.${index}.distanceVariance`}
+                                      values={values.connections[index].distanceVariance}
+                                      error={
+                                        touched.connections &&
+                                        touched.connections[index] &&
+                                        // @ts-ignore
+                                        touched.connections[index].distanceVariance &&
+                                        errors.connections &&
+                                        errors.connections[index] &&
+                                        // @ts-ignore
+                                        errors.connections[index].distanceVariance
+                                      }
+                                    />
+                                  </td>
+                                  <td>
+                                    <TimeInput
+                                      readOnly={index === 0 && true}
+                                      wrapperClassName={"w-30 "}
+                                      classNames={"min-w-[12rem]"}
+                                      placeholder="00:00"
+                                      name={`connections.${index}.transitTime`}
+                                      format="##:##"
+                                      value={values.connections[index].transitTime}
                                       // @ts-ignore
-                                      touched.connections[index].selectHub &&
-                                      errors.connections &&
-                                      errors.connections[index] &&
+                                      onValueChange={({ formattedValue }) => {
+                                        setFieldValue(`connections.${index}.transitTime`, formattedValue);
+                                      }}
+                                      error={
+                                        touched.connections &&
+                                        touched.connections[index] &&
+                                        // @ts-ignore
+                                        touched.connections[index].transitTime &&
+                                        errors.connections &&
+                                        errors.connections[index] &&
+                                        // @ts-ignore
+                                        errors.connections[index].transitTime
+                                      }
+                                    />
+                                  </td>
+                                  <td>
+                                    <TimeInput
+                                      readOnly={index === 0 && true}
+                                      wrapperClassName={"w-30 "}
+                                      classNames={"min-w-[12rem]"}
+                                      placeholder="00:00"
+                                      name={`connections.${index}.timeStoppage`}
+                                      format="##:##"
+                                      value={values.connections[index].timeStoppage}
                                       // @ts-ignore
-                                      errors.connections[index].selectHub
-                                    }
-                                    options={hubOptions?.options}
-                                  />
-                                </td>
-                                <td>
-                                  <InputText
-                                    wrapperClassName={"w-30 "}
-                                    classNames={"min-w-[12rem]"}
-                                    readOnly={index === 0 && true}
-                                    handleChange={formik.handleChange}
-                                    name={`connections.${index}.distanceFromPreviousHub`}
-                                    values={values.connections[index].distanceFromPreviousHub}
-                                    error={
-                                      touched.connections &&
-                                      touched.connections[index] &&
-                                      // @ts-ignore
-                                      touched.connections[index].distanceFromPreviousHub &&
-                                      errors.connections &&
-                                      errors.connections[index] &&
-                                      // @ts-ignore
-                                      errors.connections[index].distanceFromPreviousHub
-                                    }
-                                  />
-                                </td>
-                                <td>
-                                  <InputText
-                                    wrapperClassName={"w-30 "}
-                                    classNames={"min-w-[12rem]"}
-                                    readOnly={index === 0 && true}
-                                    handleChange={formik.handleChange}
-                                    name={`connections.${index}.distanceVariance`}
-                                    values={values.connections[index].distanceVariance}
-                                    error={
-                                      touched.connections &&
-                                      touched.connections[index] &&
-                                      // @ts-ignore
-                                      touched.connections[index].distanceVariance &&
-                                      errors.connections &&
-                                      errors.connections[index] &&
-                                      // @ts-ignore
-                                      errors.connections[index].distanceVariance
-                                    }
-                                  />
-                                </td>
-                                <td>
-                                  <Timeinput
-                                    readOnly={index === 0 && true}
-                                    wrapperClassName={"w-30 "}
-                                    classNames={"min-w-[12rem]"}
-                                    placeholder="00:00"
-                                    name={`connections.${index}.transitTime`}
-                                    format="##:##"
-                                    value={values.connections[index].transitTime}
-                                    // @ts-ignore
-                                    onValueChange={({ formattedValue }) => {
-                                      setFieldValue(`connections.${index}.transitTime`, formattedValue);
-                                    }}
-                                    error={
-                                      touched.connections &&
-                                      touched.connections[index] &&
-                                      // @ts-ignore
-                                      touched.connections[index].transitTime &&
-                                      errors.connections &&
-                                      errors.connections[index] &&
-                                      // @ts-ignore
-                                      errors.connections[index].transitTime
-                                    }
-                                  />
-                                  {/*<InputText*/}
-                                  {/*  readOnly={index === 0 && true}*/}
-                                  {/*  wrapperClassName={"w-30 "}*/}
-                                  {/*  classNames={"min-w-[12rem]"}*/}
-                                  {/*  handleChange={formik.handleChange}*/}
-                                  {/*  name={`connections.${index}.transitTime`}*/}
-                                  {/*  values={values.connections[index].transitTime}*/}
-                                  {/*  placeholder="00:00"*/}
-                                  {/*  error={*/}
-                                  {/*    touched.connections &&*/}
-                                  {/*    touched.connections[index] &&*/}
-                                  {/*    // @ts-ignore*/}
-                                  {/*    touched.connections[index].transitTime &&*/}
-                                  {/*    errors.connections &&*/}
-                                  {/*    errors.connections[index] &&*/}
-                                  {/*    // @ts-ignore*/}
-                                  {/*    errors.connections[index].transitTime*/}
-                                  {/*  }*/}
-                                  {/*/>*/}
-                                </td>
-                                <td>
-                                  <Timeinput
-                                    readOnly={index === 0 && true}
-                                    wrapperClassName={"w-30 "}
-                                    classNames={"min-w-[12rem]"}
-                                    placeholder="00:00"
-                                    name={`connections.${index}.timeStoppage`}
-                                    format="##:##"
-                                    value={values.connections[index].timeStoppage}
-                                    // @ts-ignore
-                                    onValueChange={({ formattedValue }) => {
-                                      setFieldValue(`connections.${index}.timeStoppage`, formattedValue);
-                                    }}
-                                    error={
-                                      touched.connections &&
-                                      touched.connections[index] &&
-                                      // @ts-ignore
-                                      touched.connections[index].timeStoppage &&
-                                      errors.connections &&
-                                      errors.connections[index] &&
-                                      // @ts-ignore
-                                      errors.connections[index].timeStoppage
-                                    }
-                                  />
-                                  {/* <InputText
-                                        wrapperClassName={"w-30 "}
-                                        classNames={"min-w-[12rem]"}
-                                        readOnly={index === 0 && true}
-                                        handleChange={formik.handleChange}
-                                        name={`connections.${index}.timeStoppage`}
-                                        values={values.connections[index].timeStoppage}
-                                        placeholder="00:00"
-                                        error={
-                                          touched.connections &&
-                                          touched.connections[index] &&
-                                          // @ts-ignore
-                                          touched.connections[index].timeStoppage &&
-                                          errors.connections &&
-                                          errors.connections[index] &&
-                                          // @ts-ignore
-                                          errors.connections[index].timeStoppage
-                                        }
-                                      /> */}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      )}
-                    </>
-                  </div>
+                                      onValueChange={({ formattedValue }) => {
+                                        setFieldValue(`connections.${index}.timeStoppage`, formattedValue);
+                                      }}
+                                      error={
+                                        touched.connections &&
+                                        touched.connections[index] &&
+                                        // @ts-ignore
+                                        touched.connections[index].timeStoppage &&
+                                        errors.connections &&
+                                        errors.connections[index] &&
+                                        // @ts-ignore
+                                        errors.connections[index].timeStoppage
+                                      }
+                                    />
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        )}
+                      </>
+                    </div>
 
-                  <div className="flex-end-center mt-5 gap-3">
-                    <SimpleButton
-                      handelClick={() => setIsModalOpen(false)}
-                      text="لغو"
-                      className="full-lightTomato-btn"
-                    />
-                    <SimpleButton
-                      loading={Loading}
-                      type="submit"
-                      text={!currentData ? "افزودن" : "ویرایش"}
-                      className="full-tomato-btn"
-                    />
-                  </div>
-                </>
-              )}
-            />
-          </FormikProvider>
-        </form>
-      </Modal>
+                    <div className="flex-end-center mt-5 gap-3">
+                      <SimpleButton
+                        handelClick={() => {
+                          setIsModalOpen(false);
+                          setAddOpen(false);
+                        }}
+                        text="لغو"
+                        className="full-lightTomato-btn"
+                      />
+                      <SimpleButton
+                        loading={Loading}
+                        type="submit"
+                        text={!currentData ? "افزودن" : "ویرایش"}
+                        className="full-tomato-btn"
+                      />
+                    </div>
+                  </>
+                )}
+              />
+            </FormikProvider>
+          </form>
+        </Modal>
+      )}
 
       <style>
         {`table td {

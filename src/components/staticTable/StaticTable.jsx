@@ -35,7 +35,7 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 );
 
-function Table({ columns, data, pageTable, selectable, loading }) {
+function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -89,18 +89,17 @@ function Table({ columns, data, pageTable, selectable, loading }) {
     }
   );
 
-
   return (
     <div className="overflow-auto bg-white rounded-lg shadow-md  mt-6">
       <table
         {...getTableProps()}
         className="border-collapse table-auto w-full bg-white table-striped rounded-lg text-center"
       >
-        <thead className="bg-lightTomato h-12 rounded-lg text-dark">
+        <thead className="bg-lightTomato h-12 rounded-lg text-dark ">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th className=" font-normal" {...column.getHeaderProps()}>
+                <th className={` font-normal ${THWrapper} `} {...column.getHeaderProps()}>
                   {column.render("Header")}
                 </th>
               ))}
@@ -137,8 +136,8 @@ function Table({ columns, data, pageTable, selectable, loading }) {
           <div className="h-20 centering w-full"> موردی یافت نشد </div>
         )
       )}
-     
-        <Paginations pageData={pageTable} />
+
+      <Paginations pageData={pageTable} />
     </div>
   );
 }
@@ -149,6 +148,7 @@ function StaticTable({
   pagination,
   selectable,
   loading = false,
+  THWrapper="min-w-fit"
 }) {
   return (
     <Table
@@ -157,6 +157,7 @@ function StaticTable({
       pageTable={pagination}
       selectable={selectable}
       loading={loading}
+      THWrapper={THWrapper}
     />
   );
 }

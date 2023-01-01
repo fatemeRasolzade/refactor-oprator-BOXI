@@ -42,7 +42,7 @@ const TestCustomOptions = ({ options = [] }) => {
           />
         );
       default:
-        break;
+        return <></>
     }
   };
 

@@ -15,6 +15,9 @@ import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
 import { useGetOptions } from "../../../global/hooks/useFetchOptions";
 import { useNavigate } from "react-router-dom";
+import { exportExcel } from "../../../tools/functions/ExcelExport";
+
+
 
 const ProductDefine = () => {
   const { options } = useGetOptions(apiRoute().get.GET_PRODUCT_GROUPS);
@@ -41,6 +44,7 @@ const ProductDefine = () => {
       ? productLists?.content?.map((item: any) => {
           return {
             ...item,
+          
             operation: (
               <div className="flex w-full gap-3 justify-center">
                 <DeleteOperation
@@ -67,16 +71,19 @@ const ProductDefine = () => {
         })
       : [];
 
+   
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="تعریف محصول" />
-      <SearchForm isActive={isActive} isUpdating={isUpdating}/>
+      <SearchForm isActive={isActive} isUpdating={isUpdating} productOptions={options}/>
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ActionForms />}
-        exportExcel={() => ExportExcel(productLists?.content)}
+        exportExcel={() => exportExcel(datas)}
+        // exportExcel={<ExcelExportHelper data={datas}  />}
       />
+      
       <StaticTable
         data={datas ? datas : []}
         column={ProductColumns}
@@ -88,3 +95,5 @@ const ProductDefine = () => {
 };
 
 export default ProductDefine;
+
+

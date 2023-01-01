@@ -16,6 +16,8 @@ import InputSelect from "../../../../global/InputSelect/InputSelect";
 import DatePickers from "../../../../global/DatePicker/DatePicker";
 import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
 import { DateCompare } from "../../../../tools/validations/ErrorHelper";
+import AddExcel from "../../../../components/exel/AddExcel";
+import { ServiceDefineExcel, vehicleModelExcel } from "../../../../tools/services/ExcelInfoFile";
 
 interface PropsData {
   currentData?: any;
@@ -23,23 +25,23 @@ interface PropsData {
   productOptions?: any;
 }
 const validation = Yup.object().shape({
-  name: Yup.string().required(),
-  code: Yup.string().required(),
+  name: Yup.string().required('اجباری است'),
+  code: Yup.string().required('اجباری است'),
 
   minimumOrderQuantity: Yup.number(),
   // validDateFrom: Yup.string().required(),
   // validDateTo: Yup.string().required(),
   type: Yup.object().shape({
-    text: Yup.string().required(),
-    id: Yup.string().required(),
+    text: Yup.string().required('اجباری است'),
+    id: Yup.string().required('اجباری است'),
   }),
   product: Yup.object().shape({
-    text: Yup.string().required(),
-    id: Yup.string().required(),
+    text: Yup.string().required('اجباری است'),
+    id: Yup.string().required('اجباری است'),
   }),
   priceList: Yup.object().shape({
-    text: Yup.string().required(),
-    id: Yup.string().required(),
+    text: Yup.string().required('اجباری است'),
+    id: Yup.string().required('اجباری است'),
   }),
 });
 
@@ -47,9 +49,7 @@ const ServiceDefineActionForms: React.FC<PropsData> = ({ currentData, priceOptio
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
-    
   const dispatch = useDispatch();
-
   const handleAction = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -172,6 +172,16 @@ const ServiceDefineActionForms: React.FC<PropsData> = ({ currentData, priceOptio
   useEffect(() => {
     formik.resetForm({});
   }, [isModalOpen]);
+  const setUpdate=()=>{
+    dispatch(
+      ServiceData({
+
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
 
   return (
     <>
@@ -182,7 +192,7 @@ const ServiceDefineActionForms: React.FC<PropsData> = ({ currentData, priceOptio
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      {/* <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} /> */}
+      <AddExcel excelInfo={ServiceDefineExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={currentData ? "ویرایش سرویس" : "تعریف سرویس"}>
         <form onSubmit={formik.handleSubmit}>
           <div className="  grid grid-cols-3 mt-8 gap-4 content-center items-center">

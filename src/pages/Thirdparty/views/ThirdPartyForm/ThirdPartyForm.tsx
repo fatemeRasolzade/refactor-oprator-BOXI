@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../../../../global/Modal/Modal";
-import AddExcel from "../../../../components/exel/AddExcel";
-import AddButton from "../../../../global/addButton/AddButton";
-import { ThirdPartyExcel } from "../../../../tools/services/ExcelInfoFile";
 import ThirdPartyBasicInformation from "./ThirdPartyBasicInformation";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import ThirdPartyAddressForm from "./ThirdPartyCommunicationInformation/ThirdPartyAddressForm";
@@ -19,13 +15,16 @@ import { thirdPartyData } from "../../../../redux/ThirdParty/ThirdPartyData";
 
 type CustomerFormProps = {
   currentData?: any;
+  open: boolean
+  setOpen: (value: boolean) => void
+  
 };
 
-const ThirdPartyForm = ({ currentData }: CustomerFormProps) => {
-  const [open, setOpen] = useState(false);
+const ThirdPartyForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
+  
   const [OpenAddresses, setOpenAddresses] = useState(false);
   const [OpenPhones, setOpenPhones] = useState(false);
-  const [OpenExcel, setOpenExcel] = useState(false);
+ 
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -122,13 +121,7 @@ const ThirdPartyForm = ({ currentData }: CustomerFormProps) => {
   });
 
   const { values, handleSubmit, setFieldValue, handleReset }: any = formik;
-  const handleOpenModal = () => setOpen(true);
-  const handleUploadFileAction = () => setOpenExcel(true);
-
-  const ToggleOptions = [
-    { handleClick: handleOpenModal, name: "افزودن شخصیت" },
-    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
-  ];
+ 
 
   const handleCloseCustomerForm = () => setOpen(false);
 
@@ -137,42 +130,32 @@ const ThirdPartyForm = ({ currentData }: CustomerFormProps) => {
   }, [handleReset, open]);
 
   return (
-    <>
-      {currentData ? (
-        <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={handleOpenModal}>
-          <AiOutlineEdit className="w-[20px] h-[20px]" size={15} />
-        </button>
-      ) : (
-        <AddButton ToggleOptions={ToggleOptions} />
-      )}
-      <AddExcel excelInfo={ThirdPartyExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} />
-      <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}>
-        <form onSubmit={handleSubmit}>
-          <ThirdPartyBasicInformation formik={formik} open={open} currentData={currentData} />
-          <ThirdPartyCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} />
-          <div className="flex-end-center mt-5 gap-3">
-            <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
-            <SimpleButton loading={Loading} type="submit" text={currentData ? "ویرایش" : "افزودن"} className="full-tomato-btn" />
-          </div>
-        </form>
-        <ThirdPartyAddressForm
-          setValue={setFieldValue}
-          value={values.addresses}
-          open={OpenAddresses}
-          setOpen={setOpenAddresses}
-          currentData={addressModalInfo.kind === 2 ? addressModalInfo.data : undefined}
-          ID={addressModalInfo.kind === 2 ? addressModalInfo.id : undefined}
-        />
-        <ThirdPartyTelephoneForm
-          setValue={setFieldValue}
-          value={values.telephones}
-          open={OpenPhones}
-          setOpen={setOpenPhones}
-          currentData={phonesModalInfo.kind === 2 ? phonesModalInfo.data : undefined}
-          ID={phonesModalInfo.kind === 2 ? phonesModalInfo.id : undefined}
-        />
-      </Modal>
-    </>
+    <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش شخصیت" : "افزودن شخصیت"}>
+      <form onSubmit={handleSubmit}>
+        <ThirdPartyBasicInformation formik={formik} open={open} currentData={currentData} />
+        <ThirdPartyCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} />
+        <div className="flex-end-center mt-5 gap-3">
+          <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
+          <SimpleButton loading={Loading} type="submit" text={currentData ? "ویرایش" : "افزودن"} className="full-tomato-btn" />
+        </div>
+      </form>
+      <ThirdPartyAddressForm
+        setValue={setFieldValue}
+        value={values.addresses}
+        open={OpenAddresses}
+        setOpen={setOpenAddresses}
+        currentData={addressModalInfo.kind === 2 ? addressModalInfo.data : undefined}
+        ID={addressModalInfo.kind === 2 ? addressModalInfo.id : undefined}
+      />
+      <ThirdPartyTelephoneForm
+        setValue={setFieldValue}
+        value={values.telephones}
+        open={OpenPhones}
+        setOpen={setOpenPhones}
+        currentData={phonesModalInfo.kind === 2 ? phonesModalInfo.data : undefined}
+        ID={phonesModalInfo.kind === 2 ? phonesModalInfo.id : undefined}
+      />
+    </Modal>
   );
 };
 

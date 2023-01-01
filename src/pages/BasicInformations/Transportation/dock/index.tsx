@@ -10,6 +10,7 @@ import SearchForm from "./view/SearchForm";
 import { filterGate } from "../../../../redux/Transportation/gate/GateData";
 import DockActionForms from "./view/DockActionForm";
 import { DockColumns } from "./view/Column";
+import { exportExcel } from "../../../../tools/functions/ExcelExport";
 const Dock: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const Dock: React.FC = (): JSX.Element => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <DockActionForms />}
-        exportExcel={() => ExportExcel(dockLists?.content)}
+        exportExcel={() =>  exportExcel(data)}
       />
       <StaticTable
         data={data ? data : []}

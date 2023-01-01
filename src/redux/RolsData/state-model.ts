@@ -3,4 +3,5 @@ export interface StateData {
   fetchPost: boolean;
   errorMessage: null | string;
   isUpdating: Boolean;
+  filter: object;
 }

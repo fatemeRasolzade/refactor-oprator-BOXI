@@ -19,7 +19,7 @@ const CustomInput = (props: any) => {
     return <input {...props} style={{direction: "ltr", textAlign: "center"}}
                   className={`w-full appearance-none focus:outline-none focus:shadow-outline ${props.className}   `}/>;
 };
-const Timeinput = ({
+const TimeInput = ({
                        wrapperClassName,
                        classNames,
                        readOnly,
@@ -49,11 +49,12 @@ const Timeinput = ({
                     placeholder={placeholder}
                     onValueChange={onValueChange}
                     value={value}
+                    readOnly={readOnly}
                 />
             </div>
             <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
         </div>
     );
 };
-export default Timeinput
+export default TimeInput
 

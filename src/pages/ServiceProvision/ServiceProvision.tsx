@@ -1,24 +1,31 @@
-import  { useEffect, useState } from 'react'
-import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
-import { useDispatch, useSelector } from 'react-redux';
-import OptionTableServiceProvision from './view/OptionTableServiceProvision/OptionTableServiceProvision';
-import StaticTable from './../../components/staticTable/StaticTable';
-import { clearService, ServiceProvisionData } from '../../redux/ServiceProvision/ServiceProvision';
-import { ServiceProvisionColumns } from '../../global/Column/Columns';
-import { BiEditAlt, BiTrash } from 'react-icons/bi';
-import {apiRoute} from "../../services/apiRoute"
-import AddModalService from './view/AddModalService/AddModalService';
-import SearchFilterTable from './view/SearchFilterTable/SearchFilterTable';
-import DeleteModal from '../../global/DeleteModal/DeleteModal';
+import { useEffect, useState } from "react";
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import { useDispatch, useSelector } from "react-redux";
+import OptionTableServiceProvision from "./view/OptionTableServiceProvision/OptionTableServiceProvision";
+import StaticTable from "./../../components/staticTable/StaticTable";
+import { clearService, ServiceProvisionData } from "../../redux/ServiceProvision/ServiceProvision";
+import { ServiceProvisionColumns } from "../../global/Column/Columns";
+import { BiEditAlt, BiTrash } from "react-icons/bi";
+import { apiRoute } from "../../services/apiRoute";
+import AddModalService from "./view/AddModalService/AddModalService";
+import SearchFilterTable from "./view/SearchFilterTable/SearchFilterTable";
+import DeleteModal from "../../global/DeleteModal/DeleteModal";
+import { deleteUrls } from "../../services/api.enums";
 import { ExportExcel } from '../../tools/functions/Methods';
 const ServiceProvision = () => {
-  const dispatch=useDispatch()
-const {serviceList} =useSelector((state:any)=>state.serviceProvision) 
-const {pageNumbers} =useSelector((state:any)=>state.paginate)
-const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
-const [deleteItemId,setdeleteItemId]=useState<number>(0)
-const [isModalEdit, setIsModalEdit] = useState(false);
-const [DataEditModal,setDataEditModal]=useState({})
+  const dispatch = useDispatch();
+  const { serviceList } = useSelector((state: any) => state.serviceProvision);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
+  const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
+  const [deleteItemId, setdeleteItemId] = useState<number>(0);
+  const [isModalEdit, setIsModalEdit] = useState(false);
+  const [DataEditModal, setDataEditModal] = useState({});
+  useEffect(() => {
+    dispatch(ServiceProvisionData(pageNumbers) as any);
+    return () => {
+      dispatch(clearService());
+    };
+  }, [dispatch, pageNumbers]);
 
 useEffect(()=>{
  
@@ -72,7 +79,7 @@ selectable={false}
 
 />
     </div>
-  )
-}
+  );
+};
 
-export default ServiceProvision
+export default ServiceProvision;

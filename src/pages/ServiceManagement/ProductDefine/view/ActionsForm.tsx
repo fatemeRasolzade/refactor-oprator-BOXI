@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-
 import { Formik } from "formik";
-
 import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { apiRoute } from "../../../../services/apiRoute";
@@ -9,26 +7,25 @@ import { EditDataParams, PostDataParams, selectDataFromServer } from "../../../.
 import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import { useDispatch, useSelector } from "react-redux";
-import { productData, updating } from "../../../../redux/ProductDefineData/ProductDefineData";
+import { productData } from "../../../../redux/ProductDefineData/ProductDefineData";
 import { productDefineschema } from "./productDefineschema";
-
-import AddExcel from "./AddExcel";
 import { AiOutlineEdit } from "react-icons/ai";
 import AddButton from "../../../../global/addButton/AddButton";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import Modal from "../../../../global/Modal/Modal";
 import MultiLineText from "../../../../global/MultiLineText/MultiLineText";
+import AddExcel from "../../../../components/exel/AddExcel";
+import { ProductExcel } from "../../../../tools/services/ExcelInfoFile";
 
 interface PropsData {
   itemValue?: any;
 }
 
 const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
-  const { productLists } = useSelector((state: any) => state.productDefine);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [productOptions, setProductOptions] = useState([]);
-  const [productTypeOptions, setProductTypeOptions] = useState([]);
+  const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,7 +54,15 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
     { handleClick: handleAction, name: "افزودن محصول" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
-
+  const setUpdate=()=>{
+    dispatch(
+      productData({
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
 
   return (
     <>
@@ -68,7 +73,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} />
+      <AddExcel excelInfo={ProductExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={itemValue ? "ویرایش  محصول" : "افزودن محصول"}>
         <Formik
           initialValues={
@@ -98,6 +103,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
           validationSchema={productDefineschema}
           onSubmit={(values) => {
             if (!itemValue) {
+              setLoading(true);
               PostDataParams(apiRoute().post.createProduct, values).then((res) => {
                 if (res.status === "OK") {
                   SuccessAlert("با موفقیت ساخته شد");
@@ -110,8 +116,10 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
                       pageNumber: "",
                     }) as any
                   );
+                  setLoading(false);
                 } else {
                   console.log("run error");
+                  setLoading(false);
                   // ErrorAlert("خطا در برقراری اطلاعات");
                 }
 
@@ -120,6 +128,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
                 setIsModalOpen(false);
               });
             } else {
+              setLoading(true);
               EditDataParams(apiRoute().edit.productDefine, values).then((res) => {
                 // dispatch(updating(true));
                 console.log("run edit");
@@ -134,8 +143,10 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
                       pageNumber: "",
                     }) as any
                   );
+                  setLoading(false);
                 } else {
                   console.log("run error");
+                  setLoading(false);
                   // ErrorAlert("خطا در برقراری اطلاعات");
                 }
 
@@ -150,7 +161,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
                 <InputText
                   label="کد"
                   // className="w-full"
-                  readOnly={itemValue?true:false}
+                  readOnly={itemValue ? true : false}
                   name="code"
                   handleChange={formik.handleChange}
                   values={formik.values.code}
@@ -158,7 +169,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
                   type={"text"}
                   error={formik.touched.code && formik.errors.code}
                 />
-                {/* <ErrorMessage name="code" render={(messege) => <span className="text-tomato">{messege}</span>} /> */}
+
                 <InputText
                   label="عنوان"
                   // className="w-full"
@@ -169,29 +180,22 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
                   type={"text"}
                   error={formik.touched.name && formik.errors.name}
                 />
-                {/* <ErrorMessage name="name" render={(messege) => <span className="text-tomato">{messege}</span>} /> */}
-                {/* <div>
-              <CustomSwitch />
-              
-              </div> */}{" "}
-               
-                  <InputSelect
-                  
-                    label="گروه بندی محصول"
-                    important
-                    name="productGroup"
-                    handleChange={formik.setFieldValue}
-                    values={formik.values.productGroup}
-                    error={formik.touched.productGroup && formik.errors.productGroup}
-                    options={productOptions}
-                  />
-             
 
-                  <CustomSwitch
-                    active={formik.values.isActive}
-                    handleChange={(value: any) => formik.setFieldValue("isActive", value)}
-                  />
-        
+                <InputSelect
+                  label="گروه بندی محصول"
+                  important
+                  name="productGroup"
+                  handleChange={formik.setFieldValue}
+                  values={formik.values.productGroup}
+                  error={formik.touched.productGroup && formik.errors.productGroup}
+                  options={productOptions}
+                />
+
+                <CustomSwitch
+                  active={formik.values.isActive}
+                  handleChange={(value: any) => formik.setFieldValue("isActive", value)}
+                />
+
                 <div className="!col-span-2 ">
                   <MultiLineText
                     label=" توضیحات"
@@ -206,7 +210,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
               <div className="flex-end-center mt-5 gap-3">
                 <SimpleButton handelClick={() => setIsModalOpen(false)} text="لغو" className="full-lightTomato-btn" />
                 <SimpleButton
-                  // loading={Loading}
+                  loading={Loading}
                   type="submit"
                   text={itemValue ? "ویرایش" : "افزودن"}
                   className="full-tomato-btn"

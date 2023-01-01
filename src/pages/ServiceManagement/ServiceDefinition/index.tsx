@@ -6,6 +6,7 @@ import DeleteOperation from "../../../components/tableOperation/DeleteOperation"
 import { useFetchOptions } from "../../../global/hooks/useFetchOptions";
 import { ServiceData } from "../../../redux/ServiceDefine/ServiceDefineReducer";
 import { apiRoute } from "../../../services/apiRoute";
+import { exportExcel } from "../../../tools/functions/ExcelExport";
 import { ExportExcel } from "../../../tools/functions/Methods";
 import ServiceDefineActionForms from "./view/ActionsForm";
 import { ServiceDefineColumns } from "./view/Column";
@@ -43,7 +44,11 @@ const ServiceDefinition: React.FC = (): JSX.Element => {
                   handleDeleteActionNewData={handleDeleteActionNewData}
                   route={apiRoute().delete.serviceDefine + `/${item.id}`}
                 />
-                <ServiceDefineActionForms currentData={item} productOptions={productOptions} priceOptions={priceOptions}/>
+                <ServiceDefineActionForms
+                  currentData={item}
+                  productOptions={productOptions}
+                  priceOptions={priceOptions}
+                />
               </div>
             ),
           };
@@ -52,12 +57,14 @@ const ServiceDefinition: React.FC = (): JSX.Element => {
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="تعریف سرویس" />
-      <SearchForm  isActive={isActive} productOptions={productOptions} priceOptions={priceOptions}/>
+      <SearchForm isActive={isActive} productOptions={productOptions} priceOptions={priceOptions} />
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}
-        addComponentProps={() => <ServiceDefineActionForms  productOptions={productOptions} priceOptions={priceOptions}/>}
-        exportExcel={() => ExportExcel(postLists?.content)}
+        addComponentProps={() => (
+          <ServiceDefineActionForms productOptions={productOptions} priceOptions={priceOptions} />
+        )}
+        exportExcel={() =>  exportExcel(data)}
       />
       <StaticTable
         data={data ? data : []}

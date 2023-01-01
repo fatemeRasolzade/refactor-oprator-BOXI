@@ -3,6 +3,7 @@ import CustomSwitch from "../../../../global/Switch/Switch";
 import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getThirdPartyCategory, getThirdPartyParent, getThirdPartyType } from "../../../../services/ThirdPartyApi";
+import MultiSelect from "../../../../global/multiselect/MultiSelect";
 
 const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
   const [ThirdPartyType, setThirdPartyType] = useState([]);
@@ -55,7 +56,7 @@ const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
           readOnly={currentData && true}
         />
         <InputText important label="نام شخصیت" values={values.name} name="name" handleChange={handleChange} error={touched.name && errors.name} />
-        {/* <InputSelect
+        <InputSelect
           options={ThirdPartyType}
           important
           label="نوع شخصیت"
@@ -63,7 +64,19 @@ const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
           name="selectThirdPartyType"
           handleChange={setFieldValue}
           error={touched.selectThirdPartyType && errors.selectThirdPartyType}
-        /> */}
+        />
+        <MultiSelect
+          wrapperClassName=""
+          label="شهر"
+          name="fromSourceCity"
+          handleChange={(name: "string", value: any) => {
+            setFieldValue(name, value);
+            setFieldValue("fromSourceLocation", []);
+          }}
+          values={values.fromSourceCity}
+          options={ThirdPartyType}
+          error={touched.fromSourceCity && errors.fromSourceCity}
+        />
         {values.selectThirdPartyType.id === 0 && (
           <InputText
             important

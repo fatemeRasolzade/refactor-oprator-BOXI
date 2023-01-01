@@ -11,7 +11,7 @@ import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
 import AddExcel from "../../../../../components/exel/AddExcel";
-import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
+import { DockExcel, vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
 import { useFetchOptionsOnModal } from "../../../../../global/hooks/useFetchOptions";
 import { filterDock } from "../../../../../redux/Transportation/dock/DockData";
@@ -121,6 +121,15 @@ const DockActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
   useEffect(() => {
     formik.resetForm({});
   }, [isModalOpen]);
+  const setUpdate=()=>{
+    dispatch(
+      filterDock({
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
 
   return (
     <>
@@ -131,7 +140,7 @@ const DockActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={DockExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal
         visible={isModalOpen}
         setVisible={setIsModalOpen}

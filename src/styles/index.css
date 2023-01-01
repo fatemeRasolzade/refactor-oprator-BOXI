@@ -27,8 +27,9 @@
   p {
     @apply text-right;
   }
-}
-@layer base {
+  legend {
+    @apply px-2;
+  }
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -36,6 +37,16 @@
   }
 }
 @layer components {
+  *::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  *::-webkit-scrollbar-track {
+    @apply shadow-lg bg-lightTomato rounded-lg;
+  }
+  *::-webkit-scrollbar-thumb {
+    @apply rounded-lg bg-tomato;
+  }
+
   .btn {
     @apply h-10 rounded-lg border-none text-dark px-5 py-2 centering gap-2 w-32;
   }
@@ -101,7 +112,7 @@
     @apply w-full before:content-[attr(data-before)] focus-visible:outline-none relative before:absolute before:-top-12 before:right-5 before:bg-white before:z-30 border-0 mt-1 text-sm;
   }
   .autocompleteWrapper {
-    @apply flex-between-center relative h-10 px-2 min-w-[15rem] border border-darkBorder rounded-lg text-darkGray;
+    @apply flex-between-center relative h-10 px-2 border border-darkBorder rounded-lg text-darkGray;
   }
   .autocompleteLabel {
     @apply absolute -top-3 right-5 bg-white   px-2 text-darkGray text-sm;

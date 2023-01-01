@@ -14,11 +14,11 @@ import {ErrorAlert} from "../../../../global/alert/Alert"
 interface PropsData {
   isActive: Boolean | string;
   isUpdating: Boolean;
-
+  productOptions:any;
 }
 
-const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating, }): JSX.Element => {
-const [productOptions,setproductOptions]=useState([])
+const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating, productOptions}): JSX.Element => {
+// const [productOptions,setproductOptions]=useState([])
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
    // @ts-ignore
@@ -39,19 +39,19 @@ const [productOptions,setproductOptions]=useState([])
     },
   });
 
-  // useEffect(() => {
+  useEffect(() => {
    
-  //   dispatch(
-  //     productData({
-  //       code: formik.values.code,
-  //       name: formik.values.name,
-  //       productGroup:formik.values.productGroup.id,
-  //       isActive: isActive,
-  //       pageSize: 10,
-  //       pageNumber: pageNumbers,
-  //     }) as any
-  //   );
-  // }, [isActive, filterData, isUpdating,pageNumbers]);
+    dispatch(
+      productData({
+        code: formik.values.code,
+        name: formik.values.name,
+        productGroup:formik.values.productGroup.id,
+        isActive: isActive,
+        pageSize: 10,
+        pageNumber: pageNumbers,
+      }) as any
+    );
+  }, [isActive, filterData, isUpdating,pageNumbers]);
   const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     formik.setFieldValue(name, e.target.value);
     // const filterData = data.filter((item) => item.text.includes(e.target.value));
@@ -82,24 +82,6 @@ const [productOptions,setproductOptions]=useState([])
   const handleSelect = (val: any, name: string) => {
     formik.setFieldValue(name, val);
   };
-  useEffect(() => {
-    function getDataSelect() {
-      try {
-        selectDataFromServerWithHeader(apiRoute().get.GET_PRODUCT_GROUPS).then((res: any) => {
-           if (res.status === "OK"){
-            setproductOptions(res?.payload?.content);
-           
-           }else{
-            ErrorAlert("گروه بندی محصول با خطا مواجه شد")
-           }
-        });
-        // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
-      } catch (error) {
-        ErrorAlert("دریافت دیتا با خطلا مواجه شد");
-      }
-    }
-    getDataSelect();
-  }, []);
 
   return (
     <>

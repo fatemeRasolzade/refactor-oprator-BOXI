@@ -111,9 +111,9 @@ const AddExcel: FC<AddExcelProps> = ({
                   "اضافه شد"
                 : ` تعداد ${value} عدد اضافه شد`
           );
-          convert.forEach((response) => {
-            toast.success(response);
-          });
+            convert.forEach((response) => {
+              toast.success(response);
+            });
         }
       } catch (error: any) {
         if (error?.response?.status === 406) {
