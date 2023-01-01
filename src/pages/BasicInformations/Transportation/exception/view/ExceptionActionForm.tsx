@@ -114,6 +114,15 @@ const ExceptionActionForm: React.FC<PropsData> = ({ currentData }): JSX.Element 
   useEffect(() => {
     formik.resetForm({});
   }, [isModalOpen]);
+  const setUpdate=()=>{
+    dispatch(
+      filterException({
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
 
   return (
     <>
@@ -124,7 +133,7 @@ const ExceptionActionForm: React.FC<PropsData> = ({ currentData }): JSX.Element 
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal
         visible={isModalOpen}
         setVisible={setIsModalOpen}

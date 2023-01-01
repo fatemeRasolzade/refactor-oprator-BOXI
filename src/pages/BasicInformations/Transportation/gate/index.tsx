@@ -11,6 +11,7 @@ import SearchForm from "./view/SearchForm";
 
 import GateActionForms from "./view/GateActionForm";
 import { filterGate } from "../../../../redux/Transportation/gate/GateData";
+import { exportExcel } from "../../../../tools/functions/ExcelExport";
 const Gate: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ const Gate: React.FC = (): JSX.Element => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <GateActionForms />}
-        exportExcel={() => ExportExcel(gateLists?.content)}
+        exportExcel={() =>  exportExcel(data)}
       />
       <StaticTable
         data={data ? data : []}

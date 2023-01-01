@@ -11,6 +11,7 @@ import { routeExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
 import RouteActionForms from "./RouteActionForm";
 import { v4 as uuidv4 } from "uuid";
+import { filterRoute } from "../../../../../redux/Transportation/route/RouteData";
 interface PropsData {
   currentData?: any;
   hubOptions: any;
@@ -128,7 +129,15 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
       setdesttHubOptions(filter);
     }
   };
-
+  const setUpdate=()=>{
+    dispatch(
+      filterRoute({
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
   return (
     <>
       {openConnection && (
@@ -142,7 +151,7 @@ const AddRouteForms: React.FC<PropsData> = ({ currentData, hubOptions }): JSX.El
         />
       )}
       <AddButton ToggleOptions={ToggleOptions} />
-      <AddExcel excelInfo={routeExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={routeExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={"افزودن مسیر"}>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid grid-cols-4 mt-8 gap-y-4 gap-x-2 content-center">

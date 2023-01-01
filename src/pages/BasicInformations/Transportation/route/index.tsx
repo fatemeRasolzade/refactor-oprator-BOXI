@@ -12,6 +12,7 @@ import { filterRoute } from "../../../../redux/Transportation/route/RouteData";
 import AddRouteForms from "./view/AddRoute";
 import { useFetchOptions } from "../../../../global/hooks/useFetchOptions";
 import TimePiker from "../../../../global/TimePicker/TimePiker";
+import { exportExcel } from "../../../../tools/functions/ExcelExport";
 
 const Route: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
@@ -56,7 +57,7 @@ const Route: React.FC = (): JSX.Element => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <AddRouteForms  hubOptions={hubOptions}/>}
-        exportExcel={() => ExportExcel(routeLists?.content)}
+        exportExcel={() =>  exportExcel(data)}
       />
       <StaticTable
         data={data ? data : []}
