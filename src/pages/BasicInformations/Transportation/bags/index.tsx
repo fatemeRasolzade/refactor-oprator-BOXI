@@ -10,6 +10,7 @@ import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
 import BagActionForms from "./view/BagActionForm";
 import { useFetchOptions } from "../../../../global/hooks/useFetchOptions";
+import { exportExcel } from "../../../../tools/functions/ExcelExport";
 const Bags: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ const Bags: React.FC = (): JSX.Element => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <BagActionForms  bagOptions={bagOptions}  vendorOptions={vendorOptions} hubOptions={hubOptions}/>}
-        exportExcel={() => ExportExcel(bagsData?.content)}
+        exportExcel={() =>  exportExcel(data)}
       />
       <StaticTable
         data={data ? data : []}

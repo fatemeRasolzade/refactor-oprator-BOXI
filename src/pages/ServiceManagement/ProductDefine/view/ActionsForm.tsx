@@ -54,6 +54,15 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
     { handleClick: handleAction, name: "افزودن محصول" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
+  const setUpdate=()=>{
+    dispatch(
+      productData({
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
 
   return (
     <>
@@ -64,7 +73,7 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={ProductExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={ProductExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={itemValue ? "ویرایش  محصول" : "افزودن محصول"}>
         <Formik
           initialValues={

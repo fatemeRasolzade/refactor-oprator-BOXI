@@ -38,6 +38,16 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
   const handleUploadFileAction = () => {
     setUploadExcel(!uploadExcel);
   };
+  const setUpdate=()=>{
+    dispatch(
+      vendorData({
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
+
 
   const ToggleOptions = [
     { handleClick: handleAction, name: "افزودن شرکت نقلیه" },
@@ -137,7 +147,7 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={VendorExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={VendorExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       {/* <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} /> */}
 
       <Modal

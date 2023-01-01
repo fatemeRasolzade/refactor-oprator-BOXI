@@ -49,6 +49,15 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
   const handleUploadFileAction = () => {
     setUploadExcel(!uploadExcel);
   };
+  const setUpdate=()=>{
+    dispatch(
+      vehicleModel({
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
 
   const ToggleOptions = [
     { handleClick: handleAction, name: "افزودن مدل وسیله نقلیه" },
@@ -159,7 +168,7 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={currentData ?"ویرایش مدل وسیله نقلیه" : "تعریف مدل وسیله نقلیه"}>
       {/*<Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[60%] "}>*/}
         <form onSubmit={formik.handleSubmit}>

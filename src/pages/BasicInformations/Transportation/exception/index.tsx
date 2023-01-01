@@ -11,6 +11,7 @@ import { filterGate } from "../../../../redux/Transportation/gate/GateData";
 import { ExceptionColumns } from "./view/Column";
 import ExceptionActionForm from "./view/ExceptionActionForm";
 import { filterException } from "../../../../redux/Transportation/exception/ExceptionData";
+import { exportExcel } from "../../../../tools/functions/ExcelExport";
 const Exceptions: React.FC = (): JSX.Element => {
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const Exceptions: React.FC = (): JSX.Element => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ExceptionActionForm />}
-        exportExcel={() => ExportExcel(exceptionLists?.content)}
+        exportExcel={() =>  exportExcel(data)}
       />
       <StaticTable
         data={data ? data : []}

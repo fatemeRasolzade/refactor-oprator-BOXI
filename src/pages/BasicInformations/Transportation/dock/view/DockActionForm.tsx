@@ -121,6 +121,15 @@ const DockActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
   useEffect(() => {
     formik.resetForm({});
   }, [isModalOpen]);
+  const setUpdate=()=>{
+    dispatch(
+      filterDock({
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
 
   return (
     <>
@@ -131,7 +140,7 @@ const DockActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={DockExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={DockExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal
         visible={isModalOpen}
         setVisible={setIsModalOpen}

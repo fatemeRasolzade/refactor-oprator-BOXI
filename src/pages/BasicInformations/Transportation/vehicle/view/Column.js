@@ -34,14 +34,14 @@ export const VehicleColumns = [
     },
   },
 
-  {
-    accessor: "selectHub",
-    Header: "کد هاب",
-    width: "auto",
-    Cell: ({ cell }) => {
-    return <>{SplitNumber(cell.value?.text)}</>;
-    },
-  },
+  // {
+  //   accessor: "selectHub",
+  //   Header: "کد هاب",
+  //   width: "auto",
+  //   Cell: ({ cell }) => {
+  //   return <>{SplitNumber(cell.value?.text)}</>;
+  //   },
+  // },
   {
     accessor: "hubname",
     Header: "نام هاب",

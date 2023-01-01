@@ -172,6 +172,16 @@ const ServiceDefineActionForms: React.FC<PropsData> = ({ currentData, priceOptio
   useEffect(() => {
     formik.resetForm({});
   }, [isModalOpen]);
+  const setUpdate=()=>{
+    dispatch(
+      ServiceData({
+
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
 
   return (
     <>
@@ -182,7 +192,7 @@ const ServiceDefineActionForms: React.FC<PropsData> = ({ currentData, priceOptio
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={ServiceDefineExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={ServiceDefineExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={currentData ? "ویرایش سرویس" : "تعریف سرویس"}>
         <form onSubmit={formik.handleSubmit}>
           <div className="  grid grid-cols-3 mt-8 gap-4 content-center items-center">
