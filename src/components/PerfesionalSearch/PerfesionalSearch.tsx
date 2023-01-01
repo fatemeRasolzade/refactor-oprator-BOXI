@@ -1,4 +1,9 @@
-import { Popover, PopoverHandler, PopoverContent, Button } from "@material-tailwind/react";
+import {
+  Popover,
+  PopoverHandler,
+  PopoverContent,
+  Button,
+} from "@material-tailwind/react";
 import { BiChevronDown, BiCog } from "react-icons/bi";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
 
@@ -8,19 +13,21 @@ interface propsData {
   LeftIcon?: JSX.Element;
   children?: JSX.Element;
   handleReset?: any;
-  perfetionalClik?:any
+  perfetionalClik?: any;
+  sizeWidth?: string;
 }
 
 const PerfesionalSearch = ({
   formData,
   handleReset,
   children,
-  perfetionalClik
+  perfetionalClik,
+  sizeWidth = "500px",
 }: propsData): JSX.Element => {
   return (
     <div className="w-160 relative">
       <Popover
-        placement="bottom"
+        placement="bottom-end"
         animate={{
           mount: { scale: 1, y: 0 },
           unmount: { scale: 0, y: 25 },
@@ -33,14 +40,17 @@ const PerfesionalSearch = ({
           </Button>
         </PopoverHandler>
         <PopoverContent>
-          <div className="" style={{ width: "500px" }}>
+          <div
+            className={`max-h-[500px] overflow-y-auto px-4`}
+            // style={{ width: sizeWidth }}
+          >
             <div className="flex-between-start gap-4 mt-5">{children}</div>
             <div className="flex-between-center">
               <SimpleButton
                 text="شخصی سازی"
                 icon={<BiCog color="gray" />}
                 className="centering p-0"
-              handelClick={perfetionalClik}
+                handelClick={perfetionalClik}
               />
               <SimpleButton
                 text="پاک کردن ورودی ها"

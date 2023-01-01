@@ -3,8 +3,11 @@ import { FC, useState } from "react";
 
 import { BiChevronDown, BiSearch } from "react-icons/bi";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
+import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import Chip from "../../../global/Chip/Chip";
+import { ConsignmentManageCol } from "../../../global/Column/Columns";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import { searchFilterListInitConsignment } from "../../../models/consigment";
 import ModalPerfetional from "../../Hub/Views/ModalPerfetional/ModalPerfetional";
 interface SearchFilterInterface {
   id: string;
@@ -34,7 +37,7 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({
 }) => {
   const [searchFilterList, setSearchFilterList] = useState<
     Array<SearchFilterInterface>
-  >([]);
+  >(searchFilterListInitConsignment ? searchFilterListInitConsignment : []);
   const [active, setActive] = useState(false);
   const [filterDataChip, setFilterDataChip] = useState({});
   const perfetionalClik = () => {
@@ -59,14 +62,14 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({
                   if (item.isMain || item.isShow) {
                     return (
                       <div className="Max-sm:mb-3" key={item.id}>
-                        {/* <AutocompleteInput
+                        <AutocompleteInput
                           items={[]}
-                          value={formik.values[item.valueName]}
+                          value={"sdf"}
                           label={item.label}
                           onChange={(e) =>
                             formik.setFieldValue(item.valueName, e.target.value)
                           }
-                        /> */}
+                        />
                       </div>
                     );
                   }
@@ -88,21 +91,45 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({
               formData={() => {
                 formik.handleSubmit();
               }}
+              sizeWidth="1350px"
               perfetionalClik={perfetionalClik}
             >
-              <div className="grid grid-cols-2 gap-6 my-6">{/* map */}</div>
+              <div className="grid lg:grid-cols-4 xl:grid-cols-5 gap-6 my-6 md:grid-cols-3 xs:grid-cols-1">
+                {searchFilterList.map(
+                  (item: SearchFilterInterface, index: number) => {
+                    if (!item.isMain && !item.isShow) {
+                      return (
+                        <div className="col-span-1" key={index}>
+                          <AutocompleteInput
+                            items={[]}
+                            value={""}
+                            label={item.label}
+                            onChange={(e) =>
+                              formik.setFieldValue(
+                                item.valueName,
+                                e.target.value
+                              )
+                            }
+                          />
+                        </div>
+                      );
+                    }
+                    return <></>;
+                  }
+                )}
+              </div>
             </PerfesionalSearch>
           </form>
         </div>
-        {/* <ModalPerfetional
+        <ModalPerfetional
           open={active}
           handleOpen={setActive}
-          columns={PersonnelColumn}
+          columns={ConsignmentManageCol}
           selectedCol={selectedCol}
           searchFilterList={searchFilterList}
           setSelectedCol={setSelectedCol}
           setSearchFilterList={setSearchFilterList}
-        /> */}
+        />
         {filterDataChip && (
           <Chip filterData={filterDataChip} formData={formik} />
         )}

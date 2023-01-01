@@ -31,8 +31,8 @@ const ConsignmentManage = () => {
     {
       id: crypto.randomUUID(),
       isRequire: true,
-      Header: "کد پرسنلی",
-      accessor: "personelCode",
+      Header: "شماره مرسوله",
+      accessor: "code",
       type: "text",
     },
     {
@@ -65,25 +65,7 @@ const ConsignmentManage = () => {
           setIsActive(value);
         }}
       />
-      {/* <NewOptionTable
-        items={[
-          {
-            item: <>سلام</>,
-            access: "sdf",
-          },
-          {
-            item: (
-              <SimpleButton
-                handelClick={() => ExportExcel([])}
-                text="خروجی اکسل"
-                icon={<GoDesktopDownload color="black" />}
-                className="centering rounded-lg text-black w-full"
-              />
-            ),
-            access: "sdf",
-          },
-        ]}
-      /> */}
+
       <SwitchOptionTable accessPage={["A1", "A2", "A3"]} />
       <StaticTable
         data={[]}
