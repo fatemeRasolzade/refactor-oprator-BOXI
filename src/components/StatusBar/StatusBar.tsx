@@ -1,18 +1,3 @@
-import {
-  BsCartCheck,
-  BsFillGridFill,
-  BsMinecartLoaded,
-  BsUpcScan,
-} from "react-icons/bs";
-import {
-  MdOutlineCallMissed,
-  MdOutlineTimer,
-  MdOutlineTimerOff,
-} from "react-icons/md";
-import { IoMdCheckboxOutline } from "react-icons/io";
-import { GiSwapBag } from "react-icons/gi";
-import { ImEnter } from "react-icons/im";
-import { FiXSquare } from "react-icons/fi";
 import { ElementsConsignment } from "../../models/consigment";
 
 interface OptionsProps {
