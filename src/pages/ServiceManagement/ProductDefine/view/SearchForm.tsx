@@ -14,11 +14,11 @@ import {ErrorAlert} from "../../../../global/alert/Alert"
 interface PropsData {
   isActive: Boolean | string;
   isUpdating: Boolean;
-
+  productOptions:any;
 }
 
-const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating, }): JSX.Element => {
-const [productOptions,setproductOptions]=useState([])
+const SearchForm:React.FC <PropsData> = ({ isActive, isUpdating, productOptions}): JSX.Element => {
+// const [productOptions,setproductOptions]=useState([])
   const dispatch = useDispatch();
   const [serviceCodeOptions, setServiceCodeOptions] = useState<any>([]);
    // @ts-ignore

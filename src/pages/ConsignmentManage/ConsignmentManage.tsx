@@ -7,11 +7,16 @@ import { ConsignmentManageCol } from "../../global/Column/Columns";
 import DeleteModal from "../../global/DeleteModal/DeleteModal";
 import { ExportExcel } from "../../tools/functions/Methods";
 import SearchConsignmentFilter from "./view/SearchConsignmentFilter";
+import NewOptionTable from "../../components/OptionsTable/NewOptionTable";
+import SimpleButton from "../../global/SimpleButton/SimpleButton";
+import { GoDesktopDownload } from "react-icons/go";
+import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
   id: string;
+  type: "operation" | "text" | "multiSelect" | "status" | "time";
 }
 const ConsignmentManage = () => {
   const [isOpenModalDelete, setIsOpenModalDelete] = useState({
@@ -23,23 +28,32 @@ const ConsignmentManage = () => {
     {
       id: crypto.randomUUID(),
       isRequire: true,
-      Header: "کد پرسنلی",
-      accessor: "personelCode",
+      Header: "شماره مرسوله",
+      accessor: "code",
+      type: "text",
     },
     {
       id: crypto.randomUUID(),
       isRequire: true,
       Header: "عملیات",
       accessor: "operation",
+      type: "operation",
     },
   ]);
+
   const handleDeleteActionNewData = () => {};
 
   return (
     <>
       <Breadcrumb curentPage="مدیریت مرسوله" />
       <StatusBar Options={Options} />
-      <SearchConsignmentFilter />
+      <SearchConsignmentFilter
+        isActive={isActive}
+        selectedCol={selectedCol}
+        setSelectedCol={(value: Array<SelectedColInterface>) =>
+          setSelectedCol(value)
+        }
+      />
       <OptionsTable
         btnLink="/consignment-manage/add"
         exportExcel={() => ExportExcel([])}
@@ -48,7 +62,15 @@ const ConsignmentManage = () => {
           setIsActive(value);
         }}
       />
-      <StaticTable data={[]} column={ConsignmentManageCol} pagination={7} selectable={false} THWrapper={"min-w-[130px]"} />
+
+      <SwitchOptionTable accessPage={["A1", "A2", "A3"]} />
+      <StaticTable
+        data={[]}
+        column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
+        pagination={7}
+        selectable={false}
+        THWrapper={"min-w-[130px] w-[130px]"}
+      />
       <DeleteModal
         isModalOpenDelete={isOpenModalDelete.isOpen}
         setIsModalOpenDelete={() =>

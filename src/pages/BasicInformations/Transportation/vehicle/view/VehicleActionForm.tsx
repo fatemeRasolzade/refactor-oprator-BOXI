@@ -65,6 +65,18 @@ const VehicleActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =
     setUploadExcel(!uploadExcel);
   };
 
+
+  const setUpdate=()=>{
+    dispatch(
+      filterVehicleModel({
+        search: "",
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
+
   const ToggleOptions = [
     { handleClick: handleAction, name: "افزودن وسیله نقلیه" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
@@ -200,7 +212,7 @@ const VehicleActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={vehicleExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={vehicleExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal
         visible={isModalOpen}
         setVisible={setIsModalOpen}

@@ -161,6 +161,15 @@ const BagActionForms: React.FC<PropsData> = ({ currentData, vendorOptions, bagOp
   useEffect(() => {
     formik.resetForm({});
   }, [isModalOpen]);
+  const setUpdate=()=>{
+    dispatch(
+      filterBags({
+        isActive: "",
+        pageSize: 10,
+        pageNumber: "",
+      }) as any
+    );
+  }
 
   return (
     <>
@@ -171,7 +180,7 @@ const BagActionForms: React.FC<PropsData> = ({ currentData, vendorOptions, bagOp
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={BagExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} />
+      <AddExcel excelInfo={BagExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
       <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={currentData ? "ویرایش کیسه" : "افزودن کیسه"}>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid grid-cols-2 mt-8 gap-y-4 gap-x-4 content-center">

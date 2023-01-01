@@ -35,7 +35,7 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 );
 
-function Table({ columns, data, pageTable, selectable, loading, THWrapper }) {
+function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -99,10 +99,7 @@ function Table({ columns, data, pageTable, selectable, loading, THWrapper }) {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th
-                  className={` font-normal ${THWrapper} `}
-                  {...column.getHeaderProps()}
-                >
+                <th className={` font-normal ${THWrapper} `} {...column.getHeaderProps()}>
                   {column.render("Header")}
                 </th>
               ))}
@@ -151,7 +148,7 @@ function StaticTable({
   pagination,
   selectable,
   loading = false,
-  THWrapper = "min-w-fit",
+  THWrapper="min-w-fit"
 }) {
   return (
     <Table
