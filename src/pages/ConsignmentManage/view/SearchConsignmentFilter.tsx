@@ -63,7 +63,7 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({
   return (
     <>
       <div className="flex flex-col">
-        <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
+        <div className="searchForm">
           <form onSubmit={formik.handleSubmit} className="flex">
             <div className=" flex gap-3 justify-start items-center flex-wrap">
               {searchFilterList.map((item: any, index: number) => {
