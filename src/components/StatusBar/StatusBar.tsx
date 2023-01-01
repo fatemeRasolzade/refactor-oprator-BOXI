@@ -8,6 +8,7 @@ import { TiLocation } from "react-icons/ti";
 import { CgCheck, CgClose } from "react-icons/cg";
 import { TbBoxOff } from "react-icons/tb";
 import { SlSocialDropbox } from "react-icons/sl";
+import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 
 interface OptionsProps {
   name: string;
@@ -95,6 +96,10 @@ const Elements: any = {
   Canceled: {
     icon: <TbBoxOff size={30} className="text-red" />,
     text: "لغو شده",
+  },
+  Undeliverable: {
+    icon: <HiOutlineArchiveBoxXMark size={30} className="text-red" />,
+    text: "غیر قابل تحویل",
   },
 };
 
