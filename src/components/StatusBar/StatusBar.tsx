@@ -62,12 +62,12 @@ const Elements: any = {
 
 const StatusBar = ({ Options }: StatusBarProps) => {
   return (
-    <div className="flex-start-start gap-7">
+    <div className="flex-start-start gap-7 mb-5 flex-wrap">
       {Options.map((item: any) => (
-        <div className="flex-start-center gap-2">
+        <div className="flex-start-center gap-2 border-l pl-4">
           <div>{Elements[item.name].icon}</div>
-          <div className="flex-between-start flex-col ">
-            <p className="!text-darkGray">{item.value}</p>
+          <div className="flex-between-end flex-col ">
+            <p className="!text-darkGray text-base font-bold">{item.value}</p>
             <p className="!text-darkGray">{Elements[item.name].text}</p>
           </div>
         </div>

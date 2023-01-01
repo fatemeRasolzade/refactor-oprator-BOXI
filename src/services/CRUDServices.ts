@@ -29,6 +29,22 @@ export const filterTableDataAPI = async (
       : {},
   });
 };
+export const filterDataAPI = async (
+  url: string,
+  body: object,
+  tokenRequired: boolean = true
+) => {
+  return await mainService({
+    url: url,
+    data: body,
+    method: "post",
+    headers: tokenRequired
+      ? {
+          Authorization: `Bearer ${localStorage.getItem("myToken")}`,
+        }
+      : {},
+  });
+};
 
 export const deleteDataAPI = async (
   url: string,
@@ -46,7 +62,7 @@ export const deleteDataAPI = async (
   });
 };
 
-export const addDataAPI = async (
+export const addEditDataAPI = async (
   url: string,
   method: "post" | "put",
   body: object,
@@ -56,23 +72,6 @@ export const addDataAPI = async (
     url: url,
     method,
     data: body,
-    headers: tokenRequired
-      ? {
-          Authorization: `Bearer ${localStorage.getItem("myToken")}`,
-        }
-      : {},
-  });
-};
-
-export const filterDataAPI = async (
-  url: string,
-  body: object,
-  tokenRequired: boolean = true
-) => {
-  return await mainService({
-    url: url,
-    data: body,
-    method: "post",
     headers: tokenRequired
       ? {
           Authorization: `Bearer ${localStorage.getItem("myToken")}`,

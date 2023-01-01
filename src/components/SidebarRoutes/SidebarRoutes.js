@@ -38,7 +38,7 @@ import ServiceTime from "../../pages/ServiceTime/ServiceTime";
 import CustomGeographic from "../../pages/CustomGeographic/CustomGeographic";
 import ServiceDefinition from "../../pages/ServiceManagement/ServiceDefinition";
 import ProductDefine from "../../pages/ServiceManagement/ProductDefine";
-import SaleChannel from '../../pages/SalesChannel/index'
+import SaleChannel from "../../pages/SalesChannel/index";
 import { BiLogOut } from "react-icons/bi";
 import UserService from "../../services/keycloakService";
 
@@ -70,11 +70,6 @@ export const links = [
     Icon: <MdForwardToInbox size={"25"} />,
     label: "مدیریت مرسوله",
     childs: [
-      {
-        to: "/consignment-manage",
-        component: <ConsignmentManage />,
-        label: "مدیریت مرسوله",
-      },
       {
         to: "/label-print-request",
         component: <LabelPrintRequest />,
@@ -145,6 +140,11 @@ export const links = [
     Icon: <MdMarkunreadMailbox size={"25"} />,
     label: "CRM Management",
     childs: [
+      {
+        to: "/consignment-manage",
+        component: <ConsignmentManage />,
+        label: "مدیریت مرسوله",
+      },
       {
         to: "/CRM-managment/consignment",
         component: <CRMManagment />,
