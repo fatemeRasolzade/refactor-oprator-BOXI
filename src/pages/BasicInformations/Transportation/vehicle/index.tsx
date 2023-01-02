@@ -47,6 +47,7 @@ const Vehicle: React.FC = (): JSX.Element => {
           };
         })
       : [];
+      const table=document.querySelector('table')
   return (
     <div>
       <SearchForm isActive={isActive} />
@@ -54,7 +55,7 @@ const Vehicle: React.FC = (): JSX.Element => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <VehicleActionForms  />}
-        exportExcel={() =>  exportExcel(data)}
+        exportExcel={() =>  exportExcel(table)}
         // exportExcel={() => ExportExcel(vehicleData?.content)}
       />
       <StaticTable

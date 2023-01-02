@@ -54,6 +54,8 @@ const ServiceDefinition: React.FC = (): JSX.Element => {
           };
         })
       : [];
+
+      const table=document.querySelector('table')
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="تعریف سرویس" />
@@ -64,7 +66,7 @@ const ServiceDefinition: React.FC = (): JSX.Element => {
         addComponentProps={() => (
           <ServiceDefineActionForms productOptions={productOptions} priceOptions={priceOptions} />
         )}
-        exportExcel={() =>  exportExcel(data)}
+        exportExcel={() =>  exportExcel(table)}
       />
       <StaticTable
         data={data ? data : []}

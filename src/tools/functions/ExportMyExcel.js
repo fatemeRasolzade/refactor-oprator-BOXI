@@ -4,6 +4,41 @@ import { saveAs } from "file-saver";
 const workSheetName = "Worksheet-1";
 // const ExportExcel = ({ data }) => {
 export const ExportExcel = async (data, columns) => {
+
+
+
+//  const flattenObj = (ob) => {
+//       // The object which contains the
+//       // final result
+//       let result = {};
+//       // loop through the object "ob"
+//       for (const i in ob) {
+//         // We check the type of the i using
+//         // typeof() function and recursively
+//         // call the function again
+//         if (typeof ob[i] === "object" && !Array.isArray(ob[i])) {
+//           // console.log(ob[i])
+//           if(ob[i]?.day){
+//                 result[i]=ob[i]?.day+"/"+ob[i]?.month+"/"+ob[i]?.year
+//           }
+//           else{
+//             const temp = flattenObj(ob[i]);
+//             for (const j in temp) {
+//               result[persianName[i]] = temp[j];
+//             }
+//           }
+         
+//         }
+//         // Else store ob[i] in result directly
+//         else {
+//           // @ts-ignore
+//           result[i] = ob[i];
+//         }
+//       }
+//       return result;
+//     };
+//     const flatobj = [];
+
   const workbook = new Excel.Workbook();
   try {
     // creating one worksheet in workbook
