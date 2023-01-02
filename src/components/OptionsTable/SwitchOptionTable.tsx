@@ -13,7 +13,7 @@ interface SwitchOptionTableProps {
 }
 const SwitchOptionTable: FC<SwitchOptionTableProps> = ({ accessPage }) => {
   return (
-    <div>
+    <div className="flex justify-start items-center gap-5">
       {accessPage.map((item: any, index: number) => {
         return (
           <div key={index}>{componentItem[item.code].JSXItem(item.value)}</div>
