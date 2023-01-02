@@ -64,7 +64,7 @@ const CRMManagment = () => {
             <div className="flex w-full gap-3 justify-center">
               <DeleteOperation
                 itemId={item.id}
-                title={"حذف کارمند"}
+                title={"حذف مشتری"}
                 route={`http://boxi.local:40000/core-api/customersegment/${item?.id}`}
                 handleDeleteActionNewData={() => getDataTable()}
               />

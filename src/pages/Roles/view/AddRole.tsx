@@ -9,7 +9,7 @@ import InputText from "../../../global/InputText/InputText";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { SuccessAlert } from "../../../global/alert/Alert";
 import CheckBoxThree from "../../../components/checkbox/CheckBoxThree";
-import { addDataAPI, filterDataAPI } from "../../../services/CRUDServices";
+import { addEditDataAPI, filterDataAPI } from "../../../services/CRUDServices";
 import { addEditUrls, filterUrls } from "../../../services/api.enums";
 import { fetchUpdateRuleData } from "../../../redux/RolsData/RolesData";
 
@@ -66,7 +66,7 @@ const AddEditRole: FC<EditRoleProps> = ({
           };
       if (treeChecked?.length !== 0) {
         try {
-          const res = await addDataAPI(
+          const res = await addEditDataAPI(
             addEditUrls.rule,
             currentData ? "put" : "post",
             data

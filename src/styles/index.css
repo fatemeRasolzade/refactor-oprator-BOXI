@@ -37,6 +37,16 @@
   }
 }
 @layer components {
+  *::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  *::-webkit-scrollbar-track {
+    @apply shadow-lg bg-lightTomato rounded-lg;
+  }
+  *::-webkit-scrollbar-thumb {
+    @apply rounded-lg bg-tomato;
+  }
+
   .btn {
     @apply h-10 rounded-lg border-none text-dark px-5 py-2 centering gap-2 w-32;
   }

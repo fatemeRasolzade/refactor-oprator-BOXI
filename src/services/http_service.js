@@ -35,12 +35,8 @@ axios.interceptors.response.use(null, (error) => {
 const configure = () => {
   axios.interceptors.request.use((config) => {
     if (UserService.isLoggedIn()) {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + UserService.getToken();
       const cb = () => {
-        debugger;
-        config.headers.Authorization = `Bearer ${localStorage.getItem(
-          "myToken"
-        )}`;
-
         return Promise.resolve(config);
       };
       return UserService.updateToken(cb);

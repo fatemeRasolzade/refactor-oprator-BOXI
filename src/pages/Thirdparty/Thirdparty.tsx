@@ -11,6 +11,9 @@ import { thirdPartyData, updating } from "../../redux/ThirdParty/ThirdPartyData"
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
 import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/CustomOptionsKeyword";
+import { AiOutlineEdit } from "react-icons/ai";
+import AddExcel from "../../components/exel/AddExcel";
+import AddButton from "../../global/addButton/AddButton";
 
 const Thirdparty = () => {
   const [isActive, setIsActive] = useState(true);
@@ -63,19 +66,35 @@ const Thirdparty = () => {
                   updating={updating}
                   handleDeleteActionNewData={handleDeleteActionNewData}
                 />
-                <ThirdPartyForm currentData={item} />
+                <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => handleOpenModal(item)}>
+                  <AiOutlineEdit className="w-[20px] h-[20px]" size={15} />
+                </button>
               </div>
             ),
           };
         })
       : [];
+  const [ThirdPartyModal, setThirdPartyModal] = useState({
+    isOpen: false,
+    data: undefined,
+  });
+
+  const [OpenExcel, setOpenExcel] = useState(false);
+
+  const handleOpenModal = (data = undefined) => setThirdPartyModal({ isOpen: true, data });
+  const handleUploadFileAction = () => setOpenExcel(true);
+
+  const ToggleOptions = [
+    { handleClick: handleOpenModal, name: "افزودن شخصیت" },
+    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
+  ];
 
   return (
     <>
       <Breadcrumb beforePage="برگشت" curentPage="اشخاص حقیقی/حقوقی" />
       <ThirdPartySearchForm isActive={isActive} isUpdating={isUpdating} pageNumbers={pageNumbers} />
       <div className="flex-start-center gap-20 mt-6">
-        <ThirdPartyForm />
+        {/* <AddButton ToggleOptions={ToggleOptions} /> */}
         <TestCustomOptions options={options} />
       </div>
       <StaticTable
@@ -85,6 +104,8 @@ const Thirdparty = () => {
         pagination={thirdPartyList?.totalElements}
         loading={Loading}
       />
+      {/* <ThirdPartyForm /> */}
+      {/* <AddExcel excelInfo={ThirdPartyExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
     </>
   );
 };

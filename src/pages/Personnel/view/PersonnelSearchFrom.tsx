@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
-import React, { FC, useState } from "react";
+import  { FC, useState } from "react";
 import { BiChevronDown, BiSearch } from "react-icons/bi";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import Chip from "../../../global/Chip/Chip";
@@ -91,7 +91,7 @@ const PersonnelSearchFrom: FC<PersonnelSearchFromProps> = ({
               (item: SearchFilterInterface, index: number) => {
                 if (item.isMain || item.isShow) {
                   return (
-                    <div className="Max-sm:mb-3">
+                    <div className="Max-sm:mb-3" key={item.id}>
                       <AutocompleteInput
                         items={[]}
                         value={formik.values[item.valueName]}

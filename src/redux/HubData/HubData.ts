@@ -11,21 +11,20 @@ const initialState = {
 export const HubData = createAsyncThunk("post", async (body:any) => {
 
   const params = `/filter?pageNumber=${body.pageNumbers}&pageSize=10`;
-  const data =await postDataHeaderToServer(
-    apiRoute().post.hub + params,
-    {
-    code: body.code ?  body.code : "",
-    name: body.name ? body.name : "",
-    hubTypeId: body.hubTypeId.id ? body.hubTypeId.id : "",
-    hubCategoryId: body.hubCategoryId.id ? body.hubCategoryId.id : "",
-    parentHubId: body.parentHubId.id ? body.parentHubId.id : "",
-    isActive:body.isActive
-   
-    }
-  );
-
  
-  return data
+    const data = await  postDataHeaderToServer(
+      apiRoute().post.hub + params,
+      {
+      code: body.code ?  body.code : "",
+      name: body.name ? body.name : "",
+      hubTypeId: body.hubTypeId.id ? body.hubTypeId.id : "",
+      hubCategoryId: body.hubCategoryId.id ? body.hubCategoryId.id : "",
+      parentHubId: body.parentHubId.id ? body.parentHubId.id : "",
+      isActive:body.isActive
+     
+      }
+    );
+    return data
   })
 const HubList=createSlice({
     initialState:initialState,
