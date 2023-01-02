@@ -59,9 +59,9 @@ const NavbarTypeHub = () => {
         
       </div>
 
-      <div>
+      {/* <div>
       <PerfetionalSearchHubType formiks={formik}/>
-      </div>
+      </div> */}
 
     </div>
   )

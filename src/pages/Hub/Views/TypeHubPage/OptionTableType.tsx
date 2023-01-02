@@ -2,12 +2,15 @@ import { FC } from "react";
 import { BiPlus} from "react-icons/bi";
 import { GoDesktopDownload } from "react-icons/go";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
+import CustomSwitch from "../../../../global/Switch/Switch";
 
 interface OptionsTableProps {
    exportExcel?: any;
-   setIsActive?:any
+   setIsActive?:any;
+   activesw?:any;
+   setActivesw?:any;
 }
-const OptionsTableType: FC<OptionsTableProps> = ({exportExcel,setIsActive}) => {
+const OptionsTableType: FC<OptionsTableProps> = ({exportExcel,setIsActive,activesw,setActivesw}) => {
 
   return (
     <div className="mt-3">
@@ -28,6 +31,14 @@ const OptionsTableType: FC<OptionsTableProps> = ({exportExcel,setIsActive}) => {
             icon={<GoDesktopDownload color="black" />}
             className="centering rounded-lg text-black w-full"
           />
+        </li>
+        <li>
+
+          <CustomSwitch
+            active={activesw ? activesw : false}
+            handleChange={(value: boolean) =>setActivesw(value as boolean)}
+          />
+
         </li>
      
       </ul>

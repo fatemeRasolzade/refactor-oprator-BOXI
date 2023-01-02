@@ -24,6 +24,9 @@ type CustomerFormProps = {
 };
 
 const CustomerForm = ({ currentData }: CustomerFormProps) => {
+
+
+
   const [open, setOpen] = useState(false);
   const [OpenAddresses, setOpenAddresses] = useState(false);
   const [OpenPhones, setOpenPhones] = useState(false);

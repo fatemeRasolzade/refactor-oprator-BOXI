@@ -49,6 +49,7 @@ validationSchema={validationSchema}
 onSubmit={(values)=>{
 postDataHeaderToServer(apiRoute().post.Product_Group,values).then(res=>{
   if(res.status==="OK"){
+    setIsModalOpen(false)
     SuccessAlert("با موفقیت افزوده شد")
     dispatch(ProductGroupsData(bodyProduct) as any)
   }else{
