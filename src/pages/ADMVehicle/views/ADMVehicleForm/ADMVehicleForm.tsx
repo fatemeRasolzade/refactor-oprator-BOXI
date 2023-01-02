@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../../../../global/Modal/Modal";
-import AddButton from "../../../../global/addButton/AddButton";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import { ADMVehicleData } from "../../../../redux/ADMVehicle/ADMVehicleData";
 import { createADMVehicle, editADMVehicle } from "../../../../services/ADMVehicleApi";
@@ -12,12 +10,12 @@ import { ADMVehicleFormCurrentValues, ADMVehicleFormInitialValues, ADMVehicleFor
 import ADMVehicleInformation from "./ADMVehicleInformation";
 
 type CustomerFormProps = {
+  open: boolean;
+  setOpen: (value: boolean) => void;
   currentData?: any;
 };
 
-const ADMVehicleForm = ({ currentData }: CustomerFormProps) => {
-  const [open, setOpen] = useState(false);
-  const [OpenExcel, setOpenExcel] = useState(false);
+const ADMVehicleForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -54,13 +52,6 @@ const ADMVehicleForm = ({ currentData }: CustomerFormProps) => {
   });
 
   const { handleSubmit, handleReset }: any = formik;
-  const handleOpenModal = () => setOpen(true);
-  const handleUploadFileAction = () => setOpenExcel(true);
-
-  const ToggleOptions = [
-    { handleClick: handleOpenModal, name: "افزودن وسیله نقلیه" },
-    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
-  ];
 
   const handleCloseCustomerForm = () => setOpen(false);
 
@@ -69,25 +60,15 @@ const ADMVehicleForm = ({ currentData }: CustomerFormProps) => {
   }, [handleReset, open]);
 
   return (
-    <>
-      {currentData ? (
-        <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={handleOpenModal}>
-          <AiOutlineEdit className="w-[20px] h-[20px]" size={15} />
-        </button>
-      ) : (
-        <AddButton ToggleOptions={ToggleOptions} />
-      )}
-      {/* <AddExcel excelInfo={ADMVehicleExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
-      <Modal visible={open} setVisible={setOpen} title={currentData ? " ویرایش وسیله نقلیه اجاره ای " : "تعریف وسیله نقلیه اجاره ای "}>
-        <form onSubmit={handleSubmit}>
-          <ADMVehicleInformation formik={formik} open={open} currentData={currentData} />
-          <div className="flex-end-center mt-5 gap-3">
-            <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
-            <SimpleButton loading={Loading} type="submit" text={currentData ? "ویرایش" : "افزودن"} className="full-tomato-btn" />
-          </div>
-        </form>
-      </Modal>
-    </>
+    <Modal visible={open} setVisible={setOpen} title={currentData ? " ویرایش وسیله نقلیه اجاره ای " : "تعریف وسیله نقلیه اجاره ای "}>
+      <form onSubmit={handleSubmit}>
+        <ADMVehicleInformation formik={formik} open={open} currentData={currentData} />
+        <div className="flex-end-center mt-5 gap-3">
+          <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
+          <SimpleButton loading={Loading} type="submit" text={currentData ? "ویرایش" : "افزودن"} className="full-tomato-btn" />
+        </div>
+      </form>
+    </Modal>
   );
 };
 
