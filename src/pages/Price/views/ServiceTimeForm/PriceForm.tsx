@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../../../../global/Modal/Modal";
-import AddButton from "../../../../global/addButton/AddButton";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import { EditDataParams, postDataToServer } from "../../../../services/Service_call";
 import PriceFormInformation from "./PriceFormInformation";
@@ -16,12 +14,12 @@ import { DateCompare } from "../../../../tools/functions/Methods";
 
 type PriceFormFormProps = {
   currentData?: any;
+  open: boolean;
+  setOpen: (value: boolean) => void;
 };
 
-const PriceForm = ({ currentData }: PriceFormFormProps) => {
+const PriceForm = ({ currentData, open, setOpen }: PriceFormFormProps) => {
   const [Attributes, setAttributes] = useState<any>([]);
-  const [open, setOpen] = useState(false);
-  const [OpenExcel, setOpenExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -145,13 +143,6 @@ const PriceForm = ({ currentData }: PriceFormFormProps) => {
   });
 
   const { handleSubmit, handleReset }: any = formik;
-  const handleOpenModal = () => setOpen(true);
-  const handleUploadFileAction = () => setOpenExcel(true);
-
-  const ToggleOptions = [
-    { handleClick: handleOpenModal, name: "افزودن نرخ نامه" },
-    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
-  ];
 
   const handleCloseCustomerForm = () => setOpen(false);
 
@@ -160,32 +151,22 @@ const PriceForm = ({ currentData }: PriceFormFormProps) => {
   }, [handleReset, open]);
 
   return (
-    <>
-      {currentData ? (
-        <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={handleOpenModal}>
-          <AiOutlineEdit className="w-[20px] h-[20px]" size={15} />
-        </button>
-      ) : (
-        <AddButton ToggleOptions={ToggleOptions} />
-      )}
-      {/* <AddExcel excelInfo={ADMVehicleExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
-      <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش نرخ نامه" : "تعریف نرخ نامه"}>
-        <form onSubmit={handleSubmit}>
-          <PriceFormInformation formik={formik} />
-        </form>
-        <PriceAttributeForm Attributes={Attributes} setAttributes={setAttributes} open={open} handleResetOuter={handleReset} />
-        <div className="flex-end-center mt-5 gap-3">
-          <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
-          <SimpleButton
-            handelClick={handleSubmit}
-            loading={Loading}
-            type="submit"
-            text={currentData ? "ویرایش" : "افزودن"}
-            className="full-tomato-btn"
-          />
-        </div>
-      </Modal>
-    </>
+    <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش نرخ نامه" : "تعریف نرخ نامه"}>
+      <form onSubmit={handleSubmit}>
+        <PriceFormInformation formik={formik} />
+      </form>
+      <PriceAttributeForm Attributes={Attributes} setAttributes={setAttributes} open={open} handleResetOuter={handleReset} />
+      <div className="flex-end-center mt-5 gap-3">
+        <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
+        <SimpleButton
+          handelClick={handleSubmit}
+          loading={Loading}
+          type="submit"
+          text={currentData ? "ویرایش" : "افزودن"}
+          className="full-tomato-btn"
+        />
+      </div>
+    </Modal>
   );
 };
 

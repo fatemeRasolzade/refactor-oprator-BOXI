@@ -36,7 +36,10 @@ const ActionForms: React.FC<PropsData> = ({ itemValue }): JSX.Element => {
         });
         // getDataFromServer(apiRoute().get.select_hub_category).then(res=>{if(res.status==="OK") setCatHub(res.payload.content)})
       } catch (error) {
-        ErrorAlert("دریافت دیتا با خطلا مواجه شد");
+        console.log("run error");
+        
+          // @ts-ignore
+        ErrorAlert(error?.res?.data.errors.message);
       }
     }
     if (isModalOpen) {

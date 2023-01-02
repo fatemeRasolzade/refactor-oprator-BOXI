@@ -5,9 +5,9 @@ const CustomerNotificationInformation = ({ formik }: any) => {
   const { values, handleChange, setFieldValue }: any = formik;
   return (
     <div className="inputRow">
-      <div className="border rounded-lg px-5 pt-8 mt-5 relative">
-        <span className="absolute -top-3 right-8 px-2 bg-light text-darkGray">اطلاع رسانی جمع آوری از طریق</span>
-        <div className="inputRow">
+      <fieldset>
+        <legend>اطلاع رسانی جمع آوری از طریق</legend>
+        <div className="inputRow mb-1">
           <Checkbox handleChange={handleChange} name="emailNotification" values={values.emailNotification} title="پست الکترونیک  " />
           <Checkbox handleChange={handleChange} name="smsNotification" values={values.smsNotification} title="پیامک" />
           <Checkbox
@@ -17,8 +17,8 @@ const CustomerNotificationInformation = ({ formik }: any) => {
             title="دریافت رسید تحویل از طریق پست الکترونیک"
           />
         </div>
-      </div>
-      <div className="centering w-60 mt-5">
+      </fieldset>
+      <div className="centering w-60 mt-4">
         <CustomSwitch active={values.isActive} handleChange={() => setFieldValue("isActive", !values.isActive)} />
       </div>
     </div>

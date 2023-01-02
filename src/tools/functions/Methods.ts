@@ -167,7 +167,7 @@ export const ExportExcel = (data: any) => {
   //   XLSX.writeFile(web, "xlsx-js-style-demo.xlsx");
 
   let web = XLSX.utils.book_new(),
-    ws = XLSX.utils.json_to_sheet(newArr);
+    ws = XLSX.utils.json_to_sheet(data);
   XLSX.utils.book_append_sheet(web, ws, "myfile");
   XLSX.writeFile(web, "MyExcel.xlsx");
 };

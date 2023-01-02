@@ -35,7 +35,7 @@ const CustomerBasicInformation = ({ formik, open, currentData }: any) => {
   };
 
   return (
-    <div className="border rounded-lg px-5 pt-10">
+    <div className="border rounded-xl px-5 pt-10">
       <div className="inputRow">
         <InputText
           important

@@ -15,16 +15,14 @@ import { thirdPartyData } from "../../../../redux/ThirdParty/ThirdPartyData";
 
 type CustomerFormProps = {
   currentData?: any;
-  open: boolean
-  setOpen: (value: boolean) => void
-  
+  open: boolean;
+  setOpen: (value: boolean) => void;
 };
 
 const ThirdPartyForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
-  
   const [OpenAddresses, setOpenAddresses] = useState(false);
   const [OpenPhones, setOpenPhones] = useState(false);
- 
+
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -121,7 +119,6 @@ const ThirdPartyForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
   });
 
   const { values, handleSubmit, setFieldValue, handleReset }: any = formik;
- 
 
   const handleCloseCustomerForm = () => setOpen(false);
 
