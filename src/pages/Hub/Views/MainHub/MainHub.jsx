@@ -14,6 +14,7 @@ import { BiEditAlt, BiTrash } from "react-icons/bi";
 import {DeleteDataParams} from "../../../../services/Service_call"
 import { apiRoute } from "../../../../services/apiRoute";
 import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert";
+import MyExport from "../ExportMyExcel";
 
 const Hub = () => {
   const dispatch=useDispatch()
@@ -22,6 +23,28 @@ const Hub = () => {
   const {pageNumbers} =useSelector(state=>state.paginate)
   const [ActiveSwitch,setActiveSwitch]=useState(true)
  
+
+  useEffect(()=>{
+   
+      dispatch(HubData(BodyData))
+    
+    
+   return()=>dispatch(clearHub())
+  },[])
+
+  useEffect(()=>{
+dispatch(HubData(BodyData))
+  },[pageNumbers])
+
+  useEffect(()=>{
+    dispatch(HubData(BodyData))
+    
+  },[ActiveSwitch])
+
+
+
+
+
   var data=payload?.content?.length > 0 ? payload.content.map(hubItem=>{
     return{
       isActive:hubItem?.isActive,
@@ -55,19 +78,7 @@ const BodyData={
 }
 
 
-  useEffect(()=>{
-    dispatch(HubData(BodyData))
-   return()=>dispatch(clearHub())
-  },[])
 
-  useEffect(()=>{
-dispatch(HubData(BodyData))
-  },[pageNumbers])
-
-  useEffect(()=>{
-    dispatch(HubData(BodyData))
-    
-  },[ActiveSwitch])
 
 
 const handelDeleteHub=(id)=>{
@@ -82,8 +93,12 @@ const handelDeleteHub=(id)=>{
   })
 }
 
+
   return (
     <div>
+
+
+
      <Breadcrumb beforePage="برگشت" curentPage="هاب" />
       <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" />
       <OptionsTable
@@ -92,6 +107,8 @@ const handelDeleteHub=(id)=>{
        setIsActive={setActiveSwitch}
        isActive={ActiveSwitch}
       />
+
+<MyExport data={data}/>
      <StaticTable data={data} column={HubColumn} pagination={payload?.totalElements} />
     </div>
   );

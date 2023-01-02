@@ -28,7 +28,7 @@ export const ServiceProvisionData=createAsyncThunk('ServiceProvision',async(body
         serviceDeliveryCustomers:body.serviceDeliveryCustomers ? body.serviceDeliveryCustomers : null,
         saleschannels:body.saleschannels ? body.saleschannels : null,
         discountPercent:body.discountPercent ? body.discountPercent : "",
-        isActive:body.isActive ? body.isActive : true
+        isActive:body.isActive ===undefined || body.isActive ===null  ? true : body.isActive
 })
   
     return payload

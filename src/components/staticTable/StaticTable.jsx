@@ -51,6 +51,7 @@ function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
     {
       columns,
       data,
+ 
     },
     usePagination,
     useRowSelect,
@@ -128,7 +129,7 @@ function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
       </table>
 
       {loading ? (
-        <div className="h-20 cnetering w-full">
+        <div className="h-20 cnetering w-full text-center mt-6">
           <ClipLoader />
         </div>
       ) : (

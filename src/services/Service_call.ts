@@ -1,4 +1,11 @@
 import http from "./http_service";
+import UserService from './keycloakService';
+
+
+const localData= localStorage.getItem("myToken") !== null
+
+
+
 
 export const getDataFromServer = async (apiRoute: string) => {
   const { data } = await http.get(apiRoute);
@@ -23,6 +30,7 @@ export const postDataHeaderToServer = async (apiRoute: string, body: object) => 
   const { data } = await http.post(apiRoute, body, {
     headers:{"Authorization":"Bearer " + localStorage.getItem("myToken")}
   });
+ 
   return data;
 };
 

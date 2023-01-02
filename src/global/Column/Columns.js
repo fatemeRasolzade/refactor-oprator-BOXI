@@ -2,50 +2,74 @@ export const HubColumn = [
   {
     Header: "کد هاب",
     accessor: "code",
+    key:"code",
+    header:"کد هاب"
   },
   {
     Header: "نام هاب",
     accessor: "name",
+    key:"name",
+    header:"نام هاب"
   },
   {
     Header: "نوع هاب",
     accessor: "hubType",
+    key:"hubType",
+    header:"نوع هاب"
   },
   {
     Header: "گونه هاب",
     accessor: "category",
+    key:"category",
+    header:"گونه هاب"
   },
   {
     Header: "هاب والد",
     accessor: "parentHub",
+    key:"parentHub",
+    header:"هاب والد"
   },
   {
     Header: "آدرس",
     accessor: "addressLine1",
+    key:"addressLine1",
+    header:"آدرس"
   },
   {
     Header: "منطقه",
     accessor: "Ragen",
+    key:"Ragen",
+    header:"منطقه"
   },
   {
     Header: "امکان تحویل مرسوله دارد",
     accessor: "deliver",
+    key:"deliver",
+    header:"امکان تحویل مرسوله دارد"
   },
   {
     Header: "آخرین ویرایش توسط",
     accessor: "editBy",
+    key:"editBy",
+    header:"آخرین ویرایش توسط"
   },
   {
     Header: "تاریخ آخرین ویرایش",
     accessor: "EditTime",
+    key:"EditTime",
+    header:"تاریخ آخرین ویرایش"
   },
   {
     Header: "ویرایش",
     accessor: "edit",
+   key:"",
+   header:""
   },
   {
     Header: "حذف",
     accessor: "delete",
+    key:"",
+    header:""
   },
 ];
 
