@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ExportExcel } from "../../tools/functions/Methods";
 import { DELETE_SERVICETIME, GET_TIMEUNITTIPES } from "../../services/apiRoute";
 import StaticTable from "../../components/staticTable/StaticTable";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -75,7 +74,7 @@ const ServiceTime = () => {
   const handleUploadFileAction = () => setOpenExcel(true);
 
   const ToggleOptions = [
-    { handleClick: () => handleOpenModal(undefined), name: "افزودن وسیله نقلیه" },
+    { handleClick: handleOpenModal, name: "افزودن مدت ارائه خدمات" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
 
