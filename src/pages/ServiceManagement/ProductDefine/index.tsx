@@ -8,14 +8,14 @@ import StaticTable from "../../../components/staticTable/StaticTable";
 import DeleteOperation from "../../../components/tableOperation/DeleteOperation";
 import { productData, updating } from "../../../redux/ProductDefineData/ProductDefineData";
 import { apiRoute } from "../../../services/apiRoute";
-import { ExportExcel } from "../../../tools/functions/Methods";
+
 import ActionForms from "./view/ActionsForm";
 import { ProductColumns } from "./view/Column";
 import OptionsTable from "./view/OptionsTable";
 import SearchForm from "./view/SearchForm";
 import { useGetOptions } from "../../../global/hooks/useFetchOptions";
 import { useNavigate } from "react-router-dom";
-import { exportExcel } from "../../../tools/functions/ExcelExport";
+import { ExportExcel } from "../../../tools/functions/ExportMyExcel";
 
 const ProductDefine = () => {
   const { options } = useGetOptions(apiRoute().get.GET_PRODUCT_GROUPS);
@@ -77,7 +77,8 @@ const ProductDefine = () => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ActionForms />}
-        exportExcel={() => exportExcel(datas)}
+        exportExcel={() => ExportExcel(datas, ProductColumns)}
+
         // exportExcel={<ExcelExportHelper data={datas}  />}
       />
 

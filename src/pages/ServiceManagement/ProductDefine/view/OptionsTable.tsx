@@ -2,6 +2,7 @@ import { GoDesktopDownload } from "react-icons/go";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 
+
 interface propsData {
   setIsActive?: (value: boolean) => void;
   isActive: boolean;
@@ -26,6 +27,8 @@ const OptionsTable = ({ setIsActive, addComponentProps, exportExcel, isActive }:
             />
           </li>
           <li>
+
+     
             <SimpleButton
               handelClick={exportExcel}
               text="خروجی اکسل"
