@@ -49,12 +49,15 @@ const ThirdPartyTelephoneForm = ({ open, setOpen, currentData, setValue, value, 
         setOpen(false);
         let newArray = [...value];
         let index = newArray.findIndex((a) => a.id === ID);
-        newArray[index] = values;
+        newArray[index] = { ...values, telephonePrefix: values.selectPhoneType.id === 1 ? value.telephonePrefix : "" };
         setValue("telephones", newArray);
       } else {
         const id: string = uuid();
         setOpen(false);
-        setValue("telephones", [...value, { ...values, id: `null${id}` }]);
+        setValue("telephones", [
+          ...value,
+          { ...values, id: `null${id}`, telephonePrefix: values.selectPhoneType.id === 1 ? value.telephonePrefix : "" },
+        ]);
       }
     },
   });
@@ -65,7 +68,7 @@ const ThirdPartyTelephoneForm = ({ open, setOpen, currentData, setValue, value, 
   }, [resetForm, open]);
 
   return (
-    <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش آدرس" : "افزودن آدرس"}>
+    <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش اطلاعات تماس" : "افزودن اطلاعات تماس"}>
       <form onSubmit={handleSubmit}>
         <div className="inputRow">
           <InputSelect
@@ -77,6 +80,7 @@ const ThirdPartyTelephoneForm = ({ open, setOpen, currentData, setValue, value, 
             handleChange={setFieldValue}
             error={touched.selectPhoneType && errors.selectPhoneType}
           />
+
           <InputText
             important
             label=" تلفن"
@@ -85,14 +89,16 @@ const ThirdPartyTelephoneForm = ({ open, setOpen, currentData, setValue, value, 
             handleChange={handleChange}
             error={touched.telNumber && errors.telNumber}
           />
-          <InputText
-            important
-            label=" پیش شماره"
-            values={values.telephonePrefix}
-            name="telephonePrefix"
-            handleChange={handleChange}
-            error={touched.telephonePrefix && errors.telephonePrefix}
-          />
+          {values.selectPhoneType.id !== 1 && (
+            <InputText
+              important
+              label=" پیش شماره"
+              values={values.telephonePrefix}
+              name="telephonePrefix"
+              handleChange={handleChange}
+              error={touched.telephonePrefix && errors.telephonePrefix}
+            />
+          )}
         </div>
         <div className="flex-end-center gap-3">
           <SimpleButton text="لغو" className="full-lightTomato-btn" handelClick={() => setOpen(false)} />

@@ -20,6 +20,8 @@ type CustomerFormProps = {
 };
 
 const ThirdPartyForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
+  console.log(currentData);
+
   const [OpenAddresses, setOpenAddresses] = useState(false);
   const [OpenPhones, setOpenPhones] = useState(false);
 
@@ -101,6 +103,9 @@ const ThirdPartyForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
       } else {
         createThirdParty({
           ...values,
+          nationalCode: values.selectThirdPartyType?.id === 0 ? values.nationalCode : "",
+          nationalId: values.selectThirdPartyType?.id === 1 ? values.nationalId : "",
+          economicCode: values.selectThirdPartyType?.id === 1 ? values.economicCode : "",
           addresses: values.addresses.map((a: any) => {
             return { ...a, id: undefined };
           }),
