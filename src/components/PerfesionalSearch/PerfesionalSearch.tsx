@@ -41,7 +41,7 @@ const PerfesionalSearch = ({
         </PopoverHandler>
         <PopoverContent>
           <div
-            className={`max-h-[500px] overflow-y-auto px-4`}
+            className={`max-h-[500px] px-4`}
             // style={{ width: sizeWidth }}
           >
             <div className="flex-between-start gap-4 mt-5">{children}</div>

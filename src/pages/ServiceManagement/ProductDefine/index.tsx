@@ -42,7 +42,6 @@ const ProductDefine = () => {
       ? productLists?.content?.map((item: any) => {
           return {
             ...item,
-            productGroup:item.productGroup?.text,
             operation: (
               <div className="flex w-full gap-3 justify-center">
                 <DeleteOperation

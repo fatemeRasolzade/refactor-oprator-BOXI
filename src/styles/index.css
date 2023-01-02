@@ -30,6 +30,9 @@
   legend {
     @apply px-2;
   }
+  fieldset {
+    @apply border rounded-xl p-6;
+  }
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;

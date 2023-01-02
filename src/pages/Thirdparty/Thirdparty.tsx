@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { ExportExcel } from "../../tools/functions/Methods";
 import { DELETE_THIRDPARTY } from "../../services/apiRoute";
 import { ThirdPartyColumn } from "./views/ThirdPartyColumn";
 import StaticTable from "../../components/staticTable/StaticTable";
@@ -9,27 +9,15 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import ThirdPartyForm from "./views/ThirdPartyForm/ThirdPartyForm";
 import { thirdPartyData, updating } from "../../redux/ThirdParty/ThirdPartyData";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
-import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
-import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/CustomOptionsKeyword";
-import { AiOutlineEdit } from "react-icons/ai";
 import AddExcel from "../../components/exel/AddExcel";
-import AddButton from "../../global/addButton/AddButton";
+import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
+import { ThirdPartyExcel } from "../../tools/services/ExcelInfoFile";
 
 const Thirdparty = () => {
   const [isActive, setIsActive] = useState(true);
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { pageNumbers } = useSelector((state: any) => state.paginate);
-  const handleGetExcel = () => ExportExcel(thirdPartyList?.content);
-
-  const options = [
-    {
-      name: ACTIVE_OPTION,
-      handleClick: () => setIsActive(!isActive),
-      value: isActive,
-    },
-    { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
-  ];
 
   const { thirdPartyList, isUpdating } = useSelector((state: any) => state.thirdParty);
 
@@ -74,29 +62,37 @@ const Thirdparty = () => {
           };
         })
       : [];
+
   const [ThirdPartyModal, setThirdPartyModal] = useState({
     isOpen: false,
     data: undefined,
   });
 
-  const [OpenExcel, setOpenExcel] = useState(false);
-
   const handleOpenModal = (data = undefined) => setThirdPartyModal({ isOpen: true, data });
+  const handleCloseModal = (falsy: boolean) => setThirdPartyModal({ isOpen: falsy, data: undefined });
+
+  const [OpenExcel, setOpenExcel] = useState(false);
   const handleUploadFileAction = () => setOpenExcel(true);
 
-  const ToggleOptions = [
-    { handleClick: handleOpenModal, name: "افزودن شخصیت" },
+  const ToggleOptions: any = [
+    { handleClick: () => handleOpenModal(undefined), name: "افزودن شخصیت" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
+  ];
+
+  const Options = [
+    {
+      code: "A2",
+      value: { ToggleOptions: ToggleOptions },
+    },
+    { code: "A3", value: { action: setIsActive, data: isActive } },
+    { code: "A1", value: thirdPartyList?.content },
   ];
 
   return (
     <>
       <Breadcrumb beforePage="برگشت" curentPage="اشخاص حقیقی/حقوقی" />
       <ThirdPartySearchForm isActive={isActive} isUpdating={isUpdating} pageNumbers={pageNumbers} />
-      <div className="flex-start-center gap-20 mt-6">
-        {/* <AddButton ToggleOptions={ToggleOptions} /> */}
-        <TestCustomOptions options={options} />
-      </div>
+      <SwitchOptionTable accessPage={Options} />
       <StaticTable
         selectable={false}
         data={data ? data : []}
@@ -104,8 +100,8 @@ const Thirdparty = () => {
         pagination={thirdPartyList?.totalElements}
         loading={Loading}
       />
-      {/* <ThirdPartyForm /> */}
-      {/* <AddExcel excelInfo={ThirdPartyExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
+      <ThirdPartyForm open={ThirdPartyModal.isOpen} setOpen={handleCloseModal} currentData={ThirdPartyModal.data} />
+      <AddExcel excelInfo={ThirdPartyExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} />
     </>
   );
 };

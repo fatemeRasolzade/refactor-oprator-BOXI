@@ -2,10 +2,13 @@ import { useFormik } from "formik";
 import { FC, useState } from "react";
 
 import { BiChevronDown, BiSearch } from "react-icons/bi";
+import Checkbox from "../../../components/checkbox/Checkbox";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
 import Chip from "../../../global/Chip/Chip";
 import { ConsignmentManageCol } from "../../../global/Column/Columns";
+import InputSelect from "../../../global/InputSelect/InputSelect";
+import MultiSelect from "../../../global/multiselect/MultiSelect";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { searchFilterListInitConsignment } from "../../../models/consigment";
 import ModalPerfetional from "../../Hub/Views/ModalPerfetional/ModalPerfetional";
@@ -22,7 +25,13 @@ interface SelectedColInterface {
   Header: string;
   isRequire: boolean;
   id: string;
-  type: "operation" | "text" | "multiSelect" | "status" | "time";
+  type:
+    | "operation"
+    | "text"
+    | "inputSelect"
+    | "multiSelect"
+    | "status"
+    | "time";
 }
 interface SearchConsignmentFilterProps {
   isActive: boolean;
@@ -56,26 +65,64 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({
       <div className="flex flex-col">
         <div className="flex justify-start items-center mt-6 gap-4 flex-wrap">
           <form onSubmit={formik.handleSubmit} className="flex">
-            <div className=" flex gap-3 justify-start items-center flex-wrap">
-              {searchFilterList.map(
-                (item: SearchFilterInterface, index: number) => {
-                  if (item.isMain || item.isShow) {
-                    return (
-                      <div className="Max-sm:mb-3" key={item.id}>
-                        <AutocompleteInput
-                          items={[]}
-                          value={"sdf"}
+            <div className=" flex gap-3 justify-start items-start flex-wrap">
+              {searchFilterList.map((item: any, index: number) => {
+                if (item.isMain || item.isShow) {
+                  switch (item.type) {
+                    case "text":
+                      return (
+                        <div className="Max-sm:mb-3" key={item.id}>
+                          <AutocompleteInput
+                            items={[]}
+                            value={"sdf"}
+                            label={item.label}
+                            onChange={(e) =>
+                              formik.setFieldValue(
+                                item.valueName,
+                                e.target.value
+                              )
+                            }
+                          />
+                        </div>
+                      );
+                    case "multiSelect":
+                      return (
+                        <MultiSelect
+                          wrapperClassName="w-60 z-[300]"
                           label={item.label}
-                          onChange={(e) =>
-                            formik.setFieldValue(item.valueName, e.target.value)
-                          }
+                          name={item.valueName}
+                          handleChange={formik.setFieldValue}
+                          values={""}
+                          options={[]}
                         />
-                      </div>
-                    );
+                      );
+                    case "inputSelect":
+                      return (
+                        <InputSelect
+                          label={item.label}
+                          handleChange={formik.setFieldValue}
+                          name={item.valueName}
+                          values={{}}
+                          options={[]}
+                        />
+                      );
+                    case "status":
+                      return (
+                        <>
+                          <Checkbox
+                            handleChange={() => console.log()}
+                            name={item.valueName}
+                            values={false}
+                            title={item.label}
+                          />
+                        </>
+                      );
+                    default:
+                      break;
                   }
-                  return <></>;
                 }
-              )}
+                return <></>;
+              })}
               <div className="mb-5">
                 <SimpleButton
                   type="submit"
@@ -95,28 +142,63 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({
               perfetionalClik={perfetionalClik}
             >
               <div className="grid lg:grid-cols-4 xl:grid-cols-5 gap-6 my-6 md:grid-cols-3 xs:grid-cols-1">
-                {searchFilterList.map(
-                  (item: SearchFilterInterface, index: number) => {
-                    if (!item.isMain && !item.isShow) {
-                      return (
-                        <div className="col-span-1" key={index}>
-                          <AutocompleteInput
-                            items={[]}
-                            value={""}
+                {searchFilterList.map((item: any, index: number) => {
+                  if (!item.isMain && !item.isShow) {
+                    switch (item.type) {
+                      case "text":
+                        return (
+                          <div className="Max-sm:mb-3" key={item.id}>
+                            <AutocompleteInput
+                              items={[]}
+                              value={"sdf"}
+                              label={item.label}
+                              onChange={(e) =>
+                                formik.setFieldValue(
+                                  item.valueName,
+                                  e.target.value
+                                )
+                              }
+                            />
+                          </div>
+                        );
+                      case "multiSelect":
+                        return (
+                          <MultiSelect
+                            wrapperClassName="w-full z-[300]"
                             label={item.label}
-                            onChange={(e) =>
-                              formik.setFieldValue(
-                                item.valueName,
-                                e.target.value
-                              )
-                            }
+                            name={item.valueName}
+                            handleChange={formik.setFieldValue}
+                            values={""}
+                            options={[]}
                           />
-                        </div>
-                      );
+                        );
+                      case "inputSelect":
+                        return (
+                          <InputSelect
+                            label={item.label}
+                            handleChange={formik.setFieldValue}
+                            name={item.valueName}
+                            values={{}}
+                            options={[]}
+                          />
+                        );
+                      case "status":
+                        return (
+                          <>
+                            <Checkbox
+                              handleChange={() => console.log()}
+                              name={item.valueName}
+                              values={false}
+                              title={item.label}
+                            />
+                          </>
+                        );
+                      default:
+                        break;
                     }
-                    return <></>;
                   }
-                )}
+                  return <></>;
+                })}
               </div>
             </PerfesionalSearch>
           </form>

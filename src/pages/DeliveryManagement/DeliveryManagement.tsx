@@ -1,4 +1,5 @@
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import NotFound from "../../components/NotFound/NotFound";
 import StatusBar from "../../components/StatusBar/StatusBar";
 
 const DeliveryManagement = () => {
@@ -6,6 +7,7 @@ const DeliveryManagement = () => {
     <>
       <Breadcrumb curentPage="مدیریت تحویل" beforePage="بازگشت" />
       <StatusBar Options={DeliveryStatus} />
+      <NotFound />
     </>
   );
 };

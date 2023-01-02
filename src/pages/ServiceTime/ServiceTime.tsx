@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ExportExcel } from "../../tools/functions/Methods";
 import { DELETE_SERVICETIME, GET_TIMEUNITTIPES } from "../../services/apiRoute";
 import StaticTable from "../../components/staticTable/StaticTable";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
-import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
-import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/CustomOptionsKeyword";
 import { ServiceTimeColumn } from "./views/ServiceTimeColumn";
 import { serviceTimeData, updating } from "../../redux/ServiceTimeData/ServiceTimeData";
 import ServiceTimeSearchForm from "./views/ServiceTimeSearchForm";
 import ServiceTimeForm from "./views/ServiceTimeForm/ServiceTimeForm";
 import { getDataFromServer } from "../../services/Service_call";
+import { AiOutlineEdit } from "react-icons/ai";
+import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 
 const ServiceTime = () => {
   const [isActive, setIsActive] = useState(true);
@@ -24,16 +23,6 @@ const ServiceTime = () => {
 
   const dispatch = useDispatch();
   const { pageNumbers } = useSelector((state: any) => state.paginate);
-  const handleGetExcel = () => ExportExcel(serviceTimeList?.content);
-
-  const options = [
-    {
-      name: ACTIVE_OPTION,
-      handleClick: () => setIsActive(!isActive),
-      value: isActive,
-    },
-    { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
-  ];
 
   const { serviceTimeList, isUpdating } = useSelector((state: any) => state.serviceTime);
 
@@ -64,21 +53,45 @@ const ServiceTime = () => {
                   updating={updating}
                   handleDeleteActionNewData={handleDeleteActionNewData}
                 />
-                <ServiceTimeForm currentData={item} TimeUnitType={TimeUnitType} />
+                <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => handleOpenModal(item)}>
+                  <AiOutlineEdit className="w-[20px] h-[20px]" size={15} />
+                </button>
               </div>
             ),
           };
         })
       : [];
 
+  const [ServiceTimeModal, setServiceTimeModal] = useState({
+    isOpen: false,
+    data: undefined,
+  });
+
+  const handleOpenModal = (data = undefined) => setServiceTimeModal({ isOpen: true, data });
+  const handleCloseModal = (falsy: boolean) => setServiceTimeModal({ isOpen: falsy, data: undefined });
+
+  const [OpenExcel, setOpenExcel] = useState(false);
+  const handleUploadFileAction = () => setOpenExcel(true);
+
+  const ToggleOptions = [
+    { handleClick: handleOpenModal, name: "افزودن مدت ارائه خدمات" },
+    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
+  ];
+
+  const Options = [
+    {
+      code: "A2",
+      value: { ToggleOptions: ToggleOptions },
+    },
+    { code: "A3", value: { action: setIsActive, data: isActive } },
+    { code: "A1", value: serviceTimeList?.content },
+  ];
+
   return (
     <>
       <Breadcrumb beforePage="برگشت" curentPage="مدت ارائه خدمات" />
       <ServiceTimeSearchForm isActive={isActive} isUpdating={isUpdating} pageNumbers={pageNumbers} TimeUnitType={TimeUnitType} />
-      <div className="flex-start-center gap-20 mt-6">
-        <ServiceTimeForm TimeUnitType={TimeUnitType} />
-        <TestCustomOptions options={options} />
-      </div>
+      <SwitchOptionTable accessPage={Options} />
       <StaticTable
         selectable={false}
         data={data ? data : []}
@@ -86,6 +99,8 @@ const ServiceTime = () => {
         pagination={serviceTimeList?.totalElements}
         loading={Loading}
       />
+      <ServiceTimeForm open={ServiceTimeModal.isOpen} setOpen={handleCloseModal} currentData={ServiceTimeModal.data} TimeUnitType={TimeUnitType} />
+      {/* <AddExcel excelInfo={ADMVehicleExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import Chip from "../../../global/Chip/Chip";
@@ -63,4 +63,4 @@ const ThirdPartySearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
   );
 };
 
-export default memo(ThirdPartySearchForm);
+export default ThirdPartySearchForm
