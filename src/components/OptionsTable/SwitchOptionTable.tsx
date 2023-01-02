@@ -35,16 +35,20 @@ const componentItem: any = {
     code: "A1",
   },
   A2: {
-    JSXItem: (value: any) =>
-      value.isToggle ? (
-        <AddButton ToggleOptions={value.ToggleOptions} />
-      ) : (
-        <>
+    JSXItem: (value: any) => (
+      <>
+        {value.ToggleOptions && <AddButton ToggleOptions={value.ToggleOptions} />}
+        {value.to && (
           <Link to={value.to}>
-            <SimpleButton text="افزودن" className="full-tomato-btn w-[160px] centering rounded-lg text-white" icon={<BiPlus color="white" />} />
+            <SimpleButton
+              text="افزودن"
+              className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
+              icon={<BiPlus color="white" />}
+            />
           </Link>
-        </>
-      ),
+        )}
+      </>
+    ),
     code: "A2",
   },
   A3: {
