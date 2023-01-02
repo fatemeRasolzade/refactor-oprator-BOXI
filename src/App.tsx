@@ -20,9 +20,8 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 
 import AddConsignmentManage from "./pages/ConsignmentManage/view/AddConsignmentManage";
 import DashboardLayout from "./components/Layout/DashboardLayout";
+import Customkeycloak from "./KeyCloack";
 
-// import keycloak from "keycloak-js";
-// import Customkeycloak from "./KeyCloack";
 function App() {
   const dispatch = useDispatch();
   const username = localStorage.getItem("userName");
@@ -52,7 +51,7 @@ function App() {
 
   // const [auth, setAuth] = useState(false);
   // useEffect(() => {
-  //   Customkeycloak.init({ onLoad: "login-required" }).then((authenticated) => {
+  //   Customkeycloak.init({ onLoad: "check-sso" }).then((authenticated) => {
   //     if (authenticated) {
   //       setAuth(authenticated);
   //       // @ts-ignore

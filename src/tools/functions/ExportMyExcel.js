@@ -5,8 +5,13 @@ const workSheetName = "Worksheet-1";
 // const ExportExcel = ({ data }) => {
 export const ExportExcel = async (data, columns) => {
 
-
-
+  data.map((obj) => {
+    delete obj?.operation;
+    // delete obj?.isDeleted;
+    // Object.keys(obj).forEach((key) => (obj[key] === null || obj[key] === undefined ? (obj[key] = "-") : obj[key]));
+  });
+// columns.map(item=>item.accessor==="operation" ? delete item : item)
+//    console.log(data,"data",columns);
 //  const flattenObj = (ob) => {
 //       // The object which contains the
 //       // final result

@@ -52,7 +52,7 @@ export const ProductColumns = [
   {
     Header: "عملیات",
     accessor: "operation",
-    key: "",
-    header: " ",
+    // key: "",
+    // header: " ",
   },
 ];
