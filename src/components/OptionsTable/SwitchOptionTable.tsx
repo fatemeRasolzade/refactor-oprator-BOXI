@@ -2,12 +2,14 @@ import { FC } from "react";
 import { BiPlus } from "react-icons/bi";
 import { GoDesktopDownload } from "react-icons/go";
 import { Link } from "react-router-dom";
+import AddButton from "../../global/addButton/AddButton";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
 import CustomSwitch from "../../global/Switch/Switch";
 import { ExportExcel } from "../../tools/functions/Methods";
 
+interface accessPageObject {}
 interface SwitchOptionTableProps {
-  accessPage: Array<any>;
+  accessPage: Array<accessPageObject>;
 }
 const SwitchOptionTable: FC<SwitchOptionTableProps> = ({ accessPage }) => {
   return (
@@ -35,17 +37,20 @@ const componentItem: any = {
     code: "A1",
   },
   A2: {
-    JSXItem: (
-      <>
-        <Link to={""}>
-          <SimpleButton
-            text="افزودن"
-            className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
-            icon={<BiPlus color="white" />}
-          />
-        </Link>
-      </>
-    ),
+    JSXItem: (value: any) =>
+      value.isToggle ? (
+        <AddButton ToggleOptions={value.ToggleOptions} />
+      ) : (
+        <>
+          <Link to={value.to}>
+            <SimpleButton
+              text="افزودن"
+              className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
+              icon={<BiPlus color="white" />}
+            />
+          </Link>
+        </>
+      ),
     code: "A2",
   },
   A3: {
@@ -56,4 +61,6 @@ const componentItem: any = {
     ),
     code: "A3",
   },
+  A4: { JSXItem: () => <>group add </>, code: "A4" },
+  A5: { JSXItem: () => <>group add </>, code: "A5" },
 };

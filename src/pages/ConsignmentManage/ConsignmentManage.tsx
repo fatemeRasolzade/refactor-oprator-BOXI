@@ -48,7 +48,10 @@ const ConsignmentManage = () => {
   ]);
 
   const handleDeleteActionNewData = () => {};
-
+  const ToggleOptions = [
+    { handleClick: () => console.log(), name: "افزودن پرسنل" },
+    { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
+  ];
   return (
     <>
       <Breadcrumb curentPage="مدیریت مرسوله" />
@@ -73,6 +76,10 @@ const ConsignmentManage = () => {
         accessPage={[
           { code: "A1", value: [] },
           { code: "A3", value: { action: setIsActive, data: isActive } },
+          {
+            code: "A2",
+            value: { isToggle: true, to: "", ToggleOptions: ToggleOptions },
+          },
         ]}
       />
       <StaticTable
