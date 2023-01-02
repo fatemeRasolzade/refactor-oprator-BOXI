@@ -16,7 +16,13 @@ interface SelectedColInterface {
   Header: string;
   isRequire: boolean;
   id: string;
-  type: "operation" | "text" |"inputSelect" | "multiSelect" | "status" | "time";
+  type:
+    | "operation"
+    | "text"
+    | "inputSelect"
+    | "multiSelect"
+    | "status"
+    | "time";
 }
 const ConsignmentManage = () => {
   const [isOpenModalDelete, setIsOpenModalDelete] = useState({
@@ -63,7 +69,12 @@ const ConsignmentManage = () => {
         }}
       />
 
-      <SwitchOptionTable accessPage={["A1", "A2", "A3"]} />
+      <SwitchOptionTable
+        accessPage={[
+          { code: "A1", value: [] },
+          { code: "A3", value: { action: setIsActive, data: isActive } },
+        ]}
+      />
       <StaticTable
         data={[]}
         column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
