@@ -13,11 +13,9 @@ interface SwitchOptionTableProps {
 }
 const SwitchOptionTable: FC<SwitchOptionTableProps> = ({ accessPage }) => {
   return (
-    <div className="flex justify-start items-center gap-5">
+    <div className="flex justify-start items-center gap-5 mt-3">
       {accessPage.map((item: any, index: number) => {
-        return (
-          <div key={index}>{componentItem[item.code].JSXItem(item.value)}</div>
-        );
+        return <div key={index}>{componentItem[item.code].JSXItem(item.value)}</div>;
       })}
     </div>
   );
@@ -43,11 +41,7 @@ const componentItem: any = {
       ) : (
         <>
           <Link to={value.to}>
-            <SimpleButton
-              text="افزودن"
-              className="full-tomato-btn w-[160px] h-[40px] centering rounded-lg text-white"
-              icon={<BiPlus color="white" />}
-            />
+            <SimpleButton text="افزودن" className="full-tomato-btn w-[160px] centering rounded-lg text-white" icon={<BiPlus color="white" />} />
           </Link>
         </>
       ),

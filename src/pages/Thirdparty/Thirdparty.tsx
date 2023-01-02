@@ -9,7 +9,6 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import ThirdPartyForm from "./views/ThirdPartyForm/ThirdPartyForm";
 import { thirdPartyData, updating } from "../../redux/ThirdParty/ThirdPartyData";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
-import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
 import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/CustomOptionsKeyword";
 import { AiOutlineEdit } from "react-icons/ai";
 import AddExcel from "../../components/exel/AddExcel";
@@ -88,7 +87,7 @@ const Thirdparty = () => {
   const handleUploadFileAction = () => setOpenExcel(true);
 
   const ToggleOptions: any = [
-    { handleClick: handleOpenModal, name: "افزودن شخصیت" },
+    { handleClick: () => handleOpenModal(undefined), name: "افزودن شخصیت" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
 
@@ -97,6 +96,16 @@ const Thirdparty = () => {
       <Breadcrumb beforePage="برگشت" curentPage="اشخاص حقیقی/حقوقی" />
       <ThirdPartySearchForm isActive={isActive} isUpdating={isUpdating} pageNumbers={pageNumbers} />
       {/* <SwitchOptionTable accessPage={["A4"]} AddButtonOptions={ToggleOptions} /> */}
+      <SwitchOptionTable
+        accessPage={[
+          {
+            code: "A2",
+            value: { isToggle: true, to: "", ToggleOptions: ToggleOptions },
+          },
+          { code: "A3", value: { action: setIsActive, data: isActive } },
+          { code: "A1", value: [] },
+        ]}
+      />
       {/* <div className="flex-start-center gap-20 mt-6"> */}
       {/* <AddButton ToggleOptions={ToggleOptions} /> */}
       {/* <TestCustomOptions options={options} /> */}
