@@ -10,7 +10,6 @@ import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import { PostalCodeRegex } from "../../../../../tools/validations/ErrorHelper";
 import { VALIDPOSTALCODE } from "../../../../../tools/validations/RegexKeywords";
 import { getCities, getProvinces, getRegions } from "../../../../../services/GlobalApi";
-// import { Map } from "../../../../components/map";
 
 const ThirdPartyAddressForm = ({ open, setOpen, currentData, setValue, value, ID }: any) => {
   const [provinces, setProvinces] = useState([]);

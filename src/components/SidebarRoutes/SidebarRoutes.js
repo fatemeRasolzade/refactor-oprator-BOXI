@@ -218,7 +218,7 @@ export const links = [
       {
         to: "/basic-information/thirdparty",
         component: <Thirdparty />,
-        label: "Third Party",
+        label: "اشخاص حقیقی/حقوقی",
       },
       {
         to: "/basic-information/transportation",

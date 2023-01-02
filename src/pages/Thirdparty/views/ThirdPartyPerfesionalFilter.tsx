@@ -20,6 +20,7 @@ const ThirdPartyPerfesionalFilter = ({ values, setFieldValue }: CustomerPerfesio
       <div>
         <AutocompleteInput label={"کد پستی"} value={values.postalCode} onChange={(e) => setFieldValue("postalCode", e.target.value)} />
         <InputSelect
+          wrapperClassName="mt-6"
           label={"گروه شخصیت"}
           name="selectThirdPartyCategory"
           handleChange={setFieldValue}

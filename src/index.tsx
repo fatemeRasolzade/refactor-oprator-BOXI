@@ -8,7 +8,6 @@ import App from "./App";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
 import UserService from "./services/keycloakService";
-import React from "react";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 

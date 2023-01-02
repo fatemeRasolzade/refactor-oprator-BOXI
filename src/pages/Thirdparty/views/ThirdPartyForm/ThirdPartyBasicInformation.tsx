@@ -3,7 +3,6 @@ import CustomSwitch from "../../../../global/Switch/Switch";
 import InputText from "../../../../global/InputText/InputText";
 import InputSelect from "../../../../global/InputSelect/InputSelect";
 import { getThirdPartyCategory, getThirdPartyParent, getThirdPartyType } from "../../../../services/ThirdPartyApi";
-import MultiSelect from "../../../../global/multiselect/MultiSelect";
 
 const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
   const [ThirdPartyType, setThirdPartyType] = useState([]);
@@ -23,7 +22,7 @@ const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
     setFieldValue("nationalCode", "");
     setFieldValue("nationalId", "");
     setFieldValue("economicCode", "");
-  }, [setFieldValue, values.selectThirdPartyType.id]);
+  }, [setFieldValue, values.selectThirdPartyType?.id]);
 
   const initThirdPartyType = () => {
     getThirdPartyType().then((res) => {
@@ -44,7 +43,7 @@ const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
   };
 
   return (
-    <div className="border rounded-lg px-5 pt-10">
+    <div className="border rounded-xl px-5 pt-10">
       <div className="inputRow">
         <InputText
           important
@@ -65,19 +64,7 @@ const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
           handleChange={setFieldValue}
           error={touched.selectThirdPartyType && errors.selectThirdPartyType}
         />
-        <MultiSelect
-          wrapperClassName=""
-          label="شهر"
-          name="fromSourceCity"
-          handleChange={(name: "string", value: any) => {
-            setFieldValue(name, value);
-            setFieldValue("fromSourceLocation", []);
-          }}
-          values={values.fromSourceCity}
-          options={ThirdPartyType}
-          error={touched.fromSourceCity && errors.fromSourceCity}
-        />
-        {values.selectThirdPartyType.id === 0 && (
+        {values.selectThirdPartyType?.id === 0 && (
           <InputText
             important
             label="کد ملی"
@@ -87,7 +74,7 @@ const ThirdPartyBasicInformation = ({ formik, open, currentData }: any) => {
             error={touched.nationalCode && errors.nationalCode}
           />
         )}
-        {values.selectThirdPartyType.id === 1 && (
+        {values.selectThirdPartyType?.id === 1 && (
           <>
             <InputText
               important

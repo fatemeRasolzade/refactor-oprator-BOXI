@@ -21,19 +21,13 @@ const AddButton = ({
 }: PropAddButton) => {
   const [toggle, setToggle] = useState(false);
 
-  const handleBlur = (e: {
-    currentTarget: { contains: (arg0: any) => any };
-    relatedTarget: any;
-  }) => {
+  const handleBlur = (e: { currentTarget: { contains: (arg0: any) => any }; relatedTarget: any }) => {
     if (!e.currentTarget.contains(e.relatedTarget)) setToggle(false);
   };
 
   return (
-    <div className="relative w-44" onBlur={handleBlur}>
-      <button
-        className={`btn full-tomato-btn w-full`}
-        onClick={() => setToggle(!toggle)}
-      >
+    <div className="relative w-44 ml-10" onBlur={handleBlur}>
+      <button className={`btn full-tomato-btn w-full`} onClick={() => setToggle(!toggle)}>
         <span>{RightIcon}</span>
         <span className="px-5">{text}</span>
         <span>{LeftIcon}</span>
@@ -42,11 +36,7 @@ const AddButton = ({
         ? ToggleOptions?.length > 0 && (
             <div className="ToggleContainer ">
               {ToggleOptions.map((item, index) => (
-                <button
-                  key={index}
-                  className="ToggleElements"
-                  onClick={item.handleClick}
-                >
+                <button key={index} className="ToggleElements" onClick={item.handleClick}>
                   {item.name}
                 </button>
               ))}

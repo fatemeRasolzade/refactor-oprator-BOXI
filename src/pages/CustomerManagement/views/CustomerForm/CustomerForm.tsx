@@ -2,13 +2,9 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../../../../global/Modal/Modal";
-import AddExcel from "../../../../components/exel/AddExcel";
 import CustomerAddressForm from "./CustomerCommunicationInformation/CustomerAddressForm";
-import AddButton from "../../../../global/addButton/AddButton";
 import CustomerTelephoneForm from "./CustomerCommunicationInformation/CustomerTelephoneForm";
-import { CustomerExcel } from "../../../../tools/services/ExcelInfoFile";
 import CustomerBasicInformation from "./CustomerBasicInformation";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import { createCustomer, editCustomer } from "../../../../services/CustomerApi";
@@ -21,16 +17,13 @@ import { EconomicCodeValidate, NationalCodeValidator, NationalIDValidator } from
 
 type CustomerFormProps = {
   currentData?: any;
+  open: boolean;
+  setOpen: (value: boolean) => void;
 };
 
-const CustomerForm = ({ currentData }: CustomerFormProps) => {
-
-
-
-  const [open, setOpen] = useState(false);
+const CustomerForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
   const [OpenAddresses, setOpenAddresses] = useState(false);
   const [OpenPhones, setOpenPhones] = useState(false);
-  const [OpenExcel, setOpenExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -133,13 +126,6 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
   });
 
   const { values, handleSubmit, setFieldValue, handleReset }: any = formik;
-  const handleOpenModal = () => setOpen(true);
-  const handleUploadFileAction = () => setOpenExcel(true);
-
-  const ToggleOptions = [
-    { handleClick: handleOpenModal, name: "افزودن مشتری" },
-    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
-  ];
 
   const handleCloseCustomerForm = () => setOpen(false);
 
@@ -149,17 +135,10 @@ const CustomerForm = ({ currentData }: CustomerFormProps) => {
 
   return (
     <>
-      {currentData ? (
-        <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={handleOpenModal}>
-          <AiOutlineEdit className="w-[20px] h-[20px]" size={15} />
-        </button>
-      ) : (
-        <AddButton ToggleOptions={ToggleOptions} />
-      )}
-      <AddExcel excelInfo={CustomerExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} />
+      {/* <AddExcel excelInfo={CustomerExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
       <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش مشتری" : "افزودن مشتری"}>
         <form onSubmit={handleSubmit}>
-       <CustomerBasicInformation formik={formik} open={open} currentData={currentData} />
+          <CustomerBasicInformation formik={formik} open={open} currentData={currentData} />
           <CustomerUsernameInformation formik={formik} currentData={currentData} />
           <CustomerNotificationInformation formik={formik} />
           <CustomerCommunicationInformation formik={formik} handleOpenAddress={handleOpenAddress} handleOpenPhone={handleOpenPhone} />

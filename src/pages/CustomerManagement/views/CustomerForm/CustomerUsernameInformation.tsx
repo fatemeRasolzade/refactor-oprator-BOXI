@@ -5,10 +5,10 @@ const CustomerUsernameInformation = ({ formik, currentData }: any) => {
   const { values, errors, touched, handleChange }: any = formik;
 
   return (
-    <div className="inputRow">
-      <div className="border rounded-lg px-5 pt-10 mt-10 relative">
-        <span className="absolute -top-3 right-8 px-2 text-darkGray">اطلاعات کاربری</span>
-        <div className="inputRow">
+    <div className="inputRow mt-6">
+      <fieldset>
+        <legend>اطلاعات کاربری</legend>
+        <div className="inputRow -mb-3">
           <InputText
             important
             label="نام کاربری"
@@ -41,8 +41,8 @@ const CustomerUsernameInformation = ({ formik, currentData }: any) => {
             </>
           )}
         </div>
-      </div>
-      <div className="inputRow mt-16">
+      </fieldset>
+      <div className="inputRow mt-8">
         <Checkbox
           handleChange={handleChange}
           name="extendGlobalVirtualSeries"
