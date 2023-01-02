@@ -5,21 +5,51 @@ import UserService from "./keycloakService";
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 axios.interceptors.response.use(null, (error) => {
-  const errorStatus = error?.response?.status;
+  // const errorStatus = error?.response?.status;
 
-  if (errorStatus === 404) {
-    ErrorAlert(error?.response?.data?.errors?.message);
-    toast.error(
-      error?.response?.data?.errors?.message || "مقدار مورد نظر یافت نشد"
-    );
-    return Promise.reject(error);
-  }
-  if (errorStatus >= 500) {
+  // if (errorStatus === 404) {
+  //   ErrorAlert(error?.response?.data?.errors?.message);
+  //   toast.error(
+  //     error?.response?.data?.errors?.message || "مقدار مورد نظر یافت نشد"
+  //   );
+  //   return Promise.reject(error);
+  // }
+
+  const message = error?.response?.data?.message;
+  if (error?.response?.status >= 500) {
     toast.error("مشکلی از سمت سرور رخ داده است.");
     Promise.reject(error);
     throw error;
   }
+  if (error?.response?.status === 404) {
+    if (error?.response?.data?.errors?.message) {
+      toast.error(error?.response?.data.errors.message);
+    } else {
+      toast.error(".سرویس مورد نظر یافت شد ");
+    }
 
+    return Promise.reject(error);
+  }
+  if (error?.response?.status === 403) {
+    toast.error("شما مجوز دستری ندارید ");
+    return Promise.reject(error);
+  }
+  if (error?.response?.status === 401) {
+    toast.error("شما مجوز دستری ندارید ");
+    return Promise.reject(error);
+  }
+  if (error?.response?.status === 400) {
+    toast.error("خطایی رخ داده است ");
+    return Promise.reject(error);
+  }
+  if (message) {
+    toast.error(message || error.toString());
+    return Promise.reject(error);
+  }
+  if (error?.response?.data?.errors?.message) {
+    toast.error(error?.response?.data?.errors?.message);
+  }
+  // console.log("run error ",error?.response?.data?.errors?.message)
   //   const expectedErrors =
   //     error.response &&
   //     error.response.status >= 400 &&
