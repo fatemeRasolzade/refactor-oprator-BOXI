@@ -80,6 +80,9 @@ const ThirdPartyForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
         editThirdParty({
           ...values,
           id: currentData.id,
+          nationalCode: values.selectThirdPartyType?.id === 0 ? values.nationalCode : "",
+          nationalId: values.selectThirdPartyType?.id === 1 ? values.nationalId : "",
+          economicCode: values.selectThirdPartyType?.id === 1 ? values.economicCode : "",
           addresses: values.addresses.map((a: any) => {
             return {
               ...a,

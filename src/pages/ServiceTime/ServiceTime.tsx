@@ -74,7 +74,7 @@ const ServiceTime = () => {
   const handleUploadFileAction = () => setOpenExcel(true);
 
   const ToggleOptions = [
-    { handleClick: handleOpenModal, name: "افزودن مدت ارائه خدمات" },
+    { handleClick: () => handleOpenModal(undefined), name: "افزودن مدت ارائه خدمات" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
 

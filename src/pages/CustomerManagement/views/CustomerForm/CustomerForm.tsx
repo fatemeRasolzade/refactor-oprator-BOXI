@@ -81,6 +81,9 @@ const CustomerForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
           id: currentData.id,
           password: undefined,
           confirmPassword: undefined,
+          nationalCode: values.selectThirdPartyType?.id === 0 ? values.nationalCode : "",
+          nationalId: values.selectThirdPartyType?.id === 1 ? values.nationalId : "",
+          economicCode: values.selectThirdPartyType?.id === 1 ? values.economicCode : "",
           addresses: values.addresses.map((a: any) => {
             return {
               ...a,
@@ -104,6 +107,9 @@ const CustomerForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
       } else {
         createCustomer({
           ...values,
+          nationalCode: values.selectThirdPartyType?.id === 0 ? values.nationalCode : "",
+          nationalId: values.selectThirdPartyType?.id === 1 ? values.nationalId : "",
+          economicCode: values.selectThirdPartyType?.id === 1 ? values.economicCode : "",
           currentCredit: parseInt(values.currentCredit),
           creditLimit: parseInt(values.creditLimit),
           initialCredit: parseInt(values.initialCredit),
