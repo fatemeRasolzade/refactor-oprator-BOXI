@@ -33,8 +33,8 @@ const SearchForm: React.FC<PropsData> = ({ isActive }): JSX.Element => {
   useEffect(() => {
     dispatch(
       filterException({
-        ...formik.values,
-        // isActive: isActive,
+        code: "",
+        name: "",
         pageSize: 10,
         pageNumber: pageNumbers,
       }) as any

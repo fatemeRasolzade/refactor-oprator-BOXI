@@ -50,6 +50,10 @@ const ExceptionActionForm: React.FC<PropsData> = ({ currentData }): JSX.Element 
     { handleClick: handleAction, name: "افزودن استثناء" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
+
+
+  console.log(currentData);
+  
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: validation,
@@ -57,7 +61,7 @@ const ExceptionActionForm: React.FC<PropsData> = ({ currentData }): JSX.Element 
       ? {
           id: currentData.id,
           isActive: currentData.isActive,
-          description: currentData.description,
+          description: currentData.description===null?'':currentData.description,
           name: currentData.name,
           code: currentData.code,
           type: { id: currentData?.type?.value, text: currentData?.type?.type },
@@ -67,43 +71,46 @@ const ExceptionActionForm: React.FC<PropsData> = ({ currentData }): JSX.Element 
           description: "",
           name: "",
           code: "",
-          type: {},
+          type: "",
         },
     onSubmit: (values) => {
-      console.log(values);
-      const type = values?.type?.id ? values?.type?.id : {};
+        // @ts-ignore
+      const type = values?.type?.id ? values?.type?.id :0;
       const finalData = { ...values, type };
       if (!currentData) {
-        setLoading(true);
+        // setLoading(true);
         PostDataParams(apiRoute().post.exception, finalData).then((res) => {
           if (res.status === "OK") {
             SuccessAlert("با موفقیت ساخته شد");
-            setLoading(false);
+            // setLoading(false);
             dispatch(
               filterException({
-                // pageSize: 10,
-                // pageNumber: "",
+                
+         
+                pageSize: 10,
+                pageNumber: 1,
               }) as any
             );
           } else {
-            setLoading(false);
+            // setLoading(false);
           }
           setIsModalOpen(false);
         });
       } else {
-        setLoading(true);
+        // setLoading(true);
         EditDataParams(apiRoute().edit.exception, finalData).then((res) => {
           if (res.status === "OK") {
-            setLoading(false);
+            // setLoading(false);
             SuccessAlert("با موفقیت ویرایش شد");
             dispatch(
               filterException({
-                // pageSize: 10,
-                // pageNumber: "",
+                
+                pageSize: 10,
+                pageNumber: 1,
               }) as any
             );
           } else {
-            setLoading(false);
+            // setLoading(false);
             console.log("run error");
           }
           setIsModalOpen(false);
