@@ -33,7 +33,7 @@ const doLogout = () => {
   logout();
 };
 
-const initKeycloak = (onAuthenticatedCallback) => {_kc.init({onLoad: "login-required"})
+const initKeycloak = (onAuthenticatedCallback) => {_kc.init({onLoad: "check-sso"})
     .then((authenticated) => {
       console.log("first",_kc.authenticated)
     console.log("auth",authenticated)
