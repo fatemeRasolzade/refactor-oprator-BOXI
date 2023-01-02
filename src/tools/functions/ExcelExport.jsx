@@ -4,67 +4,32 @@ import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 
 
 
-// const ExcelExport = ({ data }) => {
-  const persianName = {
-    isActive:"وضعیت",
-    code: "کد ",
-    name: "نام ",
-    search: "کد",
-    hub: "نام هاب",
-    hubTypeId: "نوع هاب",
-    hubCategoryId: "گونه هاب",
-    parentHubId: "هاب والد",
-    bagNumber: "شماره کیسه",
-    selectBagType: "نوع کیسه",
-    sourceHub: "هاب مقصد",
-    destinationHub: "هاب مبدا",
-    hubCode: "کد هاب",
-    hubName: "نام هاب",
-    route: "مسیر",
-    pelak: "پلاک",
-    description: "توضیحات",
-    productGroup: "گروه محصول",
-    timeUnit: "واحد",
-    vehicleNumber: "شماره پلاک",
-    phone: "شماره موبایل",
-    email: "پست الکترونیکی",
-    username: "نام کاربری",
-    nationalCode: "کد ملی",
-    postalCode: "کد پستی",
-    address: "آدرس",
-    telNumber: "شماره تلفن",
-    selectParentCustomer: "مشتری والد",
-    zipCode: "کد پستی",
-    parentClient: "مشتری والد",
-    personelCode: "کد پرسنلی",
-    priceListDate: "تاریخ نرخ نامه",
-    product: "محصول",
-    consignmentType: "نوع مرسوله",
-    classification: "نوع رده",
-    source: "مبدا",
-    destination: "مقصد",
-    type: "نوع",
-    priceList: "نرخ نامه",
-    selectThirdPartyCategory: "گروه شخصیت",
-    customerSegments: "مشتری ها",
-    saleschannels: "کانال فروش",
-    serviceDeliveryCustomers: "گروه مشتری",
-    service: "سرویس",
-    fromCountryDevision: "مبدا",
-    toCountryDevision: "مقصد",
-    vehicleMakeSelect: "مدل",
-    selectRoute: "نام مسیر",
-    fuelTypeSelect: "نوع سوخت",
-    consignmentCapacity: "ظرفیت مرسوله",
-    volumeCapacity: "ظرفیت حجمی",
-    weightCapacity: "ظرفیت وزنی",
-    vendorSelect: "شرکت نقلیه",
-  };
-
 
  export  const exportExcel = (data) => {
-  console.log("data is",data)
-    handleExport(data).then((url) => {
+
+
+  // function Convert() {
+    // var table = document.querySelector("table");
+    var header = [];
+    var rows = [];
+    for (var i = 0; i < data?.rows[0].cells.length; i++) {
+        header.push(data?.rows[0].cells[i].innerText);
+    }
+    for (var i = 1; i < data.rows.length; i++) {
+        var row = {};
+        for (var j = 0; j < data.rows[i].cells.length; j++) {
+            row[header[j]] = data.rows[i].cells[j].innerText;
+        }
+        rows.push(row);
+    }
+    // alert(JSON.stringify(rows));
+    // console.log(rows);
+// }
+
+
+
+  // console.log("data is",data)
+    handleExport(rows).then((url) => {
       // console.log(url);
       const downloadAnchorNode = document.createElement("a");
       downloadAnchorNode.setAttribute("href", url);
@@ -114,39 +79,39 @@ import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
   };
 
   const handleExport = (data) => {
-    const flattenObj = (ob) => {
-      // The object which contains the
-      // final result
-      let result = {};
-      // loop through the object "ob"
-      for (const i in ob) {
-        // We check the type of the i using
-        // typeof() function and recursively
-        // call the function again
-        if (typeof ob[i] === "object" && !Array.isArray(ob[i])) {
-          // console.log(ob[i])
-          if(ob[i]?.day){
-                result[i]=ob[i]?.day+"/"+ob[i]?.month+"/"+ob[i]?.year
-          }
-          else{
-            const temp = flattenObj(ob[i]);
-            for (const j in temp) {
-              result[persianName[i] ? persianName[i] : i] = temp[j];
-              // result[persianName[i]] = temp[j];
-            }
-          }
+    // const flattenObj = (ob) => {
+    //   // The object which contains the
+    //   // final result
+    //   let result = {};
+    //   // loop through the object "ob"
+    //   for (const i in ob) {
+    //     // We check the type of the i using
+    //     // typeof() function and recursively
+    //     // call the function again
+    //     if (typeof ob[i] === "object" && !Array.isArray(ob[i])) {
+    //       // console.log(ob[i])
+    //       if(ob[i]?.day){
+    //             result[i]=ob[i]?.day+"/"+ob[i]?.month+"/"+ob[i]?.year
+    //       }
+    //       else{
+    //         const temp = flattenObj(ob[i]);
+    //         for (const j in temp) {
+    //           result[persianName[i] ? persianName[i] : i] = temp[j];
+    //           // result[persianName[i]] = temp[j];
+    //         }
+    //       }
          
-        }
-        // Else store ob[i] in result directly
-        else {
-          // @ts-ignore
-          // result[i] = ob[i];
-          result[persianName[i] ? persianName[i] : i] = ob[i];
-        }
-      }
-      return result;
-    };
-    const flatobj = [];
+    //     }
+    //     // Else store ob[i] in result directly
+    //     else {
+    //       // @ts-ignore
+    //       // result[i] = ob[i];
+    //       result[persianName[i] ? persianName[i] : i] = ob[i];
+    //     }
+    //   }
+    //   return result;
+    // };
+    // const flatobj = [];
     // convert null and undefind to empty string
 
     
@@ -155,12 +120,15 @@ import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
       delete obj?.isDeleted;
       Object.keys(obj).forEach((key) => (obj[key] === null || obj[key] === undefined ? (obj[key] = "-") : obj[key]));
     });
+
+
+    // console.log(data,"daata after convert is");
     //flat object
-    data.map((item) => {
-      flatobj.push(flattenObj(item));
-    });
+    // data.map((item) => {
+    //   flatobj.push(flattenObj(item));
+    // });
     /////////////////////////////////////////////////////////////////////////////////////////
-    let headers = Object.keys(Object.assign({}, ...flatobj));
+    let headers = Object.keys(Object.assign({}, ...data));
     const obj3 = {};
     let code = 64;
     headers.forEach((element, index) => {
@@ -174,7 +142,7 @@ import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
     let table1 = [obj3];
     const output = [];
 
-    for (const o of flatobj) {
+    for (const o of data) {
       const updated = {};
       let code = 64;
       for (const key in o) {

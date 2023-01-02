@@ -36,6 +36,7 @@ const IndeterminateCheckbox = React.forwardRef(
 );
 
 function Table({ columns, data, pageTable, selectable, loading }) {
+ 
   const {
     getTableProps,
     getTableBodyProps,
@@ -51,6 +52,7 @@ function Table({ columns, data, pageTable, selectable, loading }) {
     {
       columns,
       data,
+ 
     },
     usePagination,
     useRowSelect,
@@ -129,7 +131,7 @@ function Table({ columns, data, pageTable, selectable, loading }) {
       </table>
 
       {loading ? (
-        <div className="h-20 cnetering w-full">
+        <div className="h-20 cnetering w-full text-center mt-6">
           <ClipLoader />
         </div>
       ) : (
@@ -148,7 +150,7 @@ function StaticTable({
   column,
   pagination,
   selectable,
-  loading = false,
+  loading =false
 }) {
   return (
     <Table

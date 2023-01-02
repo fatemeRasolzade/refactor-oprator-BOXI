@@ -17,14 +17,12 @@ import { useGetOptions } from "../../../global/hooks/useFetchOptions";
 import { useNavigate } from "react-router-dom";
 import { exportExcel } from "../../../tools/functions/ExcelExport";
 
-
-
 const ProductDefine = () => {
   const { options } = useGetOptions(apiRoute().get.GET_PRODUCT_GROUPS);
   const navigate = useNavigate();
   const [isActive, setIsACtive] = useState(true);
   const dispatch = useDispatch();
-  const { errorMessage, productLists, isUpdating } = useSelector((state: any) => state.productDefine);
+  const { errorMessage, productLists, isUpdating, fetchPost } = useSelector((state: any) => state.productDefine);
   // @ts-ignore
   const { pageNumbers } = useSelector((state) => state.paginate);
 
@@ -44,7 +42,7 @@ const ProductDefine = () => {
       ? productLists?.content?.map((item: any) => {
           return {
             ...item,
-          
+
             operation: (
               <div className="flex w-full gap-3 justify-center">
                 <DeleteOperation
@@ -71,11 +69,10 @@ const ProductDefine = () => {
         })
       : [];
 
-   
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="تعریف محصول" />
-      <SearchForm isActive={isActive} isUpdating={isUpdating} productOptions={options}/>
+      <SearchForm isActive={isActive} isUpdating={isUpdating} productOptions={options} />
       <OptionsTable
         setIsActive={setIsACtive}
         isActive={isActive}
@@ -83,8 +80,9 @@ const ProductDefine = () => {
         exportExcel={() => exportExcel(datas)}
         // exportExcel={<ExcelExportHelper data={datas}  />}
       />
-      
+
       <StaticTable
+        loading={fetchPost}
         data={datas ? datas : []}
         column={ProductColumns}
         pagination={productLists?.totalElements}
@@ -95,5 +93,3 @@ const ProductDefine = () => {
 };
 
 export default ProductDefine;
-
-
