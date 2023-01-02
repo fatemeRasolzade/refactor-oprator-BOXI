@@ -1,33 +1,22 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ExportExcel, getDay, getPelak } from "../../tools/functions/Methods";
+import { getDay, getPelak } from "../../tools/functions/Methods";
 import { DELETE_ADMVEHICLE } from "../../services/apiRoute";
 import StaticTable from "../../components/staticTable/StaticTable";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
-import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
-import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/CustomOptionsKeyword";
 import { ADMVehicleColumn } from "./views/ADMVehicleColumn";
 import { ADMVehicleData, updating } from "../../redux/ADMVehicle/ADMVehicleData";
 import ADMVehicleSearchForm from "./views/ADMVehicleSearchForm";
 import ADMVehicleForm from "./views/ADMVehicleForm/ADMVehicleForm";
+import { AiOutlineEdit } from "react-icons/ai";
+import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 
 const ADMVehicle = () => {
   const [isActive, setIsActive] = useState(true);
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { pageNumbers } = useSelector((state: any) => state.paginate);
-  const handleGetExcel = () => ExportExcel(ADMVehicleList?.content);
-
-  const options = [
-    {
-      name: ACTIVE_OPTION,
-      handleClick: () => setIsActive(!isActive),
-      value: isActive,
-    },
-    { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
-  ];
-
   const { ADMVehicleList, isUpdating } = useSelector((state: any) => state.ADMVehicle);
 
   const handleDeleteActionNewData = () => {
@@ -64,21 +53,45 @@ const ADMVehicle = () => {
                   updating={updating}
                   handleDeleteActionNewData={handleDeleteActionNewData}
                 />
-                <ADMVehicleForm currentData={item} />
+                <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => handleOpenModal(item)}>
+                  <AiOutlineEdit className="w-[20px] h-[20px]" size={15} />
+                </button>
               </div>
             ),
           };
         })
       : [];
 
+  const [ADMVehicleModal, setADMVehicleModal] = useState({
+    isOpen: false,
+    data: undefined,
+  });
+
+  const handleOpenModal = (data = undefined) => setADMVehicleModal({ isOpen: true, data });
+  const handleCloseModal = (falsy: boolean) => setADMVehicleModal({ isOpen: falsy, data: undefined });
+
+  const [OpenExcel, setOpenExcel] = useState(false);
+  const handleUploadFileAction = () => setOpenExcel(true);
+
+  const ToggleOptions = [
+    { handleClick: () => handleOpenModal(undefined), name: "افزودن وسیله نقلیه" },
+    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
+  ];
+
+  const Options = [
+    {
+      code: "A2",
+      value: { ToggleOptions: ToggleOptions },
+    },
+    { code: "A3", value: { action: setIsActive, data: isActive } },
+    { code: "A1", value: ADMVehicleList?.content },
+  ];
+
   return (
     <>
       <Breadcrumb beforePage="برگشت" curentPage="وسایل نقلیه اجاره ای" />
       <ADMVehicleSearchForm isActive={isActive} isUpdating={isUpdating} pageNumbers={pageNumbers} />
-      <div className="flex-start-center gap-20 mt-6">
-        <ADMVehicleForm />
-        <TestCustomOptions options={options} />
-      </div>
+      <SwitchOptionTable accessPage={Options} />
       <StaticTable
         selectable={false}
         data={data ? data : []}
@@ -86,6 +99,8 @@ const ADMVehicle = () => {
         pagination={ADMVehicleList?.totalElements}
         loading={Loading}
       />
+      <ADMVehicleForm open={ADMVehicleModal.isOpen} setOpen={handleCloseModal} currentData={ADMVehicleModal.data} />
+      {/* <AddExcel excelInfo={ADMVehicleExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
     </>
   );
 };

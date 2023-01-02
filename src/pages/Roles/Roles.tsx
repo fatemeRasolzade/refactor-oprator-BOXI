@@ -1,6 +1,7 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiPlus, BiTrash } from "react-icons/bi";
+import { BsKey } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -125,7 +126,7 @@ const Roles: FC<RolesProps> = (): JSX.Element => {
                     })
                   }
                 >
-                  <AiOutlineEdit size={20} className="w-full h-full" />
+                  <BsKey size={20} className="w-full h-full" />
                 </button>
               </div>
             ),

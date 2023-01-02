@@ -6,7 +6,7 @@ import DatePickers from "../../../../global/DatePicker/DatePicker";
 import { getVehicleMake } from "../../../../services/ADMVehicleApi";
 import VehiclePelak from "../../../../global/VehiclePelak/VehiclePelak";
 import { GET_ROUTE, HUB_SELECT } from "../../../../services/apiRoute";
-import { getDataFromServer, postDataToServer } from "../../../../services/Service_call";
+import { getDataFromServer } from "../../../../services/Service_call";
 
 const ADMVehicleInformation = ({ formik, open, currentData }: any) => {
   const [VehicleMake, setVehicleMake] = useState([]);

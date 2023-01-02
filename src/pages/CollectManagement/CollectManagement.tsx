@@ -1,4 +1,5 @@
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import NotFound from "../../components/NotFound/NotFound";
 import StatusBar from "../../components/StatusBar/StatusBar";
 
 const CollectManagement = () => {
@@ -6,6 +7,7 @@ const CollectManagement = () => {
     <>
       <Breadcrumb curentPage="مدیریت جمع آوری" beforePage="بازگشت" />
       <StatusBar Options={CollectStatus} />
+      <NotFound/>
     </>
   );
 };

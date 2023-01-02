@@ -16,7 +16,13 @@ interface SelectedColInterface {
   Header: string;
   isRequire: boolean;
   id: string;
-  type: "operation" | "text" | "multiSelect" | "status" | "time";
+  type:
+    | "operation"
+    | "text"
+    | "inputSelect"
+    | "multiSelect"
+    | "status"
+    | "time";
 }
 const ConsignmentManage = () => {
   const [isOpenModalDelete, setIsOpenModalDelete] = useState({
@@ -42,7 +48,10 @@ const ConsignmentManage = () => {
   ]);
 
   const handleDeleteActionNewData = () => {};
-
+  const ToggleOptions = [
+    { handleClick: () => console.log(), name: "افزودن پرسنل" },
+    { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
+  ];
   return (
     <>
       <Breadcrumb curentPage="مدیریت مرسوله" />
@@ -63,7 +72,16 @@ const ConsignmentManage = () => {
         }}
       />
 
-      <SwitchOptionTable accessPage={["A1", "A2", "A3"]} />
+      <SwitchOptionTable
+        accessPage={[
+          { code: "A1", value: [] },
+          { code: "A3", value: { action: setIsActive, data: isActive } },
+          {
+            code: "A2",
+            value: { isToggle: true, to: "", ToggleOptions: ToggleOptions },
+          },
+        ]}
+      />
       <StaticTable
         data={[]}
         column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}

@@ -76,8 +76,8 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
         segmentCustomers:
           values.selectcustomer &&
           values.selectcustomer?.map((item: any) => {
-            const exists = selectedCustomer?.segmentCustomers.findIndex(
-              (element: any) => element.selectcustomer.text === item.text
+            const exists = selectedCustomer?.segmentCustomers?.findIndex(
+              (element: any) => element?.selectcustomer?.text === item?.text
             );
 
             if (exists > -1) {
@@ -186,6 +186,7 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
           </div>
           <div className="col-span-5">
             <MultiSelect
+              label="مشتری"
               wrapperClassName="w-full"
               options={selectOptions}
               values={formik.values.selectcustomer}
