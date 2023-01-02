@@ -1,13 +1,12 @@
 import { useState } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
-import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/CustomOptionsKeyword";
-import TestCustomOptions from "../../global/CustomOptions/TestCustomOptions";
 import { customerData, updating } from "../../redux/CustomerManagement/CustomerManagementData";
 import { DELETE_CUSTOMER } from "../../services/apiRoute";
-import { ExportExcel } from "../../tools/functions/Methods";
 import { CustomerColumns } from "./views/CustomerColumn";
 import CustomerForm from "./views/CustomerForm/CustomerForm";
 import CustomerSearchForm from "./views/CustomerSearchForm";
@@ -17,16 +16,6 @@ const CustomerManagement = () => {
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { pageNumbers } = useSelector((state: any) => state.paginate);
-  const handleGetExcel = () => ExportExcel(customerList?.content);
-
-  const options = [
-    {
-      name: ACTIVE_OPTION,
-      handleClick: () => setIsActive(!isActive),
-      value: isActive,
-    },
-    { name: DOWNLOAD_OPTION, handleClick: handleGetExcel },
-  ];
 
   const { customerList, isUpdating } = useSelector((state: any) => state.customer);
 
@@ -63,23 +52,48 @@ const CustomerManagement = () => {
                   updating={updating}
                   handleDeleteActionNewData={handleDeleteActionNewData}
                 />
-                <CustomerForm currentData={item} />
+                <button className=" border-none	text-[14px]  w-[20px] h-[20px] " onClick={() => handleOpenModal(item)}>
+                  <AiOutlineEdit className="w-[20px] h-[20px]" size={15} />
+                </button>
               </div>
             ),
           };
         })
       : [];
 
+  const [ServiceTimeModal, setServiceTimeModal] = useState({
+    isOpen: false,
+    data: undefined,
+  });
+
+  const handleOpenModal = (data = undefined) => setServiceTimeModal({ isOpen: true, data });
+  const handleCloseModal = (falsy: boolean) => setServiceTimeModal({ isOpen: falsy, data: undefined });
+
+  const [OpenExcel, setOpenExcel] = useState(false);
+  const handleUploadFileAction = () => setOpenExcel(true);
+
+  const ToggleOptions = [
+    { handleClick: () => handleOpenModal(undefined), name: "افزودن مشتری" },
+    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
+  ];
+
+  const Options = [
+    {
+      code: "A2",
+      value: { ToggleOptions: ToggleOptions },
+    },
+    { code: "A3", value: { action: setIsActive, data: isActive } },
+    { code: "A1", value: customerList?.content },
+  ];
+
   return (
-    <div>
+    <>
       <Breadcrumb beforePage="برگشت" curentPage="مدیریت مشتریان" />
       <CustomerSearchForm isActive={isActive} isUpdating={isUpdating} pageNumbers={pageNumbers} />
-      <div className="flex-start-center gap-20 mt-6">
-        <CustomerForm />
-        <TestCustomOptions options={options} />
-      </div>
+      <SwitchOptionTable accessPage={Options} />
       <StaticTable selectable={false} data={data ? data : []} column={CustomerColumns} pagination={customerList?.totalElements} loading={Loading} />
-    </div>
+      <CustomerForm open={ServiceTimeModal.isOpen} setOpen={handleCloseModal} currentData={ServiceTimeModal.data} />
+    </>
   );
 };
 
