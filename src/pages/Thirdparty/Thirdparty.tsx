@@ -14,6 +14,7 @@ import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/Custo
 import { AiOutlineEdit } from "react-icons/ai";
 import AddExcel from "../../components/exel/AddExcel";
 import AddButton from "../../global/addButton/AddButton";
+import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 
 const Thirdparty = () => {
   const [isActive, setIsActive] = useState(true);
@@ -82,9 +83,11 @@ const Thirdparty = () => {
   const [OpenExcel, setOpenExcel] = useState(false);
 
   const handleOpenModal = (data = undefined) => setThirdPartyModal({ isOpen: true, data });
+  const handlecloseModal = (falsy: boolean) => setThirdPartyModal({ isOpen: falsy, data: undefined });
+
   const handleUploadFileAction = () => setOpenExcel(true);
 
-  const ToggleOptions = [
+  const ToggleOptions: any = [
     { handleClick: handleOpenModal, name: "افزودن شخصیت" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
@@ -93,10 +96,11 @@ const Thirdparty = () => {
     <>
       <Breadcrumb beforePage="برگشت" curentPage="اشخاص حقیقی/حقوقی" />
       <ThirdPartySearchForm isActive={isActive} isUpdating={isUpdating} pageNumbers={pageNumbers} />
-      <div className="flex-start-center gap-20 mt-6">
-        {/* <AddButton ToggleOptions={ToggleOptions} /> */}
-        <TestCustomOptions options={options} />
-      </div>
+      {/* <SwitchOptionTable accessPage={["A4"]} AddButtonOptions={ToggleOptions} /> */}
+      {/* <div className="flex-start-center gap-20 mt-6"> */}
+      {/* <AddButton ToggleOptions={ToggleOptions} /> */}
+      {/* <TestCustomOptions options={options} /> */}
+      {/* </div> */}
       <StaticTable
         selectable={false}
         data={data ? data : []}
@@ -104,7 +108,7 @@ const Thirdparty = () => {
         pagination={thirdPartyList?.totalElements}
         loading={Loading}
       />
-      {/* <ThirdPartyForm /> */}
+      <ThirdPartyForm open={ThirdPartyModal.isOpen} setOpen={handlecloseModal} currentData={ThirdPartyModal.data} />
       {/* <AddExcel excelInfo={ThirdPartyExcel} OpenModal={OpenExcel} setOpenModal={setOpenExcel} /> */}
     </>
   );
