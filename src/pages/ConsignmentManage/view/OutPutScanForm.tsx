@@ -1,5 +1,6 @@
 import { BsUpcScan } from "react-icons/bs";
 import StaticTable from "../../../components/staticTable/StaticTable";
+import InputSelect from "../../../global/InputSelect/InputSelect";
 import InputText from "../../../global/InputText/InputText";
 import Modal from "../../../global/Modal/Modal";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
@@ -12,6 +13,7 @@ interface OutPutScanFormProps {
 const OutPutScanForm = ({ open, setOpen }: OutPutScanFormProps) => {
   return (
     <Modal visible={open} setVisible={setOpen} title="اسکن ورود در هاب">
+      <InputSelect wrapperClassName="w-full" important label="هاب" />
       <InputText
         wrapperClassName="w-full -mb-5"
         leftIcon={<BsUpcScan size={30} className="text-[#EAB308] " />}

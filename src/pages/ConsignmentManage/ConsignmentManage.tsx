@@ -1,5 +1,5 @@
-import StatusBar from "../../components/StatusBar/StatusBar";
 import { useState } from "react";
+import StatusBar from "../../components/StatusBar/StatusBar";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../components/staticTable/StaticTable";
 import { ConsignmentManageCol } from "../../global/Column/Columns";
@@ -69,6 +69,7 @@ const ConsignmentManage = () => {
           { code: "A6", value: PrintLabelOptions },
           { code: "A4", value: EntranceScanOptions },
           { code: "A5", value: OutPutScanOptions },
+          { code: "A8", value: [] },
           { code: "A1", value: [] },
         ]}
       />

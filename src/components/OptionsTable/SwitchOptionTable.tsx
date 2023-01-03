@@ -3,7 +3,7 @@ import { AiOutlineFileExcel } from "react-icons/ai";
 import { BiPlus } from "react-icons/bi";
 import { GoDesktopDownload } from "react-icons/go";
 import { IoIosPrint } from "react-icons/io";
-import { IoBarcode } from "react-icons/io5";
+import { IoBarcode, IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import AddButton from "../../global/addButton/AddButton";
 import SimpleButton from "../../global/SimpleButton/SimpleButton";
@@ -68,5 +68,10 @@ const componentItem: any = {
     code: "A5",
   },
   A7: { JSXItem: () => <SimpleButton text="افزودن گروهی" RightIcon={<AiOutlineFileExcel size={20} />} />, code: "A4" },
-  A8: { JSXItem: () => <>group add </>, code: "A5" },
+  A8: {
+    JSXItem: (options: any) => (
+      <AddButton text="لغو" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoClose size={20} />} />
+    ),
+    code: "A5",
+  },
 };
