@@ -18,6 +18,8 @@ import CustomSwitch from "../../../../global/Switch/Switch";
 import Modal from "../../../../global/Modal/Modal";
 interface PropsData {
   currentData?: any;
+  open: boolean;
+  setOpen: (value: boolean) => void;
 }
 const validation = Yup.object().shape({
   name: Yup.string().required().label("نام شرکت"),
@@ -26,18 +28,18 @@ const validation = Yup.object().shape({
   contactNumber: Yup.number().label("شماره تماس"),
 });
 
-const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [uploadExcel, setUploadExcel] = useState(false);
+const VendorActionForms: React.FC<PropsData> = ({ currentData,open,setOpen}): JSX.Element => {
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [uploadExcel, setUploadExcel] = useState(false);
 
   const dispatch = useDispatch();
 
-  const handleAction = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-  const handleUploadFileAction = () => {
-    setUploadExcel(!uploadExcel);
-  };
+  // const handleAction = () => {
+  //   setIsModalOpen(!isModalOpen);
+  // };
+  // const handleUploadFileAction = () => {
+  //   setUploadExcel(!uploadExcel);
+  // };
   const setUpdate=()=>{
     dispatch(
       vendorData({
@@ -49,10 +51,10 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
   }
 
 
-  const ToggleOptions = [
-    { handleClick: handleAction, name: "افزودن شرکت نقلیه" },
-    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
-  ];
+  // const ToggleOptions = [
+  //   { handleClick: handleAction, name: "افزودن شرکت نقلیه" },
+  //   { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
+  // ];
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: validation,
@@ -109,7 +111,7 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
 
           // dispatch(updating(false));
 
-          setIsModalOpen(false);
+          // setIsModalOpen(false);
         });
       } else {
         EditDataParams(apiRoute().edit.EditVendor, values).then((res) => {
@@ -130,29 +132,29 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
             // ErrorAlert("خطا در برقراری اطلاعات");
           }
 
-          setIsModalOpen(false);
+          // setIsModalOpen(false);
         });
       }
     },
   });
   useEffect(() => {
     formik.resetForm({});
-  }, [isModalOpen]);
+  }, [open]);
   return (
     <>
-      {!currentData ? (
+      {/* {!currentData ? (
         <AddButton ToggleOptions={ToggleOptions} />
       ) : (
         <button className=" border-none	 text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={VendorExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
+      <AddExcel excelInfo={VendorExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/> */}
       {/* <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} /> */}
 
       <Modal
-        visible={isModalOpen}
-        setVisible={setIsModalOpen}
+        visible={open}
+        setVisible={setOpen}
         title={currentData ? "ویرایش شرکت نقلیه" : "افزودن شرکت نقلیه"}
       >
         <form onSubmit={formik.handleSubmit}>
@@ -214,7 +216,7 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =>
           </div>
 
           <div className="flex-end-center mt-5 gap-3">
-            <SimpleButton handelClick={() => setIsModalOpen(false)} text="لغو" className="full-lightTomato-btn" />
+            <SimpleButton handelClick={() => setOpen(false)} text="لغو" className="full-lightTomato-btn" />
             <SimpleButton
               // loading={Loading}
               type="submit"
