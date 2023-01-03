@@ -8,6 +8,8 @@ import MultiSelect from "../../../global/multiselect/MultiSelect";
 import MultiLineText from "../../../global/MultiLineText/MultiLineText";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import { toast } from "react-toastify";
+import { addEditUrls, getUrls, selectUrls } from "../../../services/api.enums";
+import { addEditDataAPI, getAPI } from "../../../services/CRUDServices";
 
 interface SetIsModalAddEditInterface {
   isOpen: boolean;
@@ -21,8 +23,6 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
   currentData,
   setIsModalAddEdit,
 }): JSX.Element => {
-  console.log("currentData", currentData);
-
   const [selectOptions, setSelectOptions] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState<any>({});
 
@@ -100,11 +100,16 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
       };
 
       try {
-        await axios({
-          url: "http://boxi.local:40000/core-api/customersegment",
-          method: currentData ? "put" : "POST",
-          data: currentData ? updateData : data,
-        });
+        // await axios({
+        //   url: "http://boxi.local:40000/core-api/customersegment",
+        //   method: currentData ? "put" : "POST",
+        //   data: currentData ? updateData : data,
+        // });
+        addEditDataAPI(
+          addEditUrls.customerSegment,
+          currentData ? "put" : "post",
+          currentData ? updateData : data
+        );
         setIsModalAddEdit({
           isOpen: false,
           data: {},
@@ -120,10 +125,7 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
 
   const handleGetSelectData = useCallback(async () => {
     try {
-      const res = await axios({
-        url: "http://boxi.local:40000/resource-api/customer/select?filter=",
-        method: "GET",
-      });
+      const res = await getAPI(selectUrls.customers);
       setSelectOptions(res.data?.payload?.content);
     } catch (error) {}
   }, []);
@@ -134,7 +136,7 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
         url: `http://boxi.local:40000/core-api/customersegment/${id}`,
         method: "GET",
       });
-
+      // const res = await getAPI(getUrls.customerSegment + `${id}`);
       setSelectedCustomer(res.data?.payload);
     } catch (error) {}
   }, []);
@@ -142,9 +144,10 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
   useEffect(() => {
     handleGetSelectData();
   }, [handleGetSelectData]);
+  console.log("current", currentData);
 
   useEffect(() => {
-    if (currentData) {
+    if (currentData !== null) {
       handleGetEditInfo(currentData.id);
     }
   }, [currentData, handleGetEditInfo]);
@@ -227,7 +230,7 @@ const AddEditCRMManagement: FC<AddEditCRMManagementProps> = ({
               handelClick={() => {
                 setIsModalAddEdit({
                   isOpen: false,
-                  data: {},
+                  data: null,
                 });
                 formik.resetForm();
                 setSelectedCustomer({});

@@ -119,7 +119,7 @@ const CRMManagment = () => {
         visible={isModalAddEdit.isOpen}
         setVisible={(e: any) =>
           setIsModalAddEdit((prev) => {
-            return { ...prev, isOpen: false };
+            return { ...prev, isOpen: false, data: null };
           })
         }
         title={isModalAddEdit.data ? "ویرایش گروه" : "افزودن گروه"}
