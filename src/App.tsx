@@ -4,7 +4,7 @@ import "react-checkbox-tree/lib/react-checkbox-tree.css";
 
 import { useCallback, useEffect, useState } from "react";
 import { links } from "./components/SidebarRoutes/SidebarRoutes";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
 import "rodal/lib/rodal.css";
 import NotFound from "./pages/NotFound/NotFound";
@@ -23,6 +23,7 @@ import DashboardLayout from "./components/Layout/DashboardLayout";
 import Customkeycloak from "./KeyCloack";
 
 function App() {
+  const navigate=useNavigate()
   const dispatch = useDispatch();
   const username = localStorage.getItem("userName");
   const handleGetuserInfo = useCallback(async () => {
@@ -67,7 +68,7 @@ function App() {
         setAuth(false);
       }
     });
-  }, []);
+  }, [navigate]);
 
   return (
     <>

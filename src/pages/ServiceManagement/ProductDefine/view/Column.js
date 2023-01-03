@@ -26,9 +26,9 @@ export const ProductColumns = [
     Header: "گروه بندی محصول ",
     width: "auto",
 
-    Cell: ({ cell }) => {
-      return cell.value?.text;
-    },
+    // Cell: ({ cell }) => {
+    //   return cell.value?.text;
+    // },
     key: "productGroup",
     header: "گروه بندی محصول ",
   },
@@ -36,9 +36,9 @@ export const ProductColumns = [
     accessor: "isActive",
     Header: "وضعیت",
     width: "auto",
-    Cell: ({ cell }) => {
-      return cell.value === true ? <span>فعال</span> : <span>غیر فعال</span>;
-    },
+    // Cell: ({ cell }) => {
+    //   return cell.value === true ? <span>فعال</span> : <span>غیر فعال</span>;
+    // },
     key: "isActive",
     header: "وضعیت",
   },
