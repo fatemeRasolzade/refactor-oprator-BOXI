@@ -12,7 +12,7 @@ export const ExportExcel = async (data, columns,title) => {
   });
 const filterColumn=columns.filter(item=>!item.accessor.includes("operation"))
 
-
+    console.log(data,filterColumn);
 
   const workbook = new Excel.Workbook();
   try {
@@ -29,7 +29,7 @@ const filterColumn=columns.filter(item=>!item.accessor.includes("operation"))
     // loop through all of the filterColumn and set the alignment with width.
     worksheet.columns.forEach((column) => {
       column.width = column.header.length + 25;
-      column.alignment = { horizontal: "center" };
+      column.alignment = { horizontal: "center"};
     });
 
     // loop through data and add each one to worksheet
