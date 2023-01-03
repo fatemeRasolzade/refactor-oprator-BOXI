@@ -10,8 +10,8 @@ export const ExportExcel = async (data, columns,title) => {
     // delete obj?.isDeleted;
     // Object.keys(obj).forEach((key) => (obj[key] === null || obj[key] === undefined ? (obj[key] = "-") : obj[key]));
   });
-const filterColumn=columns.filter(item=>item.accessor!=="operation")
-  console.log(columns,data);
+const filterColumn=columns.filter(item=>!item.accessor.includes("operation"))
+
 
 
   const workbook = new Excel.Workbook();
@@ -27,7 +27,7 @@ const filterColumn=columns.filter(item=>item.accessor!=="operation")
     worksheet.getRow(1).font = { bold: true };
 
     // loop through all of the filterColumn and set the alignment with width.
-    worksheet.filterColumn.forEach((column) => {
+    worksheet.columns.forEach((column) => {
       column.width = column.header.length + 25;
       column.alignment = { horizontal: "center" };
     });

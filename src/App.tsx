@@ -17,7 +17,6 @@ import { getUserInfo } from "./redux/userInfo/userInfoReducer";
 import GeoWrapper from "./pages/CustomGeographic/views/AddGeo/GeoWrapper";
 import GeoWrapperEdit from "./pages/CustomGeographic/views/editGeo/GeoWrapperEdit";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
-import {useNavigate} from "react-router-dom"
 import AddConsignmentManage from "./pages/ConsignmentManage/view/AddConsignmentManage";
 import DashboardLayout from "./components/Layout/DashboardLayout";
 import Customkeycloak from "./KeyCloack";
