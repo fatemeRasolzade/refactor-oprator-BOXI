@@ -49,40 +49,44 @@ function App() {
     console.log("loop");
   }, [handleGetuserInfo, username]);
 
-  // const [auth, setAuth] = useState(false);
-  // useEffect(() => {
-  //   Customkeycloak.init({ onLoad: "check-sso" }).then((authenticated) => {
-  //     if (authenticated) {
-  //       setAuth(authenticated);
-  //       // @ts-ignore
-  //       window.localStorage.setItem("myToken", Customkeycloak.token);
-  //       // @ts-ignore
-  //       axios.defaults.headers.common["Authorization"] = "Bearer " + Customkeycloak.token.toString();
-  //       window.localStorage.setItem("userName", Customkeycloak.tokenParsed?.preferred_username);
-  //     } else {
-  //       setAuth(false);
-  //     }
-  //   });
-  // }, []);
+  const [auth, setAuth] = useState(false);
+  useEffect(() => {
+    Customkeycloak.init({
+      onLoad: "login-required",
+      checkLoginIframe: false,
+    }).then((authenticated) => {
+      if (authenticated) {
+        setAuth(authenticated);
+        // @ts-ignore
+        window.localStorage.setItem("myToken", Customkeycloak.token);
+        // @ts-ignore
+        axios.defaults.headers.common["Authorization"] = "Bearer " + Customkeycloak.token.toString();
+        window.localStorage.setItem("userName", Customkeycloak.tokenParsed?.preferred_username);
+      } else {
+        Customkeycloak.login();
+        setAuth(false);
+      }
+    });
+  }, []);
 
   return (
     <>
       <div className="App">
         <YupDefault />
-          <Routes>
-            <Route path="/forgot_password" element={<ForgotPassword />} />
-            <Route path="/" element={<DashboardLayout />}>
-              {/* <Route path="*" element={<NotFound />} /> */}
-              {links.map((item) => item.childs.map((route) => <Route path={route.to} element={route.component} />))}
-              <Route path="*" element={<NotFound />} />
-              <Route path="/hub/add" element={<HubAdd />} />
-              <Route path="/hub/edit" element={<HubEdit />} />
-              <Route path="/basic-information/custom-geographic-category/add" element={<GeoWrapper />} />
-              <Route path="/basic-information/custom-geographic-category/edit" element={<GeoWrapperEdit />} />
-              <Route path="" element={<GeoWrapperEdit />} />
-              <Route path="/consignment-manage/add" element={<AddConsignmentManage />} />
-            </Route>
-          </Routes>
+        <Routes>
+          <Route path="/forgot_password" element={<ForgotPassword />} />
+          <Route path="/" element={<DashboardLayout />}>
+            {/* <Route path="*" element={<NotFound />} /> */}
+            {links.map((item) => item.childs.map((route) => <Route path={route.to} element={route.component} />))}
+            <Route path="*" element={<NotFound />} />
+            <Route path="/hub/add" element={<HubAdd />} />
+            <Route path="/hub/edit" element={<HubEdit />} />
+            <Route path="/basic-information/custom-geographic-category/add" element={<GeoWrapper />} />
+            <Route path="/basic-information/custom-geographic-category/edit" element={<GeoWrapperEdit />} />
+            <Route path="" element={<GeoWrapperEdit />} />
+            <Route path="/consignment-manage/add" element={<AddConsignmentManage />} />
+          </Route>
+        </Routes>
       </div>
     </>
   );

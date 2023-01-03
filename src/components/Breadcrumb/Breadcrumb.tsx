@@ -36,7 +36,10 @@ const Breadcrumb = ({
       </div>
       <div className="flex-start-center gap-3">
         <AiOutlineUser size={23} />
-        <p className="text-base">{UserService.getUsername()}</p>
+        <p className="text-base">
+          {/* {UserService.getUsername()} */}
+          {Customkeycloak.tokenParsed?.preferred_username}
+        </p>
         <div className="relative centering" onBlur={handleBlur}>
           <button
             className={`${toggle && "rotate-180"} transition-all duration-500`}
@@ -63,8 +66,8 @@ const Breadcrumb = ({
               </button>
               <button
                 className="ToggleElements"
-                onClick={() => UserService.doLogout()}
-                // onClick={() => Customkeycloak.logout()}
+                // onClick={() => UserService.doLogout()}
+                onClick={() => Customkeycloak.logout()}
               >
                 خروج
               </button>
