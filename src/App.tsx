@@ -17,12 +17,13 @@ import { getUserInfo } from "./redux/userInfo/userInfoReducer";
 import GeoWrapper from "./pages/CustomGeographic/views/AddGeo/GeoWrapper";
 import GeoWrapperEdit from "./pages/CustomGeographic/views/editGeo/GeoWrapperEdit";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
-
+import {useNavigate} from "react-router-dom"
 import AddConsignmentManage from "./pages/ConsignmentManage/view/AddConsignmentManage";
 import DashboardLayout from "./components/Layout/DashboardLayout";
 import Customkeycloak from "./KeyCloack";
 
 function App() {
+  const navigate=useNavigate()
   const dispatch = useDispatch();
   const username = localStorage.getItem("userName");
   const handleGetuserInfo = useCallback(async () => {
@@ -52,8 +53,10 @@ function App() {
   const [auth, setAuth] = useState(false);
   useEffect(() => {
     Customkeycloak.init({
-      onLoad: "login-required",
+      // onLoad: "login-required",
+      onLoad: "check-sso",
       checkLoginIframe: false,
+      
     }).then((authenticated) => {
       if (authenticated) {
         setAuth(authenticated);
@@ -67,7 +70,7 @@ function App() {
         setAuth(false);
       }
     });
-  }, []);
+  }, [navigate]);
 
   return (
     <>
