@@ -4,7 +4,7 @@ export enum filterUrls {
 }
 export enum addEditUrls {
   rule = "resource-api/role",
-  customerSegment = "/core-api/customersegment/",
+  customerSegment = "core-api/customersegment/",
 }
 export enum deleteUrls {
   rule = "resource-api/role",
@@ -15,5 +15,5 @@ export enum selectUrls {
   customers = "resource-api/customer/select?filter=",
 }
 export enum getUrls {
-  customerSegment = "/core-api/customersegment/",
+  customerSegment = "core-api/customersegment/",
 }
