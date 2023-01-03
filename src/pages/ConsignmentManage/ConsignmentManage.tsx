@@ -10,9 +10,9 @@ import PrintLabelForm from "./view/PrintLabelForm";
 import EntranceScanForm from "./view/EntranceScanForm";
 import OutPutScanForm from "./view/OutPutScanForm";
 import { useSelector } from "react-redux";
-import { async } from "q";
 import { filterUrls } from "../../services/api.enums";
-import { filterDataAPI, filterTableDataAPI } from "../../services/CRUDServices";
+import { filterTableDataAPI } from "../../services/CRUDServices";
+import { StatusEnum } from "../../models/consigment";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
@@ -26,11 +26,16 @@ interface SelectedColInterface {
     | "status"
     | "time";
 }
+
+interface ItemData {
+  status: StatusEnum;
+}
+
 const ConsignmentManage = () => {
   const { filter } = useSelector((state: any) => state.consignment);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
 
-  const [fetchedData, setfetchedData] = useState({});
+  const [fetchedData, setfetchedData] = useState<any>({});
   const [OpenPrintLabel, setOpenPrintLabel] = useState(false);
   const [OpenEntranceScan, setOpenEntranceScan] = useState(false);
   const [OpenOutPutScan, setOpenOutPutScan] = useState(false);
@@ -80,14 +85,28 @@ const ConsignmentManage = () => {
         pageNumbers,
         body
       );
-      console.log("res", res);
-      setfetchedData(res.data);
+      console.log("res", res.data.payload.content);
+      setfetchedData(res.data.payload);
     } catch (error) {}
-  }, []);
+  }, [pageNumbers]);
 
   useEffect(() => {
     handleGetDataTable();
   }, [handleGetDataTable]);
+
+  const data =
+    fetchedData?.content?.length !== 0
+      ? fetchedData?.content?.map((item: ItemData|any) => {
+          return {
+            id: item.id,
+            senderCity: item.senderCityName,
+            SenderPhone: item.senderPhoneNumber,
+            status: item.status,
+          };
+        })
+      : [];
+  console.log("data", data);
+  console.log("fetchedData", fetchedData);
 
   return (
     <>
@@ -110,7 +129,7 @@ const ConsignmentManage = () => {
         ]}
       />
       <StaticTable
-        data={[]}
+        data={data ? data : []}
         column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
         pagination={7}
         selectable={false}
