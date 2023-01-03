@@ -1,19 +1,20 @@
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
-import { BiPlus } from "react-icons/bi";
+import { BiPlus, BiTrash } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
-import DeleteOperation from "../../components/tableOperation/DeleteOperation";
 import { CRMCustomerColumn } from "../../global/Column/Columns";
+import DeleteModal from "../../global/DeleteModal/DeleteModal";
 import Modal from "../../global/Modal/Modal";
 import {
   clearCRMCustomer,
   fetchCRMCustomer,
 } from "../../redux/CRMCustomerGroup/CRMCustomerGroupReducer";
+import { deleteUrls, filterUrls } from "../../services/api.enums";
+import { filterTableDataAPI } from "../../services/CRUDServices";
 import { ExportExcel } from "../../tools/functions/Methods";
 import AddEditCRMManagement from "./views/AddEditCRMManagement";
 import CRMManagmentFilter from "./views/CRMManagmentFilter";
@@ -25,7 +26,10 @@ const CRMManagment = () => {
   );
 
   const { pageNumbers } = useSelector((state: any) => state.paginate);
-
+  const [isOpenModalDelete, setIsOpenModalDelete] = useState({
+    isOpen: false,
+    id: undefined,
+  });
   const [isActive, setIsActive] = useState<boolean>(true);
   const [isModalAddEdit, setIsModalAddEdit] = useState({
     isOpen: false,
@@ -34,14 +38,22 @@ const CRMManagment = () => {
 
   const getDataTable = useCallback(async () => {
     try {
-      const res = await axios({
-        url: `http://boxi.local:40000/core-api/customersegment/filter?pageNumber=${pageNumbers}&pageSize=10`,
-        method: "POST",
-        data: { ...filter, isActive },
+      // const res = await axios({
+      //   url: `http://boxi.local:40000/core-api/customersegment/filter?pageNumber=${pageNumbers}&pageSize=10`,
+      //   method: "POST",
+      //   data: { ...filter, isActive },
+      // });
+      const res = await filterTableDataAPI(filterUrls.customerSegment, pageNumbers, {
+        ...filter,
+        isActive,
       });
       dispatch(fetchCRMCustomer(res.data.payload));
     } catch (error) {}
   }, [dispatch, filter, isActive, pageNumbers]);
+
+  const handleDeleteActionNewData = () => {
+    getDataTable();
+  };
 
   useEffect(() => {
     if (!isModalAddEdit.isOpen) {
@@ -62,12 +74,22 @@ const CRMManagment = () => {
           isActive: <span>{item?.isActive ? "فعال" : "غیر فعال"}</span>,
           operation: (
             <div className="flex w-full gap-3 justify-center">
-              <DeleteOperation
+              {/* <DeleteOperation
                 itemId={item.id}
                 title={"حذف مشتری"}
                 route={`http://boxi.local:40000/core-api/customersegment/${item?.id}`}
                 handleDeleteActionNewData={() => getDataTable()}
-              />
+              /> */}
+              <button
+                className=" border-none	text-[14px]  w-[20px] h-[20px]"
+                onClick={() =>
+                  setIsOpenModalDelete((prev) => {
+                    return { ...prev, isOpen: !prev.isOpen, id: item.id };
+                  })
+                }
+              >
+                <BiTrash size={20} className="w-full h-full	" />
+              </button>
               <button
                 className=" border-none	text-[14px]  w-[20px] h-[20px] "
                 onClick={() =>
@@ -131,6 +153,18 @@ const CRMManagment = () => {
           />
         </>
       </Modal>
+      <DeleteModal
+        isModalOpenDelete={isOpenModalDelete.isOpen}
+        setIsModalOpenDelete={() =>
+          setIsOpenModalDelete((prev) => {
+            return { ...prev, isOpen: false, id: undefined };
+          })
+        }
+        title="حذف نقش"
+        itemId={isOpenModalDelete.id}
+        route={deleteUrls.customersegment}
+        handleDeleteActionNewData={handleDeleteActionNewData}
+      />
     </div>
   );
 };
