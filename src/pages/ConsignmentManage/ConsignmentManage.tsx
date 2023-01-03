@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import StatusBar from "../../components/StatusBar/StatusBar";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../components/staticTable/StaticTable";
@@ -9,14 +9,28 @@ import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 import PrintLabelForm from "./view/PrintLabelForm";
 import EntranceScanForm from "./view/EntranceScanForm";
 import OutPutScanForm from "./view/OutPutScanForm";
+import { useSelector } from "react-redux";
+import { async } from "q";
+import { filterUrls } from "../../services/api.enums";
+import { filterDataAPI, filterTableDataAPI } from "../../services/CRUDServices";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
   id: string;
-  type: "operation" | "text" | "inputSelect" | "multiSelect" | "status" | "time";
+  type:
+    | "operation"
+    | "text"
+    | "inputSelect"
+    | "multiSelect"
+    | "status"
+    | "time";
 }
 const ConsignmentManage = () => {
+  const { filter } = useSelector((state: any) => state.consignment);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
+
+  const [fetchedData, setfetchedData] = useState({});
   const [OpenPrintLabel, setOpenPrintLabel] = useState(false);
   const [OpenEntranceScan, setOpenEntranceScan] = useState(false);
   const [OpenOutPutScan, setOpenOutPutScan] = useState(false);
@@ -57,12 +71,34 @@ const ConsignmentManage = () => {
     { handleClick: () => setOpenOutPutScan(true), name: "اسکن اکسل " },
     { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
   ];
-  // const Entires
+
+  const handleGetDataTable = useCallback(async () => {
+    const body = {};
+    try {
+      const res = await filterTableDataAPI(
+        filterUrls.consignment,
+        pageNumbers,
+        body
+      );
+      console.log("res", res);
+      setfetchedData(res.data);
+    } catch (error) {}
+  }, []);
+
+  useEffect(() => {
+    handleGetDataTable();
+  }, [handleGetDataTable]);
+
   return (
     <>
       <Breadcrumb curentPage="مدیریت مرسوله" />
       <StatusBar Options={Options} />
-      <SearchConsignmentFilter selectedCol={selectedCol} setSelectedCol={(value: Array<SelectedColInterface>) => setSelectedCol(value)} />
+      <SearchConsignmentFilter
+        selectedCol={selectedCol}
+        setSelectedCol={(value: Array<SelectedColInterface>) =>
+          setSelectedCol(value)
+        }
+      />
       <SwitchOptionTable
         accessPage={[
           { code: "A7" },

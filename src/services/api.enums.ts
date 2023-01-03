@@ -2,6 +2,7 @@ export enum filterUrls {
   rulePermissions = "resource-api/permission/fetchPermissions",
   rule = "resource-api/role/filter",
   customerSegment = "core-api/customersegment/filter",
+  consignment = "consignment-api/consignment/filter",
 }
 export enum addEditUrls {
   rule = "resource-api/role",
