@@ -1,11 +1,11 @@
 import { BsBox, BsCartCheck, BsFillGridFill, BsMinecartLoaded, BsTruck, BsUpcScan } from "react-icons/bs";
-import { MdOutlineCallMissed, MdOutlineTimer, MdOutlineTimerOff } from "react-icons/md";
+import { MdOutlineCallMissed, MdOutlineCreateNewFolder, MdOutlineTimer, MdOutlineTimerOff } from "react-icons/md";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { GiSwapBag } from "react-icons/gi";
 import { ImEnter } from "react-icons/im";
 import { FiXSquare } from "react-icons/fi";
 import { TiLocation } from "react-icons/ti";
-import { CgCheck, CgClose } from "react-icons/cg";
+import { CgCheck, CgClose, CgPlayButtonR } from "react-icons/cg";
 import { TbBoxOff } from "react-icons/tb";
 import { SlSocialDropbox } from "react-icons/sl";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
@@ -97,5 +97,21 @@ export const StatusBarElements: Record<string, ElementsValue> = {
   Undeliverable: {
     icon: <HiOutlineArchiveBoxXMark size={30} className="text-[#9CA3AF]" />,
     text: "غیر قابل تحویل",
+  },
+  Complated: {
+    icon: <IoMdCheckboxOutline size={30} className="text-[#10B981]" />,
+    text: "تکمیل شده",
+  },
+  Started: {
+    icon: <CgPlayButtonR size={30} className="text-tomato" />,
+    text: "آغاز شده",
+  },
+  Created: {
+    icon: <MdOutlineCreateNewFolder size={30} className="text-[#EC4899]" />,
+    text: "ایجاد شده",
+  },
+  Allocated: {
+    icon: <MdOutlineCreateNewFolder size={30} className="text-[#EC4899]" />,
+    text: "تخصیص شده",
   },
 };
