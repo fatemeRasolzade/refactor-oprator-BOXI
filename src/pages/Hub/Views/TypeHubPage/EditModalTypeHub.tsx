@@ -2,7 +2,7 @@ import { Button, Dialog, DialogBody, DialogHeader } from '@material-tailwind/rea
 import React,{memo} from 'react'
 import { BiXCircle } from 'react-icons/bi'
 import InputText from '../../../../global/InputText/InputText'
-import {Formik} from 'formik';
+import {Formik,useFormik} from 'formik';
 import { apiRoute } from './../../../../services/apiRoute';
 import * as Yup from "yup"
 import { PutWithHeader } from '../../../../services/Service_call';
@@ -27,13 +27,40 @@ const BodyData={
   pageNumbers:pageNumbers
 }
 
+
+const formik=useFormik({
+  initialValues:{
+    id:dataEdit?.id,
+    name:dataEdit?.name ? dataEdit?.name : "",
+    code:dataEdit?.code ? dataEdit?.code : "",
+    description:dataEdit?.description ? dataEdit?.description : ""
+  },
+  onSubmit:(values)=>{
+    PutWithHeader(apiRoute().edit.Edithub_category,values).then(res=>{
+     
+      if(res.status==="OK"){
+        handleOpen(false)
+        SuccessAlert("با موفقیت ویرایش شد")
+        dispatch(HubTypeData(BodyData) as any)
+       }else{
+        ErrorAlert("با خطا مواجه شد")
+      }
+
+     })
+
+ }
+
+})
+
+
+
   return (
 
     <>
      <Modal visible={open} setVisible={handleOpen} title="ویرایش گونه هاب">
        
             {/* modal form */}
-        <Formik
+        {/* <Formik
         
         initialValues={{
           id:dataEdit?.id,
@@ -58,7 +85,7 @@ const BodyData={
         
         >
 
-          {(formik)=>(
+          {(formik)=>( */}
 
 <form onSubmit={formik.handleSubmit} className="w-full">
 <div className='grid grid-cols-2 gap-4 w-full'>
@@ -93,9 +120,9 @@ className="ml-2 text-dark bg-lightTomato"
 
 </form>
 
-          )}
+          {/* )}
            
-            </Formik>
+            </Formik> */}
  {/*end modal form */}
        
         

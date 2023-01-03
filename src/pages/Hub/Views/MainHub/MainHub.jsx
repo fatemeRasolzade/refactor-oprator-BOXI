@@ -12,7 +12,7 @@ import OptionsTable from "../../../../components/OptionsTable/OptionsTable";
 import { ExportExcel } from "../../../../tools/functions/Methods";
 import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { apiRoute } from "../../../../services/apiRoute";
-//  import {MyExport} from "../ExportMyExcel";
+  import MyExport from "../ExportMyExcel";
 import DeleteModal from "../../../../global/DeleteModal/DeleteModal";
 
 const Hub = () => {
@@ -90,7 +90,7 @@ const handelActionAfterDelete=()=>{
        isActive={ActiveSwitch}
       />
  <DeleteModal isModalOpenDelete={isModalOpenDelete} setIsModalOpenDelete={setIsModalOpenDelete} title="حذف هاب" itemId={deleteItemId} route={apiRoute().delete.hubTable} handleDeleteActionNewData={handelActionAfterDelete}/>
- {/* <MyExport data={data} columns={HubColumn}/>  */}
+ <MyExport data={data} columns={HubColumn}/> 
      <StaticTable data={data} column={HubColumn} pagination={payload?.totalElements} />
     </div>
   );
