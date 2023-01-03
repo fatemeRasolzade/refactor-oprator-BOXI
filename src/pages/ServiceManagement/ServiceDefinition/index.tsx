@@ -70,7 +70,7 @@ const ServiceDefinition: React.FC = (): JSX.Element => {
         addComponentProps={() => (
           <ServiceDefineActionForms productOptions={productOptions} priceOptions={priceOptions} />
         )}
-        exportExcel={() => ExportExcel(data, ServiceDefineColumns, "service")}
+        exportExcel={() => ExportExcel([])}
       />
       <StaticTable
         data={data ? data : []}

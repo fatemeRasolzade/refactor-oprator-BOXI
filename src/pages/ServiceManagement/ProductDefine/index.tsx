@@ -78,7 +78,7 @@ const ProductDefine = () => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ActionForms />}
-        exportExcel={() => ExportExcel(datas, ProductColumns,'product')}
+        exportExcel={() => ExportExcel([])}
 
         // exportExcel={<ExcelExportHelper data={datas}  />}
       />

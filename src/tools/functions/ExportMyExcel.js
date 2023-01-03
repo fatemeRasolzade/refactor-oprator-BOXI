@@ -3,16 +3,16 @@ import { saveAs } from "file-saver";
 
 const workSheetName = "Worksheet-1";
 // const ExportExcel = ({ data }) => {
-export const ExportExcel = async (data, columns,title) => {
-
-  data.map((obj) => {
+export const ExportExcel = async (values) => {
+  console.log(values);
+   values.data.map((obj) => {
     delete obj?.operation;
     // delete obj?.isDeleted;
     // Object.keys(obj).forEach((key) => (obj[key] === null || obj[key] === undefined ? (obj[key] = "-") : obj[key]));
   });
-const filterColumn=columns.filter(item=>!item.accessor.includes("operation"))
+const filterColumn=values.columns.filter(item=>!item.accessor.includes("operation"))
 
-    console.log(data,filterColumn);
+    // console.log(data,filterColumn);
 
   const workbook = new Excel.Workbook();
   try {
@@ -33,7 +33,7 @@ const filterColumn=columns.filter(item=>!item.accessor.includes("operation"))
     });
 
     // loop through data and add each one to worksheet
-    data.forEach((singleData) => {
+    values.data.forEach((singleData) => {
       worksheet.addRow(singleData);
     });
 
@@ -61,7 +61,7 @@ const filterColumn=columns.filter(item=>!item.accessor.includes("operation"))
     const buf = await workbook.xlsx.writeBuffer();
     console.log(buf);
     // download the processed file
-    saveAs(new Blob([buf]), `${title}.xlsx`);
+    saveAs(new Blob([buf]), `${values?.title?values?.title:workSheetName}.xlsx`);
   } catch (error) {
   } finally {
     // removing worksheet's instance to create new one

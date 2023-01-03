@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { useFormik } from "formik";
 import InputText from "../../../../global/InputText/InputText";
 import { apiRoute } from "../../../../services/apiRoute";
 import { EditDataParams, PostDataParams } from "../../../../services/Service_call";
 import { SuccessAlert } from "../../../../global/alert/Alert";
-import { useDispatch } from "react-redux";
-import { AiOutlineEdit } from "react-icons/ai";
-import AddButton from "../../../../global/addButton/AddButton";
-import AddExcel from "../../../../components/exel/AddExcel";
+import { useDispatch, useSelector } from "react-redux";
 import { vendorData } from "../../../../redux/Transportation/vendor/VendorData";
 import { ContactNumberValidate, NationalIDValidator } from "../../../../tools/validations/ErrorHelper";
 import * as Yup from "yup";
-import {  VendorExcel } from "../../../../tools/services/ExcelInfoFile";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
 import CustomSwitch from "../../../../global/Switch/Switch";
 import Modal from "../../../../global/Modal/Modal";
@@ -29,32 +25,11 @@ const validation = Yup.object().shape({
 });
 
 const VendorActionForms: React.FC<PropsData> = ({ currentData,open,setOpen}): JSX.Element => {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [uploadExcel, setUploadExcel] = useState(false);
 
+  const { filter } = useSelector((state: any) => state.vendor);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
   const dispatch = useDispatch();
 
-  // const handleAction = () => {
-  //   setIsModalOpen(!isModalOpen);
-  // };
-  // const handleUploadFileAction = () => {
-  //   setUploadExcel(!uploadExcel);
-  // };
-  const setUpdate=()=>{
-    dispatch(
-      vendorData({
-        isActive: "",
-        pageSize: 10,
-        pageNumber: "",
-      }) as any
-    );
-  }
-
-
-  // const ToggleOptions = [
-  //   { handleClick: handleAction, name: "افزودن شرکت نقلیه" },
-  //   { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
-  // ];
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: validation,
@@ -98,10 +73,9 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData,open,setOpen}): JS
 
             dispatch(
               vendorData({
-                search: "",
-                isActive: "",
+                ...filter,
                 pageSize: 10,
-                pageNumber: "",
+                pageNumber: pageNumbers,
               }) as any
             );
           } else {
@@ -110,28 +84,26 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData,open,setOpen}): JS
           }
 
           // dispatch(updating(false));
-
+            setOpen(false)
           // setIsModalOpen(false);
         });
       } else {
         EditDataParams(apiRoute().edit.EditVendor, values).then((res) => {
           // dispatch(updating(true));
-          console.log("run edit");
           if (res.status === "OK") {
             SuccessAlert("با موفقیت ویرایش شد");
             dispatch(
               vendorData({
-                search: "",
-                isActive: true,
+                ...filter,
                 pageSize: 10,
-                pageNumber: "",
+                pageNumber:pageNumbers,
               }) as any
             );
           } else {
             console.log("run error");
             // ErrorAlert("خطا در برقراری اطلاعات");
           }
-
+          setOpen(false)
           // setIsModalOpen(false);
         });
       }
@@ -142,15 +114,7 @@ const VendorActionForms: React.FC<PropsData> = ({ currentData,open,setOpen}): JS
   }, [open]);
   return (
     <>
-      {/* {!currentData ? (
-        <AddButton ToggleOptions={ToggleOptions} />
-      ) : (
-        <button className=" border-none	 text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
-          <AiOutlineEdit className="w-full h-full" />
-        </button>
-      )}
-      <AddExcel excelInfo={VendorExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/> */}
-      {/* <AddExcel setIsOpenModal={setUploadExcel} IsOpenModal={uploadExcel} /> */}
+   
 
       <Modal
         visible={open}
