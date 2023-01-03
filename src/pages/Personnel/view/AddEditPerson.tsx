@@ -40,7 +40,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   const validation = Yup.object().shape({
     personelCode: Yup.string().required(),
     nationalCode: Yup.string()
-      .matches(NationalCodeRegex, VALIDPOSTALCODE)
+      .matches(NationalCodeRegex, VALIDNATIONALCODE)
       .required(),
     name: Yup.string().required(),
     mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
@@ -83,7 +83,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   const [uploadExcel, setUploadExcel] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [nodeChecked, setNodeChecked] = useState<any>({});
-  const [selectedHub, setSelectedHub] = useState("");
+  const [selectedHub, setSelectedHub] = useState<any>({});
   const [options] = useState([
     { id: 0, text: "خیر" },
     { id: 1, text: "بله" },
@@ -130,8 +130,8 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             email: values.email,
             username: values.username,
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
-            isActive: currentData.isActive,
-            hubcode: nodeChecked.value,
+            isActive: values.isActive,
+            hubcode: selectedHub.value,
           }
         : {
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
@@ -143,7 +143,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             username: values.username,
             password: values.password,
             isActive: true,
-            hubcode: nodeChecked.value,
+            hubcode: selectedHub.value,
           };
       if (treeChecked.length === 0) {
         setTreeCheckedError("حداقل یک هاب باید انتخاب شود");
@@ -198,7 +198,6 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 
         setSelectedHub(
           findNode({ children: userInfo?.hublist }, res?.data?.payload?.hubcode)
-            .label
         );
       } catch (error) {}
     },
@@ -222,6 +221,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
     { handleClick: handleOpenModal, name: "افزودن پرسنل" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
+  console.log("sadfsd", formik.values.isActive);
 
   return (
     <div>
@@ -278,6 +278,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           <div className="grid grid-cols-4 gap-6 my-6">
             <div className="inputRow">
               <InputText
+                readOnly={currentData ? true : false}
                 wrapperClassName="w-full"
                 label="کد پرسنلی"
                 name="personelCode"
@@ -353,7 +354,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               } h-[40px] mb-[20px]`}
             >
               <CustomSwitch
-                active={true}
+                active={formik.values.isActive}
                 handleChange={(value) =>
                   formik.setFieldValue("isActive", value)
                 }
@@ -370,7 +371,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 nodeChecked={(value) => {
                   setTreeChecked([value.value]);
                   setNodeChecked(value);
-                  setSelectedHub(value.label);
+                  setSelectedHub(value);
                 }}
               />
             </div>
@@ -417,7 +418,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               <>
                 <div className="col-span-2  relative">
                   <span>هاب انتخاب شده : </span>
-                  {selectedHub}
+                  {selectedHub.label}
                 </div>
               </>
             )}
