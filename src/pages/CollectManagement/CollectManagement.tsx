@@ -1,13 +1,24 @@
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import NotFound from "../../components/NotFound/NotFound";
+import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
+import StaticTable from "../../components/staticTable/StaticTable";
 import StatusBar from "../../components/StatusBar/StatusBar";
+import CollectManagementFilterSearch from "./view/CollectManagementFilterSearch";
 
 const CollectManagement = () => {
   return (
     <>
       <Breadcrumb curentPage="مدیریت جمع آوری" beforePage="بازگشت" />
       <StatusBar Options={CollectStatus} />
-      <NotFound/>
+      <CollectManagementFilterSearch />
+      <SwitchOptionTable accessPage={[{ code: "A1", value: [] }]} />
+      <StaticTable
+        data={[]}
+        // column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
+        column={[]}
+        pagination={7}
+        selectable={false}
+        THWrapper={"min-w-[130px] w-[130px]"}
+      />
     </>
   );
 };
