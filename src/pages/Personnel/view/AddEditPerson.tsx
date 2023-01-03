@@ -83,7 +83,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   const [uploadExcel, setUploadExcel] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [nodeChecked, setNodeChecked] = useState<any>({});
-  const [selectedHub, setSelectedHub] = useState("");
+  const [selectedHub, setSelectedHub] = useState<any>({});
   const [options] = useState([
     { id: 0, text: "خیر" },
     { id: 1, text: "بله" },
@@ -143,7 +143,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             username: values.username,
             password: values.password,
             isActive: true,
-            hubcode: nodeChecked.value,
+            hubcode: selectedHub.value,
           };
       if (treeChecked.length === 0) {
         setTreeCheckedError("حداقل یک هاب باید انتخاب شود");
@@ -198,7 +198,6 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
 
         setSelectedHub(
           findNode({ children: userInfo?.hublist }, res?.data?.payload?.hubcode)
-            .label
         );
       } catch (error) {}
     },
@@ -371,7 +370,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
                 nodeChecked={(value) => {
                   setTreeChecked([value.value]);
                   setNodeChecked(value);
-                  setSelectedHub(value.label);
+                  setSelectedHub(value);
                 }}
               />
             </div>
@@ -418,7 +417,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               <>
                 <div className="col-span-2  relative">
                   <span>هاب انتخاب شده : </span>
-                  {selectedHub}
+                  {selectedHub.label}
                 </div>
               </>
             )}
