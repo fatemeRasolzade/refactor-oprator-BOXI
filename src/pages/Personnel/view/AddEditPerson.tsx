@@ -278,6 +278,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
           <div className="grid grid-cols-4 gap-6 my-6">
             <div className="inputRow">
               <InputText
+                readOnly={currentData ? true : false}
                 wrapperClassName="w-full"
                 label="کد پرسنلی"
                 name="personelCode"
