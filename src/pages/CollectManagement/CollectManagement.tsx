@@ -1,13 +1,13 @@
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import NotFound from "../../components/NotFound/NotFound";
 import StatusBar from "../../components/StatusBar/StatusBar";
+import CollectManagementFilterSearch from "./view/CollectManagementFilterSearch";
 
 const CollectManagement = () => {
   return (
     <>
       <Breadcrumb curentPage="مدیریت جمع آوری" beforePage="بازگشت" />
       <StatusBar Options={CollectStatus} />
-      <NotFound/>
+      <CollectManagementFilterSearch />
     </>
   );
 };
