@@ -54,13 +54,13 @@
     @apply h-10 rounded-lg border-none text-darkGray px-5 py-2 centering gap-2;
   }
   .full-tomato-btn {
-    @apply bg-tomato text-light;
+    @apply bg-tomato text-light w-32;
   }
   .line-tomato-btn {
     @apply bg-light text-tomato border border-tomato;
   }
   .full-lightTomato-btn {
-    @apply bg-lightTomato text-gray-600;
+    @apply bg-lightTomato text-gray-600 w-32;
   }
   .full-gray-btn {
     @apply !bg-lightGray !text-darkGray px-10;

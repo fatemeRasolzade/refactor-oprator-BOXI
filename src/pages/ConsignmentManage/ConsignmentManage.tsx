@@ -6,6 +6,7 @@ import { ConsignmentManageCol } from "../../global/Column/Columns";
 import DeleteModal from "../../global/DeleteModal/DeleteModal";
 import SearchConsignmentFilter from "./view/SearchConsignmentFilter";
 import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
+import PrintLabelForm from "./view/PrintLabelForm";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
@@ -14,11 +15,14 @@ interface SelectedColInterface {
   type: "operation" | "text" | "inputSelect" | "multiSelect" | "status" | "time";
 }
 const ConsignmentManage = () => {
+  const [OpenPrintLabel, setOpenPrintLabel] = useState(false);
+  const [OpenEntranceScan, setOpenEntranceScan] = useState(false);
+  const [OpenOutPutScan, setOpenOutPutScan] = useState(false);
+
   const [isOpenModalDelete, setIsOpenModalDelete] = useState({
     isOpen: false,
     id: undefined,
   });
-  const [isActive, setIsActive] = useState<boolean>(true);
   const [selectedCol, setSelectedCol] = useState<Array<SelectedColInterface>>([
     {
       id: crypto.randomUUID(),
@@ -39,15 +43,15 @@ const ConsignmentManage = () => {
   const handleDeleteActionNewData = () => {};
 
   const PrintLabelOptions = [
-    { handleClick: () => console.log(), name: "انتخاب شده ها" },
+    { handleClick: () => setOpenPrintLabel(true), name: "انتخاب شده ها" },
     { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
   ];
-  const EntranceOptions = [
+  const EntranceScanOptions = [
     { handleClick: () => console.log(), name: "اسکن اکسل " },
     { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
   ];
 
-  const OutPutOptions = [
+  const OutPutScanOptions = [
     { handleClick: () => console.log(), name: "اسکن اکسل " },
     { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
   ];
@@ -56,17 +60,13 @@ const ConsignmentManage = () => {
     <>
       <Breadcrumb curentPage="مدیریت مرسوله" />
       <StatusBar Options={Options} />
-      <SearchConsignmentFilter
-        isActive={isActive}
-        selectedCol={selectedCol}
-        setSelectedCol={(value: Array<SelectedColInterface>) => setSelectedCol(value)}
-      />
+      <SearchConsignmentFilter selectedCol={selectedCol} setSelectedCol={(value: Array<SelectedColInterface>) => setSelectedCol(value)} />
       <SwitchOptionTable
         accessPage={[
           { code: "A7" },
           { code: "A6", value: PrintLabelOptions },
-          { code: "A4", value: EntranceOptions },
-          { code: "A5", value: OutPutOptions },
+          { code: "A4", value: EntranceScanOptions },
+          { code: "A5", value: OutPutScanOptions },
           { code: "A1", value: [] },
         ]}
       />
@@ -89,6 +89,7 @@ const ConsignmentManage = () => {
         route={""}
         handleDeleteActionNewData={handleDeleteActionNewData}
       />
+      <PrintLabelForm open={OpenPrintLabel} setOpen={setOpenPrintLabel} />
     </>
   );
 };

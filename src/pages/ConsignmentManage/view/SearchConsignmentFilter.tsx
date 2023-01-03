@@ -34,13 +34,11 @@ interface SelectedColInterface {
     | "time";
 }
 interface SearchConsignmentFilterProps {
-  isActive: boolean;
   selectedCol: Array<SelectedColInterface>;
   // setFilterData: (value: any) => void;
   setSelectedCol: (selectedCol: Array<SelectedColInterface>) => void;
 }
 const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({
-  isActive,
   selectedCol,
   setSelectedCol,
 }) => {
