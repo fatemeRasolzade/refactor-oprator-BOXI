@@ -1,5 +1,4 @@
 import { FC } from "react";
-
 import { componentItem } from "../../models/SwitchOptionsModel";
 
 interface accessPageObject {}

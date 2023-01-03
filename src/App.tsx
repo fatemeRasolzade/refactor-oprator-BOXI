@@ -20,6 +20,7 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import AddConsignmentManage from "./pages/ConsignmentManage/view/AddConsignmentManage";
 import DashboardLayout from "./components/Layout/DashboardLayout";
 import Customkeycloak from "./KeyCloack";
+import MapComponent from "./components/map/MapComponent";
 
 function App() {
   const navigate=useNavigate()
@@ -87,6 +88,7 @@ function App() {
             <Route path="/basic-information/custom-geographic-category/edit" element={<GeoWrapperEdit />} />
             <Route path="" element={<GeoWrapperEdit />} />
             <Route path="/consignment-manage/add" element={<AddConsignmentManage />} />
+            <Route path="/map" element={<MapComponent />} />
           </Route>
         </Routes>
       </div>
