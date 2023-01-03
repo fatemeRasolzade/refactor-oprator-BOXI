@@ -7,6 +7,8 @@ import DeleteModal from "../../global/DeleteModal/DeleteModal";
 import SearchConsignmentFilter from "./view/SearchConsignmentFilter";
 import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 import PrintLabelForm from "./view/PrintLabelForm";
+import EntranceScanForm from "./view/EntranceScanForm";
+import OutPutScanForm from "./view/OutPutScanForm";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
@@ -47,12 +49,12 @@ const ConsignmentManage = () => {
     { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
   ];
   const EntranceScanOptions = [
-    { handleClick: () => console.log(), name: "اسکن اکسل " },
+    { handleClick: () => setOpenEntranceScan(true), name: "اسکن اکسل " },
     { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
   ];
 
   const OutPutScanOptions = [
-    { handleClick: () => console.log(), name: "اسکن اکسل " },
+    { handleClick: () => setOpenOutPutScan(true), name: "اسکن اکسل " },
     { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
   ];
   // const Entires
@@ -90,6 +92,8 @@ const ConsignmentManage = () => {
         handleDeleteActionNewData={handleDeleteActionNewData}
       />
       <PrintLabelForm open={OpenPrintLabel} setOpen={setOpenPrintLabel} />
+      <EntranceScanForm open={OpenEntranceScan} setOpen={setOpenEntranceScan} />
+      <OutPutScanForm open={OpenOutPutScan} setOpen={setOpenOutPutScan} />
     </>
   );
 };
