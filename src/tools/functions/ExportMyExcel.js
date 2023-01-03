@@ -3,62 +3,31 @@ import { saveAs } from "file-saver";
 
 const workSheetName = "Worksheet-1";
 // const ExportExcel = ({ data }) => {
-export const ExportExcel = async (data, columns) => {
+export const ExportExcel = async (data, columns,title) => {
 
   data.map((obj) => {
     delete obj?.operation;
-
     // delete obj?.isDeleted;
     // Object.keys(obj).forEach((key) => (obj[key] === null || obj[key] === undefined ? (obj[key] = "-") : obj[key]));
   });
 const filterColumn=columns.filter(item=>item.accessor!=="operation")
-  console.log(filterColumn);
-//  const flattenObj = (ob) => {
-//       // The object which contains the
-//       // final result
-//       let result = {};
-//       // loop through the object "ob"
-//       for (const i in ob) {
-//         // We check the type of the i using
-//         // typeof() function and recursively
-//         // call the function again
-//         if (typeof ob[i] === "object" && !Array.isArray(ob[i])) {
-//           // console.log(ob[i])
-//           if(ob[i]?.day){
-//                 result[i]=ob[i]?.day+"/"+ob[i]?.month+"/"+ob[i]?.year
-//           }
-//           else{
-//             const temp = flattenObj(ob[i]);
-//             for (const j in temp) {
-//               result[persianName[i]] = temp[j];
-//             }
-//           }
-         
-//         }
-//         // Else store ob[i] in result directly
-//         else {
-//           // @ts-ignore
-//           result[i] = ob[i];
-//         }
-//       }
-//       return result;
-//     };
-//     const flatobj = [];
+  console.log(columns,data);
+
 
   const workbook = new Excel.Workbook();
   try {
     // creating one worksheet in workbook
-    const worksheet = workbook.addWorksheet(workSheetName);
+    const worksheet = workbook.addWorksheet();
 
     // add worksheet columns
     // each columns contains header and its mapping key from data
-    worksheet.columns = columns;
+    worksheet.columns = filterColumn;
 
     // updated the font for first row.
     worksheet.getRow(1).font = { bold: true };
 
-    // loop through all of the columns and set the alignment with width.
-    worksheet.columns.forEach((column) => {
+    // loop through all of the filterColumn and set the alignment with width.
+    worksheet.filterColumn.forEach((column) => {
       column.width = column.header.length + 25;
       column.alignment = { horizontal: "center" };
     });
@@ -92,7 +61,7 @@ const filterColumn=columns.filter(item=>item.accessor!=="operation")
     const buf = await workbook.xlsx.writeBuffer();
     console.log(buf);
     // download the processed file
-    saveAs(new Blob([buf]), `excel.xlsx`);
+    saveAs(new Blob([buf]), `${title}.xlsx`);
   } catch (error) {
   } finally {
     // removing worksheet's instance to create new one

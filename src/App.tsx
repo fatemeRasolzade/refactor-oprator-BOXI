@@ -4,7 +4,7 @@ import "react-checkbox-tree/lib/react-checkbox-tree.css";
 
 import { useCallback, useEffect, useState } from "react";
 import { links } from "./components/SidebarRoutes/SidebarRoutes";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
 import "rodal/lib/rodal.css";
 import NotFound from "./pages/NotFound/NotFound";
