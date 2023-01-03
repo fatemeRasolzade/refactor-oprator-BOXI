@@ -16,7 +16,7 @@ const {pageNumbers} =useSelector((state:any)=>state.paginate)
 const validationSchema=Yup.object({
     name:Yup.string().required("عنوان را وارد کنید"),
     code:Yup.number().required("کد را وارد کنید"),
-    description:Yup.string().required("توضیحات را وارد کنید"),
+   
 })
 
 const BodyData={
@@ -59,6 +59,7 @@ const BodyData={
       PutWithHeader(apiRoute().edit.Edithub_category,values).then(res=>{
        
         if(res.status==="OK"){
+          handleOpen(false)
           SuccessAlert("با موفقیت ویرایش شد")
           dispatch(HubTypeData(BodyData) as any)
          }else{

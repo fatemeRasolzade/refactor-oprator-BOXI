@@ -13,7 +13,7 @@ import { ProductGroupsData } from '../../../../redux/ProductGroup/ProductGroup';
 
 const EditModalProductGroup = ({isModalOpen,setIsModalOpen,dataInput,bodyProduct}:{isModalOpen:boolean,setIsModalOpen?:any,dataInput:any,bodyProduct?:object}) => {
 
-  
+  console.log("first888")
 
 
     const validationSchema=Yup.object({

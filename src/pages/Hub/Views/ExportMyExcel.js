@@ -1,14 +1,15 @@
 import Excel from 'exceljs';
 import { saveAs } from 'file-saver';
-import {HubColumn} from "../../../global/Column/Columns"
+
 
 
 
 const workSheetName = 'Worksheet-1';
- const MyExport=({data})=> {
+
   const workbook = new Excel.Workbook();
 
-  const saveExcel = async () => {
+
+ export const saveExcel = async ({data,column}) => {
     try {
      
      
@@ -18,7 +19,7 @@ const workSheetName = 'Worksheet-1';
 
       // add worksheet columns
       // each columns contains header and its mapping key from data
-      worksheet.columns = HubColumn;
+      worksheet.columns = column;
 
       // updated the font for first row.
       worksheet.getRow(1).font = { bold: true };
@@ -66,12 +67,3 @@ const workSheetName = 'Worksheet-1';
       workbook.removeWorksheet(workSheetName);
     }
   };
-
-  return (
-    <>
-   
-      <div><button onClick={saveExcel}>Export</button></div>
-    </>
-  );
-}
-export default MyExport

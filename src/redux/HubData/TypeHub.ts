@@ -7,9 +7,10 @@ import { apiRoute } from './../../services/apiRoute';
 export const HubTypeData=createAsyncThunk("hubType",async(body:any)=>{
      const params=`/filter?pageNumber=${body.pageNumbers}&pageSize=10`
     const {payload}=await postDataHeaderToServer(apiRoute().post.Type_Hub_table + params,{
-      name:body.name,
-        code: body.code,
-        description:body.description
+      name:body?.name ? body?.name : "",
+        code: body?.code ? body.code : "",
+        description:body?.description ? body.description : "",
+        isActive:body.isActive
 })
 
     return payload

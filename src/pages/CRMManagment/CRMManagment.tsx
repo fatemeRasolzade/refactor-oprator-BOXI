@@ -29,7 +29,7 @@ const CRMManagment = () => {
   const [isActive, setIsActive] = useState<boolean>(true);
   const [isModalAddEdit, setIsModalAddEdit] = useState({
     isOpen: false,
-    data: {},
+    data: null,
   });
 
   const getDataTable = useCallback(async () => {
@@ -119,10 +119,10 @@ const CRMManagment = () => {
         visible={isModalAddEdit.isOpen}
         setVisible={(e: any) =>
           setIsModalAddEdit((prev) => {
-            return { ...prev, isOpen: e };
+            return { ...prev, isOpen: false };
           })
         }
-        title={isModalAddEdit.data ? "ویرایش" : "افزودن"}
+        title={isModalAddEdit.data ? "ویرایش گروه" : "افزودن گروه"}
       >
         <>
           <AddEditCRMManagement

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import * as yup from "yup";
@@ -120,10 +120,13 @@ const AddEditRole: FC<EditRoleProps> = ({
     if (treeChecked.length !== 0) {
       setTreeCheckedError("");
     }
+  }, [currentData, currentData?.permsCodes, treeChecked.length]);
+
+  useLayoutEffect(() => {
     if (currentData) {
       setTreeChecked(currentData?.permsCodes);
     }
-  }, [currentData, currentData?.permsCodes, treeChecked.length]);
+  }, [currentData]);
 
   const { values, errors, handleSubmit, setFieldValue } = formik;
 

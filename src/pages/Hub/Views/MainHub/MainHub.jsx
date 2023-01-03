@@ -11,10 +11,9 @@ import NavbarSearch from "../../../../components/NavbarSearch/NavbarSearch";
 import OptionsTable from "../../../../components/OptionsTable/OptionsTable";
 import { ExportExcel } from "../../../../tools/functions/Methods";
 import { BiEditAlt, BiTrash } from "react-icons/bi";
-import {DeleteDataParams} from "../../../../services/Service_call"
 import { apiRoute } from "../../../../services/apiRoute";
-import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert";
-import MyExport from "../ExportMyExcel";
+//  import {MyExport} from "../ExportMyExcel";
+import DeleteModal from "../../../../global/DeleteModal/DeleteModal";
 
 const Hub = () => {
   const dispatch=useDispatch()
@@ -22,13 +21,20 @@ const Hub = () => {
   const {payload}=useSelector(state=>state.hub.postLists)
   const {pageNumbers} =useSelector(state=>state.paginate)
   const [ActiveSwitch,setActiveSwitch]=useState(true)
- 
+  const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
+const [deleteItemId, setdeleteItemId] = useState(0);
+  const BodyData={
+    code: "",
+      name: "",
+      hubTypeId: "",
+      hubCategoryId: "",
+      parentHubId: "",
+      pageNumbers:pageNumbers,
+      isActive:ActiveSwitch
+  }
 
   useEffect(()=>{
    
-      dispatch(HubData(BodyData))
-    
-    
    return()=>dispatch(clearHub())
   },[])
 
@@ -42,9 +48,6 @@ dispatch(HubData(BodyData))
   },[ActiveSwitch])
 
 
-
-
-
   var data=payload?.content?.length > 0 ? payload.content.map(hubItem=>{
     return{
       isActive:hubItem?.isActive,
@@ -56,59 +59,38 @@ dispatch(HubData(BodyData))
       addressLine1:hubItem.addressLine1 ? hubItem?.addressLine1 : "",
       Ragen:hubItem.selectRegion !==null ? hubItem?.selectRegion?.text :"",
       deliver:hubItem.dropOffAllowed ? "بله" : "خیر",
-      active:hubItem?.isActive,
+      active:hubItem?.isActive === true ? "فعال" : "غیرغعال",
       editBy:hubItem.name ? hubItem?.name : "",
       EditTime:hubItem.locationStartDate !==null ? `${hubItem?.locationStartDate?.year}/${hubItem?.locationStartDate?.month}/${hubItem?.locationStartDate?.day} ` : "",
       edit:<div className="w-full centering cursor-pointer" ><BiEditAlt onClick={()=>{
         dispatch(editHub(hubItem))
        navigate("/hub/edit")
       }} size={20}/></div>,
-      delete:<div className="w-full centering cursor-pointer"><BiTrash onClick={()=>handelDeleteHub(hubItem.id)} size={20}/></div>
+      delete:<div className="w-full centering cursor-pointer"><BiTrash onClick={()=>{
+        setdeleteItemId(hubItem?.id)
+        setIsModalOpenDelete(prev=>!prev)
+      }} size={20}/></div>
     }
   }) : []
 
-const BodyData={
-  code: "",
-    name: "",
-    hubTypeId: "",
-    hubCategoryId: "",
-    parentHubId: "",
-    pageNumbers:pageNumbers,
-    isActive:ActiveSwitch
+
+const handelActionAfterDelete=()=>{
+  dispatch(deleteRow(deleteItemId))
 }
-
-
-
-
-
-const handelDeleteHub=(id)=>{
- 
-  DeleteDataParams(apiRoute().delete.hubTable + `/${id}`).then(res=>{
-    if(res.status==="OK"){
-      dispatch(deleteRow(id))
-      SuccessAlert("با موفقیت پاک شد")
-      }else{
-      ErrorAlert("خطا در برقراری ارتباط")
-    }
-  })
-}
-
 
   return (
     <div>
 
-
-
      <Breadcrumb beforePage="برگشت" curentPage="هاب" />
-      <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" />
+      <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" activeChecked={ActiveSwitch}/>
       <OptionsTable
        exportExcel={() => ExportExcel(data)}
        btnLink="/hub/add"
        setIsActive={setActiveSwitch}
        isActive={ActiveSwitch}
       />
-
-<MyExport data={data}/>
+ <DeleteModal isModalOpenDelete={isModalOpenDelete} setIsModalOpenDelete={setIsModalOpenDelete} title="حذف هاب" itemId={deleteItemId} route={apiRoute().delete.hubTable} handleDeleteActionNewData={handelActionAfterDelete}/>
+ {/* <MyExport data={data} columns={HubColumn}/>  */}
      <StaticTable data={data} column={HubColumn} pagination={payload?.totalElements} />
     </div>
   );

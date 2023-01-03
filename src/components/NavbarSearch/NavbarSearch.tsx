@@ -22,7 +22,7 @@ interface SelectedColInterface {
   isRequire: boolean;
   id:string
 }
-const NavbarSearch = () => {
+const NavbarSearch = ({activeChecked}:{activeChecked?:boolean}) => {
   const [selectedCol, setSelectedCol] = useState<Array<SelectedColInterface>>(
     []
   );
@@ -38,13 +38,14 @@ const NavbarSearch = () => {
       hubCategoryId: "",
       parentHubId: "",
       code: "",
+      
     },
 
     onSubmit: (values) => {
-      const bodyData = { ...values, pageNumbers: pageNumbers };
-
+      const bodyData = {...values,pageNumbers: pageNumbers,isActive:activeChecked};
+      
       setFilterData(values);
-      dispatch(HubData({ ...bodyData }) as any);
+        dispatch(HubData(bodyData) as any);
     },
   });
 
