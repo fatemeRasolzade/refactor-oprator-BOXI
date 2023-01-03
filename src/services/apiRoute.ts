@@ -13,10 +13,10 @@ export const apiRoute = () => {
   return {
     get: {
     //start select service delivery
-        Fliter_customerSegment:createUrl(CORE_API, "/customersegment/select?filter="),
+        Fliter_customer:createUrl(RESOURCE_API, "/customer/select?filter="),
         Fliter_Service:createUrl(CORE_API, "/service/select?filter="),
         Filter_saleschannel:createUrl(CORE_API, "/saleschannel/select?filter="),
-        Filter_servicedeliverycustomers:createUrl(CORE_API, "/servicedeliverycustomers/select?filter="),
+        Filter_servicedeliverycustomers:createUrl(CORE_API, "/customersegment/select?filter="),
 // end  service delivery
       get_city: createUrl(CORE_API, "/countryDevision/city/2/loc?filter="),
       get_province: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),

@@ -31,7 +31,7 @@ const [ServiceList, setServiceList] = useState([]);
     selectDataFromServerWithHeader(apiRoute().get.Filter_saleschannel).then(res=>{
       if(res.status==="OK"){setChanelSale(res.payload)}else{ErrorAlert("دیتای کانال فروش بارگزاری نشد")}
     })
-    selectDataFromServerWithHeader(apiRoute().get.Fliter_customerSegment).then(res=>{
+    selectDataFromServerWithHeader(apiRoute().get.Filter_servicedeliverycustomers).then(res=>{
       if(res.status==="OK"){setSegmentCustomer(res.payload)}else{ErrorAlert("دیتای کانال فروش بارگزاری نشد")}
     })
     selectDataFromServerWithHeader(apiRoute().get.Filter_servicedeliverycustomers).then(res=>{

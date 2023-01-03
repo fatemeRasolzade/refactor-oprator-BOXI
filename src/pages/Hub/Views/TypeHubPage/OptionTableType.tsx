@@ -34,10 +34,10 @@ const OptionsTableType: FC<OptionsTableProps> = ({exportExcel,setIsActive,active
         </li>
         <li>
 
-          <CustomSwitch
+          {/* <CustomSwitch
             active={activesw ? activesw : false}
             handleChange={(value: boolean) =>setActivesw(value as boolean)}
-          />
+          /> */}
 
         </li>
      
