@@ -130,8 +130,8 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
             email: values.email,
             username: values.username,
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
-            isActive: currentData.isActive,
-            hubcode: nodeChecked.value,
+            isActive: values.isActive,
+            hubcode: selectedHub.value,
           }
         : {
             isSuperAdmin: values.isSuperAdmin?.id === 0 ? false : true,
@@ -221,6 +221,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
     { handleClick: handleOpenModal, name: "افزودن پرسنل" },
     { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
   ];
+  console.log("sadfsd", formik.values.isActive);
 
   return (
     <div>
@@ -353,7 +354,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
               } h-[40px] mb-[20px]`}
             >
               <CustomSwitch
-                active={true}
+                active={formik.values.isActive}
                 handleChange={(value) =>
                   formik.setFieldValue("isActive", value)
                 }
