@@ -73,8 +73,9 @@ const Vendor: React.FC = (): JSX.Element => {
 
       <SwitchOptionTable
         accessPage={[
+          { code: "A2", value: {ToggleOptions}},
           { code: "A3",value:{data:isActive,action:()=>setIsACtive(!isActive)} },
-          { code: "A2", value: {ToggleOptions} },
+
           { code: "A1", value: [] },
         ]}
       />
