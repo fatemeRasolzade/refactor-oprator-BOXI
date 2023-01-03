@@ -40,7 +40,7 @@ const AddEditPerson: FC<AddEditPersonProps> = ({ currentData }) => {
   const validation = Yup.object().shape({
     personelCode: Yup.string().required(),
     nationalCode: Yup.string()
-      .matches(NationalCodeRegex, VALIDPOSTALCODE)
+      .matches(NationalCodeRegex, VALIDNATIONALCODE)
       .required(),
     name: Yup.string().required(),
     mobile: Yup.string().matches(MobileRegex, VALIDMOBILE).required(),
