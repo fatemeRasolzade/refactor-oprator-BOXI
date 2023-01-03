@@ -248,7 +248,7 @@ export const links = [
       {
         to: "/basic-information/service-time",
         component: <ServiceTime />,
-        label: "تعریف مدت ارئه خدمت",
+        label: "تعریف مدت ارائه خدمت",
       },
       // {
       //   to: "/basic-information/pincode-management",

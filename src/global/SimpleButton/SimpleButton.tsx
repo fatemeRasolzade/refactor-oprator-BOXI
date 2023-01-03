@@ -7,6 +7,7 @@ type SimpleButtonProps = {
   text?: string;
   className?: string;
   icon?: JSX.Element;
+  RightIcon?: JSX.Element;
   handelClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   searchBtn?: boolean;
   loading?: boolean;
@@ -18,6 +19,7 @@ const SimpleButton = ({
   type = "button",
   text,
   icon,
+  RightIcon,
   className,
   handelClick,
   searchBtn,
@@ -29,11 +31,10 @@ const SimpleButton = ({
     <button
       disabled={loading ? true : disabled}
       type={searchBtn ? "submit" : type}
-      className={`btn ${searchBtn && "full-gray-btn"} ${
-        disabled && "opacity-60"
-      } ${className} px-0`}
+      className={`btn ${searchBtn && "full-gray-btn"} ${disabled && "opacity-60"} ${className} px-0`}
       onClick={handelClick}
     >
+      {RightIcon && <span>{RightIcon} </span>}
       <span>{searchBtn ? "جستجو" : text}</span>
       {icon && <span>{icon} </span>}
       {searchBtn && (

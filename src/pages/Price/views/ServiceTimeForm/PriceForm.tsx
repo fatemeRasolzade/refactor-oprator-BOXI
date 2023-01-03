@@ -148,14 +148,23 @@ const PriceForm = ({ currentData, open, setOpen }: PriceFormFormProps) => {
 
   useEffect(() => {
     handleReset();
+    if (!currentData) {
+      setAttributes([]);
+    }
   }, [handleReset, open]);
 
   return (
     <Modal visible={open} setVisible={setOpen} title={currentData ? "ویرایش نرخ نامه" : "تعریف نرخ نامه"}>
       <form onSubmit={handleSubmit}>
-        <PriceFormInformation formik={formik} />
+        <PriceFormInformation formik={formik} open={open} />
       </form>
-      <PriceAttributeForm Attributes={Attributes} setAttributes={setAttributes} open={open} handleResetOuter={handleReset} />
+      <PriceAttributeForm
+        Attributes={Attributes}
+        setAttributes={setAttributes}
+        open={open}
+        handleResetOuter={handleReset}
+        currentData={currentData}
+      />
       <div className="flex-end-center mt-5 gap-3">
         <SimpleButton handelClick={handleCloseCustomerForm} text="لغو" className="full-lightTomato-btn" />
         <SimpleButton

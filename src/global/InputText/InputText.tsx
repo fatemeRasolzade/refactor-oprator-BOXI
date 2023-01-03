@@ -15,6 +15,7 @@ type InputTextProps = {
   handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   wrapperClassName?: string;
   password?: boolean;
+  leftIcon?: JSX.Element;
 };
 const InputText = React.forwardRef(
   (
@@ -32,6 +33,7 @@ const InputText = React.forwardRef(
       values,
       wrapperClassName,
       password,
+      leftIcon,
     }: InputTextProps,
     ref: any
   ) => {
@@ -39,18 +41,9 @@ const InputText = React.forwardRef(
 
     return (
       <div className={`flex flex-col ${wrapperClassName}`}>
-        <div
-          className={`autocompleteWrapper ${classNames} ${
-            error && "border-red"
-          } ${readOnly && "opacity-40"} `}
-        >
-          <div
-            className={`autocompleteLabel  ${error && "text-red"} top-[-17px]`}
-          >
-            {label}{" "}
-            <span className="text-tomato font-extrabold text-lg h-4">
-              {important ? "*" : " "}
-            </span>
+        <div className={`autocompleteWrapper ${classNames} ${error && "border-red"} ${readOnly && "opacity-40"} `}>
+          <div className={`autocompleteLabel  ${error && "text-red"} top-[-17px]`}>
+            {label} <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
           </div>
           <input
             ref={ref}
@@ -63,13 +56,11 @@ const InputText = React.forwardRef(
             placeholder={placeholder}
           />
           {password && (
-            <div
-              className="text-darkBorder cursor-pointer"
-              onClick={() => setHidePassword(!HidePassword)}
-            >
+            <div className="text-darkBorder cursor-pointer pr-3" onClick={() => setHidePassword(!HidePassword)}>
               {HidePassword ? <BiHide size={20} /> : <BiShow size={20} />}
             </div>
           )}
+          {leftIcon && <span className="pr-3">{leftIcon}</span>}
         </div>
         <p className="text-red text-xs pr-3 h-4 mt-1">{error}</p>
       </div>

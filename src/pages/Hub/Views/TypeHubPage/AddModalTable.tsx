@@ -15,9 +15,8 @@ const dispatch=useDispatch()
 const {pageNumbers} =useSelector((state:any)=>state.paginate)
 const validationSchema=Yup.object({
     name:Yup.string().required("عنوان را وارد کنید"),
-    code:Yup.number().required("کد را وارد کنید"),
-    description:Yup.string().required("توضیحات را وارد کنید"),
-})
+    code:Yup.number().required("کد را وارد کنید")
+  })
 
 
 
@@ -33,8 +32,9 @@ const formok=useFormik({
       postDataHeaderToServer(apiRoute().post.Type_Hub_table,values)
      .then(res=>{
       if(res.status==="OK"){
+        handleOpen(false)
         SuccessAlert("با موفقیت ساخته شد")
-        dispatch(HubTypeData(pageNumbers) as any)
+        dispatch(HubTypeData({pageNumbers:pageNumbers}) as any)
        }else{
         ErrorAlert("با خطا مواجه شد")
       }
@@ -75,7 +75,7 @@ const formok=useFormik({
                <InputText label='کد' wrapperClassName='w-full' name="code" handleChange={formok.handleChange} important values={formok.values.code} error={formok.touched.code && formok.errors.code}/>
                </div>
                 <div className='col-span-2'>
-                <InputText label='توضیحات' wrapperClassName='w-full' name='description' handleChange={formok.handleChange} important values={formok.values.description} error={formok.touched.description && formok.errors.description}/>
+                <InputText label='توضیحات' wrapperClassName='w-full' name='description' handleChange={formok.handleChange}  values={formok.values.description}/>
                 </div>
 
 

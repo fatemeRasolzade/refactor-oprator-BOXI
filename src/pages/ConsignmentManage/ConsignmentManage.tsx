@@ -1,35 +1,30 @@
-import StatusBar from "../../components/StatusBar/StatusBar";
 import { useState } from "react";
+import StatusBar from "../../components/StatusBar/StatusBar";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import { ConsignmentManageCol } from "../../global/Column/Columns";
 import DeleteModal from "../../global/DeleteModal/DeleteModal";
-import { ExportExcel } from "../../tools/functions/Methods";
 import SearchConsignmentFilter from "./view/SearchConsignmentFilter";
-import NewOptionTable from "../../components/OptionsTable/NewOptionTable";
-import SimpleButton from "../../global/SimpleButton/SimpleButton";
-import { GoDesktopDownload } from "react-icons/go";
 import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
+import PrintLabelForm from "./view/PrintLabelForm";
+import EntranceScanForm from "./view/EntranceScanForm";
+import OutPutScanForm from "./view/OutPutScanForm";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
   id: string;
-  type:
-    | "operation"
-    | "text"
-    | "inputSelect"
-    | "multiSelect"
-    | "status"
-    | "time";
+  type: "operation" | "text" | "inputSelect" | "multiSelect" | "status" | "time";
 }
 const ConsignmentManage = () => {
+  const [OpenPrintLabel, setOpenPrintLabel] = useState(false);
+  const [OpenEntranceScan, setOpenEntranceScan] = useState(false);
+  const [OpenOutPutScan, setOpenOutPutScan] = useState(false);
+
   const [isOpenModalDelete, setIsOpenModalDelete] = useState({
     isOpen: false,
     id: undefined,
   });
-  const [isActive, setIsActive] = useState<boolean>(true);
   const [selectedCol, setSelectedCol] = useState<Array<SelectedColInterface>>([
     {
       id: crypto.randomUUID(),
@@ -48,38 +43,34 @@ const ConsignmentManage = () => {
   ]);
 
   const handleDeleteActionNewData = () => {};
-  const ToggleOptions = [
-    { handleClick: () => console.log(), name: "افزودن پرسنل" },
+
+  const PrintLabelOptions = [
+    { handleClick: () => setOpenPrintLabel(true), name: "انتخاب شده ها" },
     { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
   ];
+  const EntranceScanOptions = [
+    { handleClick: () => setOpenEntranceScan(true), name: "اسکن اکسل " },
+    { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
+  ];
+
+  const OutPutScanOptions = [
+    { handleClick: () => setOpenOutPutScan(true), name: "اسکن اکسل " },
+    { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
+  ];
+  // const Entires
   return (
     <>
       <Breadcrumb curentPage="مدیریت مرسوله" />
       <StatusBar Options={Options} />
-      <SearchConsignmentFilter
-        isActive={isActive}
-        selectedCol={selectedCol}
-        setSelectedCol={(value: Array<SelectedColInterface>) =>
-          setSelectedCol(value)
-        }
-      />
-      <OptionsTable
-        btnLink="/consignment-manage/add"
-        exportExcel={() => ExportExcel([])}
-        isActive={isActive}
-        setIsActive={(value: boolean) => {
-          setIsActive(value);
-        }}
-      />
-
+      <SearchConsignmentFilter selectedCol={selectedCol} setSelectedCol={(value: Array<SelectedColInterface>) => setSelectedCol(value)} />
       <SwitchOptionTable
         accessPage={[
+          { code: "A7" },
+          { code: "A6", value: PrintLabelOptions },
+          { code: "A4", value: EntranceScanOptions },
+          { code: "A5", value: OutPutScanOptions },
+          { code: "A8", value: [] },
           { code: "A1", value: [] },
-          { code: "A3", value: { action: setIsActive, data: isActive } },
-          {
-            code: "A2",
-            value: { isToggle: true, to: "", ToggleOptions: ToggleOptions },
-          },
         ]}
       />
       <StaticTable
@@ -101,6 +92,9 @@ const ConsignmentManage = () => {
         route={""}
         handleDeleteActionNewData={handleDeleteActionNewData}
       />
+      <PrintLabelForm open={OpenPrintLabel} setOpen={setOpenPrintLabel} />
+      <EntranceScanForm open={OpenEntranceScan} setOpen={setOpenEntranceScan} />
+      <OutPutScanForm open={OpenOutPutScan} setOpen={setOpenOutPutScan} />
     </>
   );
 };

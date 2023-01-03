@@ -21,9 +21,10 @@ interface PriceAttributeFormProps {
   setAttributes: any;
   open: boolean;
   handleResetOuter: any;
+  currentData: any;
 }
 
-const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter }: PriceAttributeFormProps) => {
+const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter, currentData }: PriceAttributeFormProps) => {
   const [Product, setProduct] = useState([]);
   const [Edit, setEdit] = useState(false);
   const initProduct = () => {
@@ -115,11 +116,13 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter 
 
   const { values, errors, touched, handleChange, setFieldValue, handleSubmit, handleReset }: any = formik;
 
-  // useEffect(() => {
-    // handleReset();
-    // handleResetOuter();
-    // setAttributes([]);
-  // }, [open, handleReset, handleResetOuter, setAttributes]);
+  useEffect(() => {
+    if (!currentData) {
+      handleReset();
+      handleResetOuter();
+      setAttributes([]);
+    }
+  }, [open, handleReset, handleResetOuter, setAttributes]);
 
   const handleEditPriceAttributes = (id: any) => {
     setEdit(true);

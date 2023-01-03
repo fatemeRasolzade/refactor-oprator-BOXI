@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ExportExcel } from "../../tools/functions/Methods";
 import { PRICE_API } from "../../services/apiRoute";
 import StaticTable from "../../components/staticTable/StaticTable";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import DeleteOperation from "../../components/tableOperation/DeleteOperation";
-import { ACTIVE_OPTION, DOWNLOAD_OPTION } from "../../global/CustomOptions/CustomOptionsKeyword";
 import { priceData, updating } from "../../redux/PriceData/PriceData";
 import PriceForm from "./views/ServiceTimeForm/PriceForm";
 import PriceSearchForm from "./views/PriceSearchForm";

@@ -23,6 +23,7 @@ const VehiclePelakDropDown = ({ list = [], value, name, setValue, ReadOnly }: Ve
   };
 
   const handleChange = (e: any) => {
+    setValue(name, e.target.value);
     setSearch(e.target.value);
   };
 
@@ -33,6 +34,7 @@ const VehiclePelakDropDown = ({ list = [], value, name, setValue, ReadOnly }: Ve
       <RiArrowDownSLine size={30} />
       <div ref={WrapperRef}>
         <input
+          autoComplete="off"
           disabled={ReadOnly}
           className=" w-8 text-center focus:outline-none"
           name="ffa"

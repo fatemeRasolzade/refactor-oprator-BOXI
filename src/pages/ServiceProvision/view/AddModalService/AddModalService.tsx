@@ -12,6 +12,8 @@ import SubTableFormTwo from "./SubTableFormTwo";
 import SubTableOne from "./SubTableOne";
 import Modal from "../../../../global/Modal/Modal";
 import SimpleButton from "../../../../global/SimpleButton/SimpleButton";
+import { addEditDataAPI } from "../../../../services/CRUDServices";
+import { addEditUrls } from "../../../../services/api.enums";
 const AddModalService = ({
   setIsModalOpen,
   isModalOpen,
@@ -21,14 +23,15 @@ const AddModalService = ({
   isModalOpen?: any;
   currentData?: any;
 }) => {
-  const [isActive, setIsActive] = useState(true);
-  const [subForm, setSubForm] = useState(false);
 
+
+console.log("tttt",currentData)
+
+  const [isActive, setIsActive] = useState(true);
   const [ChanelSale, setChanelSale] = useState([]);
   const [DeliveryService, setDeliveryService] = useState([]);
   const [SegmentCustomer, setSegmentCustomer] = useState([]);
   const [catHub, setCatHub] = useState([]);
-
   const [deliveryTableOne, setdeliveryTableOne] = useState([]);
   const [deleveryTableTwo, setdeleveryTableTwo] = useState([]);
 
@@ -70,49 +73,13 @@ const AddModalService = ({
     },
   ];
 
-  // const formik=useFormik({
-  //   // enableReinitialize:true,
-
-  //   initialValues:{
-  //     code:"",
-  //     type:{
-  //         id: "",
-  //         text: ""
-  //     },
-  //     name:"",
-  //     description:"",
-  //     validDateFrom:{
-  //        day: "",
-  //        month: "",
-  //        year: ""
-  //        },
-  //     validDateTo:{
-  //        day: "",
-  //        month: "",
-  //        year: ""
-  //        },
-  //      deliveryDiscounts:[],
-  //     service:null,
-  //     customerSegments:null,
-  //     serviceDeliveryCustomers:null,
-  //     saleschannels:null,
-  //     discountPercent:"",
-  //     isActive:isActive
-  //    },
-
-  //    onSubmit:(values)=>{
-  //  // console.log(values)
-  //  values.deliveryDiscounts=[...deliveryTableOne ,...deleveryTableTwo]
-  //  console.log("oooooo",values)
-  //    }
-  // })
-
+ 
   return (
     <Modal visible={isModalOpen} setVisible={setIsModalOpen} title="ارائه سرویس">
       <div className="w-full">
         <Formik
-          initialValues={{
-            code: currentData?.code ? currentData?.code : "",
+          initialValues={{ 
+            code:currentData?.code ? currentData?.code : "",
             type: currentData?.type
               ? currentData?.type
               : {
@@ -145,7 +112,9 @@ const AddModalService = ({
           }}
           onSubmit={(values) => {
             values.deliveryDiscounts = [...deliveryTableOne, ...deleveryTableTwo];
-            console.log("oooooo", values);
+
+            // addEditDataAPI(addEditUrls.serviceProvision,currentData ? "put" : "post",values).then(res=>console.log("finall",res))
+             console.log("oooooo", values);
           }}
         >
           {(formik) => (

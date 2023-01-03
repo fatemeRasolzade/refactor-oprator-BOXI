@@ -11,11 +11,9 @@ import UserService from "./services/keycloakService";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
-
-
 root.render(
-  // <ReactKeycloakProvider authClient={keycloakConfigs}>
-
+  // // <ReactKeycloakProvider authClient={keycloakConfigs}>
+  // <React.StrictMode>
   <BrowserRouter>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -26,7 +24,7 @@ root.render(
       </PersistGate>
     </Provider>
   </BrowserRouter>
-
+  // </React.StrictMode>
   //  </ReactKeycloakProvider>
 );
 
