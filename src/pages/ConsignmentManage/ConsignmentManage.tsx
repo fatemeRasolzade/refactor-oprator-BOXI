@@ -1,28 +1,17 @@
 import StatusBar from "../../components/StatusBar/StatusBar";
 import { useState } from "react";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import OptionsTable from "../../components/OptionsTable/OptionsTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import { ConsignmentManageCol } from "../../global/Column/Columns";
 import DeleteModal from "../../global/DeleteModal/DeleteModal";
-import { ExportExcel } from "../../tools/functions/Methods";
 import SearchConsignmentFilter from "./view/SearchConsignmentFilter";
-import NewOptionTable from "../../components/OptionsTable/NewOptionTable";
-import SimpleButton from "../../global/SimpleButton/SimpleButton";
-import { GoDesktopDownload } from "react-icons/go";
 import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
   id: string;
-  type:
-    | "operation"
-    | "text"
-    | "inputSelect"
-    | "multiSelect"
-    | "status"
-    | "time";
+  type: "operation" | "text" | "inputSelect" | "multiSelect" | "status" | "time";
 }
 const ConsignmentManage = () => {
   const [isOpenModalDelete, setIsOpenModalDelete] = useState({
@@ -48,10 +37,21 @@ const ConsignmentManage = () => {
   ]);
 
   const handleDeleteActionNewData = () => {};
-  const ToggleOptions = [
-    { handleClick: () => console.log(), name: "افزودن پرسنل" },
+
+  const PrintLabelOptions = [
+    { handleClick: () => console.log(), name: "انتخاب شده ها" },
     { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
   ];
+  const EntranceOptions = [
+    { handleClick: () => console.log(), name: "اسکن اکسل " },
+    { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
+  ];
+
+  const OutPutOptions = [
+    { handleClick: () => console.log(), name: "اسکن اکسل " },
+    { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
+  ];
+  // const Entires
   return (
     <>
       <Breadcrumb curentPage="مدیریت مرسوله" />
@@ -59,27 +59,15 @@ const ConsignmentManage = () => {
       <SearchConsignmentFilter
         isActive={isActive}
         selectedCol={selectedCol}
-        setSelectedCol={(value: Array<SelectedColInterface>) =>
-          setSelectedCol(value)
-        }
+        setSelectedCol={(value: Array<SelectedColInterface>) => setSelectedCol(value)}
       />
-      <OptionsTable
-        btnLink="/consignment-manage/add"
-        exportExcel={() => ExportExcel([])}
-        isActive={isActive}
-        setIsActive={(value: boolean) => {
-          setIsActive(value);
-        }}
-      />
-
       <SwitchOptionTable
         accessPage={[
+          { code: "A7" },
+          { code: "A6", value: PrintLabelOptions },
+          { code: "A4", value: EntranceOptions },
+          { code: "A5", value: OutPutOptions },
           { code: "A1", value: [] },
-          { code: "A3", value: { action: setIsActive, data: isActive } },
-          {
-            code: "A2",
-            value: { isToggle: true, to: "", ToggleOptions: ToggleOptions },
-          },
         ]}
       />
       <StaticTable

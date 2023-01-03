@@ -2,7 +2,6 @@ import { useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import Customkeycloak from "../../KeyCloack";
 import UserService from "../../services/keycloakService";
 import ChangePasswordModal from "../Navbar/ChangePasswordModal";
 import ProfileModal from "../Navbar/ProfileModal";
@@ -32,7 +31,7 @@ const Breadcrumb = ({ curentPage, beforePage }: { curentPage?: string; beforePag
             <RiArrowDownSLine size={23} />
           </button>
           {toggle ? (
-            <div className="ToggleContainer w-36 !top-8 -right-32 border border-lightGray">
+            <div className="ToggleContainer w-36 !top-8 -right-32">
               <button className="ToggleElements" onClick={() => navigate("/")}>
                 داشبورد
               </button>

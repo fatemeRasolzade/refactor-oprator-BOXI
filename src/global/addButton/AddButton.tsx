@@ -11,6 +11,8 @@ interface PropAddButton {
   RightIcon?: JSX.Element;
   LeftIcon?: JSX.Element;
   ToggleOptions?: Toggle[];
+  className?: string;
+  WrapperClassName?: string;
 }
 
 const AddButton = ({
@@ -18,6 +20,8 @@ const AddButton = ({
   RightIcon = <BiPlus size={23} />,
   LeftIcon = <RiArrowDownSLine size={23} />,
   ToggleOptions = [],
+  className,
+  WrapperClassName,
 }: PropAddButton) => {
   const [toggle, setToggle] = useState(false);
 
@@ -26,11 +30,11 @@ const AddButton = ({
   };
 
   return (
-    <div className="relative w-44 ml-10" onBlur={handleBlur}>
-      <button className={`btn full-tomato-btn w-full`} onClick={() => setToggle(!toggle)}>
+    <div className={`relative ${WrapperClassName}`} onBlur={handleBlur}>
+      <button className={`btn w-full ${className}`} onClick={() => setToggle(!toggle)}>
         <span>{RightIcon}</span>
-        <span className="px-5">{text}</span>
-        <span>{LeftIcon}</span>
+        <span>{text}</span>
+        <span className={`${toggle && "rotate-180"} transition-all duration-500`}>{LeftIcon}</span>
       </button>
       {toggle
         ? ToggleOptions?.length > 0 && (
@@ -45,6 +49,11 @@ const AddButton = ({
         : null}
     </div>
   );
+};
+
+AddButton.defaultProps = {
+  WrapperClassName: "w-44",
+  className: "full-tomato-btn gap-5",
 };
 
 export default AddButton;

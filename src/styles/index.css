@@ -51,7 +51,7 @@
   }
 
   .btn {
-    @apply h-10 rounded-lg border-none text-dark px-5 py-2 centering gap-2 w-32;
+    @apply h-10 rounded-lg border-none text-darkGray px-5 py-2 centering gap-2;
   }
   .full-tomato-btn {
     @apply bg-tomato text-light;
@@ -63,7 +63,7 @@
     @apply bg-lightTomato text-gray-600;
   }
   .full-gray-btn {
-    @apply !bg-lightGray !text-dark px-10;
+    @apply !bg-lightGray !text-darkGray px-10;
   }
   .checkboxStyle {
     @apply bg-tomato text-white focus:!bg-red-800;
@@ -165,7 +165,7 @@
   }
   /* //Toggles */
   .ToggleContainer {
-    @apply bg-light flex-start-start flex-col  absolute top-10  right-0 shadow-xl z-20 text-right w-full;
+    @apply bg-light flex-start-start flex-col  absolute top-10  right-0 shadow-xl z-20 text-right w-full border border-lightGray;
   }
   .ToggleElements {
     @apply h-10 rounded-none border-none text-dark px-4 py-2 flex-start-start  gap-2 w-full hover:bg-lightGray transition;
