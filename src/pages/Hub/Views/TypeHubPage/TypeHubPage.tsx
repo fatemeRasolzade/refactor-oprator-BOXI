@@ -23,26 +23,15 @@ const {TableType} =useSelector((state:any)=>state.HubType)
 const {pageNumbers} =useSelector((state:any)=>state.paginate)
 const [dataEdit,setDataEdit]=useState([])
 const [EditModal,setEditModal]=useState(false)
-const [ActiveSwitch,setActiveSwitch]=useState(true)
+// const [ActiveSwitch,setActiveSwitch]=useState(true)
 const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
 const [deleteItemId, setdeleteItemId] = useState<number>(0);
 const BodyData={
   code:"",
   name:"",
   description:"",
-  isActive:ActiveSwitch,
   pageNumbers:pageNumbers
 }
-
-
-useEffect(()=>{
-
-  dispatch(HubTypeData(BodyData) as any)
-
-
-},[ActiveSwitch])
-
-
 
 useEffect(()=>{
 
@@ -76,11 +65,12 @@ const datas=TableType.content && TableType.content.map((hubItem:any)=>{
      dispatch(deleteTable(deleteItemId))
   }
 
+   
   return (
     <>
           <Breadcrumb beforePage="برگشت" curentPage="گونه هاب" /> 
           <NavbarTypeHub/>
-            <OptionsTableType setIsActive={setIsActive} exportExcel={()=>ExportExcel(TableType.content)} activesw={ActiveSwitch} setActivesw={setActiveSwitch}/>
+            <OptionsTableType setIsActive={setIsActive} exportExcel={()=>ExportExcel(TableType.content)}/>
             <AddModalTable open={active} handleOpen={setIsActive}/>
             <EditModalTypeHub  open={EditModal} handleOpen={setEditModal} dataEdit={dataEdit}/>
             <DeleteModal isModalOpenDelete={isModalOpenDelete} setIsModalOpenDelete={setIsModalOpenDelete} title="حذف هاب" itemId={deleteItemId} route={apiRoute().post.Type_Hub_table} handleDeleteActionNewData={handelActionAfterDelete}/>
