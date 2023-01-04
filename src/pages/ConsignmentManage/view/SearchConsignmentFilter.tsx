@@ -126,8 +126,6 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({
               </div>
             </div>
             <PerfesionalSearch
-              text="جستجوی پیشرفته"
-              LeftIcon={<BiChevronDown />}
               formData={() => {
                 formik.handleSubmit();
               }}

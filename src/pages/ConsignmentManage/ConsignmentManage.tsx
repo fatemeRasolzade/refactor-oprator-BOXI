@@ -80,6 +80,7 @@ const ConsignmentManage = () => {
   const handleGetDataTable = useCallback(async () => {
     const body = {};
     try {
+      setIsMoreDataLoading(true);
       const res = await filterTableDataAPI(
         filterUrls.consignment,
         pageNumbers,
@@ -87,16 +88,17 @@ const ConsignmentManage = () => {
       );
       console.log("res", res.data.payload.content);
       let contverted = await convertdataTable(res.data.payload.content);
+
       setfetchedData(contverted);
-      console.log("contverteddfbdfbpdkjfjn;k", contverted);
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setIsMoreDataLoading(false);
+    }
   }, [pageNumbers]);
 
   useEffect(() => {
     handleGetDataTable();
   }, [handleGetDataTable]);
-  debugger;
-  console.log("fetchedData", fetchedData);
 
   return (
     <>
@@ -119,10 +121,11 @@ const ConsignmentManage = () => {
         ]}
       />
       <StaticTable
-        data={[]}
+        data={fetchedData}
         column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
         pagination={7}
         selectable={false}
+        loading={isMoreDataLoading}
         THWrapper={"border border-indigo-600	 whitespace-nowrap"}
       />
       <DeleteModal
@@ -161,64 +164,53 @@ const Options = [
 ];
 
 const convertdataTable = async (fetchedData: any) => {
-  // console.log("covertfetchedData", fetchedData);
-  // const getmoreData = async () => {};
+  const getmoreData = async () => {
+    let newconvertedDatafarid = {};
+    try {
+      const res = await getAPI(getUrls.customerAddressByUsername + "/hasan");
+      newconvertedDatafarid = { AddressByUsername: res.data.payload };
+    } catch (error) {}
+    return newconvertedDatafarid;
+  };
 
   const converted = await Promise.all(
     fetchedData.map(async (item: any) => {
-      // const sampleData: any = await getmoreData();
-      // console.log("sampleData", sampleData.phoneUserName);
-      let newconvertedDatafarid = {};
-      try {
-        const res = await getAPI(getUrls.customerAddressByUsername + "/hasan");
-        console.log("888888888888888888888", res.data.payload);
-        newconvertedDatafarid = { AddressByUsername: res.data.payload };
+      const sampleData: any = await getmoreData();
 
-        return newconvertedDatafarid;
-      } catch (error) {}
-      console.log("newconvertedDatafarid", newconvertedDatafarid);
+      return {
+        ...sampleData,
+        id: item.id,
+        PaymentByBanknote: item.amountPaidWithCash,
+        TheAmountPayable: item.amountPaidWithCard,
+        senderCity: item.senderCityName,
+        SenderPhone: item.senderPhoneNumber,
+        senderCityRegionName: item.senderCityRegionName,
+        senderRegionName: item.senderRegionName,
+        IMEI1: item.imei_1,
+        IMEI2: item.imei_2,
+        IMEI3: item.imei_3,
 
-      return newconvertedDatafarid;
+        device1: item.machine_1,
+        device2: item.machine_2,
+        device3: item.machine_3,
+
+        status: StatusEnum[item.status],
+        customerName: item.customerName,
+        createdAt: item.createdDate,
+        InternetAddressOfIssuedInvoice: item.addressOfWeb,
+
+        receiverArea: item.receiverCityRegionName,
+        recipientArea: item.receiverRegionName,
+
+        weight: item.weight,
+        volume: item.volume,
+        bagId: item.bagId,
+        paymentStatus: item.paymentStatus,
+      };
     })
   );
 
   return converted;
 };
 
-// fetchedData?.content?.map(async (item: ItemData | any) => {
-//   let fetchedData: any = { customerAddress: [] };
-//   let data = await handleGetMoreData(item.customerName);
-//   console.log("sdsdvsdvsdv", data);
 
-//   return {
-//     id: item.id,
-//     PaymentByBanknote: item.amountPaidWithCash,
-//     TheAmountPayable: item.amountPaidWithCard,
-//     senderCity: item.senderCityName,
-//     SenderPhone: item.senderPhoneNumber,
-//     senderCityRegionName: item.senderCityRegionName,
-//     senderRegionName: item.senderRegionName,
-
-//     IMEI1: item.imei_1,
-//     IMEI2: item.imei_2,
-//     IMEI3: item.imei_3,
-
-//     device1: item.machine_1,
-//     device2: item.machine_2,
-//     device3: item.machine_3,
-
-//     status: StatusEnum[item.status],
-//     customerName: item.customerName,
-//     createdAt: item.createdDate,
-//     InternetAddressOfIssuedInvoice: item.addressOfWeb,
-
-//     // receiverAddress: ,
-//     receiverArea: item.receiverCityRegionName,
-//     recipientArea: item.receiverRegionName,
-
-//     weight: item.weight,
-//     volume: item.volume,
-//     bagId: item.bagId,
-//     paymentStatus: item.paymentStatus,
-//   };
-// });
