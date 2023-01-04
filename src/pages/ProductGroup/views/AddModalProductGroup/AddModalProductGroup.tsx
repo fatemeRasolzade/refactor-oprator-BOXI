@@ -10,6 +10,7 @@ import { apiRoute } from '../../../../services/apiRoute';
 import { ErrorAlert, SuccessAlert } from '../../../../global/alert/Alert';
 import {useDispatch} from "react-redux"
 import { ProductGroupsData } from './../../../../redux/ProductGroup/ProductGroup';
+import Modal from '../../../../global/Modal/Modal';
 const AddModalProductGroup = ({isModalOpen,setIsModalOpen,bodyProduct}:{isModalOpen:boolean,setIsModalOpen?:any,bodyProduct?:object}) => {
 
     const validationSchema=Yup.object({
@@ -24,18 +25,8 @@ const AddModalProductGroup = ({isModalOpen,setIsModalOpen,bodyProduct}:{isModalO
 const dispatch=useDispatch()
 
   return (
-     <Dialog
-    open={isModalOpen}
-    handler={setIsModalOpen}
-   
-    size={"lg"}
-  >
+    <Modal visible={isModalOpen} setVisible={setIsModalOpen} title="اضافه گروه محصول">
 <div className='p-3'>
-
-    <div className='flex justify-between items-center p-2'>
-    <h5>تعریف گروه محصول</h5>
-    <span onClick={()=>setIsModalOpen((prev:boolean)=>!prev)} className="cursor-pointer"><BiXCircle size={20} /></span>
-    </div>
 <div className='w-full'>
 <Formik
 initialValues={{
@@ -48,8 +39,8 @@ description:""
 validationSchema={validationSchema}
 onSubmit={(values)=>{
 postDataHeaderToServer(apiRoute().post.Product_Group,values).then(res=>{
+  setIsModalOpen(false)
   if(res.status==="OK"){
-    setIsModalOpen(false)
     SuccessAlert("با موفقیت افزوده شد")
     dispatch(ProductGroupsData(bodyProduct) as any)
   }else{
@@ -105,7 +96,7 @@ postDataHeaderToServer(apiRoute().post.Product_Group,values).then(res=>{
 
 
 
-    </Dialog>
+    </Modal>
   )
 }
 

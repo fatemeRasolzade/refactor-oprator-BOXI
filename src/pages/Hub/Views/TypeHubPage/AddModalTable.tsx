@@ -9,6 +9,7 @@ import { postDataHeaderToServer } from '../../../../services/Service_call';
 import { ErrorAlert, SuccessAlert } from '../../../../global/alert/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { HubTypeData } from '../../../../redux/HubData/TypeHub';
+import Modal from '../../../../global/Modal/Modal';
 const AddModalTable = ({open,handleOpen}:{open:boolean,handleOpen:React.Dispatch<React.SetStateAction<boolean>>}) => {
 
 const dispatch=useDispatch()
@@ -31,6 +32,7 @@ const formok=useFormik({
      
       postDataHeaderToServer(apiRoute().post.Type_Hub_table,values)
      .then(res=>{
+      handleOpen(false)
       if(res.status==="OK"){
         handleOpen(false)
         SuccessAlert("با موفقیت ساخته شد")
@@ -46,23 +48,8 @@ const formok=useFormik({
 
 
   return (
-    <Dialog
-        open={open}
-        handler={handleOpen}
-        animate={{
-          mount: { scale: 1, y: 0 },
-          unmount: { scale: 0.9, y: -100 },
-        }}
-        size={'md'}
-      >
-        <DialogHeader>
-            <div className='flex-between-center w-full'>
-            <h6 className='text-sm'>شخصی سازی</h6>
-            <span  onClick={()=>handleOpen((prev:boolean)=>!prev)} className="cursor-pointer"><BiXCircle size={20}/></span>
-               
-            </div>
-        </DialogHeader>
-        <DialogBody divider>
+    <Modal visible={open} setVisible={handleOpen} title="اضافه  گونه هاب">
+      
             {/* modal form */}
       
             <form onSubmit={formok.handleSubmit} className="w-full">
@@ -98,9 +85,9 @@ const formok=useFormik({
             </form>
        
  {/*end modal form */}
-        </DialogBody>
+       
         
-      </Dialog>
+      </Modal>
   )
 }
 

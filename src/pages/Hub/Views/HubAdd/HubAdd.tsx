@@ -11,6 +11,7 @@ import { getDataHeaderServer, postDataHeaderToServer, PostDataParams } from "../
 import { apiRoute } from "../../../../services/apiRoute"
 import { ErrorAlert, SuccessAlert } from "../../../../global/alert/Alert"
 import * as Yup from "yup"
+import Breadcrumb from "../../../../components/Breadcrumb/Breadcrumb"
 const HubAdd = () => {
   const navigate = useNavigate();
   const [typeHub, settypeHub] = useState([]);
@@ -114,6 +115,9 @@ const HubAdd = () => {
     }}
     >
    {(formik)=>(
+    <>
+ <Breadcrumb beforePage="هاب" curentPage="اضافه کردن هاب" />
+
      <form onSubmit={formik.handleSubmit}>
      <div className='w-11/12 grid grid-cols-5 gap-2'>
        
@@ -147,6 +151,7 @@ const HubAdd = () => {
               </div>
             </div>
           </form>
+          </>
         )}
       </Formik>
     </>
