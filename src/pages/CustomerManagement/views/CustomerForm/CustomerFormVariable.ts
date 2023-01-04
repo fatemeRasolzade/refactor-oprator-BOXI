@@ -11,7 +11,7 @@ export const CustomerFormValidation = () => {
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
-    nationalCode: Yup.string().matches(NationalCodeRegex, VALIDNATIONALCODE).required(),
+    // nationalCode: Yup.string().matches(NationalCodeRegex, VALIDNATIONALCODE).required(),
     selectParentCustomer: Yup.object().nullable(true).shape({
       text: Yup.string(),
       id: Yup.number(),
@@ -42,7 +42,7 @@ export const CustomerFormValidation = () => {
       text: Yup.string().required(),
       id: Yup.string().required(),
     }),
-    nationalCode: Yup.string().matches(NationalCodeRegex, VALIDNATIONALCODE).required(),
+    // nationalCode: Yup.string().matches(NationalCodeRegex, VALIDNATIONALCODE).required(),
     selectParentCustomer: Yup.object().nullable(true).shape({
       text: Yup.string(),
       id: Yup.number(),

@@ -10,7 +10,7 @@ interface StatusBarProps {
 
 const StatusBar = ({ Options }: StatusBarProps) => {
   return (
-    <div className="flex-start-start gap-5 mb-5 flex-wrap">
+    <div className="flex-start-start gap-5 mb-6 flex-wrap">
       {Options.map((item: any) => (
         <div className="flex-start-center gap-2 border-l pl-4">
           <div>{StatusBarElements[item.name].icon}</div>

@@ -52,7 +52,7 @@ const InputText = React.forwardRef(
             name={name}
             value={values}
             onChange={handleChange}
-            type={!HidePassword ? "password" : type}
+            type={HidePassword ? "password" : type}
             placeholder={placeholder}
           />
           {password && (

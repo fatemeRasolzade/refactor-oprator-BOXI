@@ -54,7 +54,7 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter,
     //   return errors;
     // },
     onSubmit: (values: any) => {
-      alert("true");
+      // alert("true");
       if (values.isParametric) {
         let data = {
           id: values?.id,

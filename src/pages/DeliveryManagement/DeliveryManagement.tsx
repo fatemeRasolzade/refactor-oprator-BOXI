@@ -1,12 +1,17 @@
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import NotFound from "../../components/NotFound/NotFound";
+import StaticTable from "../../components/staticTable/StaticTable";
 import StatusBar from "../../components/StatusBar/StatusBar";
+import { DeliveryColumns } from "./views/DeliveryColumns";
+import DeliverySearchFilter from "./views/DeliverySearchFilter";
 
 const DeliveryManagement = () => {
   return (
     <>
       <Breadcrumb curentPage="مدیریت تحویل" beforePage="بازگشت" />
       <StatusBar Options={DeliveryStatus} />
+      <DeliverySearchFilter />
+      {/* <StaticTable selectable={false} data={[]} column={DeliveryColumns} pagination={1} /> */}
       <NotFound />
     </>
   );
