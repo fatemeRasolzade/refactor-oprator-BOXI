@@ -131,6 +131,8 @@ const BagActionForms: React.FC<PropsData> = ({ currentData, vendorOptions, bagOp
           // dispatch(updating(false));
 
           setIsModalOpen(false);
+        }).catch(() => {
+          setLoading(false);
         });
       } else {
         setLoading(true);
@@ -154,6 +156,8 @@ const BagActionForms: React.FC<PropsData> = ({ currentData, vendorOptions, bagOp
           }
 
           setIsModalOpen(false);
+        }).catch(() => {
+          setLoading(false);
         });
       }
     },

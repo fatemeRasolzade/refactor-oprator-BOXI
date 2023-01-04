@@ -91,6 +91,8 @@ const DockActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
           // dispatch(updating(false));
 
           setIsModalOpen(false);
+        }).catch(() => {
+          setLoading(false);
         });
       } else {
         setLoading(true);
@@ -114,6 +116,8 @@ const DockActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
           }
 
           setIsModalOpen(false);
+        }).catch(() => {
+          setLoading(false);
         });
       }
     },
