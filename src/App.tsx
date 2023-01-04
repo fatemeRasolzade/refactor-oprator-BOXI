@@ -76,8 +76,6 @@ function App() {
               {/* <Route path="*" element={<NotFound />} /> */}
               {links.map((item) => item.childs.map((route) => <Route path={route.to} element={route.component} />))}
               <Route path="*" element={<NotFound />} />
-              <Route path="/hub/add" element={<HubAdd />} />
-              <Route path="/hub/edit" element={<HubEdit />} />
               <Route path="/basic-information/custom-geographic-category/add" element={<GeoWrapper />} />
               <Route path="/basic-information/custom-geographic-category/edit" element={<GeoWrapperEdit />} />
               <Route path="" element={<GeoWrapperEdit />} />

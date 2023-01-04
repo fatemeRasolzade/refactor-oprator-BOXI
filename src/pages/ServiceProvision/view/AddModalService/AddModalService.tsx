@@ -26,9 +26,6 @@ const AddModalService = ({
   currentData?: any;
 }) => {
 
-
-
-
   const [isActive, setIsActive] = useState(true);
   const [ChanelSale, setChanelSale] = useState([]);
   const [serviceSelect,setserviceSelect]=useState([])
@@ -48,8 +45,7 @@ const dispatch=useDispatch()
     });
     selectDataFromServerWithHeader(apiRoute().get.Fliter_Service).then((res) => {
       if (res.status === "OK") {
-        console.log(res)
-        setserviceSelect(res.payload);
+       setserviceSelect(res.payload);
       } else {
         
       }
@@ -77,8 +73,7 @@ const dispatch=useDispatch()
     },
   ];
 
- console.log("azcc",currentData)
- 
+
   return (
     <Modal visible={isModalOpen} setVisible={setIsModalOpen} title="ارائه سرویس">
       <div className="w-full">

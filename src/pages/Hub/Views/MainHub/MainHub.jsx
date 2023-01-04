@@ -14,6 +14,9 @@ import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { apiRoute } from "../../../../services/apiRoute";
   // import MyExport from "../ExportMyExcel";
 import DeleteModal from "../../../../global/DeleteModal/DeleteModal";
+import HubAdd from "../HubAdd/HubAdd";
+import OperationHub from "../OperationHub/OperationHub";
+import HubEdit from "../HubEdit/HubEdit";
 
 const Hub = () => {
   const dispatch=useDispatch()
@@ -22,6 +25,9 @@ const Hub = () => {
   const {pageNumbers} =useSelector(state=>state.paginate)
   const [ActiveSwitch,setActiveSwitch]=useState(true)
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
+  const [addHubs,setaddHubs]=useState(false)
+  const [EditHubs,setEditHubs]=useState(false)
+  const[EditData,setEditData]=useState({})
 const [deleteItemId, setdeleteItemId] = useState(0);
   const BodyData={
     code: "",
@@ -63,8 +69,10 @@ dispatch(HubData(BodyData))
       editBy:hubItem.name ? hubItem?.name : "",
       EditTime:hubItem.locationStartDate !==null ? `${hubItem?.locationStartDate?.year}/${hubItem?.locationStartDate?.month}/${hubItem?.locationStartDate?.day} ` : "",
       edit:<div className="w-full centering cursor-pointer" ><BiEditAlt onClick={()=>{
-        dispatch(editHub(hubItem))
-       navigate("/hub/edit")
+        // dispatch(editHub(hubItem))
+        setEditData(hubItem)
+      //  navigate("/hub/edit")
+      setEditHubs(prev=>!prev)
       }} size={20}/></div>,
       delete:<div className="w-full centering cursor-pointer"><BiTrash onClick={()=>{
         setdeleteItemId(hubItem?.id)
@@ -83,14 +91,16 @@ const handelActionAfterDelete=()=>{
 
      <Breadcrumb beforePage="برگشت" curentPage="هاب" />
       <NavbarSearch firstTextInput="کد قفسه" secondTextInput="کد هاب" activeChecked={ActiveSwitch}/>
-      <OptionsTable
-       exportExcel={() => ExportExcel(data)}
-       btnLink="/hub/add"
-       setIsActive={setActiveSwitch}
+       <OperationHub
+       setActionModal={setaddHubs}
+      exportExcel={() => ExportExcel(data)}
+      setIsActive={setActiveSwitch}
        isActive={ActiveSwitch}
       />
- <DeleteModal isModalOpenDelete={isModalOpenDelete} setIsModalOpenDelete={setIsModalOpenDelete} title="حذف هاب" itemId={deleteItemId} route={apiRoute().delete.hubTable} handleDeleteActionNewData={handelActionAfterDelete}/>
+      <DeleteModal isModalOpenDelete={isModalOpenDelete} setIsModalOpenDelete={setIsModalOpenDelete} title="حذف هاب" itemId={deleteItemId} route={apiRoute().delete.hubTable} handleDeleteActionNewData={handelActionAfterDelete}/>
  {/* <MyExport data={data} columns={HubColumn}/>  */}
+      <HubAdd active={addHubs} setActive={setaddHubs} />
+      <HubEdit active={EditHubs} setActive={setEditHubs} dataEdit={EditData}/>
      <StaticTable data={data} column={HubColumn} pagination={payload?.totalElements} />
     </div>
   );
