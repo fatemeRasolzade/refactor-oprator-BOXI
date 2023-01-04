@@ -36,7 +36,7 @@ export const DeliveryColumns = [
     Header: " Completion Sync Time ",
   },
   {
-    accessor: "g",
+    accessor: "j",
     Header: " منطقه ",
   },
   {

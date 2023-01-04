@@ -1,5 +1,4 @@
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import NotFound from "../../components/NotFound/NotFound";
 import StaticTable from "../../components/staticTable/StaticTable";
 import StatusBar from "../../components/StatusBar/StatusBar";
 import { DeliveryColumns } from "./views/DeliveryColumns";
@@ -11,8 +10,7 @@ const DeliveryManagement = () => {
       <Breadcrumb curentPage="مدیریت تحویل" beforePage="بازگشت" />
       <StatusBar Options={DeliveryStatus} />
       <DeliverySearchFilter />
-      {/* <StaticTable selectable={false} data={[]} column={DeliveryColumns} pagination={1} /> */}
-      <NotFound />
+      <StaticTable selectable={false} data={[]} column={DeliveryColumns} pagination={1} THWrapper={"min-w-[130px] w-[130px]"} />
     </>
   );
 };
