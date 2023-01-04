@@ -13,8 +13,7 @@ import { useSelector } from "react-redux";
 import { filterUrls, getUrls } from "../../services/api.enums";
 import { filterTableDataAPI, getAPI } from "../../services/CRUDServices";
 import { StatusEnum } from "../../models/consigment";
-import axios from "axios";
-import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
+
 interface SelectedColInterface {
   accessor: string;
   Header: string;
@@ -212,5 +211,3 @@ const convertdataTable = async (fetchedData: any) => {
 
   return converted;
 };
-
-
