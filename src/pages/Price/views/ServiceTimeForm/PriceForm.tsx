@@ -23,6 +23,22 @@ const PriceForm = ({ currentData, open, setOpen }: PriceFormFormProps) => {
   const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
+  const convertToObjects = (from?: any, to?: any, id?: any, customDevision?: any, isActive?: any, consignmentType?: any) => {
+    let arr = [];
+    for (let i = 0; i < from.length; i++) {
+      for (let j = 0; j < to.length; j++) {
+        arr.push({
+          fromCountryDevision: from[i],
+          toCountryDevision: to[j],
+          id: id,
+          isActive: isActive,
+          consignmentType: consignmentType || null,
+        });
+      }
+    }
+    return arr;
+  };
+
   useEffect(() => {
     if (currentData) {
       let array: any = [];
@@ -34,7 +50,7 @@ const PriceForm = ({ currentData, open, setOpen }: PriceFormFormProps) => {
               ? { id: 2, text: "استاندارد" }
               : a?.customDevision && Object.keys(a?.customDevision).length !== 0
               ? { id: 1, text: "سفارشی" }
-              : "",
+              : undefined,
           totalWight: { from: a.fromWeight || "", to: a.toWeight || "" },
           totalDim: { from: a.fromDim || "", to: a.toDimension || "" },
           totalValue: { from: a.fromValue || "", to: a.toValue || "" },
@@ -46,23 +62,23 @@ const PriceForm = ({ currentData, open, setOpen }: PriceFormFormProps) => {
                   .flat(1)
                   .filter((division: any) => division.countryType === "PROVINCE")
                   .filter((elem: any, index: any, arr: any) => index === arr.findIndex((t: any) => t.id === elem.id))
-              : "",
+              : undefined,
           fromSourceCity:
-            a.priceDetailDevisions.length !== 0
-              ? a.priceDetailDevisions
-                  .map((from: any) => from.fromCountryDevision)
-                  .flat(1)
-                  .filter((division: any) => division.countryType === "REGION")
-                  .filter((elem: any, index: any, arr: any) => index === arr.findIndex((t: any) => t.id === elem.id))
-              : "",
-          fromSourceLocation:
             a.priceDetailDevisions.length !== 0
               ? a.priceDetailDevisions
                   .map((from: any) => from.fromCountryDevision)
                   .flat(1)
                   .filter((division: any) => division.countryType === "CITY")
                   .filter((elem: any, index: any, arr: any) => index === arr.findIndex((t: any) => t.id === elem.id))
-              : "",
+              : undefined,
+          fromSourceLocation:
+            a.priceDetailDevisions.length !== 0
+              ? a.priceDetailDevisions
+                  .map((from: any) => from.fromCountryDevision)
+                  .flat(1)
+                  .filter((division: any) => division.countryType === "REGION")
+                  .filter((elem: any, index: any, arr: any) => index === arr.findIndex((t: any) => t.id === elem.id))
+              : undefined,
 
           toCountryDevision:
             a.priceDetailDevisions.length !== 0
@@ -71,27 +87,55 @@ const PriceForm = ({ currentData, open, setOpen }: PriceFormFormProps) => {
                   .flat(1)
                   .filter((division: any) => division.countryType === "PROVINCE")
                   .filter((elem: any, index: any, arr: any) => index === arr.findIndex((t: any) => t.id === elem.id))
-              : "",
+              : undefined,
           fromDestinationCity:
-            a.priceDetailDevisions.length !== 0
-              ? a.priceDetailDevisions
-                  .map((from: any) => from.toCountryDevision)
-                  .flat(1)
-                  .filter((division: any) => division.countryType === "REGION")
-                  .filter((elem: any, index: any, arr: any) => index === arr.findIndex((t: any) => t.id === elem.id))
-              : "",
-          fromDestinationLocation:
             a.priceDetailDevisions.length !== 0
               ? a.priceDetailDevisions
                   .map((from: any) => from.toCountryDevision)
                   .flat(1)
                   .filter((division: any) => division.countryType === "CITY")
                   .filter((elem: any, index: any, arr: any) => index === arr.findIndex((t: any) => t.id === elem.id))
-              : "",
+              : undefined,
+          fromDestinationLocation:
+            a.priceDetailDevisions.length !== 0
+              ? a.priceDetailDevisions
+                  .map((from: any) => from.toCountryDevision)
+                  .flat(1)
+                  .filter((division: any) => division.countryType === "REGION")
+                  .filter((elem: any, index: any, arr: any) => index === arr.findIndex((t: any) => t.id === elem.id))
+              : undefined,
         };
         array.push(object);
       });
-      setAttributes(array);
+
+      const finalData = array.map((item: any) => ({
+        ...item,
+        priceDetailDevisions:
+          item.fromDestinationLocation && item.fromDestinationLocation.length !== 0
+            ? convertToObjects(item.fromDestinationLocation, item.fromSourceLocation, item.id, item.customDevision, item.isActive)
+            : item.fromDestinationCity && item.fromDestinationCity.length !== 0
+            ? convertToObjects(item.fromDestinationCity, item.fromSourceCity, item.id, item.customDevision, item.isActive)
+            : item.fromDestinationState && item.fromDestinationState.length !== 0
+            ? convertToObjects(item.fromDestinationState, item.fromSourceState, item.id, item.customDevision, item.isActive)
+            : [],
+        // fromCountryDevision:
+        //   item.fromDestinationLocation && item.fromDestinationLocation.length !== 0
+        //     ? item.fromDestinationLocation
+        //     : item.fromDestinationCity && item.fromDestinationCity.length !== 0
+        //     ? item.fromDestinationCity
+        //     : item.fromDestinationState && item.fromDestinationState.length !== 0
+        //     ? item.fromDestinationState
+        //     : "",
+        // toCountryDevision:
+        //   item.fromSourceLocation && item.fromSourceLocation.length !== 0
+        //     ? item.fromSourceLocation
+        //     : item.fromSourceCity && item.fromSourceCity.length !== 0
+        //     ? item.fromSourceCity
+        //     : item.fromSourceState && item.fromSourceState.length !== 0
+        //     ? item.fromSourceState
+        //     : "",
+      }));
+      setAttributes(finalData);
     }
   }, [currentData]);
 

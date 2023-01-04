@@ -3,27 +3,37 @@ import { saveAs } from "file-saver";
 
 const workSheetName = "Worksheet-1";
 // const ExportExcel = ({ data }) => {
-export const ExportExcel = async (data, columns) => {
+export const ExportExcel = async (values) => {
+  console.log(values);
+   values.data.map((obj) => {
+    delete obj?.operation;
+    // delete obj?.isDeleted;
+    // Object.keys(obj).forEach((key) => (obj[key] === null || obj[key] === undefined ? (obj[key] = "-") : obj[key]));
+  });
+const filterColumn=values.columns.filter(item=>!item.accessor.includes("operation"))
+
+    // console.log(data,filterColumn);
+
   const workbook = new Excel.Workbook();
   try {
     // creating one worksheet in workbook
-    const worksheet = workbook.addWorksheet(workSheetName);
+    const worksheet = workbook.addWorksheet();
 
     // add worksheet columns
     // each columns contains header and its mapping key from data
-    worksheet.columns = columns;
+    worksheet.columns = filterColumn;
 
     // updated the font for first row.
     worksheet.getRow(1).font = { bold: true };
 
-    // loop through all of the columns and set the alignment with width.
+    // loop through all of the filterColumn and set the alignment with width.
     worksheet.columns.forEach((column) => {
       column.width = column.header.length + 25;
-      column.alignment = { horizontal: "center" };
+      column.alignment = { horizontal: "center"};
     });
 
     // loop through data and add each one to worksheet
-    data.forEach((singleData) => {
+    values.data.forEach((singleData) => {
       worksheet.addRow(singleData);
     });
 
@@ -51,7 +61,7 @@ export const ExportExcel = async (data, columns) => {
     const buf = await workbook.xlsx.writeBuffer();
     console.log(buf);
     // download the processed file
-    saveAs(new Blob([buf]), `excel.xlsx`);
+    saveAs(new Blob([buf]), `${values?.title?values?.title:workSheetName}.xlsx`);
   } catch (error) {
   } finally {
     // removing worksheet's instance to create new one

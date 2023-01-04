@@ -95,7 +95,7 @@ export const StatusBarElements: Record<string, ElementsValue> = {
     text: "لغو شده",
   },
   Undeliverable: {
-    icon: <HiOutlineArchiveBoxXMark size={30} className="text-[#9CA3AF]" />,
+    icon: <HiOutlineArchiveBoxXMark size={30} className="text-tomato" />,
     text: "غیر قابل تحویل",
   },
   Complated: {

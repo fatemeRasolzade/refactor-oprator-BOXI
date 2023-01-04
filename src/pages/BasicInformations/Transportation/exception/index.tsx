@@ -21,7 +21,7 @@ const Exceptions: React.FC = (): JSX.Element => {
   const handleDeleteActionNewData = () => {
     dispatch(
       filterException({
-        isActive: isActive,
+    
         pageSize: 10,
         pageNumber: pageNumbers,
       }) as any

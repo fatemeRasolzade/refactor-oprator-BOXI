@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { AiOutlineEdit } from "react-icons/ai";
 import * as Yup from "yup";
 import { EditDataParams, PostDataParams } from "../../../../../services/Service_call";
 import { apiRoute } from "../../../../../services/apiRoute";
 import { SuccessAlert } from "../../../../../global/alert/Alert";
-import AddButton from "../../../../../global/addButton/AddButton";
 import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
@@ -14,8 +12,6 @@ import {
   useFetchOptionsOnModal,
 } from "../../../../../global/hooks/useFetchOptions";
 
-import AddExcel from "../../../../../components/exel/AddExcel";
-import { vehicleExcel, vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
 import VehiclePelak from "../../../../../global/VehiclePelak/VehiclePelak";
 import Checkbox from "../../../../../components/checkbox/Checkbox";
@@ -23,6 +19,8 @@ import CustomSwitch from "../../../../../global/Switch/Switch";
 import { filterVehicleModel } from "../../../../../redux/Transportation/VehicleData/VehicleData";
 interface PropsData {
   currentData?: any;
+  open: boolean;
+  setOpen: (value: boolean) => void;
 }
 const validation = Yup.object().shape({
   vehicleCategorySelect: Yup.object().label("نوع وسیله نقلیه"),
@@ -47,7 +45,7 @@ const validation = Yup.object().shape({
   // consignmentCapacity:Yup.number().required(),
 });
 
-const VehicleActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
+const VehicleActionForms: React.FC<PropsData> = ({ currentData,open,setOpen }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -169,8 +167,10 @@ const VehicleActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =
 
           // dispatch(updating(false));
 
-          setIsModalOpen(false);
-        });
+          setOpen(false);
+        }).catch(() => {
+          setLoading(false);
+        });;
       } else {
         setLoading(true);
         EditDataParams(apiRoute().edit.Vehicle, values).then((res) => {
@@ -193,7 +193,9 @@ const VehicleActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =
             // ErrorAlert("خطا در برقراری اطلاعات");
           }
 
-          setIsModalOpen(false);
+          setOpen(false);
+        }).catch(() => {
+          setLoading(false);
         });
       }
     },
@@ -201,21 +203,21 @@ const VehicleActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element =
   useEffect(() => {
   
     formik.resetForm({});
-  }, [isModalOpen]);
+  }, [open]);
 
   return (
     <>
-      {!currentData ? (
+      {/* {!currentData ? (
         <AddButton ToggleOptions={ToggleOptions} />
       ) : (
         <button className=" border-none	 text-[14px]  w-[20px] h-[20px] " onClick={() => setIsModalOpen(!isModalOpen)}>
           <AiOutlineEdit className="w-full h-full" />
         </button>
       )}
-      <AddExcel excelInfo={vehicleExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
+      <AddExcel excelInfo={vehicleExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/> */}
       <Modal
-        visible={isModalOpen}
-        setVisible={setIsModalOpen}
+        visible={open}
+        setVisible={setOpen}
         title={currentData ? "ویرایش وسیله نقلیه" : "افزودن وسیله نقلیه"}
       >
         <form onSubmit={formik.handleSubmit} autoComplete="off">
