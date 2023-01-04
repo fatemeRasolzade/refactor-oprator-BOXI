@@ -122,12 +122,7 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({
                 return <></>;
               })}
               <div className="mb-5">
-                <SimpleButton
-                  type="submit"
-                  className="full-gray-btn w-[160px] h-[40px] centering rounded-md"
-                  icon={<BiSearch size={20} />}
-                  text="جستجو"
-                />
+                <SimpleButton searchBtn />
               </div>
             </div>
             <PerfesionalSearch

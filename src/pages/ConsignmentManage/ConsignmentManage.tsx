@@ -35,7 +35,7 @@ const ConsignmentManage = () => {
   const { filter } = useSelector((state: any) => state.consignment);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
   const [isMoreDataLoading, setIsMoreDataLoading] = useState(false);
-  const [fetchedData, setfetchedData] = useState<any>({});
+  const [fetchedData, setfetchedData] = useState<any>([]);
   const [OpenPrintLabel, setOpenPrintLabel] = useState(false);
   const [OpenEntranceScan, setOpenEntranceScan] = useState(false);
   const [OpenOutPutScan, setOpenOutPutScan] = useState(false);
@@ -86,111 +86,16 @@ const ConsignmentManage = () => {
         body
       );
       console.log("res", res.data.payload.content);
-      setfetchedData(res.data.payload);
+      let contverted = await convertdataTable(res.data.payload.content);
+      setfetchedData(contverted);
+      console.log("contverteddfbdfbpdkjfjn;k", contverted);
     } catch (error) {}
   }, [pageNumbers]);
-
-  const handleGetMoreData = async (userName: string) => {
-    let data = {
-      customerAddress: {},
-      // customerPhone: {},
-      prospectPhone: {},
-      prospectAddress: {},
-    };
-    try {
-      // setIsMoreDataLoading(true);
-      const resCustomerAddress = await getAPI(
-        getUrls.customerAddressByUsername + `/${"hasan"}`
-      );
-      // const rescustomerPhoneByUsername = await getAPI(
-      //   getUrls.customerPhoneByUsername + `/${"hasan"}`
-      // );
-      const reprospectPhoneByUsername = await getAPI(
-        getUrls.prospectPhoneByUsername + `/${"hasan"}`
-      );
-      const reprospectAddressByUsername = await getAPI(
-        getUrls.prospectAddressByUsername + `/${"hasan"}`
-      );
-      data = {
-        customerAddress: resCustomerAddress.data.payload,
-        // customerPhone: rescustomerPhoneByUsername.data.payload,
-        prospectPhone: reprospectPhoneByUsername.data.payload,
-        prospectAddress: reprospectAddressByUsername.data.payload,
-      };
-    } catch (error) {}
-    return data;
-  };
 
   useEffect(() => {
     handleGetDataTable();
   }, [handleGetDataTable]);
-
-  const data =
-    fetchedData?.content?.length !== 0
-      ? fetchedData?.content?.map((item: ItemData | any) => {
-          let fetchedData: any = { customerAddress: [] };
-          let data = handleGetMoreData(item.customerName);
-          data.then((sdfg) => {
-            console.log("customerAddressdata", sdfg);
-            fetchedData = sdfg;
-          });
-
-          return {
-            ...fetchedData,
-            id: item.id,
-            PaymentByBanknote: item.amountPaidWithCash,
-            TheAmountPayable: item.amountPaidWithCard,
-            senderCity: item.senderCityName,
-            SenderPhone: item.senderPhoneNumber,
-            senderCityRegionName: item.senderCityRegionName,
-            senderRegionName: item.senderRegionName,
-
-            IMEI1: item.imei_1,
-            IMEI2: item.imei_2,
-            IMEI3: item.imei_3,
-
-            device1: item.machine_1,
-            device2: item.machine_2,
-            device3: item.machine_3,
-
-            status: StatusEnum[item.status],
-            customerName: item.customerName,
-            createdAt: item.createdDate,
-            InternetAddressOfIssuedInvoice: item.addressOfWeb,
-
-            receiverAddress: (
-              <div className="w-full flex justify-center">
-                <>test</>
-                <TooltipWrapper
-                  textProps={fetchedData?.customerAddress?.map(
-                    (address: any) => (
-                      <div className="text-white" key={address.id}>
-                        {address.selectState.text}
-                      </div>
-                    )
-                  )}
-                >
-                  <div>
-                    {fetchedData?.customerAddress?.map((address: any) => {
-                      console.log("address.selectState.text");
-
-                      return address.selectState.text;
-                    })}
-                  </div>
-                </TooltipWrapper>
-              </div>
-            ),
-            receiverArea: item.receiverCityRegionName,
-            recipientArea: item.receiverRegionName,
-
-            weight: item.weight,
-            volume: item.volume,
-            bagId: item.bagId,
-            paymentStatus: item.paymentStatus,
-          };
-        })
-      : [];
-  console.log("data", data);
+  debugger;
   console.log("fetchedData", fetchedData);
 
   return (
@@ -214,7 +119,7 @@ const ConsignmentManage = () => {
         ]}
       />
       <StaticTable
-        data={data ? data : []}
+        data={[]}
         column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
         pagination={7}
         selectable={false}
@@ -254,3 +159,66 @@ const Options = [
   { name: "EntranceToHub", value: 1000 },
   { name: "BackToOrigin", value: 1000 },
 ];
+
+const convertdataTable = async (fetchedData: any) => {
+  // console.log("covertfetchedData", fetchedData);
+  // const getmoreData = async () => {};
+
+  const converted = await Promise.all(
+    fetchedData.map(async (item: any) => {
+      // const sampleData: any = await getmoreData();
+      // console.log("sampleData", sampleData.phoneUserName);
+      let newconvertedDatafarid = {};
+      try {
+        const res = await getAPI(getUrls.customerAddressByUsername + "/hasan");
+        console.log("888888888888888888888", res.data.payload);
+        newconvertedDatafarid = { AddressByUsername: res.data.payload };
+
+        return newconvertedDatafarid;
+      } catch (error) {}
+      console.log("newconvertedDatafarid", newconvertedDatafarid);
+
+      return newconvertedDatafarid;
+    })
+  );
+
+  return converted;
+};
+
+// fetchedData?.content?.map(async (item: ItemData | any) => {
+//   let fetchedData: any = { customerAddress: [] };
+//   let data = await handleGetMoreData(item.customerName);
+//   console.log("sdsdvsdvsdv", data);
+
+//   return {
+//     id: item.id,
+//     PaymentByBanknote: item.amountPaidWithCash,
+//     TheAmountPayable: item.amountPaidWithCard,
+//     senderCity: item.senderCityName,
+//     SenderPhone: item.senderPhoneNumber,
+//     senderCityRegionName: item.senderCityRegionName,
+//     senderRegionName: item.senderRegionName,
+
+//     IMEI1: item.imei_1,
+//     IMEI2: item.imei_2,
+//     IMEI3: item.imei_3,
+
+//     device1: item.machine_1,
+//     device2: item.machine_2,
+//     device3: item.machine_3,
+
+//     status: StatusEnum[item.status],
+//     customerName: item.customerName,
+//     createdAt: item.createdDate,
+//     InternetAddressOfIssuedInvoice: item.addressOfWeb,
+
+//     // receiverAddress: ,
+//     receiverArea: item.receiverCityRegionName,
+//     recipientArea: item.receiverRegionName,
+
+//     weight: item.weight,
+//     volume: item.volume,
+//     bagId: item.bagId,
+//     paymentStatus: item.paymentStatus,
+//   };
+// });
