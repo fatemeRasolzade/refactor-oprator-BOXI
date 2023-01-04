@@ -108,13 +108,17 @@ const GateActionForms: React.FC<PropsData> = ({ currentData }): JSX.Element => {
                 pageSize: 10,
                 pageNumber: "",
               }) as any
-            );
+            ).catch(() => {
+              setLoading(false);
+            });
           } else {
             setLoading(false);
             console.log("run error");
           }
 
           setIsModalOpen(false);
+        }).catch(() => {
+          setLoading(false);
         });
       }
     },

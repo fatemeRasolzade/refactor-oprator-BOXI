@@ -146,7 +146,9 @@ const RouteActionForms: React.FC<PropsData> = ({
           // dispatch(updating(false));
           setAddOpen && setAddOpen(false);
           setIsModalOpen(false);
-        });
+        }).catch(() => {
+          setLoading(false);
+        });;
       } else {
         setLoading(true);
         EditDataParams(apiRoute().edit.route, values).then((res) => {
@@ -168,6 +170,8 @@ const RouteActionForms: React.FC<PropsData> = ({
           }
           setAddOpen && setAddOpen(false);
           setIsModalOpen(false);
+        }).catch(() => {
+          setLoading(false);
         });
       }
     },

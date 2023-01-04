@@ -5,7 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import AutocompleteInput from "../../../../../global/Autocomplete/AutocompleteInput";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import Chip from "../../../../../global/Chip/Chip";
-import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
+import { setFilter, vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
 import PerfesionalSearch from "../../../../../components/PerfesionalSearch/PerfesionalSearch";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
 import InputText from "../../../../../global/InputText/InputText";
@@ -42,6 +42,7 @@ const SearchForm: React.FC<PropsData> = ({ isActive,fuelOptions,vendorOptions })
   });
 
   useEffect(() => {
+    dispatch(setFilter({...formik.values,isActive}));
     dispatch(
       vehicleModel({
         name: formik.values.name,

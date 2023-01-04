@@ -6,8 +6,9 @@ import DeleteOperation from "../../../components/tableOperation/DeleteOperation"
 import { useFetchOptions } from "../../../global/hooks/useFetchOptions";
 import { ServiceData } from "../../../redux/ServiceDefine/ServiceDefineReducer";
 import { apiRoute } from "../../../services/apiRoute";
-import { exportExcel } from "../../../tools/functions/ExcelExport";
-import { ExportExcel } from "../../../tools/functions/Methods";
+import { ExportExcel } from "../../../tools/functions/ExportMyExcel";
+
+
 import ServiceDefineActionForms from "./view/ActionsForm";
 import { ServiceDefineColumns } from "./view/Column";
 import OptionsTable from "./view/OptionsTable";
@@ -36,6 +37,9 @@ const ServiceDefinition: React.FC = (): JSX.Element => {
       ? postLists?.content?.map((item: any) => {
           return {
             ...item,
+            product:item?.product?.text,
+            priceList:item.priceList.text,
+            isActive:item.isActive?"فعال":"غیرفعال",
             operation: (
               <div className="flex w-full gap-3 justify-center">
                 <DeleteOperation
@@ -54,6 +58,8 @@ const ServiceDefinition: React.FC = (): JSX.Element => {
           };
         })
       : [];
+
+  // const table = document.querySelector("table");
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="تعریف سرویس" />
@@ -64,7 +70,7 @@ const ServiceDefinition: React.FC = (): JSX.Element => {
         addComponentProps={() => (
           <ServiceDefineActionForms productOptions={productOptions} priceOptions={priceOptions} />
         )}
-        exportExcel={() =>  exportExcel(data)}
+        exportExcel={() => ExportExcel([])}
       />
       <StaticTable
         data={data ? data : []}

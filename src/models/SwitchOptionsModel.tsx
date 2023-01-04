@@ -5,9 +5,10 @@ import { GoDesktopDownload } from "react-icons/go";
 import { IoIosPrint } from "react-icons/io";
 import { IoBarcode, IoClose } from "react-icons/io5";
 import CustomSwitch from "../global/Switch/Switch";
-import { ExportExcel } from "../tools/functions/Methods";
+
 import SimpleButton from "../global/SimpleButton/SimpleButton";
 import AddButton from "../global/addButton/AddButton";
+import { ExportExcel } from "../tools/functions/ExportMyExcel";
 
 interface ComponentItemInterface {
   JSXItem: (value: any) => JSX.Element;

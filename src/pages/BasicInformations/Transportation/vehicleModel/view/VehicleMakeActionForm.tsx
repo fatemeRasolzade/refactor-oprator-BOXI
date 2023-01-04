@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
-import { AiOutlineEdit } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { EditDataParams, PostDataParams } from "../../../../../services/Service_call";
 import { apiRoute } from "../../../../../services/apiRoute";
 import { SuccessAlert } from "../../../../../global/alert/Alert";
-import AddButton from "../../../../../global/addButton/AddButton";
 import InputText from "../../../../../global/InputText/InputText";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import InputSelect from "../../../../../global/InputSelect/InputSelect";
 import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
-import AddExcel from "../../../../../components/exel/AddExcel";
-import { vehicleModelExcel } from "../../../../../tools/services/ExcelInfoFile";
 import Modal from "../../../../../global/Modal/Modal";
 import CustomSwitch from "../../../../../global/Switch/Switch";
 interface PropsData {
   currentData?: any;
-  fuelOptions:any;
-  vendorOptions :any
+  fuelOptions: any;
+  vendorOptions: any;
+  open: boolean;
+  setOpen: (value: boolean) => void;
 }
 const validation = Yup.object().shape({
   name: Yup.string().required(),
@@ -34,35 +32,17 @@ const validation = Yup.object().shape({
 });
 
 const VehicleMakeActionForms: React.FC<PropsData> = ({
-  currentData,fuelOptions,vendorOptions 
+  currentData,
+  fuelOptions,
+  vendorOptions,
+  open,
+  setOpen,
 }): JSX.Element => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [uploadExcel, setUploadExcel] = useState(false);
   const [Loading, setLoading] = useState(false);
-
-
   const dispatch = useDispatch();
+  const { filter } = useSelector((state: any) => state.vehicleModel);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
 
-  const handleAction = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-  const handleUploadFileAction = () => {
-    setUploadExcel(!uploadExcel);
-  };
-  const setUpdate=()=>{
-    dispatch(
-      vehicleModel({
-        isActive: "",
-        pageSize: 10,
-        pageNumber: "",
-      }) as any
-    );
-  }
-
-  const ToggleOptions = [
-    { handleClick: handleAction, name: "افزودن مدل وسیله نقلیه" },
-    { handleClick: handleUploadFileAction, name: "افزودن گروهی اکسل" },
-  ];
   const formik = useFormik({
     enableReinitialize: true,
     validationSchema: validation,
@@ -103,74 +83,63 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
     onSubmit: (values) => {
       if (!currentData) {
         setLoading(true);
-        PostDataParams(apiRoute().post.VehicleModel, values).then((res) => {
-          if (res.status === "OK") {
-            SuccessAlert("با موفقیت ساخته شد");
-            setLoading(false);
-            dispatch(
-              vehicleModel({
-                search: "",
-                isActive: "",
-                pageSize: 10,
-                pageNumber: "",
-              }) as any
-            );
-          } else {
-            console.log("run error");
-            setLoading(false);
-            // ErrorAlert("خطا در برقراری اطلاعات");
-          }
+        PostDataParams(apiRoute().post.VehicleModel, values)
+          .then((res) => {
+            if (res.status === "OK") {
+              SuccessAlert("با موفقیت ساخته شد");
+              setLoading(false);
+              dispatch(
+                vehicleModel({
+                  pageSize: 10,
+                  pageNumber: pageNumbers,
+                }) as any
+              );
+            } else {
+              console.log("run error");
 
-          // dispatch(updating(false));
+              // ErrorAlert("خطا در برقراری اطلاعات");
+            }
 
-          setIsModalOpen(false);
-        });
+            // dispatch(updating(false));
+
+            setOpen(false);
+          })
+          .catch(() => {
+            setLoading(false);
+          });
       } else {
         setLoading(true);
-        EditDataParams(apiRoute().edit.VehicleModel, values).then((res) => {
-          // dispatch(updating(true));
-          console.log("run edit");
-          if (res.status === "OK") {
+        EditDataParams(apiRoute().edit.VehicleModel, values)
+          .then((res) => {
+            if (res.status === "OK") {
+              setLoading(false);
+              SuccessAlert("با موفقیت ویرایش شد");
+              dispatch(
+                vehicleModel({
+                  pageSize: 10,
+                  pageNumber: pageNumbers,
+                }) as any
+              );
+            }
+            setOpen(false);
+          })
+          .catch(() => {
             setLoading(false);
-            SuccessAlert("با موفقیت ویرایش شد");
-            dispatch(
-              vehicleModel({
-                search: "",
-                isActive: true,
-                pageSize: 10,
-                pageNumber: "",
-              }) as any
-            );
-          } else {
-            setLoading(false);
-            console.log("run error");
-            // ErrorAlert("خطا در برقراری اطلاعات");
-          }
-
-          setIsModalOpen(false);
-        });
+          });
       }
     },
   });
   useEffect(() => {
     formik.resetForm({});
-  }, [isModalOpen]);
+  }, [open]);
 
   return (
     <>
-      {!currentData ? (
-        <AddButton ToggleOptions={ToggleOptions} />
-      ) : (
-        <button
-          className=" border-none	 text-[14px]  w-[20px] h-[20px] "
-          onClick={() => setIsModalOpen(!isModalOpen)}
-        >
-          <AiOutlineEdit className="w-full h-full" />
-        </button>
-      )}
-      <AddExcel excelInfo={vehicleModelExcel} OpenModal={uploadExcel} setOpenModal={setUploadExcel} setUpdate={setUpdate}/>
-      <Modal visible={isModalOpen} setVisible={setIsModalOpen} title={currentData ?"ویرایش مدل وسیله نقلیه" : "تعریف مدل وسیله نقلیه"}>
-      {/*<Dialog open={isModalOpen} handler={setIsModalOpen} className={"overflow-visible p-5 min-w-[60%] "}>*/}
+      <Modal
+        visible={open}
+        setVisible={setOpen}
+        title={currentData ? "ویرایش مدل وسیله نقلیه" : "تعریف مدل وسیله نقلیه"}
+      >
         <form onSubmit={formik.handleSubmit}>
           <div className="  grid grid-cols-4 mt-8 gap-4 content-center items-center">
             <div>
@@ -181,7 +150,6 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
                 handleChange={formik.handleChange}
                 values={formik.values.name}
                 important
-
                 error={formik.touched.name && formik.errors.name}
               />
             </div>
@@ -189,7 +157,7 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
               <InputText
                 label="کد مدل"
                 // className="w-full"
-                readOnly={currentData ? true: false}
+                readOnly={currentData ? true : false}
                 name="code"
                 handleChange={formik.handleChange}
                 values={formik.values.code}
@@ -257,7 +225,6 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
                 error={formik.touched.vendorSelect && formik.errors.vendorSelect}
                 options={vendorOptions.options}
               />
-
             </div>
             <CustomSwitch
               active={formik.values.isActive}
@@ -265,11 +232,7 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
             />
           </div>
           <div className="flex-end-center mt-5 gap-3">
-            <SimpleButton
-              handelClick={() => setIsModalOpen(false)}
-              text="لغو"
-              className="full-lightTomato-btn"
-            />
+            <SimpleButton handelClick={() => setOpen(false)} text="لغو" className="full-lightTomato-btn" />
             <SimpleButton
               loading={Loading}
               type="submit"
@@ -278,10 +241,10 @@ const VehicleMakeActionForms: React.FC<PropsData> = ({
             />
           </div>
         </form>
-      {/*</Dialog>*/}
+        {/*</Dialog>*/}
       </Modal>
     </>
   );
 };
 
-export default VehicleMakeActionForms
+export default VehicleMakeActionForms;

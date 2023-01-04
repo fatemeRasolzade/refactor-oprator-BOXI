@@ -2,7 +2,8 @@ export const ServiceDefineColumns = [
   {
     accessor: "id",
     Header: "",
-    width: "auto",
+    key: "id",
+    header: "",
     // Cell: ({ row }) => {
     // return <>{row.index + 1}</>;
     // },
@@ -11,15 +12,18 @@ export const ServiceDefineColumns = [
   {
     accessor: "product",
     Header: "محصول ",
-    width: "auto",
-    Cell: ({ cell }) => {
-      return <>{cell.value?.text}</>;
-    },
+    key: "product",
+    header: "محصول",
+    // Cell: ({ cell }) => {
+    //   return <>{cell.value?.text}</>;
+    // },
   },
   {
     accessor: "code",
     Header: "کد ",
     width: "auto",
+    key: "code",
+    header: "کد",
     // Cell: ({ cell }) => {
     // return <>{SplitNumber(cell.value.text)}</>;
     // },
@@ -27,36 +31,45 @@ export const ServiceDefineColumns = [
   {
     accessor: "priceList",
     Header: "نرخ نامه ",
-    width: "auto",
-    Cell: ({ cell }) => {
-      return <>{cell.value?.text}</>;
-    },
+
+    // Cell: ({ cell }) => {
+    //   return <>{cell.value?.text}</>;
+    // },
+    key: "priceList",
+    header: "نرخ نامه",
   },
   {
     accessor: "name",
     Header: "عنوان ",
-    width: "auto",
+    key: "name",
+    header: "عنوان",
   },
   {
     accessor: "minimumOrderQuantity",
     Header: "حداقل سفارش ",
-    width: "auto",
+    key: "minimumOrderQuantity",
+    header: "حداقل سفارش",
   },
   {
     accessor: "description",
     Header: "شرح سرویس ",
-    width: "auto",
+    key: "description",
+    header: "شرح سرویس ",
   },
   {
     accessor: "isActive",
     Header: "وضعیت",
-    width: "auto",
-    Cell: ({ cell }) => {
-      return cell.value === true ? <>فعال</> : <>غیر فعال</>;
-    },
+    key: "isActive",
+    header: "وضعیت ",
+    // width: "auto",
+    // Cell: ({ cell }) => {
+    //   return cell.value === true ? <>فعال</> : <>غیر فعال</>;
+    // },
   },
   {
     Header: "عملیات",
     accessor: "operation",
+    key: "",
+    header: "",
   },
 ];

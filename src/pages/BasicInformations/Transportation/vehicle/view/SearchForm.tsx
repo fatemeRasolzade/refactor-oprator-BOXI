@@ -3,17 +3,10 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FiSearch } from "react-icons/fi";
-import { vendorData } from "../../../../../redux/Transportation/vendor/VendorData";
-import { apiRoute } from "../../../../../services/apiRoute";
-import { GetDataParams } from "../../../../../services/Service_call";
 import AutocompleteInput from "../../../../../global/Autocomplete/AutocompleteInput";
 import SimpleButton from "../../../../../global/SimpleButton/SimpleButton";
 import Chip from "../../../../../global/Chip/Chip";
-import { vehicleModel } from "../../../../../redux/Transportation/vehicleModel/VehicleModel";
-import PerfesionalSearch from "../../../../../components/PerfesionalSearch/PerfesionalSearch";
-import InputSelect from "../../../../../global/InputSelect/InputSelect";
-import { useGetFuelTypeOptions, useGetVendorOptions } from "../../../../../global/hooks/useFetchOptions";
-import InputText from "../../../../../global/InputText/InputText";
+
 import { filterVehicleModel } from "../../../../../redux/Transportation/VehicleData/VehicleData";
 import VehiclePelak from "../../../../../global/VehiclePelak/VehiclePelak";
 import { getPelak } from "../../../../../tools/functions/Methods";

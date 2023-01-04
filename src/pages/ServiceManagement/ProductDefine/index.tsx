@@ -42,7 +42,8 @@ const ProductDefine = () => {
       ? productLists?.content?.map((item: any) => {
           return {
             ...item,
-
+            productGroup:item.productGroup?.text,
+            isActive:item.isActive?"فعال":"غیر فعال",
             operation: (
               <div className="flex w-full gap-3 justify-center">
                 <DeleteOperation
@@ -68,7 +69,7 @@ const ProductDefine = () => {
           };
         })
       : [];
-
+  
   return (
     <div>
       <Breadcrumb beforePage="برگشت" curentPage="تعریف محصول" />
@@ -77,7 +78,7 @@ const ProductDefine = () => {
         setIsActive={setIsACtive}
         isActive={isActive}
         addComponentProps={() => <ActionForms />}
-        exportExcel={() => ExportExcel(datas, ProductColumns)}
+        exportExcel={() => ExportExcel([])}
 
         // exportExcel={<ExcelExportHelper data={datas}  />}
       />
