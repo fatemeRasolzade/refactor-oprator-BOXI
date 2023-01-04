@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import StatusBar from "../../components/StatusBar/StatusBar";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import StaticTable from "../../components/staticTable/StaticTable";
@@ -9,14 +9,33 @@ import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 import PrintLabelForm from "./view/PrintLabelForm";
 import EntranceScanForm from "./view/EntranceScanForm";
 import OutPutScanForm from "./view/OutPutScanForm";
+import { useSelector } from "react-redux";
+import { filterUrls, getUrls } from "../../services/api.enums";
+import { filterTableDataAPI, getAPI } from "../../services/CRUDServices";
+import { StatusEnum } from "../../models/consigment";
+import axios from "axios";
+import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
   isRequire: boolean;
   id: string;
-  type: "operation" | "text" | "inputSelect" | "multiSelect" | "status" | "time";
+  type:
+    | "operation"
+    | "text"
+    | "inputSelect"
+    | "multiSelect"
+    | "status"
+    | "time";
 }
+
+interface ItemData {}
+
 const ConsignmentManage = () => {
+  const { filter } = useSelector((state: any) => state.consignment);
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
+  const [isMoreDataLoading, setIsMoreDataLoading] = useState(false);
+  const [fetchedData, setfetchedData] = useState<any>({});
   const [OpenPrintLabel, setOpenPrintLabel] = useState(false);
   const [OpenEntranceScan, setOpenEntranceScan] = useState(false);
   const [OpenOutPutScan, setOpenOutPutScan] = useState(false);
@@ -57,12 +76,133 @@ const ConsignmentManage = () => {
     { handleClick: () => setOpenOutPutScan(true), name: "اسکن اکسل " },
     { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
   ];
-  // const Entires
+
+  const handleGetDataTable = useCallback(async () => {
+    const body = {};
+    try {
+      const res = await filterTableDataAPI(
+        filterUrls.consignment,
+        pageNumbers,
+        body
+      );
+      console.log("res", res.data.payload.content);
+      setfetchedData(res.data.payload);
+    } catch (error) {}
+  }, [pageNumbers]);
+
+  const handleGetMoreData = async (userName: string) => {
+    let data = {
+      customerAddress: {},
+      // customerPhone: {},
+      prospectPhone: {},
+      prospectAddress: {},
+    };
+    try {
+      // setIsMoreDataLoading(true);
+      const resCustomerAddress = await getAPI(
+        getUrls.customerAddressByUsername + `/${"hasan"}`
+      );
+      // const rescustomerPhoneByUsername = await getAPI(
+      //   getUrls.customerPhoneByUsername + `/${"hasan"}`
+      // );
+      const reprospectPhoneByUsername = await getAPI(
+        getUrls.prospectPhoneByUsername + `/${"hasan"}`
+      );
+      const reprospectAddressByUsername = await getAPI(
+        getUrls.prospectAddressByUsername + `/${"hasan"}`
+      );
+      data = {
+        customerAddress: resCustomerAddress.data.payload,
+        // customerPhone: rescustomerPhoneByUsername.data.payload,
+        prospectPhone: reprospectPhoneByUsername.data.payload,
+        prospectAddress: reprospectAddressByUsername.data.payload,
+      };
+    } catch (error) {}
+    return data;
+  };
+
+  useEffect(() => {
+    handleGetDataTable();
+  }, [handleGetDataTable]);
+
+  const data =
+    fetchedData?.content?.length !== 0
+      ? fetchedData?.content?.map((item: ItemData | any) => {
+          let fetchedData: any = { customerAddress: [] };
+          let data = handleGetMoreData(item.customerName);
+          data.then((sdfg) => {
+            console.log("customerAddressdata", sdfg);
+            fetchedData = sdfg;
+          });
+
+          return {
+            ...fetchedData,
+            id: item.id,
+            PaymentByBanknote: item.amountPaidWithCash,
+            TheAmountPayable: item.amountPaidWithCard,
+            senderCity: item.senderCityName,
+            SenderPhone: item.senderPhoneNumber,
+            senderCityRegionName: item.senderCityRegionName,
+            senderRegionName: item.senderRegionName,
+
+            IMEI1: item.imei_1,
+            IMEI2: item.imei_2,
+            IMEI3: item.imei_3,
+
+            device1: item.machine_1,
+            device2: item.machine_2,
+            device3: item.machine_3,
+
+            status: StatusEnum[item.status],
+            customerName: item.customerName,
+            createdAt: item.createdDate,
+            InternetAddressOfIssuedInvoice: item.addressOfWeb,
+
+            receiverAddress: (
+              <div className="w-full flex justify-center">
+                <>test</>
+                <TooltipWrapper
+                  textProps={fetchedData?.customerAddress?.map(
+                    (address: any) => (
+                      <div className="text-white" key={address.id}>
+                        {address.selectState.text}
+                      </div>
+                    )
+                  )}
+                >
+                  <div>
+                    {fetchedData?.customerAddress?.map((address: any) => {
+                      console.log("address.selectState.text");
+
+                      return address.selectState.text;
+                    })}
+                  </div>
+                </TooltipWrapper>
+              </div>
+            ),
+            receiverArea: item.receiverCityRegionName,
+            recipientArea: item.receiverRegionName,
+
+            weight: item.weight,
+            volume: item.volume,
+            bagId: item.bagId,
+            paymentStatus: item.paymentStatus,
+          };
+        })
+      : [];
+  console.log("data", data);
+  console.log("fetchedData", fetchedData);
+
   return (
     <>
       <Breadcrumb curentPage="مدیریت مرسوله" />
       <StatusBar Options={Options} />
-      <SearchConsignmentFilter selectedCol={selectedCol} setSelectedCol={(value: Array<SelectedColInterface>) => setSelectedCol(value)} />
+      <SearchConsignmentFilter
+        selectedCol={selectedCol}
+        setSelectedCol={(value: Array<SelectedColInterface>) =>
+          setSelectedCol(value)
+        }
+      />
       <SwitchOptionTable
         accessPage={[
           { code: "A7" },
@@ -74,11 +214,11 @@ const ConsignmentManage = () => {
         ]}
       />
       <StaticTable
-        data={[]}
+        data={data ? data : []}
         column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
         pagination={7}
         selectable={false}
-        THWrapper={"min-w-[130px] w-[130px]"}
+        THWrapper={"border border-indigo-600	 whitespace-nowrap"}
       />
       <DeleteModal
         isModalOpenDelete={isOpenModalDelete.isOpen}
@@ -87,7 +227,7 @@ const ConsignmentManage = () => {
             return { ...prev, isOpen: false, id: undefined };
           })
         }
-        title="حذف نقش"
+        title="حذف مرسوله"
         itemId={isOpenModalDelete.id}
         route={""}
         handleDeleteActionNewData={handleDeleteActionNewData}
