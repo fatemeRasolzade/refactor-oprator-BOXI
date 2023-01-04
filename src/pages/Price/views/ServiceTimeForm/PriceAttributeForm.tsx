@@ -128,8 +128,8 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter,
     setEdit(true);
     let data = Attributes.find((at: any) => at.id === id);
     data?.priceDetailDevisions?.length === 0
-      ? setFieldValue("classification", { id: "1", text: "سفارشی" })
-      : setFieldValue("classification", { id: "2", text: "استاندارد" });
+      ? setFieldValue("classification", { id: 1, text: "سفارشی" })
+      : setFieldValue("classification", { id: 2, text: "استاندارد" });
     data?.priceDetailDevisions?.length === 0 && data.customDevision === null && setFieldValue("classification", "");
     data.priceFormule ? setFieldValue("fixedPrice", true) : setFieldValue("fixedPrice", false);
     const { toValue, toNumber } = data;
@@ -147,13 +147,13 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter,
     setFieldValue("customDevision", data.customDevision ? { id: data.customDevision?.id, text: data.customDevision?.name } : null);
     setFieldValue("priceFormule", data?.priceFormule);
     setFieldValue("isParametric", data?.isParametric);
-    
-     setFieldValue("fromCountryDevision", data.fromCountryDevision);
-     setFieldValue("fromSourceCity", data.fromSourceCity);
-     setFieldValue("fromSourceLocation", data.fromSourceLocation);
-     setFieldValue("toCountryDevision", data.toCountryDevision);
-     setFieldValue("fromDestinationCity", data.fromDestinationCity);
-     setFieldValue("fromDestinationLocation", data.fromDestinationLocation);
+
+    setFieldValue("fromCountryDevision", data.fromCountryDevision);
+    setFieldValue("fromSourceCity", data.fromSourceCity);
+    setFieldValue("fromSourceLocation", data.fromSourceLocation);
+    setFieldValue("toCountryDevision", data.toCountryDevision);
+    setFieldValue("fromDestinationCity", data.fromDestinationCity);
+    setFieldValue("fromDestinationLocation", data.fromDestinationLocation);
     console.log(values);
   };
 
