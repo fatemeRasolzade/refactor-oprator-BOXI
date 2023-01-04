@@ -226,7 +226,7 @@ export var searchFilterListInitConsignment: Array<any> = [
   },
 ];
 
-export enum StatusEnum {
-  ACCEPT = "قبول",
-  NOT_ACCEPT = "عدم قبول",
-}
+export const StatusEnum: any = {
+  ACCEPT: "قبول",
+  NOT_ACCEPT: "عدم قبول",
+};

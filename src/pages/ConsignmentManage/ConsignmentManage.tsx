@@ -10,9 +10,10 @@ import PrintLabelForm from "./view/PrintLabelForm";
 import EntranceScanForm from "./view/EntranceScanForm";
 import OutPutScanForm from "./view/OutPutScanForm";
 import { useSelector } from "react-redux";
-import { filterUrls } from "../../services/api.enums";
-import { filterTableDataAPI } from "../../services/CRUDServices";
+import { filterUrls, getUrls } from "../../services/api.enums";
+import { filterTableDataAPI, getAPI } from "../../services/CRUDServices";
 import { StatusEnum } from "../../models/consigment";
+import axios from "axios";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
@@ -27,14 +28,12 @@ interface SelectedColInterface {
     | "time";
 }
 
-interface ItemData {
-  status: StatusEnum;
-}
+interface ItemData {}
 
 const ConsignmentManage = () => {
   const { filter } = useSelector((state: any) => state.consignment);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
-
+  const [isMoreDataLoading, setIsMoreDataLoading] = useState(false);
   const [fetchedData, setfetchedData] = useState<any>({});
   const [OpenPrintLabel, setOpenPrintLabel] = useState(false);
   const [OpenEntranceScan, setOpenEntranceScan] = useState(false);
@@ -90,18 +89,70 @@ const ConsignmentManage = () => {
     } catch (error) {}
   }, [pageNumbers]);
 
+  const handleGetMoreData = async (userName: string) => {
+    let data = {
+      customerAddress: {},
+      // customerPhone: {},
+      prospectPhone: {},
+      prospectAddress: {},
+    };
+    try {
+      // setIsMoreDataLoading(true);
+      const resCustomerAddress = await getAPI(
+        getUrls.customerAddressByUsername + `/${"hasan"}`
+      );
+      // const rescustomerPhoneByUsername = await getAPI(
+      //   getUrls.customerPhoneByUsername + `/${"hasan"}`
+      // );
+      const reprospectPhoneByUsername = await getAPI(
+        getUrls.prospectPhoneByUsername + `/${"hasan"}`
+      );
+      const reprospectAddressByUsername = await getAPI(
+        getUrls.prospectAddressByUsername + `/${"hasan"}`
+      );
+      data = {
+        customerAddress: resCustomerAddress.data.payload,
+        // customerPhone: rescustomerPhoneByUsername.data.payload,
+        prospectPhone: reprospectPhoneByUsername.data.payload,
+        prospectAddress: reprospectAddressByUsername.data.payload,
+      };
+    } catch (error) {}
+    return data;
+  };
+
   useEffect(() => {
     handleGetDataTable();
   }, [handleGetDataTable]);
 
   const data =
     fetchedData?.content?.length !== 0
-      ? fetchedData?.content?.map((item: ItemData|any) => {
+      ? fetchedData?.content?.map((item: ItemData | any) => {
+          let fetchedData = {};
+          let data = handleGetMoreData(item.customerName);
+          data.then((sdfg) => console.log("customerAddressdata", sdfg));
+
           return {
+            ...fetchedData,
             id: item.id,
+            PaymentByBanknote: item.amountPaidWithCash,
+            TheAmountPayable: item.amountPaidWithCard,
             senderCity: item.senderCityName,
             SenderPhone: item.senderPhoneNumber,
-            status: item.status,
+            senderCityRegionName: item.senderCityRegionName,
+            senderRegionName: item.senderRegionName,
+
+            status: StatusEnum[item.status],
+            customerName: item.customerName,
+            createdAt: item.createdDate,
+            InternetAddressOfIssuedInvoice: item.addressOfWeb,
+
+            receiverArea: item.receiverCityRegionName,
+            recipientArea: item.receiverRegionName,
+
+            weight: item.weight,
+            volume: item.volume,
+            bagId: item.bagId,
+            paymentStatus: item.paymentStatus,
           };
         })
       : [];
@@ -133,7 +184,7 @@ const ConsignmentManage = () => {
         column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
         pagination={7}
         selectable={false}
-        THWrapper={"min-w-[130px] w-[130px]"}
+        THWrapper={" whitespace-nowrap"}
       />
       <DeleteModal
         isModalOpenDelete={isOpenModalDelete.isOpen}
@@ -142,7 +193,7 @@ const ConsignmentManage = () => {
             return { ...prev, isOpen: false, id: undefined };
           })
         }
-        title="حذف نقش"
+        title="حذف مرسوله"
         itemId={isOpenModalDelete.id}
         route={""}
         handleDeleteActionNewData={handleDeleteActionNewData}

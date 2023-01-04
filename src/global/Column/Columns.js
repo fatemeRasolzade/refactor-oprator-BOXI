@@ -544,7 +544,7 @@ export const ConsignmentManageCol = [
     id: crypto.randomUUID(),
     isRequire: false,
     Header: "شماره کیسه ",
-    accessor: "bagNumber",
+    accessor: "bagId",
     type: "time",
   },
   {
@@ -755,7 +755,7 @@ export const ConsignmentManageCol = [
     id: crypto.randomUUID(),
     isRequire: false,
     Header: "منطقه فرستنده",
-    accessor: "SenderArea",
+    accessor: "senderRegionName",
     type: "time",
   },
   {
@@ -769,7 +769,7 @@ export const ConsignmentManageCol = [
     id: crypto.randomUUID(),
     isRequire: false,
     Header: "ناحیه فرستنده",
-    accessor: "senderArea",
+    accessor: "senderCityRegionName",
     type: "time",
   },
   {
