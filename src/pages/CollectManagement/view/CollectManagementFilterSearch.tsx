@@ -1,9 +1,10 @@
 import { useFormik } from "formik";
 import { FC, useState } from "react";
-import { BiChevronDown, BiSearch } from "react-icons/bi";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import Chip from "../../../global/Chip/Chip";
+import CustomSearchOption from "../../../global/CusotmeSearchOption/CustomSearchOption";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
+import VehiclePelak from "../../../global/VehiclePelak/VehiclePelak";
 import ModalPerfetional from "../../Hub/Views/ModalPerfetional/ModalPerfetional";
 interface CollectManagementFilterSearchProps {}
 const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = (): JSX.Element => {
@@ -26,34 +27,24 @@ const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = ()
   return (
     <div className="flex flex-col">
       <form onSubmit={formik.handleSubmit} className="searchForm">
-        <div className=" flex gap-3 justify-start items-center flex-wrap">
-          {searchFilterList.map((item: any, index: number) => {
-            return <></>;
-          })}
-          <div className="mb-5">
-            <SimpleButton
-              type="submit"
-              className="full-gray-btn w-[160px] h-[40px] centering rounded-md"
-              icon={<BiSearch size={20} />}
-              text="جستجو"
-            />
+        {searchFilterList.map((item: any, index: number) => {
+          return <></>;
+        })}
+        <CustomSearchOption />
+        <VehiclePelak formik={formik} />
+        <SimpleButton searchBtn />
+        <PerfesionalSearch
+          formData={() => {
+            formik.handleSubmit();
+          }}
+          perfetionalClik={perfetionalClik}
+        >
+          <div className="grid lg:grid-cols-4 xl:grid-cols-5 gap-6 my-6 md:grid-cols-3 xs:grid-cols-1">
+            {searchFilterList.map((item: any, index: number) => {
+              return <></>;
+            })}
           </div>
-          <PerfesionalSearch
-            text="جستجوی پیشرفته"
-            LeftIcon={<BiChevronDown />}
-            formData={() => {
-              formik.handleSubmit();
-            }}
-            sizeWidth="1350px"
-            perfetionalClik={perfetionalClik}
-          >
-            <div className="grid lg:grid-cols-4 xl:grid-cols-5 gap-6 my-6 md:grid-cols-3 xs:grid-cols-1">
-              {searchFilterList.map((item: any, index: number) => {
-                return <></>;
-              })}
-            </div>
-          </PerfesionalSearch>
-        </div>
+        </PerfesionalSearch>
       </form>
 
       {/* <ModalPerfetional
