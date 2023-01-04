@@ -225,3 +225,8 @@ export var searchFilterListInitConsignment: Array<any> = [
     options: "some",
   },
 ];
+
+export const StatusEnum: any = {
+  ACCEPT: "قبول",
+  NOT_ACCEPT: "عدم قبول",
+};

@@ -30,6 +30,7 @@ import SalesChannelList from "../SaleChannel/SalesChannelReducer";
 import customGeoReducer from "../customGeo/customGeoReducer";
 import ProductGroupsData from "../ProductGroup/ProductGroup";
 import CRMCustomerGroupReducer from "../CRMCustomerGroup/CRMCustomerGroupReducer";
+import consignmentReducer from "../Consignment/consignmentReducer";
 const persistConfig = {
   key: "root",
   storage,
@@ -64,7 +65,8 @@ const reducers = combineReducers({
   saleChannel: SalesChannelList,
   crmCustomer: CRMCustomerGroupReducer,
   customGeo: customGeoReducer,
- productG:ProductGroupsData,
+  productG: ProductGroupsData,
+  consignment: consignmentReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
