@@ -14,6 +14,7 @@ import { filterUrls, getUrls } from "../../services/api.enums";
 import { filterTableDataAPI, getAPI } from "../../services/CRUDServices";
 import { StatusEnum } from "../../models/consigment";
 import axios from "axios";
+import TooltipWrapper from "../../global/tooltip/TooltipWrapper";
 interface SelectedColInterface {
   accessor: string;
   Header: string;
@@ -127,9 +128,12 @@ const ConsignmentManage = () => {
   const data =
     fetchedData?.content?.length !== 0
       ? fetchedData?.content?.map((item: ItemData | any) => {
-          let fetchedData = {};
+          let fetchedData: any = { customerAddress: [] };
           let data = handleGetMoreData(item.customerName);
-          data.then((sdfg) => console.log("customerAddressdata", sdfg));
+          data.then((sdfg) => {
+            console.log("customerAddressdata", sdfg);
+            fetchedData = sdfg;
+          });
 
           return {
             ...fetchedData,
@@ -141,11 +145,41 @@ const ConsignmentManage = () => {
             senderCityRegionName: item.senderCityRegionName,
             senderRegionName: item.senderRegionName,
 
+            IMEI1: item.imei_1,
+            IMEI2: item.imei_2,
+            IMEI3: item.imei_3,
+
+            device1: item.machine_1,
+            device2: item.machine_2,
+            device3: item.machine_3,
+
             status: StatusEnum[item.status],
             customerName: item.customerName,
             createdAt: item.createdDate,
             InternetAddressOfIssuedInvoice: item.addressOfWeb,
 
+            receiverAddress: (
+              <div className="w-full flex justify-center">
+                <>test</>
+                <TooltipWrapper
+                  textProps={fetchedData?.customerAddress?.map(
+                    (address: any) => (
+                      <div className="text-white" key={address.id}>
+                        {address.selectState.text}
+                      </div>
+                    )
+                  )}
+                >
+                  <div>
+                    {fetchedData?.customerAddress?.map((address: any) => {
+                      console.log("address.selectState.text");
+
+                      return address.selectState.text;
+                    })}
+                  </div>
+                </TooltipWrapper>
+              </div>
+            ),
             receiverArea: item.receiverCityRegionName,
             recipientArea: item.receiverRegionName,
 
@@ -184,7 +218,7 @@ const ConsignmentManage = () => {
         column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
         pagination={7}
         selectable={false}
-        THWrapper={" whitespace-nowrap"}
+        THWrapper={"border border-indigo-600	 whitespace-nowrap"}
       />
       <DeleteModal
         isModalOpenDelete={isOpenModalDelete.isOpen}
