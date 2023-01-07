@@ -33,9 +33,8 @@ const CollectManagement = () => {
       <StaticTable
         data={pickupList?.content ? pickupList?.content : []}
         column={CollectColumns}
-        // column={[]}
         pagination={7}
-        selectable={false}
+        selectable={true}
         THWrapper={"min-w-[130px] w-[130px]"}
       />
     </>

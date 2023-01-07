@@ -18,28 +18,17 @@ interface ComponentItemInterface {
 export const componentItem: Record<string, ComponentItemInterface> = {
   A1: {
     JSXItem: (value: any) => (
-      <SimpleButton
-        className="w-62"
-        handelClick={() => ExportExcel(value)}
-        text="خروجی اکسل"
-        RightIcon={<GoDesktopDownload size={17} />}
-      />
+      <SimpleButton className="w-62" handelClick={() => ExportExcel(value)} text="خروجی اکسل" RightIcon={<GoDesktopDownload size={17} />} />
     ),
     code: "A1",
   },
   A2: {
     JSXItem: (value: any) => (
       <>
-        {value.ToggleOptions && (
-          <AddButton ToggleOptions={value.ToggleOptions} />
-        )}
+        {value.ToggleOptions && <AddButton ToggleOptions={value.ToggleOptions} />}
         {value.to && (
           <Link to={value.to}>
-            <SimpleButton
-              text="افزودن"
-              className="full-tomato-btn w-[160px]"
-              icon={<BiPlus color="white" />}
-            />
+            <SimpleButton text="افزودن" className="full-tomato-btn w-[160px]" icon={<BiPlus color="white" />} />
           </Link>
         )}
       </>
@@ -47,65 +36,34 @@ export const componentItem: Record<string, ComponentItemInterface> = {
     code: "A2",
   },
   A3: {
-    JSXItem: (value: any) => (
-      <CustomSwitch active={value.data} handleChange={value.action} />
-    ),
+    JSXItem: (value: any) => <CustomSwitch active={value.data} handleChange={value.action} />,
     code: "A3",
   },
   A4: {
     JSXItem: (options: any) => (
-      <AddButton
-        text="اسکن ورود در هاب"
-        ToggleOptions={options}
-        className="!btn gap-2"
-        WrapperClassName="w-62"
-        RightIcon={<IoBarcode size={22} />}
-      />
+      <AddButton text="اسکن ورود در هاب" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoBarcode size={22} />} />
     ),
     code: "A4",
   },
   A5: {
     JSXItem: (options: any) => (
-      <AddButton
-        text="اسکن خروج از هاب"
-        ToggleOptions={options}
-        className="!btn gap-2"
-        WrapperClassName="w-62"
-        RightIcon={<IoBarcode size={22} />}
-      />
+      <AddButton text="اسکن خروج از هاب" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoBarcode size={22} />} />
     ),
     code: "A5",
   },
   A6: {
     JSXItem: (options: any) => (
-      <AddButton
-        text="چاپ برچسب"
-        ToggleOptions={options}
-        className="!btn gap-2"
-        WrapperClassName="w-62"
-        RightIcon={<IoIosPrint size={20} />}
-      />
+      <AddButton text="چاپ برچسب" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoIosPrint size={20} />} />
     ),
     code: "A5",
   },
   A7: {
-    JSXItem: () => (
-      <SimpleButton
-        text="افزودن گروهی"
-        RightIcon={<AiOutlineFileExcel size={20} />}
-      />
-    ),
+    JSXItem: () => <SimpleButton text="افزودن گروهی" RightIcon={<AiOutlineFileExcel size={20} />} />,
     code: "A4",
   },
   A8: {
     JSXItem: (options: any) => (
-      <AddButton
-        text="لغو"
-        ToggleOptions={options}
-        className="!btn gap-2"
-        WrapperClassName="w-62"
-        RightIcon={<IoClose size={20} />}
-      />
+      <AddButton text="لغو" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoClose size={20} />} />
     ),
     code: "A5",
   },
@@ -118,5 +76,8 @@ export const componentItem: Record<string, ComponentItemInterface> = {
     ),
     code: "A9",
   },
+  // A10: {
+  //   JSXItem: (act)
+  // }
 };
 //
