@@ -56,7 +56,7 @@ const NavbarSearch = ({activeChecked}:{activeChecked?:boolean}) => {
     getDataHeaderServer(apiRoute().get.select_hub_category).then((res) => {
       if (res.status === "OK") setCatHub(res.payload.content);
     });
-    postDataHeaderToServer(apiRoute().get.select_hub, []).then((res) => {
+    getDataHeaderServer(apiRoute().get.select_hub).then((res) => {
       if (res.status === "OK") setselectHub(res.payload.content);
     });
   }, []);
@@ -84,7 +84,7 @@ const NavbarSearch = ({activeChecked}:{activeChecked?:boolean}) => {
                 onSelect={(val: any) => formik.setFieldValue("code", val)}
               />
             </div>
-            <div>
+            <div className="">
               <SimpleButton
                 type={"submit"}
                 className="full-gray-btn"
