@@ -39,17 +39,16 @@ const MapComponent = () => {
             text="دریافت اطلاعات بیشتر"
             RightIcon={<BsListUl />}
           />
-          <form>
+          <form >
             <VehiclePelak formik={formik} />
           </form>
           {filterDataChip && (
             <Chip filterData={filterDataChip} formData={formik} />
           )}
         </div>
-        <div className="w-full h-full flex absolute">
-          <div className="w-full h-full relative">
-            <Mapir Map={Map} />
-          </div>
+
+        <div className="w-[85%] h-full relative">
+          <Mapir Map={Map} />
         </div>
       </div>
     </div>
