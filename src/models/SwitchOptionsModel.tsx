@@ -111,9 +111,9 @@ export const componentItem: Record<string, ComponentItemInterface> = {
   },
   A9: {
     JSXItem: (action: any) => (
-      <button onClick={action} className="flex gap-2">
+      <button onClick={action.fetch} className="flex gap-2">
         <span>دریافت اطلاعات بیشتر</span>
-        <HiRefresh />
+        <HiRefresh className={`${action.loading ? "loading-spinner" : ""}`} />
       </button>
     ),
     code: "A9",
