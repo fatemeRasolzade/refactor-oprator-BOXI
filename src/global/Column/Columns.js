@@ -379,13 +379,13 @@ export const ConsignmentManageCol = [
     accessor: "receiverAddress",
     type: "time",
   },
-  {
-    id: crypto.randomUUID(),
-    isRequire: false,
-    Header: "پین کد مقصد",
-    accessor: "destinationAddress",
-    type: "time",
-  },
+  // {
+  //   id: crypto.randomUUID(),
+  //   isRequire: false,
+  //   Header: "پین کد مقصد",
+  //   accessor: "destinationAddress",
+  //   type: "time",
+  // },
   {
     id: crypto.randomUUID(),
     isRequire: false,
@@ -632,13 +632,13 @@ export const ConsignmentManageCol = [
     accessor: "DeliveryType",
     type: "time",
   },
-  {
-    id: crypto.randomUUID(),
-    isRequire: false,
-    Header: "پین کد فرستنده",
-    accessor: "PinCodeOfTheSender",
-    type: "time",
-  },
+  // {
+  //   id: crypto.randomUUID(),
+  //   isRequire: false,
+  //   Header: "پین کد فرستنده",
+  //   accessor: "PinCodeOfTheSender",
+  //   type: "time",
+  // },
   {
     id: crypto.randomUUID(),
     isRequire: false,
