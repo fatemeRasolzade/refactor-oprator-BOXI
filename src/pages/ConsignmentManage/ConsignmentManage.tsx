@@ -163,21 +163,33 @@ const Options = [
 ];
 
 const convertdataTable = async (fetchedData: any) => {
-  const getmoreData = async () => {
-    let newconvertedDatafarid = {};
+  const getMoreData = async (urlApi: string) => {
+    let fetchedMoreData = {};
     try {
-      const res = await getAPI(getUrls.customerAddressByUsername + "/hasan");
-      newconvertedDatafarid = { AddressByUsername: res.data.payload };
+      const res = await getAPI(urlApi);
+      fetchedMoreData = res.data.payload;
     } catch (error) {}
-    return newconvertedDatafarid;
+    return fetchedMoreData;
   };
 
   const converted = await Promise.all(
     fetchedData.map(async (item: any) => {
-      const sampleData: any = await getmoreData();
+      let fetchedJson: any = {};
+      const AddressByUsername: any = await getMoreData(
+        getUrls.customerAddressByUsername + "/hasan"
+      );
+      const PhoneByUsername: any = await getMoreData(
+        getUrls.customerPhoneByUsername + "/hasan"
+      );
+
+      fetchedJson = {
+        AddressByUsername: AddressByUsername,
+        PhoneByUsername: PhoneByUsername,
+      };
+      console.log("sample Data", AddressByUsername);
 
       return {
-        ...sampleData,
+        ...fetchedJson,
         id: item.id,
         PaymentByBanknote: item.amountPaidWithCash,
         TheAmountPayable: item.amountPaidWithCard,
@@ -198,13 +210,35 @@ const convertdataTable = async (fetchedData: any) => {
         createdAt: item.createdDate,
         InternetAddressOfIssuedInvoice: item.addressOfWeb,
 
+        DeliveryTime: item.deliveryBoundTime,
+        destinationHub: item.destinationHub,
+        currentHub: item.originHub,
+        lastUpdate: item.updateDate,
+        receiverName: item.deliveryName,
+        receiverAddress: item.deliveryAddress,
+        receiverPhone: item.deliveryPhone,
         receiverArea: item.receiverCityRegionName,
         recipientArea: item.receiverRegionName,
-
+        ConsignmentType: item.selectConsignmentType,
+        trip: item.isTripAssigned,
         weight: item.weight,
         volume: item.volume,
         bagId: item.bagId,
         paymentStatus: item.paymentStatus,
+        RescheduleDate: item.rescheduledDate,
+
+        TravelNumber: item.hubTripNumberId,
+        DeliveryTripNumber: item.lastDeliveryTripNumberId,
+        CollectionTripNumber: item.lastPickUpTripNumberId,
+
+        nextHub: item.nextHub,
+        shelfNumber: item.rackNumber,
+        NumberReferralsForDelivery: item.countOfTripForDelivery,
+        NumberOfReferralsForCollection: item.countOfTripForPickUp,
+        deliveryType: item.deliveryType,
+        PinCodeOfTheSender: item.senderPinCode,
+        serviceType: item.serviceType,
+        qcType: item.qcType,
       };
     })
   );

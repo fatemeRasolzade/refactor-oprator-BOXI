@@ -480,7 +480,7 @@ export const ConsignmentManageCol = [
   {
     id: crypto.randomUUID(),
     isRequire: false,
-    Header: "ارزش اظهاری",
+    Header: "وضعیت ارزش اظهاری",
     accessor: "DeclarativeValueStatus",
     type: "time",
   },
@@ -571,7 +571,7 @@ export const ConsignmentManageCol = [
   {
     id: crypto.randomUUID(),
     isRequire: false,
-    Header: "تعداد مراحعه جهت تحویل",
+    Header: "تعداد مراجعه جهت تحویل",
     accessor: "NumberReferralsForDelivery",
     type: "time",
   },
@@ -664,7 +664,7 @@ export const ConsignmentManageCol = [
     id: crypto.randomUUID(),
     isRequire: false,
     Header: "نوع سوریس",
-    accessor: "SourisType",
+    accessor: "serviceType",
     type: "time",
   },
   {
