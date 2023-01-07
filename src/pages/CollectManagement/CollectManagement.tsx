@@ -1,11 +1,29 @@
+import { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import StatusBar from "../../components/StatusBar/StatusBar";
+import { clearPickup, pickupData } from "../../redux/PickupData/PickupData";
 import { CollectColumns } from "./view/CollectColumns";
 import CollectManagementFilterSearch from "./view/CollectManagementFilterSearch";
 
 const CollectManagement = () => {
+  const dispatch = useDispatch();
+  const { pickupList, filter } = useSelector((state: any) => state.pickup);
+
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
+  const handleGetTableData = useCallback(async () => {
+    try {
+      dispatch(pickupData({ ...filter, pageNumber: pageNumbers }) as any);
+    } catch (error) {}
+  }, [dispatch, pageNumbers, filter]);
+
+  useEffect(() => {
+    handleGetTableData();
+    return () => dispatch(clearPickup() as any);
+  }, [dispatch, handleGetTableData]);
+
   return (
     <>
       <Breadcrumb curentPage="مدیریت جمع آوری" beforePage="بازگشت" />
@@ -13,7 +31,7 @@ const CollectManagement = () => {
       <CollectManagementFilterSearch />
       <SwitchOptionTable accessPage={[{ code: "A1", value: [] }]} />
       <StaticTable
-        data={[]}
+        data={pickupList?.content ? pickupList?.content : []}
         column={CollectColumns}
         // column={[]}
         pagination={7}

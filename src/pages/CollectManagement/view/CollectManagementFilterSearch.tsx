@@ -5,16 +5,10 @@ import Chip from "../../../global/Chip/Chip";
 import CustomSearchOption from "../../../global/CusotmeSearchOption/CustomSearchOption";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import VehiclePelak from "../../../global/VehiclePelak/VehiclePelak";
-import ModalPerfetional from "../../Hub/Views/ModalPerfetional/ModalPerfetional";
 interface CollectManagementFilterSearchProps {}
 const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = (): JSX.Element => {
   const [searchFilterList, setSearchFilterList] = useState<Array<any>>([]);
   const [filterDataChip, setFilterDataChip] = useState({});
-  const [active, setActive] = useState(false);
-
-  const perfetionalClik = () => {
-    setActive((prev) => !prev);
-  };
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -23,21 +17,16 @@ const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = ()
       setFilterDataChip(values);
     },
   });
+
+  const { handleSubmit, handleReset } = formik;
+
   return (
     <div className="flex flex-col">
       <form onSubmit={formik.handleSubmit} className="searchForm">
-        {searchFilterList.map((item: any, index: number) => {
-          return <></>;
-        })}
         <CustomSearchOption setFieldValue={formik.setFieldValue} formik={formik} />
         <VehiclePelak formik={formik} />
         <SimpleButton searchBtn />
-        <PerfesionalSearch
-          formData={() => {
-            formik.handleSubmit();
-          }}
-          perfetionalClik={perfetionalClik}
-        >
+        <PerfesionalSearch formData={handleSubmit} perfetionalClik={handleReset}>
           <div className="grid lg:grid-cols-4 xl:grid-cols-5 gap-6 my-6 md:grid-cols-3 xs:grid-cols-1">
             {searchFilterList.map((item: any, index: number) => {
               return <></>;

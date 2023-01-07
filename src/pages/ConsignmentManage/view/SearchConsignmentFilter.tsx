@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { FC, useState } from "react";
 
-import { BiChevronDown, BiSearch } from "react-icons/bi";
+import { BiChevronDown } from "react-icons/bi";
 import Checkbox from "../../../components/checkbox/Checkbox";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import AutocompleteInput from "../../../global/Autocomplete/AutocompleteInput";
