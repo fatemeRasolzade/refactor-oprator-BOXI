@@ -10,10 +10,9 @@ import { apiRoute } from '../../../../services/apiRoute';
 import { ErrorAlert, SuccessAlert } from './../../../../global/alert/Alert';
 import { useDispatch } from 'react-redux';
 import { ProductGroupsData } from '../../../../redux/ProductGroup/ProductGroup';
+import Modal from '../../../../global/Modal/Modal';
 
 const EditModalProductGroup = ({isModalOpen,setIsModalOpen,dataInput,bodyProduct}:{isModalOpen:boolean,setIsModalOpen?:any,dataInput:any,bodyProduct?:object}) => {
-
-  console.log("first888")
 
 
     const validationSchema=Yup.object({
@@ -25,20 +24,13 @@ const EditModalProductGroup = ({isModalOpen,setIsModalOpen,dataInput,bodyProduct
     const dispatch=useDispatch()
 
   return (
-     <Dialog
-    open={isModalOpen}
-    handler={setIsModalOpen}
-   
-    size={"lg"}
-  >
+    <Modal visible={isModalOpen} setVisible={setIsModalOpen} title="ویرایش گروه محصول">
 <div className='p-3'>
 
-    <div className='flex justify-between items-center p-2'>
-    <h5>ویرایش گروه محصول</h5>
-    <span onClick={()=>setIsModalOpen((prev:boolean)=>!prev)} className="cursor-pointer"><BiXCircle size={20} /></span>
-    </div>
+   
 <div className='w-full'>
 <Formik
+enableReinitialize={true}
 initialValues={{
   id:dataInput?.id,
 code:dataInput.code ? dataInput.code : "",
@@ -51,6 +43,7 @@ validationSchema={validationSchema}
 onSubmit={(values)=>{
 
  PutWithHeader(apiRoute().post.Product_Group,values).then(res=>{
+  setIsModalOpen(false)
   if(res.status==="OK"){
     SuccessAlert('با موفقیت ویرایش شد')
     dispatch(ProductGroupsData(bodyProduct) as any)
@@ -112,7 +105,7 @@ onSubmit={(values)=>{
 
 
 
-    </Dialog>
+    </Modal>
   )
 }
 

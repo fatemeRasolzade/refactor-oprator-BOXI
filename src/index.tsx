@@ -28,5 +28,6 @@ root.render(
   //  </ReactKeycloakProvider>
 );
 
-UserService.initKeycloak(root)
+UserService.initKeycloak(root);
+
 reportWebVitals();

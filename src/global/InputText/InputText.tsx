@@ -37,7 +37,7 @@ const InputText = React.forwardRef(
     }: InputTextProps,
     ref: any
   ) => {
-    const [HidePassword, setHidePassword] = useState(true);
+    const [HidePassword, setHidePassword] = useState(false);
 
     return (
       <div className={`flex flex-col ${wrapperClassName}`}>
@@ -52,12 +52,12 @@ const InputText = React.forwardRef(
             name={name}
             value={values}
             onChange={handleChange}
-            type={!HidePassword ? "password" : type}
+            type={password ? (!HidePassword ? "password" : type) : type}
             placeholder={placeholder}
           />
           {password && (
             <div className="text-darkBorder cursor-pointer pr-3" onClick={() => setHidePassword(!HidePassword)}>
-              {HidePassword ? <BiHide size={20} /> : <BiShow size={20} />}
+              {!HidePassword ? <BiHide size={20} /> : <BiShow size={20} />}
             </div>
           )}
           {leftIcon && <span className="pr-3">{leftIcon}</span>}

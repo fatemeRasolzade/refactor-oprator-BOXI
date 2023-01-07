@@ -21,7 +21,7 @@ const ServiceProvision = () => {
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [DataEditModal, setDataEditModal] = useState({});
   useEffect(() => {
-    dispatch(ServiceProvisionData(pageNumbers) as any);
+    dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any);
     return () => {
       dispatch(clearService());
     };
@@ -59,6 +59,9 @@ const data=serviceList?.content ?  serviceList.content.map((item:any)=>{
     }}/></span></div>
   }
 }) : []
+
+
+
 
 const handelActionAfterDelete=()=>{ 
   dispatch(ServiceProvisionData({pageNumbers:pageNumbers}) as any)

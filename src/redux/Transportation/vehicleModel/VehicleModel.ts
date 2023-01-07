@@ -21,15 +21,16 @@ const initialState:any= {
     vehicleModelLists:[],
     fetchpost:false,
     errorMessage:null,
-    isUpdating: false,    
+    isUpdating: false,
+    filter:{}     
 }
 
 const VehicleModelLists= createSlice({
     initialState: initialState,
     name: "vehicleModelLists",
     reducers: {
-        updating: (state:any, action:any) => {
-            state.isUpdating = action.payload;
+        setFilter: (state, action) => {
+            state.filter = action.payload;
           },
     },
     extraReducers: {
@@ -47,5 +48,5 @@ const VehicleModelLists= createSlice({
     },
 });
 
-// export const {  updating } = ProductDefineList.actions;
+export const {  setFilter } = VehicleModelLists.actions;
 export default VehicleModelLists.reducer

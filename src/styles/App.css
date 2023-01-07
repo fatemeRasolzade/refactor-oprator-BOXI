@@ -76,7 +76,7 @@
 }
 
 .react-select-3-listbox {
-  z-index: 200 !important;
+  z-index: 1000 !important;
   height: 2.5rem !important;
 }
 .custom-multi-select .css-g1d714-ValueContainer {

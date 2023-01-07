@@ -71,11 +71,14 @@ const CustomerForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
           errors.economicCode = errEC;
         }
       }
+      // alert("HERE1");
+
       return errors;
     },
     onSubmit: (values: any) => {
       setLoading(true);
       if (currentData) {
+        // alert("HERE2");
         editCustomer({
           ...values,
           id: currentData.id,
@@ -105,6 +108,7 @@ const CustomerForm = ({ currentData, open, setOpen }: CustomerFormProps) => {
           .catch(() => {})
           .finally(() => setLoading(false));
       } else {
+        // alert("thiis is true");
         createCustomer({
           ...values,
           nationalCode: values.selectThirdPartyType?.id === 0 ? values.nationalCode : "",

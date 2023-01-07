@@ -17,11 +17,23 @@ export const vendorData=createAsyncThunk('vendorLists',async(body:any)=>{
     return data;
 })
 
-const initialState:any= {
+
+
+export interface StateData {
+    vendorLists: Array<any>;
+    fetchPost?: boolean;
+    errorMessage: null | string;
+    isUpdating: Boolean;
+    filter: object;
+  }
+  
+
+const initialState:StateData= {
     vendorLists:[],
-    fetchpost:false,
+    fetchPost:false,
     errorMessage:null,
-    isUpdating: false,    
+    isUpdating: false,
+    filter:{}    
 }
 
 const VendorList = createSlice({
@@ -30,6 +42,9 @@ const VendorList = createSlice({
     reducers: {
         updating: (state:any, action:any) => {
             state.isUpdating = action.payload;
+          },
+          setFilter: (state, action) => {
+            state.filter = action.payload;
           },
     },
     extraReducers: {
@@ -47,5 +62,5 @@ const VendorList = createSlice({
     },
 });
 
-// export const {  updating } = ProductDefineList.actions;
+export const {  setFilter } = VendorList.actions;
 export default VendorList.reducer

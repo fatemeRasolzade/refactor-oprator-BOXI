@@ -182,4 +182,7 @@
   .searchForm {
     @apply flex-start-start mt-6 gap-4 flex-wrap;
   }
+  .selected {
+    @apply bg-lightTomato text-gray-600;
+  }
 }
