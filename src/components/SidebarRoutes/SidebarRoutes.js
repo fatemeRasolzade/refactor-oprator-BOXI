@@ -169,17 +169,17 @@ export const links = [
     ],
   },
 
-  {
-    Icon: <MdInfoOutline size={"25"} />,
-    label: "اطلاعات پایه محصول",
-    childs: [
-      {
-        to: "/roles",
-        component: <Roles />,
-        label: "نقش",
-      },
-    ],
-  },
+  // {
+  //   Icon: <MdInfoOutline size={"25"} />,
+  //   label: "اطلاعات پایه محصول",
+  //   childs: [
+  //     {
+  //       to: "/roles",
+  //       component: <Roles />,
+  //       label: "نقش",
+  //     },
+  //   ],
+  // },
   {
     Icon: <MdOutlineAllInbox size={"25"} />,
     label: "مدیریت سرویس",
