@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { filterUrls, getUrls } from "../../services/api.enums";
 import { filterTableDataAPI, getAPI } from "../../services/CRUDServices";
 import { StatusEnum } from "../../models/consigment";
+import TooltipItems from "./view/TooltipItems";
 
 interface SelectedColInterface {
   accessor: string;
@@ -167,13 +168,15 @@ const convertdataTable = async (fetchedData: any) => {
     let fetchedMoreData = {};
     try {
       const res = await getAPI(urlApi);
+      console.log(urlApi, res.data);
+
       fetchedMoreData = res.data.payload;
     } catch (error) {}
     return fetchedMoreData;
   };
 
   const converted = await Promise.all(
-    fetchedData.map(async (item: any) => {
+    fetchedData?.map(async (item: any) => {
       let fetchedJson: any = {};
       const AddressByUsername: any = await getMoreData(
         getUrls.customerAddressByUsername + "/hasan"
@@ -182,9 +185,57 @@ const convertdataTable = async (fetchedData: any) => {
         getUrls.customerPhoneByUsername + "/hasan"
       );
 
+      console.log("AddressByUsername", AddressByUsername);
+      console.log("PhoneByUsername", PhoneByUsername);
+
       fetchedJson = {
         AddressByUsername: AddressByUsername,
-        PhoneByUsername: PhoneByUsername,
+        SenderPhone: (
+          <TooltipItems
+            ArrayValue={PhoneByUsername?.map((item: any) => {
+              return { text: item.telNumber };
+            })}
+          />
+        ),
+        senderCity: (
+          <TooltipItems
+            ArrayValue={AddressByUsername?.map((item: any) => {
+              return { text: item.selectCity.text };
+            })}
+          />
+        ),
+        senderCityRegionName: (
+          <TooltipItems
+            ArrayValue={AddressByUsername?.map((item: any) => {
+              return { text: item.selectRegion.text };
+            })}
+          />
+        ),
+        senderRegionName: (
+          <TooltipItems
+            ArrayValue={AddressByUsername?.map((item: any) => {
+              return { text: item.selectRegion.text };
+            })}
+          />
+        ),
+        senderAdress: (
+          <TooltipItems
+            ArrayValue={AddressByUsername?.map((item: any) => {
+              return {
+                text:
+                  item.selectState.text +
+                  "،" +
+                  item.selectCity.text +
+                  "،" +
+                  item.selectRegion.text +
+                  "،پلاک" +
+                  item.pelak +
+                  "،واحد" +
+                  item.unit,
+              };
+            })}
+          />
+        ),
       };
       console.log("sample Data", AddressByUsername);
 
@@ -193,10 +244,9 @@ const convertdataTable = async (fetchedData: any) => {
         id: item.id,
         PaymentByBanknote: item.amountPaidWithCash,
         TheAmountPayable: item.amountPaidWithCard,
-        senderCity: item.senderCityName,
-        SenderPhone: item.senderPhoneNumber,
-        senderCityRegionName: item.senderCityRegionName,
-        senderRegionName: item.senderRegionName,
+        // senderCity: item.senderCityName,
+        // senderCityRegionName: item.senderCityRegionName,
+        // senderRegionName: item.senderRegionName,
         IMEI1: item.imei_1,
         IMEI2: item.imei_2,
         IMEI3: item.imei_3,

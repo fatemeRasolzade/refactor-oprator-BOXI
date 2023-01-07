@@ -642,8 +642,8 @@ export const ConsignmentManageCol = [
   {
     id: crypto.randomUUID(),
     isRequire: false,
-    Header: "آدرس کد فرستنده",
-    accessor: "SenderCodeAddress",
+    Header: "آدرس  فرستنده",
+    accessor: "senderAdress",
     type: "time",
   },
   {
