@@ -10,6 +10,9 @@ import SimpleButton from "../global/SimpleButton/SimpleButton";
 import AddButton from "../global/addButton/AddButton";
 import { HiRefresh } from "react-icons/hi";
 import { ExportExcel } from "../tools/functions/ExportMyExcel";
+import { MdDriveFileMove } from "react-icons/md";
+import { BsArrowDownUp } from "react-icons/bs";
+import { ImMap } from "react-icons/im";
 
 interface ComponentItemInterface {
   JSXItem: (value: any) => JSX.Element;
@@ -76,8 +79,29 @@ export const componentItem: Record<string, ComponentItemInterface> = {
     ),
     code: "A9",
   },
-  // A10: {
-  //   JSXItem: (act)
-  // }
+  A10: {
+    JSXItem: (options: any) => (
+      <AddButton
+        text="تخصیص به راننده"
+        ToggleOptions={options}
+        className="!btn gap-2"
+        WrapperClassName="w-62"
+        RightIcon={<MdDriveFileMove size={18} />}
+      />
+    ),
+    code: "A10",
+  },
+  A11: {
+    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="تخصیص خودکار" RightIcon={<MdDriveFileMove size={22} />} />,
+    code: "A11",
+  },
+  A12: {
+    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="تغییر هاب جمع آوری" RightIcon={<BsArrowDownUp size={17} />} />,
+    code: "A12",
+  },
+  A13: {
+    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="نمایش روی نقشه" RightIcon={<ImMap size={17} />} />,
+    code: "A13",
+  },
 };
 //

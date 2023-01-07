@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
@@ -9,6 +9,8 @@ import { CollectColumns } from "./view/CollectColumns";
 import CollectManagementFilterSearch from "./view/CollectManagementFilterSearch";
 
 const CollectManagement = () => {
+  const [OpenDriverAssignment, setOpenDriverAssignment] = useState(false);
+
   const dispatch = useDispatch();
   const { pickupList, filter } = useSelector((state: any) => state.pickup);
 
@@ -24,12 +26,27 @@ const CollectManagement = () => {
     return () => dispatch(clearPickup() as any);
   }, [dispatch, handleGetTableData]);
 
+  const DriverAssignmentOptions = [
+    { handleClick: () => setOpenDriverAssignment(true), name: "انتخاب شده ها" },
+    { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
+  ];
+
+
   return (
     <>
       <Breadcrumb curentPage="مدیریت جمع آوری" beforePage="بازگشت" />
       <StatusBar Options={CollectStatus} />
       <CollectManagementFilterSearch />
-      <SwitchOptionTable accessPage={[{ code: "A1", value: [] }]} />
+      <SwitchOptionTable
+        accessPage={[
+          { code: "A10", option: DriverAssignmentOptions },
+          { code: "A11" },
+          { code: "A12" },
+          { code: "A1", value: [] },
+          { code: "A8" },
+          { code: "A13" },
+        ]}
+      />
       <StaticTable
         data={pickupList?.content ? pickupList?.content : []}
         column={CollectColumns}
