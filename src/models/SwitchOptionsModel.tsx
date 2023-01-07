@@ -111,10 +111,14 @@ export const componentItem: Record<string, ComponentItemInterface> = {
   },
   A9: {
     JSXItem: (action: any) => (
-      <button onClick={action.fetch} className="flex gap-2">
-        <span>دریافت اطلاعات بیشتر</span>
-        <HiRefresh className={`${action.loading ? "loading-spinner" : ""}`} />
-      </button>
+      <SimpleButton
+        className="w-62"
+        handelClick={() => action.fetch()}
+        text="دریافت اطلاعات بیشتر"
+        RightIcon={
+          <HiRefresh className={`${action.loading ? "loading-spinner" : ""}`} />
+        }
+      />
     ),
     code: "A9",
   },
