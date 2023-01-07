@@ -19,9 +19,8 @@ const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = ()
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {},
-    onSubmit: async (values) => {
-      const data = {};
-      setFilterDataChip(data);
+    onSubmit: (values) => {
+      setFilterDataChip(values);
     },
   });
   return (
@@ -30,7 +29,7 @@ const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = ()
         {searchFilterList.map((item: any, index: number) => {
           return <></>;
         })}
-        <CustomSearchOption />
+        <CustomSearchOption setFieldValue={formik.setFieldValue} formik={formik} />
         <VehiclePelak formik={formik} />
         <SimpleButton searchBtn />
         <PerfesionalSearch

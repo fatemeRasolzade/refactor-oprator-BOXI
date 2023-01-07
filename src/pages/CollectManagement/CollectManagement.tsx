@@ -2,6 +2,7 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import StatusBar from "../../components/StatusBar/StatusBar";
+import { CollectColumns } from "./view/CollectColumns";
 import CollectManagementFilterSearch from "./view/CollectManagementFilterSearch";
 
 const CollectManagement = () => {
@@ -13,8 +14,8 @@ const CollectManagement = () => {
       <SwitchOptionTable accessPage={[{ code: "A1", value: [] }]} />
       <StaticTable
         data={[]}
-        // column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
-        column={[]}
+        column={CollectColumns}
+        // column={[]}
         pagination={7}
         selectable={false}
         THWrapper={"min-w-[130px] w-[130px]"}

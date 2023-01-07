@@ -3,7 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { useOnClickOutSide } from "../../tools/hooks/click-outSide-handler";
 
-const CustomSearchOption = ({ Error, important, setFieldValue }: any) => {
+const CustomSearchOption = ({ Error, important, setFieldValue, formik }: any) => {
   const [Open, setOpen] = useState(false);
   const [Name, setName] = useState<any>({
     Name: "",
@@ -15,7 +15,7 @@ const CustomSearchOption = ({ Error, important, setFieldValue }: any) => {
 
   useEffect(() => {
     if (Name.name && Value) {
-      // setFieldValue(Name.name, Value);
+      setFieldValue(Name.name, Value);
     }
   }, [Name, Value, setFieldValue]);
 
