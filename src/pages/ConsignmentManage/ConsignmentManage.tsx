@@ -107,9 +107,12 @@ const ConsignmentManage = () => {
     try {
       setIsMoreDataLoading(true);
       const convertedData = await convertdataTable(originalData);
-      setIsMoreDataLoading(false);
+
       setfetchedData(convertedData);
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setIsMoreDataLoading(false);
+    }
   }, [originalData]);
 
   return (
