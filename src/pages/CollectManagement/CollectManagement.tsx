@@ -1,22 +1,57 @@
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import StatusBar from "../../components/StatusBar/StatusBar";
+import { clearPickup, pickupData } from "../../redux/PickupData/PickupData";
+import { CollectColumns } from "./view/CollectColumns";
 import CollectManagementFilterSearch from "./view/CollectManagementFilterSearch";
 
 const CollectManagement = () => {
+  const [OpenDriverAssignment, setOpenDriverAssignment] = useState(false);
+
+  const dispatch = useDispatch();
+  const { pickupList, filter } = useSelector((state: any) => state.pickup);
+
+  const { pageNumbers } = useSelector((state: any) => state.paginate);
+  const handleGetTableData = useCallback(async () => {
+    try {
+      dispatch(pickupData({ ...filter, pageNumber: pageNumbers }) as any);
+    } catch (error) {}
+  }, [dispatch, pageNumbers, filter]);
+
+  useEffect(() => {
+    handleGetTableData();
+    return () => dispatch(clearPickup() as any);
+  }, [dispatch, handleGetTableData]);
+
+  const DriverAssignmentOptions = [
+    { handleClick: () => setOpenDriverAssignment(true), name: "انتخاب شده ها" },
+    { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
+  ];
+
+
   return (
     <>
       <Breadcrumb curentPage="مدیریت جمع آوری" beforePage="بازگشت" />
       <StatusBar Options={CollectStatus} />
       <CollectManagementFilterSearch />
-      <SwitchOptionTable accessPage={[{ code: "A1", value: [] }]} />
+      <SwitchOptionTable
+        accessPage={[
+          { code: "A10", option: DriverAssignmentOptions },
+          { code: "A11" },
+          { code: "A12" },
+          { code: "A1", value: [] },
+          { code: "A8" },
+          { code: "A13" },
+        ]}
+      />
       <StaticTable
-        data={[]}
-        // column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
-        column={[]}
+        data={pickupList?.content ? pickupList?.content : []}
+        column={CollectColumns}
         pagination={7}
-        selectable={false}
+        selectable={true}
         THWrapper={"min-w-[130px] w-[130px]"}
       />
     </>

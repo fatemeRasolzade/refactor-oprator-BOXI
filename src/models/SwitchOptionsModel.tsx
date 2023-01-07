@@ -8,7 +8,11 @@ import CustomSwitch from "../global/Switch/Switch";
 
 import SimpleButton from "../global/SimpleButton/SimpleButton";
 import AddButton from "../global/addButton/AddButton";
+import { HiRefresh } from "react-icons/hi";
 import { ExportExcel } from "../tools/functions/ExportMyExcel";
+import { MdDriveFileMove } from "react-icons/md";
+import { BsArrowDownUp } from "react-icons/bs";
+import { ImMap } from "react-icons/im";
 
 interface ComponentItemInterface {
   JSXItem: (value: any) => JSX.Element;
@@ -56,11 +60,48 @@ export const componentItem: Record<string, ComponentItemInterface> = {
     ),
     code: "A5",
   },
-  A7: { JSXItem: () => <SimpleButton text="افزودن گروهی" RightIcon={<AiOutlineFileExcel size={20} />} />, code: "A4" },
+  A7: {
+    JSXItem: () => <SimpleButton text="افزودن گروهی" RightIcon={<AiOutlineFileExcel size={20} />} />,
+    code: "A4",
+  },
   A8: {
     JSXItem: (options: any) => (
       <AddButton text="لغو" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoClose size={20} />} />
     ),
     code: "A5",
   },
+  A9: {
+    JSXItem: (action: any) => (
+      <button onClick={action} className="flex gap-2">
+        <span>دریافت اطلاعات بیشتر</span>
+        <HiRefresh />
+      </button>
+    ),
+    code: "A9",
+  },
+  A10: {
+    JSXItem: (options: any) => (
+      <AddButton
+        text="تخصیص به راننده"
+        ToggleOptions={options}
+        className="!btn gap-2"
+        WrapperClassName="w-62"
+        RightIcon={<MdDriveFileMove size={18} />}
+      />
+    ),
+    code: "A10",
+  },
+  A11: {
+    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="تخصیص خودکار" RightIcon={<MdDriveFileMove size={22} />} />,
+    code: "A11",
+  },
+  A12: {
+    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="تغییر هاب جمع آوری" RightIcon={<BsArrowDownUp size={17} />} />,
+    code: "A12",
+  },
+  A13: {
+    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="نمایش روی نقشه" RightIcon={<ImMap size={17} />} />,
+    code: "A13",
+  },
 };
+//

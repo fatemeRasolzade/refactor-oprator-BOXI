@@ -79,11 +79,14 @@ const Chip: React.FC<propsData> = ({ filterData, formData }: propsData) => {
     toCountryDevision: "مقصد",
     vehicleMakeSelect: "مدل",
     selectRoute: "نام مسیر",
-    fuelTypeSelect:"نوع سوخت",
-    consignmentCapacity:"ظرفیت مرسوله",
-    volumeCapacity:'ظرفیت حجمی',
-    weightCapacity:"ظرفیت وزنی",
-    vendorSelect:"شرکت نقلیه",
+    fuelTypeSelect: "نوع سوخت",
+    consignmentCapacity: "ظرفیت مرسوله",
+    volumeCapacity: "ظرفیت حجمی",
+    weightCapacity: "ظرفیت وزنی",
+    vendorSelect: "شرکت نقلیه",
+    customercode: "کد مشتری",
+    consigmentnumber: "شماره مرسوله",
+    tripnumber: "شماره سفر",
   };
   const valueAccessor = (value: any) => {
     if (value["label"]) {

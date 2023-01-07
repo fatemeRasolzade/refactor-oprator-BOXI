@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 export const CORE_API = `${process.env.REACT_APP_BASE_URL}core-api`;
 export const RESOURCE_API = `${process.env.REACT_APP_BASE_URL}resource-api`;
 export const CONSIGNMENT_API = `${process.env.REACT_APP_BASE_URL}consignment-api`;
@@ -12,12 +11,12 @@ const createUrl = (base: any, dir: any) => {
 export const apiRoute = () => {
   return {
     get: {
-    //start select service delivery
-        Fliter_customer:createUrl(RESOURCE_API, "/customer/select?filter="),
-        Fliter_Service:createUrl(CORE_API, "/service/select?filter="),
-        Filter_saleschannel:createUrl(CORE_API, "/saleschannel/select?filter="),
-        Filter_servicedeliverycustomers:createUrl(CORE_API, "/customersegment/select?filter="),
-// end  service delivery
+      //start select service delivery
+      Fliter_customer: createUrl(RESOURCE_API, "/customer/select?filter="),
+      Fliter_Service: createUrl(CORE_API, "/service/select?filter="),
+      Filter_saleschannel: createUrl(CORE_API, "/saleschannel/select?filter="),
+      Filter_servicedeliverycustomers: createUrl(CORE_API, "/customersegment/select?filter="),
+      // end  service delivery
       get_city: createUrl(CORE_API, "/countryDevision/city/2/loc?filter="),
       get_province: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),
       get_province_city: createUrl(CORE_API, "/countryDevision/province/1/city?filter="),
@@ -28,15 +27,15 @@ export const apiRoute = () => {
       filter_hub: createUrl(CORE_API, "/hub/filter"),
       get_hub_type: createUrl(CORE_API, "/hubCategory/selectHubTypes"),
       get_hub_category: createUrl(CORE_API, "/hubCategory/select"),
-      selectFleetType:createUrl(CORE_API,"/vehicle/selectFleetTypes"),
-      selectVehicleMake:createUrl(CORE_API,'/vehicleMake/select?filter='),
-      selectVehicleCategory:createUrl(CORE_API,"/vehicleCategory/select?filter="),
-      selectfuelTypes:createUrl(CORE_API,"/vehicleMake/selectFuelTypes"),
-      selectVendor:createUrl(CORE_API,'/vendor/select?filter='),
-      selectBagTypes:createUrl(CORE_API,'/bag/selectBagTypes'),
-      selectException:createUrl(CORE_API,'/exception/exceptiontype'),
-      selectPriceLists:createUrl(CORE_API,'/pricelist/select?filter='),
-      selectProducts:createUrl(CORE_API,'/product/select?filter='),
+      selectFleetType: createUrl(CORE_API, "/vehicle/selectFleetTypes"),
+      selectVehicleMake: createUrl(CORE_API, "/vehicleMake/select?filter="),
+      selectVehicleCategory: createUrl(CORE_API, "/vehicleCategory/select?filter="),
+      selectfuelTypes: createUrl(CORE_API, "/vehicleMake/selectFuelTypes"),
+      selectVendor: createUrl(CORE_API, "/vendor/select?filter="),
+      selectBagTypes: createUrl(CORE_API, "/bag/selectBagTypes"),
+      selectException: createUrl(CORE_API, "/exception/exceptiontype"),
+      selectPriceLists: createUrl(CORE_API, "/pricelist/select?filter="),
+      selectProducts: createUrl(CORE_API, "/product/select?filter="),
       //hub_category
       filter_hub_category: createUrl(CORE_API, "/hubCategory/filter"),
       //select hub category
@@ -73,12 +72,12 @@ export const apiRoute = () => {
       GET_SERVICES: createUrl(CORE_API, `/service/select?fliter=`),
     },
     post: {
-      salesChannel:createUrl(CORE_API,'/saleschannel'),
-      bags:createUrl(CORE_API,'/bag'),
-      route:createUrl(CORE_API,"/route"),
-      gate:createUrl(CORE_API,"/gate"),
-      dock:createUrl(CORE_API,"/dock"),
-      exception:createUrl(CORE_API,'/exception'),
+      salesChannel: createUrl(CORE_API, "/saleschannel"),
+      bags: createUrl(CORE_API, "/bag"),
+      route: createUrl(CORE_API, "/route"),
+      gate: createUrl(CORE_API, "/gate"),
+      dock: createUrl(CORE_API, "/dock"),
+      exception: createUrl(CORE_API, "/exception"),
       // create
       hub: createUrl(CORE_API, "/hub"),
       createProduct: createUrl(CORE_API, "/product"),
@@ -95,19 +94,18 @@ export const apiRoute = () => {
       filterPersonnel: createUrl(RESOURCE_API, "/employee"),
       serviceDefine: createUrl(CORE_API, "/service"),
       product: createUrl(CORE_API, "/product"),
-      Product_Group:createUrl(CORE_API, "/productGroup")
-      
+      Product_Group: createUrl(CORE_API, "/productGroup"),
     },
     postExcel: {
       exception: createUrl(CORE_API, "/exception"),
     },
     delete: {
-      salesChannel:createUrl(CORE_API,'/saleschannel'),
-      exception:createUrl(CORE_API,'/exception'),
-      gate:createUrl(CORE_API,"/gate"),
-      dock:createUrl(CORE_API,"/dock"),
-      route:createUrl(CORE_API,"/route"),
-      bags:createUrl(CORE_API,'/bag'),
+      salesChannel: createUrl(CORE_API, "/saleschannel"),
+      exception: createUrl(CORE_API, "/exception"),
+      gate: createUrl(CORE_API, "/gate"),
+      dock: createUrl(CORE_API, "/dock"),
+      route: createUrl(CORE_API, "/route"),
+      bags: createUrl(CORE_API, "/bag"),
       role: createUrl(RESOURCE_API, "/role"),
       Vehicle: createUrl(CORE_API, "/vehicle"),
       personnel: createUrl(RESOURCE_API, "/employee"),
@@ -119,17 +117,17 @@ export const apiRoute = () => {
       deleteConnections: createUrl(CORE_API, "/connection"),
     },
     edit: {
-      salesChannel:createUrl(CORE_API,'/saleschannel'),
-      exception:createUrl(CORE_API,'/exception'),
-      gate:createUrl(CORE_API,"/gate"),
-      dock:createUrl(CORE_API,"/dock"),
-      bags:createUrl(CORE_API,'/bag'),
-      route:createUrl(CORE_API, "/route"),
+      salesChannel: createUrl(CORE_API, "/saleschannel"),
+      exception: createUrl(CORE_API, "/exception"),
+      gate: createUrl(CORE_API, "/gate"),
+      dock: createUrl(CORE_API, "/dock"),
+      bags: createUrl(CORE_API, "/bag"),
+      route: createUrl(CORE_API, "/route"),
       Vehicle: createUrl(CORE_API, "/vehicle"),
       EditVendor: createUrl(CORE_API, "/vendor"),
       VehicleModel: createUrl(CORE_API, "/vehicleMake"),
       productDefine: createUrl(CORE_API, "/product"),
-      Edithub_category:createUrl(CORE_API,"/hubCategory"),
+      Edithub_category: createUrl(CORE_API, "/hubCategory"),
       serviceDefine: createUrl(CORE_API, "/service"),
     },
   };
@@ -192,3 +190,5 @@ export const GET_USER_PROFILE = `${RESOURCE_API}/employee/info?username=`;
 export const CHANGE_USER_PASSWORD = `${RESOURCE_API}/changepassword/changepassword`;
 export const GET_RECOVERY_CODE = `${RESOURCE_API}/changepassword/forgotpassword`;
 export const CHECK_RECOVERY_CODE = `${RESOURCE_API}/changepassword/checktoken`;
+
+export const PICKUP = `http://172.16.55.144:40000/consignment-api/pickup`;

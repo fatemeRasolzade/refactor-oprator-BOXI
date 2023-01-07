@@ -7,6 +7,7 @@ import PageNumber from "../PaginationAction/PaginationAction";
 import PersonnelList from "../PersonData/PersonsData";
 import ProductDefineList from "../ProductDefineData/ProductDefineData";
 import CustomerList from "../CustomerManagement/CustomerManagementData";
+import PickupList from "../PickupData/PickupData";
 import ThirdPartyList from "../ThirdParty/ThirdPartyData";
 import ADMVehicleList from "../ADMVehicle/ADMVehicleData";
 import ServiceTimeList from "../ServiceTimeData/ServiceTimeData";
@@ -46,6 +47,7 @@ const reducers = combineReducers({
   serviceDefine: ServiceData,
   productDefine: ProductDefineList,
   customer: CustomerList,
+  pickup: PickupList,
   thirdParty: ThirdPartyList,
   ADMVehicle: ADMVehicleList,
   serviceTime: ServiceTimeList,

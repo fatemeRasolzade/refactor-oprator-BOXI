@@ -379,13 +379,13 @@ export const ConsignmentManageCol = [
     accessor: "receiverAddress",
     type: "time",
   },
-  {
-    id: crypto.randomUUID(),
-    isRequire: false,
-    Header: "پین کد مقصد",
-    accessor: "destinationAddress",
-    type: "time",
-  },
+  // {
+  //   id: crypto.randomUUID(),
+  //   isRequire: false,
+  //   Header: "پین کد مقصد",
+  //   accessor: "destinationAddress",
+  //   type: "time",
+  // },
   {
     id: crypto.randomUUID(),
     isRequire: false,
@@ -480,7 +480,7 @@ export const ConsignmentManageCol = [
   {
     id: crypto.randomUUID(),
     isRequire: false,
-    Header: "ارزش اظهاری",
+    Header: "وضعیت ارزش اظهاری",
     accessor: "DeclarativeValueStatus",
     type: "time",
   },
@@ -571,7 +571,7 @@ export const ConsignmentManageCol = [
   {
     id: crypto.randomUUID(),
     isRequire: false,
-    Header: "تعداد مراحعه جهت تحویل",
+    Header: "تعداد مراجعه جهت تحویل",
     accessor: "NumberReferralsForDelivery",
     type: "time",
   },
@@ -632,18 +632,18 @@ export const ConsignmentManageCol = [
     accessor: "DeliveryType",
     type: "time",
   },
+  // {
+  //   id: crypto.randomUUID(),
+  //   isRequire: false,
+  //   Header: "پین کد فرستنده",
+  //   accessor: "PinCodeOfTheSender",
+  //   type: "time",
+  // },
   {
     id: crypto.randomUUID(),
     isRequire: false,
-    Header: "پین کد فرستنده",
-    accessor: "PinCodeOfTheSender",
-    type: "time",
-  },
-  {
-    id: crypto.randomUUID(),
-    isRequire: false,
-    Header: "آدرس کد فرستنده",
-    accessor: "SenderCodeAddress",
+    Header: "آدرس  فرستنده",
+    accessor: "senderAdress",
     type: "time",
   },
   {
@@ -664,7 +664,7 @@ export const ConsignmentManageCol = [
     id: crypto.randomUUID(),
     isRequire: false,
     Header: "نوع سوریس",
-    accessor: "SourisType",
+    accessor: "serviceType",
     type: "time",
   },
   {
