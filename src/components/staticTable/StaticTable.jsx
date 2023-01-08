@@ -5,37 +5,35 @@ import { useTable, usePagination, useRowSelect } from "react-table";
 import Paginations from "../../global/Pagination/Pagination";
 import { addRows, deleteRow } from "../../redux/selectRowTable/selectRowTable";
 
-const IndeterminateCheckbox = React.forwardRef(
-  ({ data, indeterminate, ...rest }, ref) => {
-    const dispatch = useDispatch();
+const IndeterminateCheckbox = React.forwardRef(({ data, indeterminate, ...rest }, ref) => {
+  const dispatch = useDispatch();
 
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
+  const defaultRef = React.useRef();
+  const resolvedRef = ref || defaultRef;
 
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
+  React.useEffect(() => {
+    resolvedRef.current.indeterminate = indeterminate;
+  }, [resolvedRef, indeterminate]);
 
-    return (
-      <>
-        <input
-          type="checkbox"
-          ref={resolvedRef}
-          {...rest}
-          onClick={(e) => {
-            if (e.target.checked) {
-              dispatch(addRows(data.original));
-            } else {
-              dispatch(deleteRow(data.original));
-            }
-          }}
-        />
-      </>
-    );
-  }
-);
+  return (
+    <>
+      <input
+        type="checkbox"
+        ref={resolvedRef}
+        {...rest}
+        onClick={(e) => {
+          if (e.target.checked) {
+            dispatch(addRows(data.original));
+          } else {
+            dispatch(deleteRow(data.original));
+          }
+        }}
+      />
+    </>
+  );
+});
 
-function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
+function Table({ columns, data, pageTable, selectable, loading, THWrapper }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -51,7 +49,6 @@ function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
     {
       columns,
       data,
- 
     },
     usePagination,
     useRowSelect,
@@ -60,19 +57,14 @@ function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
         ? {
             Header: ({ getToggleAllPageRowsSelectedProps }) => (
               <div>
-                <IndeterminateCheckbox
-                  {...getToggleAllPageRowsSelectedProps()}
-                />
+                <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
               </div>
             ),
             // The cell can use the individual row's getToggleRowSelectedProps method
             // to the render a checkbox
             Cell: ({ row }) => (
               <div>
-                <IndeterminateCheckbox
-                  {...row.getToggleRowSelectedProps()}
-                  data={row}
-                />
+                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} data={row} />
               </div>
             ),
           }
@@ -92,10 +84,7 @@ function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
 
   return (
     <div className="overflow-auto bg-white rounded-lg shadow-md  mt-6">
-      <table
-        {...getTableProps()}
-        className="border-collapse table-auto w-full bg-white table-striped rounded-lg text-center"
-      >
+      <table {...getTableProps()} className="border-collapse table-auto w-full bg-white table-striped rounded-lg text-center">
         <thead className="bg-lightTomato h-12 rounded-lg text-dark ">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -111,10 +100,7 @@ function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
           {page.map((row, i) => {
             prepareRow(row);
             return (
-              <tr
-                {...row.getRowProps()}
-                className="even:bg-lightGray h-12 text-dark"
-              >
+              <tr {...row.getRowProps()} className="even:bg-lightGray h-12 text-dark">
                 {row.cells.map((cell) => {
                   return (
                     <td {...cell.getCellProps()} className="">
@@ -133,9 +119,7 @@ function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
           <ClipLoader />
         </div>
       ) : (
-        page.length === 0 && (
-          <div className="h-20 centering w-full"> موردی یافت نشد </div>
-        )
+        page.length === 0 && <div className="h-20 centering w-full"> موردی یافت نشد </div>
       )}
 
       <Paginations pageData={pageTable} />
@@ -143,24 +127,8 @@ function Table({ columns, data, pageTable, selectable, loading ,THWrapper }) {
   );
 }
 
-function StaticTable({
-  data,
-  column,
-  pagination,
-  selectable,
-  loading = false,
-  THWrapper="min-w-fit"
-}) {
-  return (
-    <Table
-      columns={column}
-      data={data}
-      pageTable={pagination}
-      selectable={selectable}
-      loading={loading}
-      THWrapper={THWrapper}
-    />
-  );
+function StaticTable({ data, column, pagination, selectable, loading = false, THWrapper = "min-w-fit" }) {
+  return <Table columns={column} data={data} pageTable={pagination} selectable={selectable} loading={loading} THWrapper={THWrapper} />;
 }
 
 export default StaticTable;
