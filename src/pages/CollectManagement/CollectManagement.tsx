@@ -50,8 +50,8 @@ const CollectManagement = () => {
           { code: "A11" },
           { code: "A12", value: () => setOpenChangeCollectHub(true) },
           { code: "A1", value: [] },
-          { code: "A8", value: CancelOptions },
           { code: "A13" },
+          { code: "A8", value: CancelOptions },
         ]}
       />
       <StaticTable

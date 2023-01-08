@@ -41,18 +41,20 @@ export const componentItem: Record<string, ComponentItemInterface> = {
   },
   A4: {
     JSXItem: (options: any) => (
-      <AddButton text="اسکن ورود در هاب" ToggleOptions={options} className="btn gap-2" RightIcon={<IoBarcode size={22} />} />
+      <AddButton text="اسکن ورود در هاب" ToggleOptions={options} className="btn gap-2 px-0" RightIcon={<IoBarcode size={22} />} />
     ),
     code: "A4",
   },
   A5: {
     JSXItem: (options: any) => (
-      <AddButton text="اسکن خروج از هاب" ToggleOptions={options} className="btn gap-2" RightIcon={<IoBarcode size={22} />} />
+      <AddButton text="اسکن خروج از هاب" ToggleOptions={options} className="btn gap-2 px-0" RightIcon={<IoBarcode size={22} />} />
     ),
     code: "A5",
   },
   A6: {
-    JSXItem: (options: any) => <AddButton text="چاپ برچسب" ToggleOptions={options} className="btn gap-2" RightIcon={<IoIosPrint size={20} />} />,
+    JSXItem: (options: any) => (
+      <AddButton text="چاپ برچسب" ToggleOptions={options} WrapperClassName="w-36" className="btn gap-2 px-0 " RightIcon={<IoIosPrint size={20} />} />
+    ),
     code: "A5",
   },
   A7: {
