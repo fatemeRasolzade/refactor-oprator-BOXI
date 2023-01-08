@@ -3,13 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { useOnClickOutSide } from "../../tools/hooks/click-outSide-handler";
 
-const CustomSearchOption = ({
-  Error,
-  important,
-  setFieldValue,
-  formik,
-  wrapperClass = "w-[30rem]",
-}: any) => {
+const CustomSearchOption = ({ Error, important, setFieldValue, formik, WrapperClassName }: any) => {
   const [Open, setOpen] = useState(false);
   const [Name, setName] = useState<any>({
     Name: "",
@@ -31,27 +25,18 @@ const CustomSearchOption = ({
   };
 
   return (
-    <div
-      className={`autocompleteWrapper ${wrapperClass} w-full ${
-        Error && "border-red"
-      }`}
-    >
-      <div className={`autocompleteLabel  ${Error && "text-red"} top-[-17px]`}>
-        نوع جستجو{" "}
-        <span className="text-tomato font-extrabold text-lg h-4">
-          {important ? "*" : " "}
-        </span>
-      </div>
-      <div ref={WrapperRef} className="relative flex border-l pl-1 w-[50%]">
+    <div className={`autocompleteWrapper  ${WrapperClassName}`}>
+      <div className={`autocompleteLabel  top-[-17px]`}>نوع جستجو</div>
+      <div ref={WrapperRef} className="w-[50%] relative flex-between-center border-l pl-1">
         <input
           autoComplete="off"
-          className="w-full focus:outline-none mr-2 mt-1"
+          className=" focus:outline-none mr-2 mt-1"
           value={Name.text}
           onFocus={() => setOpen(true)}
           name="select"
         />
         <span className={`${Open && "rotate-180"} transition-all duration-500`}>
-          <RiArrowDownSLine size={23} className="text-darkGray" />
+          <RiArrowDownSLine size={17} className="text-darkGray  cursor-pointer" />
         </span>
         {Open && Options.length > 0 && (
           <ul className="ToggleContainer">
@@ -59,9 +44,7 @@ const CustomSearchOption = ({
               <li
                 key={item.id}
                 onClick={() => handleClick(item)}
-                className={`ToggleElements ${
-                  item.text === Name.text ? "selected" : ""
-                }`}
+                className={`ToggleElements ${item.text === Name.text ? "selected" : ""}`}
               >
                 {item.text}
               </li>
@@ -69,18 +52,24 @@ const CustomSearchOption = ({
           </ul>
         )}
       </div>
-      <input
-        onChange={(e) => setValue(e.target.value)}
-        className="w-[50%] focus:outline-none mr-2 mt-1"
-      />
-      <span className="mr-2">
-        <FiSearch size={19} className="text-darkGray" />
-      </span>
+      <div className="flex-between-center w-full">
+        <input
+          onChange={(e) => setValue(e.target.value)}
+          className="w-[50%] focus:outline-none mr-2 mt-1"
+        />
+        <span className="mr-2">
+          <FiSearch size={19} className="text-darkGray" />
+        </span>
+      </div>
     </div>
   );
 };
 
 export default CustomSearchOption;
+
+CustomSearchOption.defaultProps = {
+  WrapperClassName: "w-[30rem]",
+};
 
 const Options = [
   { id: 1, text: "شماره جمع آوری", name: "code", onclick },

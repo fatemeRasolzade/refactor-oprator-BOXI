@@ -36,7 +36,7 @@ const Breadcrumb = ({ curentPage, beforePage }: { curentPage?: string; beforePag
             <RiArrowDownSLine size={23} />
           </button>
           {toggle ? (
-            <div className="ToggleContainer w-36 !top-8 -right-32">
+            <div className="ToggleContainer  !top-8 -right-32">
               <button className="ToggleElements" onClick={() => navigate("/")}>
                 داشبورد
               </button>

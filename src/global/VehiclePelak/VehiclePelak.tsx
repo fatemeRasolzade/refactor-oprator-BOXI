@@ -9,7 +9,7 @@ interface VehiclePelakProps {
   Search?: boolean;
 }
 
-const VehiclePelak = ({ formik, important, ReadOnly, WrapperClassName, Search }: VehiclePelakProps) => {
+const   VehiclePelak = ({ formik, important, ReadOnly, WrapperClassName, Search }: VehiclePelakProps) => {
   const { values, errors, touched, setFieldValue }: any = formik;
 
   const Error =

@@ -18,7 +18,7 @@ const MapPage = () => {
   });
 
 
-  
+
   return (
     <div className="w-full h-full">
       <Breadcrumb curentPage="مدیریت نقش" />
@@ -32,11 +32,11 @@ const MapPage = () => {
           />
 
           <form className="flex flex-col gap-3">
-            <VehiclePelak WrapperClassName={"w-full"} formik={formik} />
+            <VehiclePelak WrapperClassName={"w-full"} Search formik={formik} />
             <CustomSearchOption
               setFieldValue={formik.setFieldValue}
               formik={formik}
-              wrapperClass={"w-full"}
+              WrapperClassName={"w-full"}
             />
             <SimpleButton className="full-gray-btn my-[15px]" text="جستجو" />
           </form>
