@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
-import { AiOutlineFileExcel } from "react-icons/ai";
 import { BiPlus } from "react-icons/bi";
-import { GoDesktopDownload } from "react-icons/go";
+import { ImMap } from "react-icons/im";
 import { IoIosPrint } from "react-icons/io";
+import { HiRefresh } from "react-icons/hi";
+import { BsArrowDownUp } from "react-icons/bs";
+import { AiOutlineFileExcel } from "react-icons/ai";
+import { MdDriveFileMove } from "react-icons/md";
 import { IoBarcode, IoClose } from "react-icons/io5";
+import { GoDesktopDownload } from "react-icons/go";
 import CustomSwitch from "../global/Switch/Switch";
-
 import SimpleButton from "../global/SimpleButton/SimpleButton";
 import AddButton from "../global/addButton/AddButton";
-import { HiRefresh } from "react-icons/hi";
 import { ExportExcel } from "../tools/functions/ExportMyExcel";
-import { MdDriveFileMove } from "react-icons/md";
-import { BsArrowDownUp } from "react-icons/bs";
-import { ImMap } from "react-icons/im";
 
 interface ComponentItemInterface {
   JSXItem: (value: any) => JSX.Element;
@@ -21,7 +20,7 @@ interface ComponentItemInterface {
 export const componentItem: Record<string, ComponentItemInterface> = {
   A1: {
     JSXItem: (value: any) => (
-      <SimpleButton className="w-62" handelClick={() => ExportExcel(value)} text="خروجی اکسل" RightIcon={<GoDesktopDownload size={17} />} />
+      <SimpleButton className="w-62 px-1" handelClick={() => ExportExcel(value)} text="خروجی اکسل" RightIcon={<GoDesktopDownload size={17} />} />
     ),
     code: "A1",
   },
@@ -61,21 +60,22 @@ export const componentItem: Record<string, ComponentItemInterface> = {
     code: "A5",
   },
   A7: {
-    JSXItem: () => <SimpleButton text="افزودن گروهی" RightIcon={<AiOutlineFileExcel size={20} />} />,
+    JSXItem: () => <SimpleButton text="افزودن گروهی" className="w-62 px-1" RightIcon={<AiOutlineFileExcel size={20} />} />,
     code: "A4",
   },
   A8: {
     JSXItem: (options: any) => (
-      <AddButton text="لغو" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoClose size={20} />} />
+      <AddButton text="لغو" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-80" RightIcon={<IoClose size={20} />} />
     ),
-    code: "A5",
+    code: "A8",
   },
   A9: {
     JSXItem: (action: any) => (
-      <button onClick={action.fetch} className="flex gap-2">
-        <span>دریافت اطلاعات بیشتر</span>
-        <HiRefresh className={`${action.loading ? "loading-spinner" : ""}`} />
-      </button>
+      <SimpleButton
+        text="دریافت اطلاعات بیشتر"
+        icon={<HiRefresh className={`${action.loading ? "loading-spinner" : ""}`} />}
+        handelClick={action.fetch}
+      />
     ),
     code: "A9",
   },
@@ -92,15 +92,19 @@ export const componentItem: Record<string, ComponentItemInterface> = {
     code: "A10",
   },
   A11: {
-    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="تخصیص خودکار" RightIcon={<MdDriveFileMove size={22} />} />,
+    JSXItem: (handelClick) => (
+      <SimpleButton className="w-62 px-1" handelClick={handelClick} text="تخصیص خودکار" RightIcon={<MdDriveFileMove size={22} />} />
+    ),
     code: "A11",
   },
   A12: {
-    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="تغییر هاب جمع آوری" RightIcon={<BsArrowDownUp size={17} />} />,
+    JSXItem: (handelClick) => (
+      <SimpleButton className="w-62 px-1" handelClick={handelClick} text="تغییر هاب جمع آوری" RightIcon={<BsArrowDownUp size={17} />} />
+    ),
     code: "A12",
   },
   A13: {
-    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="نمایش روی نقشه" RightIcon={<ImMap size={17} />} />,
+    JSXItem: (handelClick) => <SimpleButton className="w-62 px-1" handelClick={handelClick} text="نمایش روی نقشه" RightIcon={<ImMap size={17} />} />,
     code: "A13",
   },
 };

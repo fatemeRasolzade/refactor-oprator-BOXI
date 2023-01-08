@@ -77,11 +77,7 @@ const ConsignmentManage = () => {
     const body = {};
     try {
       setloadData(true);
-      const res = await filterTableDataAPI(
-        filterUrls.consignment,
-        pageNumbers,
-        body
-      );
+      const res = await filterTableDataAPI(filterUrls.consignment, pageNumbers, body);
       console.log("res", res.data.payload.content);
       let maindata = await mainDataTable(res.data.payload.content);
       // let contverted = await convertdataTable(res.data.payload.content);
@@ -191,19 +187,11 @@ const convertdataTable = async (fetchedData: any) => {
     fetchedData?.map(async (item: any) => {
       let fetchedJson: any = {};
       // fetch customer apis
-      const AddressByUsername: any = await getMoreData(
-        getUrls.customerAddressByUsername + "/hasan"
-      );
-      const PhoneByUsername: any = await getMoreData(
-        getUrls.customerPhoneByUsername + "/hasan"
-      );
+      const AddressByUsername: any = await getMoreData(getUrls.customerAddressByUsername + "/hasan");
+      const PhoneByUsername: any = await getMoreData(getUrls.customerPhoneByUsername + "/hasan");
       // fetch prospect apis
-      const AddressByUsernameprospect: any = await getMoreData(
-        getUrls.prospectAddressByUsername + "/hasan"
-      );
-      const PhoneByUsernameprospect: any = await getMoreData(
-        getUrls.prospectPhoneByUsername + "/hasan"
-      );
+      const AddressByUsernameprospect: any = await getMoreData(getUrls.prospectAddressByUsername + "/hasan");
+      const PhoneByUsernameprospect: any = await getMoreData(getUrls.prospectPhoneByUsername + "/hasan");
 
       console.log("AddressByUsernameprospect", AddressByUsernameprospect);
       console.log("PhoneByUsernameprospect", PhoneByUsernameprospect);
@@ -289,15 +277,7 @@ const convertdataTable = async (fetchedData: any) => {
               ArrayValue={AddressByUsername?.map((item: any) => {
                 return {
                   text:
-                    item.selectState.text +
-                    "،" +
-                    item.selectCity.text +
-                    "،" +
-                    item.selectRegion.text +
-                    "،پلاک" +
-                    item.pelak +
-                    "،واحد" +
-                    item.unit,
+                    item.selectState.text + "،" + item.selectCity.text + "،" + item.selectRegion.text + "،پلاک" + item.pelak + "،واحد" + item.unit,
                 };
               })}
             />

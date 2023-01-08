@@ -5,11 +5,14 @@ import SwitchOptionTable from "../../components/OptionsTable/SwitchOptionTable";
 import StaticTable from "../../components/staticTable/StaticTable";
 import StatusBar from "../../components/StatusBar/StatusBar";
 import { clearPickup, pickupData } from "../../redux/PickupData/PickupData";
+import ChangeCollectHubForm from "./view/ChangeCollectHubForm";
 import { CollectColumns } from "./view/CollectColumns";
 import CollectManagementFilterSearch from "./view/CollectManagementFilterSearch";
+import DriverAssignmentForm from "./view/DriverAssignmentForm";
 
 const CollectManagement = () => {
   const [OpenDriverAssignment, setOpenDriverAssignment] = useState(false);
+  const [OpenChangeCollectHub, setOpenChangeCollectHub] = useState(false);
 
   const dispatch = useDispatch();
   const { pickupList, filter } = useSelector((state: any) => state.pickup);
@@ -27,10 +30,14 @@ const CollectManagement = () => {
   }, [dispatch, handleGetTableData]);
 
   const DriverAssignmentOptions = [
-    { handleClick: () => setOpenDriverAssignment(true), name: "انتخاب شده ها" },
-    { handleClick: () => console.log(), name: "افزودن گروهی اکسل" },
+    { handleClick: () => setOpenDriverAssignment(true), name: "تخصیص انتخاب شده" },
+    { handleClick: () => console.log(), name: "تخصیص گروهی اکسل" },
   ];
 
+  const CancelOptions = [
+    { handleClick: () => setOpenDriverAssignment(true), name: "لغو انتخاب شده" },
+    { handleClick: () => console.log(), name: "لغو گروهی اکسل" },
+  ];
 
   return (
     <>
@@ -39,11 +46,11 @@ const CollectManagement = () => {
       <CollectManagementFilterSearch />
       <SwitchOptionTable
         accessPage={[
-          { code: "A10", option: DriverAssignmentOptions },
+          { code: "A10", value: DriverAssignmentOptions },
           { code: "A11" },
-          { code: "A12" },
+          { code: "A12", value: () => setOpenChangeCollectHub(true) },
           { code: "A1", value: [] },
-          { code: "A8" },
+          { code: "A8", value: CancelOptions },
           { code: "A13" },
         ]}
       />
@@ -54,6 +61,8 @@ const CollectManagement = () => {
         selectable={true}
         THWrapper={"min-w-[130px] w-[130px]"}
       />
+      <DriverAssignmentForm open={OpenDriverAssignment} setOpen={setOpenDriverAssignment} />
+      <ChangeCollectHubForm open={OpenChangeCollectHub} setOpen={setOpenChangeCollectHub} />
     </>
   );
 };
