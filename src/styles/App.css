@@ -102,3 +102,13 @@
   scrollbar-width: thin;
   scrollbar-color: #ef5644 #ffeae9;
 }
+
+.loading-spinner{
+  animation: loading-spinner 1s linear infinite
+}
+@keyframes loading-spinner{
+  from{
+    transform: rotate(360deg)}
+  to
+    {transform: rotate(0deg)}
+}

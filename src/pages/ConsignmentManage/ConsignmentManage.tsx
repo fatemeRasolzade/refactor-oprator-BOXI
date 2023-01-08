@@ -29,10 +29,12 @@ const ConsignmentManage = () => {
   const { filter } = useSelector((state: any) => state.consignment);
   const { pageNumbers } = useSelector((state: any) => state.paginate);
   const [isMoreDataLoading, setIsMoreDataLoading] = useState(false);
+  const [loadData, setloadData] = useState(false);
   const [fetchedData, setfetchedData] = useState<any>([]);
   const [OpenPrintLabel, setOpenPrintLabel] = useState(false);
   const [OpenEntranceScan, setOpenEntranceScan] = useState(false);
   const [OpenOutPutScan, setOpenOutPutScan] = useState(false);
+  const [originalData, setOriginalData] = useState([]);
 
   const [isOpenModalDelete, setIsOpenModalDelete] = useState({
     isOpen: false,
@@ -74,21 +76,38 @@ const ConsignmentManage = () => {
   const handleGetDataTable = useCallback(async () => {
     const body = {};
     try {
-      setIsMoreDataLoading(true);
-      const res = await filterTableDataAPI(filterUrls.consignment, pageNumbers, body);
+      setloadData(true);
+      const res = await filterTableDataAPI(
+        filterUrls.consignment,
+        pageNumbers,
+        body
+      );
       console.log("res", res.data.payload.content);
-      let contverted = await convertdataTable(res.data.payload.content);
-
-      setfetchedData(contverted);
+      let maindata = await mainDataTable(res.data.payload.content);
+      // let contverted = await convertdataTable(res.data.payload.content);
+      setfetchedData(maindata);
+      setOriginalData(res.data.payload.content);
     } catch (error) {
     } finally {
-      setIsMoreDataLoading(false);
+      setloadData(false);
     }
   }, [pageNumbers]);
 
   useEffect(() => {
     handleGetDataTable();
   }, [handleGetDataTable]);
+
+  const fetchedMoreDataHandler = useCallback(async () => {
+    try {
+      setIsMoreDataLoading(true);
+      const convertedData = await convertdataTable(originalData);
+
+      setfetchedData(convertedData);
+    } catch (error) {
+    } finally {
+      setIsMoreDataLoading(false);
+    }
+  }, [originalData]);
 
   return (
     <>
@@ -103,6 +122,13 @@ const ConsignmentManage = () => {
           { code: "A5", value: OutPutScanOptions },
           { code: "A8", value: [] },
           { code: "A1", value: [] },
+          {
+            code: "A9",
+            value: {
+              loading: isMoreDataLoading,
+              fetch: () => fetchedMoreDataHandler(),
+            },
+          },
         ]}
       />
       <StaticTable
@@ -110,7 +136,7 @@ const ConsignmentManage = () => {
         column={selectedCol.length > 2 ? selectedCol : ConsignmentManageCol}
         pagination={7}
         selectable={false}
-        loading={isMoreDataLoading}
+        loading={loadData}
         THWrapper={"border border-indigo-600	 whitespace-nowrap"}
       />
       <DeleteModal
@@ -148,6 +174,7 @@ const Options = [
   { name: "BackToOrigin", value: 1000 },
 ];
 
+// convert data
 const convertdataTable = async (fetchedData: any) => {
   const getMoreData = async (urlApi: string) => {
     let fetchedMoreData = {};
@@ -163,14 +190,26 @@ const convertdataTable = async (fetchedData: any) => {
   const converted = await Promise.all(
     fetchedData?.map(async (item: any) => {
       let fetchedJson: any = {};
-      const AddressByUsername: any = await getMoreData(getUrls.customerAddressByUsername + "/hasan");
-      const PhoneByUsername: any = await getMoreData(getUrls.customerPhoneByUsername + "/hasan");
+      // fetch customer apis
+      const AddressByUsername: any = await getMoreData(
+        getUrls.customerAddressByUsername + "/hasan"
+      );
+      const PhoneByUsername: any = await getMoreData(
+        getUrls.customerPhoneByUsername + "/hasan"
+      );
+      // fetch prospect apis
+      const AddressByUsernameprospect: any = await getMoreData(
+        getUrls.prospectAddressByUsername + "/hasan"
+      );
+      const PhoneByUsernameprospect: any = await getMoreData(
+        getUrls.prospectPhoneByUsername + "/hasan"
+      );
 
-      console.log("AddressByUsername", AddressByUsername);
-      console.log("PhoneByUsername", PhoneByUsername);
+      console.log("AddressByUsernameprospect", AddressByUsernameprospect);
+      console.log("PhoneByUsernameprospect", PhoneByUsernameprospect);
 
       fetchedJson = {
-        AddressByUsername: AddressByUsername,
+        // AddressByUsername: AddressByUsername,
         SenderPhone: (
           <TooltipItems
             ArrayValue={PhoneByUsername?.map((item: any) => {
@@ -199,6 +238,13 @@ const convertdataTable = async (fetchedData: any) => {
             })}
           />
         ),
+        senderPostalCode: (
+          <TooltipItems
+            ArrayValue={AddressByUsername?.map((item: any) => {
+              return { text: item.postalCode };
+            })}
+          />
+        ),
         senderAdress: (
           <TooltipItems
             ArrayValue={AddressByUsername?.map((item: any) => {
@@ -207,6 +253,55 @@ const convertdataTable = async (fetchedData: any) => {
               };
             })}
           />
+        ),
+        receiverPhone: (
+          <TooltipItems
+            ArrayValue={PhoneByUsernameprospect?.map((item: any) => {
+              return { text: item.telNumber };
+            })}
+          />
+        ),
+        recipientArea: (
+          <TooltipItems
+            ArrayValue={AddressByUsernameprospect?.map((item: any) => {
+              return { text: item.selectRegion.text };
+            })}
+          />
+        ),
+        // recipientArea: (
+        //   <TooltipItems
+        //     ArrayValue={AddressByUsername?.map((item: any) => {
+        //       return { text: item.selectCity.text };
+        //     })}
+        //   />
+        // ),
+        receiverPostalcode: (
+          <TooltipItems
+            ArrayValue={AddressByUsernameprospect?.map((item: any) => {
+              return { text: item.postalCode };
+            })}
+          />
+        ),
+
+        receiverAddress: (
+          <div className="min-w-[100px]">
+            <TooltipItems
+              ArrayValue={AddressByUsername?.map((item: any) => {
+                return {
+                  text:
+                    item.selectState.text +
+                    "،" +
+                    item.selectCity.text +
+                    "،" +
+                    item.selectRegion.text +
+                    "،پلاک" +
+                    item.pelak +
+                    "،واحد" +
+                    item.unit,
+                };
+              })}
+            />
+          </div>
         ),
       };
       console.log("sample Data", AddressByUsername);
@@ -237,10 +332,69 @@ const convertdataTable = async (fetchedData: any) => {
         currentHub: item.originHub,
         lastUpdate: item.updateDate,
         receiverName: item.deliveryName,
-        receiverAddress: item.deliveryAddress,
-        receiverPhone: item.deliveryPhone,
-        receiverArea: item.receiverCityRegionName,
-        recipientArea: item.receiverRegionName,
+        // receiverAddress: item.deliveryAddress,
+        // receiverPhone: item.deliveryPhone,
+        // receiverArea: item.receiverCityRegionName,
+        // recipientArea: item.receiverRegionName,
+        ConsignmentType: item.selectConsignmentType,
+        trip: item.isTripAssigned,
+        weight: item.weight,
+        volume: item.volume,
+        bagId: item.bagId,
+        paymentStatus: item.paymentStatus,
+        RescheduleDate: item.rescheduledDate,
+
+        TravelNumber: item.hubTripNumberId,
+        DeliveryTripNumber: item.lastDeliveryTripNumberId,
+        CollectionTripNumber: item.lastPickUpTripNumberId,
+
+        nextHub: item.nextHub,
+        shelfNumber: item.rackNumber,
+        NumberReferralsForDelivery: item.countOfTripForDelivery,
+        NumberOfReferralsForCollection: item.countOfTripForPickUp,
+        deliveryType: item.deliveryType,
+        PinCodeOfTheSender: item.senderPinCode,
+        serviceType: item.serviceType,
+        qcType: item.qcType,
+      };
+    })
+  );
+
+  return converted;
+};
+
+const mainDataTable = async (fetchedData: any) => {
+  const converted = await Promise.all(
+    fetchedData?.map(async (item: any) => {
+      return {
+        id: item.id,
+        PaymentByBanknote: item.amountPaidWithCash,
+        TheAmountPayable: item.amountPaidWithCard,
+        // senderCity: item.senderCityName,
+        // senderCityRegionName: item.senderCityRegionName,
+        // senderRegionName: item.senderRegionName,
+        IMEI1: item.imei_1,
+        IMEI2: item.imei_2,
+        IMEI3: item.imei_3,
+
+        device1: item.machine_1,
+        device2: item.machine_2,
+        device3: item.machine_3,
+
+        status: StatusEnum[item.status],
+        customerName: item.customerName,
+        createdAt: item.createdDate,
+        InternetAddressOfIssuedInvoice: item.addressOfWeb,
+
+        DeliveryTime: item.deliveryBoundTime,
+        destinationHub: item.destinationHub,
+        currentHub: item.originHub,
+        lastUpdate: item.updateDate,
+        receiverName: item.deliveryName,
+        // receiverAddress: item.deliveryAddress,
+        // receiverPhone: item.deliveryPhone,
+        // receiverArea: item.receiverCityRegionName,
+        // recipientArea: item.receiverRegionName,
         ConsignmentType: item.selectConsignmentType,
         trip: item.isTripAssigned,
         weight: item.weight,
