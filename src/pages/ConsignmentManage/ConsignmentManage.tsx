@@ -289,15 +289,7 @@ const convertdataTable = async (fetchedData: any) => {
               ArrayValue={AddressByUsername?.map((item: any) => {
                 return {
                   text:
-                    item.selectState.text +
-                    "،" +
-                    item.selectCity.text +
-                    "،" +
-                    item.selectRegion.text +
-                    "،پلاک" +
-                    item.pelak +
-                    "،واحد" +
-                    item.unit,
+                    item.selectState.text + "،" + item.selectCity.text + "،" + item.selectRegion.text + "،پلاک" + item.pelak + "،واحد" + item.unit,
                 };
               })}
             />
