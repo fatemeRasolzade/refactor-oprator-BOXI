@@ -93,17 +93,12 @@ const SearchConsignmentFilter: FC<SearchConsignmentFilterProps> = ({ selectedCol
               }
               return <></>;
             })}
-            <div className="mb-5">
-              <SimpleButton searchBtn />
-            </div>
+            <SimpleButton searchBtn />
           </div>
           <PerfesionalSearch
-            text="جستجوی پیشرفته"
-            LeftIcon={<BiChevronDown />}
             formData={() => {
               formik.handleSubmit();
             }}
-            sizeWidth="1350px"
             perfetionalClik={perfetionalClik}
           >
             <div className="grid lg:grid-cols-4 xl:grid-cols-5 gap-6 my-6 md:grid-cols-3 xs:grid-cols-1">

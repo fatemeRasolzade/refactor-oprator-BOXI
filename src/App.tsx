@@ -20,7 +20,8 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import AddConsignmentManage from "./pages/ConsignmentManage/view/AddConsignmentManage";
 import DashboardLayout from "./components/Layout/DashboardLayout";
 import Customkeycloak from "./KeyCloack";
-import MapComponent from "./components/map/MapComponent";
+
+import MapPage from "./pages/map/MapPage";
 
 function App() {
   const navigate = useNavigate();
@@ -76,19 +77,32 @@ function App() {
       <div className="App">
         <YupDefault />
 
-          <Routes>
-            <Route path="/forgot_password" element={<ForgotPassword />} />
-            <Route path="/" element={<DashboardLayout />}>
-              {/* <Route path="*" element={<NotFound />} /> */}
-              {links.map((item) => item.childs.map((route) => <Route path={route.to} element={route.component} />))}
-              <Route path="*" element={<NotFound />} />
-              <Route path="/basic-information/custom-geographic-category/add" element={<GeoWrapper />} />
-              <Route path="/basic-information/custom-geographic-category/edit" element={<GeoWrapperEdit />} />
-              <Route path="" element={<GeoWrapperEdit />} />
-              <Route path="/consignment-manage/add" element={<AddConsignmentManage />} />
-              <Route path="/map" element={<MapComponent />} />
-            </Route>
-          </Routes>
+        <Routes>
+          <Route path="/forgot_password" element={<ForgotPassword />} />
+          <Route path="/" element={<DashboardLayout />}>
+            {/* <Route path="*" element={<NotFound />} /> */}
+            {links.map((item) =>
+              item.childs.map((route) => (
+                <Route path={route.to} element={route.component} />
+              ))
+            )}
+            <Route path="*" element={<NotFound />} />
+            <Route
+              path="/basic-information/custom-geographic-category/add"
+              element={<GeoWrapper />}
+            />
+            <Route
+              path="/basic-information/custom-geographic-category/edit"
+              element={<GeoWrapperEdit />}
+            />
+            <Route path="" element={<GeoWrapperEdit />} />
+            <Route
+              path="/consignment-manage/add"
+              element={<AddConsignmentManage />}
+            />
+            <Route path="/map" element={<MapPage />} />
+          </Route>
+        </Routes>
       </div>
     </>
   );

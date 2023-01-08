@@ -1,12 +1,15 @@
+import { FiSearch } from "react-icons/fi";
 import VehiclePelakDropDown from "./VehiclePelakDropDown";
 
 interface VehiclePelakProps {
   formik: any;
   important?: boolean;
   ReadOnly?: boolean;
+  WrapperClassName?: string;
+  Search?: boolean;
 }
 
-const VehiclePelak = ({ formik, important, ReadOnly }: VehiclePelakProps) => {
+const   VehiclePelak = ({ formik, important, ReadOnly, WrapperClassName, Search }: VehiclePelakProps) => {
   const { values, errors, touched, setFieldValue }: any = formik;
 
   const Error =
@@ -17,10 +20,11 @@ const VehiclePelak = ({ formik, important, ReadOnly }: VehiclePelakProps) => {
 
   return (
     <div className={`${ReadOnly && "opacity-40"}`}>
-      <div className={`autocompleteWrapper w-60 ${Error && "border-red"}`}>
+      <div className={`autocompleteWrapper ${WrapperClassName} ${Error && "border-red"}`}>
         <div className={`autocompleteLabel  ${Error && "text-red"} top-[-17px]`}>
           شماره پلاک <span className="text-tomato font-extrabold text-lg h-4">{important ? "*" : " "}</span>
         </div>
+
         <VehiclePelakDropDown
           ReadOnly={ReadOnly}
           value={values.vehicleNumber3}
@@ -31,7 +35,7 @@ const VehiclePelak = ({ formik, important, ReadOnly }: VehiclePelakProps) => {
         <input
           disabled={ReadOnly}
           value={values.vehicleNumber2}
-          className="w-12 border-b text-center focus:outline-none"
+          className="w-[25%] border-b text-center focus:outline-none"
           onChange={(e) => setFieldValue("vehicleNumber2", e.target.value)}
         />
         <VehiclePelakDropDown
@@ -44,13 +48,22 @@ const VehiclePelak = ({ formik, important, ReadOnly }: VehiclePelakProps) => {
         <input
           disabled={ReadOnly}
           value={values.vehicleNumber0}
-          className="w-10 border-b text-center focus:outline-none"
+          className="w-[25%] border-b text-center focus:outline-none"
           onChange={(e) => setFieldValue("vehicleNumber0", e.target.value)}
         />
+        {Search && (
+          <span className="pr-2 ">
+            <FiSearch size={19} className="text-darkGray" />
+          </span>
+        )}
       </div>
       <p className="text-red text-xs pr-3 h-4 mt-1">{Error}</p>
     </div>
   );
+};
+
+VehiclePelak.defaultProps = {
+  WrapperClassName: "w-60",
 };
 
 export default VehiclePelak;

@@ -30,8 +30,8 @@ const VehiclePelakDropDown = ({ list = [], value, name, setValue, ReadOnly }: Ve
   const listFilter = () => list.filter((l) => l.includes(search));
 
   return (
-    <div className="relative flex-start-center w-12">
-      <RiArrowDownSLine size={30} />
+    <div className="relative flex-start-center w-[25%]">
+      <RiArrowDownSLine size={17} className="cursor-pointer" />
       <div ref={WrapperRef}>
         <input
           autoComplete="off"

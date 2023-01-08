@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 export const HubColumn = [
   {
     Header: "کد هاب",
@@ -387,6 +389,13 @@ export const ConsignmentManageCol = [
   //   type: "time",
   // },
   {
+    id: uuidv4(),
+    isRequire: false,
+    Header: "کد پستی گیرنده",
+    accessor: "receiverPostalcode",
+    type: "time",
+  },
+  {
     id: crypto.randomUUID(),
     isRequire: false,
     Header: "نام گیرنده",
@@ -642,6 +651,13 @@ export const ConsignmentManageCol = [
   {
     id: crypto.randomUUID(),
     isRequire: false,
+    Header: "کد پستی فرستنده",
+    accessor: "senderPostalCode",
+    type: "time",
+  },
+  {
+    id: crypto.randomUUID(),
+    isRequire: false,
     Header: "آدرس  فرستنده",
     accessor: "senderAdress",
     type: "time",
@@ -663,7 +679,7 @@ export const ConsignmentManageCol = [
   {
     id: crypto.randomUUID(),
     isRequire: false,
-    Header: "نوع سوریس",
+    Header: "نوع سرویس",
     accessor: "serviceType",
     type: "time",
   },

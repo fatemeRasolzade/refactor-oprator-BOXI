@@ -224,7 +224,7 @@ const PriceAttributeForm = ({ Attributes, setAttributes, open, handleResetOuter,
       </div>
       {!values.isParametric && <PriceParameters formik={formik} />}
       <div className="flex-end-end">
-        <SimpleButton type="submit" text={Edit ? "ویرایش در لیست" : "درج در لیست"} className="full-tomato-btn w-40" icon={<BiPlus size={20} />} />
+        <SimpleButton type="submit" text={Edit ? "ویرایش در لیست" : "درج در لیست"} className="full-tomato-btn " icon={<BiPlus size={20} />} />
       </div>
       <StaticTable selectable={false} data={data ? data : []} column={PriceAttributeColumn} pagination={1} loading={false} />
     </form>

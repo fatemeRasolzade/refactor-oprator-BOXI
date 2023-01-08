@@ -16,7 +16,10 @@ const TooltipItems: FC<TooltipItemsProps> = ({ ArrayValue }): JSX.Element => {
           </div>
         ))}
       >
-        <div>{ArrayValue.map((value: any) => value.text)}</div>
+        <div>
+          {ArrayValue[ArrayValue.length - 1].text}
+          {ArrayValue.length > 1 && "..."}
+        </div>
       </TooltipWrapper>
     </div>
   );

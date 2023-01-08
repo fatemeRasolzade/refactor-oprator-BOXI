@@ -17,14 +17,17 @@ root.render(
   <BrowserRouter>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ToastContainer closeButton={false} autoClose={3000} toastClassName="rounded-md p-4 font-medium" />
+        <ToastContainer
+          closeButton={false}
+          autoClose={3000}
+          toastClassName="rounded-md p-4 font-medium"
+        />
         <ThemeProvider>
           <App />
         </ThemeProvider>
       </PersistGate>
     </Provider>
   </BrowserRouter>
-  // </React.StrictMode>
   //  </ReactKeycloakProvider>
 );
 

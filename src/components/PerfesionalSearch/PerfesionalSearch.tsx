@@ -12,7 +12,7 @@ interface propsData {
   sizeWidth?: string;
 }
 
-const PerfesionalSearch = ({ formData, handleReset, children, perfetionalClik, sizeWidth = "500px" }: propsData): JSX.Element => {
+const PerfesionalSearch = ({ formData, handleReset, children, perfetionalClik,  }: propsData): JSX.Element => {
   return (
     <div className="w-160 relative">
       <Popover
@@ -34,7 +34,7 @@ const PerfesionalSearch = ({ formData, handleReset, children, perfetionalClik, s
             // style={{ width: sizeWidth }}
           >
             <div className="flex-between-start gap-4 mt-5">{children}</div>
-            <div className="flex-between-center">
+            <div className="flex-end-center gap-7">
               <SimpleButton text="شخصی سازی" icon={<BiCog color="gray" />} className="centering p-0" handelClick={perfetionalClik} />
               <SimpleButton text="پاک کردن ورودی ها" className="p-0" handelClick={handleReset} />
               <SimpleButton searchBtn handelClick={formData} />
