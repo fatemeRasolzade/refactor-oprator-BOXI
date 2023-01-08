@@ -18,6 +18,7 @@ const IndeterminateCheckbox = React.forwardRef(({ data, indeterminate, ...rest }
   return (
     <>
       <input
+        className="accent-tomato"
         type="checkbox"
         ref={resolvedRef}
         {...rest}
