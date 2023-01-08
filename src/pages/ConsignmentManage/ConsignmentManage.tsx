@@ -20,13 +20,7 @@ interface SelectedColInterface {
   Header: string;
   isRequire: boolean;
   id: string;
-  type:
-    | "operation"
-    | "text"
-    | "inputSelect"
-    | "multiSelect"
-    | "status"
-    | "time";
+  type: "operation" | "text" | "inputSelect" | "multiSelect" | "status" | "time";
 }
 
 interface ItemData {}
@@ -119,12 +113,7 @@ const ConsignmentManage = () => {
     <>
       <Breadcrumb curentPage="مدیریت مرسوله" />
       <StatusBar Options={Options} />
-      <SearchConsignmentFilter
-        selectedCol={selectedCol}
-        setSelectedCol={(value: Array<SelectedColInterface>) =>
-          setSelectedCol(value)
-        }
-      />
+      <SearchConsignmentFilter selectedCol={selectedCol} setSelectedCol={(value: Array<SelectedColInterface>) => setSelectedCol(value)} />
       <SwitchOptionTable
         accessPage={[
           { code: "A7" },
@@ -260,16 +249,7 @@ const convertdataTable = async (fetchedData: any) => {
           <TooltipItems
             ArrayValue={AddressByUsername?.map((item: any) => {
               return {
-                text:
-                  item.selectState.text +
-                  "،" +
-                  item.selectCity.text +
-                  "،" +
-                  item.selectRegion.text +
-                  "،پلاک" +
-                  item.pelak +
-                  "،واحد" +
-                  item.unit,
+                text: item.selectState.text + "،" + item.selectCity.text + "،" + item.selectRegion.text + "،پلاک" + item.pelak + "،واحد" + item.unit,
               };
             })}
           />

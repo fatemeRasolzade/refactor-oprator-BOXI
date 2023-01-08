@@ -16,6 +16,7 @@ import { addEditDataAPI } from "../../../../services/CRUDServices";
 import { addEditUrls } from "../../../../services/api.enums";
 import {useDispatch,useSelector} from "react-redux"
 import { ServiceProvisionData } from "../../../../redux/ServiceProvision/ServiceProvision";
+import * as Yup from "yup"
 const AddModalService = ({
   setIsModalOpen,
   isModalOpen,
@@ -25,9 +26,6 @@ const AddModalService = ({
   isModalOpen?: any;
   currentData?: any;
 }) => {
-
-
-
 
   const [isActive, setIsActive] = useState(true);
   const [ChanelSale, setChanelSale] = useState([]);
@@ -48,8 +46,7 @@ const dispatch=useDispatch()
     });
     selectDataFromServerWithHeader(apiRoute().get.Fliter_Service).then((res) => {
       if (res.status === "OK") {
-        console.log(res)
-        setserviceSelect(res.payload);
+       setserviceSelect(res.payload);
       } else {
         
       }
@@ -77,8 +74,27 @@ const dispatch=useDispatch()
     },
   ];
 
- console.log("azcc",currentData)
- 
+
+  const validateSchema=Yup.object().shape({
+    code:Yup.number().required(),
+    name:Yup.string().required(),
+      service: Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+    type:Yup.object().shape({
+      text: Yup.string().required(),
+      id: Yup.string().required(),
+    }),
+    discountPercent:Yup.string().required()
+    // validDateFrom:Yup.object().shape({
+    //   day: Yup.string().required(),
+    //   month:Yup.string().required(),
+    //   year: Yup.string().required(),
+    // })
+   
+  })
+
   return (
     <Modal visible={isModalOpen} setVisible={setIsModalOpen} title="ارائه سرویس">
       <div className="w-full">
@@ -150,7 +166,7 @@ const dispatch=useDispatch()
           }
           onSubmit={(values, { resetForm }) => {
             values.deliveryDiscounts = [...deliveryTableOne, ...deleveryTableTwo];
-            console.log('rrrr',values)
+          
              addEditDataAPI(addEditUrls.serviceProvision,currentData ? "put" : "post",values).then(res=>{
                setIsModalOpen(false)
               if(res.data.status==="OK"){
@@ -165,6 +181,7 @@ const dispatch=useDispatch()
              })
             
           }}
+          validationSchema={validateSchema}
         >
           {(formik) => (
             <>
@@ -176,12 +193,14 @@ const dispatch=useDispatch()
                   handleChange={formik.handleChange}
                   values={formik.values.name}
                   important
+                  error={formik.touched.name && formik.errors.name}
                 />
-                <InputText label="کد" name="code" handleChange={formik.handleChange} values={formik.values.code} important />
+                <InputText label="کد" name="code" handleChange={formik.handleChange} values={formik.values.code} important error={formik.touched.code && formik.errors.code}/>
                 <CustomSwitch active={isActive} handleChange={() => setIsActive((prev) => !prev)} />
                 <InputSelect
                   wrapperClassName="col-span-2 z-[99]"
                   label="سرویس"
+                  important
                   name="service"
                   handleChange={formik.setFieldValue}
                   values={formik.values.service}
@@ -194,6 +213,7 @@ const dispatch=useDispatch()
                   handleChange={formik.setFieldValue}
                   values={formik.values.validDateFrom}
                   title="تاریخ اعتبار از"
+                  error={formik.touched.validDateFrom && formik.errors.validDateFrom}
                 />
                 <DatePickers
                   WrapperClassName="col-span-2 xl:col-span-1"
@@ -232,10 +252,12 @@ const dispatch=useDispatch()
                 <InputSelect
                   label="نوع تخفیف"
                   name="type"
+                  important
                   handleChange={formik.setFieldValue}
                   values={formik.values.type}
                   options={dicountType}
                   wrapperClassName="col-span-2 xl:col-span-1"
+                  error={formik.touched.type && formik.errors.type}
                 />
                 {formik.values.type.text === "ثابت" ? (
                   <InputText
@@ -245,6 +267,7 @@ const dispatch=useDispatch()
                     values={formik.values.discountPercent}
                     important
                     wrapperClassName="col-span-2 2xl:col-span-1"
+                    error={formik.touched.discountPercent && formik.errors.discountPercent}
                   />
                 ) : null}
               </form>
