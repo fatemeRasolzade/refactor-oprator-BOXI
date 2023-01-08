@@ -19,9 +19,7 @@ interface ComponentItemInterface {
 }
 export const componentItem: Record<string, ComponentItemInterface> = {
   A1: {
-    JSXItem: (value: any) => (
-      <SimpleButton className="w-62 px-1" handelClick={() => ExportExcel(value)} text="خروجی اکسل" RightIcon={<GoDesktopDownload size={17} />} />
-    ),
+    JSXItem: (value: any) => <SimpleButton handelClick={() => ExportExcel(value)} text="خروجی اکسل" RightIcon={<GoDesktopDownload size={17} />} />,
     code: "A1",
   },
   A2: {
@@ -43,29 +41,33 @@ export const componentItem: Record<string, ComponentItemInterface> = {
   },
   A4: {
     JSXItem: (options: any) => (
-      <AddButton text="اسکن ورود در هاب" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoBarcode size={22} />} />
+      <AddButton text="اسکن ورود در هاب" ToggleOptions={options} className="btn gap-2" RightIcon={<IoBarcode size={22} />} />
     ),
     code: "A4",
   },
   A5: {
     JSXItem: (options: any) => (
-      <AddButton text="اسکن خروج از هاب" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoBarcode size={22} />} />
+      <AddButton text="اسکن خروج از هاب" ToggleOptions={options} className="btn gap-2" RightIcon={<IoBarcode size={22} />} />
     ),
     code: "A5",
   },
   A6: {
-    JSXItem: (options: any) => (
-      <AddButton text="چاپ برچسب" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoIosPrint size={20} />} />
-    ),
+    JSXItem: (options: any) => <AddButton text="چاپ برچسب" ToggleOptions={options} className="btn gap-2" RightIcon={<IoIosPrint size={20} />} />,
     code: "A5",
   },
   A7: {
-    JSXItem: () => <SimpleButton text="افزودن گروهی" className="w-62 px-1" RightIcon={<AiOutlineFileExcel size={20} />} />,
+    JSXItem: () => <SimpleButton text="افزودن گروهی" RightIcon={<AiOutlineFileExcel size={20} />} />,
     code: "A4",
   },
   A8: {
     JSXItem: (options: any) => (
-      <AddButton text="لغو" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoClose size={20} />} />
+      <AddButton
+        text="لغو"
+        ToggleOptions={options}
+        className="btn gap-2 justify-start px-0 "
+        WrapperClassName="w-40"
+        RightIcon={<IoClose size={20} />}
+      />
     ),
     code: "A8",
   },
@@ -73,7 +75,7 @@ export const componentItem: Record<string, ComponentItemInterface> = {
     JSXItem: (action: any) => (
       <SimpleButton
         text="دریافت اطلاعات بیشتر"
-        icon={<HiRefresh className={`${action.loading ? "loading-spinner" : ""}`} />}
+        icon={<HiRefresh className={`${action.loading ? "loading-spinner" : " "}`} />}
         handelClick={action.fetch}
       />
     ),
@@ -84,27 +86,23 @@ export const componentItem: Record<string, ComponentItemInterface> = {
       <AddButton
         text="تخصیص به راننده"
         ToggleOptions={options}
-        className="!btn gap-2"
-        WrapperClassName="w-62"
+        className="btn gap-2 px-0"
+        WrapperClassName="w-40"
         RightIcon={<MdDriveFileMove size={18} />}
       />
     ),
     code: "A10",
   },
   A11: {
-    JSXItem: (handelClick) => (
-      <SimpleButton className="w-62 px-1" handelClick={handelClick} text="تخصیص خودکار" RightIcon={<MdDriveFileMove size={22} />} />
-    ),
+    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="تخصیص خودکار" RightIcon={<MdDriveFileMove size={22} />} />,
     code: "A11",
   },
   A12: {
-    JSXItem: (handelClick) => (
-      <SimpleButton className="w-62 px-1" handelClick={handelClick} text="تغییر هاب جمع آوری" RightIcon={<BsArrowDownUp size={17} />} />
-    ),
+    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="تغییر هاب جمع آوری" RightIcon={<BsArrowDownUp size={17} />} />,
     code: "A12",
   },
   A13: {
-    JSXItem: (handelClick) => <SimpleButton className="w-62 px-1" handelClick={handelClick} text="نمایش روی نقشه" RightIcon={<ImMap size={17} />} />,
+    JSXItem: (handelClick) => <SimpleButton handelClick={handelClick} text="نمایش روی نقشه" RightIcon={<ImMap size={17} />} />,
     code: "A13",
   },
 };
