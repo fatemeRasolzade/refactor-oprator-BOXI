@@ -24,7 +24,7 @@ const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = ()
     <div className="flex flex-col">
       <form onSubmit={formik.handleSubmit} className="searchForm">
         <CustomSearchOption setFieldValue={formik.setFieldValue} formik={formik} />
-        <VehiclePelak formik={formik} />
+        <VehiclePelak Search WrapperClassName="w-72" formik={formik} />
         <SimpleButton searchBtn />
         <PerfesionalSearch formData={handleSubmit} perfetionalClik={handleReset}>
           <div className="grid lg:grid-cols-4 xl:grid-cols-5 gap-6 my-6 md:grid-cols-3 xs:grid-cols-1">

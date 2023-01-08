@@ -45,7 +45,9 @@ const CustomSearchOption = ({ Error, important, setFieldValue, formik }: any) =>
         )}
       </div>
       <input onChange={(e) => setValue(e.target.value)} className="w-48 focus:outline-none mr-2 mt-1" />
-      <FiSearch size={19} className="text-darkGray mr-3" />
+      <span className="mr-2">
+        <FiSearch size={19} className="text-darkGray" />
+      </span>
     </div>
   );
 };

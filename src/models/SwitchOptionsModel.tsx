@@ -65,7 +65,7 @@ export const componentItem: Record<string, ComponentItemInterface> = {
   },
   A8: {
     JSXItem: (options: any) => (
-      <AddButton text="لغو" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-80" RightIcon={<IoClose size={20} />} />
+      <AddButton text="لغو" ToggleOptions={options} className="!btn gap-2" WrapperClassName="w-62" RightIcon={<IoClose size={20} />} />
     ),
     code: "A8",
   },

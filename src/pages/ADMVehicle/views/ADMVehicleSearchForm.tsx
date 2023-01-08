@@ -51,7 +51,7 @@ const ADMVehicleSearchForm: React.FC<PropsData> = ({ isActive, isUpdating, pageN
   return (
     <>
       <form className="searchForm" onSubmit={handleSubmit}>
-        <VehiclePelak formik={formik} />
+        <VehiclePelak formik={formik} Search WrapperClassName="w-72" />
         <AutocompleteInput label="هاب مرکز گزارش" value={values.hubName} onChange={(e) => setFieldValue("hubName", e.target.value)} />
         <SimpleButton searchBtn />
         <PerfesionalSearch formData={handleSubmit} handleReset={handleReset}>
