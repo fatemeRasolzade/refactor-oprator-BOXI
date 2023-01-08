@@ -16,6 +16,9 @@ const MapPage = () => {
     initialValues: {},
     onSubmit: (values) => {},
   });
+
+
+  
   return (
     <div className="w-full h-full">
       <Breadcrumb curentPage="مدیریت نقش" />
@@ -28,13 +31,14 @@ const MapPage = () => {
             RightIcon={<BsList size={17} />}
           />
 
-          <form>
+          <form className="flex flex-col gap-3">
             <VehiclePelak WrapperClassName={"w-full"} formik={formik} />
             <CustomSearchOption
               setFieldValue={formik.setFieldValue}
               formik={formik}
+              wrapperClass={"w-full"}
             />
-            <SimpleButton className="full-gray-btn" text="جستجو" />
+            <SimpleButton className="full-gray-btn my-[15px]" text="جستجو" />
           </form>
         </div>
         <div className="w-[80%] h-full">
@@ -46,10 +50,3 @@ const MapPage = () => {
 };
 
 export default MapPage;
-{
-  /* <form className="flex flex-col gap-7 items-center">
-            {/* <CustomSearchOption
-            setFieldValue={formik.setFieldValue}
-            formik={formik}
-        /> */
-}

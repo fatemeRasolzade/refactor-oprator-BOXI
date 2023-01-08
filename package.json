@@ -37,7 +37,6 @@
     "keycloak-js": "^20.0.1",
     "leaflet": "^1.9.3",
     "leaflet-draw": "^1.0.4",
-    "mapir-react-component": "^2.0.7",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-autocomplete": "^1.8.1",
