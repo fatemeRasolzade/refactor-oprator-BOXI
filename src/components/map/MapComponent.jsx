@@ -1,36 +1,49 @@
-import Mapir from "mapir-react-component";
-const apiKey =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImMwMmU0NWFiYTQ4NTliOTk0MGUxNjMxNGFiYzI4YWYxMzUxZDVmNjdjMGNlYzk5OTk2ZGNkM2NhY2UwYzIxOTc4YmQyM2FjZThiZDU0ZTQyIn0.eyJhdWQiOiIyMDU4NiIsImp0aSI6ImMwMmU0NWFiYTQ4NTliOTk0MGUxNjMxNGFiYzI4YWYxMzUxZDVmNjdjMGNlYzk5OTk2ZGNkM2NhY2UwYzIxOTc4YmQyM2FjZThiZDU0ZTQyIiwiaWF0IjoxNjcyNzMwNzg4LCJuYmYiOjE2NzI3MzA3ODgsImV4cCI6MTY3NTIzNjM4OCwic3ViIjoiIiwic2NvcGVzIjpbImJhc2ljIl19.EomlDf3bHNVopTXiJzWQYKB5-CWw0O3OPfwR979JmPyDsq5ls1UD0pKFT2bOP5WxpE7hs6GQQW3b3Fst5vO9pcx07JyXNSjlSFeURHN8La7QPzXBOF-QaEjaE88c6V52uomtC0qmOiFbzyx6f8TkvI-2-g1KSYekwqKMUWqr8aI8yP6lwtZaDD_VUfG5h_8av6hNHBCN8SMRCBDIF2hBO8nCv7JTo9lwXJ8qWcjFQ3Bm8amU02K-Sr728K8EF0DosZyuNgNWLI3dDiQEHgTGGm3VfZ3QUKx8Y3bWcO4v3bZmU-ZzDwEx9MGNRGElnbusfolDtDF-PHIgvRUQvc60nQ";
+import {
+  MapContainer,
+  Marker,
+  Polyline,
+  Popup,
+  TileLayer,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import "leaflet-draw/dist/leaflet.draw.css";
 
-const Map = Mapir.setToken({
-  transformRequest: (url) => {
-    return {
-      url: url,
-      headers: {
-        "x-api-key": apiKey, //Mapir api key
-        "Mapir-SDK": "reactjs",
-      },
-    };
-  },
-});
 const MapComponent = () => {
   return (
-    <div className="w-full h-full">
-      <Mapir
-        center={[51.42047, 35.729054]}
-        zoom={[3]}
-        scrollZoom={false}
-        hash={true}
-        Map={Map}
-        interactive={true}
-      >
-        <Mapir.Marker
-          coordinates={[35.69985410885464, 51.3358469690329]}
-          anchor="bottom"
-        />
-      </Mapir>
-    </div>
+    <MapContainer center={defaultCenter} zoom={defaultZoom}>
+      <TileLayer
+        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <Marker position={position}>
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+      <Marker position={position}>
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+      <Polyline pathOptions={limeOptions} positions={polyline} />
+      {/* <FeatureGroup
+    ref={(featureGroupRef) => {
+      onFeatureGroupReady(featureGroupRef);
+    }}
+  >
+    <EditControl position="topright" onCreated={onCreated} />
+  </FeatureGroup> */}
+    </MapContainer>
   );
 };
 
 export default MapComponent;
+const defaultCenter = [38.9072, -77.0369];
+const position = [51.505, -0.09];
+const limeOptions = { color: "red" };
+const polyline = [
+  [51.505, -0.09],
+  [51.51, -0.1],
+  [51.51, -0.12],
+];
+const defaultZoom = 8;
