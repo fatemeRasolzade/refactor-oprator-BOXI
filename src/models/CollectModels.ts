@@ -1,7 +1,7 @@
 export const CollectSearchElements = [
   {
     type: "inputSelect",
-    name: "hubList",
+    name: "hublist",
     label: " هاب ",
   },
   {

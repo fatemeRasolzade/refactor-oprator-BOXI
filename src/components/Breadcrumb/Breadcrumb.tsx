@@ -12,7 +12,10 @@ const Breadcrumb = ({ curentPage, beforePage }: { curentPage?: string; beforePag
   const [toggle, setToggle] = useState(false);
   const [OpenProfile, setOpenProfile] = useState(false);
   const [OpenChangePassword, setOpenChangePassword] = useState(false);
-  const handleBlur = (e: { currentTarget: { contains: (arg0: any) => any }; relatedTarget: any }) => {
+  const handleBlur = (e: {
+    currentTarget: { contains: (arg0: any) => any };
+    relatedTarget: any;
+  }) => {
     if (!e.currentTarget.contains(e.relatedTarget)) setToggle(false);
   };
 
@@ -32,11 +35,14 @@ const Breadcrumb = ({ curentPage, beforePage }: { curentPage?: string; beforePag
           {/* {Customkeycloak.tokenParsed?.preferred_username} */}
         </p>
         <div className="relative centering" onBlur={handleBlur}>
-          <button className={`${toggle && "rotate-180"} transition-all duration-500`} onClick={() => setToggle(!toggle)}>
+          <button
+            className={`${toggle && "rotate-180"} transition-all duration-500`}
+            onClick={() => setToggle(!toggle)}
+          >
             <RiArrowDownSLine size={23} />
           </button>
           {toggle ? (
-            <div className="ToggleContainer  !top-8 -right-32">
+            <div className="ToggleContainer  !top-8 -right-32 w-36">
               <button className="ToggleElements" onClick={() => navigate("/")}>
                 داشبورد
               </button>

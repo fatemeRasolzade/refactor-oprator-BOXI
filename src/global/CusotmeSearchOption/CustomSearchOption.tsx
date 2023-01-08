@@ -52,10 +52,10 @@ const CustomSearchOption = ({ Error, important, setFieldValue, formik, WrapperCl
           </ul>
         )}
       </div>
-      <div className="flex-between-center w-full">
+      <div className="flex-between-center w-[50%]">
         <input
           onChange={(e) => setValue(e.target.value)}
-          className="w-[50%] focus:outline-none mr-2 mt-1"
+          className="w-full focus:outline-none mr-2 mt-1"
         />
         <span className="mr-2">
           <FiSearch size={19} className="text-darkGray" />

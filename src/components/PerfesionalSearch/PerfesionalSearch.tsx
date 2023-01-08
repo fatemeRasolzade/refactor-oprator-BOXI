@@ -12,7 +12,7 @@ interface propsData {
   sizeWidth?: string;
 }
 
-const PerfesionalSearch = ({ formData, handleReset, children, perfetionalClik, sizeWidth = "500px" }: propsData): JSX.Element => {
+const PerfesionalSearch = ({ formData, handleReset, children, perfetionalClik,  }: propsData): JSX.Element => {
   return (
     <div className="w-160 relative">
       <Popover

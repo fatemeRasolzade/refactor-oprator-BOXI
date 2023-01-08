@@ -1,12 +1,13 @@
 import { useFormik } from "formik";
-import { FC, useState } from "react";
-import { useDispatch } from "react-redux";
+import { FC, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PerfesionalSearch from "../../../components/PerfesionalSearch/PerfesionalSearch";
 import Chip from "../../../global/Chip/Chip";
 import CustomSearchOption from "../../../global/CusotmeSearchOption/CustomSearchOption";
 import SimpleButton from "../../../global/SimpleButton/SimpleButton";
 import VehiclePelak from "../../../global/VehiclePelak/VehiclePelak";
 import { setFilter } from "../../../redux/PickupData/PickupData";
+import { getRegions } from "../../../services/GlobalApi";
 import CollectPerfesionalSearch from "./CollectPerfesionalSearch";
 interface CollectManagementFilterSearchProps {}
 const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = (): JSX.Element => {
@@ -24,10 +25,24 @@ const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = ()
   });
 
   const { handleSubmit, handleReset } = formik;
+  const { hublist } = useSelector((state: any) => state.userInfo);
 
-  const CollectSearchSelecteOptions = {
-    hubList: [],
-    pickupFrom: [],
+  const Convert = (data: any) => {
+    const array: any = [];
+    data &&
+      data.forEach((element: any) => {
+        array.push({ ...element, text: element.label });
+      });
+    return array;
+  };
+
+  const [CollectSearchSelecteOptions, setCollectSearchSelecteOptions] = useState({
+    hublist: Convert(hublist),
+    pickupFrom: [
+      { id: 1, text: "مشتری حقیقی" },
+      { id: 2, text: "مشتری حقوقی" },
+      { id: 0, text: "هاب" },
+    ],
     hubAllocatedType: [
       { id: 0, text: "تخصیص شده" },
       { id: 1, text: "تخصیص نشده" },
@@ -69,7 +84,16 @@ const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = ()
       { id: 1, text: "تخصیص نشده" },
     ],
     podiHub: [],
-  };
+  });
+
+  useEffect(() => {
+    getRegions().then((res) => {
+      setCollectSearchSelecteOptions({
+        ...CollectSearchSelecteOptions,
+        podiHub: res,
+      });
+    });
+  }, []);
 
   return (
     <div className="flex flex-col">
@@ -78,7 +102,11 @@ const CollectManagementFilterSearch: FC<CollectManagementFilterSearchProps> = ()
         <VehiclePelak Search WrapperClassName="w-72" formik={formik} />
         <SimpleButton searchBtn />
         <PerfesionalSearch formData={handleSubmit} perfetionalClik={handleReset}>
-          <CollectPerfesionalSearch formik={formik} searchFilterList={searchFilterList} Options={CollectSearchSelecteOptions} />
+          <CollectPerfesionalSearch
+            formik={formik}
+            searchFilterList={searchFilterList}
+            Options={CollectSearchSelecteOptions}
+          />
         </PerfesionalSearch>
       </form>
 
